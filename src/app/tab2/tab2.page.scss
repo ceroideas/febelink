@@ -1,0 +1,142 @@
+/*ion-header{
+    .logo{
+        position: absolute;
+        top:10%;
+        left:28%;
+        width: 45%;
+        max-width: 200px;
+    }
+}*/
+.desktop {
+    @media (max-width: 768px){
+        display: none;
+    }
+}
+.mobile {
+    @media (min-width: 768px){
+        display: none;
+    }
+  }
+ion-header{
+    text-align: center;
+    background: var(--ion-color-light);
+
+    .btn-header {
+        margin: 0 0.8rem;
+    }
+
+    .active {
+        color: var(--ion-color-primary) !important;
+    }
+
+    ion-toolbar {
+        @media (min-width: 768px){
+            margin:0 auto;
+            max-width: 1200px;
+        }
+    }
+    .logo{
+
+        position: absolute;
+        top:10%;
+        left:28%;
+        width: 45%;
+        max-width: 200px;
+
+        @media (min-width: 768px){
+            position: relative;
+            width: 45%;
+            max-width: 130px;
+            left: 0;
+            float:left;
+            margin-left: 20px;
+        }
+    }
+}
+ion-content{
+
+    ion-segment {
+        @media (min-width: 768px){
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    }
+    ion-card {
+        cursor: pointer;
+        ion-card-header {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    .segment-title {
+        @media (min-width: 768px){
+            font-size: 1.7rem;
+        }
+    }
+    .content-segment {
+        @media (min-width: 768px){
+            margin-top:40px;
+        }
+    }
+    .grid-card {
+        margin: 40 auto;
+        max-width: 1000px;
+
+        img {
+            height: 150px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .card-desc {
+            min-height:80px;overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+            color: #222;
+        }
+    }
+
+    .text-center {
+        text-align: center;
+    }
+    .desc{
+        font-size: 12px;
+        color:#95a5a6;
+    }
+    .header{
+        width: 100%;
+        display: block;
+    }
+    .social{
+        float: right;
+        display: block;
+    }
+    .share{
+        margin-right: 10px;
+        font-size: 12px;
+        color: #8b8b8b;
+    }
+    .mas{
+        font-size: 18px;
+    }
+    .vacio{
+        margin-top:100px;
+    }
+
+
+    ion-thumbnail {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .social-media {
+        font-size: 10px;
+        color: #8b8b8b;
+        text-transform: capitalize;
+    }
+    .right {
+        float:right;
+    }
+}

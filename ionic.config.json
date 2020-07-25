@@ -1,0 +1,8 @@
+{
+  "name": "Febelink-pwa",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

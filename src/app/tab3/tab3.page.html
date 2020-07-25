@@ -1,0 +1,131 @@
+
+<ion-header>
+  <ion-toolbar color="light">
+    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()">
+
+    <ion-buttons slot="end" class="desktop">
+      <ion-button class="btn-header" (click)="irA('/tabs/tab1')">
+        <ion-icon slot="start" name="search"></ion-icon>
+        Todas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab2')">
+        <ion-icon slot="start" name="archive"></ion-icon>
+        Búsquedas
+      </ion-button>
+      <ion-button class="btn-header active">
+        <ion-icon slot="start" name="hand-right"></ion-icon>
+        Ofertas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab4')">
+        <ion-icon slot="start" name="person"></ion-icon>
+        {{ perfil !== null ? 'Perfil' : 'Inciar sesión'}}
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons size="large" slot="end">
+      <ion-button color="primary" slot="icon-only" (click)="openGuide()"> 
+        <ion-icon style="font-size: x-large;" name="information-circle"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="segmentplace">
+    <ion-segment [(ngModel)]="settingsOfertas">
+        <ion-segment-button value="ofertasPage">Recibidas</ion-segment-button>
+        <ion-segment-button value="misOfertasPage">Mis Ofertas</ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="settingsOfertas" class="content-segment">
+
+    <div *ngSwitchCase="'ofertasPage'">
+
+      <ion-refresher slot="fixed" (ionRefresh)="doRefreshOfertas($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <h3 class="ion-text-center">Estas son las ofertas recibidas a tus demandas</h3>
+      <div class="cargando-container ion-text-center" margin-top *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+        <p>Cargando...</p>
+      </div>
+      <p class="vacio ion-text-center" *ngIf="!(ofertas?.length>0) && !isLoading">No hay elementos para mostrar</p>
+     
+      <ion-list lines="none">
+        <ion-item *ngFor="let oferta of ofertas" (click)="interiorOferta(oferta)">
+          <ion-label>
+            <p class="demandante"><span><em>{{oferta?.demanda}}</em></span></p>
+            <b>{{oferta?.nombre}}</b>
+            <p *ngIf="oferta.ofertante">Ofertante: {{oferta?.ofertante}}</p>
+          </ion-label>
+
+          <div class="ion-text-end">
+            <span class="estado" style="background-color: #19cf50;" *ngIf="oferta?.estado == 1">Aceptada</span>
+            <span class="estado" style="background-color: #da1c1c;" *ngIf="oferta?.estado == 2">Denegada</span>
+            <span class="estado" style="background-color: #3289db;" *ngIf="oferta?.estado == 3">Sin respuesta</span>
+          </div>
+      
+        </ion-item>
+      </ion-list>
+
+    </div>
+
+    <div *ngSwitchCase="'misOfertasPage'" class="content-segment">
+
+      <ion-refresher slot="fixed" (ionRefresh)="doRefreshMisOfertas($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <h3 class="ion-text-center"> Ofertas realizadas</h3>
+      <div class="cargando-container ion-text-center" margin-top *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+        <p>Cargando...</p>
+      </div>
+      <p class="vacio ion-text-center" *ngIf="!(misOfertas?.length>0) && !isLoading">No hay elementos para mostrar</p>
+      
+      
+      <ion-list *ngIf="!isLoading">
+        <ion-item-sliding #item *ngFor="let oferta of misOfertas">
+
+          <ion-item (click)="detalleDemanda(oferta?.id_demanda,oferta?.estado)">
+            <ion-label>
+              <b>{{oferta?.nombre}}</b>
+              <p class="demandante">{{oferta?.ofertante}} <span><em>({{oferta?.demanda}})</em></span></p>
+              <p>{{oferta?.descripcion}}</p>
+            </ion-label>
+  
+            <div class="ion-text-end">
+              <span class="estado" style="background-color: #19cf50;" *ngIf="oferta?.estado == 1">{{oferta?.estado_oferta}}</span>
+              <span class="estado" style="background-color: #da1c1c;" *ngIf="oferta?.estado == 2">{{oferta?.estado_oferta}}</span>
+              <span class="estado" style="background-color: #3289db;" *ngIf="oferta?.estado == 3">{{oferta?.estado_oferta}}</span>
+            </div>
+        
+          </ion-item>
+   
+          <ion-item-options side="end">
+            <ion-button (click)="borrarOferta(oferta,item)" color="danger" *ngIf="oferta?.estado !== 3">
+              <ion-icon name="trash"></ion-icon>
+              Borrar
+            </ion-button>
+            <ion-button (click)="borrarOferta(oferta,item)" color="danger" *ngIf="oferta?.estado === 3">
+              <ion-icon name="trash"></ion-icon>
+              Cancelar
+            </ion-button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
+  <ion-toolbar color="febelink">
+    <p style="margin-bottom: 0px;">Febelink Copyright 2020</p>
+    <p style="margin-top: 5px;">Contacto: info@febelink.com </p>
+  </ion-toolbar>
+</ion-footer>

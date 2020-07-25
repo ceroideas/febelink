@@ -1,0 +1,72 @@
+  
+{
+  "array":[
+    {
+      "messageId":"1",
+      "userId":"140000198202211138",
+      "userName":"María",
+      "userImgUrl":"./assets/user.jpg",
+      "toUserId":"210000198410281948",
+      "toUserName":"Juan",
+      "userAvatar":"./assets/guide/to-user.jpg",
+      "time":1488349800000,
+      "message":"Necesito un carpintero ",
+      "status":"success",
+      "color": "#888"
+
+    },
+    {
+      "messageId":"2",
+      "userId":"210000198410281948",
+      "userName":"Juan",
+      "userImgUrl":"./assets/guide/to-user.jpg",
+      "toUserId":"140000198202211138",
+      "toUserName":"María",
+      "userAvatar":"./assets/guide/user.jpg",
+      "time":1491034800000,
+      "message":"Te recomiendo a Francisco, gran profesional <a>febelink.com/#/perfil/32423</a>",
+      "status":"success",
+      "color" : "#0096d2"
+    },
+    {
+      "messageId":"3",
+      "userId":"140000198202211138",
+      "userName":"María",
+      "userImgUrl":"./assets/guide/user.jpg",
+      "toUserId":"210000198410281948",
+      "toUserName":"Juan",
+      "userAvatar":"./assets/guide/to-user.jpg",
+      "time":1491034920000,
+      "message":"Gracias!!",
+      "status":"success",
+      "color": "#888"
+    },
+    {
+      "messageId":"4",
+      "userId":"210000198410281948",
+      "userName":"Ernesto",
+      "userImgUrl":"./assets/guide/to-user.jpg",
+      "toUserId":"140000198202211138",
+      "toUserName":"María",
+      "userAvatar":"./assets/guide/user2.png",
+      "time":1491036720000,
+      "message":"Estaré encantado de hacerte un presupuesto. Revisa mi perfil para conocer mi trabajo <a>febelink.com/#/perfil/09823</a>",
+      "status":"success",
+      "color" : "#00bb2d"
+    },
+
+    {
+        "messageId":"5",
+        "userId":"140000198202211138",
+        "userName":"María",
+        "userImgUrl":"./assets/guide/user.jpg",
+        "toUserId":"210000198410281948",
+        "toUserName":"Ernesto",
+        "userAvatar":"./assets/guide/to-user.jpg",
+        "time":1491034920000,
+        "message":"Perfecto. 👍",
+        "status":"success",
+        "color": "#888"
+      }
+  ]
+}

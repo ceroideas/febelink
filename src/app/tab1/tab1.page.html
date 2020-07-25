@@ -1,0 +1,220 @@
+<ion-header>
+  <ion-toolbar color="light">
+
+    <ion-buttons slot="start" class="mobile">
+      <ion-button>
+        <ion-menu-button menu="febelink"></ion-menu-button>
+      </ion-button>
+    </ion-buttons>
+
+    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="refresh()">
+
+    <ion-buttons slot="end" class="desktop">
+      <ion-button class="btn-header active">
+        <ion-icon slot="start" name="search"></ion-icon>
+        Todas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab2')">
+        <ion-icon slot="start" name="archive"></ion-icon>
+        Búsquedas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab3')">
+        <ion-icon slot="start" name="hand-right"></ion-icon>
+        Ofertas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab4')">
+        <ion-icon slot="start" name="person"></ion-icon>
+        {{ perfil !== null ? 'Perfil' : 'Inciar sesión'}}
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons size="large" slot="end">
+      <ion-button size="large" color="primary" slot="icon-only" (click)="openGuide()"> 
+        <ion-icon style="font-size: x-large;" name="information-circle"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="content-filter">
+
+    <div class="autocomplete">
+      
+      <ion-searchbar
+        placeholder = "Qué buscas..."
+        [(ngModel)]="searchText"
+        (ionFocus)="addFocus()"
+        (ionChange)="search()"
+        (ionBlur)="removeFocus()"
+        (ionClear)="clearBtn()"
+        debounce=500>
+      </ion-searchbar>
+
+      <div class="keys-dropdown">
+        <ion-list mode="ios" *ngIf="searchText.length > 2 && keys.length > 0">
+  
+          <ion-item (click)="getSectorsByKeys(key)" *ngFor="let key of keys" style="font-size: 16px;">
+            <span [innerHTML]="key.name"></span>
+          </ion-item>
+    
+        </ion-list>
+      </div>
+
+      <div class="sector-dropdown">
+
+        <ion-list mode="ios" *ngIf="searchText.length > 2 && keywords.main">
+  
+          <ion-item (click)="publicarDemanda()" style="font-size: 16px;">
+            Crear demanda en <strong style="margin-left: 5px;">{{keywords.main.sector_nombre}}</strong>
+            <ion-icon style="color: black;font-size:large;" slot="end" name="add"></ion-icon>
+          </ion-item>
+    
+          <ion-item (click)="openOfertantes()" style="font-size: 16px;">
+              Ver ofertantes en <strong style="margin-left: 5px;">{{keywords.main.sector_nombre}}</strong>
+             <ion-icon  style="color: black;font-size:large;" slot="end" name="eye"></ion-icon>
+           </ion-item>
+    
+        </ion-list>
+
+      </div>
+  
+    </div>
+
+    <!--<ion-item class="buscador" color="dark">-->
+      <!--<ion-icon item-right name="search" (tap)="hideKeyboard()"></ion-icon>-->
+    <!---  <ion-icon slot="end" name="search"></ion-icon>
+      <ion-input type="text" placeholder="Buscar..." (ionChange)="onKeyPressed($event)"></ion-input>
+    </ion-item>-->
+  
+    <div class="filtros">
+      <ion-item class="categorias">
+        <ion-label>Sectores</ion-label>
+        <ionic-selectable  item-content [(ngModel)]="sector" itemValueField="id" itemTextField="nombre" [items]="sectores"
+          [canSearch]="true" (onChange)="sectorChange($event)">
+        </ionic-selectable>
+      </ion-item>
+      <ion-item class="categorias">
+        <ion-label>Subsectores</ion-label>
+        <ionic-selectable  item-content [(ngModel)]="subsector" itemValueField="id" itemTextField="nombre"
+          [items]="subsectores" [canSearch]="true" (onChange)="subSectorChange($event)">
+        </ionic-selectable>
+      </ion-item><ion-item class="categorias">
+        <ion-label>Provincia</ion-label>
+        <ionic-selectable
+        item-content
+        [(ngModel)]="provincia"
+        itemValueField="id"
+        itemTextField="name"
+        [items]="provincias"
+        [canSearch]="true"
+        (onChange)="provinciasChange($event)">
+        </ionic-selectable>
+      </ion-item>
+      <ion-item class="categorias">
+        <ion-label>Localidad</ion-label>
+        <ionic-selectable item-content [(ngModel)]="localidad" itemValueField="id" itemTextField="name"
+          [items]="localidades" [canSearch]="true" (onChange)="localidadesChange($event)">
+        </ionic-selectable>
+      </ion-item>
+    </div>
+
+  </div>
+
+
+  <div class="cargando-container text-center" margin-top *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+    <p>Cargando...</p>
+  </div>
+  <p class="vacio text-center" *ngIf="!(demandasFiltradasBuscador.length>0) && !isLoading">No hay elementos para mostrar
+  </p>
+
+  <ion-list *ngIf="!isLoading">
+
+
+    <!-- DESKTOP --> 
+    <ion-grid class="grid-card desktop">
+      <ion-row>
+        <ion-col size="12" size-lg="3" side-md="4" size-sm="6" size-xs="12"  *ngFor="let demanda of demandasFiltradasBuscador">
+          <ion-card (click)="detalleDemanda(demanda)">
+            <div>
+              <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen">
+              <img [src]="demanda?.imagen" *ngIf="demanda?.imagen">
+            </div>
+            <ion-card-header>
+              <strong style="color: #222;"> {{demanda?.nombre}}</strong>
+            </ion-card-header>
+            <ion-card-content>
+
+              <p class="card-desc">{{demanda?.descripcion}}</p>
+
+              <ion-row>
+                <ion-col size="3">
+                  <ion-icon name="hand-right"></ion-icon>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-icon name="infinite"></ion-icon>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-icon name="share-social"></ion-icon>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-icon name="eye"></ion-icon>
+                </ion-col>
+              </ion-row>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item class="mobile" lines="none" (click)="detalleDemanda(demanda)" *ngFor="let demanda of demandasFiltradasBuscador">
+      <ion-thumbnail slot="start">
+        <img  src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen">
+        <img  height="75" [src]="demanda?.imagen" *ngIf="demanda?.imagen">
+      </ion-thumbnail>
+      <ion-label>
+        <h2><strong>{{demanda?.nombre}}</strong></h2>
+        <em class="desc">{{demanda?.descripcion}}</em>
+        <ion-buttons slot="end" class="right">
+          <ion-button class="social-media">
+            <ion-icon  slot="start" name="hand-left"></ion-icon>
+            <span *ngIf="demanda?.ofertas_restantes - demanda?.ofertas.length<=5">{{demanda?.ofertas_restantes - demanda?.ofertas.length}}</span>
+            <ion-icon  *ngIf="demanda?.ofertas_restantes - demanda?.ofertas.length>5" slot="start" name="infinite"></ion-icon>
+            <ion-icon  slot="start" name="share-social"></ion-icon>
+            <ion-icon  slot="start" name="eye"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-text-center desktop" [hidden]="!showCookies">
+  <ion-toolbar color="dark">
+    <p>Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra 
+      <a (click)="openCookies()" style="text-decoration: underline;cursor:pointer;">política de cookies</a>.
+    </p>
+    <ion-buttons size="large" slot="end">
+      <ion-button size="large" slot="icon-only" (click)="closeCookies()"> 
+        <ion-icon style="font-size: x-large;" name="close"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer class="ion-no-border ion-text-center desktop" [hidden]="showCookies">
+  <ion-toolbar color="febelink">
+    <div>
+      <p style="margin-bottom: 0px;">© 2020 Febelink</p>
+      <p style="margin-top: 5px;">Contacto: info@febelink.com </p>
+    </div>
+  </ion-toolbar>
+</ion-footer>

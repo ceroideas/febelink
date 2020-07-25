@@ -1,0 +1,138 @@
+.desktop {
+    @media (max-width: 768px){
+        display: none;
+    }
+}
+.mobile {
+    @media (min-width: 768px){
+        display: none;
+    }
+  }
+ion-header{
+    text-align: center;
+    background: var(--ion-color-light);
+
+    .btn-header {
+        margin: 0 0.8rem;
+    }
+
+    .active {
+        color: var(--ion-color-primary) !important;
+    }
+
+    ion-toolbar {
+        @media (min-width: 768px){
+            margin:0 auto;
+            max-width: 1200px;
+        }
+    }
+    .logo{
+
+        position: absolute;
+        top:10%;
+        left:28%;
+        width: 45%;
+        max-width: 200px;
+
+        @media (min-width: 768px){
+            position: relative;
+            width: 45%;
+            max-width: 130px;
+            left: 0;
+            float:left;
+            margin-left: 20px;
+        }
+    }
+}
+ion-content {
+    .content {
+        @media (min-width: 768px){
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    }
+    ion-item{
+        padding-left:0 !important;
+        margin-left: 0 !important;
+    }
+    .ofertante{
+        display: block;
+        color: #9f9f9f;
+        margin-bottom: 10px;
+    }
+    .title{
+        font-size: 18px;
+    }
+    .btn-info{
+        width: 100%;
+    }
+    .apartado{
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+    .logo{
+        height:150px;
+        display: block;
+        margin:0 auto;
+        max-width: 150px;
+    }
+    .editar{
+        color:var(--ion-color-primary);
+        margin-left: 20px;
+    }
+    .reviews{
+        font-size: 16px;
+        color:#ffbb58;
+        #valoracion{
+            text-transform: capitalize;
+            ion-icon{
+                color:#ffbb58;
+            }
+        }
+        a{
+            color: #9f9f9f;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .desc{
+            color:#9f9f9f;
+            @media (min-width: 768px){
+                font-size: 18px;
+            }
+        }
+    }
+    .valoracion{
+        float: right;
+        ion-icon{
+            color:#ffbb58;
+        }
+    }
+    .desc{
+        font-size: 12px;
+        color:#95a5a6;
+        @media (min-width: 768px){
+            font-size: 17px;
+        }
+    }
+    .share{
+        margin-right: 10px;
+        font-size: 12px;
+        color: #8b8b8b;
+    }
+    .valoracion-text{
+        margin: 10px 0px 10px 0px !important;
+        p{
+            white-space: normal !important;
+            word-break: break-all;
+        }
+    }
+    .boton{
+        display: block;
+        margin:20px auto;
+    }
+    .contact-info {
+        @media (min-width: 768px){
+            font-size: 16px;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+ion-content{
+    .publicar{
+        margin-top:20px;
+    }
+    .placeholder{
+        margin:10px;
+    }
+    .editar{
+        color:var(--ion-color-primary);
+        margin-left: 20px;
+    }
+    .stars{
+        color:var(--ion-color-star);
+        width: 25%;
+        float: left;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}

@@ -1,0 +1,39 @@
+<ion-content>
+  <div class="cover-content">
+    <p class="title">Iniciar Sesión</p>
+    <hr>
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
+      <ion-item class="input">
+          <ion-label>
+              <ion-icon name="person"></ion-icon>
+          </ion-label>
+          <ion-input clearInput type="email" placeholder="Email" formControlName="email" required></ion-input>
+      </ion-item>
+
+      <ion-item class="input">
+          <ion-label>
+              <ion-icon name="lock-closed"></ion-icon>
+          </ion-label>        
+          <ion-input clearInput [type]="passwordType" placeholder="Contraseña" formControlName="password" required></ion-input>
+      </ion-item>
+      <div class="links">
+          <a (click)='hideShowPassword()'> Mostrar/ocultar contraseña <ion-icon [name]="passwordIcon" class="passwordIcon"></ion-icon></a>
+          <div class="clear"></div>
+      </div>
+      <div class="links">
+          <a class="create float-left" (click)="openModal()"><i class="fa fa-eye"></i>Olvidaste tu contraseña?</a>
+          <a class="forgot float-right" (click)="openRegistro()"><i class="fa fa-user float-right"></i>Crear cuenta</a>
+          <div class="clear"></div>
+      </div>
+      <ion-button expand="full" type="submit" [disabled]="!form.valid" ion-button color="febelink">
+        INICIAR SESIÓN
+      </ion-button>
+     
+  </form>
+  <div class="links">
+      Contacta con nosotros: <a href="mailto:info@febelink.com">info@febelink.com</a>
+      <div class="clear"></div>
+  </div>
+  </div>
+<div class="cover-overlay"></div>
+</ion-content>

@@ -1,0 +1,108 @@
+
+<ion-header>
+  <ion-toolbar color="febelink">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ofertantes de {{sectorName}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="cargando-container ion-text-center" margin-top *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+    <p>Cargando...</p>
+  </div>
+  <p class="vacio ion-text-center" *ngIf="(ofertantes.length === 0 && isLoading)">No hay elementos para mostrar
+  </p>
+  <ion-list lines="none" *ngIf="!isLoading">
+
+    <!-- MOBILE -->
+    <ion-item class="mobile" (click)="irAPerfil(ofertante?.id)"  *ngFor="let ofertante of ofertantes">
+
+      <ion-thumbnail slot="start">
+        <img  src="assets/imgs/4.jpg" *ngIf="!ofertante?.logo">
+        <img  height="75" [src]="ofertante?.logo" *ngIf="ofertante?.logo">
+      </ion-thumbnail>
+
+
+      <ion-label>
+        <h2><strong style="color: #222;">{{ofertante?.nombre}}</strong></h2>
+        <em class="desc">{{ofertante?.descripcion}}</em>
+        <div class="social">
+          <img src="assets/guide/best.png" width="14" height="14" *ngIf="ofertante.valoracion === 10" style="margin-bottom: -1px;margin-right: 5px;">
+          <img src="assets/guide/recomendable.png" width="14" height="14" *ngIf="ofertante.valoracion === 5" style="margin-bottom: -1px;margin-right: 5px;">
+          <img src="assets/guide/top.png" width="14" height="14" *ngIf="((ofertante.valoracion < 10) && (ofertante.valoracion > 5))" style="margin-bottom: -1px;margin-right: 5px;">
+          <span class="share" *ngIf="ofertante.total_valoraciones === 1"> 
+            1 valoración
+          </span>
+          <span class="share" *ngIf="ofertante.total_valoraciones > 1">
+            {{ofertante.total_valoraciones}} valoraciones
+          </span>
+        </div>
+      </ion-label>
+
+
+
+
+     
+      <!--<div class="header" style="margin-bottom: 5px;">
+        <h2><strong style="color: #222;">{{ofertante?.nombre}}</strong></h2>
+        <em class="desc">{{ofertante?.descripcion}}</em>
+      </div>
+
+      <div class="social">
+        <img src="assets/best.png" width="14" height="14" *ngIf="ofertante.valoracion === 10" style="margin-bottom: -1px;margin-right: 5px;">
+        <img src="assets/recomendable.png" width="14" height="14" *ngIf="ofertante.valoracion === 5" style="margin-bottom: -1px;margin-right: 5px;">
+        <img src="assets/top.png" width="14" height="14" *ngIf="((ofertante.valoracion < 10) && (ofertante.valoracion > 5))" style="margin-bottom: -1px;margin-right: 5px;">
+        <span class="share" *ngIf="ofertante.total_valoraciones === 1"> 
+          1 valoración
+        </span>
+        <span class="share" *ngIf="ofertante.total_valoraciones > 1">
+          {{ofertante.total_valoraciones}} valoraciones
+        </span>
+      </div>-->
+    </ion-item>
+
+    
+    <!-- DESKTOP --> 
+    <ion-grid class="grid-card desktop">
+      <ion-row>
+        <ion-col size="12" size-lg="3" side-md="4" size-sm="6" size-xs="12" *ngFor="let ofertante of ofertantes">
+          <ion-card (click)="irAPerfil(ofertante?.id)" >
+            <div>
+              <img class="img-grid" src="assets/imgs/4.jpg" *ngIf="!ofertante?.logo">
+              <img class="img-grid" [src]="ofertante?.logo" *ngIf="ofertante?.logo">
+            </div>
+            <ion-card-header>
+              <strong style="color: #222;"> {{ofertante?.nombre}}</strong>
+            </ion-card-header>
+            <ion-card-content>
+
+              <p class="card-desc">{{ofertante?.descripcion}}</p>
+
+              <div style="margin-top: 10px;">
+                <div style="display:inline-block">
+                  <img class="img-icon" src="assets/guide/best.png" *ngIf="ofertante.valoracion === 10" style="margin-bottom: -3px;margin-right: 10px;">
+                  <img class="img-icon" src="assets/guide/recomendable.png" *ngIf="ofertante.valoracion === 5" style="margin-bottom: -3px;margin-right: 10px;">
+                  <img class="img-icon" src="assets/guide/top.png" *ngIf="((ofertante.valoracion < 10) && (ofertante.valoracion > 5))" style="margin-bottom: -3px;margin-right: 10px;">
+                </div>
+                <div style="display:inline-block">
+                  <span class="share" *ngIf="ofertante.total_valoraciones === 1"> 
+                    1 valoración
+                  </span>
+                  <span class="share" *ngIf="ofertante.total_valoraciones > 1">
+                    {{ofertante.total_valoraciones}} valoraciones
+                  </span>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-list>
+
+</ion-content>

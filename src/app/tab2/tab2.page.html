@@ -1,0 +1,211 @@
+
+<ion-header>
+  <ion-toolbar color="light">
+    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()">
+
+    <ion-buttons slot="end" class="desktop">
+      <ion-button class="btn-header" (click)="irA('/tabs/tab1')">
+        <ion-icon slot="start" name="search"></ion-icon>
+        Todas
+      </ion-button>
+      <ion-button class="btn-header active">
+        <ion-icon slot="start" name="archive"></ion-icon>
+        Búsquedas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab3')">
+        <ion-icon slot="start" name="hand-right"></ion-icon>
+        Ofertas
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/tabs/tab4')">
+        <ion-icon slot="start" name="person"></ion-icon>
+        {{ perfil !== null ? 'Perfil' : 'Inciar sesión'}}
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons size="large" slot="end">
+      <ion-button color="primary" slot="icon-only" (click)="openGuide()"> 
+        <ion-icon style="font-size: x-large;" name="information-circle"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="segmentplace">
+    <ion-segment [(ngModel)]="settingsDemandas">
+        <ion-segment-button value="demandasPage">Recibidas</ion-segment-button>
+        <ion-segment-button value="misDemandasPage">Mis Búsquedas</ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="settingsDemandas">
+
+    <div *ngSwitchCase="'demandasPage'">
+
+      <ion-refresher slot="fixed" (ionRefresh)="doRefreshDemandas($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <h4 class="text-center"> Demandas específicas para tí (sector y subsector)</h4>
+      <div class="cargando-container text-center" margin-top *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+        <p>Cargando...</p>
+      </div>
+      
+      <p class="vacio text-center" *ngIf="!(demandas?.length>0) && !isLoading">No hay elementos para mostrar</p>
+
+      <!-- DESKTOP --> 
+    <ion-grid class="grid-card desktop" *ngIf="!isLoading">
+      <ion-row>
+        <ion-col size="12" size-lg="3" side-md="4" size-sm="6" size-xs="12" (click)="detalleDemanda(demanda)" *ngFor="let demanda of demandas">
+          <ion-card (click)="detalleDemanda(demanda)">
+            <div>
+              <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen">
+              <img [src]="demanda?.imagen" *ngIf="demanda?.imagen">
+            </div>
+            <ion-card-header>
+              <strong style="color: #222;"> {{demanda?.nombre}}</strong>
+            </ion-card-header>
+            <ion-card-content>
+
+              <p class="card-desc">{{demanda?.descripcion}}</p>
+
+              <ion-row>
+                <ion-col size="3">
+                  <ion-icon name="hand-right"></ion-icon>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-icon name="infinite"></ion-icon>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-icon name="share-social"></ion-icon>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-icon name="eye"></ion-icon>
+                </ion-col>
+              </ion-row>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+      <!-- MOBILE -->
+      <ion-list class="mobile" *ngIf="!isLoading">
+        <ion-item lines="none" (click)="detalleDemanda(demanda)" *ngFor="let demanda of demandas">
+          <ion-thumbnail slot="start">
+            <img  src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen">
+            <img  height="75" [src]="demanda?.imagen" *ngIf="demanda?.imagen">
+          </ion-thumbnail>
+
+          <ion-label>
+            <h2><strong>{{demanda?.nombre}}</strong></h2>
+            <em class="desc">{{demanda?.descripcion}}</em>
+            <ion-buttons slot="end" class="right">
+              <ion-button class="social-media">
+                <ion-icon  slot="start" name="hand-left"></ion-icon>
+                <span *ngIf="demanda?.ofertas_restantes<=5">{{demanda?.ofertas_restantes}}</span>
+                <ion-icon  *ngIf="demanda?.ofertas_restantes>5" slot="start" name="infinite"></ion-icon>
+                <ion-icon  slot="start" name="share-social"></ion-icon>
+                <ion-icon  slot="start" name="eye"></ion-icon>
+                <ion-icon  slot="start" name="star"></ion-icon>{{demanda?.valoracion}} / 5
+              </ion-button>
+            </ion-buttons>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+    </div>
+
+    <div *ngSwitchCase="'misDemandasPage'">
+      
+      <ion-refresher slot="fixed" (ionRefresh)="doRefreshMisDemandas($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <h4 style="text-align: center;"> Demandas Realizadas</h4>
+      <div class="cargando-container text-center" margin-top *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+        <p>Cargando...</p>
+      </div>
+      <p class="vacio text-center" *ngIf="!(misDemandas?.length>0) && !isLoading">No hay elementos para mostrar</p>
+
+      <!-- MOBILE -->
+      <ion-list  class="mobile" *ngIf="!isLoading">
+        <ion-item lines="none" *ngFor="let demanda of misDemandas">
+          <ion-thumbnail slot="start">
+            <img  src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" (click)="detalleDemanda(demanda)">
+            <img  height="75" [src]="demanda?.imagen" *ngIf="demanda?.imagen" (click)="detalleDemanda(demanda)">
+          </ion-thumbnail>
+
+
+          <ion-label>
+            <h2 (click)="detalleDemanda(demanda)"><strong>{{demanda?.nombre}}</strong></h2>
+            <em (click)="detalleDemanda(demanda)" class="desc">{{demanda?.descripcion}}</em>
+            <ion-buttons slot="end" class="right">
+              <ion-button class="social-media">
+
+
+                <span class="share" (click)="editarDemanda(demanda)">
+                  <ion-icon name="create"></ion-icon> Editar
+                </span>
+                <span class="share" (click)="borrarDemanda(demanda)">
+                  <ion-icon name="trash"></ion-icon> Borrar
+                </span>
+
+              </ion-button>
+            </ion-buttons>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+            <!-- DESKTOP --> 
+    <ion-grid class="grid-card desktop" *ngIf="!isLoading">
+      <ion-row>
+        <ion-col size="12" size-lg="3" side-md="4" size-sm="6" size-xs="12" *ngFor="let demanda of misDemandas">
+          <ion-card>
+            <div>
+              <img (click)="detalleDemanda(demanda)" src="assets/imgs/4.jpg" (click)="detalleDemanda(demanda)" *ngIf="!demanda?.imagen">
+              <img (click)="detalleDemanda(demanda)" [src]="demanda?.imagen" (click)="detalleDemanda(demanda)" *ngIf="demanda?.imagen">
+            </div>
+            <ion-card-header (click)="detalleDemanda(demanda)">
+              <strong style="color: #222;"> {{demanda?.nombre}}</strong>
+            </ion-card-header>
+            <ion-card-content>
+
+              <p (click)="detalleDemanda(demanda)" class="card-desc">{{demanda?.descripcion}}</p>
+
+              <ion-row>
+                <ion-col text-center size="6" (click)="editarDemanda(demanda)">
+                  <ion-icon name="create"></ion-icon>
+                </ion-col>
+                <ion-col text-center size="6">
+                  <ion-icon name="trash" (click)="borrarDemanda(demanda)"></ion-icon>
+                </ion-col>
+              </ion-row>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    </div>
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="publicarDemanda()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
+  <ion-toolbar color="febelink">
+    <p style="margin-bottom: 0px;">Febelink Copyright 2020</p>
+    <p style="margin-top: 5px;">Contacto: info@febelink.com </p>
+  </ion-toolbar>
+</ion-footer>

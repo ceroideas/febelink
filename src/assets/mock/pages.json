@@ -1,0 +1,47 @@
+  
+{
+    "array":[
+      {
+          "name": "Introducción",
+          "icon": "chatbubbles",
+          "url": null,
+          "description": null
+      },
+      {
+          "name": "Todas",
+          "icon": "search",
+          "url":"assets/guide/home.png",
+          "urlweb":"assets/guide/homeweb.png",
+          "description" : "Te damos la bienvenida a <strong>Febelink</strong>, el boca a boca digital. No pierdas el tiempo buscando, <strong>pídelo</strong>. Responde a las <strong>demandas</strong> de otros usuarios. <strong>Recomienda</strong> a otros usuarios y sé una <strong>Referencia</strong> en tu sector."
+      },
+      {
+          "name": "Demandas",
+          "icon": "archive",
+          "url":"assets/guide/misdemandas.png",
+          "urlweb":"assets/guide/misdemandasweb.png",
+          "description" : "Aquí ves y <strong>gestionas</strong> tus <strong>demandas</strong>, tanto las que has realizado, como las que coinciden con tus actividades para responder o compartir con otros usuarios."
+      },
+      {
+          "name": "Ofertas",
+          "icon": "hand-right",
+          "url":"assets/guide/misofertas.png",
+          "urlweb":"assets/guide/misofertasweb.png",
+          "description" : "Aquí ves y <strong>gestionas</strong> tus <strong>ofertas</strong>, tanto las que has realizado a otros usuarios, como las que han respondido a tus demandas."
+      },
+      {
+          "name": "Perfil",
+          "icon": "person",
+          "url":"assets/guide/perfil.png",
+          "urlweb":"assets/guide/perfilweb.png",
+          "description" : "Aquí gestionas tu <strong>información</strong>. Recuerda que para tu seguridad tus datos personales <strong>no son visibles</strong> para el resto de usuarios. También puedes <strong>pedir</strong> una <strong>recomendación</strong> para ser la referencia en tus actividades."
+      },
+      {
+         "name": "Fin de la guía",
+         "icon": "happy",
+         "url": null,
+         "description": null
+      }
+    ]
+  }
+
+  

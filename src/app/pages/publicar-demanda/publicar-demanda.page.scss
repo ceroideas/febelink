@@ -1,0 +1,15 @@
+ion-content{
+    .stars{
+        color:var(--ion-color-star);
+        width: 25%;
+        float: left;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .publicar{
+        margin-top:20px;
+    }
+    .placeholder{
+        margin:10px;
+    }
+}

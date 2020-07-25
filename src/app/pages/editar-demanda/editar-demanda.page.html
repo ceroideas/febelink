@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="febelink">
+    <ion-title>Editar Demanda</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+
+  <img [src]="base64img" *ngIf="base64img">
+  <img src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto && !demanda?.imagen" (click)="adjuntarImagen()" class="placeholder" width="125" height="125">
+  <img [src]="demanda?.imagen" *ngIf="demanda?.imagen && !base64img">
+  <span class="editar" (click)="adjuntarImagen()">Editar <ion-icon name="create"></ion-icon></span>   
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
+
+    <ion-list lines="none">
+      <ion-radio-group  [ngModel]="(demanda.ofertas_restantes).toString()" formControlName="ofertas_restantes">
+        <ion-list-header>
+          <ion-label>
+            Ofertantes máximos para la demanda
+          </ion-label>
+        </ion-list-header>
+    
+        <ion-item class="stars">
+          <ion-label>1</ion-label>
+          <ion-radio value="1"></ion-radio>
+        </ion-item>
+    
+        <ion-item class="stars">
+          <ion-label>3</ion-label>
+          <ion-radio value="3"></ion-radio>
+        </ion-item>
+    
+        <ion-item class="stars">
+          <ion-label>5</ion-label>
+          <ion-radio value="5"></ion-radio>
+        </ion-item>
+    
+        <ion-item class="stars">
+          <ion-label>&infin;</ion-label>
+          <ion-radio value="99"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input type="text" formControlName="nombre" [(ngModel)]="demanda.nombre"></ion-input>
+  </ion-item>
+  <ion-item class="input">
+    <ion-label position="floating">
+        Categoría actual : {{sector.nombre}}
+    </ion-label>    
+    <ion-select clearInput type="text" formControlName="sector">
+        <ion-option [value]="sector?.id" *ngFor="let sector of sectores">{{sector.nombre}}</ion-option>
+    </ion-select>           
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">
+      Descripción
+    </ion-label>
+    <ion-textarea rows="6" cols="20" formControlName="descripcion" [(ngModel)]="demanda.descripcion"></ion-textarea>
+  </ion-item>
+  
+  <ion-button type="submit" color="primary" class="publicar">Editar</ion-button>
+  </form>
+</ion-content>
