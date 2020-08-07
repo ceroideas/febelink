@@ -2,9 +2,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, throwError  } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +18,14 @@ export class ApiService {
 
   constructor( private http: HttpClient,
                private utilities: UtilitiesService,
-               private router:Router ) { }
+               private router:Router ) { 
+               }
 
 
-  login( params ): Observable<any> {
+  login( params, endpoint ): Observable<any> {
 
-   
-    const formData = new FormData();
-    formData.append('email', params.email);
-    formData.append('password', params.password);
-    formData.append('remember_me', '1');
-
-    return this.http.post<any>( environment.API_URL_AUTH + "login",
-                                formData ).pipe(
+    return this.http.post<any>( environment.API_URL_AUTH + endpoint,
+                                params ).pipe(
                                     map(async (res: any) => {
 
                                       console.log("LOGIN RES",res);
