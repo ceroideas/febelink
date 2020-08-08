@@ -25,10 +25,12 @@
           <a class="forgot float-right" (click)="openRegistro()"><i class="fa fa-user float-right"></i>Crear cuenta</a>
           <div class="clear"></div>
       </div>
-      <ion-button expand="full" type="submit" [disabled]="!form.valid" ion-button color="febelink">
+      <ion-button expand="full" type="submit" [disabled]="!form.valid"  color="febelink">
         INICIAR SESIÓN
       </ion-button>
-     
+
+      <social-login></social-login>
+
   </form>
   <div class="links">
       Contacta con nosotros: <a href="mailto:info@febelink.com">info@febelink.com</a>

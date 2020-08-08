@@ -22,6 +22,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
 import { CookieService } from 'ngx-cookie-service';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from 'angularx-social-login';
 
 
 @NgModule({
@@ -36,6 +43,7 @@ import { CookieService } from 'ngx-cookie-service';
             ComponentsModule,
             IonicStorageModule.forRoot(),
             NgxStripeModule.forRoot('pk_live_26EQ8gc0INPEdZjy6Iy8DOnK004mMtUILK'),
+            SocialLoginModule,
             ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
             ],
   providers: [
@@ -46,7 +54,27 @@ import { CookieService } from 'ngx-cookie-service';
     SocialSharing,
     Camera,
     Deeplinks,
-    CookieService
+    CookieService,
+    Facebook,
+    GooglePlus,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.WEB_CLIENT_ID
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
+          }
+        ],
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

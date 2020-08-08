@@ -144,7 +144,6 @@ export class Tab4Page {
         this.perfil.logo = "https://api.febelink.com/storage/" + this.perfil.avatar;
       }
 
-      console.log("MI PERFIL",this.perfil);
       await this.obtenerSectoresPerfil();
       await this.obtenerSubSectoresPerfil();
       await this.obtenerProvincias();
@@ -266,7 +265,6 @@ export class Tab4Page {
           response = res;
           this.utilities.showToast('Se han producido los cambios correctamente');
           this.utilities.saveUserData(p);
-          console.log("RESPONSE1",res);
           this.utilities.dismissLoading();
 
         });
@@ -281,7 +279,6 @@ export class Tab4Page {
       (await this.api.editarOfertante(p.name, p.email, p.descripcion, p.telefono, p.direccion, p.provincia, p.localidad, p.sector, p.sub_sector, p.dni, this.base64img)).subscribe( res => {
 
         response = res;
-        console.log("RESPONSE2",res);
         this.utilities.showToast('Se han producido los cambios correctamente');
         this.utilities.saveUserData(res.user);
         this.utilities.dismissLoading();
@@ -487,7 +484,6 @@ export class Tab4Page {
 
       setTimeout(() => {
         this.form.get('sector').setValue(this.sectoresPerfil);
-        console.log("SECTORES", this.sectoresPerfil);
       }, 500);
 
       this.obtenerSectores();
@@ -511,7 +507,6 @@ export class Tab4Page {
 
       setTimeout(() => {
         this.form.get('sub_sector').setValue(this.subSectoresPerfil);
-      console.log("SUB_SECTORES", this.subSectoresPerfil);
       }, 500);
     
     });
@@ -527,7 +522,6 @@ export class Tab4Page {
 
     (await this.api.obtenerSectores()).subscribe( sectores => {
       this.sectores =  sectores;
-      console.log("TODOS LOS SECTORES",this.sectores);
     });
     
   }
@@ -558,13 +552,12 @@ export class Tab4Page {
     this.subsectores = [];
   
       var subs_array = ids_sector.toString().split(',');
-      console.log("SUBS_ARRAY",subs_array);
+     
       for (const id_sector of subs_array) {
         (await this.api.obtenerSubSectores(id_sector)).subscribe( subs => {
           for (const sub of subs) {
             this.subsectores.push(sub);
           }
-          console.log("SUBSECTORES",this.subsectores);
           
           if (addToForm) {
             if (this.subsectores.length > 0) {
@@ -797,7 +790,6 @@ export class Tab4Page {
   checkHide() {
     this.typeDNI = "password";
     this.typeAddress = "password";
-    console.log("LEAVE CONTENT")
   }
 
   async openGuide() {
