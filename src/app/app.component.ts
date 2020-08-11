@@ -40,31 +40,23 @@ export class AppComponent {
   }
 
   initializeApp() {
-    //alert("CORDOVA "+this.platform.is('cordova'));
-    //alert("CAPACITOR "+this.platform.is('capacitor'));
+   
     this.platform.ready().then(() => {
-      //this.statusBar.styleDefault();
-      /*this.platform.backButton.subscribeWithPriority(-1, () => {
-        App.exitApp();
-      });*/
-
+   
       this.platform.backButton.subscribe(() => {
 
         navigator['app'].exitApp();
-
-       /* if (this.router.url === 'tabs/tab1') {
-          navigator['app'].exitApp();
-        } else {
-          if (this.routerOutlets && this.routerOutlets.canGoBack()) {
-            this.routerOutlets.pop();
-          }
-        }*/
         
       });
      
-    
-      this.splashScreen.hide();
-      this.initDeeplinks();
+
+      if(this.platform.is('cordova')){
+
+        this.splashScreen.hide();
+        this.initDeeplinks();
+        
+      }
+     
       this.userSubscription = this.api.getUserLogged().subscribe(item =>{
         if(this.platform.is('cordova')){
           this.pushSetup();
@@ -82,17 +74,10 @@ export class AppComponent {
       if (this.routerOutlets && this.routerOutlets.canGoBack()) {
         this.routerOutlets.pop();
       }
-      // else if (this.router.url != '/tabs/tabs/tab1') {
-      //   this.router.navigate(['/tabs/tabs/tab1']);
-      // } 
+   
       else if (this.router.url === 'tabs/tab1') {
         navigator['app'].exitApp();
-        /*if (new Date().getTime() - this.lastTimeBackPress >= this.timePeriodToExit) {
-          this.lastTimeBackPress = new Date().getTime();
-          this.presentAlertConfirm();
-        } else {
-          navigator['app'].exitApp();
-        }*/
+       
       }
     });
       }
@@ -105,44 +90,37 @@ export class AppComponent {
       '/#/demanda/:id': 'detalle-demanda',
       '/#/perfil-demandante/:id': 'perfil-demandante'
      }).subscribe((match) => {
-
-      //alert("MATCH "+JSON.stringify(match));
        
         let id = match.$args.id;
         if(match.$route === 'detalle-demanda') {
           id = Number(id);
           setTimeout(() => {
-            this.router.navigate([match.$route],{ queryParams: { 'id_demanda': id }});
+            this.router.navigate(['demanda/'+id],{ queryParams: { 'id_demanda': id }});
           }, 500);
         } else if (match.$route === 'perfil-demandante') {
-          this.router.navigate([match.$route],{ queryParams: { 'id_perfil': id }});
+          this.router.navigate(['perfil-demandante/'+id],{ queryParams: { 'id_perfil': id }});
         }
 
 
       }, (nomatch) => { 
           console.error('Got a deeplink that didn\'t match', nomatch); 
-          //alert('Got a deeplink that didn\'t match '+JSON.stringify(nomatch));
-
+        
           let path =  nomatch.$link.fragment;
        
-   
           let id = path.substring(
-           path.lastIndexOf("/")+1, 
-           path.length
-         );
+            path.lastIndexOf("/")+1, 
+            path.length
+          );
    
            var route = path.substring(
              path.lastIndexOf("#") + 2, 
              path.lastIndexOf("/")
            );
 
-          // alert("ROUTE " + route);
-          // alert("ID " + id);
-   
            if(route === 'demanda') {
        
              setTimeout(() => {
-              this.router.navigate(['detalle-demanda'], { queryParams: { 'id_demanda': Number(id) }});
+              this.router.navigate(['demanda/'+id], { queryParams: { 'id_demanda': Number(id) }});
              }, 500);
           
             }else if(route === 'perfil-demandante') {
@@ -254,13 +232,7 @@ export class AppComponent {
   public loginImplicito(): void {
 
     this.router.navigate(['tabs/tab1']);
-   /* this.utilities.getUserData().then(userData => {
-      if (userData) {
-        this.router.navigate(['tabs/tab1']);
-      } else {
-        this.router.navigate(['login']);
-      }
-    });*/
+
   }
 
   

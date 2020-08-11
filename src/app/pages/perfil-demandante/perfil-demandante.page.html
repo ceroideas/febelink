@@ -18,7 +18,7 @@
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/tabs/tab4')">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ perfil !== null ? 'Perfil' : 'Inciar sesión'}}
+        {{ perfil !== null ? 'Perfil' : 'Iniciar sesión'}}
       </ion-button>
     </ion-buttons>
   
@@ -70,7 +70,7 @@
       </p>
     </div>
     <!-- Botón compartir perfil -->
-    <ion-button color="febelink" expand="block" class="boton" (click)="compartirPerfil()">Compartir perfil</ion-button>
+    <ion-button color="febelink" expand="block" class="boton" (click)="shareProfile($event)">Compartir perfil</ion-button>
     <div *ngIf="sinOpiniones == true">
       <span class="reviews">
         <a href="#">Sin valoraciones</a>
@@ -126,7 +126,7 @@
         <ion-col size="8">
           <h1 class="title">{{perfil?.name}}</h1>
           <!-- Botón compartir perfil -->
-          <ion-button style="float:left;" class="boton" (click)="shareWeb($event)">Compartir perfil</ion-button>
+          <ion-button style="float:left;" class="boton" (click)="shareProfile($event)">Compartir perfil</ion-button>
         </ion-col>
       </ion-row>
   

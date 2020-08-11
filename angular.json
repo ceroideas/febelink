@@ -30,7 +30,11 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/static_demanda.php",
+              "src/static_perfil.php",
+              "src/.htaccess",
+              "src/about"
             ],
             "styles": [
               {
