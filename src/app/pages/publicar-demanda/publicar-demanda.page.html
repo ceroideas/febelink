@@ -10,9 +10,10 @@
 <ion-content class="ion-padding ion-text-center">
 
   <img [src]="base64img" *ngIf="base64img">
-  <img src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto" (click)="adjuntarImagen()" class="placeholder" width="125"
+  <img src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto" class="placeholder" width="125" (click)="attachImage()"
     height="125">
-
+ <input *ngIf="!isNative" class="input-file-demandas" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="attachImage()" /> 
+   
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
 
 

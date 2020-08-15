@@ -1,86 +1,77 @@
-ion-content{
-    background-image: url('../../../assets/imgs/bg1.jpg');
-    --background: none;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding:15%;
-    .cover-content{
-        z-index: 99!important;  
-        position: relative;
-        background-color:white;
-        width: 75%;
-        margin:0 auto;
-        padding:20px;
-        margin-top: 25%;
-        @media (min-width: 768px){
-            max-width: 400px;
-            margin: 15% auto 0px;
-        }
-        button{
-            width: 100%;
-            margin-top: 10px;
-        }
-        .input{
-            margin-left: 0;
-            padding-left: 0;
-            font-size: 12px;
-        }
-        .rgs-social{
-            text-align: center;
-        }
-        .logos{
-            margin: 2px;
-            font-size: 32px;
-        }
-        .title{
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .subtitle{
-            margin-top: 5px;
-          font-size: 10px;
-          opacity: 0.8;
-        }
-        .rgs-title{
-        text-align: center;
-          line-height: 24px;
-          font-size: 12px;
-          opacity: 0.7;
+ion-content {
+  --background: none;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 15%;
+  text-align: center;
 
-        }
-        .links{
-            margin-top:20px;
-            a{
-                color:var(--ion-color-dark);
-                font-size: 9px;
-                margin:5px;
-                text-decoration: none;
-                cursor: pointer;
-                @media (min-width: 768px){
-                    font-size: 11px;
-                }
-            }
-        }
-      }
-      .cover-overlay{
-        z-index: 1!important;
-        position: absolute;
-        opacity: 0.5;
-        background-color: #000000!important;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
+  .cover-content {
+    z-index: 99 !important;
+    position: relative;
+    background-color: white;
+    margin: 0 auto;
+    padding: 2em;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+    @media (min-width: 768px) {
+      max-width: 400px;
+      margin: 5% auto 0px;
     }
+    ion-item {
+      margin: 1.5em;
+    }
+    img {
+      display: block;
+      width: 30%;
+      margin: 1.5em auto;
+    }
+    ion-button[type="submit"] {
+      margin: 1.5em auto 0;
+      vertical-align: baseline;
+    }
+    .input {
+      padding-left: 0;
+      font-size: 12px;
+    }
+    .rgs-social {
+      text-align: center;
+    }
+    .logos {
+      margin: 2px;
+      font-size: 32px;
+    }
+    .title {
+      text-align: center;
+    }
+    .subtitle {
+      margin-top: 5px;
+      font-size: 10px;
+      opacity: 0.8;
+    }
+    .rgs-title {
+      text-align: center;
+      line-height: 24px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+  .newAccountBox {
+    margin-top: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .cover-overlay {
+    margin: 1.5em;
+  }
 }
 
-
-.passwordIcon{
-    color: var(--ion-color-dark);
-    font-size:1rem !important;
-    position: relative !important;
-    top: 5px !important;
-    margin: 0 auto !important;
+.passwordIcon {
+  color: var(--ion-color-dark);
+  font-size: 1rem !important;
+  position: relative !important;
+  top: 5px !important;
+  margin: 0 auto !important;
 }

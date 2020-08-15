@@ -9,6 +9,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { OlvidarContrasenaPageModule } from '../olvidar-contrasena/olvidar-contrasena.module';
 import { RegistroPageModule } from '../registro/registro.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { RegistroPageModule } from '../registro/registro.module';
     IonicModule,
     LoginPageRoutingModule,
     OlvidarContrasenaPageModule,
-    RegistroPageModule
+    RegistroPageModule,
+    ComponentsModule
   ],
   declarations: [LoginPage]
 })

@@ -26,7 +26,6 @@ export class TabsPage {
   }
   
   async obtenerPerfil() {
-    console.log("OBTIENE PERFIL TAB")
     await this.utilities.getUserData().then(data => {
       this.perfil = data;
     });

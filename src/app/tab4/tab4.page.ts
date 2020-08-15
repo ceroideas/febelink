@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ModalController, AlertController, ActionSheetController, IonContent, PopoverController } from '@ionic/angular';
+import { ModalController, AlertController, ActionSheetController, IonContent, PopoverController, Platform } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
@@ -48,6 +48,7 @@ export class Tab4Page {
   typeAddress : string = "password";
   loading: boolean = true;
   max_bio: any = 15;
+  isNative: boolean = true;
 
   constructor( private modalCtrl: ModalController,
                public alertCtrl: AlertController,
@@ -55,11 +56,22 @@ export class Tab4Page {
                private api: ApiService,
                private utilities: UtilitiesService,
                private router: Router,
+               private platform: Platform,
+               private elementRef: ElementRef,
                private camera: Camera,
                private storage: Storage,
                private socialSharing: SocialSharing,
                public popoverController: PopoverController,
                private actionSheet: ActionSheetController ) {
+
+                if(this.platform.is('cordova')){
+
+                  this.isNative = true;
+            
+                } else { 
+                  this.isNative = false;
+                }
+
                 this.subsectores = [];
                 
 
@@ -144,7 +156,6 @@ export class Tab4Page {
         this.perfil.logo = "https://api.febelink.com/storage/" + this.perfil.avatar;
       }
 
-      console.log("MI PERFIL",this.perfil);
       await this.obtenerSectoresPerfil();
       await this.obtenerSubSectoresPerfil();
       await this.obtenerProvincias();
@@ -266,7 +277,6 @@ export class Tab4Page {
           response = res;
           this.utilities.showToast('Se han producido los cambios correctamente');
           this.utilities.saveUserData(p);
-          console.log("RESPONSE1",res);
           this.utilities.dismissLoading();
 
         });
@@ -281,7 +291,6 @@ export class Tab4Page {
       (await this.api.editarOfertante(p.name, p.email, p.descripcion, p.telefono, p.direccion, p.provincia, p.localidad, p.sector, p.sub_sector, p.dni, this.base64img)).subscribe( res => {
 
         response = res;
-        console.log("RESPONSE2",res);
         this.utilities.showToast('Se han producido los cambios correctamente');
         this.utilities.saveUserData(res.user);
         this.utilities.dismissLoading();
@@ -373,10 +382,23 @@ export class Tab4Page {
     }
   }
 
+  public attachImage():void {
+
+    if(this.platform.is('cordova')){
+
+      this.attachImageNative();
+
+    } else { 
+
+      this.attachImageWeb();
+      
+    }
+  }
+
   /**
    * Cambiar imagen de perfil
    */
-  public adjuntarImagen(): void {
+  public attachImageNative(): void {
     if ((Number(this.perfil.role_id) == 5 && this.subscription != null && this.subscription_details.profile_photo == 1) || Number(this.perfil.role_id) == 4) {
       const options: CameraOptions = {
         quality: 100,
@@ -397,6 +419,56 @@ export class Tab4Page {
       this.showSubscription('Suscríbete a alguno de nuestros planes para poder cambiar la foto de perfil');
     }
   }
+
+  attachImageWeb(): Promise<void> {
+
+    return new Promise<void>(async (resolve, reject) => {
+     
+      if ((Number(this.perfil.role_id) == 5 && this.subscription != null && this.subscription_details.profile_photo == 1) || Number(this.perfil.role_id) == 4) {
+
+        let filePicker = this.elementRef.nativeElement.querySelector('.input-file-perfil');
+
+        if (!filePicker || !filePicker.files 
+            || filePicker.files.length <= 0) {
+            reject('No file selected.');
+            return;
+        }
+        const myFile = filePicker.files[0];
+  
+        if (myFile.size > 307200) {
+          this.utilities.showToast('Imágen demasiado grande, max. 300KB');
+          //reject('Image is too big (max. 300KB)');
+          return;
+      }
+        
+        this.base64img = await this.convert(myFile);
+
+      }else {
+        this.showSubscription('Suscríbete a alguno de nuestros planes para poder cambiar la foto de perfil');
+      }
+
+      resolve();
+    });
+  }
+
+  private convert(myFile: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+        const fileReader = new FileReader();
+        if (fileReader && myFile) {
+            fileReader.readAsDataURL(myFile);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        } else {
+            reject('No file provided');
+        }
+    });
+  }
+
 
   async showSubscription(alert_message) {
     let alert = await this.alertCtrl.create({
@@ -487,7 +559,6 @@ export class Tab4Page {
 
       setTimeout(() => {
         this.form.get('sector').setValue(this.sectoresPerfil);
-        console.log("SECTORES", this.sectoresPerfil);
       }, 500);
 
       this.obtenerSectores();
@@ -511,7 +582,6 @@ export class Tab4Page {
 
       setTimeout(() => {
         this.form.get('sub_sector').setValue(this.subSectoresPerfil);
-      console.log("SUB_SECTORES", this.subSectoresPerfil);
       }, 500);
     
     });
@@ -527,7 +597,6 @@ export class Tab4Page {
 
     (await this.api.obtenerSectores()).subscribe( sectores => {
       this.sectores =  sectores;
-      console.log("TODOS LOS SECTORES",this.sectores);
     });
     
   }
@@ -558,13 +627,12 @@ export class Tab4Page {
     this.subsectores = [];
   
       var subs_array = ids_sector.toString().split(',');
-      console.log("SUBS_ARRAY",subs_array);
+     
       for (const id_sector of subs_array) {
         (await this.api.obtenerSubSectores(id_sector)).subscribe( subs => {
           for (const sub of subs) {
             this.subsectores.push(sub);
           }
-          console.log("SUBSECTORES",this.subsectores);
           
           if (addToForm) {
             if (this.subsectores.length > 0) {
@@ -576,10 +644,73 @@ export class Tab4Page {
     
   }
 
-  /**
-   * Compartir el perfil fuera de la app
+    /**
+   * Recommend profile outside or inside the app
    */
-   async compartirPerfil() {
+  async recommend( ev: any ) {
+    const actionSheet = await this.actionSheet.create({
+      header: 'Elige donde quieres compartir',
+      buttons: [
+        {
+          text: 'Dentro de la aplicación',
+          role: 'destructive',
+          handler: () => {
+            this.recomendacionAlert();
+          }
+        }, {
+          text: 'Fuera de la aplicación',
+          handler: () => {
+
+            if(this.platform.is('cordova')){
+
+              this.shareProfileNative();
+
+            } else { 
+              
+              this.shareProfileWeb(ev);
+
+            }
+
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+ 
+
+  /**
+   * Popup to recommend the profile
+   */
+  async recomendacionAlert() {
+    let alert = await this.alertCtrl.create({
+      header: 'Pedir Recomendación',
+      subHeader: 'Escribe el email de un usuario',
+      inputs: [{
+        name: 'email',
+        placeholder: 'Email'
+      }],
+      buttons: [{
+        text: 'Cancelar',
+        handler: data => {
+        }
+      },
+      {
+        text: 'Enviar',
+        handler: data => {
+          this.enviarRecomendacion(data.email);
+        }
+      }
+      ]
+    });
+    await alert.present();
+  }
+
+  /**
+   * Share the profile outside the app ( Native)
+   */
+   async shareProfileNative() {
 
     if(this.perfil.reference === undefined) {
       (await this.api.obtenerPerfil(this.perfil.id)).subscribe( aux => {
@@ -591,14 +722,14 @@ export class Tab4Page {
     let url = "https://febelink.com/perfil-demandante/"+this.perfil.reference;
     let message = "Febelink \n"+subject+" \n";
 
-    //this.socialSharing.share(message, "", this.perfil.logo, url);
-    //this.socialSharing.share(message, "", null, url);
     this.socialSharing.share(null, null, null, url);
-   
     
   }
 
-  async shareWeb(ev: any) {
+  /**
+   * Share the profile outside the app ( Web)
+   */
+  async shareProfileWeb(ev: any) {
 
     if(this.perfil.reference === undefined) {
       (await this.api.obtenerPerfil(this.perfil.id)).subscribe( aux => {
@@ -634,81 +765,6 @@ export class Tab4Page {
     
   }
 
-  /**
-   * Recomendar perfil fuera o dentro de la app
-   */
-  async recomendar() {
-    const actionSheet = await this.actionSheet.create({
-      header: 'Elige donde quieres compartir',
-      buttons: [
-        {
-          text: 'Dentro de la aplicación',
-          role: 'destructive',
-          handler: () => {
-            this.recomendacionAlert();
-          }
-        }, {
-          text: 'Fuera de la aplicación',
-          handler: () => {
-            this.compartirPerfil();
-          }
-        }
-      ]
-    });
-    await actionSheet.present();
-  }
-
-  /**
-   * Recomendar perfil fuera o dentro de la app
-   */
-  async recomendarWeb(ev: any) {
-    const actionSheet = await this.actionSheet.create({
-      header: 'Elige donde quieres compartir',
-      buttons: [
-        {
-          text: 'Dentro de la aplicación',
-          role: 'destructive',
-          handler: () => {
-            this.recomendacionAlert();
-          }
-        }, {
-          text: 'Fuera de la aplicación',
-          handler: () => {
-            this.shareWeb(ev);
-          }
-        }
-      ]
-    });
-    await actionSheet.present();
-  }
-
-
-  /**
-   * Popup para recomendar el perfil
-   */
-  async recomendacionAlert() {
-    let alert = await this.alertCtrl.create({
-      header: 'Pedir Recomendación',
-      subHeader: 'Escribe el email de un usuario',
-      inputs: [{
-        name: 'email',
-        placeholder: 'Email'
-      }],
-      buttons: [{
-        text: 'Cancelar',
-        handler: data => {
-        }
-      },
-      {
-        text: 'Enviar',
-        handler: data => {
-          this.enviarRecomendacion(data.email);
-        }
-      }
-      ]
-    });
-    await alert.present();
-  }
 
   /**
    * Enviar notificación de recomendación a otro usuario
@@ -797,7 +853,6 @@ export class Tab4Page {
   checkHide() {
     this.typeDNI = "password";
     this.typeAddress = "password";
-    console.log("LEAVE CONTENT")
   }
 
   async openGuide() {

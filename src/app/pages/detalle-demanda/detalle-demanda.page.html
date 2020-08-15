@@ -19,7 +19,7 @@
     </ion-button>
     <ion-button class="btn-header" (click)="irA('/tabs/tab4')">
       <ion-icon slot="start" name="person"></ion-icon>
-      {{ perfil !== null ? 'Perfil' : 'Inciar sesión'}}
+      {{ perfil !== null ? 'Perfil' : 'Iniciar sesión'}}
     </ion-button>
   </ion-buttons>
 
@@ -67,7 +67,7 @@
           
         
           <ion-button class="apartado btn-info" (click)="irAPerfil()">
-            <ion-icon name="md-checkmark-circle" item-left></ion-icon>
+            <ion-icon name="checkmark-circle" item-left></ion-icon>
             &nbsp;VER PERFIL
           </ion-button>
         
@@ -76,7 +76,7 @@
             &nbsp;RESPONDER
           </ion-button>
 
-          <ion-button class="apartado btn-info" (click)="shareWeb($event)">
+          <ion-button class="apartado btn-info" (click)="share(demanda?.id,$event)">
             <ion-icon name="share-social" item-left></ion-icon>
             &nbsp;COMPARTIR
           </ion-button>
@@ -177,7 +177,7 @@
       &nbsp;RESPONDER
     </ion-button>
   
-    <ion-button expand="full" color="febelink"  class="apartado" (click)="share(demanda?.id)">
+    <ion-button expand="full" color="febelink"  class="apartado" (click)="share(demanda?.id,$event)">
       <ion-icon name="share-social"></ion-icon>
       &nbsp;COMPARTIR
     </ion-button>

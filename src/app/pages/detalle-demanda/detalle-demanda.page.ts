@@ -44,16 +44,21 @@ export class DetalleDemandaPage implements OnInit {
       let data:any = route.snapshot.queryParamMap;
       let id_demanda = data.params.id_demanda;
      
-      if (id_demanda) {
+      //if (id_demanda) {
+      if(data.params.demanda === undefined) {
 
-        this.obtenerDemanda(id_demanda);
-        this.aceptada = data.params.aceptada;
+        //this.obtenerDemanda(id_demanda);
+        //this.aceptada = data.params.aceptada;
+
+        this.route.paramMap.subscribe(params => {
+          this.obtenerDemanda(params.get('id'));
+          this.aceptada = data.params.aceptada;
+        });
 
       } else {
 
         this.aceptada = false
         this.demanda = JSON.parse(data.params.demanda);
-        this.updateMetaData(this.demanda);
         this.obtenerOfertasRelacionadas();
 
       }
@@ -63,31 +68,6 @@ export class DetalleDemandaPage implements OnInit {
   ngOnInit() {
 
     this.obtenerPerfil();
-
-  }
-
-  updateMetaData(demanda) {
-
-    const titleTag = this.meta.getTag(`property='og:title'`);
-    let url = "https://febelink.com/#/demanda/"+this.demanda.id;
-
-    if( titleTag === null ){
-
-      this.meta.addTags([
-        { property: 'og:title', content: demanda.nombre },
-        { property: 'og:description', content: demanda.descripcion },
-        { property: 'og:image', content: demanda.imagen },
-        { property: 'og:url', content: url }
-      ]);
-
-    } else {
-
-      this.meta.updateTag({ property: 'og:title', content: demanda.nombre },`property='og:title'`); 
-      this.meta.updateTag({ property: 'og:description', content: demanda.descripcion },`property='og:description'`); 
-      this.meta.updateTag({ property: 'og:image', content: demanda.imagen },`property='og:image'`); 
-      this.meta.updateTag({ property: 'og:url', content: url },`property='og:url'`); 
-
-    }
 
   }
 
@@ -150,7 +130,7 @@ export class DetalleDemandaPage implements OnInit {
    * Ir a un perfil
    */
   public irAPerfil(): void {
-    this.router.navigate(['perfil-demandante'],{ queryParams: { 'id_perfil': this.demanda.id_demandante, 'contacto': this.aceptada  }});
+    this.router.navigate(['perfil-demandante/'+this.demanda.id_demandante],{ queryParams: { 'id_perfil': this.demanda.id_demandante, 'contacto': this.aceptada  }});
   }
 
   /**
@@ -186,23 +166,24 @@ export class DetalleDemandaPage implements OnInit {
     }
 
 
-  /*share(id) {
-   
-    //let url = "https://febelink.com/#/demandas/"+id;
-    let url = "https://febelink.com/demandas/"+id;
-    var desc = this.demanda.descripcion;
+ 
+  public share( id, ev: any ):void {
 
-    if(desc.length > 50) {
-      desc = desc.substring(0, 49)+"...";
+    if(this.platform.is('cordova')){
+
+     this.shareNative(id);
+
+    } else { 
+
+      this.shareWeb(ev);
+     
     }
+  }
 
-    let message = "Febelink \n"+this.demanda.nombre+ ": \n"+desc+" \n";
-
-    this.socialSharing.share(message, "Febelink", this.demanda.imagen, url).then(result => {}).catch(error => {});
-
-  }*/
-
-  share(id) {
+  /**
+   * Share Android/iOS
+   */
+  shareNative(id) {
 
     let url = "https://febelink.com/demanda/"+id;
     var desc = this.demanda.descripcion;
@@ -216,9 +197,12 @@ export class DetalleDemandaPage implements OnInit {
     this.socialSharing.share(null, null, null, url).then(result => {}).catch(error => {});
   }
 
+  /**
+   * Share Web
+   */
   async shareWeb(ev: any) {
 
-    let url = "https://febelink.com/#/demanda/"+this.demanda.id;
+    let url = "https://febelink.com/demanda/"+this.demanda.id;
     var desc = this.demanda.descripcion;
 
     if(desc.length > 50) {
