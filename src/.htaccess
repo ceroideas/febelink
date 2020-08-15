@@ -1,0 +1,37 @@
+<ifModule mod_rewrite.c>
+AddDefaultCharset UTF-8
+RewriteEngine On
+
+# Don't rewrite files or directories do nothing if the previous RewriteConds match
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+#list of supported social media - profile
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|LinkedInBot/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+RewriteCond  %{REQUEST_URI} ^/perfil-demandante/(.*)$
+RewriteRule ^perfil-demandante/(.*)$ https://febelink.com/static_perfil.php?id=$1&type=f-p [R,L]
+
+#list of supported social media - demand
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|LinkedInBot/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+RewriteCond  %{REQUEST_URI} ^/demanda/(.*)$
+RewriteRule ^demanda/(.*)$ https://febelink.com/static_demanda.php?id=$1&type=f-d [R,L]
+
+
+#whatsapp does not support images greater than 300kB - profile
+RewriteCond %{HTTP_USER_AGENT} (WhatsApp)
+RewriteCond %{REQUEST_URI} ^/perfil-demandante/(.*)$
+RewriteRule ^perfil-demandante/(.*)$ https://febelink.com/static_perfil.php?id=$1&default_img=1&type=w-p [R,L]
+
+#whatsapp does not support images greater than 300kB - demand
+RewriteCond %{HTTP_USER_AGENT} (WhatsApp)
+RewriteCond %{REQUEST_URI} ^/demanda/(.*)$
+RewriteRule ^demanda/(.*)$ https://febelink.com/static_demanda.php?id=$1&default_img=1&type=w-d [R,L]
+
+#if user-agent not contained in the list above, we use the default scripts
+#RewriteRule ^perfil-demandante/(.*)$ https://febelink.com/static_perfil.php?id=$1&type=d-p [R,L]
+#RewriteRule ^demanda/(.*)$ https://febelink.com/static_demanda.php?id=$1&type=d-d [R,L]
+
+# Rewrite everything else to index.html to allow HTML5 state links
+RewriteRule ^ index.html [L]
+</ifModule>

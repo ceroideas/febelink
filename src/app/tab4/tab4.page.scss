@@ -46,6 +46,26 @@ ion-header{
 }
 ion-content {
 
+    .input-file {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        opacity: 0;
+        left: 0px;
+    }
+
+    .input-file-perfil {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        opacity: 0;
+        left: 105px;
+        top: 15px;
+        @media (min-width: 768px){
+            left: 44%;
+        }
+    }
+
     .desktop-content {
         margin:0 auto;
         max-width:800px;

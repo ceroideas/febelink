@@ -12,4 +12,15 @@ ion-content{
     .placeholder{
         margin:10px;
     }
+    .input-file-demandas {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        opacity: 0;
+        left: 105px;
+        top: 15px;
+        @media (min-width: 768px){
+            left: 44%;
+        }
+    }
 }

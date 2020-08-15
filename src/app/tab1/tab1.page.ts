@@ -127,7 +127,7 @@ export class Tab1Page {
    * @param demanda 
    */
   public detalleDemanda(demanda):void {
-    this.router.navigate(['detalle-demanda'],{ queryParams: { 'demanda': JSON.stringify(demanda) }});
+    this.router.navigate(['demanda/'+demanda.id],{ queryParams: { 'demanda': JSON.stringify(demanda) }});
   }
 
   /**

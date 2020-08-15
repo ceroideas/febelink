@@ -1,0 +1,56 @@
+<?php
+// 1. get the content Id (here: an Integer) and sanitize it properly
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$default_img = filter_input(INPUT_GET, 'default_img', FILTER_SANITIZE_NUMBER_INT);
+
+// 2. get the content from a flat file (or API, or Database, or ...)
+$data = json_decode(file_get_contents('https://api.febelink.com/api/auth/demanda/'.$id));
+//var_dump($data);
+// 3. return the page
+return makePage($data,$default_img); 
+
+function makePage($data,$default_img) {
+    if(isset($data->imagen)){
+	    if(strpos($data->imagen, 'https') !== 0){
+    		$data->imagen = "https://api.febelink.com/storage/".$data->imagen;
+    	}
+    }else{
+    	$data->imagen = "https://api.febelink.com/storage/oferta/default.png";
+    }
+
+    $image = $data->imagen;
+    $name  = $data->nombre;
+    $description = $data->descripcion;
+    if(isset($image) && isset($default_img) && $default_img == 1){   
+	$ch = curl_init($image);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+        $data = curl_exec($ch);
+        $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+        curl_close($ch);
+
+        if(((int) $size) > 300000){  
+	    $image = "https://api.febelink.com/storage/oferta/default.png";
+        }
+    }
+
+    // 1. get the page
+	// 2. generate the HTML with open graph tags
+    $html  = '<!doctype html>'.PHP_EOL;
+    $html .= '<html>'.PHP_EOL;
+    $html .= '<head>'.PHP_EOL;
+    $html .= '<meta name="author" content="Javier"/>'.PHP_EOL;
+    $html .= '<meta property="og:title" content="'.$name.'"/>'.PHP_EOL;
+    $html .= '<meta property="og:description" content="'.$description.'"/>'.PHP_EOL;
+    $html .= '<meta property="og:image" content="'.$image.'"/>'.PHP_EOL;
+   // $html .= '<meta http-equiv="refresh" content="0;url=https://www.febelink.com/demanda/'.$data->id.'">'.PHP_EOL;
+   // $html .= '<meta property="og:url" content="https://www.febelink.com/demanda/'.$data->id.'"/>'.PHP_EOL;
+    $html .= '<meta property="og:type" content="article"/>'.PHP_EOL;
+    $html .= '<meta property="fb:app_id" content="895023747604792" />'.PHP_EOL;
+    $html .= '</head>'.PHP_EOL;
+    $html .= '<body></body>'.PHP_EOL;
+    $html .= '</html>';
+    // 3. return the page
+    echo $html;
+}
