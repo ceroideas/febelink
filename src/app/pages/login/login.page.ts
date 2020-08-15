@@ -22,7 +22,9 @@ export class LoginPage implements OnInit {
                private utilities: UtilitiesService,
                public loadingCtrl: LoadingController,
                private modalCtrl: ModalController,
-               private router: Router ) { }
+               private router: Router ) {
+
+                }
 
   ngOnInit() {
 
@@ -38,12 +40,12 @@ export class LoginPage implements OnInit {
 
     this.utilities.showLoading();
 
-    let params = {
-      email: this.form.get('email').value,
-      password: this.form.get('password').value
-    };
+    const formData = new FormData();
+    formData.append('email', this.form.get('email').value);
+    formData.append('password', this.form.get('password').value);
+    formData.append('remember_me', '1');
 
-    ( await this.api.login( params )).subscribe( res => {
+    ( await this.api.login( formData, 'login' )).subscribe( res => {
 
     },err => {
       console.log("ERROR",err);
@@ -112,5 +114,6 @@ export class LoginPage implements OnInit {
       }
     });
   }
+
 
 }

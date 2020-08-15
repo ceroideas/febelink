@@ -8,9 +8,8 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
-import { Plugins } from '@capacitor/core';
 import { JsonPipe } from '@angular/common';
-const { App } = Plugins;
+
 
 
 @Component({
@@ -37,7 +36,6 @@ export class AppComponent {
     private deeplinks: Deeplinks
   ) {
 
-    //this.backbutton();
     this.initializeApp();
   }
 
