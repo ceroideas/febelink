@@ -1,7 +1,7 @@
 <ion-content>
   <div class="cover-content">
-    <p class="title">Registro</p>
-    <p class="subtitle">Regístrate ya!, es GRATIS!</p>
+    <img src="assets/imgs/logo.png" alt="logo" />
+    <p class="title">Crear una nueva cuenta</p>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
       <ion-item class="input ion-no-padding">
         <ion-label>
@@ -84,13 +84,19 @@
         ></ion-input>
       </ion-item>
 
-      <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
-      He leído, y acepto los
-      <a class="link-terms" (click)="openTerms()">terminos y condiciones</a>
+      <span class="terms-conditions">
+        <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
+        He leído, y acepto los
+        <a (click)="openTerms()">terminos y condiciones</a>
+      </span>
 
       <ion-button expand="full" type="submit" ion-button color="febelink"
         >REGISTRARSE</ion-button
       >
+      <social-login></social-login>
     </form>
+  </div>
+  <div class="cover-overlay">
+    <a href="mailto:info@febelink.com">Contacta con Febelink</a>
   </div>
 </ion-content>
