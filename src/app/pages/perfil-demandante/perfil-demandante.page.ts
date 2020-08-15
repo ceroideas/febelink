@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, Platform } from '@ionic/angular';
 import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
 import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
 import { GuidePage } from '../guide/guide.page';
@@ -25,13 +25,18 @@ export class PerfilDemandantePage implements OnInit {
   constructor( private route: ActivatedRoute,
                private api: ApiService,
                private socialSharing: SocialSharing,
+               private platform: Platform,
                private modalCtrl: ModalController,
                public popoverController: PopoverController,
                private router: Router ) { 
 
     var data:any = route.snapshot.queryParamMap;
-    this.id_perfil = data.params.id_perfil;
+   // this.id_perfil = data.params.id_perfil;
     this.contacto = data.params.contacto;
+
+    this.route.paramMap.subscribe(params => {
+      this.id_perfil = params.get('id');
+    });
 
   }
 
@@ -87,22 +92,36 @@ export class PerfilDemandantePage implements OnInit {
     });
   }
 
+  public shareProfile( ev: any ):void {
+
+    if(this.platform.is('cordova')){
+
+     this.shareProfileNative();
+
+    } else { 
+
+      this.shareProfileWeb(ev);
+     
+    }
+  }
+
   /**
-   * Botón de compartir perfil fuera de la aplicación
+   * Share Native ( Android/iOS)
    */
-  public compartirPerfil() {
+  public shareProfileNative() {
    
     let subject = "Mira el perfil de " + this.perfil.name + " usuario de Febelink:";
     let url = "https://febelink.com/perfil-demandante/"+this.id_perfil;
     let message = "Febelink \n"+subject+" \n";
 
-    //this.socialSharing.share(message, "Febelink", this.perfil.logo, url);
-    //this.socialSharing.share(message, "Febelink", null, url);
     this.socialSharing.share(null, null, null, url);
 
   }
 
-  async shareWeb(ev: any) {
+  /**
+   * Share Web
+   */
+  async shareProfileWeb(ev: any) {
 
     let subject = "Mira el perfil de " + this.perfil.name + " usuario de Febelink:";
     let url = "https://febelink.com/perfil-demandante/"+this.id_perfil;

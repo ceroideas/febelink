@@ -1,0 +1,20 @@
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 148 46">
+  <defs>
+    <linearGradient id="Degradado_sin_nombre" data-name="Degradado sin nombre" x1="70.5" y1="7.28" x2="70.5" y2="47.28" gradientTransform="matrix(1, 0, 0, -1, 0, 47.28)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="gray"/>
+      <stop offset="0" stop-color="gray" stop-opacity="0.25"/>
+      <stop offset="0" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="Degradado_sin_nombre_2" data-name="Degradado sin nombre 2" x1="365.5" y1="-1541.72" x2="365.5" y2="-1513.72" gradientTransform="matrix(1, 0, 0, -1, -330, -1507.72)" xlink:href="#Degradado_sin_nombre"/>
+  </defs>
+  <title>Icon-2</title>
+  <rect id="Rectangle" x="9" y="9" width="139" height="37" fill="#55abdd" opacity="0.2" style="isolation: isolate"/>
+  <rect id="Rectangle-2" width="141" height="40" fill="url(#Degradado_sin_nombre)"/>
+  <rect id="Rectangle-3" x="1" y="1" width="139" height="37" fill="#fff"/>
+  <path id="Oval" d="M22,20A13.51,13.51,0,1,1,35.5,34,13.76,13.76,0,0,1,22,20Z" transform="translate(0 0)" fill-rule="evenodd" fill="url(#Degradado_sin_nombre_2)"/>
+  <circle id="Oval-2" cx="35" cy="20" r="12" fill="#5a86c1"/>
+  <path id="Rectangle-4" d="M60.23,10.11h22V14h-22Z" transform="translate(0 0)" fill="#e0e0e0" fill-rule="evenodd"/>
+  <path id="Rectangle-5" d="M60.23,17.53h60.55v3.9H60.23Z" transform="translate(0 0)" fill="#e0e0e0" fill-rule="evenodd"/>
+  <path id="Rectangle-6" d="M60.23,25h60.55v3.9H60.23Z" transform="translate(0 0)" fill="#e0e0e0" fill-rule="evenodd"/>
+  <path id="Path" d="M44,14.2,41.27,12l-7.18,9.94-4-3.23L28,21.59l5.38,4.33v0L34.75,27,44,14.2Z" transform="translate(0 0)" fill="#fff" fill-rule="evenodd"/>
+</svg>

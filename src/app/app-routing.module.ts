@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'perfil-demandante',
+    path: 'perfil-demandante/:id',
     loadChildren: () => import('./pages/perfil-demandante/perfil-demandante.module').then( m => m.PerfilDemandantePageModule)
   },
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/guide/guide.module').then( m => m.GuidePageModule)
   },
   {
-    path: 'detalle-demanda',
+    path: 'demanda/:id',
     loadChildren: () => import('./pages/detalle-demanda/detalle-demanda.module').then( m => m.DetalleDemandaPageModule)
   },
   {

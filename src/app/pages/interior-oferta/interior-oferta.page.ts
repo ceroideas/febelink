@@ -64,7 +64,7 @@ export class InteriorOfertaPage implements OnInit {
    */
   public irAPerfil():void {
     this.closeModal();
-    this.router.navigate(['perfil-demandante'],{ queryParams: { 'id_perfil': this.oferta.id_ofertante, 'contacto':this.oferta.estado != 3 }});
+    this.router.navigate(['perfil-demandante/'+this.oferta.id_ofertante],{ queryParams: { 'id_perfil': this.oferta.id_ofertante, 'contacto':this.oferta.estado != 3 }});
   }
 
 }
