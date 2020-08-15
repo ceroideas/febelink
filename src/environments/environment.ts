@@ -4,11 +4,12 @@
 
 export const environment = {
   production: false,
-  baseWebUrl: 'http://localhost/',
-  API_URL: 'http://localhost/api/',
-  API_URL_AUTH: 'http://localhost/api/auth/',
-  WEB_CLIENT_ID: '470264817351-dj55lg6n7u6fllmkrj90cg9lnjfqrvcn.apps.googleusercontent.com',
-  FACEBOOK_ID: '895023747604792'
+  baseWebUrl: "http://localhost/",
+  API_URL: "http://localhost/api/",
+  API_URL_AUTH: "http://localhost/api/auth/",
+  WEB_CLIENT_ID:
+    "470264817351-dj55lg6n7u6fllmkrj90cg9lnjfqrvcn.apps.googleusercontent.com",
+  FACEBOOK_ID: "895023747604792",
 };
 
 /*
