@@ -4,73 +4,89 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end" class="desktop">
-      <ion-button class="btn-header" (click)="irA('/tabs/tab1')">
+      <ion-button class="btn-header" (click)="irA('/menu/todas')">
         <ion-icon slot="start" name="search"></ion-icon>
         Todas
       </ion-button>
-      <ion-button class="btn-header" (click)="irA('/tabs/tab2')">
+      <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
         <ion-icon slot="start" name="archive"></ion-icon>
         Búsquedas
       </ion-button>
-      <ion-button class="btn-header" (click)="irA('/tabs/tab3')">
+      <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="hand-right"></ion-icon>
         Ofertas
       </ion-button>
-      <ion-button class="btn-header" (click)="irA('/tabs/tab4')">
+      <ion-button class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
         {{ perfil !== null ? 'Perfil' : 'Iniciar sesión'}}
       </ion-button>
     </ion-buttons>
-  
-      <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()">
-  
-      <ion-buttons size="large" slot="end">
-        <ion-button size="large" color="primary" slot="icon-only" (click)="openGuide()"> 
-          <ion-icon style="font-size: x-large;" name="information-circle"> </ion-icon>
-        </ion-button>
-      </ion-buttons>
-  
+
+    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()" />
+
+    <ion-buttons size="large" slot="end">
+      <ion-button
+        size="large"
+        color="primary"
+        slot="icon-only"
+        (click)="openGuide()"
+      >
+        <ion-icon style="font-size: x-large" name="information-circle">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <!-- MOBILE -->
 <ion-content class="mobile ion-padding">
-
-  <div class="ion-text-center ion-padding-top"  *ngIf="isLoading">
+  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
     <ion-spinner></ion-spinner>
     <p>Cargando...</p>
   </div>
 
   <div *ngIf="perfil!=null && !isLoading">
     <!-- Logo nombre y valoracion -->
-    <img [src]="perfil?.logo" *ngIf="perfil?.logo" class="logo">
-    <img src="assets/imgs/4.jpg" *ngIf="!perfil?.logo" class="logo">
+    <img [src]="perfil?.logo" *ngIf="perfil?.logo" class="logo" />
+    <img src="assets/imgs/4.jpg" *ngIf="!perfil?.logo" class="logo" />
     <div class="apartado">
       <h1 class="title">{{perfil?.name}}</h1>
       <span class="reviews">
         <div class="val" *ngFor="let val of perfil.valoracion">
-          <strong id="valoracion" *ngIf="val.length > 0">{{ val.length }} {{ val[0].name }}</strong>
+          <strong id="valoracion" *ngIf="val.length > 0"
+            >{{ val.length }} {{ val[0].name }}</strong
+          >
         </div>
       </span>
     </div>
     <!-- Apartados -->
     <div class="apartado" *ngIf="perfil?.descripcion">
       <h2 class="title">Descripción</h2>
-      <p class="desc">
-        {{perfil?.descripcion}}
-      </p>
+      <p class="desc">{{perfil?.descripcion}}</p>
     </div>
     <div class="apartado" *ngIf="contacto ==='true'">
       <h2 class="title">Datos de contacto</h2>
       <p>
-        <ion-icon name="mail"></ion-icon> Email: <a [href]="'mailto:' + perfil?.email" target="_top"><em>{{perfil?.email}}</em></a>
+        <ion-icon name="mail"></ion-icon> Email:
+        <a [href]="'mailto:' + perfil?.email" target="_top"
+          ><em>{{perfil?.email}}</em></a
+        >
       </p>
       <p>
-        <ion-icon name="call"></ion-icon> Telefono: <a [href]="'tel:' + perfil?.telefono" target="_top"><em>{{perfil?.telefono}}</em></a>
+        <ion-icon name="call"></ion-icon> Telefono:
+        <a [href]="'tel:' + perfil?.telefono" target="_top"
+          ><em>{{perfil?.telefono}}</em></a
+        >
       </p>
     </div>
     <!-- Botón compartir perfil -->
-    <ion-button color="febelink" expand="block" class="boton" (click)="shareProfile($event)">Compartir perfil</ion-button>
+    <ion-button
+      color="febelink"
+      expand="block"
+      class="boton"
+      (click)="shareProfile($event)"
+      >Compartir perfil</ion-button
+    >
     <div *ngIf="sinOpiniones == true">
       <span class="reviews">
         <a href="#">Sin valoraciones</a>
@@ -86,30 +102,37 @@
           <div>
             <span><strong>{{opinion?.usuario}}</strong></span>
             <span class="valoracion">
-              <ion-icon name="star-outline" *ngFor="let vacias of opinion?.vacias"></ion-icon>
-              <ion-icon name="star" *ngFor="let star of opinion?.valoracion"></ion-icon>
+              <ion-icon
+                name="star-outline"
+                *ngFor="let vacias of opinion?.vacias"
+              ></ion-icon>
+              <ion-icon
+                name="star"
+                *ngFor="let star of opinion?.valoracion"
+              ></ion-icon>
             </span>
           </div>
           <div class="valoracion-text">
-            <p>
-              {{opinion?.texto}}
-            </p>
+            <p>{{opinion?.texto}}</p>
           </div>
         </ion-item>
       </ion-list>
     </div>
     <!-- Botón publicar opinión -->
-    <ion-button color="febelink" class="boton" *ngIf="contacto && sinOpiniones" (click)="opinionModal()">
+    <ion-button
+      color="febelink"
+      class="boton"
+      *ngIf="contacto && sinOpiniones"
+      (click)="opinionModal()"
+    >
       Publicar opinion
     </ion-button>
   </div>
 </ion-content>
 
-
 <!-- DESKTOP -->
 <ion-content class="desktop ion-padding">
-
-  <div class="ion-text-center ion-padding-top"  *ngIf="isLoading">
+  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
     <ion-spinner></ion-spinner>
     <p>Cargando...</p>
   </div>
@@ -118,41 +141,58 @@
     <ion-grid fixed *ngIf="perfil!=null">
       <ion-row>
         <ion-col size="4">
-         
-            <img style="float:left;" [src]="perfil?.logo" *ngIf="perfil?.logo" class="logo">
-            <img style="float:left;" src="assets/imgs/4.jpg" *ngIf="!perfil?.logo" class="logo">
-         
+          <img
+            style="float: left"
+            [src]="perfil?.logo"
+            *ngIf="perfil?.logo"
+            class="logo"
+          />
+          <img
+            style="float: left"
+            src="assets/imgs/4.jpg"
+            *ngIf="!perfil?.logo"
+            class="logo"
+          />
         </ion-col>
         <ion-col size="8">
           <h1 class="title">{{perfil?.name}}</h1>
           <!-- Botón compartir perfil -->
-          <ion-button style="float:left;" class="boton" (click)="shareProfile($event)">Compartir perfil</ion-button>
+          <ion-button
+            style="float: left"
+            class="boton"
+            (click)="shareProfile($event)"
+            >Compartir perfil</ion-button
+          >
         </ion-col>
       </ion-row>
-  
+
       <ion-row>
         <ion-col>
-            <!-- Apartados -->
-            <div class="apartado" *ngIf="perfil?.descripcion">
-              <h2 class="title">Descripción</h2>
-              <p class="desc">
-               {{perfil?.descripcion}}
-              </p>
-           </div>
+          <!-- Apartados -->
+          <div class="apartado" *ngIf="perfil?.descripcion">
+            <h2 class="title">Descripción</h2>
+            <p class="desc">{{perfil?.descripcion}}</p>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-  
+
     <ion-grid fixed>
       <ion-row>
         <ion-col>
           <div class="apartado" *ngIf="contacto ==='true'">
             <h2 class="title">Datos de contacto</h2>
             <p class="contact-info">
-              <ion-icon name="mail"></ion-icon> Email: <a [href]="'mailto:' + perfil?.email" target="_top"><em>{{perfil?.email}}</em></a>
+              <ion-icon name="mail"></ion-icon> Email:
+              <a [href]="'mailto:' + perfil?.email" target="_top"
+                ><em>{{perfil?.email}}</em></a
+              >
             </p>
             <p class="contact-info">
-              <ion-icon name="call"></ion-icon> Telefono: <a [href]="'tel:' + perfil?.telefono" target="_top"><em>{{perfil?.telefono}}</em></a>
+              <ion-icon name="call"></ion-icon> Telefono:
+              <a [href]="'tel:' + perfil?.telefono" target="_top"
+                ><em>{{perfil?.telefono}}</em></a
+              >
             </p>
             <!--<p class="contact-info">
               <ion-icon name="map"></ion-icon> Dirección: <em>{{perfil?.direccion}}</em>
@@ -167,7 +207,9 @@
         <ion-col>
           <span class="reviews">
             <div class="val" *ngFor="let val of perfil.valoracion">
-              <strong id="valoracion" *ngIf="val.length > 0">{{ val.length }} {{ val[0].name }}</strong>
+              <strong id="valoracion" *ngIf="val.length > 0"
+                >{{ val.length }} {{ val[0].name }}</strong
+              >
             </div>
           </span>
         </ion-col>
@@ -190,26 +232,33 @@
                 <div>
                   <span><strong>{{opinion?.usuario}}</strong></span>
                   <span class="valoracion">
-                    <ion-icon name="star-outline" *ngFor="let vacias of opinion?.vacias"></ion-icon>
-                    <ion-icon name="star" *ngFor="let star of opinion?.valoracion"></ion-icon>
+                    <ion-icon
+                      name="star-outline"
+                      *ngFor="let vacias of opinion?.vacias"
+                    ></ion-icon>
+                    <ion-icon
+                      name="star"
+                      *ngFor="let star of opinion?.valoracion"
+                    ></ion-icon>
                   </span>
                 </div>
                 <div class="valoracion-text">
-                  <p>
-                    {{opinion?.texto}}
-                  </p>
+                  <p>{{opinion?.texto}}</p>
                 </div>
               </ion-item>
             </ion-list>
           </div>
           <!-- Botón publicar opinión -->
-          <ion-button class="boton" *ngIf="contacto && sinOpiniones" (click)="opinionModal()" style="max-width: 200px;">
+          <ion-button
+            class="boton"
+            *ngIf="contacto && sinOpiniones"
+            (click)="opinionModal()"
+            style="max-width: 200px"
+          >
             Publicar opinion
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
-
-
 </ion-content>

@@ -12,32 +12,28 @@ import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   form: FormGroup;
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
 
-  constructor( private formBuilder: FormBuilder,
-               private api: ApiService,
-               private utilities: UtilitiesService,
-               public loadingCtrl: LoadingController,
-               private modalCtrl: ModalController,
-               private router: Router ) {
-
-                }
+  constructor(
+    private formBuilder: FormBuilder,
+    private api: ApiService,
+    private utilities: UtilitiesService,
+    public loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-
     this.loginImplicito();
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
-
   }
 
   async submitForm() {
-
     this.utilities.showLoading();
 
     const formData = new FormData();
@@ -45,75 +41,69 @@ export class LoginPage implements OnInit {
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
 
-    ( await this.api.login( formData, 'login' )).subscribe( res => {
-
-    },err => {
-      console.log("ERROR",err);
-      this.utilities.dismissLoading();
-      // credenciales incorrectas
-      if (err.status === 401) {
-        this.utilities.showToast('Los datos introducidos no son correctos');
+    (await this.api.login(formData, 'login')).subscribe(
+      (res) => {},
+      (err) => {
+        console.log('ERROR', err);
+        this.utilities.dismissLoading();
+        // credenciales incorrectas
+        if (err.status === 401) {
+          this.utilities.showToast('Los datos introducidos no son correctos');
+        }
+        // 422 (email no válido)
+        else if (err.status === 422) {
+          this.utilities.showToast(
+            'El formato del email introducido no es correcto'
+          );
+        } else {
+          this.utilities.showAlert(
+            'Error al iniciar sesión',
+            'Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde'
+          );
+        }
       }
-      // 422 (email no válido)
-      else if (err.status === 422) {
-        this.utilities.showToast('El formato del email introducido no es correcto');
-      }
-      else {
-        this.utilities.showAlert('Error al iniciar sesión', 'Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde');
-      }
-    });
-
+    );
   }
 
   hideShowPassword() {
-    
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
-    
   }
 
   /**
    * Mostramos el modal para recuperar contraseña
    */
   async openModal() {
-
     const profileModal = await this.modalCtrl.create({
-      component: OlvidarContrasenaPage
+      component: OlvidarContrasenaPage,
     });
     return await profileModal.present();
-
   }
 
   /**
    * Open sign up page
    */
   openRegistro() {
-
     this.router.navigate(['registro']);
-
   }
 
   /**
    * Si hay datos guardados de usuario iniciamos directamente
    */
-  public loginImplicito():void {
-    this.utilities.getUserData().then(async userData => {
+  public loginImplicito(): void {
+    this.utilities.getUserData().then(async (userData) => {
       if (userData) {
-
         let loading = await this.loadingCtrl.create({
           message: 'Iniciando sesión...',
-          duration: 1500
+          duration: 1500,
         });
 
         await loading.present();
         await loading.onDidDismiss();
         this.api.emitUserLogged();
-        this.router.navigate(['tabs/tab1']);
-        this.utilities.setGuia("login");
-
+        this.router.navigate(['menu/todas']);
+        this.utilities.setGuia('login');
       }
     });
   }
-
-
 }
