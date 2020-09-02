@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
-import { ModalController, NavParams, PopoverController, IonContent, Platform } from '@ionic/angular';
+import {
+  ModalController,
+  NavParams,
+  PopoverController,
+  IonContent,
+  Platform,
+} from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
@@ -10,14 +16,12 @@ import { RealizarOfertaPage } from '../realizar-oferta/realizar-oferta.page';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-detalle-demanda',
   templateUrl: './detalle-demanda.page.html',
   styleUrls: ['./detalle-demanda.page.scss'],
 })
 export class DetalleDemandaPage implements OnInit {
-  
   @ViewChild(IonContent, { static: false }) content: IonContent;
   demanda: any;
   opiniones: any;
@@ -31,7 +35,8 @@ export class DetalleDemandaPage implements OnInit {
   perfil: any;
   isLoading: boolean;
 
-  constructor( private utilities: UtilitiesService,
+  constructor(
+    private utilities: UtilitiesService,
     private platform: Platform,
     private api: ApiService,
     private modalCtrl: ModalController,
@@ -39,144 +44,140 @@ export class DetalleDemandaPage implements OnInit {
     private route: ActivatedRoute,
     public meta: Meta,
     private socialSharing: SocialSharing,
-    public popoverController: PopoverController ) { 
+    public popoverController: PopoverController
+  ) {
+    let data: any = route.snapshot.queryParamMap;
+    let id_demanda = data.params.id_demanda;
 
-      let data:any = route.snapshot.queryParamMap;
-      let id_demanda = data.params.id_demanda;
-     
-      //if (id_demanda) {
-      if(data.params.demanda === undefined) {
+    //if (id_demanda) {
+    if (data.params.demanda === undefined) {
+      //this.obtenerDemanda(id_demanda);
+      //this.aceptada = data.params.aceptada;
 
-        //this.obtenerDemanda(id_demanda);
-        //this.aceptada = data.params.aceptada;
-
-        this.route.paramMap.subscribe(params => {
-          this.obtenerDemanda(params.get('id'));
-          this.aceptada = data.params.aceptada;
-        });
-
-      } else {
-
-        this.aceptada = false
-        this.demanda = JSON.parse(data.params.demanda);
-        this.obtenerOfertasRelacionadas();
-
-      }
-
+      this.route.paramMap.subscribe((params) => {
+        this.obtenerDemanda(params.get('id'));
+        this.aceptada = data.params.aceptada;
+      });
+    } else {
+      this.aceptada = false;
+      this.demanda = JSON.parse(data.params.demanda);
+      this.obtenerOfertasRelacionadas();
     }
+  }
 
   ngOnInit() {
-
     this.obtenerPerfil();
-
   }
 
   /**
    * Obtenemos la demanda a partir del id
-   * @param id_demanda 
+   * @param id_demanda
    */
   async obtenerDemanda(id_demanda) {
     this.isLoading = true;
-    (await this.api.obtenerDemanda(id_demanda)).subscribe( demanda => {
-
-      if (demanda.imagen != null) {
-        if (!demanda.imagen.includes("http://") && !demanda.imagen.includes("https://"))
-          demanda.imagen = "https://api.febelink.com/storage/" + demanda.imagen;
+    (await this.api.obtenerDemanda(id_demanda)).subscribe(
+      (demanda) => {
+        if (demanda.imagen != null) {
+          if (
+            !demanda.imagen.includes('http://') &&
+            !demanda.imagen.includes('https://')
+          )
+            demanda.imagen =
+              'https://api.febelink.com/storage/' + demanda.imagen;
+        }
+        this.demanda = demanda;
+        this.obtenerOfertasRelacionadas();
+      },
+      (err) => {
+        this.isLoading = false;
+        this.utilities.showToast('ERROR ' + JSON.stringify(err));
       }
-      this.demanda = demanda;
-      this.obtenerOfertasRelacionadas();
-
-    },err => {
-      this.isLoading = false;
-      this.utilities.showToast("ERROR "+JSON.stringify(err));
-    })
-
+    );
   }
 
   async obtenerOfertasRelacionadas() {
-
     this.isLoading = true;
-    ( await this.api.obtenerDemandasRelacionadas(this.demanda.id_demandante, this.demanda.id) ).subscribe( resp => {
-
-      this.demandasRelacionadas = resp;
-      console.log("this.demandasRelacionadas",this.demandasRelacionadas);
-      for (let demanda of this.demandasRelacionadas) {
-        if (demanda.imagen != null) {
-          if (!demanda.imagen.includes("http://") && !demanda.imagen.includes("https://"))
-            demanda.imagen = "https://api.febelink.com/storage/" + demanda.imagen;
+    (
+      await this.api.obtenerDemandasRelacionadas(
+        this.demanda.id_demandante,
+        this.demanda.id
+      )
+    ).subscribe(
+      (resp) => {
+        this.demandasRelacionadas = resp;
+        console.log('this.demandasRelacionadas', this.demandasRelacionadas);
+        for (let demanda of this.demandasRelacionadas) {
+          if (demanda.imagen != null) {
+            if (
+              !demanda.imagen.includes('http://') &&
+              !demanda.imagen.includes('https://')
+            )
+              demanda.imagen =
+                'https://api.febelink.com/storage/' + demanda.imagen;
+          }
+          demanda.valoracion = Number(demanda.valoracion);
         }
-        demanda.valoracion = Number(demanda.valoracion);
+        this.isLoading = false;
+      },
+      (err) => {
+        this.isLoading = false;
       }
-      this.isLoading = false;
-    },err => {
-      this.isLoading = false;
-    });
-    
+    );
   }
 
   /**
    * Ir a otra demanda
-   * @param demanda 
+   * @param demanda
    */
-   public detalleDemanda(demanda): void {
-    
-     this.demanda = demanda;
-     this.obtenerOfertasRelacionadas();
-     this.content.scrollToTop(1500);
-     //this.router.navigate(['detalle-demanda'],{ queryParams: { 'demanda': JSON.stringify(demanda), 'contacto': false  }});
+  public detalleDemanda(demanda): void {
+    this.demanda = demanda;
+    this.obtenerOfertasRelacionadas();
+    this.content.scrollToTop(1500);
+    //this.router.navigate(['detalle-demanda'],{ queryParams: { 'demanda': JSON.stringify(demanda), 'contacto': false  }});
   }
 
   /**
    * Ir a un perfil
    */
   public irAPerfil(): void {
-    this.router.navigate(['perfil-demandante/'+this.demanda.id_demandante],{ queryParams: { 'id_perfil': this.demanda.id_demandante, 'contacto': this.aceptada  }});
+    this.router.navigate(['perfil-demandante/' + this.demanda.id_demandante], {
+      queryParams: {
+        id_perfil: this.demanda.id_demandante,
+        contacto: this.aceptada,
+      },
+    });
   }
 
   /**
-     * Crear modal para realizar una oferta
-     * @param id 
-     */
-    async ofertar(id) {
-
-      if(this.perfil !== null){
-
-        const ofertaModal = await this.modalCtrl.create({
-          component: RealizarOfertaPage,
-          componentProps: { id_demanda: id }
-        });
-    
-        await ofertaModal.present();
-
-      } else {
-
-        this.userRegister();
-
-      }
-      
-    }
-
-    async userRegister() {
-
-      const registerModal = await this.modalCtrl.create({
-        component: SesionCtrlPage
+   * Crear modal para realizar una oferta
+   * @param id
+   */
+  async ofertar(id) {
+    if (this.perfil !== null) {
+      const ofertaModal = await this.modalCtrl.create({
+        component: RealizarOfertaPage,
+        componentProps: { id_demanda: id },
       });
-  
-      await registerModal.present();
+
+      await ofertaModal.present();
+    } else {
+      this.userRegister();
     }
+  }
 
+  async userRegister() {
+    const registerModal = await this.modalCtrl.create({
+      component: SesionCtrlPage,
+    });
 
- 
-  public share( id, ev: any ):void {
+    await registerModal.present();
+  }
 
-    if(this.platform.is('cordova')){
-
-     this.shareNative(id);
-
-    } else { 
-
+  public share(id, ev: any): void {
+    if (this.platform.is('cordova')) {
+      this.shareNative(id);
+    } else {
       this.shareWeb(ev);
-     
     }
   }
 
@@ -184,80 +185,74 @@ export class DetalleDemandaPage implements OnInit {
    * Share Android/iOS
    */
   shareNative(id) {
-
-    let url = "https://febelink.com/demanda/"+id;
+    let url = 'https://febelink.com/demanda/' + id;
     var desc = this.demanda.descripcion;
 
-    if(desc.length > 50) {
-      desc = desc.substring(0, 49)+"...";
+    if (desc.length > 50) {
+      desc = desc.substring(0, 49) + '...';
     }
 
-    let message = "Febelink \n"+this.demanda.nombre+ ": \n"+desc+" \n";
+    let message = 'Febelink \n' + this.demanda.nombre + ': \n' + desc + ' \n';
 
-    this.socialSharing.share(null, null, null, url).then(result => {}).catch(error => {});
+    this.socialSharing
+      .share(null, null, null, url)
+      .then((result) => {})
+      .catch((error) => {});
   }
 
   /**
    * Share Web
    */
   async shareWeb(ev: any) {
-
-    let url = "https://febelink.com/demanda/"+this.demanda.id;
+    let url = 'https://febelink.com/demanda/' + this.demanda.id;
     var desc = this.demanda.descripcion;
 
-    if(desc.length > 50) {
-      desc = desc.substring(0, 49)+"...";
+    if (desc.length > 50) {
+      desc = desc.substring(0, 49) + '...';
     }
 
-    let message = "Febelink \n"+this.demanda.nombre+ ": \n"+desc+" \n";
+    let message = 'Febelink \n' + this.demanda.nombre + ': \n' + desc + ' \n';
 
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url:url, title: message, desc: desc  }
+      componentProps: { url: url, title: message, desc: desc },
     });
     return await popover.present();
   }
 
-
-   /**
+  /**
    * Navegar a la pantalla p
-   * @param p 
+   * @param p
    */
   public irA(p: string): void {
-
-    if(p === '/tabs/tab4') {
-      if(this.perfil === null){
+    if (p === '/menu/perfil') {
+      if (this.perfil === null) {
         this.router.navigate(['login']);
       } else {
-        this.router.navigate(['/tabs/tab4']);
+        this.router.navigate(['/menu/perfil']);
       }
     } else {
       this.router.navigate([p]);
     }
-    
   }
 
   async obtenerPerfil() {
     this.perfil = await this.utilities.getUserData();
-    console.log("PERFIL",this.perfil);
+    console.log('PERFIL', this.perfil);
   }
 
   home() {
-    this.router.navigate(['tabs/tab1']);
+    this.router.navigate(['menu/todas']);
   }
 
   async openGuide() {
-
     const guideModal = await this.modalCtrl.create({
       component: GuidePage,
-      cssClass: 'guide-modal'
+      cssClass: 'guide-modal',
     });
     return await guideModal.present();
-
   }
-  
-
 }
