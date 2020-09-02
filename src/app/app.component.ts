@@ -8,6 +8,7 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { NavController } from '@ionic/angular';
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -30,7 +31,8 @@ export class AppComponent {
     private utilities: UtilitiesService,
     public alertCtrl: AlertController,
     private router: Router,
-    private deeplinks: Deeplinks
+    private deeplinks: Deeplinks,
+    private navCtrl: NavController
   ) {
     this.initializeApp();
   }
@@ -38,7 +40,11 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.platform.backButton.subscribe(() => {
-        navigator['app'].exitApp();
+        if (this.router.url === '' || this.router.url === '/menu/todas') {
+          navigator['app'].exitApp();
+        } else {
+          this.navCtrl.back();
+        }
       });
 
       if (this.platform.is('cordova')) {
