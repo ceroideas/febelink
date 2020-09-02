@@ -1,77 +1,102 @@
-<ion-header>
-
-  <ion-toolbar color="light">
-
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <img src="assets/imgs/logo.png" alt="" class="logo">
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <div class="cover-content">
-      <p class="title">Registro</p>
-      <p class="subtitle">Regístrate ya!, es GRATIS!</p>
-      <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
-          <ion-item class="input ion-no-padding">
-              <ion-label>
-                  <ion-icon name="person"></ion-icon>
-              </ion-label>
-              <ion-input clearInput type="text" formControlName="name" placeholder="Nombre de usuario" required>
-              </ion-input>
-          </ion-item>
-          <ion-item class="input ion-no-padding">
-              <ion-label>
-                  <ion-icon name="person"></ion-icon>
-              </ion-label>
-            
-              <ion-select clearInput placeholder="Sector" formControlName="sector">
-                <ion-select-option [value]="sector?.id" *ngFor="let sector of sectores">{{sector?.nombre}}</ion-select-option>
-              </ion-select>
+    <img src="assets/imgs/logo.png" alt="logo" />
+    <p class="title">Crear una nueva cuenta</p>
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
+      <ion-item class="input ion-no-padding">
+        <ion-label>
+          <ion-icon name="person"></ion-icon>
+        </ion-label>
+        <ion-input
+          clearInput
+          type="text"
+          formControlName="name"
+          placeholder="Nombre de usuario"
+          required
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item class="input ion-no-padding">
+        <ion-label>
+          <ion-icon name="person"></ion-icon>
+        </ion-label>
 
-          </ion-item>
-          <ion-item class="input ion-no-padding" *ngIf="subsectores?.length>0">
-              <ion-label>
-                  <ion-icon name="person"></ion-icon>
-              </ion-label>
+        <ion-select clearInput placeholder="Sector" formControlName="sector">
+          <ion-select-option
+            [value]="sector?.id"
+            *ngFor="let sector of sectores"
+            >{{sector?.nombre}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item class="input ion-no-padding" *ngIf="subsectores?.length>0">
+        <ion-label>
+          <ion-icon name="person"></ion-icon>
+        </ion-label>
 
-              <ion-select clearInput placeholder="Subsector" formControlName="sub_sector">
-                <ion-select-option *ngFor="let subsector of subsectores" [value]="subsector?.id">{{subsector?.nombre}}</ion-select-option>
-              </ion-select>
-              
-          </ion-item>
-          <ion-item class="input ion-no-padding">
-              <ion-label>
-                  <ion-icon name="mail"></ion-icon>
-              </ion-label>
-              <ion-input clearInput type="email" formControlName="email" placeholder="Email" required></ion-input>
-          </ion-item>
-          <ion-item class="input ion-no-padding">
-              <ion-label>
-                  <ion-icon name="lock-closed"></ion-icon>
-              </ion-label>
-              <ion-input clearInput type="password" formControlName="password" placeholder="Contraseña" required>
-              </ion-input>
-          </ion-item>
-          <ion-item class="input ion-no-padding">
-              <ion-label>
-                  <ion-icon name="lock-closed"></ion-icon>
-              </ion-label>
-              <ion-input clearInput type="password" formControlName="confirmPassword"
-                  placeholder="Confirmar contraseña" required></ion-input>
-          </ion-item>
+        <ion-select
+          clearInput
+          placeholder="Subsector"
+          formControlName="sub_sector"
+        >
+          <ion-select-option
+            *ngFor="let subsector of subsectores"
+            [value]="subsector?.id"
+            >{{subsector?.nombre}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item class="input ion-no-padding">
+        <ion-label>
+          <ion-icon name="mail"></ion-icon>
+        </ion-label>
+        <ion-input
+          clearInput
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-item class="input ion-no-padding">
+        <ion-label>
+          <ion-icon name="lock-closed"></ion-icon>
+        </ion-label>
+        <ion-input
+          clearInput
+          type="password"
+          formControlName="password"
+          placeholder="Contraseña"
+          required
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item class="input ion-no-padding">
+        <ion-label>
+          <ion-icon name="lock-closed"></ion-icon>
+        </ion-label>
+        <ion-input
+          clearInput
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Confirmar contraseña"
+          required
+        ></ion-input>
+      </ion-item>
 
-          <ion-item no-lines class="terminos ion-no-padding" lines="none">
-              <ion-label>He leído, y acepto los terminos y condiciones</ion-label>
-              <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
-          </ion-item>
+      <span class="terms-conditions">
+        <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
+        He leído, y acepto los
+        <a (click)="openTerms()">terminos y condiciones</a>
+      </span>
 
-          <div class="box-terms">
-            <a class="link-terms" (click)="openTerms()">Terminos y condiciones</a>
-          </div>
-
-          <ion-button expand="full" type="submit" ion-button color="febelink">REGISTRARSE</ion-button>
-      </form>
+      <ion-button expand="full" type="submit" ion-button color="febelink"
+        >REGISTRARSE</ion-button
+      >
+      <social-login></social-login>
+    </form>
+  </div>
+  <div class="cover-overlay">
+    <a href="mailto:info@febelink.com">Contacta con Febelink</a>
   </div>
 </ion-content>

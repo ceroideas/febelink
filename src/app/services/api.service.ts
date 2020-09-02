@@ -1,56 +1,48 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Observable, throwError  } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
   public userLogged: EventEmitter<any> = new EventEmitter();
   public refreshTab: EventEmitter<any> = new EventEmitter();
 
+  constructor(
+    private http: HttpClient,
+    private utilities: UtilitiesService,
+    private router: Router
+  ) {}
 
-  constructor( private http: HttpClient,
-               private utilities: UtilitiesService,
-               private router:Router ) { }
+  login(params, endpoint): Observable<any> {
+    return this.http
+      .post<any>(environment.API_URL_AUTH + endpoint, params)
+      .pipe(
+        map(async (res: any) => {
+          console.log('LOGIN RES', res);
 
+          await this.utilities.saveAccessTokenInfo(res);
+          await this.utilities.saveUserData(res.user);
+          await this.utilities.saveUserSubscription(res.subscription);
+          await this.utilities.saveUserSubscriptionDetails(
+            res.subscription_details
+          );
+          await this.utilities.setGuia('login');
+          this.userLogged.emit('user:login');
+          this.utilities.dismissLoading();
+          this.router.navigate(['menu/todas']);
 
-  login( params ): Observable<any> {
-
-   
-    const formData = new FormData();
-    formData.append('email', params.email);
-    formData.append('password', params.password);
-    formData.append('remember_me', '1');
-
-    return this.http.post<any>( environment.API_URL_AUTH + "login",
-                                formData ).pipe(
-                                    map(async (res: any) => {
-
-                                      console.log("LOGIN RES",res);
-
-                                      await this.utilities.saveAccessTokenInfo(res);
-                                      await this.utilities.saveUserData(res.user);
-                                      await this.utilities.saveUserSubscription(res.subscription);
-                                      await this.utilities.saveUserSubscriptionDetails(res.subscription_details);
-                                      await this.utilities.setGuia("login");
-                                      this.userLogged.emit('user:login');
-                                      this.utilities.dismissLoading();
-                                      this.router.navigate(['tabs/tab1']);
-                                    
-
-                                      return res;
-
-                                    }),
-                                    catchError( (err: any, caught: Observable<any>) => {
-                                        return this.handleError(err, caught, 'login');
-                                    })
-                                );
+          return res;
+        }),
+        catchError((err: any, caught: Observable<any>) => {
+          return this.handleError(err, caught, 'login');
+        })
+      );
   }
 
   emitUserLogged() {
@@ -62,491 +54,492 @@ export class ApiService {
   }
 
   refreshTabs() {
-    this.refreshTab.emit("refreshTab");
+    this.refreshTab.emit('refreshTab');
   }
 
-  async _getData( endpoint:string  ) {
-   
+  async _getData(endpoint: string) {
     let token;
-    await this.utilities.getAccessTokenInfo().then(tokenInfo => {
-      if(tokenInfo!==null)
-      token =  tokenInfo.access_token;
+    await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
+      if (tokenInfo !== null) token = tokenInfo.access_token;
     });
 
-    return this.http.get<any>( environment.API_URL_AUTH+endpoint,
-                             {headers:{'Authorization':`Bearer ${ token}`}}
-                                      ).pipe(
-                                        map((res: any) => {
-                                            return res;
-                                        }),
-                                        catchError( (err: any, caught: Observable<any>) => {
-                                            return this.handleError(err, caught, endpoint);
-                                        })
-                                    );
-}
+    return this.http
+      .get<any>(environment.API_URL_AUTH + endpoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err: any, caught: Observable<any>) => {
+          return this.handleError(err, caught, endpoint);
+        })
+      );
+  }
 
-async _createData( endpoint:string , data:any) {
-
-  let token;
-    await this.utilities.getAccessTokenInfo().then(tokenInfo => {
-      token =  tokenInfo.access_token;
+  async _createData(endpoint: string, data: any) {
+    let token;
+    await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
+      token = tokenInfo.access_token;
     });
 
-  //perform the API call
-  return this.http.post<any>( environment.API_URL_AUTH+endpoint,
-                              data,
-                              {headers:{'Authorization':`Bearer ${ token}`}}
-                              ).pipe(
-                                  map((res: any) => {
-                                      return res;
-                                  }),
-                                  catchError( (err: any, caught: Observable<any>) => {
-                                      return this.handleError(err, caught, endpoint);
-                                  })
-                              );
-}
+    //perform the API call
+    return this.http
+      .post<any>(environment.API_URL_AUTH + endpoint, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err: any, caught: Observable<any>) => {
+          return this.handleError(err, caught, endpoint);
+        })
+      );
+  }
 
   /**
    * Recuperar contraseña y enviar email
-   * @param email 
+   * @param email
    */
   public recuperarContraseña(email) {
-   
     const formData = new FormData();
     formData.append('email', email);
-    return this.http.post( environment.API_URL_AUTH + 'recuperar-contrasena', 
-                formData, {headers:{'Authorization':`Bearer ${ this.getToken()}`}}).toPromise().then(response => response);
+    return this.http
+      .post(environment.API_URL_AUTH + 'recuperar-contrasena', formData, {
+        headers: { Authorization: `Bearer ${this.getToken()}` },
+      })
+      .toPromise()
+      .then((response) => response);
   }
 
-  
-   /**
+  /**
    * Guardamos el token de registro de las notificaciones push
-   * @param tokenRegistro 
+   * @param tokenRegistro
    */
   public guardarTokenDeRegistro(tokenRegistro) {
-
     const formData = new FormData();
-    formData.append('registerToken', tokenRegistro );
+    formData.append('registerToken', tokenRegistro);
     formData.append('platform', this.utilities.getPlatform());
 
-    return this._createData("guardar-token",formData);
+    return this._createData('guardar-token', formData);
   }
   /**
    * Saltar guia
    */
-  public noShowAgain( params ): any {
-    return this._createData('saltar-guia',params);
+  public noShowAgain(params): any {
+    return this._createData('saltar-guia', params);
   }
   /**
    * Borrar demanda a partir de su id
-   * @param id 
+   * @param id
    */
   public borrarDemanda(id) {
-   
     const formData = new FormData();
-    formData.append('id', id );
+    formData.append('id', id);
 
-    return this._createData('borrar-demanda',formData);
+    return this._createData('borrar-demanda', formData);
   }
   /**
    * Editar una demanda
-   * @param params 
+   * @param params
    */
   public editarDemanda(params) {
-    
     const formData = new FormData();
-    formData.append('id', params.id );
-    formData.append('nombre', params.nombre );
-    formData.append('ofertas_restantes', params.ofertas_restantes );
-    formData.append('descripcion', params.descripcion );
+    formData.append('id', params.id);
+    formData.append('nombre', params.nombre);
+    formData.append('ofertas_restantes', params.ofertas_restantes);
+    formData.append('descripcion', params.descripcion);
     if (params.sector != null && params.sector != '')
       formData.append('sector', params.sector);
-    if (params.file != null)
-      formData.append('file', params.file);
-   
-    return this._createData('editar-demanda',formData);
+    if (params.file != null) formData.append('file', params.file);
+
+    return this._createData('editar-demanda', formData);
   }
   /**
    * Publicar una demanda
-   * @param nombre 
-   * @param descripcion 
-   * @param sector 
-   * @param sub_sector 
-   * @param ofertas_restantes 
-   * @param file 
+   * @param nombre
+   * @param descripcion
+   * @param sector
+   * @param sub_sector
+   * @param ofertas_restantes
+   * @param file
    */
-  public publicarDemanda(nombre, descripcion, sector, sub_sector, ofertas_restantes, file) {
-
+  public publicarDemanda(
+    nombre,
+    descripcion,
+    sector,
+    sub_sector,
+    ofertas_restantes,
+    file
+  ) {
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
 
-    if( sector!==null ) {
-
+    if (sector !== null) {
       formData.append('id_sector', sector);
       formData.append('sub_sector', sub_sector);
-
     }
 
     formData.append('ofertas_restantes', ofertas_restantes);
     formData.append('file', file);
 
-    return this._createData('publicar-demanda',formData);
+    return this._createData('publicar-demanda', formData);
   }
 
   /**
    * Enviar notificación a todos los ofertantes
-   * @param title 
-   * @param desc 
-   * @param sector 
-   * @param subsector 
+   * @param title
+   * @param desc
+   * @param sector
+   * @param subsector
    */
   public enviarNotificacionAOfertantes(title, desc, sector, subsector) {
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
 
-    if( sector!==null ) {
-
+    if (sector !== null) {
       formData.append('sector', sector);
       formData.append('subsector', subsector);
-      
     }
-    
-    return this._createData('notificacion-demanda',formData);
+
+    return this._createData('notificacion-demanda', formData);
   }
   /**
    * Demandante responde a oferta
-   * @param respuesta 
-   * @param id_oferta 
+   * @param respuesta
+   * @param id_oferta
    */
   public responderOferta(respuesta, id_oferta) {
-
     const formData = new FormData();
     formData.append('respuesta', respuesta);
     formData.append('id_oferta', id_oferta);
-    return this._createData('responder-oferta',formData);
-
+    return this._createData('responder-oferta', formData);
   }
   public subscribe(subscription_id, token) {
-
     const formData = new FormData();
     formData.append('subscription_id', subscription_id);
     formData.append('token', token);
-    return this._createData('subscribe',formData);
-   
+    return this._createData('subscribe', formData);
   }
   /**
    * Enviar una notificación cuando se responde a la oferta
-   * @param title 
-   * @param desc 
-   * @param id_oferta 
-   * @param respuesta 
+   * @param title
+   * @param desc
+   * @param id_oferta
+   * @param respuesta
    */
   public enviarNotificationOfertaRespondida(title, desc, id_oferta, respuesta) {
-
-     const formData = new FormData();
-     formData.append('mtitle', title);
-     formData.append('mdesc', desc);
-     formData.append('id_ofertante', id_oferta);
-     formData.append('respuesta', respuesta);
-     return this._createData('notificacion-oferta',formData);
-    
+    const formData = new FormData();
+    formData.append('mtitle', title);
+    formData.append('mdesc', desc);
+    formData.append('id_ofertante', id_oferta);
+    formData.append('respuesta', respuesta);
+    return this._createData('notificacion-oferta', formData);
   }
 
   public swapSubscription(stripe_plan) {
-
     const formData = new FormData();
     formData.append('stripe_plan', stripe_plan);
-    return this._createData('swap-subscription',formData);
-   
+    return this._createData('swap-subscription', formData);
   }
 
   public cancelSubscription() {
-
     const formData = new FormData();
-    return this._createData('cancel-subscription',formData);
-    
+    return this._createData('cancel-subscription', formData);
   }
 
   /**
-   * Obtener todas las demandas 
+   * Obtener todas las demandas
    */
   obtenerDemandas() {
-    return this._getData( 'demandas');
+    return this._getData('demandas');
   }
-   /**
+  /**
    * Obtener todos los sectores
    */
   public obtenerSectores() {
-    return this._getData( 'sectores');
+    return this._getData('sectores');
   }
   /**
    * Obtener los subsectores a partir de un sector id
-   * @param id 
+   * @param id
    */
   public obtenerSubSectores(id) {
-    return this._getData( 'sub-sectores/' + id);
+    return this._getData('sub-sectores/' + id);
   }
   /**
    * Obtener provincias
    */
   public obtenerProvincias() {
-    return this._getData( 'provincias');
+    return this._getData('provincias');
   }
   /**
    * Obtener los sectores de un perfil a partir de id
-   * @param id 
+   * @param id
    */
   public obtenerSectoresPerfil(id) {
-    return this._getData( 'sectores-perfil/' + id );
+    return this._getData('sectores-perfil/' + id);
   }
   public obtenerSubSectoresPerfil(id) {
-    return this._getData( 'sub-sectores-perfil/' + id );
+    return this._getData('sub-sectores-perfil/' + id);
   }
   /**
    * Comprobar si existe un usuario a partir de su nombre (único)
-   * @param name 
+   * @param name
    */
   public existeUsuario(name) {
-    return this._getData( 'existe-usuario/' + name );
+    return this._getData('existe-usuario/' + name);
   }
   public getAllSubscriptions() {
-    return this._getData( 'get-subscriptions' );
+    return this._getData('get-subscriptions');
   }
   /**
    * Search by keys
    */
-  public searchByKeys( key ) {
-    return this._getData( 'buscar-keys?keys=' + key );
+  public searchByKeys(key) {
+    return this._getData('buscar-keys?keys=' + key);
   }
   /**
    * Get sectors by keys
    */
-  public getSectorsByKeys( key ) {
-    return this._getData( 'sectores-keys?keys=' + key );
+  public getSectorsByKeys(key) {
+    return this._getData('sectores-keys?keys=' + key);
   }
   /**
    * Get Bidders by score
    */
-  public getBiddersByScore( id ) {
-    return this._getData( 'ofertantes-sector/' + id );
+  public getBiddersByScore(id) {
+    return this._getData('ofertantes-sector/' + id);
   }
-   /**
+  /**
    * Obtener las demandas del demandate a partir de su id
-   * @param id 
+   * @param id
    */
   public getOpinionTypes() {
-    return this._getData( 'get-opinions-types' );
+    return this._getData('get-opinions-types');
   }
   public getSubSectores(id) {
-    return this._getData( 'get-sub-sectores-perfil/' + id );
+    return this._getData('get-sub-sectores-perfil/' + id);
   }
 
   /**
    * Obtener localidades
    */
   public obtenerLocalidades(id_provincia) {
-
     const formData = new FormData();
     formData.append('id_provincia', id_provincia);
 
-    return this._createData('localidades',formData);
+    return this._createData('localidades', formData);
   }
   /**
    * Enviar notificación al recomendar perfil
-   * @param title 
-   * @param desc 
-   * @param name 
+   * @param title
+   * @param desc
+   * @param name
    */
   public enviarNotificacionPedirRecomendacion(title, desc, name) {
-
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
     formData.append('name', name);
-    return this._createData('pedir-recomendacion',formData);
-    
+    return this._createData('pedir-recomendacion', formData);
   }
   /**
    * Editar los datos del ofertante y su contraseña
-   * @param name 
-   * @param email 
-   * @param descripcion 
-   * @param telefono 
-   * @param direccion 
-   * @param sector 
-   * @param dni 
-   * @param imagen 
-   * @param pass 
+   * @param name
+   * @param email
+   * @param descripcion
+   * @param telefono
+   * @param direccion
+   * @param sector
+   * @param dni
+   * @param imagen
+   * @param pass
    */
-  public editarOfertanteYContra(name, email, descripcion, telefono, direccion, provincia, localidad, sector, sub_sector, dni, imagen, pass) {
-    
+  public editarOfertanteYContra(
+    name,
+    email,
+    descripcion,
+    telefono,
+    direccion,
+    provincia,
+    localidad,
+    sector,
+    sub_sector,
+    dni,
+    imagen,
+    pass
+  ) {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
     formData.append('direccion', direccion);
-    if(provincia!==undefined && provincia!== null)
-    formData.append('province_id', provincia);
-    if(localidad!==undefined && localidad!==null)
-    formData.append('town_id', localidad);
+    if (provincia !== undefined && provincia !== null)
+      formData.append('province_id', provincia);
+    if (localidad !== undefined && localidad !== null)
+      formData.append('town_id', localidad);
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
-    if(imagen!==undefined)
-    formData.append('file', imagen);
+    if (imagen !== undefined) formData.append('file', imagen);
     formData.append('email', email);
     formData.append('password', pass);
-    return this._createData('editar-ofertante',formData);
-
+    return this._createData('editar-ofertante', formData);
   }
   /**
    * Editar los datos del ofertante
-   * @param name 
-   * @param email 
-   * @param descripcion 
-   * @param telefono 
-   * @param direccion 
-   * @param sector 
-   * @param sub_sector 
-   * @param dni 
-   * @param imagen 
+   * @param name
+   * @param email
+   * @param descripcion
+   * @param telefono
+   * @param direccion
+   * @param sector
+   * @param sub_sector
+   * @param dni
+   * @param imagen
    */
-  public editarOfertante(name, email, descripcion, telefono, direccion, provincia, localidad,  sector, sub_sector, dni, imagen) {
-    
+  public editarOfertante(
+    name,
+    email,
+    descripcion,
+    telefono,
+    direccion,
+    provincia,
+    localidad,
+    sector,
+    sub_sector,
+    dni,
+    imagen
+  ) {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
     formData.append('direccion', direccion);
-    if(provincia!==undefined && provincia!== null)
-    formData.append('province_id', provincia.id);
-    if(localidad!==undefined && localidad!==null)
-    formData.append('town_id', localidad.id);
+    if (provincia !== undefined && provincia !== null)
+      formData.append('province_id', provincia.id);
+    if (localidad !== undefined && localidad !== null)
+      formData.append('town_id', localidad.id);
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
-    if(imagen!==undefined)
-    formData.append('file', imagen);
+    if (imagen !== undefined) formData.append('file', imagen);
     formData.append('email', email);
-    return this._createData('editar-ofertante',formData);
-  
+    return this._createData('editar-ofertante', formData);
   }
   /**
    * Publicar una opinión a un demandate
-   * @param valoracion 
-   * @param texto 
-   * @param id_demandante 
+   * @param valoracion
+   * @param texto
+   * @param id_demandante
    */
   public publicarOpinion(type_id, subsector_id, to_user_id) {
-
     const formData = new FormData();
     formData.append('type_id', type_id);
     formData.append('subsector_id', subsector_id);
     formData.append('to_user_id', to_user_id);
-    return this._createData('publicar-opinion',formData);
-
+    return this._createData('publicar-opinion', formData);
   }
   /**
    * REalizar una oferta a una demanda por su id
-   * @param nombre 
-   * @param descripcion 
-   * @param precio 
-   * @param id_demanda 
+   * @param nombre
+   * @param descripcion
+   * @param precio
+   * @param id_demanda
    */
   public realizarOferta(nombre, descripcion, precio, id_demanda) {
-
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
     formData.append('precio', precio);
     formData.append('id_demanda', id_demanda);
-    return this._createData('realizar-oferta',formData);
-    
+    return this._createData('realizar-oferta', formData);
   }
 
   /**
    * Obtener las demandas relacionadas a una demanda del usuario
-   * @param id_usuario 
-   * @param id_oferta 
+   * @param id_usuario
+   * @param id_oferta
    */
-  public obtenerDemandasRelacionadas( id_usuario, id_oferta ) {
-    return this._getData( 'demandas-relacionadas/' + id_usuario + '/' + id_oferta );
+  public obtenerDemandasRelacionadas(id_usuario, id_oferta) {
+    return this._getData(
+      'demandas-relacionadas/' + id_usuario + '/' + id_oferta
+    );
   }
 
   /**
    * Obtener un perfil a partir de id
-   * @param id 
+   * @param id
    */
   public obtenerPerfil(id) {
-    return this._getData( 'obtener-perfil/' + id );
+    return this._getData('obtener-perfil/' + id);
   }
   /**
    * Obtener las opiniones de un perfil segun id
-   * @param id 
+   * @param id
    */
   public opinionesPerfil(id) {
-    return this._getData( 'opiniones-perfil/' + id );
+    return this._getData('opiniones-perfil/' + id);
   }
   /**
    * Comprobar si existen opiniones
-   * @param id_demandante 
+   * @param id_demandante
    */
   public comprobarOpinion(id_demandante) {
-    return this._getData( 'comprobar-opiniones/' + id_demandante );
+    return this._getData('comprobar-opiniones/' + id_demandante);
   }
   /**
    * Demandas recibidas por el ofertante
    */
   public demandasRecibidas() {
-    return this._getData( 'demandas-recibidas' );
+    return this._getData('demandas-recibidas');
   }
   /**
    * Obtener las demandas del demandate a partir de su id
-   * @param id 
+   * @param id
    */
   public obtenerDemandasDemandante(id) {
-    return this._getData( 'demandas-demandante/' + id );
+    return this._getData('demandas-demandante/' + id);
   }
   /**
    * Obtener tus ofertas
    */
   public misOfertas() {
-    return this._getData( 'mis-ofertas' );
+    return this._getData('mis-ofertas');
   }
   /**
    * Borrar una oferta
-   * @param id 
+   * @param id
    */
   public borrarOferta(id) {
-    return this._getData( 'borrar-oferta/' + id );
+    return this._getData('borrar-oferta/' + id);
   }
   /**
    * Ofertas recibidas del demandante
    */
   public ofertasRecibidas() {
-    return this._getData( 'ofertas-recibidas' );
+    return this._getData('ofertas-recibidas');
   }
   /**
    * Obtener demanda a partir de id
-   * @param id 
+   * @param id
    */
   public obtenerDemanda(id) {
-    return this._getData( 'demanda/' + id );
+    return this._getData('demanda/' + id);
   }
-
-  
 
   /**
    * Registro del ofertante
-   * @param name 
-   * @param email 
-   * @param password 
-   * @param password_confirmation 
+   * @param name
+   * @param email
+   * @param password
+   * @param password_confirmation
    */
-  public registro( params ):any {
-
+  public registro(params): any {
     const formData = new FormData();
     formData.append('name', params.name);
     formData.append('sector', params.sector);
@@ -556,32 +549,28 @@ async _createData( endpoint:string , data:any) {
     formData.append('password_confirmation', params.password_confirmation);
     formData.append('role_id', '5');
 
-    return this.http.post( environment.API_URL_AUTH + 'signup', formData);
-   
+    return this.http.post(environment.API_URL_AUTH + 'signup', formData);
   }
 
-
-  handleError( error: any, caught: Observable<any>, endpoint: string ) {
-    switch( error.status ) {
-        case 401 : {
-          this.router.navigate(["login"]);
-          this.utilities.showToast('Sesión expirada');
-          return throwError(error);
-        }
-        default : {
-          return throwError(error);
-        }
+  handleError(error: any, caught: Observable<any>, endpoint: string) {
+    switch (error.status) {
+      case 401: {
+        this.router.navigate(['login']);
+        this.utilities.showToast('Sesión expirada');
+        return throwError(error);
+      }
+      default: {
+        return throwError(error);
+      }
     }
-
   }
 
   /**
    * Asignar el token de autentificación a la cabecera de las peticiones futuras
    */
   async getToken() {
-    await this.utilities.getAccessTokenInfo().then(tokenInfo => {
+    await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
       return tokenInfo.access_token;
     });
   }
-
 }

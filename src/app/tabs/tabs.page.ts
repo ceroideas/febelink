@@ -6,38 +6,37 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
 })
 export class TabsPage {
-
   perfil: any;
   public refreshTabs: any;
 
-  constructor( private utilities: UtilitiesService,
-               private api: ApiService,
-               private router: Router ) {
+  constructor(
+    private utilities: UtilitiesService,
+    private api: ApiService,
+    private router: Router
+  ) {
+    this.refreshTabs = this.api.refreshTab.subscribe((item) =>
+      this.obtenerPerfil()
+    );
+  }
 
-                this.refreshTabs = this.api.refreshTab.subscribe(item => this.obtenerPerfil());
-
-               }
-
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.obtenerPerfil();
   }
-  
+
   async obtenerPerfil() {
-    console.log("OBTIENE PERFIL TAB")
-    await this.utilities.getUserData().then(data => {
+    await this.utilities.getUserData().then((data) => {
       this.perfil = data;
     });
   }
 
   irA(p) {
-    if(this.perfil === null){
+    if (this.perfil === null) {
       this.router.navigate(['login']);
-    }else {
-      this.router.navigate(['/tabs/tab4']);
+    } else {
+      this.router.navigate(['/menu/perfil']);
     }
   }
-
 }

@@ -55,7 +55,7 @@ export class OfertantesPage implements OnInit {
    * Ir a un perfil
    */
   public irAPerfil(id): void {
-    this.router.navigate(['perfil-demandante'],{ queryParams: { 'id_perfil': id , 'contacto': true  }});
+    this.router.navigate(['perfil-demandante/'+id],{ queryParams: { 'id_perfil': id , 'contacto': true  }});
   }
 
 }

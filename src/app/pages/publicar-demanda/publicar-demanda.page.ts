@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, Platform } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -16,22 +16,33 @@ export class PublicarDemandaPage implements OnInit {
 
   form: FormGroup;
   srcFoto: any;
-  base64img: string;
+  base64img: any;
   sectores: any[];
   subsectores: any[];
   perfil: any;
   sector: any;
   sectorId: any;
+  isNative: boolean = true;
 
   constructor( public navParams: NavParams,
                private modalCtrl: ModalController,
                private formBuilder: FormBuilder,
                private api: ApiService,
+               private platform: Platform,
                private utilities: UtilitiesService,
                private camera: Camera,
+               private elementRef: ElementRef,
                private sanitizer: DomSanitizer ) {
 
     this.sectorId = navParams.get('sector');
+
+    if(this.platform.is('cordova')){
+
+      this.isNative = true;
+
+    } else { 
+      this.isNative = false;
+    }
     
    }
 
@@ -114,10 +125,23 @@ export class PublicarDemandaPage implements OnInit {
     
   }
 
+  public attachImage():void {
+
+    if(this.platform.is('cordova')){
+
+      this.attachImageNative();
+
+    } else { 
+
+      this.attachImageWeb();
+
+    }
+  }
+
   /**
    * Adjuntar imagen a la demanda
    */
-  public adjuntarImagen():void {
+  public attachImageNative():void {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -136,6 +160,54 @@ export class PublicarDemandaPage implements OnInit {
       this.utilities.showAlert('Error al obtener imagen', error);
     })
   }
+
+  /**
+   * Attach image for web
+   */
+
+  attachImageWeb(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+
+      let filePicker = this.elementRef.nativeElement.querySelector('.input-file-demandas');
+
+      if (!filePicker || !filePicker.files 
+          || filePicker.files.length <= 0) {
+          reject('No file selected.');
+          return;
+      }
+      const myFile = filePicker.files[0];
+
+      if (myFile.size > 307200) {
+        this.utilities.showToast('Imágen demasiado grande, max. 300KB');
+        return;
+    }
+      
+    this.base64img = await this.convert(myFile);
+      console.log(`Your base64 image is ${this.base64img}`);
+     
+      this.srcFoto = true;
+
+      resolve();
+  });
+  }
+
+  private convert(myFile: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+        const fileReader = new FileReader();
+        if (fileReader && myFile) {
+            fileReader.readAsDataURL(myFile);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        } else {
+            reject('No file provided');
+        }
+    });
+  }   
 
   /**
    * Obtener sectores del servidor

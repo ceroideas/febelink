@@ -10,41 +10,37 @@ import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.pag
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
-
-  settingsOfertas: string = "ofertasPage"; // default button
+  settingsOfertas: string = 'ofertasPage'; // default button
   ofertas: any;
   misOfertas: any;
   isLoading: boolean;
   perfil: any;
 
-  constructor( private modalCtrl: ModalController,
-               private api: ApiService,
-               private utilities: UtilitiesService,
-               private router: Router ) {
-
+  constructor(
+    private modalCtrl: ModalController,
+    private api: ApiService,
+    private utilities: UtilitiesService,
+    private router: Router
+  ) {
     this.settingsOfertas = 'ofertasPage';
-
   }
 
   /**
    * Obtenemos las ofertas cada vez que entramos en la pantalla
    */
   public async ionViewDidEnter() {
-
     this.misOfertas = [];
     this.ofertas = [];
 
     await this.obtenerPerfil();
 
-    if( this.perfil !== null ) {
-
+    if (this.perfil !== null) {
       this.isLoading = true;
       await this.obtenerOfertas();
       await this.obtenerMisOfertas();
-
     }
   }
 
@@ -52,33 +48,29 @@ export class Tab3Page {
    * Obtener las ofertas del ofertante del servidor
    */
   async obtenerMisOfertas() {
-
-    (await this.api.misOfertas()).subscribe( ofertas => {
+    (await this.api.misOfertas()).subscribe((ofertas) => {
       this.misOfertas = ofertas;
       this.isLoading = false;
       console.log(this.ofertas);
     });
-
   }
 
   /**
    * Modal para suscribirse
    */
   async suscribirse() {
-
     const suscribirseModal = await this.modalCtrl.create({
-      component: SuscribirsePage
+      component: SuscribirsePage,
     });
 
     await suscribirseModal.present();
     const { data } = await suscribirseModal.onWillDismiss();
     this.obtenerMisOfertas();
-
   }
 
   /**
    * Recargar las ofertas del ofertante
-   * @param refresher 
+   * @param refresher
    */
   public doRefreshMisOfertas(refresher): void {
     this.obtenerMisOfertas();
@@ -87,43 +79,43 @@ export class Tab3Page {
 
   /**
    * Borramos la oferta con un itemSliding
-   * @param oferta 
-   * @param item 
+   * @param oferta
+   * @param item
    */
   async borrarOferta(oferta, item: IonItemSliding) {
     console.log(oferta);
-    (await this.api.borrarOferta(oferta.id)).subscribe( resp => {
-
-      console.log("OFERTA BORRADA correctamente",resp);
-      this.obtenerMisOfertas();
-      item.close();
-
-    },err => {
-      console.log(err);
-      this.utilities.showToast("No se ha podido borrar la oferta");
-    });
-    
+    (await this.api.borrarOferta(oferta.id)).subscribe(
+      (resp) => {
+        console.log('OFERTA BORRADA correctamente', resp);
+        this.obtenerMisOfertas();
+        item.close();
+      },
+      (err) => {
+        console.log(err);
+        this.utilities.showToast('No se ha podido borrar la oferta');
+      }
+    );
   }
 
   /**
    * Ir a la demanda con su estado
-   * @param id_demanda 
-   * @param estado 
+   * @param id_demanda
+   * @param estado
    */
   public detalleDemanda(id_demanda, estado): void {
-
     let aceptada: boolean;
     if (estado == 1) aceptada = true;
     else aceptada = false;
-    this.router.navigate(['detalle-demanda'],{ queryParams: { 'id_demanda': id_demanda, 'aceptada': aceptada }});
-    
+    this.router.navigate(['demanda/' + id_demanda], {
+      queryParams: { id_demanda: id_demanda, aceptada: aceptada },
+    });
   }
 
   /**
    * Obtener datos del perfil
    */
   async obtenerPerfil() {
-    await this.utilities.getUserData().then(data => {
+    await this.utilities.getUserData().then((data) => {
       this.perfil = data;
     });
   }
@@ -132,78 +124,69 @@ export class Tab3Page {
    * Obtener las ofertas del servidor y terminar de cargar
    */
   async obtenerOfertas() {
-
-    (await this.api.ofertasRecibidas()).subscribe( res => {
-
+    (await this.api.ofertasRecibidas()).subscribe((res) => {
       let ofertas = [];
-      for(var i = 0; i < res.length; i++) {
+      for (var i = 0; i < res.length; i++) {
         let element = res[i];
-        Array.isArray(element) ? ofertas.push(element[0]) : ofertas.push(element);
+        Array.isArray(element)
+          ? ofertas.push(element[0])
+          : ofertas.push(element);
       }
       this.ofertas = ofertas;
       console.log(this.ofertas);
       this.isLoading = false;
-
     });
-
   }
 
   /**
    * Método para recargar las ofertas
-   * @param refresher 
+   * @param refresher
    */
-  public doRefreshOfertas(refresher):void {
+  public doRefreshOfertas(refresher): void {
     this.obtenerOfertas();
     refresher.complete();
   }
 
   /**
    * Creamos modal para el interior de la oferta
-   * @param oferta 
+   * @param oferta
    */
-   async interiorOferta(oferta){
-
+  async interiorOferta(oferta) {
     const interiorOfertaModal = await this.modalCtrl.create({
       component: InteriorOfertaPage,
-      componentProps: { oferta: oferta }
+      componentProps: { oferta: oferta },
     });
 
     await interiorOfertaModal.present();
     const { data } = await interiorOfertaModal.onWillDismiss();
     this.obtenerOfertas();
-
   }
 
   async openGuide() {
-
     const guideModal = await this.modalCtrl.create({
       component: GuidePage,
-      cssClass: 'guide-modal'
+      cssClass: 'guide-modal',
     });
     return await guideModal.present();
-
   }
 
   home() {
-    this.router.navigate(['tabs/tab1']);
+    this.router.navigate(['menu/todas']);
   }
 
   /**
    * Navegar a la pantalla p
-   * @param p 
+   * @param p
    */
   public irA(p: string): void {
-
-    if(p === '/tabs/tab4') {
-      if(this.perfil === null){
+    if (p === '/menu/perfil') {
+      if (this.perfil === null) {
         this.router.navigate(['login']);
       } else {
-        this.router.navigate(['/tabs/tab4']);
+        this.router.navigate(['/menu/perfil']);
       }
     } else {
       this.router.navigate([p]);
     }
-    
   }
-
 }

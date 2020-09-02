@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from './menu/menu.component';
 import { CookiesComponent } from './cookies/cookies.component';
 import { SharePopoverComponent } from './share-popover/share-popover.component';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 @NgModule({
     entryComponents: [
@@ -11,12 +12,14 @@ import { SharePopoverComponent } from './share-popover/share-popover.component';
     declarations: [
       MenuComponent,
       CookiesComponent,
-      SharePopoverComponent
+      SharePopoverComponent,
+      SocialLoginComponent
     ],
     exports: [
       MenuComponent,
       CookiesComponent,
-      SharePopoverComponent
+      SharePopoverComponent,
+      SocialLoginComponent
     ],
     imports: [
       CommonModule,
