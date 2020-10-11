@@ -153,6 +153,7 @@ export class DetalleDemandaPage implements OnInit {
    * @param id
    */
   async ofertar(id) {
+    console.log(this.perfil);
     if (this.perfil !== null) {
       const ofertaModal = await this.modalCtrl.create({
         component: RealizarOfertaPage,
