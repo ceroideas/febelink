@@ -39,32 +39,26 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <div class="content-filter">
+  <div class="content-filter content-filter-header">
     <div class="autocomplete">
-      <ion-searchbar
-        placeholder="Qué buscas..."
-        [(ngModel)]="searchText"
-        (ionFocus)="addFocus()"
-        (ionChange)="search()"
-        (ionBlur)="removeFocus()"
-        (ionClear)="clearBtn()"
-        debounce="500"
+      <ion-searchbar class="search_input_header"
+              placeholder="Qué buscas..."
+              [(ngModel)]="searchText"
+              (ionFocus)="addFocus()"
+              (ionChange)="search()"
+              (ionBlur)="removeFocus()"
+              (ionClear)="clearBtn()"
+                     (click)="view_filter()"
+              debounce="500"
       >
       </ion-searchbar>
 
       <div class="keys-dropdown">
         <ion-list mode="ios" *ngIf="searchText.length > 2 && keys.length > 0">
           <ion-item
-            (click)="getSectorsByKeys(key)"
-            *ngFor="let key of keys"
-            style="font-size: 16px"
+                  (click)="getSectorsByKeys(key)"
+                  *ngFor="let key of keys"
+                  style="font-size: 16px"
           >
             <span [innerHTML]="key.name"></span>
           </ion-item>
@@ -76,24 +70,24 @@
           <ion-item (click)="publicarDemanda()" style="font-size: 16px">
             Crear demanda en
             <strong style="margin-left: 5px"
-              >{{keywords.main.sector_nombre}}</strong
+            >{{keywords.main.sector_nombre}}</strong
             >
             <ion-icon
-              style="color: black; font-size: large"
-              slot="end"
-              name="add"
+                    style="color: black; font-size: large"
+                    slot="end"
+                    name="add"
             ></ion-icon>
           </ion-item>
 
           <ion-item (click)="openOfertantes()" style="font-size: 16px">
             Ver ofertantes en
             <strong style="margin-left: 5px"
-              >{{keywords.main.sector_nombre}}</strong
+            >{{keywords.main.sector_nombre}}</strong
             >
             <ion-icon
-              style="color: black; font-size: large"
-              slot="end"
-              name="eye"
+                    style="color: black; font-size: large"
+                    slot="end"
+                    name="eye"
             ></ion-icon>
           </ion-item>
         </ion-list>
@@ -106,60 +100,68 @@
       <ion-input type="text" placeholder="Buscar..." (ionChange)="onKeyPressed($event)"></ion-input>
     </ion-item>-->
 
-    <div class="filtros">
+    <div id="filter_hidden" class="filtros">
       <ion-item class="categorias">
         <ion-label>Sectores</ion-label>
         <ionic-selectable
-          item-content
-          [(ngModel)]="sector"
-          itemValueField="id"
-          itemTextField="nombre"
-          [items]="sectores"
-          [canSearch]="true"
-          (onChange)="sectorChange($event)"
+                item-content
+                [(ngModel)]="sector"
+                itemValueField="id"
+                itemTextField="nombre"
+                [items]="sectores"
+                [canSearch]="true"
+                (onChange)="sectorChange($event)"
         >
         </ionic-selectable>
       </ion-item>
       <ion-item class="categorias">
         <ion-label>Subsectores</ion-label>
         <ionic-selectable
-          item-content
-          [(ngModel)]="subsector"
-          itemValueField="id"
-          itemTextField="nombre"
-          [items]="subsectores"
-          [canSearch]="true"
-          (onChange)="subSectorChange($event)"
+                item-content
+                [(ngModel)]="subsector"
+                itemValueField="id"
+                itemTextField="nombre"
+                [items]="subsectores"
+                [canSearch]="true"
+                (onChange)="subSectorChange($event)"
         >
         </ionic-selectable> </ion-item
       ><ion-item class="categorias">
-        <ion-label>Provincia</ion-label>
-        <ionic-selectable
-          item-content
-          [(ngModel)]="provincia"
-          itemValueField="id"
-          itemTextField="name"
-          [items]="provincias"
-          [canSearch]="true"
-          (onChange)="provinciasChange($event)"
-        >
-        </ionic-selectable>
-      </ion-item>
+      <ion-label>Provincia</ion-label>
+      <ionic-selectable
+              item-content
+              [(ngModel)]="provincia"
+              itemValueField="id"
+              itemTextField="name"
+              [items]="all_province"
+              [canSearch]="true"
+              (onChange)="provinciasChange($event)"
+      >
+      </ionic-selectable>
+    </ion-item>
       <ion-item class="categorias">
         <ion-label>Localidad</ion-label>
         <ionic-selectable
-          item-content
-          [(ngModel)]="localidad"
-          itemValueField="id"
-          itemTextField="name"
-          [items]="localidades"
-          [canSearch]="true"
-          (onChange)="localidadesChange($event)"
+                item-content
+                [(ngModel)]="localidad"
+                itemValueField="id"
+                itemTextField="name"
+                [items]="localidades"
+                [canSearch]="true"
+                (onChange)="localidadesChange($event)"
         >
         </ionic-selectable>
       </ion-item>
     </div>
   </div>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
 
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
     <ion-spinner></ion-spinner>

@@ -25,6 +25,7 @@ export class Tab1Page {
   sector: any;
   localidades: any[] = [];
   provincias: any[] = [];
+  all_province : any[] = [];
   localidad: any;
   provincia: any;
   demandasCategoria: any = [];
@@ -32,6 +33,7 @@ export class Tab1Page {
   demandasFiltradasBuscador: any = [];
   isLogin: any;
   cookies: string;
+  filter_hidden: boolean;
 
   //SEARCH COMPONENT
   searchText: string = '';
@@ -303,6 +305,7 @@ export class Tab1Page {
   }
 
   async obtenerProvincias() {
+    // console.log('obtenemos todas las provincias.')
     this.provincias = [
       {
         id: 0,
@@ -313,8 +316,10 @@ export class Tab1Page {
     (await this.api.obtenerProvincias()).subscribe((provincias) => {
       for (let provincia of provincias) {
         this.provincias.push(provincia);
+
       }
       this.provincia = this.provincias[0];
+      this.all_province=this.provincias;
     });
   }
 
@@ -338,38 +343,101 @@ export class Tab1Page {
 
   filtrarDemandas() {
     this.demandasFiltradasBuscador = [];
-
+    this.all_province=this.provincias;
     if (this.provincia.id == 0) {
+
       //No Provincia
       if (this.sector.id != 0) {
         //Si Sector
         if (this.subsector.id != 0) {
+          this.all_province = [
+            {
+              id: 0,
+              name: 'Todas',
+            },
+          ];
           for (let demanda of this.demandas) {
             if (demanda.sub_sector == this.subsector.id) {
               this.demandasFiltradasBuscador.push(demanda);
+
+              let exist = 0;
+              for (let province_exist of this.all_province) {
+                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
+                  exist=1;
+                }
+              }
+
+              if(exist==0){
+
+                this.all_province.push(
+                    {
+                      id: demanda.user['province_id'],
+                      name: this.provincias[demanda.user['province_id']].name,
+                    })
+              }
             }
           }
         } else {
+
+
+          this.all_province = [
+            {
+              id: 0,
+              name: 'Todas',
+            },
+          ];
           for (let demanda of this.demandas) {
+
             if (demanda.sector == this.sector.id) {
               this.demandasFiltradasBuscador.push(demanda);
+
+
+              let exist = 0;
+              for (let province_exist of this.all_province) {
+                // console.log(this.provincias[demanda.user['province_id']].name)
+                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
+                  exist=1;
+                }
+              }
+
+              if(exist==0){
+
+              this.all_province.push(
+                {
+                  id: demanda.user['province_id'],
+                  name: this.provincias[demanda.user['province_id']].name,
+                })
+              }
+
             }
           }
+
         }
       } else {
+
         //No sector
         for (let demanda of this.demandas) {
+
           this.demandasProvincia.push(demanda);
           this.demandasFiltradasBuscador.push(demanda);
+
         }
       }
     } else {
       //Si provincia
+
       if (this.localidad.id != 0) {
+
         //Si localidad
         if (this.sector.id != 0) {
           //Si sector
           let aux = this.subsector.id != 0 ? this.subsector : this.sector;
+          this.all_province = [
+            {
+              id: 0,
+              name: 'Todas',
+            },
+          ];
           for (let demanda of this.demandas) {
             this.demandasProvincia.push(demanda);
             if (
@@ -379,6 +447,22 @@ export class Tab1Page {
               demanda.user.town_id == this.localidad.id
             ) {
               this.demandasFiltradasBuscador.push(demanda);
+
+              let exist = 0;
+              for (let province_exist of this.all_province) {
+                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
+                  exist=1;
+                }
+              }
+
+              if(exist==0){
+
+                this.all_province.push(
+                    {
+                      id: demanda.user['province_id'],
+                      name: this.provincias[demanda.user['province_id']].name,
+                    })
+              }
             }
           }
         } else {
@@ -394,9 +478,17 @@ export class Tab1Page {
           }
         }
       } else {
+
+        //no localidad
         if (this.sector.id != 0) {
           //Si sector
           let aux = this.subsector.id != 0 ? this.subsector : this.sector;
+          this.all_province = [
+            {
+              id: 0,
+              name: 'Todas',
+            },
+          ];
           for (let demanda of this.demandas) {
             this.demandasProvincia.push(demanda);
             if (
@@ -406,6 +498,22 @@ export class Tab1Page {
               demanda.user.province_id == this.provincia.id
             ) {
               this.demandasFiltradasBuscador.push(demanda);
+
+              let exist = 0;
+              for (let province_exist of this.all_province) {
+                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
+                  exist=1;
+                }
+              }
+
+              if(exist==0){
+
+                this.all_province.push(
+                    {
+                      id: demanda.user['province_id'],
+                      name: this.provincias[demanda.user['province_id']].name,
+                    })
+              }
             }
           }
         } else {
@@ -559,4 +667,27 @@ export class Tab1Page {
   closeCookies() {
     this.showCookies = false;
   }
+
+  view_filter(){
+    document.getElementById("filter_hidden").style.display = "block";
+  }
+
+  onScroll(event) {
+
+    if(event.detail.scrollTop==0){
+      document.getElementById("filter_hidden").style.display = "block";
+    }else{
+      document.getElementById("filter_hidden").style.display = "none";
+    }
+    // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
+    // if (event.detail.deltaY > 0 && this.filter_hidden) return;
+    // if (event.detail.deltaY < 0 && !this.filter_hidden) return;
+    // if (event.detail.deltaY > 0) {
+    //   console.log(event.detail.deltaY);
+    //   this.filter_hidden = true;
+    // } else {
+    //   console.log(event.detail.deltaY);
+    //   this.filter_hidden = false;
+    // };
+  };
 }
