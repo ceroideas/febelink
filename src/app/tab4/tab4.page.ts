@@ -47,7 +47,6 @@ export class Tab4Page {
   localidad: any;
   provincias: any[] = [];
   localidades: any[] = [];
-  typeDNI: string = 'password';
   typeAddress: string = 'password';
   loading: boolean = true;
   max_bio: any = 15;
@@ -296,7 +295,11 @@ export class Tab4Page {
         )
       ).subscribe(
         (res) => {
+          console.log("correcto");
+          console.log(res.user.dni);
           response = res;
+          var dniinput = document.getElementById('dninie') as HTMLInputElement;
+          dniinput.value=res.user.dni;
           this.utilities.showToast(
             'Se han producido los cambios correctamente'
           );
@@ -311,7 +314,6 @@ export class Tab4Page {
             //if (JSON.parse(err.error)) {
             //this.utilities.showToast(JSON.parse(err.error));
             //} else {
-
             let jsonError = err.error;
 
             let arrayErrores = [];
@@ -845,25 +847,12 @@ export class Tab4Page {
     );
   }
 
-  clickDNI() {
-    if (this.typeDNI === 'password') {
-      this.typeDNI = 'text';
-    } else {
-      this.typeDNI = 'password';
-    }
-  }
-
   clickAddress() {
     if (this.typeAddress === 'password') {
       this.typeAddress = 'text';
     } else {
       this.typeAddress = 'password';
     }
-  }
-
-  checkHide() {
-    this.typeDNI = 'password';
-    this.typeAddress = 'password';
   }
 
   async openGuide() {
