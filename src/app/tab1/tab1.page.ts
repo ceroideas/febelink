@@ -9,6 +9,7 @@ import { PublicarDemandaPage } from '../pages/publicar-demanda/publicar-demanda.
 import { SesionCtrlPage } from '../pages/sesion-ctrl/sesion-ctrl.page';
 import { CookiesComponent } from '../components/cookies/cookies.component';
 import { CookieService } from 'ngx-cookie-service';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab1',
@@ -64,6 +65,17 @@ export class Tab1Page {
 
   ionViewDidEnter() {
     this.loadData();
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
   ionViewDidLoad() {

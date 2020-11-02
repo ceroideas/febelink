@@ -19,6 +19,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Storage } from '@ionic/storage';
 import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab4',
@@ -887,6 +888,17 @@ export class Tab4Page {
     });
 
     await suscribirseModal.present();
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
   /**
