@@ -52,6 +52,8 @@ export class Tab4Page {
   loading: boolean = true;
   max_bio: any = 15;
   isNative: boolean = true;
+  inputpass1: String = '';
+  inputpass2: String = '';
 
   constructor(
     private modalCtrl: ModalController,
@@ -75,6 +77,25 @@ export class Tab4Page {
     }
 
     this.subsectores = [];
+  }
+  //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
+  showHidePassMessages(){
+    if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0)){
+      document.getElementById('savebtn').removeAttribute('disabled');
+    } else {
+      document.getElementById('savebtn').setAttribute('disabled', 'disabled');
+    }
+if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0){
+      document.getElementById('msgpass1').classList.add('hide');
+    } else {
+      document.getElementById('msgpass1').classList.remove('hide');
+    }
+
+    if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0){
+      document.getElementById('msgpass2').classList.add('hide');
+    } else {
+      document.getElementById('msgpass2').classList.remove('hide');
+    }
   }
 
   async ngOnInit() {}
@@ -264,14 +285,49 @@ export class Tab4Page {
             this.base64img,
             p.password
           )
-        ).subscribe((res) => {
+        ).subscribe(
+        (res) => {
           response = res;
           this.utilities.showToast(
             'Se han producido los cambios correctamente'
           );
           this.utilities.saveUserData(p);
           this.utilities.dismissLoading();
-        });
+        },
+        (err) => {
+          if (err.status === 422) {
+            let jsonError = err.error;
+
+            let arrayErrores = [];
+
+            for (let key in jsonError.errors) {
+              arrayErrores.push(jsonError.errors[key]);
+            }
+
+            // mergeamos los subarrays en uno solo
+            arrayErrores = [].concat.apply([], arrayErrores);
+
+            for (let i = 0; i < arrayErrores.length; i++) {
+              arrayErrores[i] = this.utilities.capitalizeFirstLetter(
+                arrayErrores[i]
+              );
+            }
+
+            let cadenaErrores = `<ul>`;
+            for (let error of arrayErrores) {
+              cadenaErrores += `<li>${error}</li>`;
+            }
+            cadenaErrores += `</ul>`;
+
+            this.utilities.showAlert(
+              'Error al editar los datos',
+              `Ocurrieron los siguientes errores: ${cadenaErrores}`
+            );
+            // }
+          }
+          this.utilities.dismissLoading();
+        }
+        );
       } else {
         this.utilities.showToast(
           'Introduce correctamente la confirmación de contraseña'
