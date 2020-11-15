@@ -14,11 +14,11 @@
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        Respuestas
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ perfil !== null ? 'Perfil' : 'Iniciar sesión'}}
+        {{ perfil !== undefined ? 'Perfil' : 'Iniciar sesión'}}
       </ion-button>
     </ion-buttons>
 
@@ -45,14 +45,14 @@
     <p>Cargando...</p>
   </div>
 
-  <div *ngIf="perfil!=null && !isLoading">
+  <div *ngIf="perfilpublico!=null && !isLoading">
     <!-- Logo nombre y valoracion -->
-    <img [src]="perfil?.logo" *ngIf="perfil?.logo" class="logo" />
-    <img src="assets/imgs/4.jpg" *ngIf="!perfil?.logo" class="logo" />
+    <img [src]="perfilpublico?.logo" *ngIf="perfilpublico?.logo" class="logo" />
+    <img src="assets/imgs/4.jpg" *ngIf="!perfilpublico?.logo" class="logo" />
     <div class="apartado">
-      <h1 class="title">{{perfil?.name}}</h1>
+      <h1 class="title">{{perfilpublico?.name}}</h1>
       <span class="reviews">
-        <div class="val" *ngFor="let val of perfil.valoracion">
+        <div class="val" *ngFor="let val of perfilpublico.valoracion">
           <strong id="valoracion" *ngIf="val.length > 0"
             >{{ val.length }} {{ val[0].name }}</strong
           >
@@ -60,22 +60,22 @@
       </span>
     </div>
     <!-- Apartados -->
-    <div class="apartado" *ngIf="perfil?.descripcion">
+    <div class="apartado" *ngIf="perfilpublico?.descripcion">
       <h2 class="title">Descripción</h2>
-      <p class="desc">{{perfil?.descripcion}}</p>
+      <p class="desc">{{perfilpublico?.descripcion}}</p>
     </div>
     <div class="apartado" *ngIf="contacto ==='true'">
       <h2 class="title">Datos de contacto</h2>
       <p>
         <ion-icon name="mail"></ion-icon> Email:
-        <a [href]="'mailto:' + perfil?.email" target="_top"
-          ><em>{{perfil?.email}}</em></a
+        <a [href]="'mailto:' + perfilpublico?.email" target="_top"
+          ><em>{{perfilpublico?.email}}</em></a
         >
       </p>
       <p>
         <ion-icon name="call"></ion-icon> Telefono:
-        <a [href]="'tel:' + perfil?.telefono" target="_top"
-          ><em>{{perfil?.telefono}}</em></a
+        <a [href]="'tel:' + perfilpublico?.telefono" target="_top"
+          ><em>{{perfilpublico?.telefono}}</em></a
         >
       </p>
     </div>
@@ -137,25 +137,25 @@
     <p>Cargando...</p>
   </div>
 
-  <div *ngIf="perfil!=null && !isLoading" class="content">
-    <ion-grid fixed *ngIf="perfil!=null">
+  <div *ngIf="perfilpublico!=null && !isLoading" class="content">
+    <ion-grid fixed *ngIf="perfilpublico!=null">
       <ion-row>
         <ion-col size="4">
           <img
             style="float: left"
-            [src]="perfil?.logo"
-            *ngIf="perfil?.logo"
+            [src]="perfilpublico?.logo"
+            *ngIf="perfilpublico?.logo"
             class="logo"
           />
           <img
             style="float: left"
             src="assets/imgs/4.jpg"
-            *ngIf="!perfil?.logo"
+            *ngIf="!perfilpublico?.logo"
             class="logo"
           />
         </ion-col>
         <ion-col size="8">
-          <h1 class="title">{{perfil?.name}}</h1>
+          <h1 class="title">{{perfilpublico?.name}}</h1>
           <!-- Botón compartir perfil -->
           <ion-button
             style="float: left"
@@ -169,9 +169,9 @@
       <ion-row>
         <ion-col>
           <!-- Apartados -->
-          <div class="apartado" *ngIf="perfil?.descripcion">
+          <div class="apartado" *ngIf="perfilpublico?.descripcion">
             <h2 class="title">Descripción</h2>
-            <p class="desc">{{perfil?.descripcion}}</p>
+            <p class="desc">{{perfilpublico?.descripcion}}</p>
           </div>
         </ion-col>
       </ion-row>
@@ -184,14 +184,14 @@
             <h2 class="title">Datos de contacto</h2>
             <p class="contact-info">
               <ion-icon name="mail"></ion-icon> Email:
-              <a [href]="'mailto:' + perfil?.email" target="_top"
-                ><em>{{perfil?.email}}</em></a
+              <a [href]="'mailto:' + perfilpublico?.email" target="_top"
+                ><em>{{perfilpublico?.email}}</em></a
               >
             </p>
             <p class="contact-info">
               <ion-icon name="call"></ion-icon> Telefono:
-              <a [href]="'tel:' + perfil?.telefono" target="_top"
-                ><em>{{perfil?.telefono}}</em></a
+              <a [href]="'tel:' + perfilpublico?.telefono" target="_top"
+                ><em>{{perfilpublico?.telefono}}</em></a
               >
             </p>
             <!--<p class="contact-info">
@@ -206,7 +206,7 @@
       <ion-row>
         <ion-col>
           <span class="reviews">
-            <div class="val" *ngFor="let val of perfil.valoracion">
+            <div class="val" *ngFor="let val of perfilpublico.valoracion">
               <strong id="valoracion" *ngIf="val.length > 0"
                 >{{ val.length }} {{ val[0].name }}</strong
               >

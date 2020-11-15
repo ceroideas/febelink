@@ -13,7 +13,7 @@
       </ion-button>
       <ion-button class="btn-header active">
         <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        Respuestas
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
@@ -35,7 +35,7 @@
     <ion-segment [(ngModel)]="settingsOfertas">
       <ion-segment-button value="ofertasPage">Recibidas</ion-segment-button>
       <ion-segment-button value="misOfertasPage"
-        >Mis Ofertas</ion-segment-button
+        >Mis Respuestas</ion-segment-button
       >
     </ion-segment>
   </div>
@@ -46,7 +46,7 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       <h3 class="ion-text-center">
-        Estas son las ofertas recibidas a tus demandas
+        Estas son las respuestas recibidas a tus búsquedas
       </h3>
       <div
         class="cargando-container ion-text-center"
@@ -104,7 +104,7 @@
       <ion-refresher slot="fixed" (ionRefresh)="doRefreshMisOfertas($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <h3 class="ion-text-center">Ofertas realizadas</h3>
+      <h3 class="ion-text-center">Respuestas realizadas</h3>
       <div
         class="cargando-container ion-text-center"
         margin-top
