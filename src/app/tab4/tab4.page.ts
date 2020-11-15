@@ -295,7 +295,41 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                     );
                     this.utilities.saveUserData(p);
                     this.utilities.dismissLoading();
-                });
+                },
+                (err) => {
+                  if (err.status === 422) {
+                    let jsonError = err.error;
+        
+                    let arrayErrores = [];
+        
+                    for (let key in jsonError.errors) {
+                      arrayErrores.push(jsonError.errors[key]);
+                    }
+        
+                    // mergeamos los subarrays en uno solo
+                    arrayErrores = [].concat.apply([], arrayErrores);
+        
+                    for (let i = 0; i < arrayErrores.length; i++) {
+                      arrayErrores[i] = this.utilities.capitalizeFirstLetter(
+                        arrayErrores[i]
+                      );
+                    }
+        
+                    let cadenaErrores = `<ul>`;
+                    for (let error of arrayErrores) {
+                      cadenaErrores += `<li>${error}</li>`;
+                    }
+                    cadenaErrores += `</ul>`;
+        
+                    this.utilities.showAlert(
+                      'Error al editar los datos',
+                      `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                    );
+                    // }
+                  }
+                  this.utilities.dismissLoading();
+                }
+                );
             } else {
                 this.utilities.showToast(
                     'Introduce correctamente la confirmación de contraseña'
