@@ -27,6 +27,7 @@ import { TermsPage } from '../pages/terms/terms.page';
     styleUrls: ['tab4.page.scss'],
 })
 export class Tab4Page {
+
     @ViewChild('barCanvas', {static: true}) barCanvas: ElementRef;
     @ViewChild(IonContent, {static: false}) content: IonContent;
 
@@ -53,6 +54,8 @@ export class Tab4Page {
     loading: boolean = true;
     max_bio: any = 15;
     isNative: boolean = true;
+    inputpass1: String = '';
+    inputpass2: String = '';
 
     constructor(
         private modalCtrl: ModalController,
@@ -77,56 +80,74 @@ export class Tab4Page {
 
         this.subsectores = [];
     }
-
-    async ngOnInit() {
+    //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
+  showHidePassMessages(){
+    if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0)){
+      document.getElementById('savebtn').removeAttribute('disabled');
+    } else {
+      document.getElementById('savebtn').setAttribute('disabled', 'disabled');
+    }
+if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0){
+      document.getElementById('msgpass1').classList.add('hide');
+    } else {
+      document.getElementById('msgpass1').classList.remove('hide');
     }
 
-    async ionViewWillEnter() {
-        //await this.obtenerSectores();
-        await this.loadSuscriptions();
-        this.content.scrollToTop(1500);
+    if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0){
+      document.getElementById('msgpass2').classList.add('hide');
+    } else {
+      document.getElementById('msgpass2').classList.remove('hide');
     }
+  }
 
-    initForm() {
-        let value = 0;
+  async ngOnInit() {}
 
-        this.form = this.formBuilder.group({
-            name: [this.perfil.name],
-            telefono: [this.perfil.telefono],
-            descripcion: [this.perfil.descripcion],
-            direccion: [this.perfil.direccion],
-            provincia: [this.provincia],
-            localidad: [this.localidad],
-            dni: [this.perfil.dni],
-            sector: [this.sectoresPerfil],
-            sub_sector: [this.subSectoresPerfil],
-            email: [this.perfil.email],
-            password: [''],
-            passwordConfirmation: [''],
+  async ionViewWillEnter() {
+    //await this.obtenerSectores();
+    await this.loadSuscriptions();
+    this.content.scrollToTop(1500);
+  }
+
+  initForm() {
+    let value = 0;
+
+    this.form = this.formBuilder.group({
+      name: [this.perfil.name],
+      telefono: [this.perfil.telefono],
+      descripcion: [this.perfil.descripcion],
+      direccion: [this.perfil.direccion],
+      provincia: [this.provincia],
+      localidad: [this.localidad],
+      dni: [this.perfil.dni],
+      sector: [this.sectoresPerfil],
+      sub_sector: [this.subSectoresPerfil],
+      email: [this.perfil.email],
+      password: [''],
+      passwordConfirmation: [''],
+    });
+    this.form.get('sector').valueChanges.subscribe((id) => {
+      if (Number(id) !== 0) {
+        if (value !== Number(id)) this.obtenerTodosSubSectores(Number(id));
+        value = Number(id);
+      }
+    });
+  }
+
+  loadSuscriptions() {
+    this.utilities.getUserSubscription().then(async (subscriptions) => {
+      this.subscription = subscriptions != null ? subscriptions[0] : null;
+
+      this.utilities
+        .getUserSubscriptionDetails()
+        .then((subscription_details) => {
+          this.subscription_details = subscription_details;
+          if (subscription_details !== null) {
+            this.max_bio = this.subscription_details.max_bio;
+          }
+          this.obtenerPerfil();
         });
-        this.form.get('sector').valueChanges.subscribe((id) => {
-            if (Number(id) !== 0) {
-                if (value !== Number(id)) this.obtenerTodosSubSectores(Number(id));
-                value = Number(id);
-            }
-        });
-    }
-
-    loadSuscriptions() {
-        this.utilities.getUserSubscription().then(async (subscriptions) => {
-            this.subscription = subscriptions != null ? subscriptions[0] : null;
-
-            this.utilities
-                .getUserSubscriptionDetails()
-                .then((subscription_details) => {
-                    this.subscription_details = subscription_details;
-                    if (subscription_details !== null) {
-                        this.max_bio = this.subscription_details.max_bio;
-                    }
-                    this.obtenerPerfil();
-                });
-        });
-    }
+    });
+  }
 
     async obtenerPerfil() {
         this.utilities.getUserData().then(async (data) => {
@@ -274,7 +295,41 @@ export class Tab4Page {
                     );
                     this.utilities.saveUserData(p);
                     this.utilities.dismissLoading();
-                });
+                },
+                (err) => {
+                  if (err.status === 422) {
+                    let jsonError = err.error;
+        
+                    let arrayErrores = [];
+        
+                    for (let key in jsonError.errors) {
+                      arrayErrores.push(jsonError.errors[key]);
+                    }
+        
+                    // mergeamos los subarrays en uno solo
+                    arrayErrores = [].concat.apply([], arrayErrores);
+        
+                    for (let i = 0; i < arrayErrores.length; i++) {
+                      arrayErrores[i] = this.utilities.capitalizeFirstLetter(
+                        arrayErrores[i]
+                      );
+                    }
+        
+                    let cadenaErrores = `<ul>`;
+                    for (let error of arrayErrores) {
+                      cadenaErrores += `<li>${error}</li>`;
+                    }
+                    cadenaErrores += `</ul>`;
+        
+                    this.utilities.showAlert(
+                      'Error al editar los datos',
+                      `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                    );
+                    // }
+                  }
+                  this.utilities.dismissLoading();
+                }
+                );
             } else {
                 this.utilities.showToast(
                     'Introduce correctamente la confirmación de contraseña'
