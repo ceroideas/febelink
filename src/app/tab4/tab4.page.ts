@@ -27,69 +27,67 @@ import { TermsPage } from '../pages/terms/terms.page';
     styleUrls: ['tab4.page.scss'],
 })
 export class Tab4Page {
+@ViewChild('barCanvas', {static: true}) barCanvas: ElementRef;
+@ViewChild(IonContent, {static: false}) content: IonContent;
 
-    @ViewChild('barCanvas', {static: true}) barCanvas: ElementRef;
-    @ViewChild(IonContent, {static: false}) content: IonContent;
+perfil: any;
+opiniones: any;
+total_opinions: any;
+opinion_types: any;
+form: FormGroup;
+base64img: any;
+demandas: any[] = [];
+sectores: any[];
+sectoresPerfil: any[] = [];
+subSectoresPerfil: any[] = [];
+subsectores: any[];
+subscription: any;
+subscription_details: any;
+barChart: Chart;
+provincia: any;
+localidad: any;
+provincias: any[] = [];
+localidades: any[] = [];
+typeAddress: string = 'password';
+loading: boolean = true;
+max_bio: any = 15;
+isNative: boolean = true;
+inputpass1: String = '';
+inputpass2: String = '';
 
-    perfil: any;
-    opiniones: any;
-    total_opinions: any;
-    opinion_types: any;
-    form: FormGroup;
-    base64img: any;
-    demandas: any[] = [];
-    sectores: any[];
-    sectoresPerfil: any[] = [];
-    subSectoresPerfil: any[] = [];
-    subsectores: any[];
-    subscription: any;
-    subscription_details: any;
-    barChart: Chart;
-    provincia: any;
-    localidad: any;
-    provincias: any[] = [];
-    localidades: any[] = [];
-    typeDNI: string = 'password';
-    typeAddress: string = 'password';
-    loading: boolean = true;
-    max_bio: any = 15;
-    isNative: boolean = true;
-    inputpass1: String = '';
-    inputpass2: String = '';
-
-    constructor(
-        private modalCtrl: ModalController,
-        public alertCtrl: AlertController,
-        private formBuilder: FormBuilder,
-        private api: ApiService,
-        private utilities: UtilitiesService,
-        private router: Router,
-        private platform: Platform,
-        private elementRef: ElementRef,
-        private camera: Camera,
-        private storage: Storage,
-        private socialSharing: SocialSharing,
-        public popoverController: PopoverController,
-        private actionSheet: ActionSheetController
-    ) {
-        if (this.platform.is('cordova')) {
-            this.isNative = true;
-        } else {
-            this.isNative = false;
-        }
-
-        this.subsectores = [];
-    }
-    //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
-  showHidePassMessages(){
-    if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0)){
-      document.getElementById('savebtn').removeAttribute('disabled');
+constructor(
+    private modalCtrl: ModalController,
+    public alertCtrl: AlertController,
+    private formBuilder: FormBuilder,
+    private api: ApiService,
+    private utilities: UtilitiesService,
+    private router: Router,
+    private platform: Platform,
+    private elementRef: ElementRef,
+    private camera: Camera,
+    private storage: Storage,
+    private socialSharing: SocialSharing,
+    public popoverController: PopoverController,
+    private actionSheet: ActionSheetController
+) {
+    if (this.platform.is('cordova')) {
+        this.isNative = true;
     } else {
-      document.getElementById('savebtn').setAttribute('disabled', 'disabled');
+        this.isNative = false;
     }
+
+    this.subsectores = [];
+}
+//&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
+showHidePassMessages(){
+if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0)){
+  document.getElementById('savebtn').removeAttribute('disabled');
+} else {
+  document.getElementById('savebtn').setAttribute('disabled', 'disabled');
+}
 if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0){
-      document.getElementById('msgpass1').classList.add('hide');
-    } else {
+  document.getElementById('msgpass1').classList.add('hide');
+} else {
       document.getElementById('msgpass1').classList.remove('hide');
     }
 
@@ -289,7 +287,11 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                         p.password
                     )
                 ).subscribe((res) => {
+                    console.log("correcto");
+                    console.log(res.user.dni);
                     response = res;
+                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                    dniinput.value=res.user.dni;
                     this.utilities.showToast(
                         'Se han producido los cambios correctamente'
                     );
