@@ -143,14 +143,21 @@ ion-content {
         margin-bottom: 10px;
     }
 }
+
 #msgpass1{
     color: red;
     font-size: 14px;
 }
+
 #msgpass2{
     color: red;
     font-size: 14px;
 }
+
 .hide{
     display: none;
+
+  .terms-text:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -6,13 +6,12 @@ import {ModalController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 
-
 @Component({
-    selector: 'app-suscribirse',
-    templateUrl: './suscribirse.page.html',
-    styleUrls: ['./suscribirse.page.scss'],
+    selector: 'app-suscription-browser',
+    templateUrl: './suscription-browser.page.html',
+    styleUrls: ['./suscription-browser.page.scss'],
 })
-export class SuscribirsePage implements OnInit {
+export class SuscriptionBrowserPage implements OnInit {
 
     elements: Elements;
     // optional parameters
@@ -122,15 +121,14 @@ export class SuscribirsePage implements OnInit {
                         this.utilities.showLoading();
 
                         (await this.api.subscribe(this.selected, result.token.id)).subscribe(async response => {
-
-                            console.log(response);
-                            await this.utilities.saveUserSubscription(response.subscription);
-                            console.log(result.token.id);
+                            document.getElementById("payment-form").style.display = "none";
+                            document.getElementById("div_suscription").style.display = "flex";
                             this.card.clear();
-                            this.subscription = await this.utilities.getUserSubscription();
                             this.utilities.dismissLoading();
                             this.utilities.showToast('Suscrito correctamente');
-
+                            this.storage.remove('userData').then(() => {
+                                this.api.refreshTabs();
+                            });
                         });
 
                     }
