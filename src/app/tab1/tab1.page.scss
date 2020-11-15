@@ -211,7 +211,6 @@ ion-thumbnail {
     float:right;
 }
 
-
 .search_input_header{
     --background: #141414;
     --border-radius: 25px;
@@ -223,4 +222,9 @@ ion-thumbnail {
 .content-filter-header{
     background: white;
     border-top: 1px solid #d0d0d0;
+}
+
+.subtitle{
+    font-size: 20px;
+    text-align: center;
 }
