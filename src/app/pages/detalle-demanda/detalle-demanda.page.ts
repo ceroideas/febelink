@@ -156,7 +156,6 @@ export class DetalleDemandaPage implements OnInit {
    */
   async ofertar(id) {
 
-
       if (this.perfil !== null) {
           if (this.perfil['id'] == this.demanda['id_demandante']) {
               const alert = await this.alertController.create({

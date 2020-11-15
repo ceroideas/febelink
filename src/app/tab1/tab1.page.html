@@ -19,7 +19,7 @@
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        Respuestas
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
@@ -108,7 +108,7 @@
 
     <div class="filtros">
       <ion-item class="categorias">
-        <ion-label>Sectores</ion-label>
+        <ion-label>Actividades</ion-label>
         <ionic-selectable
           item-content
           [(ngModel)]="sector"
@@ -160,6 +160,10 @@
       </ion-item>
     </div>
   </div>
+
+  <ion-text class="subtitle">
+    <p>Ultimas búsquedas</p>
+  </ion-text>
 
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
     <ion-spinner></ion-spinner>
