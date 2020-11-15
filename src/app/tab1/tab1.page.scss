@@ -194,8 +194,6 @@ ion-content {
         }
         
     }
-
-    
 }
 
 ion-thumbnail {
@@ -211,4 +209,25 @@ ion-thumbnail {
     float:right;
 }
 
+.terms-text:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
 
+.search_input_header{
+    --background: #141414;
+    --border-radius: 25px;
+    --color: #fff;
+    --icon-color: #fff;
+    --placeholder-color: #fff;
+}
+
+.content-filter-header{
+    background: white;
+    border-top: 1px solid #d0d0d0;
+}
+
+.subtitle{
+    font-size: 20px;
+    text-align: center;
+}

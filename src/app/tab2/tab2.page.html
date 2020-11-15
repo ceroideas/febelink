@@ -13,7 +13,7 @@
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        Respuestas
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
@@ -46,7 +46,7 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       <h4 class="text-center">
-        Demandas específicas para tí (sector y subsector)
+        Búsquedas específicas para tí (sector y subsector)
       </h4>
       <div class="cargando-container text-center" margin-top *ngIf="isLoading">
         <ion-spinner></ion-spinner>
@@ -141,7 +141,7 @@
       <ion-refresher slot="fixed" (ionRefresh)="doRefreshMisDemandas($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <h4 style="text-align: center">Demandas Realizadas</h4>
+      <h4 style="text-align: center">Búsquedas Realizadas</h4>
       <div class="cargando-container text-center" margin-top *ngIf="isLoading">
         <ion-spinner></ion-spinner>
         <p>Cargando...</p>
@@ -262,7 +262,7 @@
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">Febelink Copyright 2020</p>
+    <p style="margin-bottom: 0px">© 2020 Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>

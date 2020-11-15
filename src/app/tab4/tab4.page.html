@@ -13,7 +13,7 @@
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        Respuestas
       </ion-button>
       <ion-button class="btn-header active">
         <ion-icon slot="start" name="person"></ion-icon>
@@ -272,10 +272,13 @@
             <ion-item class="input">
               <ion-label position="floating"> Contraseña nueva: </ion-label>
               <ion-input
+                [(ngModel)]="inputpass1"
+                (keyup)="showHidePassMessages()"
                 clearInput
                 type="password"
                 formControlName="password"
               ></ion-input>
+              <p id="msgpass1" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
             </ion-item>
           </ion-col>
           <ion-col size="6">
@@ -284,10 +287,13 @@
                 Confimar contraseña nueva:
               </ion-label>
               <ion-input
+                [(ngModel)]="inputpass2"
+                (keyup)="showHidePassMessages()"
                 clearInput
                 type="password"
                 formControlName="passwordConfirmation"
               ></ion-input>
+              <p id="msgpass2" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -440,6 +446,7 @@
         </ion-item>
       </div>
       <ion-button
+        id="savebtn"
         type="submit"
         style="max-width: 200px"
         expand="block"
@@ -473,12 +480,20 @@
       (click)="logout()"
       >Cerrar Sesion &nbsp;<ion-icon name="log-out"></ion-icon>
     </ion-button>
+
+    <ion-button
+            style="max-width: 200px; margin-top: 20px"
+            class="guardar-cambios"
+
+            (click)="suspended_profile()"
+    >Deshabilitar cuenta<ion-icon name="suspended_profile"></ion-icon>
+    </ion-button>
   </div>
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">© 2020 Febelink</p>
+    <p style="margin-bottom: 0px">© 2020 Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>
