@@ -7,18 +7,19 @@ import {
     PopoverController,
     Platform,
 } from '@ionic/angular';
-import {ApiService} from '../services/api.service';
-import {UtilitiesService} from '../services/utilities.service';
-import {GuidePage} from '../pages/guide/guide.page';
-import {SuscribirsePage} from '../pages/suscribirse/suscribirse.page';
-import {Router} from '@angular/router';
-import {FormGroup, FormBuilder} from '@angular/forms';
-import {Chart} from 'chart.js';
-import {IonicSelectableComponent} from 'ionic-selectable';
-import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
-import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {Storage} from '@ionic/storage';
-import {SharePopoverComponent} from '../components/share-popover/share-popover.component';
+import { ApiService } from '../services/api.service';
+import { UtilitiesService } from '../services/utilities.service';
+import { GuidePage } from '../pages/guide/guide.page';
+import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Chart } from 'chart.js';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Storage } from '@ionic/storage';
+import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
     selector: 'app-tab4',

@@ -194,8 +194,6 @@ ion-content {
         }
         
     }
-
-    
 }
 
 ion-thumbnail {
@@ -209,6 +207,11 @@ ion-thumbnail {
 }
 .right {
     float:right;
+}
+
+.terms-text:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .search_input_header{

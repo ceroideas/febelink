@@ -6,6 +6,7 @@ import { GuidePage } from '../pages/guide/guide.page';
 import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
 import { Router } from '@angular/router';
 import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab3',
@@ -42,6 +43,17 @@ export class Tab3Page {
       await this.obtenerOfertas();
       await this.obtenerMisOfertas();
     }
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
   /**
