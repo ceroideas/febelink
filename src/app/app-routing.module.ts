@@ -120,7 +120,12 @@ const routes: Routes = [
       import('./pages/acerca-de/acerca-de.module').then(
         (m) => m.AcercaDePageModule
       ),
-  },
+  },  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  }
+
+
 ];
 @NgModule({
   imports: [

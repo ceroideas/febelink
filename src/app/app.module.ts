@@ -25,11 +25,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angularx-social-login';
 
+const config: SocketIoConfig = { url: 'https://api.febelink.com:3425', options: {secure: true, rejectUnauthorized: false}};
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,6 +40,7 @@ import {
             IonicModule.forRoot(), 
             AppRoutingModule,
             FormsModule,
+      SocketIoModule.forRoot(config),
             ReactiveFormsModule,
             HttpClientModule,
             ComponentsModule,
@@ -52,6 +55,7 @@ import {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Push,
     SocialSharing,
+
     Camera,
     Deeplinks,
     CookieService,

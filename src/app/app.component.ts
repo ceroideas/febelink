@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Platform, AlertController, IonRouterOutlet } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
+import {Socket} from "ngx-socket-io";
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
@@ -30,6 +30,7 @@ export class AppComponent {
     private api: ApiService,
     private utilities: UtilitiesService,
     public alertCtrl: AlertController,
+    private socket: Socket,
     private router: Router,
     private deeplinks: Deeplinks,
     private navCtrl: NavController
@@ -59,6 +60,7 @@ export class AppComponent {
       });
     });
     this.loginImplicito();
+
   }
 
   backbutton() {
