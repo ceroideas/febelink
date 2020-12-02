@@ -1,163 +1,162 @@
 .desktop {
-    @media (max-width: 768px){
-        display: none;
-    }
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 .mobile {
-    @media (min-width: 768px){
-        display: none;
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+ion-header {
+  text-align: center;
+  background: var(--ion-color-light);
+
+  .btn-header {
+    margin: 0 0.8rem;
+  }
+
+  .active {
+    color: var(--ion-color-primary) !important;
+  }
+
+  ion-toolbar {
+    @media (min-width: 768px) {
+      margin: 0 auto;
+      max-width: 1200px;
     }
   }
-ion-header{
-    text-align: center;
-    background: var(--ion-color-light);
+  .logo {
+    position: absolute;
+    top: 10%;
+    left: 28%;
+    width: 45%;
+    max-width: 200px;
 
-    .btn-header {
-        margin: 0 0.8rem;
+    @media (min-width: 768px) {
+      position: relative;
+      width: 45%;
+      max-width: 130px;
+      left: 0;
+      float: left;
+      margin-left: 20px;
     }
-
-    .active {
-        color: var(--ion-color-primary) !important;
-    }
-
-    ion-toolbar {
-        @media (min-width: 768px){
-            margin:0 auto;
-            max-width: 1200px;
-        }
-    }
-    .logo{
-
-        position: absolute;
-        top:10%;
-        left:28%;
-        width: 45%;
-        max-width: 200px;
-
-        @media (min-width: 768px){
-            position: relative;
-            width: 45%;
-            max-width: 130px;
-            left: 0;
-            float:left;
-            margin-left: 20px;
-        }
-    }
+  }
 }
 ion-content {
+  .input-file {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    opacity: 0;
+    left: 0px;
+  }
 
-    .input-file {
-        width: 150px;
-        height: 150px;
-        position: absolute;
-        opacity: 0;
-        left: 0px;
+  .input-file-perfil {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    opacity: 0;
+    left: 105px;
+    top: 15px;
+    @media (min-width: 768px) {
+      left: 44%;
     }
+  }
 
-    .input-file-perfil {
-        width: 150px;
-        height: 150px;
-        position: absolute;
-        opacity: 0;
-        left: 105px;
-        top: 15px;
-        @media (min-width: 768px){
-            left: 44%;
-        }
-    }
+  .desktop-content {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  .left {
+    float: left;
+  }
 
-    .desktop-content {
-        margin:0 auto;
-        max-width:800px;
+  ion-item {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  .ofertante {
+    display: block;
+    color: #9f9f9f;
+    margin-bottom: 10px;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .btn-info {
+    width: 100%;
+  }
+  .apartado {
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+  .logo {
+    display: block;
+    height: 150px;
+    margin: 0 auto;
+    max-width: 150px;
+  }
+  .editar {
+    color: var(--ion-color-primary);
+  }
+  .reviews {
+    font-size: 16px;
+    color: #ffbb58;
+    a {
+      color: #9f9f9f;
+      text-decoration: none;
+      margin-left: 20px;
     }
-    .left {
-        float:left;
+  }
+  .valoracion {
+    float: right;
+    ion-icon {
+      color: #ffbb58;
     }
-
-    ion-item{
-        padding-left:0 !important;
-        margin-left: 0 !important;
-    }
-    .ofertante{
-        display: block;
-        color: #9f9f9f;
-        margin-bottom: 10px;
-    }
-    .title{
-        font-size: 18px;
-    }
-    .btn-info{
-        width: 100%;
-    }
-    .apartado{
-        margin-bottom: 15px;
-        margin-top: 15px;
-    }
-    .logo{
-        display: block;
-        height:150px;
-        margin:0 auto;
-        max-width: 150px;
-    }
-    .editar{
-        color:var(--ion-color-primary);
-    }
-    .reviews{
-        font-size: 16px;
-        color:#ffbb58;
-        a{
-            color: #9f9f9f;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-    }
-    .valoracion{
-        float: right;
-        ion-icon{
-            color:#ffbb58;
-        }
-    }
-    .campos{
-        margin-bottom:20px;
-    }
-    .desc{
-        font-size: 12px;
-        color:#95a5a6;
-    }
-    .share{
-        margin-right: 10px;
-        font-size: 14px;
-        color: #8b8b8b;
-    }
-    .valoracion-text{
-        margin: 10px 0px 10px 0px !important;
-        p{
-            white-space: normal !important;
-            word-break: break-all;
-        }
-    }
-    .guardar-cambios{
-        display: block;
-        margin:0 auto;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-}
-
-#msgpass1{
-    color: red;
+  }
+  .campos {
+    margin-bottom: 20px;
+  }
+  .desc {
+    font-size: 12px;
+    color: #95a5a6;
+  }
+  .share {
+    margin-right: 10px;
     font-size: 14px;
+    color: #8b8b8b;
+  }
+  .valoracion-text {
+    margin: 10px 0px 10px 0px !important;
+    p {
+      white-space: normal !important;
+      word-break: break-all;
+    }
+  }
+  .guardar-cambios {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
-#msgpass2{
-    color: red;
-    font-size: 14px;
+#msgpass1 {
+  color: red;
+  font-size: 14px;
 }
 
-.hide{
-    display: none;
+#msgpass2 {
+  color: red;
+  font-size: 14px;
+}
 
-  .terms-text:hover{
+.hide {
+  display: none;
+
+  .terms-text:hover {
     text-decoration: underline;
     cursor: pointer;
+  }
 }

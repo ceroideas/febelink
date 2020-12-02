@@ -48,6 +48,7 @@ provincia: any;
 localidad: any;
 provincias: any[] = [];
 localidades: any[] = [];
+typeDNI: string = 'password';
 typeAddress: string = 'password';
 loading: boolean = true;
 max_bio: any = 15;
@@ -987,6 +988,17 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
         });
 
         await suscribirseModal.present();
+    }
+
+    /**
+     * Modal para abrir terminos y condiciones
+     */
+    async termsModal() {
+        const TermsModal = await this.modalCtrl.create({
+            component: TermsPage,
+        });
+
+        await TermsModal.present();
     }
 
     /**
