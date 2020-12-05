@@ -68,7 +68,7 @@
       <div class="sector-dropdown">
         <ion-list mode="ios" *ngIf="searchText.length > 2 && keywords.main">
           <ion-item (click)="publicarDemanda()" style="font-size: 16px">
-            Crear demanda en
+            Crear búsqueda en
             <strong style="margin-left: 5px"
             >{{keywords.main.sector_nombre}}</strong
             >
@@ -80,7 +80,7 @@
           </ion-item>
 
           <ion-item (click)="openOfertantes()" style="font-size: 16px">
-            Ver ofertantes en
+            Ver respuestas en
             <strong style="margin-left: 5px"
             >{{keywords.main.sector_nombre}}</strong
             >
@@ -102,7 +102,7 @@
 
     <div id="filter_hidden" class="filtros">
       <ion-item class="categorias">
-        <ion-label>Actividades</ion-label>
+        <ion-label>Sectores</ion-label>
         <ionic-selectable
                 item-content
                 [(ngModel)]="sector"
