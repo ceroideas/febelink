@@ -1,15 +1,15 @@
-import {Component, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {Platform, AlertController, IonRouterOutlet} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-
-import {Push, PushObject, PushOptions} from '@ionic-native/push/ngx';
-import {UtilitiesService} from './services/utilities.service';
-import {ApiService} from './services/api.service';
-import {Deeplinks} from '@ionic-native/deeplinks/ngx';
-import {NavController} from '@ionic/angular';
-import {JsonPipe} from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Platform, AlertController, IonRouterOutlet } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {Socket} from "ngx-socket-io";
+import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
+import { UtilitiesService } from './services/utilities.service';
+import { ApiService } from './services/api.service';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { NavController } from '@ionic/angular';
+import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -22,20 +22,21 @@ export class AppComponent {
     timePeriodToExit = 2000;
     @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
 
-    constructor(
-        private platform: Platform,
-        private splashScreen: SplashScreen,
-        private statusBar: StatusBar,
-        private push: Push,
-        private api: ApiService,
-        private utilities: UtilitiesService,
-        public alertCtrl: AlertController,
-        private router: Router,
-        private deeplinks: Deeplinks,
-        private navCtrl: NavController
-    ) {
-        this.initializeApp();
-    }
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private push: Push,
+    private api: ApiService,
+    private utilities: UtilitiesService,
+    public alertCtrl: AlertController,
+    private socket: Socket,
+    private router: Router,
+    private deeplinks: Deeplinks,
+    private navCtrl: NavController
+  ) {
+    this.initializeApp();
+  }
 
     initializeApp() {
         this.platform.ready().then(() => {

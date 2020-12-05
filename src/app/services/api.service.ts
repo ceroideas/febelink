@@ -643,4 +643,39 @@ export class ApiService {
             return tokenInfo.access_token;
         });
     }
+  public getAllMessages(params) {
+    const formData = new FormData();
+    formData.append('room_id', params);
+    return this._createData('getallmessages', formData);
+  }
+
+  public getChatOferta(id_demanda,id_ofertante) {
+    const formData = new FormData();
+    formData.append('id_demanda', id_demanda);
+    formData.append('id_ofertante', id_ofertante);
+    return this._createData('getchatoferta', formData);
+  }
+
+  public setMessage(user_id,person_id,message,room,timecreated) {
+    const formData = new FormData();
+    formData.append('user_id', user_id);
+    formData.append('person_id', person_id);
+    formData.append('message', message);
+    formData.append('room', room);
+    formData.append('timecreated', timecreated);
+    return this._createData('setmessage', formData);
+  }
+
+  public openChat(room) {
+    const formData = new FormData();
+    formData.append('room', room);
+    return this._createData('openchat', formData);
+  }
+
+  public closeChat(room) {
+    const formData = new FormData();
+    formData.append('room', room);
+    return this._createData('closechat', formData);
+  }
+
 }

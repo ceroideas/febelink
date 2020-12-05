@@ -130,6 +130,8 @@
                 <span><em>({{oferta?.demanda}})</em></span>
               </p>
               <p>{{oferta?.descripcion}}</p>
+
+
             </ion-label>
 
             <div class="ion-text-end">
@@ -153,6 +155,9 @@
               >
             </div>
           </ion-item>
+          <ion-button expand="block"
+                  (click)="viewChat(oferta?.id_demanda,oferta?.chat)" *ngIf="oferta?.chat>0">Chat
+          </ion-button>
 
           <ion-item-options side="end">
             <ion-button
