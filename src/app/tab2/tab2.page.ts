@@ -6,6 +6,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 import { PublicarDemandaPage } from '../pages/publicar-demanda/publicar-demanda.page';
 import { GuidePage } from '../pages/guide/guide.page';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab2',
@@ -30,6 +31,17 @@ export class Tab2Page {
   }
 
   ngOnInit() {}
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
+  }
 
   async ionViewDidEnter() {
     this.demandas = [];

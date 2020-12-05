@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { Push } from '@ionic-native/push/ngx';
@@ -26,9 +26,11 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {BrowserTab} from '@ionic-native/browser-tab/ngx';
+
 import {
-  GoogleLoginProvider,
-  FacebookLoginProvider,
+    GoogleLoginProvider,
+    FacebookLoginProvider,
 } from 'angularx-social-login';
 
 const config: SocketIoConfig = { url: 'https://api.febelink.com:3425', options: {secure: true, rejectUnauthorized: false}};
@@ -55,7 +57,7 @@ const config: SocketIoConfig = { url: 'https://api.febelink.com:3425', options: 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Push,
     SocialSharing,
-
+      BrowserTab,
     Camera,
     Deeplinks,
     CookieService,
@@ -82,4 +84,5 @@ const config: SocketIoConfig = { url: 'https://api.febelink.com:3425', options: 
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

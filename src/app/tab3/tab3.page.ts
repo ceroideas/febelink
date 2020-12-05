@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {ModalController, IonItemSliding,NavController} from '@ionic/angular';
-import {ApiService} from '../services/api.service';
-import {UtilitiesService} from '../services/utilities.service';
-import {GuidePage} from '../pages/guide/guide.page';
-import {SuscribirsePage} from '../pages/suscribirse/suscribirse.page';
-import {NavigationExtras, Router} from '@angular/router';
-import {InteriorOfertaPage} from '../pages/interior-oferta/interior-oferta.page';
+import { Component } from '@angular/core';
+import { ModalController, IonItemSliding,NavController } from '@ionic/angular';
+import { ApiService } from '../services/api.service';
+import { UtilitiesService } from '../services/utilities.service';
+import { GuidePage } from '../pages/guide/guide.page';
+import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
+import { NavigationExtras,Router } from '@angular/router';
+import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
+import { TermsPage } from '../pages/terms/terms.page';
 import { Storage } from '@ionic/storage';
-
 @Component({
     selector: 'app-tab3',
     templateUrl: 'tab3.page.html',
@@ -48,20 +48,27 @@ export class Tab3Page {
         }
     }
 
-    /**
-     * Obtener las ofertas del ofertante del servidor
-     */
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
+  }
+
+  /**
+   * Obtener las ofertas del ofertante del servidor
+   */
+
     async obtenerMisOfertas() {
-
         (await this.api.misOfertas()).subscribe((ofertas) => {
-
             this.misOfertas_one = ofertas;
-            // console.log(ofertas)
             this.isLoading = false;
             this.obtenerChatOfertas();
         });
-
-
     }
 
     async obtenerChatOfertas() {
