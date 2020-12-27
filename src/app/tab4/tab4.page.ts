@@ -81,18 +81,18 @@ constructor(
 }
 //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
 showHidePassMessages(){
-if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0)){
+if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass2.trim().length<=0)){
   document.getElementById('savebtn').removeAttribute('disabled');
 } else {
   document.getElementById('savebtn').setAttribute('disabled', 'disabled');
 }
-if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0){
+if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass1.trim().length<=0){
   document.getElementById('msgpass1').classList.add('hide');
 } else {
       document.getElementById('msgpass1').classList.remove('hide');
     }
 
-    if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0){
+    if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass2.trim().length<=0){
       document.getElementById('msgpass2').classList.add('hide');
     } else {
       document.getElementById('msgpass2').classList.remove('hide');
