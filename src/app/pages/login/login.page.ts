@@ -61,6 +61,7 @@ export class LoginPage implements OnInit {
             'Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde'
           );
         }
+        this.utilities.dismissLoading();
       }
     );
   }
