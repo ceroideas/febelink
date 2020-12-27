@@ -437,8 +437,10 @@ export class ApiService {
         formData.append('descripcion', descripcion);
         formData.append('telefono', telefono);
         formData.append('direccion', direccion);
-        formData.append('provincia', provincia);
-        formData.append('localidad', localidad);
+        if (provincia !== undefined && provincia !== null)
+            formData.append('province_id', provincia.id);
+        if (localidad !== undefined && localidad !== null)
+            formData.append('town_id', localidad.id);
         formData.append('sector', sector);
         formData.append('sub_sector', sub_sector);
         formData.append('dni', dni);
