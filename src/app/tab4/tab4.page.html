@@ -112,6 +112,7 @@
               <ion-label position="floating"> Descripcion: </ion-label>
               <ion-textarea
                 [value]="perfil?.descripcion"
+                type="text"
                 [maxlength]="max_bio"
                 formControlName="descripcion"
               ></ion-textarea>
@@ -122,7 +123,7 @@
               <ion-label position="floating"> Direccion: </ion-label>
               <ion-input
                 clearInput
-                (ionBlur)="checkHide()"
+                type="text"
                 [value]="perfil?.direccion"
                 formControlName="direccion"
               ></ion-input>

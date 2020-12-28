@@ -371,6 +371,15 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 )
             ).subscribe(
                 (res) => {
+                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                        res.user.descripcion="";
+                    }
+                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                        res.user.direccion="";
+                    }
+                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                        res.user.telefono="";
+                    }
                     response = res;
                     this.utilities.showToast(
                         'Se han producido los cambios correctamente'
@@ -381,31 +390,18 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 (err) => {
                     if (err.status === 422) {
                         let arrayErrores = [];
-                        //comprobar descripción
-                        if(err.error.vDescription == false){
-                            arrayErrores.push("La descripción no puede estar vacia");
+                        if(err.error.nombre == false){
+                            arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
                         }
-                        //comprobar dirección
-                        if(err.error.vAddress == false){
-                            arrayErrores.push("La dirección no puede estar vacia");
+                        if(err.error.email == false){
+                            arrayErrores.push("El correo no es válido");
                         }
-                        //comprobar provincia
-                        if(err.error.vProvince == false){
-                            arrayErrores.push("La provincia no puede estar vacia");
-                        }
-                        //comprobar localidad
-                        if(err.error.vLocation == false){
-                            arrayErrores.push("La localidad no puede estar vacia");
-                        }
-                        //comprobar telefono
-                        if(err.error.vTelefono == "0"){
-                            arrayErrores.push("El teléfono no puede estar vacio");
-                        } else if(err.error.vTelefono == "2"){
+                        if(err.error.vTelefono == false){
                             arrayErrores.push("El formato del teléfono no es correcto");
                         }
                         //comprobar DNI
                         if(err.error.vDNI == false){
-                            arrayErrores.push("El formato del DNI no es correcto");
+                            arrayErrores.push("El formato del DNI/NIE no es correcto");
                         }
                         
                         //Mostrar conjunto de errores de validación
