@@ -369,6 +369,10 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                 )
             ).subscribe(
                 (res) => {
+                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                        res.user.telefono="";
+                    }
+                    response = res;
                     var dniinput = document.getElementById('dninie') as HTMLInputElement;
                     dniinput.value=res.user.dni;
                     this.utilities.showToast(
@@ -380,31 +384,19 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                 (err) => {
                     if (err.status === 422) {
                         let arrayErrores = [];
-                        //Check description
-                        if(err.error.vDescription == false){
-                            arrayErrores.push("La descripción no puede estar vacia");
+                        if(err.error.nombre == false){
+                            arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
                         }
-                        //Check address
-                        if(err.error.vAddress == false){
-                            arrayErrores.push("La dirección no puede estar vacia");
-                        }
-                        //Check province
-                        if(err.error.vProvince == false){
-                            arrayErrores.push("La provincia no puede estar vacia");
-                        }
-                        //Check town
-                        if(err.error.vLocation == false){
-                            arrayErrores.push("La localidad no puede estar vacia");
+                        if(err.error.email == false){
+                            arrayErrores.push("El correo no es válido");
                         }
                         //Check phone number
-                        if(err.error.vTelefono == "0"){
-                            arrayErrores.push("El teléfono no puede estar vacio");
-                        } else if(err.error.vTelefono == "2"){
+                        if(err.error.vTelefono == false){
                             arrayErrores.push("El formato del teléfono no es correcto");
                         }
                         //Check DNI
                         if(err.error.vDNI == false){
-                            arrayErrores.push("El formato del DNI no es correcto");
+                            arrayErrores.push("El formato del DNI/NIE no es correcto");
                         }
                         
                         //Show all the errors
