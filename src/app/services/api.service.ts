@@ -430,7 +430,7 @@ export class ApiService {
         sub_sector,
         dni,
         imagen,
-        pass,
+        pass
     ) {
         const formData = new FormData();
         formData.append('name', name);
