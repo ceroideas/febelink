@@ -300,15 +300,22 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                         p.password
                     )
                 ).subscribe((res) => {
-                    console.log("correcto");
-                    console.log(res.user.dni);
+                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                        res.user.descripcion="";
+                    }
+                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                        res.user.direccion="";
+                    }
+                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                        res.user.telefono="";
+                    }
                     response = res;
                     var dniinput = document.getElementById('dninie') as HTMLInputElement;
                     dniinput.value=res.user.dni;
                     this.utilities.showToast(
                         'Se han producido los cambios correctamente'
                     );
-                    this.utilities.saveUserData(p);
+                    this.utilities.saveUserData(res.user);
                     this.utilities.dismissLoading();
                 },
                 (err) => {
@@ -369,6 +376,12 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                 )
             ).subscribe(
                 (res) => {
+                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                        res.user.descripcion="";
+                    }
+                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                        res.user.direccion="";
+                    }
                     if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
                         res.user.telefono="";
                     }
