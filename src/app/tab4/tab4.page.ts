@@ -299,7 +299,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                         p.sub_sector,
                         p.dni,
                         this.base64img,
-                        p.password,
+                        p.password
                     )
                 ).subscribe((res) => {
                     console.log("correcto");
@@ -367,7 +367,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                     p.sector,
                     p.sub_sector,
                     p.dni,
-                    this.base64img,
+                    this.base64img
                 )
             ).subscribe(
                 (res) => {

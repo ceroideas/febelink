@@ -430,15 +430,17 @@ export class ApiService {
         sub_sector,
         dni,
         imagen,
-        pass,
+        pass
     ) {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('descripcion', descripcion);
         formData.append('telefono', telefono);
         formData.append('direccion', direccion);
-        formData.append('provincia', provincia);
-        formData.append('localidad', localidad);
+        if (provincia !== undefined && provincia !== null)
+            formData.append('province_id', provincia.id);
+        if (localidad !== undefined && localidad !== null)
+            formData.append('town_id', localidad.id);
         formData.append('sector', sector);
         formData.append('sub_sector', sub_sector);
         formData.append('dni', dni);
