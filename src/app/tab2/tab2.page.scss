@@ -140,7 +140,9 @@ ion-content{
         float:right;
     }
 }
-.terms-text:hover{
+.terms-text{
     text-decoration: underline;
+}
+.terms-text:hover{
     cursor: pointer;
 }

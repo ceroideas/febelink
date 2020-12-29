@@ -154,9 +154,13 @@ ion-content {
 
 .hide {
   display: none;
+}
 
-  .terms-text:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
+}
+.terms-text{
+  text-decoration: underline;
+}
+.terms-text:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }

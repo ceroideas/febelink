@@ -48,8 +48,6 @@ provincia: any;
 localidad: any;
 provincias: any[] = [];
 localidades: any[] = [];
-typeDNI: string = 'password';
-typeAddress: string = 'password';
 loading: boolean = true;
 max_bio: any = 15;
 isNative: boolean = true;
@@ -371,7 +369,8 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 )
             ).subscribe(
                 (res) => {
-                    response = res;
+                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                    dniinput.value=res.user.dni;
                     this.utilities.showToast(
                         'Se han producido los cambios correctamente'
                     );
@@ -954,27 +953,6 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 }
             }
         );
-    }
-
-    clickDNI() {
-        if (this.typeDNI === 'password') {
-            this.typeDNI = 'text';
-        } else {
-            this.typeDNI = 'password';
-        }
-    }
-
-    clickAddress() {
-        if (this.typeAddress === 'password') {
-            this.typeAddress = 'text';
-        } else {
-            this.typeAddress = 'password';
-        }
-    }
-
-    checkHide() {
-        this.typeDNI = 'password';
-        this.typeAddress = 'password';
     }
 
     async openGuide() {
