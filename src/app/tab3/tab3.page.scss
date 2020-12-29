@@ -110,7 +110,9 @@ ion-content{
         background-color: #da1c1c;
     }
 }
-.terms-text:hover{
+.terms-text{
     text-decoration: underline;
+}
+.terms-text:hover{
     cursor: pointer;
 }
