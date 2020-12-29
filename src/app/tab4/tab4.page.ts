@@ -299,7 +299,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                         p.sub_sector,
                         p.dni,
                         this.base64img,
-                        p.password,
+                        p.password
                     )
                 ).subscribe((res) => {
                     console.log("correcto");
@@ -367,7 +367,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                     p.sector,
                     p.sub_sector,
                     p.dni,
-                    this.base64img,
+                    this.base64img
                 )
             ).subscribe(
                 (res) => {
@@ -381,34 +381,34 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 (err) => {
                     if (err.status === 422) {
                         let arrayErrores = [];
-                        //comprobar descripción
+                        //Check description
                         if(err.error.vDescription == false){
                             arrayErrores.push("La descripción no puede estar vacia");
                         }
-                        //comprobar dirección
+                        //Check address
                         if(err.error.vAddress == false){
                             arrayErrores.push("La dirección no puede estar vacia");
                         }
-                        //comprobar provincia
+                        //Check province
                         if(err.error.vProvince == false){
                             arrayErrores.push("La provincia no puede estar vacia");
                         }
-                        //comprobar localidad
+                        //Check town
                         if(err.error.vLocation == false){
                             arrayErrores.push("La localidad no puede estar vacia");
                         }
-                        //comprobar telefono
+                        //Check phone number
                         if(err.error.vTelefono == "0"){
                             arrayErrores.push("El teléfono no puede estar vacio");
                         } else if(err.error.vTelefono == "2"){
                             arrayErrores.push("El formato del teléfono no es correcto");
                         }
-                        //comprobar DNI
+                        //Check DNI
                         if(err.error.vDNI == false){
                             arrayErrores.push("El formato del DNI no es correcto");
                         }
                         
-                        //Mostrar conjunto de errores de validación
+                        //Show all the errors
                         arrayErrores = [].concat.apply([], arrayErrores);
 
                         let cadenaErrores = `<ul>`;
