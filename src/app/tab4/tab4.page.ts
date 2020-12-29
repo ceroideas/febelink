@@ -48,8 +48,6 @@ provincia: any;
 localidad: any;
 provincias: any[] = [];
 localidades: any[] = [];
-typeDNI: string = 'password';
-typeAddress: string = 'password';
 loading: boolean = true;
 max_bio: any = 15;
 isNative: boolean = true;
@@ -81,18 +79,18 @@ constructor(
 }
 //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
 showHidePassMessages(){
-if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0)){
+if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass1.trim().length<=0) && (this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass2.trim().length<=0)){
   document.getElementById('savebtn').removeAttribute('disabled');
 } else {
   document.getElementById('savebtn').setAttribute('disabled', 'disabled');
 }
-if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass1.trim().length<=0){
+if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass1.trim().length<=0){
   document.getElementById('msgpass1').classList.add('hide');
 } else {
       document.getElementById('msgpass1').classList.remove('hide');
     }
 
-    if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || this.inputpass2.trim().length<=0){
+    if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass2.trim().length<=0){
       document.getElementById('msgpass2').classList.add('hide');
     } else {
       document.getElementById('msgpass2').classList.remove('hide');
@@ -371,16 +369,12 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 )
             ).subscribe(
                 (res) => {
-                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
-                        res.user.descripcion="";
-                    }
-                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
-                        res.user.direccion="";
-                    }
                     if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
                         res.user.telefono="";
                     }
                     response = res;
+                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                    dniinput.value=res.user.dni;
                     this.utilities.showToast(
                         'Se han producido los cambios correctamente'
                     );
@@ -396,15 +390,16 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                         if(err.error.email == false){
                             arrayErrores.push("El correo no es válido");
                         }
+                        //Check phone number
                         if(err.error.vTelefono == false){
                             arrayErrores.push("El formato del teléfono no es correcto");
                         }
-                        //comprobar DNI
+                        //Check DNI
                         if(err.error.vDNI == false){
                             arrayErrores.push("El formato del DNI/NIE no es correcto");
                         }
                         
-                        //Mostrar conjunto de errores de validación
+                        //Show all the errors
                         arrayErrores = [].concat.apply([], arrayErrores);
 
                         let cadenaErrores = `<ul>`;
@@ -950,27 +945,6 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                 }
             }
         );
-    }
-
-    clickDNI() {
-        if (this.typeDNI === 'password') {
-            this.typeDNI = 'text';
-        } else {
-            this.typeDNI = 'password';
-        }
-    }
-
-    clickAddress() {
-        if (this.typeAddress === 'password') {
-            this.typeAddress = 'text';
-        } else {
-            this.typeAddress = 'password';
-        }
-    }
-
-    checkHide() {
-        this.typeDNI = 'password';
-        this.typeAddress = 'password';
     }
 
     async openGuide() {

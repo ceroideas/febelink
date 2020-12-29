@@ -123,7 +123,6 @@
               <ion-label position="floating"> Direccion: </ion-label>
               <ion-input
                 clearInput
-                type="text"
                 [value]="perfil?.direccion"
                 formControlName="direccion"
               ></ion-input>
@@ -322,9 +321,7 @@
         <ion-item class="input" (click)="clickAddress()">
           <ion-label position="floating"> Direccion: </ion-label>
           <ion-input
-            (ionBlur)="checkHide()"
             clearInput
-            type="{{typeAddress}}"
             formControlName="direccion"
           ></ion-input>
         </ion-item>
