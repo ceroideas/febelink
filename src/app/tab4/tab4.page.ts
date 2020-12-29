@@ -244,6 +244,20 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
     public irAInicio(): void {
     }
 
+    saveProvince:String;
+
+    public provinciasChange(event: {
+        component: IonicSelectableComponent;
+        value: any;
+    }): void {
+        this.localidades = [];
+        this.provincia = event.value;
+        this.localidad = null;
+        this.obtenerLocalidades(event.value.id);
+        this.saveProvince = event.value.name;
+        //console.log(this.saveProvince);
+    }
+
     /**
      * Metido a mano campos para enviarlos al servidor
      */
@@ -364,30 +378,37 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                     this.utilities.dismissLoading();
                 },
                 (err) => {
-                    console.log('ERROR', err);
-                    // credenciales incorrectas
                     if (err.status === 422) {
-                        console.log('ERR BODY', err.error);
-                        //if (JSON.parse(err.error)) {
-                        //this.utilities.showToast(JSON.parse(err.error));
-                        //} else {
-
-                        let jsonError = err.error;
-
                         let arrayErrores = [];
-
-                        for (let key in jsonError.errors) {
-                            arrayErrores.push(jsonError.errors[key]);
+                        //Check description
+                        if(err.error.vDescription == false){
+                            arrayErrores.push("La descripción no puede estar vacia");
                         }
-
-                        // mergeamos los subarrays en uno solo
+                        //Check address
+                        if(err.error.vAddress == false){
+                            arrayErrores.push("La dirección no puede estar vacia");
+                        }
+                        //Check province
+                        if(err.error.vProvince == false){
+                            arrayErrores.push("La provincia no puede estar vacia");
+                        }
+                        //Check town
+                        if(err.error.vLocation == false){
+                            arrayErrores.push("La localidad no puede estar vacia");
+                        }
+                        //Check phone number
+                        if(err.error.vTelefono == "0"){
+                            arrayErrores.push("El teléfono no puede estar vacio");
+                        } else if(err.error.vTelefono == "2"){
+                            arrayErrores.push("El formato del teléfono no es correcto");
+                        }
+                        //Check DNI
+                        if(err.error.vDNI == false){
+                            arrayErrores.push("El formato del DNI no es correcto");
+                        }
+                        
+                        //Show all the errors
                         arrayErrores = [].concat.apply([], arrayErrores);
-
-                        for (let i = 0; i < arrayErrores.length; i++) {
-                            arrayErrores[i] = this.utilities.capitalizeFirstLetter(
-                                arrayErrores[i]
-                            );
-                        }
 
                         let cadenaErrores = `<ul>`;
                         for (let error of arrayErrores) {
@@ -399,7 +420,6 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
                             'Error al editar los datos',
                             `Ocurrieron los siguientes errores: ${cadenaErrores}`
                         );
-                        // }
                     } else {
                         this.utilities.showAlert(
                             'Error al editar los datos',
@@ -900,16 +920,6 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) || thi
             }
             this.utilities.dismissLoading();
         });
-    }
-
-    public provinciasChange(event: {
-        component: IonicSelectableComponent;
-        value: any;
-    }): void {
-        this.localidades = [];
-        this.provincia = event.value;
-        this.localidad = null;
-        this.obtenerLocalidades(event.value.id);
     }
 
     public localidadesChange(event: {
