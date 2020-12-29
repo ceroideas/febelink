@@ -16,7 +16,10 @@ export class RegistroPage implements OnInit {
   form: FormGroup;
   sectores: any;
   subsectores: any;
-
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+  passwordType2: string = 'password';
+  passwordIcon2: string = 'eye-off';
 
   constructor(public navCtrl: NavController,
     private formBuilder: FormBuilder,
@@ -47,6 +50,16 @@ export class RegistroPage implements OnInit {
     });
     this.obtenerSectores();
   }
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
+  hideShowPassword2() {
+    this.passwordType2 = this.passwordType2 === 'text' ? 'password' : 'text';
+    this.passwordIcon2 = this.passwordIcon2 === 'eye-off' ? 'eye' : 'eye-off';
+  }
+
 
     /**
    * Obtenemos todos lo sectores del servidor
