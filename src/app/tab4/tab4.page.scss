@@ -142,12 +142,7 @@ ion-content {
   }
 }
 
-#msgpass1 {
-  color: red;
-  font-size: 14px;
-}
-
-#msgpass2 {
+#msgpass1 ,#msgpass2, #msgpass3, #msgpass4 {
   color: red;
   font-size: 14px;
 }
@@ -161,4 +156,18 @@ ion-content {
 .terms-text:hover{
   text-decoration: underline;
   cursor: pointer;
+}
+.passwordIcon {
+  color: var(--ion-color-dark);
+  font-size: 1rem !important;
+  position: relative !important;
+  top: 40px !important;
+  margin: 0 auto !important;
+}
+.passwordIcon2 {
+  color: var(--ion-color-dark);
+  font-size: 1rem !important;
+  position: relative !important;
+  top: 25px !important;
+  margin: 0 auto !important;
 }

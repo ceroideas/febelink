@@ -53,6 +53,10 @@ max_bio: any = 15;
 isNative: boolean = true;
 inputpass1: String = '';
 inputpass2: String = '';
+passwordType: string = 'password';
+passwordIcon: string = 'eye-off';
+passwordType2: string = 'password';
+passwordIcon2: string = 'eye-off';
 
 constructor(
     private modalCtrl: ModalController,
@@ -86,15 +90,28 @@ if((this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\
 }
 if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass1.trim().length<=0){
   document.getElementById('msgpass1').classList.add('hide');
+  document.getElementById('msgpass3').classList.add('hide');
 } else {
       document.getElementById('msgpass1').classList.remove('hide');
+      document.getElementById('msgpass3').classList.remove('hide');
     }
 
     if(this.inputpass2.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/) || this.inputpass2.trim().length<=0){
       document.getElementById('msgpass2').classList.add('hide');
+      document.getElementById('msgpass4').classList.add('hide');
     } else {
       document.getElementById('msgpass2').classList.remove('hide');
+      document.getElementById('msgpass4').classList.remove('hide');
     }
+}
+
+hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
+  hideShowPassword2() {
+    this.passwordType2 = this.passwordType2 === 'text' ? 'password' : 'text';
+    this.passwordIcon2 = this.passwordIcon2 === 'eye-off' ? 'eye' : 'eye-off';
   }
 
   async ngOnInit() {}
