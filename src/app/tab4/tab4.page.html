@@ -270,11 +270,17 @@
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating"> Contraseña nueva: </ion-label>
+              <ion-icon
+                slot="end"
+                (click)="hideShowPassword()"
+                [name]="passwordIcon"
+                class="passwordIcon2"
+              ></ion-icon>
               <ion-input
                 [(ngModel)]="inputpass1"
                 (keyup)="showHidePassMessages()"
                 clearInput
-                type="password"
+                [type]="passwordType"
                 formControlName="password"
               ></ion-input>
               <p id="msgpass1" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
@@ -283,13 +289,19 @@
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating">
-                Confimar contraseña nueva:
+                Confirmar contraseña nueva:
               </ion-label>
+              <ion-icon
+                slot="end"
+                (click)="hideShowPassword2()"
+                [name]="passwordIcon2"
+                class="passwordIcon2"
+              ></ion-icon>
               <ion-input
                 [(ngModel)]="inputpass2"
                 (keyup)="showHidePassMessages()"
                 clearInput
-                type="password"
+                [type]="passwordType2"
                 formControlName="passwordConfirmation"
               ></ion-input>
               <p id="msgpass2" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
@@ -425,22 +437,40 @@
 
         <ion-item class="input">
           <ion-label position="floating"> Contraseña nueva: </ion-label>
+          <ion-icon
+          slot="end"
+          (click)="hideShowPassword()"
+          [name]="passwordIcon"
+          class="passwordIcon"
+        ></ion-icon>
           <ion-input
+            [(ngModel)]="inputpass1"
+            (keyup)="showHidePassMessages()"
             clearInput
-            type="password"
+            [type]="passwordType"
             formControlName="password"
           ></ion-input>
         </ion-item>
+        <p id="msgpass3" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
         <ion-item class="input">
           <ion-label position="floating">
-            Confimar contraseña nueva:
+            Confirmar contraseña nueva:
           </ion-label>
+          <ion-icon
+            slot="end"
+            (click)="hideShowPassword2()"
+            [name]="passwordIcon2"
+            class="passwordIcon"
+        ></ion-icon>
           <ion-input
+            [(ngModel)]="inputpass2"
+            (keyup)="showHidePassMessages()"
             clearInput
-            type="password"
+            [type]="passwordType2"
             formControlName="passwordConfirmation"
           ></ion-input>
         </ion-item>
+        <p id="msgpass4" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
       </div>
       <ion-button
         id="savebtn"
