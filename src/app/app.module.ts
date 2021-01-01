@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Push } from '@ionic-native/push/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -30,12 +30,20 @@ import {
   FacebookLoginProvider,
 } from 'angularx-social-login';
 
+/* NGX Translate imports. */
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, 
-            IonicModule.forRoot(), 
+  imports: [BrowserModule,
+            IonicModule.forRoot(),
             AppRoutingModule,
             FormsModule,
             ReactiveFormsModule,
@@ -44,7 +52,14 @@ import {
             IonicStorageModule.forRoot(),
             NgxStripeModule.forRoot('pk_live_26EQ8gc0INPEdZjy6Iy8DOnK004mMtUILK'),
             SocialLoginModule,
-            ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+            ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+            TranslateModule.forRoot({
+              loader: {
+                  provide: TranslateLoader,
+                  useFactory: (createTranslateLoader),
+                  deps: [HttpClient]
+              }
+          }),
             ],
   providers: [
     StatusBar,
@@ -74,7 +89,7 @@ import {
           }
         ],
       } as SocialAuthServiceConfig,
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -10,6 +10,7 @@ import { ApiService } from './services/api.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController } from '@ionic/angular';
 import { JsonPipe } from '@angular/common';
+import { TranslateConfigService } from './services/translate/translate-config.service';
 
 @Component({
   selector: 'app-root',
@@ -32,13 +33,15 @@ export class AppComponent {
     public alertCtrl: AlertController,
     private router: Router,
     private deeplinks: Deeplinks,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private translateService: TranslateConfigService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.setupLanguage();
       this.platform.backButton.subscribe(() => {
         if (this.router.url === '' || this.router.url === '/menu/todas') {
           navigator['app'].exitApp();
@@ -59,6 +62,11 @@ export class AppComponent {
       });
     });
     this.loginImplicito();
+  }
+
+  setupLanguage() {
+    const currentLanguage = this.translateService.getDefaultLanguage();
+    this.translateService.setLanguage(currentLanguage);
   }
 
   backbutton() {
