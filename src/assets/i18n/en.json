@@ -1,7 +1,11 @@
 {
     "menu": {
         "tabs": {
-            "searchEngine": "Search"
+            "searchEngine": "Search",
+            "recommend": "Recommend",
+            "chat": "Chat",
+            "profile": "Profile",
+            "login": "Login"
         }
     }
 }
