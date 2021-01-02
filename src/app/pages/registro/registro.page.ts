@@ -99,6 +99,19 @@ export class RegistroPage implements OnInit {
   /**
    * Enviamos el registro al servidor
    */
+  loginBeforeRegister(p) {
+    this.utilities.showLoading();
+
+    const formData = new FormData();
+    formData.append('email', p.email);
+    formData.append('password', p.password);
+    formData.append('remember_me', '1');
+
+    (this.api.login(formData, 'login')).subscribe(
+      (res) => {this.utilities.dismissLoading();}
+    );
+  }
+
   async submitForm() {
 
     console.log("FORM",this.form);
@@ -118,14 +131,9 @@ export class RegistroPage implements OnInit {
       console.log("P",p);
 
        this.api.registro(p).subscribe(resp => {
-        
         console.log("RESP",resp);
+        this.loginBeforeRegister(p);
         this.utilities.dismissLoading();
-
-        this.navCtrl.navigateForward('/login').then(() => {
-          this.utilities.showToast("Se ha creado el usuario correctamente");
-        });
-
       }, err => {
         
         console.log("ERROR",err)
