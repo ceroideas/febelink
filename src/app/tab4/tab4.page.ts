@@ -29,6 +29,7 @@ export class Tab4Page {
   @ViewChild('barCanvas', { static: true }) barCanvas: ElementRef;
   @ViewChild(IonContent, { static: false }) content: IonContent;
 
+  currentYear = new Date().getFullYear();
   perfil: any;
   opiniones: any;
   total_opinions: any;
@@ -81,7 +82,7 @@ export class Tab4Page {
 
   async ionViewWillEnter() {
     //await this.obtenerSectores();
-    await this.loadSuscriptions();
+    this.loadSuscriptions();
     this.content.scrollToTop(1500);
   }
 
@@ -545,6 +546,7 @@ export class Tab4Page {
   /**
    * Método para cerrar sesión
    */
+  /*
   async logout() {
     let alert = await this.alertCtrl.create({
       header: 'Cerrar sesión',
@@ -569,6 +571,7 @@ export class Tab4Page {
     });
     await alert.present();
   }
+  */
 
   /**
    * Comprobación de contraseñas

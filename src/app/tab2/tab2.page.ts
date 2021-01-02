@@ -13,6 +13,7 @@ import { GuidePage } from '../pages/guide/guide.page';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
+  currentYear = new Date().getFullYear();
   settingsDemandas: string = 'demandasPage'; // default button
   perfil: any;
   demandas: any;

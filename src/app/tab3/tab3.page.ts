@@ -13,6 +13,7 @@ import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.pag
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
+  currentYear = new Date().getFullYear();
   settingsOfertas: string = 'ofertasPage'; // default button
   ofertas: any;
   misOfertas: any;

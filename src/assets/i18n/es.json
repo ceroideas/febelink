@@ -6,6 +6,9 @@
             "chat": "Chat",
             "profile": "Perfil",
             "login": "Iniciar sesión"
+        },
+        "pages": {
+            "opinions": "Opiniones"
         }
     }
 }

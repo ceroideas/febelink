@@ -5,6 +5,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginPage implements OnInit {
     private utilities: UtilitiesService,
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async submitForm() {
+  submitForm() {
     this.utilities.showLoading();
 
     const formData = new FormData();
@@ -41,8 +43,10 @@ export class LoginPage implements OnInit {
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
 
-    (await this.api.login(formData, 'login')).subscribe(
-      (res) => {},
+    this.api.login(formData, 'login').subscribe(
+      (res) => {
+        this.authenticationService.login();
+      },
       (err) => {
         console.log('ERROR', err);
         this.utilities.dismissLoading();

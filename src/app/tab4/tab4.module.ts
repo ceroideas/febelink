@@ -1,18 +1,15 @@
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Tab4Page } from './tab4.page';
+import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 import { Tab4PageRoutingModule } from './tab4-routing.module'
 import { IonicSelectableModule } from 'ionic-selectable';
 
+import { Tab4Page } from './tab4.page';
+
+
 @NgModule({
   imports: [
-    IonicModule,
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
+    SharedModule,
     IonicSelectableModule,
     RouterModule.forChild([{ path: '', component: Tab4Page }]),
     Tab4PageRoutingModule,

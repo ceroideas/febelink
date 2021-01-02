@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform, AlertController, IonRouterOutlet } from '@ionic/angular';
+import { Platform, AlertController, IonRouterOutlet, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -11,6 +11,8 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController } from '@ionic/angular';
 import { JsonPipe } from '@angular/common';
 import { TranslateConfigService } from './services/translate/translate-config.service';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from './services/authentication/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +25,16 @@ export class AppComponent {
   timePeriodToExit = 2000;
   @ViewChild(IonRouterOutlet, { static: false }) routerOutlets: IonRouterOutlet;
 
+  public appPages = [
+    {
+        key: 'opinions',
+        url: '/menu/perfil',
+        icon: 'people'
+    }
+];
+
   constructor(
-    private platform: Platform,
+    public platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private push: Push,
@@ -34,7 +44,10 @@ export class AppComponent {
     private router: Router,
     private deeplinks: Deeplinks,
     private navCtrl: NavController,
-    private translateService: TranslateConfigService
+    private translateService: TranslateConfigService,
+    private storage: Storage,
+    private menu: MenuController,
+    public authenticationService: AuthenticationService
   ) {
     this.initializeApp();
   }
@@ -61,6 +74,14 @@ export class AppComponent {
         }
       });
     });
+
+    this.authenticationService.authenticationState.subscribe(state => {
+      console.log('state', state);
+      if (state) {
+        this.menu.enable(true);
+      }
+    });
+
     this.loginImplicito();
   }
 
@@ -234,4 +255,34 @@ export class AppComponent {
   public loginImplicito(): void {
     this.router.navigate(['menu/todas']);
   }
+
+  /**
+   * Método para cerrar sesión
+   */
+  async logout() {
+    let alert = await this.alertCtrl.create({
+      header: 'Cerrar sesión',
+      message: '¿Estás seguro de que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: () => {
+            this.storage.remove('userData').then(() => {
+              this.menu.enable(false);
+              this.authenticationService.logout();
+              this.api.refreshTabs();
+              this.router.navigate(['menu/todas']);
+              this.utilities.showToast('Sesión cerrada con éxito');
+            });
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
 }

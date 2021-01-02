@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar color="light">
+
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
     <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()" />
 
     <ion-buttons slot="end" class="desktop">
@@ -262,7 +267,7 @@
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">Febelink Copyright 2020</p>
+    <p style="margin-bottom: 0px">Febelink Copyright {{ currentYear }}</p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>

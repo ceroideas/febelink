@@ -1,10 +1,15 @@
 <ion-header>
   <ion-toolbar color="light">
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <!--
     <ion-buttons slot="start" class="mobile">
       <ion-button>
         <ion-menu-button menu="febelink"></ion-menu-button>
       </ion-button>
     </ion-buttons>
+    -->
 
     <img src="assets/imgs/logo.png" alt="" class="logo" (click)="refresh()" />
 
@@ -42,6 +47,7 @@
 </ion-header>
 
 <ion-content>
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -49,12 +55,13 @@
   <div class="content-filter">
     <div class="autocomplete">
       <ion-searchbar
-        placeholder="Qué buscas..."
+        placeholder="Buscar en Febelink..."
         [(ngModel)]="searchText"
         (ionFocus)="addFocus()"
         (ionChange)="search()"
         (ionBlur)="removeFocus()"
         (ionClear)="clearBtn()"
+        (keyup.enter)="detectKeyPressed($event)"
         debounce="500"
       >
       </ion-searchbar>
@@ -66,11 +73,13 @@
             *ngFor="let key of keys"
             style="font-size: 16px"
           >
+            <ion-icon slot="start" name="search-outline"></ion-icon>
             <span [innerHTML]="key.name"></span>
           </ion-item>
         </ion-list>
       </div>
 
+      <!--
       <div class="sector-dropdown">
         <ion-list mode="ios" *ngIf="searchText.length > 2 && keywords.main">
           <ion-item (click)="publicarDemanda()" style="font-size: 16px">
@@ -98,14 +107,10 @@
           </ion-item>
         </ion-list>
       </div>
+      -->
     </div>
 
-    <!--<ion-item class="buscador" color="dark">-->
-    <!--<ion-icon item-right name="search" (tap)="hideKeyboard()"></ion-icon>-->
-    <!---  <ion-icon slot="end" name="search"></ion-icon>
-      <ion-input type="text" placeholder="Buscar..." (ionChange)="onKeyPressed($event)"></ion-input>
-    </ion-item>-->
-
+    <!--
     <div class="filtros">
       <ion-item class="categorias">
         <ion-label>Sectores</ion-label>
@@ -159,8 +164,10 @@
         </ionic-selectable>
       </ion-item>
     </div>
+  -->
   </div>
 
+  <!--
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
     <ion-spinner></ion-spinner>
     <p>Cargando...</p>
@@ -171,6 +178,7 @@
   >
     No hay elementos para mostrar
   </p>
+  -->
 
   <ion-list *ngIf="!isLoading">
     <!-- DESKTOP -->
@@ -277,7 +285,7 @@
 >
   <ion-toolbar color="febelink">
     <div>
-      <p style="margin-bottom: 0px">© 2020 Febelink</p>
+      <p style="margin-bottom: 0px">© {{ currentYear }} Febelink</p>
       <p style="margin-top: 5px">Contacto: info@febelink.com</p>
     </div>
   </ion-toolbar>

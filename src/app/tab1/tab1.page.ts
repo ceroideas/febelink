@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
+  currentYear = new Date().getFullYear();
   perfil: any;
   demandas: any;
   isLoading: boolean;
@@ -429,6 +430,13 @@ export class Tab1Page {
     this.selectorEnabled = true;
   }
 
+  detectKeyPressed(event) {
+    console.log('detecKeyPressed', event);
+    if ((event.key === 'Enter') && (this.searchText.length > 2)) {
+      this.publicarDemanda();
+    }
+  }
+
   async search() {
     console.log('SEARCH', this.searchText);
 
@@ -449,10 +457,12 @@ export class Tab1Page {
     this.keys = [];
 
     (await this.api.getSectorsByKeys(key.value)).subscribe((keywords) => {
+      console.log('keywords', keywords);
       this.searchText = key.value;
       this.keyText = this.searchText;
       this.keywords = keywords;
       this.selectorEnabled = true;
+      this.publicarDemanda();
     });
   }
 
