@@ -426,7 +426,7 @@ hideShowPassword() {
                         }
                         //Check DNI
                         if(err.error.vDNI == false){
-                            arrayErrores.push("El formato del DNI/NIE no es correcto");
+                            arrayErrores.push("El formato del DNI/NIE/CIF no es correcto");
                         }
                         
                         //Show all the errors
