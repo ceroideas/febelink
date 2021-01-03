@@ -15,6 +15,7 @@ import { Storage } from '@ionic/storage';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
+import { ISector, ISubSector } from './models/sector.model';
 
 @Component({
   selector: 'app-root',
@@ -36,8 +37,8 @@ export class AppComponent {
 ];
   currentUser: IUser;
   selected = false;
-  userSector = null;
-  userSubsector = null;
+  userSector: ISector;
+  userSubsector: ISubSector;
   userSubscriptionDetails = 'ninguno';
   userFeedback = [];
 
@@ -88,7 +89,7 @@ export class AppComponent {
       console.log('state', state);
       if (state) {
         this.menu.enable(true);
-        this.getUserData();
+        this.getUserInfo();
       }
     });
 
@@ -296,36 +297,36 @@ export class AppComponent {
   }
 
   // TODO: Use state management library to simplify data collection.
-  async getUserData() {
-    await this.utilities.getUserData().then((data) => {
-      console.log('userData', data);
-      if (data) {
-        this.currentUser = {...data};
-      }
-    });
+  async getUserInfo() {
+    await this.getUserData();
     await this.getUserSectorsAndSubsectors();
     await this.getUserSuscriptions();
     await this.getUserOpinions();
   }
 
+  async getUserData() {
+    this.currentUser = {...await this.utilities.getUserData()};
+    console.log('userData', this.currentUser);
+  }
+
+
   async getUserSectorsAndSubsectors() {
-    const sectors = await (await this.api.obtenerSectores()).toPromise();
+    const sectors: ISector[] = await (await this.api.obtenerSectores()).toPromise();
     console.log('sectors', sectors);
     const userSectorsIds = await (await this.api.obtenerSectoresPerfil(this.currentUser.id)).toPromise();
     console.log('userSectorsIds', userSectorsIds);
     const sectorId = userSectorsIds[0]?.id_sector;
-    const subsectors = await (await this.api.obtenerSubSectores(sectorId)).toPromise();
+    const subsectors: ISubSector[] = await (await this.api.obtenerSubSectores(sectorId)).toPromise();
     console.log('subsectors', subsectors);
     const userSubsectorsIds = await (await this.api.obtenerSubSectoresPerfil(this.currentUser.id)).toPromise();
     console.log('userSubsectorsIds', userSubsectorsIds);
-    this.userSector = sectors.filter((sector) => sector.id === sectorId).pop().nombre;
-    this.userSubsector = subsectors.filter((subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector).pop().nombre;
+    this.userSector = sectors.filter((sector) => sector.id === sectorId).pop();
+    this.userSubsector = subsectors.filter((subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector).pop();
   }
 
   async getUserSuscriptions() {
     const userSubscription = await this.utilities.getUserSubscription();
     console.log('userSubscription', userSubscription);
-
     if (userSubscription.length !== 0) {
       const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
       console.log('userSubscriptionDetails', userSubscriptionDetails);

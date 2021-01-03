@@ -27,7 +27,7 @@
                             </p>
                             <p *ngIf="userSector">
                                 <ion-icon name="pricetags-outline"></ion-icon>
-                                {{ userSector }} / {{ userSubsector}}
+                                {{ userSector.nombre }} / {{ userSubsector.nombre }}
                             </p>
                         </ion-label>
                     </ion-item>
@@ -40,6 +40,7 @@
                 <ion-toolbar color="primary">
                     <ion-item lines="none" color="primary">
                         <div tabindex="0"></div>
+                        <ion-icon slot="start" name="people-outline"></ion-icon>
                         <ion-label class="ion-text-wrap">
                             <ion-text color="light">
                                 <h2>Opiniones</h2>
@@ -52,7 +53,7 @@
                         <ion-card>
                             <ion-item lines="none">
                                 <div tabindex="0"></div>
-                                <ion-label class="ion-text-wrap">
+                                <ion-label color="sandybrown" class="ion-text-wrap">
                                     <p *ngFor="let opinion of userFeedback">{{opinion.count}} {{opinion.type}}</p>
                                 </ion-label>
                             </ion-item>
