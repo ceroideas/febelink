@@ -1,48 +1,83 @@
 <ion-app>
-  <!--
-    <app-menu></app-menu>
-    <ion-router-outlet id="main"></ion-router-outlet>
-  -->
-  <ion-split-pane contentId="main-content" [when]="platform.width() >= 992 && authenticationService.isAuthenticated()">
-    <ion-menu *ngIf="authenticationService.isAuthenticated()" contentId="main-content" type="overlay">
-        <ion-header>
-            <ion-toolbar color="primary">
-                <ion-title>Menu</ion-title>
-                <ion-buttons slot="end">
-                    <ion-button (click)="logout()">
-                        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-            </ion-toolbar>
-            <ion-toolbar color="primary">
-                <ion-item color="primary">
-                    <ion-avatar slot="start">
-                    <img src="assets/guide/user2.png" alt="Menu profile picture">
-                    </ion-avatar>
-                    <ion-label class="ion-text-wrap">
-                        <h2> User </h2>
-                    </ion-label>
-                </ion-item>
+    <!--
+        <app-menu></app-menu>
+        <ion-router-outlet id="main"></ion-router-outlet>
+    -->
+    <ion-split-pane contentId="main-content" [when]="platform.width() >= 992 && authenticationService.isAuthenticated()">
+        <ion-menu *ngIf="authenticationService.isAuthenticated()" contentId="main-content" type="overlay">
+            <ion-header>
+                <ion-toolbar color="primary">
+                    <ion-title>Menu</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="logout()">
+                            <ion-icon slot="icon-only" name="log-out"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+                <ion-toolbar color="primary">
+                    <ion-item color="primary">
+                        <ion-avatar slot="start">
+                        <img src="https://api.febelink.com/storage/users/default.png" alt="Menu profile picture">
+                        </ion-avatar>
+                        <ion-label class="ion-text-wrap">
+                            <h2> {{ currentUser?.name }} </h2>
+                            <p>
+                                <ion-icon name="card-outline"></ion-icon>
+                                Plan actual: {{ userSubscriptionDetails }}
+                            </p>
+                            <p *ngIf="userSector">
+                                <ion-icon name="pricetags-outline"></ion-icon>
+                                {{ userSector }} / {{ userSubsector}}
+                            </p>
+                        </ion-label>
+                    </ion-item>
                     <ion-buttons slot="end">
                         <ion-button routerLink="/menu/perfil">
                             <ion-icon slot="icon-only" color="light" name="create"></ion-icon>
                         </ion-button>
                     </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content>
-            <ion-list id="inbox-list">
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                    <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                </ion-toolbar>
+                <ion-toolbar color="primary">
+                    <ion-item lines="none" color="primary">
                         <div tabindex="0"></div>
-                        <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                        <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
+                        <ion-label class="ion-text-wrap">
+                            <ion-text color="light">
+                                <h2>Opiniones</h2>
+                            </ion-text>
+                        </ion-label>
+                        <ion-icon color="light" [name]="selected ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="selected = !selected"></ion-icon>
                     </ion-item>
-                </ion-menu-toggle>
-            </ion-list>
+                    <!-- Section options. -->
+                    <ng-container *ngIf="selected">
+                        <ion-card>
+                            <ion-item lines="none">
+                                <div tabindex="0"></div>
+                                <ion-label class="ion-text-wrap">
+                                    <p *ngFor="let opinion of userFeedback">{{opinion.count}} {{opinion.type}}</p>
+                                </ion-label>
+                            </ion-item>
+                        </ion-card>
+                    </ng-container>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <ion-list id="inbox-list">
+                    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+                        <ion-item *ngIf="p.key !== 'subscriptions'" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                            <div tabindex="0"></div>
+                            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
+                        </ion-item>
+                        <ion-item *ngIf="p.key === 'subscriptions'" lines="none" detail="false" routerLinkActive="selected" (click)="showSubscriptionsModal()">
+                            <div tabindex="0"></div>
+                            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+                </ion-list>
 
-        </ion-content>
-    </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-</ion-split-pane>
+            </ion-content>
+        </ion-menu>
+        <ion-router-outlet id="main-content"></ion-router-outlet>
+    </ion-split-pane>
 </ion-app>

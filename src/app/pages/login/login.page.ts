@@ -24,7 +24,6 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private router: Router,
-    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -44,9 +43,7 @@ export class LoginPage implements OnInit {
     formData.append('remember_me', '1');
 
     this.api.login(formData, 'login').subscribe(
-      (res) => {
-        this.authenticationService.login();
-      },
+      (res) => {},
       (err) => {
         console.log('ERROR', err);
         this.utilities.dismissLoading();

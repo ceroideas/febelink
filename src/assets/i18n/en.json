@@ -9,6 +9,7 @@
         }
     },
     "pages": {
-        "opinions": "Opinions"
+        "opinions": "Opinions",
+        "subscriptions": "Subscriptions"
     }
 }

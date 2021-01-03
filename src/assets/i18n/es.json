@@ -8,7 +8,8 @@
             "login": "Iniciar sesión"
         },
         "pages": {
-            "opinions": "Opiniones"
+            "opinions": "Opiniones",
+            "subscriptions": "Subscripciones"
         }
     }
 }

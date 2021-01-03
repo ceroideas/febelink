@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform, AlertController, IonRouterOutlet, MenuController } from '@ionic/angular';
+import { Platform, AlertController, IonRouterOutlet, MenuController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -13,6 +13,8 @@ import { JsonPipe } from '@angular/common';
 import { TranslateConfigService } from './services/translate/translate-config.service';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { IUser } from './models/user.model';
+import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 
 @Component({
   selector: 'app-root',
@@ -27,11 +29,17 @@ export class AppComponent {
 
   public appPages = [
     {
-        key: 'opinions',
-        url: '/menu/perfil',
-        icon: 'people'
+        key: 'subscriptions',
+        url: '',
+        icon: 'calendar'
     }
 ];
+  currentUser: IUser;
+  selected = false;
+  userSector = null;
+  userSubsector = null;
+  userSubscriptionDetails = 'ninguno';
+  userFeedback = [];
 
   constructor(
     public platform: Platform,
@@ -47,7 +55,8 @@ export class AppComponent {
     private translateService: TranslateConfigService,
     private storage: Storage,
     private menu: MenuController,
-    public authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService,
+    private modalCtrl: ModalController
   ) {
     this.initializeApp();
   }
@@ -79,6 +88,7 @@ export class AppComponent {
       console.log('state', state);
       if (state) {
         this.menu.enable(true);
+        this.getUserData();
       }
     });
 
@@ -283,6 +293,60 @@ export class AppComponent {
       ],
     });
     await alert.present();
+  }
+
+  // TODO: Use state management library to simplify data collection.
+  async getUserData() {
+    await this.utilities.getUserData().then((data) => {
+      console.log('userData', data);
+      if (data) {
+        this.currentUser = {...data};
+      }
+    });
+    await this.getUserSectorsAndSubsectors();
+    await this.getUserSuscriptions();
+    await this.getUserOpinions();
+  }
+
+  async getUserSectorsAndSubsectors() {
+    const sectors = await (await this.api.obtenerSectores()).toPromise();
+    console.log('sectors', sectors);
+    const userSectorsIds = await (await this.api.obtenerSectoresPerfil(this.currentUser.id)).toPromise();
+    console.log('userSectorsIds', userSectorsIds);
+    const sectorId = userSectorsIds[0]?.id_sector;
+    const subsectors = await (await this.api.obtenerSubSectores(sectorId)).toPromise();
+    console.log('subsectors', subsectors);
+    const userSubsectorsIds = await (await this.api.obtenerSubSectoresPerfil(this.currentUser.id)).toPromise();
+    console.log('userSubsectorsIds', userSubsectorsIds);
+    this.userSector = sectors.filter((sector) => sector.id === sectorId).pop().nombre;
+    this.userSubsector = subsectors.filter((subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector).pop().nombre;
+  }
+
+  async getUserSuscriptions() {
+    const userSubscription = await this.utilities.getUserSubscription();
+    console.log('userSubscription', userSubscription);
+
+    if (userSubscription.length !== 0) {
+      const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
+      console.log('userSubscriptionDetails', userSubscriptionDetails);
+      this.userSubscriptionDetails = userSubscriptionDetails?.name;
+    }
+  }
+
+  async showSubscriptionsModal() {
+      const suscribirseModal = await this.modalCtrl.create({
+        component: SuscribirsePage,
+      });
+      await suscribirseModal.present();
+  }
+
+  async getUserOpinions() {
+    const result = await (await this.api.opinionesPerfil(this.currentUser.reference)).toPromise();
+    console.log('opinions', result);
+    result.opinions.forEach((opinion, index) => {
+      this.userFeedback.push({count: opinion, type: result.types[index]})
+    })
+    console.log('userFeedback', this.userFeedback);
   }
 
 }

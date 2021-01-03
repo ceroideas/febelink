@@ -20,7 +20,7 @@
         <ion-icon slot="start" name="hand-right"></ion-icon>
         {{ 'menu.tabs.chat' | translate }}
       </ion-button>
-      <ion-button class="btn-header active">
+      <ion-button *ngIf="perfil === null" class="btn-header active">
         <ion-icon slot="start" name="person"></ion-icon>
         {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
       </ion-button>
@@ -408,6 +408,7 @@
           </ion-select>
         </ion-item>
 
+        <!--
         <ion-card style="margin-top: 20px">
           <ion-card-header>
             <strong>Suscripciones</strong>
@@ -427,6 +428,7 @@
             </ion-button>
           </ion-card-content>
         </ion-card>
+        -->
 
         <ion-item class="input">
           <ion-label position="floating"> Contraseña nueva: </ion-label>

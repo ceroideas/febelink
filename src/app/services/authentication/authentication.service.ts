@@ -32,7 +32,6 @@ export class AuthenticationService {
 
     async checkUserData() {
       await this.utilities.getUserData().then((data) => {
-        console.log('userData', data);
         if (data) {
           this.authenticationState.next(true);
         }

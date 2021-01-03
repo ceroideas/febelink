@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private utilities: UtilitiesService,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {}
 
   login(params, endpoint): Observable<any> {
@@ -28,6 +30,7 @@ export class ApiService {
 
           await this.utilities.saveAccessTokenInfo(res);
           await this.utilities.saveUserData(res.user);
+          this.authenticationService.login();
           await this.utilities.saveUserSubscription(res.subscription);
           await this.utilities.saveUserSubscriptionDetails(
             res.subscription_details

@@ -14,8 +14,7 @@
       <ion-icon name="hand-right"></ion-icon>
       <ion-label>{{ 'menu.tabs.chat' | translate }}</ion-label>
     </ion-tab-button>
-
-    <ion-tab-button (click)="irA('perfil')">
+    <ion-tab-button *ngIf="perfil === null" (click)="irA('perfil')">
       <ion-icon name="person"></ion-icon>
       <ion-label>{{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}</ion-label>
     </ion-tab-button>
