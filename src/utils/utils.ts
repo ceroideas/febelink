@@ -3,3 +3,12 @@
 export const supportedLanguages = (): string[] => {
     return ['es', 'en'];
 }
+
+export const answerOptions = (): {text: string, value: string}[] => {
+    return [
+        {text: "1", value: "1"},
+        {text: "3", value: "3"},
+        {text: "5", value: "5"},
+        {text: "∞", value: "99"},
+    ];
+}

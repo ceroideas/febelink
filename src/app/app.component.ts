@@ -86,7 +86,6 @@ export class AppComponent {
     });
 
     this.authenticationService.authenticationState.subscribe(state => {
-      console.log('state', state);
       if (state) {
         this.menu.enable(true);
         this.getUserInfo();
@@ -102,9 +101,7 @@ export class AppComponent {
   }
 
   backbutton() {
-    console.log('backbutton');
     document.addEventListener('backbutton', () => {
-      console.log('backbutton1');
       if (this.routerOutlets && this.routerOutlets.canGoBack()) {
         this.routerOutlets.pop();
       } else if (this.router.url === 'menu/todas') {
@@ -306,30 +303,23 @@ export class AppComponent {
 
   async getUserData() {
     this.currentUser = {...await this.utilities.getUserData()};
-    console.log('userData', this.currentUser);
   }
 
 
   async getUserSectorsAndSubsectors() {
     const sectors: ISector[] = await (await this.api.obtenerSectores()).toPromise();
-    console.log('sectors', sectors);
     const userSectorsIds = await (await this.api.obtenerSectoresPerfil(this.currentUser.id)).toPromise();
-    console.log('userSectorsIds', userSectorsIds);
     const sectorId = userSectorsIds[0]?.id_sector;
     const subsectors: ISubSector[] = await (await this.api.obtenerSubSectores(sectorId)).toPromise();
-    console.log('subsectors', subsectors);
     const userSubsectorsIds = await (await this.api.obtenerSubSectoresPerfil(this.currentUser.id)).toPromise();
-    console.log('userSubsectorsIds', userSubsectorsIds);
     this.userSector = sectors.filter((sector) => sector.id === sectorId).pop();
     this.userSubsector = subsectors.filter((subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector).pop();
   }
 
   async getUserSuscriptions() {
     const userSubscription = await this.utilities.getUserSubscription();
-    console.log('userSubscription', userSubscription);
     if (userSubscription.length !== 0) {
       const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
-      console.log('userSubscriptionDetails', userSubscriptionDetails);
       this.userSubscriptionDetails = userSubscriptionDetails?.name;
     }
   }
@@ -343,11 +333,9 @@ export class AppComponent {
 
   async getUserOpinions() {
     const result = await (await this.api.opinionesPerfil(this.currentUser.reference)).toPromise();
-    console.log('opinions', result);
     result.opinions.forEach((opinion, index) => {
       this.userFeedback.push({count: opinion, type: result.types[index]})
     })
-    console.log('userFeedback', this.userFeedback);
   }
 
 }

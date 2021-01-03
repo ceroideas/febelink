@@ -11,5 +11,8 @@
     "pages": {
         "opinions": "Opinions",
         "subscriptions": "Subscriptions"
+    },
+    "labels": {
+        "currentPlan": "Current plan"
     }
 }

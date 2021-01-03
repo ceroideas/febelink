@@ -23,7 +23,7 @@
                             <h2> {{ currentUser?.name }} </h2>
                             <p>
                                 <ion-icon name="card-outline"></ion-icon>
-                                Plan actual: {{ userSubscriptionDetails }}
+                                {{ 'menu.labels.currentPlan' | translate }}: {{ userSubscriptionDetails }}
                             </p>
                             <p *ngIf="userSector">
                                 <ion-icon name="pricetags-outline"></ion-icon>
@@ -43,7 +43,7 @@
                         <ion-icon slot="start" name="people-outline"></ion-icon>
                         <ion-label class="ion-text-wrap">
                             <ion-text color="light">
-                                <h2>Opiniones</h2>
+                                <h2>{{ 'menu.pages.opinions' | translate }}</h2>
                             </ion-text>
                         </ion-label>
                         <ion-icon color="light" [name]="selected ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="selected = !selected"></ion-icon>

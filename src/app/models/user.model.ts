@@ -23,7 +23,7 @@ export interface IUser {
     town_id: number | null;
     telefono: string | null;
     logo: string | null;
-    dni: string;
+    dni: string | null;
     card_brand: string | null;
     card_last_four: string | null;
     trial_ends_at: string | null;
