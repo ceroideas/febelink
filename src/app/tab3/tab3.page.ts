@@ -171,10 +171,6 @@ export class Tab3Page {
     return await guideModal.present();
   }
 
-  home() {
-    this.router.navigate(['menu/todas']);
-  }
-
   /**
    * Navegar a la pantalla p
    * @param p

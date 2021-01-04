@@ -877,10 +877,6 @@ export class Tab4Page {
     return await guideModal.present();
   }
 
-  home() {
-    this.router.navigate(['menu/todas']);
-  }
-
   /**
    * Modal para suscribirse
    */

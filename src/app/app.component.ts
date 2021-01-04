@@ -283,7 +283,7 @@ export class AppComponent {
               this.menu.enable(false);
               this.authenticationService.logout();
               this.api.refreshTabs();
-              this.router.navigate(['menu/todas']);
+              this.router.navigate(['login']);
               this.utilities.showToast('Sesión cerrada con éxito');
             });
           },

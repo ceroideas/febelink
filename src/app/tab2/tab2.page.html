@@ -5,7 +5,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()" />
+    <img tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
 
     <ion-buttons slot="end" class="desktop">
       <ion-button class="btn-header" (click)="irA('/menu/todas')">
@@ -43,58 +43,19 @@
 
   <div class="content-filter">
     <div class="autocomplete">
-      <ion-searchbar
+      <ion-searchbar #mysearch
         placeholder="Qué buscas..."
-        [(ngModel)]="searchText"
-        (ionFocus)="addFocus()"
-        (ionChange)="search()"
-        (ionBlur)="removeFocus()"
-        (ionClear)="clearBtn()"
         debounce="500"
       >
       </ion-searchbar>
-
-      <div class="keys-dropdown">
-        <ion-list mode="ios" *ngIf="searchText.length > 2 && keys.length > 0">
-          <ion-item
-            (click)="getSectorsByKeys(key)"
-            *ngFor="let key of keys"
-            style="font-size: 16px"
-          >
-            <span [innerHTML]="key.name"></span>
-          </ion-item>
-        </ion-list>
-      </div>
-
-      <div class="sector-dropdown">
-        <ion-list mode="ios" *ngIf="searchText.length > 2 && keywords.main">
-          <ion-item (click)="publicarDemanda()" style="font-size: 16px">
-            Crear demanda en
-            <strong style="margin-left: 5px"
-              >{{keywords.main.sector_nombre}}</strong
-            >
-            <ion-icon
-              style="color: black; font-size: large"
-              slot="end"
-              name="add"
-            ></ion-icon>
-          </ion-item>
-
-          <ion-item (click)="openOfertantes()" style="font-size: 16px">
-            Ver ofertantes en
-            <strong style="margin-left: 5px"
-              >{{keywords.main.sector_nombre}}</strong
-            >
-            <ion-icon
-              style="color: black; font-size: large"
-              slot="end"
-              name="eye"
-            ></ion-icon>
-          </ion-item>
-        </ion-list>
-      </div>
     </div>
 
+    <ion-item lines="none">
+      <ion-icon name="filter-outline" slot="start"></ion-icon>
+      <ion-label>Filtros</ion-label>
+      <ion-icon [name]="showFilters ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="showFilters = !showFilters"></ion-icon>
+    </ion-item>
+    <ng-container *ngIf="showFilters">
     <div class="filtros">
       <ion-item class="categorias">
         <ion-label>Sectores</ion-label>
@@ -103,7 +64,7 @@
           [(ngModel)]="sector"
           itemValueField="id"
           itemTextField="nombre"
-          [items]="sectores"
+          [items]="sectors"
           [canSearch]="true"
           (onChange)="sectorChange($event)"
         >
@@ -116,7 +77,7 @@
           [(ngModel)]="subsector"
           itemValueField="id"
           itemTextField="nombre"
-          [items]="subsectores"
+          [items]="subSectors"
           [canSearch]="true"
           (onChange)="subSectorChange($event)"
         >
@@ -148,6 +109,7 @@
         </ionic-selectable>
       </ion-item>
     </div>
+    </ng-container>
   </div>
 
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
@@ -156,7 +118,7 @@
   </div>
   <p
     class="vacio text-center"
-    *ngIf="!(demandasFiltradasBuscador.length>0) && !isLoading"
+    *ngIf="!(searchResults.length>0) && !isLoading"
   >
     No hay elementos para mostrar
   </p>
@@ -171,33 +133,26 @@
           side-md="4"
           size-sm="6"
           size-xs="12"
-          *ngFor="let demanda of demandasFiltradasBuscador"
+          *ngFor="let demanda of searchResults | filter:mysearch.value"
         >
           <ion-card (click)="detalleDemanda(demanda)">
             <div>
               <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
               <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
             </div>
-            <ion-card-header>
-              <strong style="color: #222"> {{demanda?.nombre}}</strong>
-            </ion-card-header>
+            <ion-item>
+              <ion-label>
+                <strong style="color: #222"> {{demanda?.nombre}}</strong>
+              </ion-label>
+              <ion-label slot="end">
+                <em class="username">{{demanda?.user?.name}}</em>
+              </ion-label>
+            </ion-item>
             <ion-card-content>
-              <p class="card-desc">{{demanda?.descripcion}}</p>
-
-              <ion-row>
-                <ion-col size="3">
-                  <ion-icon name="hand-right"></ion-icon>
-                </ion-col>
-                <ion-col size="3">
-                  <ion-icon name="infinite"></ion-icon>
-                </ion-col>
-                <ion-col size="3">
-                  <ion-icon name="share-social"></ion-icon>
-                </ion-col>
-                <ion-col size="3">
-                  <ion-icon name="eye"></ion-icon>
-                </ion-col>
-              </ion-row>
+              <p class="description">{{demanda?.descripcion}}</p>
+              <ion-item lines="none">
+                <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(); $event.stopPropagation();"></ion-icon>
+              </ion-item>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -205,7 +160,7 @@
     </ion-grid>
 
     <ion-item class="mobile" lines="none" (click)="detalleDemanda(demanda)"
-      *ngFor="let demanda of demandasFiltradasBuscador"
+      *ngFor="let demanda of searchResults | filter:mysearch.value"
     >
       <ion-avatar slot="start">
         <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
@@ -214,255 +169,13 @@
       <ion-label>
         <h2><strong>{{demanda?.nombre}}</strong></h2>
         <em class="desc">{{demanda?.descripcion}}</em>
-        <ion-buttons>
-          <ion-button class="social-media">
-            <ion-icon slot="start" name="hand-left"></ion-icon>
-            <span
-              *ngIf="demanda?.ofertas_restantes - demanda?.ofertas.length<=5"
-              >{{demanda?.ofertas_restantes - demanda?.ofertas.length}}</span
-            >
-            <ion-icon
-              *ngIf="demanda?.ofertas_restantes - demanda?.ofertas.length>5"
-              slot="start"
-              name="infinite"
-            ></ion-icon>
-            <ion-icon slot="start" name="share-social"></ion-icon>
-            <ion-icon slot="start" name="eye"></ion-icon>
-          </ion-button>
-        </ion-buttons>
       </ion-label>
       <ion-label slot="end">
-        <em>{{demanda?.user?.name}}</em>
+        <em style="padding: 5px">{{demanda?.user?.name}}</em>
       </ion-label>
-      <ion-icon slot="end" name="heart-outline"></ion-icon>
+      <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(); $event.stopPropagation();"></ion-icon>
     </ion-item>
   </ion-list>
-
-  <!--
-  <div class="segmentplace">
-    <ion-segment [(ngModel)]="settingsDemandas">
-      <ion-segment-button value="demandasPage">Recibidas</ion-segment-button>
-      <ion-segment-button value="misDemandasPage"
-        >Mis Búsquedas</ion-segment-button
-      >
-    </ion-segment>
-  </div>
-
-  <div [ngSwitch]="settingsDemandas">
-    <div *ngSwitchCase="'demandasPage'">
-      <ion-refresher slot="fixed" (ionRefresh)="doRefreshDemandas($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-      <h4 class="text-center">
-        Demandas específicas para tí (sector y subsector)
-      </h4>
-      <div class="cargando-container text-center" margin-top *ngIf="isLoading">
-        <ion-spinner></ion-spinner>
-        <p>Cargando...</p>
-      </div>
-
-      <p class="vacio text-center" *ngIf="!(demandas?.length>0) && !isLoading">
-        No hay elementos para mostrar
-      </p>
-
-      <ion-grid class="grid-card desktop" *ngIf="!isLoading">
-        <ion-row>
-          <ion-col
-            size="12"
-            size-lg="3"
-            side-md="4"
-            size-sm="6"
-            size-xs="12"
-            (click)="detalleDemanda(demanda)"
-            *ngFor="let demanda of demandas"
-          >
-            <ion-card (click)="detalleDemanda(demanda)">
-              <div>
-                <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-                <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
-              </div>
-              <ion-card-header>
-                <strong style="color: #222"> {{demanda?.nombre}}</strong>
-              </ion-card-header>
-              <ion-card-content>
-                <p class="card-desc">{{demanda?.descripcion}}</p>
-
-                <ion-row>
-                  <ion-col size="3">
-                    <ion-icon name="hand-right"></ion-icon>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-icon name="infinite"></ion-icon>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-icon name="share-social"></ion-icon>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-icon name="eye"></ion-icon>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <ion-list class="mobile" *ngIf="!isLoading">
-        <ion-item
-          lines="none"
-          (click)="detalleDemanda(demanda)"
-          *ngFor="let demanda of demandas"
-        >
-          <ion-thumbnail slot="start">
-            <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-            <img height="75" [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
-          </ion-thumbnail>
-
-          <ion-label>
-            <h2><strong>{{demanda?.nombre}}</strong></h2>
-            <em class="desc">{{demanda?.descripcion}}</em>
-            <ion-buttons slot="end" class="right">
-              <ion-button class="social-media">
-                <ion-icon slot="start" name="hand-left"></ion-icon>
-                <span *ngIf="demanda?.ofertas_restantes<=5"
-                  >{{demanda?.ofertas_restantes}}</span
-                >
-                <ion-icon
-                  *ngIf="demanda?.ofertas_restantes>5"
-                  slot="start"
-                  name="infinite"
-                ></ion-icon>
-                <ion-icon slot="start" name="share-social"></ion-icon>
-                <ion-icon slot="start" name="eye"></ion-icon>
-                <ion-icon slot="start" name="star"></ion-icon
-                >{{demanda?.valoracion}} / 5
-              </ion-button>
-            </ion-buttons>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </div>
-
-    <div *ngSwitchCase="'misDemandasPage'">
-      <ion-refresher slot="fixed" (ionRefresh)="doRefreshMisDemandas($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-      <h4 style="text-align: center">Demandas Realizadas</h4>
-      <div class="cargando-container text-center" margin-top *ngIf="isLoading">
-        <ion-spinner></ion-spinner>
-        <p>Cargando...</p>
-      </div>
-      <p
-        class="vacio text-center"
-        *ngIf="!(misDemandas?.length>0) && !isLoading"
-      >
-        No hay elementos para mostrar
-      </p>
-
-      <ion-list class="mobile" *ngIf="!isLoading">
-        <ion-item lines="none" *ngFor="let demanda of misDemandas">
-          <ion-thumbnail slot="start">
-            <img
-              src="assets/imgs/4.jpg"
-              *ngIf="!demanda?.imagen"
-              (click)="detalleDemanda(demanda)"
-            />
-            <img
-              height="75"
-              [src]="demanda?.imagen"
-              *ngIf="demanda?.imagen"
-              (click)="detalleDemanda(demanda)"
-            />
-          </ion-thumbnail>
-
-          <ion-label>
-            <h2 (click)="detalleDemanda(demanda)">
-              <strong>{{demanda?.nombre}}</strong>
-            </h2>
-            <em (click)="detalleDemanda(demanda)" class="desc"
-              >{{demanda?.descripcion}}</em
-            >
-            <ion-buttons slot="end" class="right">
-              <ion-button class="social-media">
-                <span class="share" (click)="editarDemanda(demanda)">
-                  <ion-icon name="create"></ion-icon> Editar
-                </span>
-                <span class="share" (click)="borrarDemanda(demanda)">
-                  <ion-icon name="trash"></ion-icon> Borrar
-                </span>
-              </ion-button>
-            </ion-buttons>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-
-      <ion-grid class="grid-card desktop" *ngIf="!isLoading">
-        <ion-row>
-          <ion-col
-            size="12"
-            size-lg="3"
-            side-md="4"
-            size-sm="6"
-            size-xs="12"
-            *ngFor="let demanda of misDemandas"
-          >
-            <ion-card>
-              <div>
-                <img
-                  (click)="detalleDemanda(demanda)"
-                  src="assets/imgs/4.jpg"
-                  (click)="detalleDemanda(demanda)"
-                  *ngIf="!demanda?.imagen"
-                />
-                <img
-                  (click)="detalleDemanda(demanda)"
-                  [src]="demanda?.imagen"
-                  (click)="detalleDemanda(demanda)"
-                  *ngIf="demanda?.imagen"
-                />
-              </div>
-              <ion-card-header (click)="detalleDemanda(demanda)">
-                <strong style="color: #222"> {{demanda?.nombre}}</strong>
-              </ion-card-header>
-              <ion-card-content>
-                <p (click)="detalleDemanda(demanda)" class="card-desc">
-                  {{demanda?.descripcion}}
-                </p>
-
-                <ion-row>
-                  <ion-col
-                    text-center
-                    size="6"
-                    (click)="editarDemanda(demanda)"
-                  >
-                    <ion-icon name="create"></ion-icon>
-                  </ion-col>
-                  <ion-col text-center size="6">
-                    <ion-icon
-                      name="trash"
-                      (click)="borrarDemanda(demanda)"
-                    ></ion-icon>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </div>
-
-  <ion-fab
-    vertical="bottom"
-    horizontal="end"
-    slot="fixed"
-    (click)="publicarDemanda()"
-  >
-    <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  -->
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
