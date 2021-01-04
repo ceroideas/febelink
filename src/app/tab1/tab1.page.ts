@@ -21,11 +21,10 @@ import { IUser } from '../models/user.model';
 })
 export class Tab1Page {
   currentYear = new Date().getFullYear();
-  perfil: IUser;
+  perfil: IUser = null;
   isLoading: boolean;
   sectors: ISector[] = [];
   subSectors: ISubSector[] = [];
-  subsector: any;
   sector: any;
   isLogin: any;
   cookies: string;
@@ -38,6 +37,7 @@ export class Tab1Page {
   openKeys: boolean = false;
   selectorEnabled: boolean = false;
   showCookies = false;
+  refreshTab: any;
 
   publishSearchForm: FormGroup;
   answerOptions = answerOptions();
@@ -58,6 +58,9 @@ export class Tab1Page {
     private camera: Camera,
     private sanitizer: DomSanitizer
   ) {
+    this.refreshTab = this.api.getUserLogged().subscribe((item) => {
+      this.obtenerPerfil();
+    });
 
     this.utilities.getGuia().then((data) => {
       this.isLogin = data;
@@ -72,10 +75,17 @@ export class Tab1Page {
   }
 
   ionViewDidEnter() {
+    console.log("Tab1Page::ionViewDidEnter method called.");
     this.loadData();
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave");
+    this.showCard = false;
+    this.searchText = '';
+    this.sectors = [];
+    this.subSectors = [];
+  }
 
   builtForm() {
     this.publishSearchForm = this.formBuilder.group({
@@ -121,7 +131,7 @@ export class Tab1Page {
   async loadData() {
     await this.obtenerPerfil();
     this.loadSectors();
-    this.subsector = null;
+    this.loadSubSectors(0);
   }
 
   async openGuide() {
@@ -189,6 +199,7 @@ export class Tab1Page {
       ...await (await this.api.obtenerSubSectores(id)).toPromise()
     ];
 
+    console.log('subsectors', this.subSectors);
     this.publishSearchForm.patchValue({sub_sector: this.subSectors[0].id});
   }
 
@@ -235,6 +246,10 @@ export class Tab1Page {
       this.keywords = keywords;
       this.selectorEnabled = true;
       this.publishSearchForm.patchValue({sector: this.keywords.main.sector_id});
+
+      this.subSectors = [];
+      this.loadSubSectors(this.keywords.main.sector_id);
+
       this.showCard = true;
       this.removeFocus();
     });
