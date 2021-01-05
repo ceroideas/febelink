@@ -1,4 +1,12 @@
 {
+    "common": {
+        "labelSectors": "Sectors",
+        "labelSubsectors": "Subsectors",
+        "labelProvince": "Province",
+        "labelTown": "Town",
+        "labelNoElements": "No elements to show",
+        "labelLoading": "Loading..."
+    },
     "menu": {
         "tabs": {
             "searchEngine": "Search",

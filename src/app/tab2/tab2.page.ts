@@ -7,6 +7,7 @@ import { GuidePage } from '../pages/guide/guide.page';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
+import { IUser } from '../models/user.model';
 
 @Component({
   selector: 'app-tab2',
@@ -15,23 +16,22 @@ import { ISector, ISubSector } from '../models/sector.model';
 })
 export class Tab2Page {
   currentYear = new Date().getFullYear();
-  perfil: any;
+  currentUser: IUser = null;
   demandas: any;
   isLoading: boolean;
   sectors: ISector[] = [];
   subSectors: ISubSector[] = [];
   subsector: any;
   sector: any;
-  localidades: any[] = [];
-  provincias: any[] = [];
-  localidad: any;
-  provincia: any;
+  provinces: any[] = [];
+  province: any;
+  towns: any[] = [];
+  town: any;
   demandasCategoria: any = [];
   demandasProvincia: any = [];
   searchResults: ISearch[] = [];
   isLogin: any;
   refreshTab: any;
-
   showFilters = false;
 
   constructor(
@@ -41,7 +41,7 @@ export class Tab2Page {
     private modalCtrl: ModalController,
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
-      this.obtenerPerfil();
+      this.getUserProfile();
     });
 
     this.utilities.getGuia().then((data) => {
@@ -56,10 +56,10 @@ export class Tab2Page {
   }
 
   async loadData() {
-    await this.obtenerPerfil();
+    await this.getUserProfile();
     this.loadSectors();
     this.obtenerDemandas();
-    this.obtenerProvincias();
+    this.loadProvinces();
     this.subsector = null;
   }
 
@@ -125,15 +125,15 @@ export class Tab2Page {
     component: IonicSelectableComponent;
     value: any;
   }): void {
-    this.localidades = [
+    this.towns = [
       {
         id: 0,
         name: 'Todas',
       },
     ];
-    this.provincia = event.value;
-    this.localidad = this.localidades[0];
-    this.obtenerLocalidades(event.value.id);
+    this.province = event.value;
+    this.town = this.towns[0];
+    this.loadTowns(event.value.id);
     this.filtrarDemandas();
   }
 
@@ -141,7 +141,7 @@ export class Tab2Page {
     component: IonicSelectableComponent;
     value: any;
   }): void {
-    this.localidad = event.value;
+    this.town = event.value;
     this.filtrarDemandas();
   }
 
@@ -149,8 +149,8 @@ export class Tab2Page {
     this.obtenerDemandas();
     this.sector = this.sectors[0];
     this.subSectors = [];
-    this.provincia = null;
-    this.localidad = null;
+    this.province = null;
+    this.town = null;
     this.subsector = 'Todas';
     refresher.target.complete();
   }
@@ -159,8 +159,8 @@ export class Tab2Page {
     this.obtenerDemandas();
     this.sector = this.sectors[0];
     this.subSectors = [];
-    this.provincia = null;
-    this.localidad = null;
+    this.province = null;
+    this.town = null;
     this.subsector = 'Todas';
   }
 
@@ -172,17 +172,17 @@ export class Tab2Page {
     return await guideModal.present();
   }
 
-  async obtenerPerfil() {
+  async getUserProfile() {
 
     await this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
 
     await this.utilities.getUserData().then((data) => {
-      this.perfil = data;
+      this.currentUser = {...data};
 
-      if (this.perfil !== null) {
-        if (this.perfil.skip_wizard === 0 && this.isLogin === 'login') {
+      if (this.currentUser) {
+        if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){
           this.openGuide();
           //}
@@ -204,54 +204,36 @@ export class Tab2Page {
 
   async loadSubSectors(id: number) {
     this.subSectors.push({ id: 0, nombre: 'Todas', id_sector: 0});
-
     this.subSectors = [
       ...this.subSectors,
       ...await (await this.api.obtenerSubSectores(id)).toPromise()
     ];
-
     console.log('subsectors', this.subSectors);
     this.subsector = this.subSectors[0];
   }
 
-  async obtenerProvincias() {
-    this.provincias = [
-      {
-        id: 0,
-        name: 'Todas',
-      },
+  async loadProvinces() {
+    this.provinces = [ {id: 0, name: 'Todas' }];
+    this.provinces = [
+      ...this.provinces,
+      ...await (await this.api.obtenerProvincias()).toPromise()
     ];
-
-    (await this.api.obtenerProvincias()).subscribe((provincias) => {
-      for (let provincia of provincias) {
-        this.provincias.push(provincia);
-      }
-      this.provincia = this.provincias[0];
-    });
+    this.province = this.provinces[0];
   }
 
-  async obtenerLocalidades(id_provincia) {
-    this.localidades = [
-      {
-        id: 0,
-        name: 'Todas',
-      },
+  async loadTowns(id_provincia: number) {
+    this.towns = [ {id: 0, name: 'Todas' }];
+    this.towns = [
+      ...this.towns,
+      await (await this.api.obtenerLocalidades(id_provincia)).toPromise()
     ];
-
-    (await this.api.obtenerLocalidades(id_provincia)).subscribe(
-      (localidades) => {
-        for (let localidad of localidades) {
-          this.localidades.push(localidad);
-        }
-        this.localidad = this.localidades[0];
-      }
-    );
+    this.town = this.towns[0];
   }
 
   filtrarDemandas() {
     this.searchResults = [];
 
-    if (this.provincia.id == 0) {
+    if (this.province.id == 0) {
       //No Provincia
       if (this.sector.id != 0) {
         //Si Sector
@@ -277,7 +259,7 @@ export class Tab2Page {
       }
     } else {
       //Si provincia
-      if (this.localidad.id != 0) {
+      if (this.town.id != 0) {
         //Si localidad
         if (this.sector.id != 0) {
           //Si sector
@@ -288,7 +270,7 @@ export class Tab2Page {
               demanda.user != null &&
               (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
                 aux.id &&
-              demanda.user.town_id == this.localidad.id
+              demanda.user.town_id == this.town.id
             ) {
               this.searchResults.push(demanda);
             }
@@ -299,7 +281,7 @@ export class Tab2Page {
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
-              demanda.user.town_id == this.localidad.id
+              demanda.user.town_id == this.town.id
             ) {
               this.searchResults.push(demanda);
             }
@@ -315,7 +297,7 @@ export class Tab2Page {
               demanda.user != null &&
               (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
                 aux.id &&
-              demanda.user.province_id == this.provincia.id
+              demanda.user.province_id == this.province.id
             ) {
               this.searchResults.push(demanda);
             }
@@ -326,7 +308,7 @@ export class Tab2Page {
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
-              demanda.user.province_id == this.provincia.id
+              demanda.user.province_id == this.province.id
             ) {
               this.searchResults.push(demanda);
             }
@@ -338,7 +320,7 @@ export class Tab2Page {
 
   public irA(p: string): void {
     if (p === '/menu/perfil') {
-      if (this.perfil === null) {
+      if (this.currentUser) {
         this.router.navigate(['login']);
       } else {
         this.router.navigate(['/menu/perfil']);
@@ -352,4 +334,4 @@ export class Tab2Page {
     console.log('onClickFavourite');
   }
 
-  }
+}

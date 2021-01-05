@@ -20,9 +20,9 @@
         <ion-icon slot="start" name="hand-right"></ion-icon>
         {{ 'menu.tabs.chat' | translate }}
       </ion-button>
-      <ion-button *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
+      <ion-button *ngIf="currentUser === null" class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
+        {{ (currentUser !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
       </ion-button>
     </ion-buttons>
 
@@ -58,7 +58,7 @@
     <ng-container *ngIf="showFilters">
     <div class="filtros">
       <ion-item class="categorias">
-        <ion-label>Sectores</ion-label>
+        <ion-label>{{ 'common.labelSectors' | translate }}</ion-label>
         <ionic-selectable
           item-content
           [(ngModel)]="sector"
@@ -71,7 +71,7 @@
         </ionic-selectable>
       </ion-item>
       <ion-item class="categorias">
-        <ion-label>Subsectores</ion-label>
+        <ion-label>{{ 'common.labelSubsectors' | translate }}</ion-label>
         <ionic-selectable
           item-content
           [(ngModel)]="subsector"
@@ -83,26 +83,26 @@
         >
         </ionic-selectable> </ion-item
       ><ion-item class="categorias">
-        <ion-label>Provincia</ion-label>
+        <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
         <ionic-selectable
           item-content
-          [(ngModel)]="provincia"
+          [(ngModel)]="province"
           itemValueField="id"
           itemTextField="name"
-          [items]="provincias"
+          [items]="provinces"
           [canSearch]="true"
           (onChange)="provinciasChange($event)"
         >
         </ionic-selectable>
       </ion-item>
       <ion-item class="categorias">
-        <ion-label>Localidad</ion-label>
+        <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
         <ionic-selectable
           item-content
-          [(ngModel)]="localidad"
+          [(ngModel)]="town"
           itemValueField="id"
           itemTextField="name"
-          [items]="localidades"
+          [items]="towns"
           [canSearch]="true"
           (onChange)="localidadesChange($event)"
         >
@@ -114,13 +114,13 @@
 
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
     <ion-spinner></ion-spinner>
-    <p>Cargando...</p>
+    <p>{{ 'common.labelLoading' | translate }}</p>
   </div>
   <p
     class="vacio text-center"
     *ngIf="!(searchResults.length>0) && !isLoading"
   >
-    No hay elementos para mostrar
+  {{ 'common.labelNoElements' | translate }}
   </p>
 
   <ion-list *ngIf="!isLoading">
