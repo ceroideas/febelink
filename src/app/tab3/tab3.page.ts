@@ -3,9 +3,10 @@ import { ModalController, IonItemSliding } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
-import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
 import { Router } from '@angular/router';
 import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
+import { IOffer } from '../models/offer.model';
+import { IUser } from '../models/user.model';
 
 @Component({
   selector: 'app-tab3',
@@ -14,82 +15,51 @@ import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.pag
 })
 export class Tab3Page {
   currentYear = new Date().getFullYear();
-  settingsOfertas: string = 'ofertasPage'; // default button
-  ofertas: any;
-  misOfertas: any;
+  offers: IOffer[] = [];
   isLoading: boolean;
-  perfil: any;
+  currentUser: IUser = null;
 
   constructor(
     private modalCtrl: ModalController,
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router
-  ) {
-    this.settingsOfertas = 'ofertasPage';
-  }
+  ) {}
 
-  /**
-   * Obtenemos las ofertas cada vez que entramos en la pantalla
-   */
-  public async ionViewDidEnter() {
-    this.misOfertas = [];
-    this.ofertas = [];
-
-    await this.obtenerPerfil();
-
-    if (this.perfil !== null) {
+  async ionViewDidEnter() {
+    await this.getUserProfile();
+    if (this.currentUser) {
       this.isLoading = true;
-      await this.obtenerOfertas();
-      await this.obtenerMisOfertas();
+      await this.getOffers();
     }
   }
 
-  /**
-   * Obtener las ofertas del ofertante del servidor
-   */
-  async obtenerMisOfertas() {
-    (await this.api.misOfertas()).subscribe((ofertas) => {
-      this.misOfertas = ofertas;
-      this.isLoading = false;
-      console.log(this.ofertas);
-    });
+  async getUserProfile() {
+    this.currentUser = await this.utilities.getUserData();
+    console.log('getUserProfile', this.currentUser);
   }
 
-  /**
-   * Modal para suscribirse
-   */
-  async suscribirse() {
-    const suscribirseModal = await this.modalCtrl.create({
-      component: SuscribirsePage,
-    });
-
-    await suscribirseModal.present();
-    const { data } = await suscribirseModal.onWillDismiss();
-    this.obtenerMisOfertas();
+  async getOffers() {
+    const [ myOffers, offers ] = await Promise.all([
+      await (await this.api.misOfertas()).toPromise(),
+      await (await this.api.ofertasRecibidas()).toPromise()
+    ]);
+    console.log('myOffers', myOffers);
+    console.log('offers', offers);
+    this.offers = [...offers.flat(), ...myOffers];
+    this.isLoading = false;
   }
 
-  /**
-   * Recargar las ofertas del ofertante
-   * @param refresher
-   */
-  public doRefreshMisOfertas(refresher): void {
-    this.obtenerMisOfertas();
+  doRefreshOffers(refresher): void {
+    this.getOffers();
     refresher.event.complete();
   }
 
-  /**
-   * Borramos la oferta con un itemSliding
-   * @param oferta
-   * @param item
-   */
-  async borrarOferta(oferta, item: IonItemSliding) {
-    console.log(oferta);
-    (await this.api.borrarOferta(oferta.id)).subscribe(
+  async deleteOffer(offer: IOffer) {
+    (await this.api.borrarOferta(offer.id)).subscribe(
       (resp) => {
         console.log('OFERTA BORRADA correctamente', resp);
-        this.obtenerMisOfertas();
-        item.close();
+        this.getOffers();
       },
       (err) => {
         console.log(err);
@@ -98,60 +68,6 @@ export class Tab3Page {
     );
   }
 
-  /**
-   * Ir a la demanda con su estado
-   * @param id_demanda
-   * @param estado
-   */
-  public detalleDemanda(id_demanda, estado): void {
-    let aceptada: boolean;
-    if (estado == 1) aceptada = true;
-    else aceptada = false;
-    this.router.navigate(['demanda/' + id_demanda], {
-      queryParams: { id_demanda: id_demanda, aceptada: aceptada },
-    });
-  }
-
-  /**
-   * Obtener datos del perfil
-   */
-  async obtenerPerfil() {
-    await this.utilities.getUserData().then((data) => {
-      this.perfil = data;
-    });
-  }
-
-  /**
-   * Obtener las ofertas del servidor y terminar de cargar
-   */
-  async obtenerOfertas() {
-    (await this.api.ofertasRecibidas()).subscribe((res) => {
-      let ofertas = [];
-      for (var i = 0; i < res.length; i++) {
-        let element = res[i];
-        Array.isArray(element)
-          ? ofertas.push(element[0])
-          : ofertas.push(element);
-      }
-      this.ofertas = ofertas;
-      console.log(this.ofertas);
-      this.isLoading = false;
-    });
-  }
-
-  /**
-   * Método para recargar las ofertas
-   * @param refresher
-   */
-  public doRefreshOfertas(refresher): void {
-    this.obtenerOfertas();
-    refresher.complete();
-  }
-
-  /**
-   * Creamos modal para el interior de la oferta
-   * @param oferta
-   */
   async interiorOferta(oferta) {
     const interiorOfertaModal = await this.modalCtrl.create({
       component: InteriorOfertaPage,
@@ -160,7 +76,16 @@ export class Tab3Page {
 
     await interiorOfertaModal.present();
     const { data } = await interiorOfertaModal.onWillDismiss();
-    this.obtenerOfertas();
+    this.getOffers();
+  }
+
+  detalleDemanda(id_demanda, estado): void {
+    let aceptada: boolean;
+    if (estado == 1) aceptada = true;
+    else aceptada = false;
+    this.router.navigate(['demanda/' + id_demanda], {
+      queryParams: { id_demanda: id_demanda, aceptada: aceptada },
+    });
   }
 
   async openGuide() {
@@ -171,13 +96,9 @@ export class Tab3Page {
     return await guideModal.present();
   }
 
-  /**
-   * Navegar a la pantalla p
-   * @param p
-   */
-  public irA(p: string): void {
+  irA(p: string): void {
     if (p === '/menu/perfil') {
-      if (this.perfil === null) {
+      if (this.currentUser) {
         this.router.navigate(['login']);
       } else {
         this.router.navigate(['/menu/perfil']);

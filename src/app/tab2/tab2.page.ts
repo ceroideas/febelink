@@ -58,12 +58,12 @@ export class Tab2Page {
   async loadData() {
     await this.getUserProfile();
     this.loadSectors();
-    this.obtenerDemandas();
+    this.getSearchResults();
     this.loadProvinces();
     this.subsector = null;
   }
 
-  async obtenerDemandas() {
+  async getSearchResults() {
     this.isLoading = true;
     this.demandasCategoria = [];
     this.searchResults = [];
@@ -96,7 +96,7 @@ export class Tab2Page {
     });
   }
 
-  public sectorChange(event: {
+  sectorChange(event: {
     component: IonicSelectableComponent;
     value: any;
   }): void {
@@ -110,18 +110,18 @@ export class Tab2Page {
     this.loadSubSectors(event.value.id);
     this.subsector = this.subSectors[0];
     this.sector = event.value;
-    this.filtrarDemandas();
+    this.filterSearchResults();
   }
 
-  public subSectorChange(event: {
+  subSectorChange(event: {
     component: IonicSelectableComponent;
     value: any;
   }): void {
     this.subsector = event.value;
-    this.filtrarDemandas();
+    this.filterSearchResults();
   }
 
-  public provinciasChange(event: {
+  provincesChange(event: {
     component: IonicSelectableComponent;
     value: any;
   }): void {
@@ -134,19 +134,19 @@ export class Tab2Page {
     this.province = event.value;
     this.town = this.towns[0];
     this.loadTowns(event.value.id);
-    this.filtrarDemandas();
+    this.filterSearchResults();
   }
 
-  public localidadesChange(event: {
+  townsChange(event: {
     component: IonicSelectableComponent;
     value: any;
   }): void {
     this.town = event.value;
-    this.filtrarDemandas();
+    this.filterSearchResults();
   }
 
   public doRefresh(refresher): void {
-    this.obtenerDemandas();
+    this.getSearchResults();
     this.sector = this.sectors[0];
     this.subSectors = [];
     this.province = null;
@@ -156,7 +156,7 @@ export class Tab2Page {
   }
 
   refresh() {
-    this.obtenerDemandas();
+    this.getSearchResults();
     this.sector = this.sectors[0];
     this.subSectors = [];
     this.province = null;
@@ -173,20 +173,16 @@ export class Tab2Page {
   }
 
   async getUserProfile() {
-
     await this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
-
     await this.utilities.getUserData().then((data) => {
       this.currentUser = {...data};
-
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){
           this.openGuide();
           //}
-
           this.utilities.setGuia('other');
         }
       }
@@ -230,7 +226,7 @@ export class Tab2Page {
     this.town = this.towns[0];
   }
 
-  filtrarDemandas() {
+  filterSearchResults() {
     this.searchResults = [];
 
     if (this.province.id == 0) {

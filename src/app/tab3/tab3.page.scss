@@ -46,6 +46,20 @@ ion-header{
 }
 ion-content{
 
+    ion-searchbar {
+        --background: #141414;
+        --border-radius: 25px;
+        --color: white;
+        --icon-color: white;
+        --placeholder-color: white;
+    }
+
+    .content-filter {
+        @media (min-width: 768px){
+            margin: 40px 0px;
+        }
+    }
+
     ion-segment {
         @media (min-width: 768px){
             max-width: 400px;
@@ -109,4 +123,9 @@ ion-content{
     .denegada{
         background-color: #da1c1c;
     }
+}
+
+ion-avatar {
+    width: 48px;
+    height: 48px;
 }

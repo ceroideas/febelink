@@ -13,11 +13,11 @@
         {{ 'menu.tabs.searchEngine' | translate }}
       </ion-button>
       <ion-button class="btn-header active">
-        <ion-icon slot="start" name="archive"></ion-icon>
+        <ion-icon slot="start" name="heart"></ion-icon>
         {{ 'menu.tabs.recommend' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
-        <ion-icon slot="start" name="hand-right"></ion-icon>
+        <ion-icon slot="start" name="chatbubbles"></ion-icon>
         {{ 'menu.tabs.chat' | translate }}
       </ion-button>
       <ion-button *ngIf="currentUser === null" class="btn-header" (click)="irA('/menu/perfil')">
@@ -91,7 +91,7 @@
           itemTextField="name"
           [items]="provinces"
           [canSearch]="true"
-          (onChange)="provinciasChange($event)"
+          (onChange)="provincesChange($event)"
         >
         </ionic-selectable>
       </ion-item>
@@ -104,7 +104,7 @@
           itemTextField="name"
           [items]="towns"
           [canSearch]="true"
-          (onChange)="localidadesChange($event)"
+          (onChange)="townsChange($event)"
         >
         </ionic-selectable>
       </ion-item>
@@ -159,7 +159,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-item class="mobile" lines="none" (click)="detalleDemanda(demanda)"
+    <ion-item tappable class="mobile" lines="none" (click)="detalleDemanda(demanda)"
       *ngFor="let demanda of searchResults | filter:mysearch.value"
     >
       <ion-avatar slot="start">
