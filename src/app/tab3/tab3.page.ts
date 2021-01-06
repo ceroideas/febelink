@@ -107,4 +107,32 @@ export class Tab3Page {
       this.router.navigate([p]);
     }
   }
+
+  getOfferBackgroundColor(offerStatus: number) {
+    switch(offerStatus) {
+      case 1: {
+        return "#19cf50";
+      }
+      case 2: {
+        return "#da1c1c";
+      }
+      case 3: {
+        return "#3289db";
+      }
+    }
+  }
+
+  getOfferText(offerStatus: number) {
+    switch(offerStatus) {
+      case 1: {
+        return "Aceptada";
+      }
+      case 2: {
+        return "Denegada";
+      }
+      case 3: {
+        return "Sin respuesta";
+      }
+    }
+  }
 }

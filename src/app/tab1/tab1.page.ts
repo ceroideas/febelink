@@ -13,6 +13,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab1',
@@ -56,7 +57,8 @@ export class Tab1Page {
     private cookSvc: CookieService,
     private formBuilder: FormBuilder,
     private camera: Camera,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private translateService: TranslateService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.obtenerPerfil();
@@ -106,18 +108,20 @@ export class Tab1Page {
           (await this.api.publicarDemanda(nombre, texto, sector, sub_sector, ofertas_restantes, this.base64img)).subscribe(async resp => {
             console.log("Búsqueda publicada",resp);
             if( sector !== -1 ) {
-              (await this.api.enviarNotificacionAOfertantes('Se ha realizado una búsqueda, mira en tu panel!', 'Titulo: ' + nombre + '\nDescripción: ' + texto, sector, sub_sector)).subscribe( resp => {
+              (await this.api.enviarNotificacionAOfertantes(this.translateService.instant("tabs.tab1.messageSearchDone"),
+              `${this.translateService.instant("common.labelTitle")}:  ${nombre} \n${this.translateService.instant("common.labelDescription")}: ${texto}`,
+              sector, sub_sector)).subscribe( resp => {
                 console.log("Notificacion enviada correctamente")
               });
             }
             this.utilities.dismissLoading();
-            this.utilities.showToast('Búsqueda enviada. En breve recibirás tus respuestas. ¡Suerte!');
+            this.utilities.showToast(this.translateService.instant("tabs.tab1.messageSearchSent"));
           },err => {
             this.utilities.dismissLoading();
-            this.utilities.showToast('Hubo un error al publicar la búsqueda.');
+            this.utilities.showToast(this.translateService.instant("tabs.tab1.errorPublishSearch"));
           });
         } else {
-          this.utilities.showToast('Debes rellenar los campos de tu perfil para realizar las demandas.');
+          this.utilities.showToast(this.translateService.instant("tabs.tab1.errorMissingProfileInfo"));
         }
     } else {
       this.userRegister();
@@ -356,7 +360,7 @@ export class Tab1Page {
       }
       const myFile = filePicker.files[0];
       if (myFile.size > 307200) {
-        this.utilities.showToast('Imágen demasiado grande, max. 300KB');
+        this.utilities.showToast('Imagen demasiado grande, max. 300KB');
         return;
     }
     this.base64img = await this.convert(myFile);

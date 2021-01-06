@@ -80,7 +80,7 @@
             <ion-item lines="none">
               <ion-list-header>
                 <ion-label>
-                  <em>¿Quieres añadir una foto?</em>
+                  <em>{{ 'tabs.tab1.labelPhoto' | translate }}</em>
                 </ion-label>
               </ion-list-header>
             </ion-item>
@@ -96,7 +96,7 @@
                 <ion-radio-group formControlName="ofertas_restantes">
                   <ion-list-header>
                     <ion-label>
-                      <em>¿Cuántas respuestas quieres recibir?</em>
+                      <em>{{ 'tabs.tab1.labelAnswers' | translate }}</em>
                     </ion-label>
                   </ion-list-header>
                   <ion-item *ngFor="let answer of answerOptions" class="stars">
@@ -113,7 +113,7 @@
               -->
               <ion-item class="input" *ngIf="sectors?.length>0">
                 <ion-label position="floating">
-                  Sector
+                  {{ 'common.labelSector' | translate }}
                 </ion-label>
                 <ion-select clearInput type="text" formControlName="sector" (ionChange)="onChangeSector($event)">
                   <ion-select-option *ngFor="let s of sectors" [value]="s?.id">{{s?.nombre}}</ion-select-option>
@@ -121,7 +121,7 @@
               </ion-item>
               <ion-item class="input" *ngIf="subSectors?.length>0">
                 <ion-label position="floating">
-                  Subsector
+                  {{ 'common.labelSubsector' | translate }}
                 </ion-label>
                 <ion-select clearInput type="text" formControlName="sub_sector">
                   <ion-select-option *ngFor="let subsector of subSectors" [value]="subsector?.id">{{subsector?.nombre}}</ion-select-option>
@@ -129,12 +129,12 @@
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
-                  Descripción
+                  {{ 'common.labelDescription' | translate }}
                 </ion-label>
                 <ion-textarea placeholder="¿Quieres añadir una descripción?" rows="6" cols="20" formControlName="descripcion"></ion-textarea>
               </ion-item>
               <ion-item lines="none">
-                <ion-button style="margin:auto" type="submit" color="primary" class="publicar">Enviar búsqueda</ion-button>
+                <ion-button style="margin:auto" type="submit" color="primary" class="publicar">{{ 'tabs.tab1.buttonSend' | translate }}</ion-button>
               </ion-item>
             </form>
           </ion-card-content>
@@ -151,12 +151,11 @@
 >
   <ion-toolbar color="dark">
     <p>
-      Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar,
-      asumimos que estás de acuerdo con nuestra
+      {{ 'common.cookies1' | translate }}
       <a
         (click)="openCookies()"
         style="text-decoration: underline; cursor: pointer"
-        >política de cookies</a
+        >{{ 'common.cookies2' | translate }}</a
       >.
     </p>
     <ion-buttons size="large" slot="end">

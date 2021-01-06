@@ -84,20 +84,7 @@
                 <div class="ion-text-end">
                   <span
                     class="estado"
-                    style="background-color: #19cf50"
-                    *ngIf="offer?.estado == 1"
-                    >{{offer?.estado_oferta}}</span
-                  >
-                  <span
-                    class="estado"
-                    style="background-color: #da1c1c"
-                    *ngIf="offer?.estado == 2"
-                    >{{offer?.estado_oferta}}</span
-                  >
-                  <span
-                    class="estado"
-                    style="background-color: #3289db"
-                    *ngIf="offer?.estado == 3"
+                    [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
                     >{{offer?.estado_oferta}}</span
                   >
                 </div>
@@ -105,21 +92,8 @@
               <ng-template #offerReceived>
                 <span
                   class="estado"
-                  style="background-color: #19cf50"
-                  *ngIf="offer?.estado == 1"
-                  >Aceptada</span
-                >
-                <span
-                  class="estado"
-                  style="background-color: #da1c1c"
-                  *ngIf="offer?.estado == 2"
-                  >Denegada</span
-                >
-                <span
-                  class="estado"
-                  style="background-color: #3289db"
-                  *ngIf="offer?.estado == 3"
-                  >Sin respuesta</span
+                  [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
+                  >{{ getOfferText(offer?.estado) }}</span
                 >
               </ng-template>
             </ion-card-content>
@@ -147,20 +121,7 @@
           <div class="ion-text-end">
             <span
               class="estado"
-              style="background-color: #19cf50"
-              *ngIf="offer?.estado == 1"
-              >{{offer?.estado_oferta}}</span
-            >
-            <span
-              class="estado"
-              style="background-color: #da1c1c"
-              *ngIf="offer?.estado == 2"
-              >{{offer?.estado_oferta}}</span
-            >
-            <span
-              class="estado"
-              style="background-color: #3289db"
-              *ngIf="offer?.estado == 3"
+              [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
               >{{offer?.estado_oferta}}</span
             >
           </div>
@@ -168,21 +129,8 @@
         <ng-template #offerReceived>
           <span
             class="estado"
-            style="background-color: #19cf50"
-            *ngIf="offer?.estado == 1"
-            >Aceptada</span
-          >
-          <span
-            class="estado"
-            style="background-color: #da1c1c"
-            *ngIf="offer?.estado == 2"
-            >Denegada</span
-          >
-          <span
-            class="estado"
-            style="background-color: #3289db"
-            *ngIf="offer?.estado == 3"
-            >Sin respuesta</span
+            [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
+            >{{ getOfferText(offer?.estado) }}</span
           >
         </ng-template>
       </div>

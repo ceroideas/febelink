@@ -52,7 +52,7 @@
 
     <ion-item lines="none">
       <ion-icon name="filter-outline" slot="start"></ion-icon>
-      <ion-label>Filtros</ion-label>
+      <ion-label>{{ 'tabs.tab2.filters' | translate }}</ion-label>
       <ion-icon [name]="showFilters ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="showFilters = !showFilters"></ion-icon>
     </ion-item>
     <ng-container *ngIf="showFilters">
