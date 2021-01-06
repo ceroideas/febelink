@@ -225,12 +225,20 @@ export class Tab1Page {
     this.publishSearchForm.patchValue({nombre: this.searchText});
     if ((this.searchText.length > 2) && (this.selectorEnabled)) {
       (await this.api.searchByKeys(this.searchText)).subscribe((keywords) => {
-        let keys = [];
-        for (let key of keywords) {
-          let item = { name: this.highlight(key.keyword), value: key.keyword };
-          keys.push(item);
+        if (keywords.length !== 0) {
+          let keys = [];
+          for (let key of keywords) {
+            let item = { name: this.highlight(key.keyword), value: key.keyword };
+            keys.push(item);
+          }
+          this.keys = keys;
         }
-        this.keys = keys;
+        else {
+          setTimeout(() => {
+            this.selectorEnabled = false;
+            this.showCard = true;
+          }, 500);
+        }
         console.log('keywords', this.keys);
       });
     }
@@ -270,7 +278,7 @@ export class Tab1Page {
   removeFocus() {
     console.log('REMOVE FOCUS');
     this.keyText = this.searchText;
-    this.selectorEnabled = false;
+    this.keys.length = 0;
   }
 
   clearBtn() {
