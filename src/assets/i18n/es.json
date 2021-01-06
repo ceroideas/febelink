@@ -5,7 +5,8 @@
         "labelProvince": "Provincia",
         "labelTown": "Localidad",
         "labelNoElements": "No hay elementos para mostrar",
-        "labelLoading": "Cargando..."
+        "labelLoading": "Cargando...",
+        "searchPlaceholder": "Buscar en Febelink"
     },
     "menu": {
         "tabs": {
@@ -17,7 +18,7 @@
         },
         "pages": {
             "opinions": "Opiniones",
-            "subscriptions": "Subscripciones"
+            "subscriptions": "Suscripciones"
         },
         "labels": {
             "currentPlan": "Plan actual"

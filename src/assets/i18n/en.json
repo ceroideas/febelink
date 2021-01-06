@@ -5,7 +5,8 @@
         "labelProvince": "Province",
         "labelTown": "Town",
         "labelNoElements": "No elements to show",
-        "labelLoading": "Loading..."
+        "labelLoading": "Loading...",
+        "searchPlaceholder": "Search in Febelink"
     },
     "menu": {
         "tabs": {

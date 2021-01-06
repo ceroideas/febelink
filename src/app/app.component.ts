@@ -36,7 +36,7 @@ export class AppComponent {
     }
 ];
   currentUser: IUser;
-  selected = false;
+  showOpinions = true;
   userSector: ISector;
   userSubsector: ISubSector;
   userSubscriptionDetails = 'ninguno';

@@ -92,7 +92,7 @@ export class Tab1Page {
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       sector: ['', Validators.required],
-      ofertas_restantes: [''],
+      ofertas_restantes: [answerOptions()[answerOptions().length - 1].value],
       sub_sector: ['']
     });
   }
@@ -222,7 +222,7 @@ export class Tab1Page {
 
   async search() {
     console.log('SEARCH', this.searchText, this.selectorEnabled);
-
+    this.publishSearchForm.patchValue({nombre: this.searchText});
     if ((this.searchText.length > 2) && (this.selectorEnabled)) {
       (await this.api.searchByKeys(this.searchText)).subscribe((keywords) => {
         let keys = [];

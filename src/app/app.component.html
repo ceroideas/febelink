@@ -46,10 +46,10 @@
                                 <h2>{{ 'menu.pages.opinions' | translate }}</h2>
                             </ion-text>
                         </ion-label>
-                        <ion-icon color="light" [name]="selected ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="selected = !selected"></ion-icon>
+                        <ion-icon color="light" [name]="showOpinions ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="showOpinions = !showOpinions"></ion-icon>
                     </ion-item>
                     <!-- Section options. -->
-                    <ng-container *ngIf="selected">
+                    <ng-container *ngIf="showOpinions">
                         <ion-card>
                             <ion-item lines="none">
                                 <div tabindex="0"></div>
