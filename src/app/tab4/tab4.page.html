@@ -117,18 +117,17 @@
               <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
               <ion-textarea
                 [value]="perfil?.descripcion"
+                type="text"
                 [maxlength]="max_bio"
                 formControlName="descripcion"
               ></ion-textarea>
             </ion-item>
           </ion-col>
           <ion-col size="6" style="margin-top: 23px">
-            <ion-item class="input" (click)="clickAddress()">
+            <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
               <ion-input
                 clearInput
-                (ionBlur)="checkHide()"
-                type="{{typeAddress}}"
                 [value]="perfil?.direccion"
                 formControlName="direccion"
               ></ion-input>
@@ -184,13 +183,11 @@
             </ion-item>
           </ion-col>
           <ion-col size="6">
-            <ion-item class="input" (click)="clickDNI()">
+            <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelDNI' | translate }} </ion-label>
               <ion-input
+                id='dninie'
                 clearInput
-                (ionBlur)="checkHide()"
-                clearInput
-                type="{{typeDNI}}"
                 type="text"
                 [value]="perfil?.dni"
                 formControlName="dni"
@@ -241,11 +238,20 @@
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelNewPass' | translate }} </ion-label>
+              <ion-icon
+                slot="end"
+                (click)="hideShowPassword()"
+                [name]="passwordIcon"
+                class="passwordIcon2"
+              ></ion-icon>
               <ion-input
+                [(ngModel)]="inputpass1"
+                (keyup)="showHidePassMessages()"
                 clearInput
-                type="password"
+                [type]="passwordType"
                 formControlName="password"
               ></ion-input>
+              <p id="msgpass1" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
             </ion-item>
           </ion-col>
           <ion-col size="6">
@@ -253,11 +259,20 @@
               <ion-label position="floating">
                 {{ 'common.labelConfirmNewPass' | translate }}
               </ion-label>
+              <ion-icon
+                slot="end"
+                (click)="hideShowPassword2()"
+                [name]="passwordIcon2"
+                class="passwordIcon2"
+              ></ion-icon>
               <ion-input
+                [(ngModel)]="inputpass2"
+                (keyup)="showHidePassMessages()"
                 clearInput
-                type="password"
+                [type]="passwordType2"
                 formControlName="passwordConfirmation"
               ></ion-input>
+              <p id="msgpass2" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -283,12 +298,10 @@
             formControlName="descripcion"
           ></ion-textarea>
         </ion-item>
-        <ion-item class="input" (click)="clickAddress()">
+        <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
           <ion-input
-            (ionBlur)="checkHide()"
             clearInput
-            type="{{typeAddress}}"
             formControlName="direccion"
           ></ion-input>
         </ion-item>
@@ -328,12 +341,11 @@
             formControlName="telefono"
           ></ion-input>
         </ion-item>
-        <ion-item class="input" (tap)="clickDNI()">
+        <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelDNI' | translate }} </ion-label>
           <ion-input
-            (ionBlur)="checkHide()"
+            id="dninie"
             clearInput
-            type="{{typeDNI}}"
             formControlName="dni"
           ></ion-input>
         </ion-item>
@@ -373,24 +385,43 @@
 
         <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelNewPass' | translate }} </ion-label>
+          <ion-icon
+          slot="end"
+          (click)="hideShowPassword()"
+          [name]="passwordIcon"
+          class="passwordIcon"
+        ></ion-icon>
           <ion-input
+            [(ngModel)]="inputpass1"
+            (keyup)="showHidePassMessages()"
             clearInput
-            type="password"
+            [type]="passwordType"
             formControlName="password"
           ></ion-input>
         </ion-item>
+        <p id="msgpass3" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
         <ion-item class="input">
           <ion-label position="floating">
             {{ 'common.labelConfirmNewPass' | translate }}
           </ion-label>
+          <ion-icon
+            slot="end"
+            (click)="hideShowPassword2()"
+            [name]="passwordIcon2"
+            class="passwordIcon"
+        ></ion-icon>
           <ion-input
+            [(ngModel)]="inputpass2"
+            (keyup)="showHidePassMessages()"
             clearInput
-            type="password"
+            [type]="passwordType2"
             formControlName="passwordConfirmation"
           ></ion-input>
         </ion-item>
+        <p id="msgpass4" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
       </div>
       <ion-button
+        id="savebtn"
         type="submit"
         style="max-width: 200px"
         expand="block"
@@ -417,12 +448,27 @@
       </ion-row>
     </ion-grid>
 
+    <ion-button
+      style="max-width: 200px; margin-top: 20px"
+      class="guardar-cambios"
+      expand="block"
+      (click)="logout()"
+      >Cerrar Sesion &nbsp;<ion-icon name="log-out"></ion-icon>
+    </ion-button>
+
+    <ion-button
+            style="max-width: 200px; margin-top: 20px"
+            class="guardar-cambios"
+
+            (click)="suspended_profile()"
+    >Deshabilitar cuenta<ion-icon name="suspended_profile"></ion-icon>
+    </ion-button>
   </div>
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">© {{ currentYear }} Febelink</p>
+    <p style="margin-bottom: 0px">© {{ currentYear }} Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>

@@ -8,6 +8,7 @@ import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.pag
 import { IOffer } from '../models/offer.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab3',
@@ -144,5 +145,16 @@ export class Tab3Page {
         return "Sin respuesta";
       }
     }
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 }

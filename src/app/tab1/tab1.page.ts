@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab1',
@@ -29,6 +30,7 @@ export class Tab1Page {
   sector: any;
   isLogin: any;
   cookies: string;
+  filter_hidden: boolean;
 
   //SEARCH COMPONENT
   searchText: string = '';
@@ -379,6 +381,17 @@ export class Tab1Page {
             reject('No file provided');
         }
     });
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
 }

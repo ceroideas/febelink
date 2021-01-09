@@ -42,11 +42,11 @@ export class LoginPage implements OnInit {
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
 
-    this.api.login(formData, 'login').subscribe(
-      (res) => {},
+    (this.api.login(formData, 'login')).subscribe(
+      (res) => {        this.utilities.dismissLoading();},
       (err) => {
         console.log('ERROR', err);
-        this.utilities.dismissLoading();
+
         // credenciales incorrectas
         if (err.status === 401) {
           this.utilities.showToast('Los datos introducidos no son correctos');
@@ -62,6 +62,7 @@ export class LoginPage implements OnInit {
             'Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde'
           );
         }
+        this.utilities.dismissLoading();
       }
     );
   }

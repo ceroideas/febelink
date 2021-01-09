@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Push } from '@ionic-native/push/ngx';
@@ -25,9 +25,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {BrowserTab} from '@ionic-native/browser-tab/ngx';
+
 import {
-  GoogleLoginProvider,
-  FacebookLoginProvider,
+    GoogleLoginProvider,
+    FacebookLoginProvider,
 } from 'angularx-social-login';
 
 /* NGX Translate imports. */
@@ -38,6 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+const config: SocketIoConfig = { url: 'https://api.febelink.com:3425', options: {secure: true, rejectUnauthorized: false}};
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,6 +50,7 @@ export function createTranslateLoader(http: HttpClient) {
             IonicModule.forRoot(),
             AppRoutingModule,
             FormsModule,
+      SocketIoModule.forRoot(config),
             ReactiveFormsModule,
             HttpClientModule,
             ComponentsModule,
@@ -67,6 +72,7 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Push,
     SocialSharing,
+      BrowserTab,
     Camera,
     Deeplinks,
     CookieService,
@@ -93,4 +99,5 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

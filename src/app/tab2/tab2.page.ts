@@ -9,6 +9,7 @@ import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
+import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
   selector: 'app-tab2',
@@ -356,6 +357,17 @@ export class Tab2Page {
         this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
       });
     }
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
 }

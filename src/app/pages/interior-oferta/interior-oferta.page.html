@@ -26,8 +26,11 @@
 </ion-button>
 
 <hr>
+  <ion-button class="apartado btn-info" (click)="viewChat()">
+    <ion-icon style="color:white;" name="chatbox-ellipses-outline"></ion-icon>&nbsp;Chat
+  </ion-button>
+<div text-center *ngIf="oferta?.estado == 3" class="center_input_button">
 
-<div text-center *ngIf="oferta?.estado == 3">
   <ion-button class="btn-respuesta" (click)="responderOferta(1)">
     <ion-icon name="checkmark"></ion-icon>Aceptar
   </ion-button>
