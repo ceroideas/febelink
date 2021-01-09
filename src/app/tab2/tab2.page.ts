@@ -59,6 +59,7 @@ export class Tab2Page {
     await this.getUserProfile();
     this.loadSectors();
     this.getSearchResults();
+    // this.getFavorites();
     this.loadProvinces();
     this.subsector = null;
   }
@@ -68,7 +69,12 @@ export class Tab2Page {
     this.demandasCategoria = [];
     this.searchResults = [];
 
+    let userFavorites = await (await (await this.api.getFavorites()).toPromise());
+    userFavorites = Object.keys(userFavorites);
+    console.log('userFavorites', userFavorites);
+
     (await this.api.obtenerDemandas()).subscribe((resp) => {
+      console.log('Demandas', resp);
       this.demandas = resp;
       for (let demanda of this.demandas) {
         if (demanda.imagen != null) {
@@ -81,7 +87,7 @@ export class Tab2Page {
         }
 
         demanda.valoracion = Number(demanda.valoracion);
-        demanda.favorito = false;
+        userFavorites.includes(demanda.id.toString()) ? demanda.favorito = true : demanda.favorito = false;
         this.demandasCategoria.push(demanda);
         this.searchResults.push(demanda);
       }
@@ -177,6 +183,7 @@ export class Tab2Page {
       this.isLogin = data;
     });
     await this.utilities.getUserData().then((data) => {
+      console.log('getUserProfile', data);
       this.currentUser = {...data};
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
@@ -326,8 +333,42 @@ export class Tab2Page {
     }
   }
 
-  onClickAddToFavorites() {
-    console.log('onClickFavourite');
+  async getFavorites() {
+    (await this.api.getFavorites()).subscribe((result) => {
+      console.log('Favoritos', Object.keys(result));
+    });
+  }
+
+  async onClickAddToFavorites(demand) {
+    console.log('onClickFavourite', demand.favorito);
+    let p = {
+      id: demand.id,
+    };
+    // Add to favorites.
+    if (demand.favorito) {
+      this.utilities.showLoading();
+      (await this.api.favouriteDemand(p)).subscribe(result => {
+        console.log('result', result);
+        this.utilities.dismissLoading();
+        this.utilities.showToast('Se ha añadido a favoritos correctamente.');
+
+      },err => {
+        this.utilities.dismissLoading();
+        this.utilities.showToast('Error al añadir a favoritos.');
+      });
+    }
+    // Remove from favorites.
+    else {
+      this.utilities.showLoading();
+      (await this.api.unFavouriteDemand(p)).subscribe(result => {
+        console.log('result', result);
+        this.utilities.dismissLoading();
+        this.utilities.showToast('Se ha eliminado de favoritos correctamente.');
+      },err => {
+        this.utilities.dismissLoading();
+        this.utilities.showToast('Error al eliminar de favoritos.');
+      });
+    }
   }
 
 }

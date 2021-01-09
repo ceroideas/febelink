@@ -226,8 +226,12 @@ export class Tab1Page {
 
   async search() {
     console.log('SEARCH', this.searchText, this.selectorEnabled);
+    if (this.searchText === '') {
+      this.keys = [];
+      // this.selectorEnabled = true;
+    }
     this.publishSearchForm.patchValue({nombre: this.searchText});
-    if ((this.searchText.length > 2) && (this.selectorEnabled)) {
+    if ((this.searchText.length > 2) /*&& (this.selectorEnabled)*/) {
       (await this.api.searchByKeys(this.searchText)).subscribe((keywords) => {
         if (keywords.length !== 0) {
           let keys = [];
@@ -239,16 +243,17 @@ export class Tab1Page {
         }
         else {
           setTimeout(() => {
-            this.selectorEnabled = false;
+            // this.selectorEnabled = false;
             this.showCard = true;
           }, 500);
         }
-        console.log('keywords', this.keys);
+        console.log('keys', this.keys);
       });
     }
   }
 
   async getSectorsByKeys(key) {
+    console.log('getSectorsByKeys');
     this.keys = [];
 
     (await this.api.getSectorsByKeys(key.value)).subscribe((keywords) => {
@@ -282,7 +287,7 @@ export class Tab1Page {
   removeFocus() {
     console.log('REMOVE FOCUS');
     this.keyText = this.searchText;
-    this.keys.length = 0;
+    // this.keys.length = 0;
   }
 
   clearBtn() {

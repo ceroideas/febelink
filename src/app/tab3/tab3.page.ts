@@ -40,13 +40,15 @@ export class Tab3Page {
   }
 
   async getOffers() {
-    const [ myOffers, offers ] = await Promise.all([
+    const [ myOffers, offers, favorites ] = await Promise.all([
       await (await this.api.misOfertas()).toPromise(),
-      await (await this.api.ofertasRecibidas()).toPromise()
+      await (await this.api.ofertasRecibidas()).toPromise(),
+      await (await this.api.getFavorites()).toPromise()
     ]);
     console.log('myOffers', myOffers);
     console.log('offers', offers);
-    this.offers = [...offers.flat(), ...myOffers];
+    console.log('favorites', favorites);
+    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites)];
     this.isLoading = false;
   }
 

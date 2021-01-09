@@ -133,6 +133,34 @@ export class ApiService {
   public noShowAgain(params): any {
     return this._createData('saltar-guia', params);
   }
+
+  /**
+   * Añadir a favoritos una demanda.
+   * @param params
+   */
+  favouriteDemand(params) {
+    const formData = new FormData();
+    formData.append('id', params.id);
+    return this._createData('favorite', formData);
+  }
+
+  /**
+   * Eliminar de favoritos una demanda.
+   * @param params
+   */
+  unFavouriteDemand(params) {
+    const formData = new FormData();
+    formData.append('id', params.id);
+    return this._createData('unfavorite', formData);
+  }
+
+  /**
+   * Obtener todos los favoritos del usuario.
+   */
+  getFavorites() {
+    return this._getData('favorites');
+  }
+
   /**
    * Borrar demanda a partir de su id
    * @param id
