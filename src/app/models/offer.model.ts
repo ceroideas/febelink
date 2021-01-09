@@ -17,4 +17,5 @@ export interface IOffer {
     nombre: string;
     precio: number;
     respondida: number;
+    type?: string;
 }

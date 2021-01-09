@@ -77,12 +77,10 @@ export class Tab1Page {
   }
 
   ionViewDidEnter() {
-    console.log("Tab1Page::ionViewDidEnter method called.");
     this.loadData();
   }
 
   ionViewDidLeave() {
-    console.log("ionViewDidLeave");
     this.showCard = false;
     this.searchText = '';
     this.sectors = [];
@@ -101,12 +99,10 @@ export class Tab1Page {
 
   async submitForm() {
     if( this.perfil !== null) {
-      console.log('publishSearchForm', this.publishSearchForm.value);
       const { nombre, descripcion: texto, sector, sub_sector, ofertas_restantes } = this.publishSearchForm.value;
       if (this.checkUserFields()) {
         this.utilities.showLoading();
           (await this.api.publicarDemanda(nombre, texto, sector, sub_sector, ofertas_restantes, this.base64img)).subscribe(async resp => {
-            console.log("Búsqueda publicada",resp);
             if( sector !== -1 ) {
               (await this.api.enviarNotificacionAOfertantes(this.translateService.instant("tabs.tab1.messageSearchDone"),
               `${this.translateService.instant("common.labelTitle")}:  ${nombre} \n${this.translateService.instant("common.labelDescription")}: ${texto}`,
@@ -164,7 +160,6 @@ export class Tab1Page {
 
     await this.utilities.getUserData().then((data) => {
       this.perfil = data;
-      console.log('perfil', this.perfil);
 
       if (this.perfil !== null) {
         if (this.perfil.skip_wizard === 0 && this.isLogin === 'login') {
@@ -203,12 +198,10 @@ export class Tab1Page {
       ...await (await this.api.obtenerSubSectores(id)).toPromise()
     ];
 
-    console.log('subsectors', this.subSectors);
     this.publishSearchForm.patchValue({sub_sector: this.subSectors[0].id});
   }
 
   onChangeSector(event) {
-    console.log('onChangeSector', event.detail);
     this.subSectors = [];
     this.loadSubSectors(event.detail.value);
   }
@@ -219,9 +212,7 @@ export class Tab1Page {
   }
 
   detectKeyPressed(event) {
-    console.log('detecKeyPressed', event);
-    if ((event.key === 'Enter') && (this.searchText.length > 2)) {
-    }
+    if ((event.key === 'Enter') && (this.searchText.length > 2)) {}
   }
 
   async search() {
@@ -285,13 +276,11 @@ export class Tab1Page {
   }
 
   removeFocus() {
-    console.log('REMOVE FOCUS');
     this.keyText = this.searchText;
     // this.keys.length = 0;
   }
 
   clearBtn() {
-    console.log('Clear buton');
     this.keywords = {};
     this.keys = [];
   }
@@ -349,7 +338,6 @@ export class Tab1Page {
     this.camera.getPicture(options).then((urlFoto) => {
       this.srcFoto = this.sanitizer.bypassSecurityTrustUrl(urlFoto);
       this.base64img = 'data:image/jpeg;base64,' + urlFoto;
-      console.log(urlFoto);
     }).catch(error => {
       this.utilities.showAlert('Error al obtener imagen', error);
     })
@@ -369,7 +357,6 @@ export class Tab1Page {
         return;
     }
     this.base64img = await this.convert(myFile);
-      console.log(`Your base64 image is ${this.base64img}`);
       this.srcFoto = true;
 
       resolve();

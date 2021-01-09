@@ -50,7 +50,11 @@
             "errorMissingProfileInfo": "Debes rellenar los campos de tu perfil para realizar las búsquedas."
         },
         "tab2": {
-            "filters": "Filtros"
+            "filters": "Filtros",
+            "messageAddedFavorite": "Se ha añadido a favoritos correctamente.",
+            "messageRemovedFavorite": "Se ha eliminado de favoritos correctamente.",
+            "errorAddFavorite": "Error al añadir a favoritos.",
+            "errorRemoveFavorite": "Error al eliminar de favoritos."
         },
         "tab4": {
             "buttonAskRecommendation": "Pedir recomendación",

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
 import { IOffer } from '../models/offer.model';
 import { IUser } from '../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab3',
@@ -23,7 +24,8 @@ export class Tab3Page {
     private modalCtrl: ModalController,
     private api: ApiService,
     private utilities: UtilitiesService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {}
 
   async ionViewDidEnter() {
@@ -36,7 +38,6 @@ export class Tab3Page {
 
   async getUserProfile() {
     this.currentUser = await this.utilities.getUserData();
-    console.log('getUserProfile', this.currentUser);
   }
 
   async getOffers() {
@@ -45,9 +46,7 @@ export class Tab3Page {
       await (await this.api.ofertasRecibidas()).toPromise(),
       await (await this.api.getFavorites()).toPromise()
     ]);
-    console.log('myOffers', myOffers);
-    console.log('offers', offers);
-    console.log('favorites', favorites);
+    Object.values(favorites).forEach((favorite: IOffer) => favorite.type = "favorite")
     this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites)];
     this.isLoading = false;
   }
@@ -58,16 +57,25 @@ export class Tab3Page {
   }
 
   async deleteOffer(offer: IOffer) {
-    (await this.api.borrarOferta(offer.id)).subscribe(
-      (resp) => {
-        console.log('OFERTA BORRADA correctamente', resp);
+    if (offer?.type === 'favorite') {
+      (await this.api.unFavouriteDemand({id: offer.id})).subscribe(result => {
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
         this.getOffers();
-      },
-      (err) => {
-        console.log(err);
-        this.utilities.showToast('No se ha podido borrar la oferta');
-      }
-    );
+      },err => {
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
+      });
+    }
+    else {
+      (await this.api.borrarOferta(offer.id)).subscribe(
+        (resp) => {
+          this.getOffers();
+        },
+        (err) => {
+          console.log(err);
+          this.utilities.showToast('No se ha podido borrar la oferta');
+        }
+      );
+    }
   }
 
   async interiorOferta(oferta) {

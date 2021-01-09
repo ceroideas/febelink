@@ -8,6 +8,7 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab2',
@@ -39,6 +40,7 @@ export class Tab2Page {
     private utilities: UtilitiesService,
     private router: Router,
     private modalCtrl: ModalController,
+    private translateService: TranslateService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
@@ -59,7 +61,6 @@ export class Tab2Page {
     await this.getUserProfile();
     this.loadSectors();
     this.getSearchResults();
-    // this.getFavorites();
     this.loadProvinces();
     this.subsector = null;
   }
@@ -71,10 +72,8 @@ export class Tab2Page {
 
     let userFavorites = await (await (await this.api.getFavorites()).toPromise());
     userFavorites = Object.keys(userFavorites);
-    console.log('userFavorites', userFavorites);
 
     (await this.api.obtenerDemandas()).subscribe((resp) => {
-      console.log('Demandas', resp);
       this.demandas = resp;
       for (let demanda of this.demandas) {
         if (demanda.imagen != null) {
@@ -92,7 +91,6 @@ export class Tab2Page {
         this.searchResults.push(demanda);
       }
       this.isLoading = false;
-      console.log('searchResults', this.searchResults);
     });
   }
 
@@ -183,7 +181,6 @@ export class Tab2Page {
       this.isLogin = data;
     });
     await this.utilities.getUserData().then((data) => {
-      console.log('getUserProfile', data);
       this.currentUser = {...data};
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
@@ -211,7 +208,6 @@ export class Tab2Page {
       ...this.subSectors,
       ...await (await this.api.obtenerSubSectores(id)).toPromise()
     ];
-    console.log('subsectors', this.subSectors);
     this.subsector = this.subSectors[0];
   }
 
@@ -333,14 +329,7 @@ export class Tab2Page {
     }
   }
 
-  async getFavorites() {
-    (await this.api.getFavorites()).subscribe((result) => {
-      console.log('Favoritos', Object.keys(result));
-    });
-  }
-
   async onClickAddToFavorites(demand) {
-    console.log('onClickFavourite', demand.favorito);
     let p = {
       id: demand.id,
     };
@@ -348,25 +337,23 @@ export class Tab2Page {
     if (demand.favorito) {
       this.utilities.showLoading();
       (await this.api.favouriteDemand(p)).subscribe(result => {
-        console.log('result', result);
         this.utilities.dismissLoading();
-        this.utilities.showToast('Se ha añadido a favoritos correctamente.');
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageAddedFavorite"));
 
       },err => {
         this.utilities.dismissLoading();
-        this.utilities.showToast('Error al añadir a favoritos.');
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorAddFavorite"));
       });
     }
     // Remove from favorites.
     else {
       this.utilities.showLoading();
       (await this.api.unFavouriteDemand(p)).subscribe(result => {
-        console.log('result', result);
         this.utilities.dismissLoading();
-        this.utilities.showToast('Se ha eliminado de favoritos correctamente.');
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
       },err => {
         this.utilities.dismissLoading();
-        this.utilities.showToast('Error al eliminar de favoritos.');
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
       });
     }
   }

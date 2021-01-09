@@ -12,7 +12,6 @@ export class FilterPipe implements PipeTransform {
   */
 
   transform(items: any[], search: string) {
-    console.log('items', items);
     if ((items.length !== 0) && (search)) {
         return items.filter( item  => item?.nombre ? (item.nombre.toLowerCase().indexOf(search.toLowerCase()) > -1) :
         (item.descripcion.toLowerCase().indexOf(search.toLowerCase()) > -1));

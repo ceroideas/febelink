@@ -50,7 +50,11 @@
             "errorMissingProfileInfo": "You must fill in your profile fields to perform the searches."
         },
         "tab2": {
-            "filters": "Filters"
+            "filters": "Filters",
+            "messageAddedFavorite": "It has been added to favorites correctly.",
+            "messageRemovedFavorite": "It has been correctly removed from the favorites.",
+            "errorAddFavorite": "Error when adding to favorites.",
+            "errorRemoveFavorite": "Error when deleting from favorites."
         },
         "tab4": {
             "buttonAskRecommendation": "Ask for a recommendation",
