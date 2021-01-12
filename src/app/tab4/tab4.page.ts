@@ -27,38 +27,41 @@ import { TermsPage } from '../pages/terms/terms.page';
     styleUrls: ['tab4.page.scss'],
 })
 export class Tab4Page {
-@ViewChild('barCanvas', {static: true}) barCanvas: ElementRef;
-@ViewChild(IonContent, {static: false}) content: IonContent;
+  @ViewChild('barCanvas', { static: true }) barCanvas: ElementRef;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
 
-perfil: any;
-opiniones: any;
-total_opinions: any;
-opinion_types: any;
-form: FormGroup;
-base64img: any;
-demandas: any[] = [];
-sectores: any[];
-sectoresPerfil: any[] = [];
-subSectoresPerfil: any[] = [];
-subsectores: any[];
-subscription: any;
-subscription_details: any;
-barChart: Chart;
-provincia: any;
-localidad: any;
-provincias: any[] = [];
-localidades: any[] = [];
-loading: boolean = true;
-max_bio: any = 15;
-isNative: boolean = true;
-inputpass1: String = '';
-inputpass2: String = '';
-passwordType: string = 'password';
-passwordIcon: string = 'eye-off';
-passwordType2: string = 'password';
-passwordIcon2: string = 'eye-off';
+  currentYear = new Date().getFullYear();
+  perfil: any;
+  opiniones: any;
+  total_opinions: any;
+  opinion_types: any;
+  form: FormGroup;
+  base64img: any;
+  demandas: any[] = [];
+  sectores: any[];
+  sectoresPerfil: any[] = [];
+  subSectoresPerfil: any[] = [];
+  subsectores: any[];
+  subscription: any;
+  subscription_details: any;
+  barChart: Chart;
+  provincia: any;
+  localidad: any;
+  provincias: any[] = [];
+  localidades: any[] = [];
+  typeDNI: string = 'password';
+  typeAddress: string = 'password';
+  loading: boolean = true;
+  max_bio: any = 15;
+  isNative: boolean = true;
+  inputpass1: String = '';
+  inputpass2: String = '';
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+  passwordType2: string = 'password';
+  passwordIcon2: string = 'eye-off';
 
-constructor(
+  constructor(
     private modalCtrl: ModalController,
     public alertCtrl: AlertController,
     private formBuilder: FormBuilder,
@@ -118,7 +121,7 @@ hideShowPassword() {
 
   async ionViewWillEnter() {
     //await this.obtenerSectores();
-    await this.loadSuscriptions();
+    this.loadSuscriptions();
     this.content.scrollToTop(1500);
   }
 
@@ -725,7 +728,6 @@ hideShowPassword() {
      */
     async obtenerSectoresPerfil() {
         this.sectoresPerfil = [];
-
         (await this.api.obtenerSectoresPerfil(this.perfil.id)).subscribe(
             (response) => {
                 for (let x of response) {
@@ -989,14 +991,13 @@ hideShowPassword() {
         this.router.navigate(['menu/todas']);
     }
 
-    /**
-     * Modal para suscribirse
-     */
-    async suscribirse() {
-        const suscribirseModal = await this.modalCtrl.create({
-            component: SuscribirsePage,
-        });
-
+  /**
+   * Modal para suscribirse
+   */
+  async suscribirse() {
+    const suscribirseModal = await this.modalCtrl.create({
+      component: SuscribirsePage,
+    });
         await suscribirseModal.present();
     }
 

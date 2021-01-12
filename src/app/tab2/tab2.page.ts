@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
-import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
-import { PublicarDemandaPage } from '../pages/publicar-demanda/publicar-demanda.page';
+import { ModalController } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { ISearch } from '../models/search.model';
+import { ISector, ISubSector } from '../models/sector.model';
+import { IUser } from '../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
@@ -14,23 +17,347 @@ import { TermsPage } from '../pages/terms/terms.page';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
-  settingsDemandas: string = 'demandasPage'; // default button
-  perfil: any;
+  currentYear = new Date().getFullYear();
+  currentUser: IUser = null;
   demandas: any;
-  misDemandas: any;
   isLoading: boolean;
+  sectors: ISector[] = [];
+  subSectors: ISubSector[] = [];
+  subsector: any;
+  sector: any;
+  provinces: any[] = [];
+  province: any;
+  towns: any[] = [];
+  town: any;
+  demandasCategoria: any = [];
+  demandasProvincia: any = [];
+  searchResults: ISearch[] = [];
+  isLogin: any;
+  refreshTab: any;
+  showFilters = false;
 
   constructor(
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
-    public alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private translateService: TranslateService
   ) {
-    this.settingsDemandas = 'demandasPage';
+    this.refreshTab = this.api.getUserLogged().subscribe((item) => {
+      this.getUserProfile();
+    });
+
+    this.utilities.getGuia().then((data) => {
+      this.isLogin = data;
+    });
   }
 
   ngOnInit() {}
+
+  ionViewDidEnter() {
+    this.loadData();
+  }
+
+  async loadData() {
+    await this.getUserProfile();
+    this.loadSectors();
+    this.getSearchResults();
+    this.loadProvinces();
+    this.subsector = null;
+  }
+
+  async getSearchResults() {
+    this.isLoading = true;
+    this.demandasCategoria = [];
+    this.searchResults = [];
+
+    let userFavorites = await (await (await this.api.getFavorites()).toPromise());
+    userFavorites = Object.keys(userFavorites);
+
+    (await this.api.obtenerDemandas()).subscribe((resp) => {
+      this.demandas = resp;
+      for (let demanda of this.demandas) {
+        if (demanda.imagen != null) {
+          if (
+            !demanda.imagen.includes('http://') &&
+            !demanda.imagen.includes('https://')
+          )
+            demanda.imagen =
+              'https://api.febelink.com/storage/' + demanda.imagen;
+        }
+
+        demanda.valoracion = Number(demanda.valoracion);
+        userFavorites.includes(demanda.id.toString()) ? demanda.favorito = true : demanda.favorito = false;
+        this.demandasCategoria.push(demanda);
+        this.searchResults.push(demanda);
+      }
+      this.isLoading = false;
+    });
+  }
+
+  public detalleDemanda(demanda): void {
+    this.router.navigate(['demanda/' + demanda.id], {
+      queryParams: { demanda: JSON.stringify(demanda) },
+    });
+  }
+
+  sectorChange(event: {
+    component: IonicSelectableComponent;
+    value: any;
+  }): void {
+    this.subSectors = [
+      {
+        id: 0,
+        nombre: 'Todas',
+        id_sector: 0
+      },
+    ];
+    this.loadSubSectors(event.value.id);
+    this.subsector = this.subSectors[0];
+    this.sector = event.value;
+    this.filterSearchResults();
+  }
+
+  subSectorChange(event: {
+    component: IonicSelectableComponent;
+    value: any;
+  }): void {
+    this.subsector = event.value;
+    this.filterSearchResults();
+  }
+
+  provincesChange(event: {
+    component: IonicSelectableComponent;
+    value: any;
+  }): void {
+    this.towns = [
+      {
+        id: 0,
+        name: 'Todas',
+      },
+    ];
+    this.province = event.value;
+    this.town = this.towns[0];
+    this.loadTowns(event.value.id);
+    this.filterSearchResults();
+  }
+
+  townsChange(event: {
+    component: IonicSelectableComponent;
+    value: any;
+  }): void {
+    this.town = event.value;
+    this.filterSearchResults();
+  }
+
+  public doRefresh(refresher): void {
+    this.getSearchResults();
+    this.sector = this.sectors[0];
+    this.subSectors = [];
+    this.province = null;
+    this.town = null;
+    this.subsector = 'Todas';
+    refresher.target.complete();
+  }
+
+  refresh() {
+    this.getSearchResults();
+    this.sector = this.sectors[0];
+    this.subSectors = [];
+    this.province = null;
+    this.town = null;
+    this.subsector = 'Todas';
+  }
+
+  async openGuide() {
+    const guideModal = await this.modalCtrl.create({
+      component: GuidePage,
+      cssClass: 'guide-modal',
+    });
+    return await guideModal.present();
+  }
+
+  async getUserProfile() {
+    await this.utilities.getGuia().then((data) => {
+      this.isLogin = data;
+    });
+    await this.utilities.getUserData().then((data) => {
+      this.currentUser = {...data};
+      if (this.currentUser) {
+        if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
+          //if(this.platform.is('cordova')){
+          this.openGuide();
+          //}
+          this.utilities.setGuia('other');
+        }
+      }
+    });
+  }
+
+  async loadSectors() {
+    this.sectors.push({ id: 0, nombre: 'Todas' });
+    this.sectors = [
+      ...this.sectors,
+      ...await (await this.api.obtenerSectores()).toPromise()
+    ];
+    this.sector = this.sectors[0];
+  }
+
+  async loadSubSectors(id: number) {
+    this.subSectors.push({ id: 0, nombre: 'Todas', id_sector: 0});
+    this.subSectors = [
+      ...this.subSectors,
+      ...await (await this.api.obtenerSubSectores(id)).toPromise()
+    ];
+    this.subsector = this.subSectors[0];
+  }
+
+  async loadProvinces() {
+    this.provinces = [ {id: 0, name: 'Todas' }];
+    this.provinces = [
+      ...this.provinces,
+      ...await (await this.api.obtenerProvincias()).toPromise()
+    ];
+    this.province = this.provinces[0];
+  }
+
+  async loadTowns(id_provincia: number) {
+    this.towns = [ {id: 0, name: 'Todas' }];
+    this.towns = [
+      ...this.towns,
+      await (await this.api.obtenerLocalidades(id_provincia)).toPromise()
+    ];
+    this.town = this.towns[0];
+  }
+
+  filterSearchResults() {
+    this.searchResults = [];
+
+    if (this.province.id == 0) {
+      //No Provincia
+      if (this.sector.id != 0) {
+        //Si Sector
+        if (this.subsector.id != 0) {
+          for (let demanda of this.demandas) {
+            if (demanda.sub_sector == this.subsector.id) {
+              this.searchResults.push(demanda);
+            }
+          }
+        } else {
+          for (let demanda of this.demandas) {
+            if (demanda.sector == this.sector.id) {
+              this.searchResults.push(demanda);
+            }
+          }
+        }
+      } else {
+        //No sector
+        for (let demanda of this.demandas) {
+          this.demandasProvincia.push(demanda);
+          this.searchResults.push(demanda);
+        }
+      }
+    } else {
+      //Si provincia
+      if (this.town.id != 0) {
+        //Si localidad
+        if (this.sector.id != 0) {
+          //Si sector
+          let aux = this.subsector.id != 0 ? this.subsector : this.sector;
+          for (let demanda of this.demandas) {
+            this.demandasProvincia.push(demanda);
+            if (
+              demanda.user != null &&
+              (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
+                aux.id &&
+              demanda.user.town_id == this.town.id
+            ) {
+              this.searchResults.push(demanda);
+            }
+          }
+        } else {
+          //No sector
+          for (let demanda of this.demandas) {
+            this.demandasProvincia.push(demanda);
+            if (
+              demanda.user != null &&
+              demanda.user.town_id == this.town.id
+            ) {
+              this.searchResults.push(demanda);
+            }
+          }
+        }
+      } else {
+        if (this.sector.id != 0) {
+          //Si sector
+          let aux = this.subsector.id != 0 ? this.subsector : this.sector;
+          for (let demanda of this.demandas) {
+            this.demandasProvincia.push(demanda);
+            if (
+              demanda.user != null &&
+              (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
+                aux.id &&
+              demanda.user.province_id == this.province.id
+            ) {
+              this.searchResults.push(demanda);
+            }
+          }
+        } else {
+          //No sector
+          for (let demanda of this.demandas) {
+            this.demandasProvincia.push(demanda);
+            if (
+              demanda.user != null &&
+              demanda.user.province_id == this.province.id
+            ) {
+              this.searchResults.push(demanda);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public irA(p: string): void {
+    if (p === '/menu/perfil') {
+      if (this.currentUser) {
+        this.router.navigate(['login']);
+      } else {
+        this.router.navigate(['/menu/perfil']);
+      }
+    } else {
+      this.router.navigate([p]);
+    }
+  }
+
+  async onClickAddToFavorites(demand) {
+    let p = {
+      id: demand.id,
+    };
+    // Add to favorites.
+    if (demand.favorito) {
+      this.utilities.showLoading();
+      (await this.api.favouriteDemand(p)).subscribe(result => {
+        this.utilities.dismissLoading();
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageAddedFavorite"));
+
+      },err => {
+        this.utilities.dismissLoading();
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorAddFavorite"));
+      });
+    }
+    // Remove from favorites.
+    else {
+      this.utilities.showLoading();
+      (await this.api.unFavouriteDemand(p)).subscribe(result => {
+        this.utilities.dismissLoading();
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
+      },err => {
+        this.utilities.dismissLoading();
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
+      });
+    }
+  }
 
   /**
    * Modal para abrir terminos y condiciones
@@ -43,189 +370,4 @@ export class Tab2Page {
     await TermsModal.present();
   }
 
-  async ionViewDidEnter() {
-    this.demandas = [];
-    this.misDemandas = [];
-
-    await this.obtenerPerfil();
-
-    if (this.perfil !== null) {
-      this.isLoading = true;
-      this.obtenerDemandas();
-      this.obtenerDemandasDemandante();
-    }
-  }
-
-  async obtenerDemandas() {
-    this.demandas = [];
-    (await this.api.demandasRecibidas()).subscribe((demandas) => {
-      demandas = demandas.filter(
-        (demanda) => demanda.id_demandante !== this.perfil.id
-      );
-      for (let demanda of demandas) {
-        if (demanda.imagen != null) {
-          if (
-            !demanda.imagen.includes('http://') &&
-            !demanda.imagen.includes('https://')
-          ) {
-            demanda.imagen =
-              'https://api.febelink.com/storage/' + demanda.imagen;
-          }
-        }
-        this.demandas.push(demanda);
-      }
-
-      this.isLoading = false;
-    });
-  }
-
-  async obtenerDemandasDemandante() {
-    this.misDemandas = [];
-    this.isLoading = true;
-
-    (await this.api.obtenerDemandasDemandante(this.perfil.id)).subscribe(
-      (misDemandas) => {
-        for (let demanda of misDemandas) {
-          if (demanda.imagen != null) {
-            if (
-              !demanda.imagen.includes('http://') &&
-              !demanda.imagen.includes('https://')
-            ) {
-              demanda.imagen =
-                'https://api.febelink.com/storage/' + demanda.imagen;
-            }
-          }
-          this.misDemandas.push(demanda);
-        }
-        this.isLoading = false;
-      }
-    );
-  }
-
-  /**
-   * Obtener datos del perfil
-   */
-  async obtenerPerfil() {
-    await this.utilities.getUserData().then((data) => {
-      this.perfil = data;
-    });
-  }
-
-  /**
-   * Cuando se refresca se obtienen las demandas
-   * @param refresherDem
-   */
-  public doRefreshDemandas(refresherDem): void {
-    this.obtenerDemandas();
-    refresherDem.target.complete();
-  }
-
-  /**
-   * Cuando se refresca se obtienen las demandas
-   * @param refresherMisDem
-   */
-  public doRefreshMisDemandas(refresherMis): void {
-    this.obtenerDemandasDemandante();
-    refresherMis.target.complete();
-  }
-
-  /**
-   * Ir a la pantalla de la demanda
-   * @param demanda
-   */
-  public detalleDemanda(demanda): void {
-    this.router.navigate(['demanda/' + demanda.id], {
-      queryParams: { demanda: JSON.stringify(demanda) },
-    });
-  }
-
-  /**
-   * Mostar modal para editar la demanda
-   * @param demanda
-   */
-  async editarDemanda(demanda) {
-    const editarModal = await this.modalCtrl.create({
-      component: EditarDemandaPage,
-      componentProps: { demanda: demanda },
-    });
-
-    await editarModal.present();
-
-    const { data } = await editarModal.onWillDismiss();
-    this.obtenerDemandasDemandante();
-  }
-
-  /**
-   * Método para borrar la demanda
-   * @param demanda
-   */
-  async borrarDemanda(demanda) {
-    let alert = await this.alertCtrl.create({
-      header: demanda.nombre,
-      subHeader: 'Seguro que quieres borrar la demanda?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: () => {},
-        },
-        {
-          text: 'Aceptar',
-          handler: async () => {
-            (await this.api.borrarDemanda(demanda.id)).subscribe((resp) => {
-              this.obtenerDemandasDemandante();
-              this.utilities.showToast(
-                'Se ha borrado correctamente la demanda'
-              );
-            });
-          },
-        },
-      ],
-    });
-    await alert.present();
-  }
-
-  /**
-   * Crear modal para publicar demanda
-   */
-  async publicarDemanda() {
-    const publicarModal = await this.modalCtrl.create({
-      component: PublicarDemandaPage,
-    });
-
-    await publicarModal.present();
-
-    const { data } = await publicarModal.onWillDismiss();
-
-    if (this.perfil !== null) {
-      this.obtenerDemandasDemandante();
-    }
-  }
-
-  /**
-   * Navegar a la pantalla p
-   * @param p
-   */
-  public irA(p: string): void {
-    if (p === '/menu/perfil') {
-      if (this.perfil === null) {
-        this.router.navigate(['login']);
-      } else {
-        this.router.navigate(['/menu/perfil']);
-      }
-    } else {
-      this.router.navigate([p]);
-    }
-  }
-
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
-  }
-
-  home() {
-    this.router.navigate(['menu/todas']);
-  }
 }

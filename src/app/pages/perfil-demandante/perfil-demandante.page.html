@@ -6,19 +6,19 @@
     <ion-buttons slot="end" class="desktop">
       <ion-button class="btn-header" (click)="irA('/menu/todas')">
         <ion-icon slot="start" name="search"></ion-icon>
-        Todas
+        {{ 'menu.tabs.searchEngine' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
-        <ion-icon slot="start" name="archive"></ion-icon>
-        Búsquedas
+        <ion-icon slot="start" name="heart"></ion-icon>
+        {{ 'menu.tabs.recommend' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
-        <ion-icon slot="start" name="hand-right"></ion-icon>
-        Respuestas
+        <ion-icon slot="start" name="chatbubbles"></ion-icon>
+        {{ 'menu.tabs.chat' | translate }}
       </ion-button>
-      <ion-button class="btn-header" (click)="irA('/menu/perfil')">
+      <ion-button *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ perfil !== undefined ? 'Perfil' : 'Iniciar sesión'}}
+        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
       </ion-button>
     </ion-buttons>
 

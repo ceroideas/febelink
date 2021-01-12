@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform, AlertController, IonRouterOutlet } from '@ionic/angular';
+import { Platform, AlertController, IonRouterOutlet, MenuController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Socket} from "ngx-socket-io";
@@ -10,20 +10,40 @@ import { ApiService } from './services/api.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController } from '@ionic/angular';
 import { JsonPipe } from '@angular/common';
+import { TranslateConfigService } from './services/translate/translate-config.service';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { IUser } from './models/user.model';
+import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
+import { ISector, ISubSector } from './models/sector.model';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy{
     public userSubscription: any;
     lastTimeBackPress = 0;
     timePeriodToExit = 2000;
     @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
 
+  public appPages = [
+    {
+        key: 'subscriptions',
+        url: '',
+        icon: 'calendar'
+    }
+];
+  currentUser: IUser;
+  showOpinions = true;
+  userSector: ISector;
+  userSubsector: ISubSector;
+  userSubscriptionDetails = 'ninguno';
+  userFeedback = [];
+
   constructor(
-    private platform: Platform,
+    public platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private push: Push,
@@ -33,34 +53,53 @@ export class AppComponent {
     private socket: Socket,
     private router: Router,
     private deeplinks: Deeplinks,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private translateService: TranslateConfigService,
+    private storage: Storage,
+    private menu: MenuController,
+    public authenticationService: AuthenticationService,
+    private modalCtrl: ModalController
   ) {
     this.initializeApp();
   }
 
-    initializeApp() {
-        this.platform.ready().then(() => {
-            this.platform.backButton.subscribe(() => {
-                if (this.router.url === '' || this.router.url === '/menu/todas') {
-                    navigator['app'].exitApp();
-                } else {
-                    this.navCtrl.back();
-                }
-            });
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.setupLanguage();
+      this.platform.backButton.subscribe(() => {
+        if (this.router.url === '' || this.router.url === '/menu/todas') {
+          navigator['app'].exitApp();
+        } else {
+          this.navCtrl.back();
+        }
+      });
 
-            if (this.platform.is('cordova')) {
-                this.splashScreen.hide();
-                this.initDeeplinks();
-            }
+      if (this.platform.is('cordova')) {
+        this.splashScreen.hide();
+        this.initDeeplinks();
+      }
 
-            this.userSubscription = this.api.getUserLogged().subscribe((item) => {
-                if (this.platform.is('cordova')) {
-                    this.pushSetup();
-                }
-            });
-        });
-        // this.loginImplicito();
-    }
+      this.userSubscription = this.api.getUserLogged().subscribe((item) => {
+        if (this.platform.is('cordova')) {
+          this.pushSetup();
+        }
+      });
+    });
+
+    this.authenticationService.authenticationState.subscribe(state => {
+      if (state) {
+        this.menu.enable(true);
+        this.getUserInfo();
+      }
+    });
+
+    // this.loginImplicito();
+  }
+
+  setupLanguage() {
+    const currentLanguage = this.translateService.getDefaultLanguage();
+    this.translateService.setLanguage(currentLanguage);
+  }
 
     backbutton() {
         console.log('backbutton');
@@ -75,60 +114,56 @@ export class AppComponent {
     }
 
     public initDeeplinks() {
-        this.deeplinks
-            .route({
-                '/demanda/:id': 'detalle-demanda',
-                '/perfil-demandante/:id': 'perfil-demandante',
-                '/#/demanda/:id': 'detalle-demanda',
-                '/#/perfil-demandante/:id': 'perfil-demandante',
-            })
-            .subscribe(
-                (match) => {
-                    let id = match.$args.id;
-                    if (match.$route === 'detalle-demanda') {
-                        id = Number(id);
-                        setTimeout(() => {
-                            this.router.navigate(['demanda/' + id], {
-                                queryParams: {id_demanda: id},
-                            });
-                        }, 500);
-                    } else if (match.$route === 'perfil-demandante') {
-                        this.router.navigate(['perfil-demandante/' + id], {
-                            queryParams: {id_perfil: id},
-                        });
-                    }
-                },
-                (nomatch) => {
-                    console.error("Got a deeplink that didn't match", nomatch);
-
-                    let path = nomatch.$link.fragment;
-
-                    let id = path.substring(path.lastIndexOf('/') + 1, path.length);
-
-                    var route = path.substring(
-                        path.lastIndexOf('#') + 2,
-                        path.lastIndexOf('/')
-                    );
-
-                    if (route === 'demanda') {
-                        setTimeout(() => {
-                            this.router.navigate(['demanda/' + id], {
-                                queryParams: {id_demanda: Number(id)},
-                            });
-                        }, 500);
-                    } else if (route === 'perfil-demandante') {
-                        setTimeout(() => {
-                            this.router.navigate(['perfil-demandante'], {
-                                queryParams: {id_perfil: id},
-                            });
-                        }, 500);
-                    }
-                }
+      this.deeplinks
+        .route({
+          '/demanda/:id': 'detalle-demanda',
+          '/perfil-demandante/:id': 'perfil-demandante',
+          '/#/demanda/:id': 'detalle-demanda',
+          '/#/perfil-demandante/:id': 'perfil-demandante',
+        })
+        .subscribe(
+          (match) => {
+            let id = match.$args.id;
+            if (match.$route === 'detalle-demanda') {
+              id = Number(id);
+              setTimeout(() => {
+                this.router.navigate(['demanda/' + id], {
+                  queryParams: { id_demanda: id },
+                });
+              }, 500);
+            } else if (match.$route === 'perfil-demandante') {
+              this.router.navigate(['perfil-demandante/' + id], {
+                queryParams: { id_perfil: id },
+              });
+            }
+          },
+          (nomatch) => {
+            console.error("Got a deeplink that didn't match", nomatch);
+            let path = nomatch.$link.fragment;
+            let id = path.substring(path.lastIndexOf('/') + 1, path.length);
+            var route = path.substring(
+              path.lastIndexOf('#') + 2,
+              path.lastIndexOf('/')
             );
+            if (route === 'demanda') {
+              setTimeout(() => {
+                this.router.navigate(['demanda/' + id], {
+                  queryParams: { id_demanda: Number(id) },
+                });
+              }, 500);
+            } else if (route === 'perfil-demandante') {
+              setTimeout(() => {
+                this.router.navigate(['perfil-demandante'], {
+                  queryParams: { id_perfil: id },
+                });
+              }, 500);
+            }
+          }
+        );
     }
 
     ngOnDestroy() {
-        this.userSubscription.unsubscribe();
+      this.userSubscription.unsubscribe();
     }
 
     public pushSetup(): void {
@@ -227,4 +262,78 @@ export class AppComponent {
     public loginImplicito(): void {
         this.router.navigate(['menu/todas']);
     }
+
+    /**
+   * Método para cerrar sesión
+   */
+  async logout() {
+    let alert = await this.alertCtrl.create({
+      header: 'Cerrar sesión',
+      message: '¿Estás seguro de que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: () => {
+            this.storage.remove('userData').then(() => {
+              this.menu.enable(false);
+              this.authenticationService.logout();
+              this.api.refreshTabs();
+              this.router.navigate(['login']);
+              this.utilities.showToast('Sesión cerrada con éxito');
+            });
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  // TODO: Use state management library to simplify data collection.
+  async getUserInfo() {
+    await this.getUserData();
+    await this.getUserSectorsAndSubsectors();
+    await this.getUserSuscriptions();
+    await this.getUserOpinions();
+  }
+
+  async getUserData() {
+    this.currentUser = {...await this.utilities.getUserData()};
+  }
+
+
+  async getUserSectorsAndSubsectors() {
+    const sectors: ISector[] = await (await this.api.obtenerSectores()).toPromise();
+    const userSectorsIds = await (await this.api.obtenerSectoresPerfil(this.currentUser.id)).toPromise();
+    const sectorId = userSectorsIds[0]?.id_sector;
+    const subsectors: ISubSector[] = await (await this.api.obtenerSubSectores(sectorId)).toPromise();
+    const userSubsectorsIds = await (await this.api.obtenerSubSectoresPerfil(this.currentUser.id)).toPromise();
+    this.userSector = sectors.filter((sector) => sector.id === sectorId).pop();
+    this.userSubsector = subsectors.filter((subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector).pop();
+  }
+
+  async getUserSuscriptions() {
+    const userSubscription = await this.utilities.getUserSubscription();
+    if (userSubscription.length !== 0) {
+      const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
+      this.userSubscriptionDetails = userSubscriptionDetails?.name;
+    }
+  }
+
+  async showSubscriptionsModal() {
+      const suscribirseModal = await this.modalCtrl.create({
+        component: SuscribirsePage,
+      });
+      await suscribirseModal.present();
+  }
+
+  async getUserOpinions() {
+    const result = await (await this.api.opinionesPerfil(this.currentUser.reference)).toPromise();
+    result.opinions.forEach((opinion, index) => {
+      this.userFeedback.push({count: opinion, type: result.types[index]})
+    })
+  }
 }

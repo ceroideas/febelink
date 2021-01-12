@@ -229,6 +229,31 @@ ion-thumbnail {
     border-top: 1px solid #d0d0d0;
 }
 
+.stars{
+    color:var(--ion-color-star);
+    width: 25%;
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+}
+.publicar{
+    margin-top:20px;
+}
+.placeholder{
+    margin:10px;
+}
+.input-file-demandas {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    opacity: 0;
+    left: 105px;
+    top: 15px;
+    @media (min-width: 768px){
+        left: 44%;
+    }
+}
+
 .subtitle{
     font-size: 20px;
     text-align: center;

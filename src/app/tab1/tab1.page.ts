@@ -1,14 +1,19 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { IonicSelectableComponent } from 'ionic-selectable';
 import { ModalController, Platform } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
 import { UtilitiesService } from '../services/utilities.service';
 import { Router } from '@angular/router';
-import { PublicarDemandaPage } from '../pages/publicar-demanda/publicar-demanda.page';
 import { SesionCtrlPage } from '../pages/sesion-ctrl/sesion-ctrl.page';
 import { CookiesComponent } from '../components/cookies/cookies.component';
 import { CookieService } from 'ngx-cookie-service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { answerOptions } from 'src/utils/utils';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ISector, ISubSector } from '../models/sector.model';
+import { IUser } from '../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 
 @Component({
@@ -17,21 +22,12 @@ import { TermsPage } from '../pages/terms/terms.page';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  perfil: any;
-  demandas: any;
+  currentYear = new Date().getFullYear();
+  perfil: IUser = null;
   isLoading: boolean;
-  sectores: any[];
-  subsectores: any[];
-  subsector: any;
+  sectors: ISector[] = [];
+  subSectors: ISubSector[] = [];
   sector: any;
-  localidades: any[] = [];
-  provincias: any[] = [];
-  all_province : any[] = [];
-  localidad: any;
-  provincia: any;
-  demandasCategoria: any = [];
-  demandasProvincia: any = [];
-  demandasFiltradasBuscador: any = [];
   isLogin: any;
   cookies: string;
   filter_hidden: boolean;
@@ -46,6 +42,13 @@ export class Tab1Page {
   showCookies = false;
   refreshTab: any;
 
+  publishSearchForm: FormGroup;
+  answerOptions = answerOptions();
+  srcFoto: any;
+  base64img: any;
+  isNative: boolean = true;
+  showCard = false;
+
   constructor(
     private api: ApiService,
     private platform: Platform,
@@ -53,8 +56,11 @@ export class Tab1Page {
     private router: Router,
     private modalCtrl: ModalController,
     private elementRef: ElementRef,
-    private renderer: Renderer2,
-    private cookSvc: CookieService
+    private cookSvc: CookieService,
+    private formBuilder: FormBuilder,
+    private camera: Camera,
+    private sanitizer: DomSanitizer,
+    private translateService: TranslateService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.obtenerPerfil();
@@ -63,186 +69,73 @@ export class Tab1Page {
     this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
+    this.builtForm();
+    if(this.platform.is('cordova')){
+      this.isNative = true;
+
+    } else {
+      this.isNative = false;
+    }
   }
 
   ionViewDidEnter() {
     this.loadData();
   }
 
-  /**
-   * Modal para abrir terminos y condiciones
-   */
-  async termsModal() {
-    const TermsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
-
-    await TermsModal.present();
+  ionViewDidLeave() {
+    this.showCard = false;
+    this.searchText = '';
+    this.sectors = [];
+    this.subSectors = [];
   }
 
-  ionViewDidLoad() {
-    let searchInput = this.elementRef.nativeElement.querySelector(
-      '.searchbar-input'
-    );
-    if (searchInput != null) {
-      this.renderer.listen(searchInput, 'keyup', (event) => {
-        if (event.keyCode == 13) {
-          this.getSectorsByKeys({
-            name: this.searchText,
-            value: this.searchText,
+  builtForm() {
+    this.publishSearchForm = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      sector: ['', Validators.required],
+      ofertas_restantes: [answerOptions()[answerOptions().length - 1].value],
+      sub_sector: ['']
+    });
+  }
+
+  async submitForm() {
+    if( this.perfil !== null) {
+      const { nombre, descripcion: texto, sector, sub_sector, ofertas_restantes } = this.publishSearchForm.value;
+      if (this.checkUserFields()) {
+        this.utilities.showLoading();
+          (await this.api.publicarDemanda(nombre, texto, sector, sub_sector, ofertas_restantes, this.base64img)).subscribe(async resp => {
+            if( sector !== -1 ) {
+              (await this.api.enviarNotificacionAOfertantes(this.translateService.instant("tabs.tab1.messageSearchDone"),
+              `${this.translateService.instant("common.labelTitle")}:  ${nombre} \n${this.translateService.instant("common.labelDescription")}: ${texto}`,
+              sector, sub_sector)).subscribe( resp => {
+                console.log("Notificacion enviada correctamente")
+              });
+            }
+            this.utilities.dismissLoading();
+            this.utilities.showToast(this.translateService.instant("tabs.tab1.messageSearchSent"));
+          },err => {
+            this.utilities.dismissLoading();
+            this.utilities.showToast(this.translateService.instant("tabs.tab1.errorPublishSearch"));
           });
+        } else {
+          this.utilities.showToast(this.translateService.instant("tabs.tab1.errorMissingProfileInfo"));
         }
-      });
+    } else {
+      this.userRegister();
     }
-    let searchIcon = this.elementRef.nativeElement.querySelector(
-      '.searchbar-search-icon'
-    );
-    if (searchIcon != null) {
-      this.renderer.listen(searchIcon, 'click', (event) => {
-        this.getSectorsByKeys({ name: this.keyText, value: this.keyText });
-      });
-    }
+  }
+
+  checkUserFields(): boolean {
+    return this.perfil?.dni !== null && this.perfil?.telefono !== null && this.perfil?.direccion !== null;
   }
 
   async loadData() {
     await this.obtenerPerfil();
-    this.obtenerSectores();
-    this.obtenerDemandas();
-    this.obtenerProvincias();
-    this.subsector = null;
+    this.loadSectors();
+    this.loadSubSectors(0);
   }
 
-  async obtenerDemandas() {
-    this.isLoading = true;
-    this.demandasCategoria = [];
-    this.demandasFiltradasBuscador = [];
-
-    (await this.api.obtenerDemandas()).subscribe((resp) => {
-      this.demandas = resp;
-      for (let demanda of this.demandas) {
-        if (demanda.imagen != null) {
-          if (
-            !demanda.imagen.includes('http://') &&
-            !demanda.imagen.includes('https://')
-          )
-            demanda.imagen =
-              'https://api.febelink.com/storage/' + demanda.imagen;
-        }
-
-        demanda.valoracion = Number(demanda.valoracion);
-        this.demandasCategoria.push(demanda);
-        this.demandasFiltradasBuscador.push(demanda);
-      }
-      this.isLoading = false;
-    });
-  }
-
-  /**
-   * Navegación a una demanda
-   * @param demanda
-   */
-  public detalleDemanda(demanda): void {
-    this.router.navigate(['demanda/' + demanda.id], {
-      queryParams: { demanda: JSON.stringify(demanda) },
-    });
-  }
-
-  /**
-   * Filtrado con cambio de sector
-   * @param event
-   */
-  public sectorChange(event: {
-    component: IonicSelectableComponent;
-    value: any;
-  }): void {
-    this.subsectores = [
-      {
-        id: 0,
-        nombre: 'Todas',
-      },
-    ];
-    this.obtenerSubSectores(event.value.id);
-    this.subsector = this.subsectores[0];
-    this.sector = event.value;
-    this.filtrarDemandas();
-  }
-
-  /**
-   * Filtrado con cambio de subsector
-   * @param event
-   */
-  public subSectorChange(event: {
-    component: IonicSelectableComponent;
-    value: any;
-  }): void {
-    this.subsector = event.value;
-    this.filtrarDemandas();
-  }
-
-  public provinciasChange(event: {
-    component: IonicSelectableComponent;
-    value: any;
-  }): void {
-    this.localidades = [
-      {
-        id: 0,
-        name: 'Todas',
-      },
-    ];
-    this.provincia = event.value;
-    this.localidad = this.localidades[0];
-    this.obtenerLocalidades(event.value.id);
-    this.filtrarDemandas();
-  }
-
-  public localidadesChange(event: {
-    component: IonicSelectableComponent;
-    value: any;
-  }): void {
-    this.localidad = event.value;
-    this.filtrarDemandas();
-  }
-
-  /**
-   * Obtenemos las demandas e inicializamos los sectores de nuevo
-   * @param refresher
-   */
-  public doRefresh(refresher): void {
-    this.obtenerDemandas();
-    this.sector = this.sectores[0];
-    this.subsectores = [];
-    this.provincia = null;
-    this.localidad = null;
-    this.subsector = 'Todas';
-    refresher.target.complete();
-  }
-
-  refresh() {
-    this.obtenerDemandas();
-    this.sector = this.sectores[0];
-    this.subsectores = [];
-    this.provincia = null;
-    this.localidad = null;
-    this.subsector = 'Todas';
-  }
-
-  /**
-   * Buscador automático cada tecla pulsada
-   * @param event
-   */
-  public onKeyPressed(event): void {
-    let letra = event.value.toLowerCase().trim();
-    this.demandasFiltradasBuscador = this.demandasCategoria.filter(
-      (demanda) =>
-        demanda.nombre.toLowerCase() == letra ||
-        demanda.descripcion.toLowerCase().includes(letra) ||
-        demanda.nombre.toLowerCase().includes(letra)
-    );
-  }
-
-  /**
-   * Method to opend guide
-   */
   async openGuide() {
     const guideModal = await this.modalCtrl.create({
       component: GuidePage,
@@ -251,7 +144,6 @@ export class Tab1Page {
     return await guideModal.present();
   }
 
-  //Función para obtener los datos del perfil en el storage
   async obtenerPerfil() {
     this.cookies = this.cookSvc.get('wizard');
     if (this.cookies === 'wizard') {
@@ -276,272 +168,44 @@ export class Tab1Page {
           //if(this.platform.is('cordova')){
           this.openGuide();
           //}
-
           this.utilities.setGuia('other');
         }
       }
     });
   }
 
-  //Obtener sectores y subsectores
-  async obtenerSectores() {
-    this.sectores = [
+  async loadSectors() {
+    this.sectors.push({
+      id: 0,
+      nombre: 'Todas',
+    });
+    this.sectors = [
+      ...this.sectors,
+      ...await (await this.api.obtenerSectores()).toPromise()
+    ];
+    this.publishSearchForm.patchValue({sector: this.sectors[0].id});
+  }
+
+  async loadSubSectors(id: number) {
+    this.subSectors.push(
       {
         id: 0,
         nombre: 'Todas',
-      },
-    ];
-
-    (await this.api.obtenerSectores()).subscribe((sectores) => {
-      for (let sector of sectores) {
-        this.sectores.push(sector);
-      }
-      this.sector = this.sectores[0];
-    });
-  }
-
-  async obtenerSubSectores(id_sector) {
-    this.subsectores = [
-      {
-        id: 0,
-        nombre: 'Todas',
-      },
-    ];
-
-    (await this.api.obtenerSubSectores(id_sector)).subscribe((subsectores) => {
-      for (let subsector of subsectores) {
-        this.subsectores.push(subsector);
-      }
-      this.subsector = this.subsectores[0];
-    });
-  }
-
-  async obtenerProvincias() {
-    // console.log('obtenemos todas las provincias.')
-    this.provincias = [
-      {
-        id: 0,
-        name: 'Todas',
-      },
-    ];
-
-    (await this.api.obtenerProvincias()).subscribe((provincias) => {
-      for (let provincia of provincias) {
-        this.provincias.push(provincia);
-
-      }
-      this.provincia = this.provincias[0];
-      this.all_province=this.provincias;
-    });
-  }
-
-  async obtenerLocalidades(id_provincia) {
-    this.localidades = [
-      {
-        id: 0,
-        name: 'Todas',
-      },
-    ];
-
-    (await this.api.obtenerLocalidades(id_provincia)).subscribe(
-      (localidades) => {
-        for (let localidad of localidades) {
-          this.localidades.push(localidad);
-        }
-        this.localidad = this.localidades[0];
+        id_sector: 0
       }
     );
+
+    this.subSectors = [
+      ...this.subSectors,
+      ...await (await this.api.obtenerSubSectores(id)).toPromise()
+    ];
+
+    this.publishSearchForm.patchValue({sub_sector: this.subSectors[0].id});
   }
 
-  filtrarDemandas() {
-    this.demandasFiltradasBuscador = [];
-    this.all_province=this.provincias;
-    if (this.provincia.id == 0) {
-
-      //No Provincia
-      if (this.sector.id != 0) {
-        //Si Sector
-        if (this.subsector.id != 0) {
-          this.all_province = [
-            {
-              id: 0,
-              name: 'Todas',
-            },
-          ];
-          for (let demanda of this.demandas) {
-            if (demanda.sub_sector == this.subsector.id) {
-              this.demandasFiltradasBuscador.push(demanda);
-
-              let exist = 0;
-              for (let province_exist of this.all_province) {
-                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
-                  exist=1;
-                }
-              }
-
-              if(exist==0){
-
-                this.all_province.push(
-                    {
-                      id: demanda.user['province_id'],
-                      name: this.provincias[demanda.user['province_id']].name,
-                    })
-              }
-            }
-          }
-        } else {
-
-
-          this.all_province = [
-            {
-              id: 0,
-              name: 'Todas',
-            },
-          ];
-          for (let demanda of this.demandas) {
-
-            if (demanda.sector == this.sector.id) {
-              this.demandasFiltradasBuscador.push(demanda);
-
-
-              let exist = 0;
-              for (let province_exist of this.all_province) {
-                // console.log(this.provincias[demanda.user['province_id']].name)
-                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
-                  exist=1;
-                }
-              }
-
-              if(exist==0){
-
-              this.all_province.push(
-                {
-                  id: demanda.user['province_id'],
-                  name: this.provincias[demanda.user['province_id']].name,
-                })
-              }
-
-            }
-          }
-
-        }
-      } else {
-
-        //No sector
-        for (let demanda of this.demandas) {
-
-          this.demandasProvincia.push(demanda);
-          this.demandasFiltradasBuscador.push(demanda);
-
-        }
-      }
-    } else {
-      //Si provincia
-
-      if (this.localidad.id != 0) {
-
-        //Si localidad
-        if (this.sector.id != 0) {
-          //Si sector
-          let aux = this.subsector.id != 0 ? this.subsector : this.sector;
-          this.all_province = [
-            {
-              id: 0,
-              name: 'Todas',
-            },
-          ];
-          for (let demanda of this.demandas) {
-            this.demandasProvincia.push(demanda);
-            if (
-              demanda.user != null &&
-              (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
-                aux.id &&
-              demanda.user.town_id == this.localidad.id
-            ) {
-              this.demandasFiltradasBuscador.push(demanda);
-
-              let exist = 0;
-              for (let province_exist of this.all_province) {
-                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
-                  exist=1;
-                }
-              }
-
-              if(exist==0){
-
-                this.all_province.push(
-                    {
-                      id: demanda.user['province_id'],
-                      name: this.provincias[demanda.user['province_id']].name,
-                    })
-              }
-            }
-          }
-        } else {
-          //No sector
-          for (let demanda of this.demandas) {
-            this.demandasProvincia.push(demanda);
-            if (
-              demanda.user != null &&
-              demanda.user.town_id == this.localidad.id
-            ) {
-              this.demandasFiltradasBuscador.push(demanda);
-            }
-          }
-        }
-      } else {
-
-        //no localidad
-        if (this.sector.id != 0) {
-          //Si sector
-          let aux = this.subsector.id != 0 ? this.subsector : this.sector;
-          this.all_province = [
-            {
-              id: 0,
-              name: 'Todas',
-            },
-          ];
-          for (let demanda of this.demandas) {
-            this.demandasProvincia.push(demanda);
-            if (
-              demanda.user != null &&
-              (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
-                aux.id &&
-              demanda.user.province_id == this.provincia.id
-            ) {
-              this.demandasFiltradasBuscador.push(demanda);
-
-              let exist = 0;
-              for (let province_exist of this.all_province) {
-                if(province_exist.name==this.provincias[demanda.user['province_id']].name){
-                  exist=1;
-                }
-              }
-
-              if(exist==0){
-
-                this.all_province.push(
-                    {
-                      id: demanda.user['province_id'],
-                      name: this.provincias[demanda.user['province_id']].name,
-                    })
-              }
-            }
-          }
-        } else {
-          //No sector
-          for (let demanda of this.demandas) {
-            this.demandasProvincia.push(demanda);
-            if (
-              demanda.user != null &&
-              demanda.user.province_id == this.provincia.id
-            ) {
-              this.demandasFiltradasBuscador.push(demanda);
-            }
-          }
-        }
-      }
-    }
+  onChangeSector(event) {
+    this.subSectors = [];
+    this.loadSubSectors(event.detail.value);
   }
 
   //NEW SEARCH COMPONENT
@@ -549,34 +213,59 @@ export class Tab1Page {
     this.selectorEnabled = true;
   }
 
-  async search() {
-    console.log('SEARCH', this.searchText);
+  detectKeyPressed(event) {
+    if ((event.key === 'Enter') && (this.searchText.length > 2)) {}
+  }
 
-    if (this.searchText.length > 2) {
+  async search() {
+    console.log('SEARCH', this.searchText, this.selectorEnabled);
+    if (this.searchText === '') {
+      this.keys = [];
+      // this.selectorEnabled = true;
+    }
+    this.publishSearchForm.patchValue({nombre: this.searchText});
+    if ((this.searchText.length > 2) /*&& (this.selectorEnabled)*/) {
       (await this.api.searchByKeys(this.searchText)).subscribe((keywords) => {
-        let keys = [];
-        for (let key of keywords) {
-          let item = { name: this.highlight(key.keyword), value: key.keyword };
-          keys.push(item);
+        if (keywords.length !== 0) {
+          let keys = [];
+          for (let key of keywords) {
+            let item = { name: this.highlight(key.keyword), value: key.keyword };
+            keys.push(item);
+          }
+          this.keys = keys;
         }
-        this.keys = keys;
-        console.log('keywords', this.keys);
+        else {
+          setTimeout(() => {
+            // this.selectorEnabled = false;
+            this.showCard = true;
+          }, 500);
+        }
+        console.log('keys', this.keys);
       });
     }
   }
 
   async getSectorsByKeys(key) {
+    console.log('getSectorsByKeys');
     this.keys = [];
 
     (await this.api.getSectorsByKeys(key.value)).subscribe((keywords) => {
+      console.log('keywords', keywords);
       this.searchText = key.value;
       this.keyText = this.searchText;
       this.keywords = keywords;
       this.selectorEnabled = true;
+      this.publishSearchForm.patchValue({sector: this.keywords.main.sector_id});
+
+      this.subSectors = [];
+      this.loadSubSectors(this.keywords.main.sector_id);
+
+      this.showCard = true;
+      this.removeFocus();
     });
   }
 
-  public highlight(query) {
+  highlight(query) {
     if (!this.searchText) {
       return query;
     }
@@ -589,38 +278,15 @@ export class Tab1Page {
   }
 
   removeFocus() {
-    console.log('REMOVE FOCUS');
     this.keyText = this.searchText;
-    this.selectorEnabled = false;
+    // this.keys.length = 0;
   }
 
   clearBtn() {
-    console.log('Clear buton');
     this.keywords = {};
     this.keys = [];
   }
 
-  openOfertantes() {
-    if (this.perfil !== null) {
-      this.router.navigate(['ofertantes'], {
-        queryParams: {
-          sector: this.keywords.main.sector_id,
-          sector_name: this.keywords.main.sector_nombre,
-        },
-      });
-    } else {
-      this.userRegister();
-    }
-
-    //this.removeFocus();
-    this.searchText = '';
-    this.keywords = {};
-    this.keys = [];
-  }
-
-  /**
-   * Crear modal para registro de usuario
-   */
   async userRegister() {
     const registerModal = await this.modalCtrl.create({
       component: SesionCtrlPage,
@@ -629,30 +295,7 @@ export class Tab1Page {
     await registerModal.present();
   }
 
-  /**
-   * Crear modal para publicar demanda
-   */
-  async publicarDemanda() {
-    const publicarModal = await this.modalCtrl.create({
-      component: PublicarDemandaPage,
-      componentProps: { sector: this.keywords.main.sector_id },
-    });
-
-    await publicarModal.present();
-
-    const { data } = await publicarModal.onWillDismiss();
-    this.searchText = '';
-    this.searchText = '';
-    this.keywords = {};
-    this.keys = [];
-    this.loadData();
-  }
-
-  /**
-   * Navegar a la pantalla p
-   * @param p
-   */
-  public irA(p: string): void {
+  irA(p: string): void {
     if (p === '/menu/perfil') {
       if (this.perfil === null) {
         this.router.navigate(['login']);
@@ -664,15 +307,10 @@ export class Tab1Page {
     }
   }
 
-  home() {
-    this.router.navigate(['menu/todas']);
-  }
-
   async openCookies() {
     const cookiesModal = await this.modalCtrl.create({
       component: CookiesComponent,
     });
-
     await cookiesModal.present();
   }
 
@@ -680,26 +318,80 @@ export class Tab1Page {
     this.showCookies = false;
   }
 
-  view_filter(){
-    document.getElementById("filter_hidden").style.display = "block";
+  attachImage():void {
+    if(this.platform.is('cordova')){
+      this.attachImageNative();
+    } else {
+      this.attachImageWeb();
+    }
   }
 
-  onScroll(event) {
-
-    if(event.detail.scrollTop==0){
-      document.getElementById("filter_hidden").style.display = "block";
-    }else{
-      document.getElementById("filter_hidden").style.display = "none";
+  attachImageNative():void {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      mediaType: this.camera.MediaType.PICTURE,
+      encodingType: this.camera.EncodingType.JPEG,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      targetWidth: 1920,
+      targetHeight: 1080,
+      allowEdit: false
     }
-    // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
-    // if (event.detail.deltaY > 0 && this.filter_hidden) return;
-    // if (event.detail.deltaY < 0 && !this.filter_hidden) return;
-    // if (event.detail.deltaY > 0) {
-    //   console.log(event.detail.deltaY);
-    //   this.filter_hidden = true;
-    // } else {
-    //   console.log(event.detail.deltaY);
-    //   this.filter_hidden = false;
-    // };
-  };
+    this.camera.getPicture(options).then((urlFoto) => {
+      this.srcFoto = this.sanitizer.bypassSecurityTrustUrl(urlFoto);
+      this.base64img = 'data:image/jpeg;base64,' + urlFoto;
+    }).catch(error => {
+      this.utilities.showAlert('Error al obtener imagen', error);
+    })
+  }
+
+  attachImageWeb(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let filePicker = this.elementRef.nativeElement.querySelector('.input-file-demandas');
+      if (!filePicker || !filePicker.files
+          || filePicker.files.length <= 0) {
+          reject('No file selected.');
+          return;
+      }
+      const myFile = filePicker.files[0];
+      if (myFile.size > 307200) {
+        this.utilities.showToast('Imagen demasiado grande, max. 300KB');
+        return;
+    }
+    this.base64img = await this.convert(myFile);
+      this.srcFoto = true;
+
+      resolve();
+  });
+  }
+
+  convert(myFile: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+        const fileReader = new FileReader();
+        if (fileReader && myFile) {
+            fileReader.readAsDataURL(myFile);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        } else {
+            reject('No file provided');
+        }
+    });
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
+  }
+
 }

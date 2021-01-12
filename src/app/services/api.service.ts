@@ -1,11 +1,12 @@
-import {Injectable, EventEmitter} from '@angular/core';
-import {Observable, throwError} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
-import {environment} from 'src/environments/environment';
-import {UtilitiesService} from './utilities.service';
-import {Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { UtilitiesService } from './utilities.service';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication/authentication.service';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root',
@@ -162,6 +163,33 @@ export class ApiService {
      */
     public noShowAgain(params): any {
         return this._createData('saltar-guia', params);
+    }
+
+    /**
+     * Añadir a favoritos una demanda.
+     * @param params
+     */
+    favouriteDemand(params) {
+      const formData = new FormData();
+      formData.append('id', params.id);
+      return this._createData('favorite', formData);
+    }
+
+    /**
+     * Eliminar de favoritos una demanda.
+     * @param params
+     */
+    unFavouriteDemand(params) {
+      const formData = new FormData();
+      formData.append('id', params.id);
+      return this._createData('unfavorite', formData);
+    }
+
+    /**
+     * Obtener todos los favoritos del usuario.
+     */
+    getFavorites() {
+      return this._getData('favorites');
     }
 
     /**

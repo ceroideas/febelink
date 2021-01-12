@@ -16,14 +16,14 @@
       },
       {
           "name": "Demandas",
-          "icon": "archive",
+          "icon": "heart",
           "url":"assets/guide/misdemandas.png",
           "urlweb":"assets/guide/misdemandasweb.png",
           "description" : "Aquí ves y <strong>gestionas</strong> tus <strong>demandas</strong>, tanto las que has realizado, como las que coinciden con tus actividades para responder o compartir con otros usuarios."
       },
       {
           "name": "Ofertas",
-          "icon": "hand-right",
+          "icon": "chatbubbles",
           "url":"assets/guide/misofertas.png",
           "urlweb":"assets/guide/misofertasweb.png",
           "description" : "Aquí ves y <strong>gestionas</strong> tus <strong>ofertas</strong>, tanto las que has realizado a otros usuarios, como las que han respondido a tus demandas."
