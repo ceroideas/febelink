@@ -221,10 +221,10 @@ export class Tab1Page {
     console.log('SEARCH', this.searchText, this.selectorEnabled);
     if (this.searchText === '') {
       this.keys = [];
-      // this.selectorEnabled = true;
+      this.selectorEnabled = true;
     }
     this.publishSearchForm.patchValue({nombre: this.searchText});
-    if ((this.searchText.length > 2) /*&& (this.selectorEnabled)*/) {
+    if ((this.searchText.length > 2) && (this.selectorEnabled)) {
       (await this.api.searchByKeys(this.searchText)).subscribe((keywords) => {
         if (keywords.length !== 0) {
           let keys = [];
@@ -236,7 +236,7 @@ export class Tab1Page {
         }
         else {
           setTimeout(() => {
-            // this.selectorEnabled = false;
+            this.selectorEnabled = false;
             this.showCard = true;
           }, 500);
         }
@@ -278,8 +278,11 @@ export class Tab1Page {
   }
 
   removeFocus() {
-    this.keyText = this.searchText;
-    // this.keys.length = 0;
+    setTimeout(() => {
+      this.keyText = this.searchText;
+      this.selectorEnabled = false;
+      this.keys.length = 0;
+    }, 500);
   }
 
   clearBtn() {
