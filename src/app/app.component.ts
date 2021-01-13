@@ -89,6 +89,7 @@ export class AppComponent implements OnDestroy{
 
     this.authenticationService.authenticationState.subscribe(state => {
       if (state) {
+        console.log('state', state);
         this.menu.enable(true);
         this.getUserInfo();
       }
