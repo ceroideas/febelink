@@ -23,10 +23,11 @@ import { ISector, ISubSector } from './models/sector.model';
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnDestroy{
-    public userSubscription: any;
-    lastTimeBackPress = 0;
-    timePeriodToExit = 2000;
-    @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
+  currentYear = new Date().getFullYear();
+  public userSubscription: any;
+  lastTimeBackPress = 0;
+  timePeriodToExit = 2000;
+  @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
 
   public appPages = [
     {
