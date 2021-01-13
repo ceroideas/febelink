@@ -648,35 +648,6 @@ hideShowPassword() {
         });
     }
 
-    /**
-     * Método para cerrar sesión
-     */
-    async logout() {
-        let alert = await this.alertCtrl.create({
-            header: 'Cerrar sesión',
-            message: '¿Estás seguro de que deseas cerrar sesión?',
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                },
-                {
-                    text: 'Cerrar sesión',
-                    handler: () => {
-                        this.storage.remove('userData').then(() => {
-                            this.api.refreshTabs();
-                            this.router.navigate(['menu/todas']);
-                            //this.router.navigateByUrl('menu/todas');
-                            this.utilities.showToast('Sesión cerrada con éxito');
-                        });
-                    },
-                },
-            ],
-        });
-        await alert.present();
-    }
-
-
     async suspended_profile() {
 
         let alert = await this.alertCtrl.create({
