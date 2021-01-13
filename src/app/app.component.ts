@@ -336,4 +336,8 @@ export class AppComponent implements OnDestroy{
       this.userFeedback.push({count: opinion, type: result.types[index]})
     })
   }
+
+  goToProfile() {
+    this.router.navigate(['menu/perfil']).then(() => this.menu.close());
+  }
 }
