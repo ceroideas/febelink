@@ -56,6 +56,13 @@
             "errorAddFavorite": "Error when adding to favorites.",
             "errorRemoveFavorite": "Error when deleting from favorites."
         },
+        "tab3": {
+            "alertDelete": {
+                "message": "¿Are you sure you want to remove this search??",
+                "btnCancel": "Cancel",
+                "btnDelete": "Delete"
+            }
+        },
         "tab4": {
             "buttonAskRecommendation": "Ask for a recommendation",
             "buttonSave": "Save changes",

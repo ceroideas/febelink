@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, IonItemSliding } from '@ionic/angular';
+import { ModalController, IonItemSliding, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
@@ -26,7 +26,8 @@ export class Tab3Page {
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private alertCtrl: AlertController
   ) {}
 
   async ionViewDidEnter() {
@@ -156,5 +157,25 @@ export class Tab3Page {
     });
 
     await TermsModal.present();
+  }
+
+  async deleteItem(offer: IOffer) {
+    let alert = await this.alertCtrl.create({
+      header: this.translateService.instant("menu.tabs.chat"),
+      message: this.translateService.instant("tabs.tab3.alertDelete.message"),
+      buttons: [
+        {
+          text: this.translateService.instant("tabs.tab3.alertDelete.btnCancel"),
+          role: 'cancel',
+        },
+        {
+          text: this.translateService.instant("tabs.tab3.alertDelete.btnDelete"),
+          handler: () => {
+            this.deleteOffer(offer);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }
