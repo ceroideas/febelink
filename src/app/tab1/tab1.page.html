@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <img tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
+    <img *ngIf="showCard" tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
 
     <ion-buttons slot="end" class="desktop">
       <ion-button class="btn-header active">
@@ -41,9 +41,13 @@
 
 <ion-content>
 
-  <ion-grid fixed style="height: 90vh;">
-    <ion-row class="ion-align-items-center" style="height: 90vh;">
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center">
         <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
+
+          <ion-item *ngIf="!showCard" lines="none">
+            <img src="assets/imgs/logo.png" alt="Febelink logo" />
+          </ion-item>
 
         <!-- Search engine. -->
         <div class="content-filter">
