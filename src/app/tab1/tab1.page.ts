@@ -51,7 +51,7 @@ export class Tab1Page {
 
   constructor(
     private api: ApiService,
-    private platform: Platform,
+    public platform: Platform,
     private utilities: UtilitiesService,
     private router: Router,
     private modalCtrl: ModalController,
