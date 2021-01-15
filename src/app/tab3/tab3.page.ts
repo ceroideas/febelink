@@ -50,6 +50,9 @@ export class Tab3Page {
     ]);
     Object.values(favorites).forEach((favorite: IOffer) => favorite.type = "favorite")
     this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites)];
+    console.log('offers', this.offers);
+    this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.isLoading = false;
   }
 

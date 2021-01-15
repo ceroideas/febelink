@@ -170,9 +170,9 @@ export class ApiService {
      * @param params
      */
     favouriteDemand(params) {
-      const formData = new FormData();
-      formData.append('id', params.id);
-      return this._createData('favorite', formData);
+        const formData = new FormData();
+        formData.append('id', params.id);
+        return this._createData('favorite', formData);
     }
 
     /**
@@ -180,16 +180,16 @@ export class ApiService {
      * @param params
      */
     unFavouriteDemand(params) {
-      const formData = new FormData();
-      formData.append('id', params.id);
-      return this._createData('unfavorite', formData);
+        const formData = new FormData();
+        formData.append('id', params.id);
+        return this._createData('unfavorite', formData);
     }
 
     /**
      * Obtener todos los favoritos del usuario.
      */
     getFavorites() {
-      return this._getData('favorites');
+        return this._getData('favorites');
     }
 
     /**
