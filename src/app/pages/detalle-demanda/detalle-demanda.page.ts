@@ -7,8 +7,9 @@ import {
   PopoverController,
   IonContent,
   Platform,
+  NavController,
 } from '@ionic/angular';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
 import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
@@ -16,6 +17,7 @@ import { RealizarOfertaPage } from '../realizar-oferta/realizar-oferta.page';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 import {AlertController} from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -46,7 +48,9 @@ export class DetalleDemandaPage implements OnInit {
     public meta: Meta,
     private socialSharing: SocialSharing,
     public popoverController: PopoverController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private storage: Storage,
+    private navCtrl: NavController
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -269,5 +273,24 @@ export class DetalleDemandaPage implements OnInit {
       cssClass: 'guide-modal',
     });
     return await guideModal.present();
+  }
+
+  viewChat() {
+    this.storage.get('userData').then(res => {
+      if (res) {
+        const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              user_id: JSON.stringify(res.id),
+              person_name: JSON.stringify('Chat'),
+              person_id: JSON.stringify(res.id),
+              room_id: JSON.stringify(roomId),
+              create: JSON.stringify(res.id),
+            }
+          };
+          this.navCtrl.navigateForward('chat', navigationExtras);
+      }
+    });
+
   }
 }

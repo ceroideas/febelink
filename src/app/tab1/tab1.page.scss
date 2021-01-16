@@ -1,3 +1,13 @@
+.desktop {
+    @media (max-width: 768px){
+        display: none;
+    }
+}
+.mobile {
+    @media (min-width: 768px){
+        display: none;
+    }
+}
 ion-header{
     text-align: center;
     background: var(--ion-color-light);
