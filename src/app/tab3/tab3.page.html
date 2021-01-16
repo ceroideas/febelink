@@ -63,7 +63,8 @@
           size-xs="12"
           *ngFor="let offer of offers | filter:mysearch.value"
         >
-          <ion-card>
+          <ion-card (click)="offer?.demanda ?
+          detalleDemanda(offer?.id_demanda, offer?.estado) : interiorOferta(offer)">
             <div>
               <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
               <img [src]="offer?.imagen" *ngIf="offer?.imagen" />

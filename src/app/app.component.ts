@@ -23,10 +23,11 @@ import { ISector, ISubSector } from './models/sector.model';
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnDestroy{
-    public userSubscription: any;
-    lastTimeBackPress = 0;
-    timePeriodToExit = 2000;
-    @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
+  currentYear = new Date().getFullYear();
+  public userSubscription: any;
+  lastTimeBackPress = 0;
+  timePeriodToExit = 2000;
+  @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
 
   public appPages = [
     {
@@ -88,6 +89,7 @@ export class AppComponent implements OnDestroy{
 
     this.authenticationService.authenticationState.subscribe(state => {
       if (state) {
+        console.log('state', state);
         this.menu.enable(true);
         this.getUserInfo();
       }
@@ -335,5 +337,9 @@ export class AppComponent implements OnDestroy{
     result.opinions.forEach((opinion, index) => {
       this.userFeedback.push({count: opinion, type: result.types[index]})
     })
+  }
+
+  goToProfile() {
+    this.router.navigate(['menu/perfil']).then(() => this.menu.close());
   }
 }

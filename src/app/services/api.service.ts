@@ -19,7 +19,8 @@ export class ApiService {
         public alertController: AlertController,
         private http: HttpClient,
         private utilities: UtilitiesService,
-        private router: Router
+        private router: Router,
+        private authenticationService: AuthenticationService
     ) {
     }
 
@@ -39,9 +40,8 @@ export class ApiService {
                         });
 
                         await alert.present();
-                      this.router.navigate(['menu/todas']);
-                      this.utilities.dismissLoading();
-                    return false;
+                        this.router.navigate(['menu/todas']);
+                        return false;
 
                     } else {
                         await this.utilities.saveAccessTokenInfo(res);
@@ -51,8 +51,8 @@ export class ApiService {
                             res.subscription_details
                         );
                         await this.utilities.setGuia('login');
+                        this.authenticationService.login();
                         this.userLogged.emit('user:login');
-                        this.utilities.dismissLoading();
                         this.router.navigate(['menu/todas']);
 
                         return res;

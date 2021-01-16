@@ -41,76 +41,82 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <!-- Search component and filters. -->
+  <ion-grid>
   <div class="content-filter">
-    <div class="autocomplete">
-      <ion-searchbar #mysearch
-        placeholder="{{ 'common.searchPlaceholder' | translate }}"
-        debounce="500"
-      >
-      </ion-searchbar>
-    </div>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="10">
+        <div class="autocomplete">
+          <ion-searchbar #mysearch
+            placeholder="{{ 'common.searchPlaceholder' | translate }}"
+            debounce="500"
+          >
+          </ion-searchbar>
+        </div>
+      </ion-col>
 
-    <ion-item lines="none">
-      <ion-icon name="filter-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'tabs.tab2.filters' | translate }}</ion-label>
-      <ion-icon [name]="showFilters ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="showFilters = !showFilters"></ion-icon>
-    </ion-item>
-    <ng-container *ngIf="showFilters">
-    <div class="filtros">
-      <ion-item class="categorias">
-        <ion-label>{{ 'common.labelSectors' | translate }}</ion-label>
-        <ionic-selectable
-          item-content
-          [(ngModel)]="sector"
-          itemValueField="id"
-          itemTextField="nombre"
-          [items]="sectors"
-          [canSearch]="true"
-          (onChange)="sectorChange($event)"
-        >
-        </ionic-selectable>
-      </ion-item>
-      <ion-item class="categorias">
-        <ion-label>{{ 'common.labelSubsectors' | translate }}</ion-label>
-        <ionic-selectable
-          item-content
-          [(ngModel)]="subsector"
-          itemValueField="id"
-          itemTextField="nombre"
-          [items]="subSectors"
-          [canSearch]="true"
-          (onChange)="subSectorChange($event)"
-        >
-        </ionic-selectable> </ion-item
-      ><ion-item class="categorias">
-        <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-        <ionic-selectable
-          item-content
-          [(ngModel)]="province"
-          itemValueField="id"
-          itemTextField="name"
-          [items]="provinces"
-          [canSearch]="true"
-          (onChange)="provincesChange($event)"
-        >
-        </ionic-selectable>
-      </ion-item>
-      <ion-item class="categorias">
-        <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-        <ionic-selectable
-          item-content
-          [(ngModel)]="town"
-          itemValueField="id"
-          itemTextField="name"
-          [items]="towns"
-          [canSearch]="true"
-          (onChange)="townsChange($event)"
-        >
-        </ionic-selectable>
-      </ion-item>
-    </div>
-    </ng-container>
+      <ion-col size="2">
+        <ion-icon size="large" tappable name="filter-outline" (click)="showFilters = !showFilters"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+      <ng-container *ngIf="showFilters">
+        <div class="filtros">
+          <ion-item class="categorias">
+            <ion-label>{{ 'common.labelSectors' | translate }}</ion-label>
+            <ionic-selectable
+              item-content
+              [(ngModel)]="sector"
+              itemValueField="id"
+              itemTextField="nombre"
+              [items]="sectors"
+              [canSearch]="true"
+              (onChange)="sectorChange($event)"
+            >
+            </ionic-selectable>
+          </ion-item>
+          <ion-item class="categorias">
+            <ion-label>{{ 'common.labelSubsectors' | translate }}</ion-label>
+            <ionic-selectable
+              item-content
+              [(ngModel)]="subsector"
+              itemValueField="id"
+              itemTextField="nombre"
+              [items]="subSectors"
+              [canSearch]="true"
+              (onChange)="subSectorChange($event)"
+            >
+            </ionic-selectable> </ion-item
+          ><ion-item class="categorias">
+            <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
+            <ionic-selectable
+              item-content
+              [(ngModel)]="province"
+              itemValueField="id"
+              itemTextField="name"
+              [items]="provinces"
+              [canSearch]="true"
+              (onChange)="provincesChange($event)"
+            >
+            </ionic-selectable>
+          </ion-item>
+          <ion-item class="categorias">
+            <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
+            <ionic-selectable
+              item-content
+              [(ngModel)]="town"
+              itemValueField="id"
+              itemTextField="name"
+              [items]="towns"
+              [canSearch]="true"
+              (onChange)="townsChange($event)"
+            >
+            </ionic-selectable>
+          </ion-item>
+        </div>
+      </ng-container>
   </div>
+</ion-grid>
 
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
     <ion-spinner></ion-spinner>
