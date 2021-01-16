@@ -9,6 +9,7 @@ import { IOffer } from '../models/offer.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
+import { IFavorite } from '../models/favorite.model';
 
 @Component({
   selector: 'app-tab3',
@@ -51,12 +52,11 @@ export class Tab3Page {
 
     Object.values(favorites[0]).forEach((favorite: IOffer) => {
       favorite.type = "favorite";
-      favorite.created_at = favorites[1].find(e => e.favoriteable_id === favorite.id).created_at;
+      favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
     });
     this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0])];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    console.log('offers', this.offers);
     this.isLoading = false;
   }
 
