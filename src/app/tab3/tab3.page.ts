@@ -48,11 +48,15 @@ export class Tab3Page {
       await (await this.api.ofertasRecibidas()).toPromise(),
       await (await this.api.getFavorites()).toPromise()
     ]);
-    Object.values(favorites).forEach((favorite: IOffer) => favorite.type = "favorite")
-    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites)];
-    console.log('offers', this.offers);
+
+    Object.values(favorites[0]).forEach((favorite: IOffer) => {
+      favorite.type = "favorite";
+      favorite.created_at = favorites[1].find(e => e.favoriteable_id === favorite.id).created_at;
+    });
+    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0])];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    console.log('offers', this.offers);
     this.isLoading = false;
   }
 
