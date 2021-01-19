@@ -43,16 +43,13 @@
 
   <!-- Search component and filters. -->
   <ion-grid>
-  <div class="content-filter">
     <ion-row class="ion-align-items-center">
       <ion-col size="10">
-        <div class="autocomplete">
-          <ion-searchbar #mysearch
-            placeholder="{{ 'common.searchPlaceholder' | translate }}"
-            debounce="500"
-          >
-          </ion-searchbar>
-        </div>
+        <ion-searchbar #mysearch
+          placeholder="{{ 'common.searchPlaceholder' | translate }}"
+          debounce="500"
+        >
+        </ion-searchbar>
       </ion-col>
 
       <ion-col size="2">
@@ -115,8 +112,6 @@
           </ion-item>
         </div>
       </ng-container>
-  </div>
-</ion-grid>
 
   <div class="cargando-container text-center" margin-top *ngIf="isLoading">
     <ion-spinner></ion-spinner>
@@ -182,6 +177,7 @@
       <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"></ion-icon>
     </ion-item>
   </ion-list>
+</ion-grid>
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">

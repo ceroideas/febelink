@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, IonItemSliding } from '@ionic/angular';
+import { ModalController, IonItemSliding, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
@@ -9,6 +9,7 @@ import { IOffer } from '../models/offer.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
+import { IFavorite } from '../models/favorite.model';
 
 @Component({
   selector: 'app-tab3',
@@ -26,7 +27,8 @@ export class Tab3Page {
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private alertCtrl: AlertController
   ) {}
 
   async ionViewDidEnter() {
@@ -47,8 +49,14 @@ export class Tab3Page {
       await (await this.api.ofertasRecibidas()).toPromise(),
       await (await this.api.getFavorites()).toPromise()
     ]);
-    Object.values(favorites).forEach((favorite: IOffer) => favorite.type = "favorite")
-    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites)];
+
+    Object.values(favorites[0]).forEach((favorite: IOffer) => {
+      favorite.type = "favorite";
+      favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
+    });
+    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0])];
+    this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.isLoading = false;
   }
 
@@ -156,5 +164,25 @@ export class Tab3Page {
     });
 
     await TermsModal.present();
+  }
+
+  async deleteItem(offer: IOffer) {
+    let alert = await this.alertCtrl.create({
+      header: this.translateService.instant("menu.tabs.chat"),
+      message: this.translateService.instant("tabs.tab3.alertDelete.message"),
+      buttons: [
+        {
+          text: this.translateService.instant("tabs.tab3.alertDelete.btnCancel"),
+          role: 'cancel',
+        },
+        {
+          text: this.translateService.instant("tabs.tab3.alertDelete.btnDelete"),
+          handler: () => {
+            this.deleteOffer(offer);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

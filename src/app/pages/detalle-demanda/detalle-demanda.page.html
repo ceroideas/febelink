@@ -80,6 +80,11 @@
             &nbsp;RESPONDER
           </ion-button>
 
+          <ion-button class="apartado btn-info" (click)="viewChat()">
+            <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
+            &nbsp;CHAT
+          </ion-button>
+
           <ion-button
             class="apartado btn-info"
             (click)="share(demanda?.id,$event)"
@@ -191,6 +196,16 @@
     >
       <ion-icon name="chatbubbles"></ion-icon>
       &nbsp;RESPONDER
+    </ion-button>
+
+    <ion-button
+    expand="full"
+    color="febelink"
+    class="apartado"
+    (click)="viewChat()"
+    >
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      &nbsp;CHAT
     </ion-button>
 
     <ion-button

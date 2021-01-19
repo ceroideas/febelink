@@ -18,4 +18,6 @@ export interface IOffer {
     precio: number;
     respondida: number;
     type?: string;
+    created_at: string;
+    updated_at: string;
 }
