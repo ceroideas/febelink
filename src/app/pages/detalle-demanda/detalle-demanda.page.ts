@@ -37,6 +37,7 @@ export class DetalleDemandaPage implements OnInit {
   subSectoresPerfil: any[] = [];
   perfil: any;
   isLoading: boolean;
+  showChat = false;
 
   constructor(
     private utilities: UtilitiesService,
@@ -67,6 +68,7 @@ export class DetalleDemandaPage implements OnInit {
     } else {
       this.aceptada = false;
       this.demanda = JSON.parse(data.params.demanda);
+      console.log('demanda', this.demanda);
       this.obtenerOfertasRelacionadas();
     }
   }
@@ -261,6 +263,11 @@ export class DetalleDemandaPage implements OnInit {
   async obtenerPerfil() {
     this.perfil = await this.utilities.getUserData();
     console.log('PERFIL', this.perfil);
+
+    // Show CHAT button if offer has been answered.
+    const myOffer = this.demanda.ofertas.filter(offer => offer.id_ofertante === this.perfil.id).pop();
+    console.log('myOffer', myOffer);
+    this.showChat = myOffer?.respondida === 1;
   }
 
   home() {
@@ -286,6 +293,7 @@ export class DetalleDemandaPage implements OnInit {
               person_id: JSON.stringify(res.id),
               room_id: JSON.stringify(roomId),
               create: JSON.stringify(res.id),
+              id_demandante: JSON.stringify(this.demanda.id_demandante)
             }
           };
           this.navCtrl.navigateForward('chat', navigationExtras);

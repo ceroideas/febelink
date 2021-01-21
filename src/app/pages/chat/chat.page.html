@@ -19,7 +19,7 @@
                     </ion-title>
                     <div *ngIf="view_finish" style="display: flex;">
                     <ion-buttons *ngIf="user_id==create" slot="end" style="margin-left: 18px;" >
-                     <p *ngIf="finish_chat==false " (click)="finishChat()">Cerrar chat</p>
+                     <p *ngIf="finish_chat==false && this.userIdDemand === this.user_id" (click)="finishChat()">Cerrar chat</p>
                      <p *ngIf="finish_chat==true" (click)="openChat()">Abrir chat</p>
                     </ion-buttons>
                     </div>

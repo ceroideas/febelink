@@ -37,6 +37,8 @@ export class ChatPage implements OnInit {
 
     @ViewChild('content', {static: true}) private content: any;
 
+    userIdDemand: string;
+
     constructor(private socket: Socket,
                 private platform: Platform,
                 private route: ActivatedRoute,
@@ -57,12 +59,15 @@ export class ChatPage implements OnInit {
 
         this.route.queryParams.subscribe(params => {
 
+            console.log('CHAT', params);
+
             this.user_id = JSON.parse(params["user_id"]);
             this.person_name = JSON.parse(params["person_name"]);
             this.person_id = JSON.parse(params["person_id"]);
             this.room_id = JSON.parse(params["room_id"]);
             this.currentUser = JSON.parse(params["user_id"]);
             this.create = JSON.parse(params["create"]);
+            params["id_demandante"] ? this.userIdDemand = JSON.parse(params["id_demandante"]) : this.userIdDemand = this.user_id;
             this.socket.emit('create', this.room_id);
         });
 
