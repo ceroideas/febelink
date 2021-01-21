@@ -334,6 +334,7 @@ export class AppComponent implements OnDestroy{
 
   async getUserOpinions() {
     const result = await (await this.api.opinionesPerfil(this.currentUser.reference)).toPromise();
+    this.userFeedback = [];
     result.opinions.forEach((opinion, index) => {
       this.userFeedback.push({count: opinion, type: result.types[index]})
     })

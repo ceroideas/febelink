@@ -185,4 +185,13 @@ export class Tab3Page {
     });
     await alert.present();
   }
+
+  onClickSearchHandler(search: IOffer) {
+    console.log('search', search);
+    if (search?.type == 'favorite') {
+      this.detalleDemanda(search?.id, 0)
+    } else if (search?.demanda) {
+      this.detalleDemanda(search?.id_demanda, search?.estado)
+    } else this.interiorOferta(search)
+  }
 }
