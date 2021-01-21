@@ -23,7 +23,6 @@ export class InteriorOfertaPage implements OnInit {
                private storage: Storage ) {
 
     this.oferta = navParams.get('oferta');
-    console.log('oferta', this.oferta);
 
   }
 

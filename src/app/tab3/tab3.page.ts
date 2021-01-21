@@ -197,7 +197,6 @@ export class Tab3Page {
   }
 
   onClickSearchHandler(search: IOffer) {
-    console.log('search', search);
     if (search?.type == 'favorite') {
       this.detalleDemanda(search?.id, 0)
     } else if (search?.demanda) {

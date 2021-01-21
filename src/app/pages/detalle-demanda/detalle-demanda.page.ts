@@ -68,7 +68,6 @@ export class DetalleDemandaPage implements OnInit {
     } else {
       this.aceptada = false;
       this.demanda = JSON.parse(data.params.demanda);
-      console.log('demanda', this.demanda);
       this.obtenerOfertasRelacionadas();
     }
   }
@@ -262,14 +261,6 @@ export class DetalleDemandaPage implements OnInit {
 
   async obtenerPerfil() {
     this.perfil = await this.utilities.getUserData();
-    console.log('PERFIL', this.perfil);
-
-    // Show CHAT button if offer has been accepted.
-    /*
-    const myOffer = this.demanda.ofertas.filter(offer => offer.id_ofertante === this.perfil.id).pop();
-    console.log('myOffer', myOffer);
-    this.showChat = myOffer?.respondida === 1;
-    */
 
     // Show CHAT button if a chat conversation has been started.
     const roomId = `${this.perfil.id}${this.demanda.id}${this.demanda.id_demandante}`;

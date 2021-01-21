@@ -58,9 +58,6 @@ export class ChatPage implements OnInit {
         });
 
         this.route.queryParams.subscribe(params => {
-
-            console.log('CHAT', params);
-
             this.user_id = JSON.parse(params["user_id"]);
             this.person_name = JSON.parse(params["person_name"]);
             this.person_id = JSON.parse(params["person_id"]);
