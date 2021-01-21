@@ -264,10 +264,20 @@ export class DetalleDemandaPage implements OnInit {
     this.perfil = await this.utilities.getUserData();
     console.log('PERFIL', this.perfil);
 
-    // Show CHAT button if offer has been answered.
+    // Show CHAT button if offer has been accepted.
+    /*
     const myOffer = this.demanda.ofertas.filter(offer => offer.id_ofertante === this.perfil.id).pop();
     console.log('myOffer', myOffer);
     this.showChat = myOffer?.respondida === 1;
+    */
+
+    // Show CHAT button if a chat conversation has been started.
+    const roomId = `${this.perfil.id}${this.demanda.id}${this.demanda.id_demandante}`;
+    this.api.getAllMessages(roomId).then(myObservable => {
+      myObservable.subscribe((response) => {
+        this.showChat = response?.message !== 'NoChat';
+      });
+    });
   }
 
   home() {
