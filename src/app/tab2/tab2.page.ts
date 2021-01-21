@@ -75,7 +75,6 @@ export class Tab2Page {
     userFavorites = Object.keys(userFavorites[0]);
 
     (await this.api.obtenerDemandas()).subscribe((resp) => {
-      console.log(resp);
       this.demandas = resp;
       for (let demanda of this.demandas) {
         if (demanda.imagen != null) {
