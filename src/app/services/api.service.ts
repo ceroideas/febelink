@@ -541,11 +541,10 @@ export class ApiService {
      * @param precio
      * @param id_demanda
      */
-    public realizarOferta(nombre, descripcion, precio, id_demanda) {
+    public realizarOferta(nombre, descripcion, id_demanda) {
         const formData = new FormData();
         formData.append('nombre', nombre);
         formData.append('descripcion', descripcion);
-        formData.append('precio', precio);
         formData.append('id_demanda', id_demanda);
         return this._createData('realizar-oferta', formData);
     }

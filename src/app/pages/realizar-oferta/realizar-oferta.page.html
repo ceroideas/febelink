@@ -2,7 +2,7 @@
 
 <ion-header>
   <ion-toolbar color="febelink">
-    <ion-title>Realizar Oferta</ion-title>
+    <ion-title>Responder</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">Cancelar</ion-button>
     </ion-buttons>
@@ -17,19 +17,12 @@
       </ion-label>
       <ion-input type="text" formControlName="nombre"></ion-input>
     </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">
-        Precio <em>(En euros)</em>
-      </ion-label>
-      <ion-input type="number" formControlName="precio"></ion-input>
-    </ion-item>
     <ion-item>
       <ion-label position="floating">
         Descripcion
       </ion-label>
       <ion-textarea rows="6" cols="20" formControlName="descripcion"></ion-textarea>
     </ion-item>
-    <ion-button type="submit" class="enviar">Enviar oferta</ion-button>
+    <ion-button type="submit" class="enviar">Enviar</ion-button>
   </form>
 </ion-content>
