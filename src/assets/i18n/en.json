@@ -61,7 +61,9 @@
                 "message": "¿Are you sure you want to remove this search??",
                 "btnCancel": "Cancel",
                 "btnDelete": "Delete"
-            }
+            },
+            "errorRemoveOffer": "The offer could not be deleted.",
+            "errorRemoveSearch": "The search could not be deleted."
         },
         "tab4": {
             "buttonAskRecommendation": "Ask for a recommendation",

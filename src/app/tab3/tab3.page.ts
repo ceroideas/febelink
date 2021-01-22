@@ -81,7 +81,7 @@ export class Tab3Page {
         },
         (err) => {
           console.log(err);
-          this.utilities.showToast('No se ha podido borrar la oferta');
+          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveOffer"));
         }
       );
     } else {
@@ -91,7 +91,7 @@ export class Tab3Page {
         },
         (err) => {
           console.log(err);
-          this.utilities.showToast('No se ha podido borrar la búsqueda');
+          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveSearch"));
         }
       );
     }

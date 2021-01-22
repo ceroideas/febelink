@@ -61,7 +61,9 @@
                 "message": "¿Estás seguro de que deseas eliminar esta búsqueda?",
                 "btnCancel": "Cancelar",
                 "btnDelete": "Eliminar"
-            }
+            },
+            "errorRemoveOffer": "No se ha podido borrar la oferta.",
+            "errorRemoveSearch": "No se ha podido borrar la búsqueda."
         },
         "tab4": {
             "buttonAskRecommendation": "Pedir recomendación",
