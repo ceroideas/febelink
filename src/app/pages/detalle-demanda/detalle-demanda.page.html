@@ -80,7 +80,7 @@
             &nbsp;RESPONDER
           </ion-button>
 
-          <ion-button class="apartado btn-info" (click)="viewChat()">
+          <ion-button *ngIf="showChat" class="apartado btn-info" (click)="viewChat()">
             <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
             &nbsp;CHAT
           </ion-button>
@@ -198,7 +198,7 @@
       &nbsp;RESPONDER
     </ion-button>
 
-    <ion-button
+    <ion-button *ngIf="showChat"
     expand="full"
     color="febelink"
     class="apartado"

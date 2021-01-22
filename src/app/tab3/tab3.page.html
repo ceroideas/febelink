@@ -66,8 +66,7 @@
               size-xs="12"
               *ngFor="let offer of offers | filter:mysearch.value"
             >
-              <ion-card (click)="offer?.demanda ?
-              detalleDemanda(offer?.id_demanda, offer?.estado) : interiorOferta(offer)">
+              <ion-card (click)="onClickSearchHandler(offer)">
                 <div>
                   <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
                   <img [src]="offer?.imagen" *ngIf="offer?.imagen" />
@@ -108,8 +107,7 @@
 
         <!-- MOBILE. -->
         <ion-item tappable class="mobile" lines="none"
-          *ngFor="let offer of offers | filter:mysearch.value" (click)="offer?.demanda ?
-          detalleDemanda(offer?.id_demanda, offer?.estado) : interiorOferta(offer)"
+          *ngFor="let offer of offers | filter:mysearch.value" (click)="onClickSearchHandler(offer)"
         >
           <ion-avatar slot="start">
             <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />

@@ -72,7 +72,7 @@ export class Tab2Page {
     this.searchResults = [];
 
     let userFavorites = await (await (await this.api.getFavorites()).toPromise());
-    userFavorites = Object.keys(userFavorites);
+    userFavorites = Object.keys(userFavorites[0]);
 
     (await this.api.obtenerDemandas()).subscribe((resp) => {
       this.demandas = resp;

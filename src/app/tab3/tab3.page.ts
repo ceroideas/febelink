@@ -44,17 +44,17 @@ export class Tab3Page {
   }
 
   async getOffers() {
-    const [ myOffers, offers, favorites ] = await Promise.all([
+    const [ myOffers, offers, favorites, mySearchs ] = await Promise.all([
       await (await this.api.misOfertas()).toPromise(),
       await (await this.api.ofertasRecibidas()).toPromise(),
-      await (await this.api.getFavorites()).toPromise()
+      await (await this.api.getFavorites()).toPromise(),
+      await (await this.api.obtenerDemandasDemandante(this.currentUser.id)).toPromise()
     ]);
-
     Object.values(favorites[0]).forEach((favorite: IOffer) => {
       favorite.type = "favorite";
       favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
     });
-    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0])];
+    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0]), ...mySearchs];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.isLoading = false;
@@ -74,14 +74,24 @@ export class Tab3Page {
         this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
       });
     }
-    else {
+    else if (offer?.id_ofertante) {
       (await this.api.borrarOferta(offer.id)).subscribe(
         (resp) => {
           this.getOffers();
         },
         (err) => {
           console.log(err);
-          this.utilities.showToast('No se ha podido borrar la oferta');
+          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveOffer"));
+        }
+      );
+    } else {
+      (await this.api.borrarDemanda(offer.id)).subscribe(
+        (resp) => {
+          this.getOffers();
+        },
+        (err) => {
+          console.log(err);
+          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveSearch"));
         }
       );
     }
@@ -184,5 +194,13 @@ export class Tab3Page {
       ],
     });
     await alert.present();
+  }
+
+  onClickSearchHandler(search: IOffer) {
+    if (search?.type == 'favorite') {
+      this.detalleDemanda(search?.id, 0)
+    } else if (search?.demanda) {
+      this.detalleDemanda(search?.id_demanda, search?.estado)
+    } else this.interiorOferta(search)
   }
 }

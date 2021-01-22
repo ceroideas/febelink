@@ -37,6 +37,7 @@ export class DetalleDemandaPage implements OnInit {
   subSectoresPerfil: any[] = [];
   perfil: any;
   isLoading: boolean;
+  showChat = false;
 
   constructor(
     private utilities: UtilitiesService,
@@ -260,7 +261,14 @@ export class DetalleDemandaPage implements OnInit {
 
   async obtenerPerfil() {
     this.perfil = await this.utilities.getUserData();
-    console.log('PERFIL', this.perfil);
+
+    // Show CHAT button if a chat conversation has been started.
+    const roomId = `${this.perfil.id}${this.demanda.id}${this.demanda.id_demandante}`;
+    this.api.getAllMessages(roomId).then(myObservable => {
+      myObservable.subscribe((response) => {
+        this.showChat = response?.message !== 'NoChat';
+      });
+    });
   }
 
   home() {
@@ -286,6 +294,7 @@ export class DetalleDemandaPage implements OnInit {
               person_id: JSON.stringify(res.id),
               room_id: JSON.stringify(roomId),
               create: JSON.stringify(res.id),
+              id_demandante: JSON.stringify(this.demanda.id_demandante)
             }
           };
           this.navCtrl.navigateForward('chat', navigationExtras);
