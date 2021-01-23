@@ -49,12 +49,13 @@ export class RealizarOfertaPage implements OnInit {
   async submitForm() {
     let p = {
       nombre: this.form.get('nombre').value,
+      precio: this.form.get('precio').value,
       descripcion: this.form.get('descripcion').value
     };
     try {
       if (this.comprobarCamposPerfil()) {
 
-        (await this.api.realizarOferta(p.nombre, p.descripcion, this.id_demanda)).subscribe( resp => {
+        (await this.api.realizarOferta(p.nombre, p.descripcion, p.precio, this.id_demanda)).subscribe( resp => {
           
           this.utilities.showToast('Se ha realizado la oferta correctamente');
           this.closeModal();
