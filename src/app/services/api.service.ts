@@ -538,7 +538,6 @@ export class ApiService {
      * REalizar una oferta a una demanda por su id
      * @param nombre
      * @param descripcion
-     * @param precio
      * @param id_demanda
      */
     public realizarOferta(nombre, descripcion, id_demanda) {
