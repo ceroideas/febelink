@@ -69,7 +69,7 @@
               <ion-card (click)="onClickSearchHandler(offer)">
                 <div>
                   <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
-                  <img [src]="offer?.imagen" *ngIf="offer?.imagen" />
+                  <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
                 </div>
                 <ion-item>
                   <ion-label class="ion-text-wrap">
@@ -111,7 +111,7 @@
         >
           <ion-avatar slot="start">
             <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
-            <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen"></ion-img>
+            <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
           </ion-avatar>
           <ion-label>
             <h2><strong>{{offer?.nombre}}</strong></h2>
