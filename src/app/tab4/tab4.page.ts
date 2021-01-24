@@ -585,13 +585,20 @@ hideShowPassword() {
 
                 this.base64img = await this.convert(myFile);
             } else {
+                this.resetFileInput();
                 this.showSubscription(
                     'Suscríbete a alguno de nuestros planes para poder cambiar la foto de perfil'
                 );
             }
-
             resolve();
         });
+    }
+
+    private resetFileInput() {
+        let filePicker = this.elementRef.nativeElement.querySelector(
+            '.input-file-perfil'
+        );
+        filePicker.value = '';
     }
 
     private convert(myFile: File): Promise<string | ArrayBuffer> {
