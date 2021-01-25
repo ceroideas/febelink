@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, ModalController,NavController } from '@ionic/angular';
+import { NavParams, ModalController,NavController, AlertController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import {NavigationExtras} from "@angular/router";
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-interior-oferta',
@@ -14,13 +15,15 @@ import { Storage } from '@ionic/storage';
 export class InteriorOfertaPage implements OnInit {
   exist_chat=false;
   oferta:any;
-  constructor( public navParams: NavParams,
-               private navCtrl: NavController,
-               private modalCtrl: ModalController,
-               private api: ApiService,
-               private utilities: UtilitiesService,
-               private router: Router,
-               private storage: Storage ) {
+  constructor(public navParams: NavParams,
+              private navCtrl: NavController,
+              private modalCtrl: ModalController,
+              private api: ApiService,
+              private utilities: UtilitiesService,
+              private router: Router,
+              private storage: Storage,
+              private alertCtrl: AlertController,
+              private translateService: TranslateService) {
 
     this.oferta = navParams.get('oferta');
 
@@ -92,6 +95,26 @@ export class InteriorOfertaPage implements OnInit {
       }
     });
 
+  }
+
+  async confirmShowInfoAlert(response: number) {
+    let alert = await this.alertCtrl.create({
+      header: this.translateService.instant("pages.offerDetails.alertShowData.header"),
+      message: this.translateService.instant("pages.offerDetails.alertShowData.message"),
+      buttons: [
+        {
+          text: this.translateService.instant("pages.offerDetails.alertShowData.buttonCancel"),
+          role: 'cancel',
+        },
+        {
+          text: this.translateService.instant("pages.offerDetails.alertShowData.buttonAccept"),
+          handler: () => {
+            this.responderOferta(1);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
 }

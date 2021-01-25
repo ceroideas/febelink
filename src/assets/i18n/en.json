@@ -71,5 +71,15 @@
             "labelNoOpinions": "No opinions yet",
             "labelOpinions": "Opinions"
         }
+    },
+    "pages": {
+        "offerDetails": {
+            "alertShowData": {
+                "header": "Show user data",
+                "message": "You will see the user's email and phone number and your data (email and phone number) will be visible. Are you sure?",
+                "buttonAccept": "Accept",
+                "buttonCancel": "Cancel"
+            }
+        }
     }
 }
