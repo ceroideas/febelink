@@ -13,7 +13,6 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
 import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
-import { RealizarOfertaPage } from '../realizar-oferta/realizar-oferta.page';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 import {AlertController} from '@ionic/angular';
@@ -155,36 +154,6 @@ export class DetalleDemandaPage implements OnInit {
     });
   }
 
-  /**
-   * Crear modal para realizar una oferta
-   * @param id
-   */
-  async ofertar(id) {
-
-      if (this.perfil !== null) {
-          if (this.perfil['id'] == this.demanda['id_demandante']) {
-              const alert = await this.alertController.create({
-                  cssClass: 'my-custom-class',
-                  header: 'Responder',
-                  message: 'No puedes responder a tu propia demanda.',
-                  buttons: ['Aceptar']
-              });
-
-              await alert.present();
-          } else {
-              const ofertaModal = await this.modalCtrl.create({
-                  component: RealizarOfertaPage,
-                  componentProps: {id_demanda: id},
-              });
-              await ofertaModal.present();
-          }
-
-      } else {
-          this.userRegister();
-      }
-
-  }
-
   async userRegister() {
     const registerModal = await this.modalCtrl.create({
       component: SesionCtrlPage,
@@ -261,14 +230,6 @@ export class DetalleDemandaPage implements OnInit {
 
   async obtenerPerfil() {
     this.perfil = await this.utilities.getUserData();
-
-    // Show CHAT button if a chat conversation has been started.
-    const roomId = `${this.perfil.id}${this.demanda.id}${this.demanda.id_demandante}`;
-    this.api.getAllMessages(roomId).then(myObservable => {
-      myObservable.subscribe((response) => {
-        this.showChat = response?.message !== 'NoChat';
-      });
-    });
   }
 
   home() {
