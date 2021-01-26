@@ -19,6 +19,7 @@ import {AlertController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { IUser } from 'src/app/models/user.model';
 import { ISearch } from 'src/app/models/search.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -52,7 +53,8 @@ export class DetalleDemandaPage implements OnInit {
     public popoverController: PopoverController,
     public alertController: AlertController,
     private storage: Storage,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private translateService: TranslateService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -268,8 +270,7 @@ export class DetalleDemandaPage implements OnInit {
         }
       });
     } else {
-      // TODO: Move string to translation messages.
-      this.utilities.showToast('Debes rellenar los campos de tu perfil para poder chatear.');
+      this.utilities.showToast(this.translateService.instant('pages.demandDetails.messageFillProfileData'));
     }
   }
 
@@ -279,7 +280,7 @@ export class DetalleDemandaPage implements OnInit {
             const alert = await this.alertController.create({
                 cssClass: 'my-custom-class',
                 header: 'Chat',
-                message: 'No puedes chatear contigo mismo.', // TODO: Move string to translation messages.
+                message: this.translateService.instant('pages.demandDetails.alertChat.message'),
                 buttons: ['Aceptar']
             });
 

@@ -80,6 +80,12 @@
                 "buttonAccept": "Accept",
                 "buttonCancel": "Cancel"
             }
+        },
+        "demandDetails": {
+            "messageFillProfileData": "You must fill in the fields in your profile to be able to chat.",
+            "alertChat": {
+                "message": "You can't chat with yourself."
+            }
         }
     }
 }

@@ -132,7 +132,7 @@
             <ion-card (click)="detalleDemanda(demanda)">
               <div>
                 <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-                <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
+                <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
               </div>
               <ion-card-header>
                 <strong style="color: #222"> {{demanda?.nombre}}</strong>
@@ -166,7 +166,7 @@
     <ion-slides>
       <ion-slide>
         <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
-        <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+        <ion-img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" appImgErrorFallback></ion-img>
       </ion-slide>
     </ion-slides>
 
@@ -224,12 +224,13 @@
           *ngFor="let demandaR of demandasRelacionadas"
         >
           <ion-thumbnail slot="start">
-            <img
+            <ion-img
               [src]="demandaR?.imagen"
               width="75"
               height="75"
               *ngIf="demandaR?.imagen"
-            />
+              appImgErrorFallback
+            ></ion-img>
             <img
               src="assets/imgs/4.jpg"
               width="75"

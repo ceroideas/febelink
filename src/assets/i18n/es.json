@@ -80,6 +80,12 @@
                 "buttonAccept": "Aceptar",
                 "buttonCancel": "Cancelar"
             }
+        },
+        "demandDetails": {
+            "messageFillProfileData": "Debes rellenar los campos de tu perfil para poder chatear.",
+            "alertChat": {
+                "message": "No puedes chatear contigo mismo."
+            }
         }
     }
 }
