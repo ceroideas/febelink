@@ -201,6 +201,8 @@ export class Tab3Page {
       this.detalleDemanda(search?.id, 0)
     } else if (search?.demanda) {
       this.detalleDemanda(search?.id_demanda, search?.estado)
+    } else if (search['id_demandante']) {
+        this.detalleDemanda(search['id'], search?.estado)
     } else this.interiorOferta(search)
   }
 }

@@ -12,6 +12,7 @@ export interface ISearch {
     completada: number;
     descripcion: string;
     id: number;
+    demandante?: string;
     id_demandante: number;
     imagen: string;
     nombre: string;

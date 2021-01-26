@@ -17,6 +17,8 @@ import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 import {AlertController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { IUser } from 'src/app/models/user.model';
+import { ISearch } from 'src/app/models/search.model';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -25,7 +27,7 @@ import { Storage } from '@ionic/storage';
 })
 export class DetalleDemandaPage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
-  demanda: any;
+  demanda: ISearch = null;
   opiniones: any;
   demandasRelacionadas: any;
   rol: any;
@@ -34,7 +36,7 @@ export class DetalleDemandaPage implements OnInit {
   subSector_correcto: boolean;
   sectoresPerfil: any[] = [];
   subSectoresPerfil: any[] = [];
-  perfil: any;
+  perfil: IUser = null;
   isLoading: boolean;
   showChat = false;
 
@@ -244,23 +246,57 @@ export class DetalleDemandaPage implements OnInit {
     return await guideModal.present();
   }
 
-  viewChat() {
-    this.storage.get('userData').then(res => {
-      if (res) {
-        const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              user_id: JSON.stringify(res.id),
-              person_name: JSON.stringify('Chat'),
-              person_id: JSON.stringify(res.id),
-              room_id: JSON.stringify(roomId),
-              create: JSON.stringify(res.id),
-              id_demandante: JSON.stringify(this.demanda.id_demandante)
-            }
-          };
-          this.navCtrl.navigateForward('chat', navigationExtras);
-      }
-    });
+  goToChat() {
+    if (this.checkUserData()) {
+      this.storage.get('userData').then(res => {
+        if (res) {
+          const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                user_id: JSON.stringify(res.id),
+                user_name: JSON.stringify(res.name),
+                person_name: JSON.stringify('Chat'),
+                person_id: JSON.stringify(res.id),
+                room_id: JSON.stringify(roomId),
+                create: JSON.stringify(res.id),
+                id_demandante: JSON.stringify(this.demanda.id_demandante),
+                demand_id: JSON.stringify(this.demanda.id),
+                search_title: JSON.stringify(this.demanda.nombre),
+              }
+            };
+            this.navCtrl.navigateForward('chat', navigationExtras);
+        }
+      });
+    } else {
+      // TODO: Move string to translation messages.
+      this.utilities.showToast('Debes rellenar los campos de tu perfil para poder chatear.');
+    }
+  }
+
+  async viewChat() {
+    if (this.perfil !== null) {
+        if (this.perfil.id == this.demanda.id_demandante) {
+            const alert = await this.alertController.create({
+                cssClass: 'my-custom-class',
+                header: 'Chat',
+                message: 'No puedes chatear contigo mismo.', // TODO: Move string to translation messages.
+                buttons: ['Aceptar']
+            });
+
+            await alert.present();
+        } else {
+            this.goToChat();
+        }
+    } else {
+        this.userRegister();
+    }
+  }
+
+  checkUserData(): boolean {
+    if (this.perfil.dni && this.perfil.telefono && this.perfil.direccion)
+      return true;
+    else
+      return false;
 
   }
 }

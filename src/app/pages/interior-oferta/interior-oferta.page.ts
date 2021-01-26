@@ -84,10 +84,13 @@ export class InteriorOfertaPage implements OnInit {
         let navigationExtras: NavigationExtras = {
           queryParams: {
             user_id: JSON.stringify(res.id),
+            user_name: JSON.stringify(res.name),
             person_name: JSON.stringify('Chat'),
             person_id: JSON.stringify(this.oferta.id_ofertante),
             room_id: JSON.stringify(room_id),
             create: JSON.stringify(res.id),
+            demand_id: JSON.stringify(this.oferta.id_demanda),
+            search_title: JSON.stringify(this.oferta.descripcion),
           }
         };
         this.modalCtrl.dismiss();
