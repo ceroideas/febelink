@@ -237,6 +237,10 @@ export class ChatPage implements OnInit {
                 this.newMessageChat(this.person_id);
             });
         });
+
+        (await this.ApiService.sendNotificacionNewMessage(this.person_id, this.message)).subscribe((resp) => {
+            console.log('sendNotificacionNewMessage', resp);
+        });
     }
 
     async newMessageChat(person_id) {
