@@ -12,9 +12,9 @@ export const environment = {
   API_URL: "http://localhost:8000/api/",
   API_URL_AUTH: "http://localhost:8000/api/auth/",
   */
-  baseWebUrl: "https://28ea271c5ff5.ngrok.io/",
-  API_URL: "https://28ea271c5ff5.ngrok.io/api/",
-  API_URL_AUTH: "https://28ea271c5ff5.ngrok.io/api/auth/",
+  baseWebUrl: "https://4b837ed705bd.ngrok.io/",
+  API_URL: "https://4b837ed705bd.ngrok.io/api/",
+  API_URL_AUTH: "https://4b837ed705bd.ngrok.io/api/auth/",
   WEB_CLIENT_ID:
     "470264817351-dj55lg6n7u6fllmkrj90cg9lnjfqrvcn.apps.googleusercontent.com",
   FACEBOOK_ID: "895023747604792",

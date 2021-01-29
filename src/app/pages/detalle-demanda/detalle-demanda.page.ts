@@ -258,7 +258,7 @@ export class DetalleDemandaPage implements OnInit {
                 user_id: JSON.stringify(res.id),
                 user_name: JSON.stringify(res.name),
                 person_name: JSON.stringify('Chat'),
-                person_id: JSON.stringify(res.id),
+                person_id: JSON.stringify(this.demanda.id_demandante),
                 room_id: JSON.stringify(roomId),
                 create: JSON.stringify(res.id),
                 id_demandante: JSON.stringify(this.demanda.id_demandante),

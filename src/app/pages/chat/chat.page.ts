@@ -238,9 +238,11 @@ export class ChatPage implements OnInit {
             });
         });
 
+        /*
         (await this.ApiService.sendNotificacionNewMessage(this.person_id, this.message)).subscribe((resp) => {
             console.log('sendNotificacionNewMessage', resp);
         });
+        */
     }
 
     async newMessageChat(person_id) {
