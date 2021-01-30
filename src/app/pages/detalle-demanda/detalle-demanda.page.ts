@@ -20,6 +20,7 @@ import { Storage } from '@ionic/storage';
 import { IUser } from 'src/app/models/user.model';
 import { ISearch } from 'src/app/models/search.model';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -93,7 +94,7 @@ export class DetalleDemandaPage implements OnInit {
             !demanda.imagen.includes('https://')
           )
             demanda.imagen =
-              'https://api.febelink.com/storage/' + demanda.imagen;
+            `${environment.baseWebUrl}storage/${demanda.imagen}`;
         }
         this.demanda = demanda;
         this.obtenerOfertasRelacionadas();
@@ -123,7 +124,7 @@ export class DetalleDemandaPage implements OnInit {
               !demanda.imagen.includes('https://')
             )
               demanda.imagen =
-                'https://api.febelink.com/storage/' + demanda.imagen;
+                `${environment.baseWebUrl}storage/${demanda.imagen}`;
           }
           demanda.valoracion = Number(demanda.valoracion);
         }

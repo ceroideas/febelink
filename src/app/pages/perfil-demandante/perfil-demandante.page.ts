@@ -7,6 +7,7 @@ import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
 import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
 import { GuidePage } from '../guide/guide.page';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -59,7 +60,7 @@ export class PerfilDemandantePage implements OnInit {
             !this.perfilpublico.logo.includes('https://')
           )
             this.perfilpublico.logo =
-              'https://api.febelink.com/storage/' + this.perfilpublico.logo;
+            `${environment.baseWebUrl}storage/${this.perfilpublico.logo}`;
         } else {
           this.perfilpublico.logo = '';
         }

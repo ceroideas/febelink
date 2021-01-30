@@ -10,6 +10,7 @@ import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tab2',
@@ -84,7 +85,7 @@ export class Tab2Page {
             !demanda.imagen.includes('https://')
           )
             demanda.imagen =
-              'https://api.febelink.com/storage/' + demanda.imagen;
+            `${environment.baseWebUrl}storage/${demanda.imagen}`;
         }
 
         demanda.valoracion = Number(demanda.valoracion);

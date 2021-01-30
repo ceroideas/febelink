@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ofertantes',
@@ -39,9 +40,9 @@ export class OfertantesPage implements OnInit {
 
       for (let ofertante of ofertantes) {
         if (ofertante.logo != null) {
-         if (!ofertante.logo.includes("http://") && !ofertante.logo.includes("https://"))
-           ofertante.logo = "https://api.febelink.com/storage/" + ofertante.logo;
-         }
+          if (!ofertante.logo.includes("http://") && !ofertante.logo.includes("https://"))
+            ofertante.logo = `${environment.baseWebUrl}storage/${ofertante.logo}`;
+          }
         this.ofertantes.push(ofertante);
       }
 
@@ -51,7 +52,7 @@ export class OfertantesPage implements OnInit {
 
   }
 
-   /**
+  /**
    * Ir a un perfil
    */
   public irAPerfil(id): void {

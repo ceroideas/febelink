@@ -4,17 +4,19 @@
 
 export const environment = {
   production: false,
-  /*
+
   baseWebUrl: 'https://api.febelink.com/',
   API_URL: 'https://api.febelink.com/api/',
   API_URL_AUTH: 'https://api.febelink.com/api/auth/',
+  SOCKET_URL: 'https://api.febelink.com:3425',
+
+  /*
   baseWebUrl: "http://localhost/",
   API_URL: "http://localhost:8000/api/",
   API_URL_AUTH: "http://localhost:8000/api/auth/",
+  SOCKET_URL: 'http://localhost:3425',
   */
-  baseWebUrl: "https://4b837ed705bd.ngrok.io/",
-  API_URL: "https://4b837ed705bd.ngrok.io/api/",
-  API_URL_AUTH: "https://4b837ed705bd.ngrok.io/api/auth/",
+
   WEB_CLIENT_ID:
     "470264817351-dj55lg6n7u6fllmkrj90cg9lnjfqrvcn.apps.googleusercontent.com",
   FACEBOOK_ID: "895023747604792",

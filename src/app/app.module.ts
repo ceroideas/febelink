@@ -41,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-const config: SocketIoConfig = { url: 'https://api.febelink.com:3425', options: {secure: true, rejectUnauthorized: false}};
+const config: SocketIoConfig = { url: environment.SOCKET_URL, options: {secure: true, rejectUnauthorized: false}};
 
 @NgModule({
   declarations: [AppComponent],

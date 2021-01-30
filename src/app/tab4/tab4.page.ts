@@ -20,6 +20,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Storage } from '@ionic/storage';
 import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
 import { TermsPage } from '../pages/terms/terms.page';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-tab4',
@@ -176,10 +177,10 @@ hideShowPassword() {
                     !this.perfil.logo.includes('https://')
                 )
                     this.perfil.logo =
-                        'https://api.febelink.com/storage/' + this.perfil.logo;
+                        `${environment.baseWebUrl}storage/${this.perfil.logo}`;
             } else {
                 this.perfil.logo =
-                    'https://api.febelink.com/storage/' + this.perfil.avatar;
+                    `${environment.baseWebUrl}storage/${this.perfil.avatar}`;
             }
 
             await this.obtenerSectoresPerfil();
