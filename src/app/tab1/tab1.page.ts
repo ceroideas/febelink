@@ -87,6 +87,7 @@ export class Tab1Page {
     this.searchText = '';
     this.sectors = [];
     this.subSectors = [];
+    this.publishSearchForm.reset();
   }
 
   builtForm() {
