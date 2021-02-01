@@ -50,18 +50,21 @@
             [src]="perfil?.logo"
             *ngIf="perfil?.logo && base64img==null"
             class="logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <img
             (click)="attachImage()"
             [src]="base64img"
             *ngIf="base64img!=null"
             class="logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <img
             (click)="attachImage()"
             src="assets/imgs/4.jpg"
             *ngIf="!perfil?.logo && base64img==null"
             class="logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <input
             *ngIf="!isNative"

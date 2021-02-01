@@ -529,68 +529,45 @@ hideShowPassword() {
      * Cambiar imagen de perfil
      */
     public attachImageNative(): void {
-        if (
-            (Number(this.perfil.role_id) == 5 &&
-                this.subscription != null &&
-                this.subscription_details.profile_photo == 1) ||
-            Number(this.perfil.role_id) == 4
-        ) {
-            const options: CameraOptions = {
-                quality: 100,
-                destinationType: this.camera.DestinationType.DATA_URL,
-                mediaType: this.camera.MediaType.PICTURE,
-                encodingType: this.camera.EncodingType.JPEG,
-                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-                targetWidth: 1920,
-                targetHeight: 1080,
-                allowEdit: false,
-            };
-            this.camera
-                .getPicture(options)
-                .then((urlFoto) => {
-                    this.base64img = 'data:image/jpeg;base64,' + urlFoto;
-                })
-                .catch((error) => {
-                    this.utilities.showAlert('Error al obtener imagen', error);
-                });
-        } else {
-            this.showSubscription(
-                'Suscríbete a alguno de nuestros planes para poder cambiar la foto de perfil'
-            );
-        }
+        const options: CameraOptions = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            mediaType: this.camera.MediaType.PICTURE,
+            encodingType: this.camera.EncodingType.JPEG,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+            targetWidth: 1920,
+            targetHeight: 1080,
+            allowEdit: false,
+        };
+        this.camera
+            .getPicture(options)
+            .then((urlFoto) => {
+                this.base64img = 'data:image/jpeg;base64,' + urlFoto;
+            })
+            .catch((error) => {
+                this.utilities.showAlert('Error al obtener imagen', error);
+        });
     }
 
     attachImageWeb(): Promise<void> {
         return new Promise<void>(async (resolve, reject) => {
-            if (
-                (Number(this.perfil.role_id) == 5 &&
-                    this.subscription != null &&
-                    this.subscription_details.profile_photo == 1) ||
-                Number(this.perfil.role_id) == 4
-            ) {
-                let filePicker = this.elementRef.nativeElement.querySelector(
-                    '.input-file-perfil'
-                );
+            let filePicker = this.elementRef.nativeElement.querySelector(
+                '.input-file-perfil'
+            );
 
-                if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
-                    reject('No file selected.');
-                    return;
-                }
-                const myFile = filePicker.files[0];
-
-                if (myFile.size > 307200) {
-                    this.utilities.showToast('Imágen demasiado grande, max. 300KB');
-                    //reject('Image is too big (max. 300KB)');
-                    return;
-                }
-
-                this.base64img = await this.convert(myFile);
-            } else {
-                this.resetFileInput();
-                this.showSubscription(
-                    'Suscríbete a alguno de nuestros planes para poder cambiar la foto de perfil'
-                );
+            if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
+                reject('No file selected.');
+                return;
             }
+            const myFile = filePicker.files[0];
+
+            if (myFile.size > 307200) {
+                this.utilities.showToast('Imágen demasiado grande, max. 300KB');
+                //reject('Image is too big (max. 300KB)');
+                return;
+            }
+
+            this.base64img = await this.convert(myFile);
             resolve();
         });
     }
