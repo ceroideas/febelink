@@ -17,7 +17,7 @@
                 <ion-toolbar color="primary">
                     <ion-item color="primary">
                         <ion-avatar slot="start">
-                        <img src="https://api.febelink.com/storage/users/default.png" alt="Menu profile picture">
+                        <img [src]="currentUser?.avatar" alt="Menu profile picture">
                         </ion-avatar>
                         <ion-label class="ion-text-wrap">
                             <h2 class="menu-username"> {{ currentUser?.name }} </h2>
