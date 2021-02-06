@@ -8,6 +8,8 @@ import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
 import { GuidePage } from '../guide/guide.page';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
 import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { IUser } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -22,6 +24,9 @@ export class PerfilDemandantePage implements OnInit {
   contacto: any;
   sinOpiniones: any;
   isLoading: boolean;
+  refreshTab:any;
+  isLogin: any;
+  currentUser: IUser = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +35,8 @@ export class PerfilDemandantePage implements OnInit {
     private platform: Platform,
     private modalCtrl: ModalController,
     public popoverController: PopoverController,
-    private router: Router
+    private router: Router,
+    private utilities: UtilitiesService
   ) {
     var data: any = route.snapshot.queryParamMap;
     // this.id_perfil = data.params.id_perfil;
@@ -39,10 +45,31 @@ export class PerfilDemandantePage implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id_perfil = params.get('id');
     });
+    this.refreshTab = this.api.getUserLogged().subscribe((item) => {
+      this.getUserProfile();
+    });
+  }
+
+  async getUserProfile() {
+    await this.utilities.getGuia().then((data) => {
+      this.isLogin = data;
+    });
+    await this.utilities.getUserData().then((data) => {
+      this.currentUser = {...data};
+      if (this.currentUser) {
+        if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
+          //if(this.platform.is('cordova')){
+          this.openGuide();
+          //}
+          this.utilities.setGuia('other');
+        }
+      }
+    });
   }
 
   ngOnInit() {
     this.obtenerPerfil();
+    this.getUserProfile();
   }
 
   /**
@@ -138,8 +165,8 @@ export class PerfilDemandantePage implements OnInit {
    * Modal para valorar el perfil
    */
   async opinionModal() {
-    console.log(this.perfil);
-    if (this.perfil != undefined) {
+    console.log(this.currentUser.id);
+    if (this.currentUser.id != undefined) {
       const publicarModal = await this.modalCtrl.create({
         component: PublicarOpinionPage,
         componentProps: { id_demandante: this.perfilpublico.id },
