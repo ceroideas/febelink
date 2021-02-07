@@ -13,11 +13,14 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
 import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
-import { RealizarOfertaPage } from '../realizar-oferta/realizar-oferta.page';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 import {AlertController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { IUser } from 'src/app/models/user.model';
+import { ISearch } from 'src/app/models/search.model';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -26,7 +29,7 @@ import { Storage } from '@ionic/storage';
 })
 export class DetalleDemandaPage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
-  demanda: any;
+  demanda: ISearch = null;
   opiniones: any;
   demandasRelacionadas: any;
   rol: any;
@@ -35,7 +38,7 @@ export class DetalleDemandaPage implements OnInit {
   subSector_correcto: boolean;
   sectoresPerfil: any[] = [];
   subSectoresPerfil: any[] = [];
-  perfil: any;
+  perfil: IUser = null;
   isLoading: boolean;
   showChat = false;
 
@@ -51,7 +54,8 @@ export class DetalleDemandaPage implements OnInit {
     public popoverController: PopoverController,
     public alertController: AlertController,
     private storage: Storage,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private translateService: TranslateService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -90,7 +94,7 @@ export class DetalleDemandaPage implements OnInit {
             !demanda.imagen.includes('https://')
           )
             demanda.imagen =
-              'https://api.febelink.com/storage/' + demanda.imagen;
+            `${environment.baseWebUrl}storage/${demanda.imagen}`;
         }
         this.demanda = demanda;
         this.obtenerOfertasRelacionadas();
@@ -120,7 +124,7 @@ export class DetalleDemandaPage implements OnInit {
               !demanda.imagen.includes('https://')
             )
               demanda.imagen =
-                'https://api.febelink.com/storage/' + demanda.imagen;
+                `${environment.baseWebUrl}storage/${demanda.imagen}`;
           }
           demanda.valoracion = Number(demanda.valoracion);
         }
@@ -153,36 +157,6 @@ export class DetalleDemandaPage implements OnInit {
         contacto: this.aceptada,
       },
     });
-  }
-
-  /**
-   * Crear modal para realizar una oferta
-   * @param id
-   */
-  async ofertar(id) {
-
-      if (this.perfil !== null) {
-          if (this.perfil['id'] == this.demanda['id_demandante']) {
-              const alert = await this.alertController.create({
-                  cssClass: 'my-custom-class',
-                  header: 'Responder',
-                  message: 'No puedes responder a tu propia demanda.',
-                  buttons: ['Aceptar']
-              });
-
-              await alert.present();
-          } else {
-              const ofertaModal = await this.modalCtrl.create({
-                  component: RealizarOfertaPage,
-                  componentProps: {id_demanda: id},
-              });
-              await ofertaModal.present();
-          }
-
-      } else {
-          this.userRegister();
-      }
-
   }
 
   async userRegister() {
@@ -261,14 +235,6 @@ export class DetalleDemandaPage implements OnInit {
 
   async obtenerPerfil() {
     this.perfil = await this.utilities.getUserData();
-
-    // Show CHAT button if a chat conversation has been started.
-    const roomId = `${this.perfil.id}${this.demanda.id}${this.demanda.id_demandante}`;
-    this.api.getAllMessages(roomId).then(myObservable => {
-      myObservable.subscribe((response) => {
-        this.showChat = response?.message !== 'NoChat';
-      });
-    });
   }
 
   home() {
@@ -283,23 +249,56 @@ export class DetalleDemandaPage implements OnInit {
     return await guideModal.present();
   }
 
-  viewChat() {
-    this.storage.get('userData').then(res => {
-      if (res) {
-        const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              user_id: JSON.stringify(res.id),
-              person_name: JSON.stringify('Chat'),
-              person_id: JSON.stringify(res.id),
-              room_id: JSON.stringify(roomId),
-              create: JSON.stringify(res.id),
-              id_demandante: JSON.stringify(this.demanda.id_demandante)
-            }
-          };
-          this.navCtrl.navigateForward('chat', navigationExtras);
-      }
-    });
+  goToChat() {
+    if (this.checkUserData()) {
+      this.storage.get('userData').then(res => {
+        if (res) {
+          const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                user_id: JSON.stringify(res.id),
+                user_name: JSON.stringify(res.name),
+                person_name: JSON.stringify('Chat'),
+                person_id: JSON.stringify(this.demanda.id_demandante),
+                room_id: JSON.stringify(roomId),
+                create: JSON.stringify(res.id),
+                id_demandante: JSON.stringify(this.demanda.id_demandante),
+                demand_id: JSON.stringify(this.demanda.id),
+                search_title: JSON.stringify(this.demanda.nombre),
+              }
+            };
+            this.navCtrl.navigateForward('chat', navigationExtras);
+        }
+      });
+    } else {
+      this.utilities.showToast(this.translateService.instant('pages.demandDetails.messageFillProfileData'));
+    }
+  }
+
+  async viewChat() {
+    if (this.perfil !== null) {
+        if (this.perfil.id == this.demanda.id_demandante) {
+            const alert = await this.alertController.create({
+                cssClass: 'my-custom-class',
+                header: 'Chat',
+                message: this.translateService.instant('pages.demandDetails.alertChat.message'),
+                buttons: ['Aceptar']
+            });
+
+            await alert.present();
+        } else {
+            this.goToChat();
+        }
+    } else {
+        this.userRegister();
+    }
+  }
+
+  checkUserData(): boolean {
+    if (this.perfil.dni && this.perfil.telefono && this.perfil.direccion)
+      return true;
+    else
+      return false;
 
   }
 }

@@ -44,6 +44,7 @@ export class Tab3Page {
   }
 
   async getOffers() {
+    this.utilities.showLoading();
     const [ myOffers, offers, favorites, mySearchs ] = await Promise.all([
       await (await this.api.misOfertas()).toPromise(),
       await (await this.api.ofertasRecibidas()).toPromise(),
@@ -57,6 +58,7 @@ export class Tab3Page {
     this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0]), ...mySearchs];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    this.utilities.dismissLoading();
     this.isLoading = false;
   }
 
@@ -201,6 +203,8 @@ export class Tab3Page {
       this.detalleDemanda(search?.id, 0)
     } else if (search?.demanda) {
       this.detalleDemanda(search?.id_demanda, search?.estado)
+    } else if (search['id_demandante']) {
+        this.detalleDemanda(search['id'], search?.estado)
     } else this.interiorOferta(search)
   }
 }

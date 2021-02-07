@@ -75,12 +75,7 @@
             &nbsp;VER PERFIL
           </ion-button>
 
-          <ion-button class="apartado btn-info" (click)="ofertar(demanda?.id)">
-            <ion-icon name="chatbubbles" item-left></ion-icon>
-            &nbsp;RESPONDER
-          </ion-button>
-
-          <ion-button *ngIf="showChat" class="apartado btn-info" (click)="viewChat()">
+          <ion-button class="apartado btn-info" (click)="viewChat()">
             <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
             &nbsp;CHAT
           </ion-button>
@@ -137,7 +132,7 @@
             <ion-card (click)="detalleDemanda(demanda)">
               <div>
                 <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-                <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
+                <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
               </div>
               <ion-card-header>
                 <strong style="color: #222"> {{demanda?.nombre}}</strong>
@@ -171,7 +166,7 @@
     <ion-slides>
       <ion-slide>
         <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
-        <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+        <ion-img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" appImgErrorFallback></ion-img>
       </ion-slide>
     </ion-slides>
 
@@ -189,16 +184,6 @@
     </ion-button>
 
     <ion-button
-      expand="full"
-      color="febelink"
-      class="apartado"
-      (click)="ofertar(demanda?.id)"
-    >
-      <ion-icon name="chatbubbles"></ion-icon>
-      &nbsp;RESPONDER
-    </ion-button>
-
-    <ion-button *ngIf="showChat"
     expand="full"
     color="febelink"
     class="apartado"
@@ -239,12 +224,13 @@
           *ngFor="let demandaR of demandasRelacionadas"
         >
           <ion-thumbnail slot="start">
-            <img
+            <ion-img
               [src]="demandaR?.imagen"
               width="75"
               height="75"
               *ngIf="demandaR?.imagen"
-            />
+              appImgErrorFallback
+            ></ion-img>
             <img
               src="assets/imgs/4.jpg"
               width="75"

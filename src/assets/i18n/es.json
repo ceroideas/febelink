@@ -71,5 +71,21 @@
             "labelNoOpinions": "Sin opiniones aún",
             "labelOpinions": "Opiniones"
         }
+    },
+    "pages": {
+        "offerDetails": {
+            "alertShowData": {
+                "header": "Mostrar datos usuario",
+                "message": "Vas a ver el email y el teléfono del usuario y tus datos (email y teléfono) serán visibles. ¿Estás seguro?",
+                "buttonAccept": "Aceptar",
+                "buttonCancel": "Cancelar"
+            }
+        },
+        "demandDetails": {
+            "messageFillProfileData": "Debes rellenar los campos de tu perfil para poder chatear.",
+            "alertChat": {
+                "message": "No puedes chatear contigo mismo."
+            }
+        }
     }
 }

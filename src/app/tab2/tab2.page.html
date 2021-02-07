@@ -139,7 +139,7 @@
           <ion-card (click)="detalleDemanda(demanda)">
             <div>
               <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-              <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
+              <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
             </div>
             <ion-item>
               <ion-label>
@@ -165,7 +165,7 @@
     >
       <ion-avatar slot="start">
         <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-        <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen"></ion-img>
+        <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
       </ion-avatar>
       <ion-label>
         <h2><strong>{{demanda?.nombre}}</strong></h2>

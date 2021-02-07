@@ -30,11 +30,14 @@ export class AppComponent implements OnDestroy{
   @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
 
   public appPages = [
+    // NOTE: Hidden for the time being until Stripe development is completed.
+    /*
     {
         key: 'subscriptions',
         url: '',
         icon: 'calendar'
     }
+    */
 ];
   currentUser: IUser;
   showOpinions = true;
@@ -342,5 +345,9 @@ export class AppComponent implements OnDestroy{
 
   goToProfile() {
     this.router.navigate(['menu/perfil']).then(() => this.menu.close());
+  }
+
+  onImgError(event){
+    event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
 }

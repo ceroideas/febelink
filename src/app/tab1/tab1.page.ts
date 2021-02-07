@@ -87,6 +87,7 @@ export class Tab1Page {
     this.searchText = '';
     this.sectors = [];
     this.subSectors = [];
+    this.publishSearchForm.reset();
   }
 
   builtForm() {
@@ -214,7 +215,12 @@ export class Tab1Page {
   }
 
   detectKeyPressed(event) {
-    if ((event.key === 'Enter') && (this.searchText.length > 2)) {}
+    if ((event.key === 'Enter') && (this.searchText.length > 2)) {
+      this.showCard = true;
+      setTimeout(() => {
+        this.keys.length = 0;
+      }, 500);
+    }
   }
 
   async search() {

@@ -706,4 +706,12 @@ export class ApiService {
     return this._createData('closechat', formData);
   }
 
+
+    sendNotificacionNewMessage(id: number, message: string) {
+        const formData = new FormData();
+        formData.append('id', id.toString());
+        formData.append('message', message);
+        return this._createData('notify-new-message', formData);
+    }
+
 }

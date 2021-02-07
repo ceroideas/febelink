@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { ImgErrorFallbackDirective } from '../directives/img-error-fallback.directive';
 
 
 @NgModule({
-    declarations: [FilterPipe],
+    declarations: [FilterPipe, ImgErrorFallbackDirective],
     imports: [
         CommonModule,
         FormsModule,
@@ -15,7 +16,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
         IonicModule,
         TranslateModule.forChild(),
     ],
-    exports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TranslateModule, FilterPipe],
+    exports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TranslateModule, FilterPipe, ImgErrorFallbackDirective],
     entryComponents: []
 })
 export class SharedModule { }

@@ -38,6 +38,8 @@ export class ChatPage implements OnInit {
     @ViewChild('content', {static: true}) private content: any;
 
     userIdDemand: string;
+    demandId: number;
+    searchTitle: string;
 
     constructor(private socket: Socket,
                 private platform: Platform,
@@ -59,12 +61,15 @@ export class ChatPage implements OnInit {
 
         this.route.queryParams.subscribe(params => {
             this.user_id = JSON.parse(params["user_id"]);
+            this.user_name = JSON.parse(params["user_name"]);
             this.person_name = JSON.parse(params["person_name"]);
             this.person_id = JSON.parse(params["person_id"]);
             this.room_id = JSON.parse(params["room_id"]);
             this.currentUser = JSON.parse(params["user_id"]);
             this.create = JSON.parse(params["create"]);
             params["id_demandante"] ? this.userIdDemand = JSON.parse(params["id_demandante"]) : this.userIdDemand = this.user_id;
+            this.demandId = JSON.parse(params["demand_id"]);
+            this.searchTitle = JSON.parse(params["search_title"]);
             this.socket.emit('create', this.room_id);
         });
 
@@ -173,7 +178,6 @@ export class ChatPage implements OnInit {
 
         } else {
             this.view_finish=true;
-            this.empty_chat = false;
 
             let d = new Date();
             let timestamp = d.getTime();
@@ -212,6 +216,12 @@ export class ChatPage implements OnInit {
             await this.setMessageDB(this.message, this.room_id, timestamp)
             this.message = '';
 
+            if (this.empty_chat) {
+                this.submitOffer();
+            }
+
+            this.empty_chat = false;
+
         }
     }
 
@@ -227,6 +237,12 @@ export class ChatPage implements OnInit {
                 this.newMessageChat(this.person_id);
             });
         });
+
+        /*
+        (await this.ApiService.sendNotificacionNewMessage(this.person_id, this.message)).subscribe((resp) => {
+            console.log('sendNotificacionNewMessage', resp);
+        });
+        */
     }
 
     async newMessageChat(person_id) {
@@ -496,6 +512,12 @@ export class ChatPage implements OnInit {
                     this.presentAlert('Chat cerrado', 'Ahora no puedes escribir, ni el ofertante podra enviarte mensajes.', 'Aceptar')
                 }
             });
+        });
+    }
+
+    async submitOffer() {
+        (await this.ApiService.realizarOferta(this.user_name, this.searchTitle, 0, this.demandId)).subscribe( resp => {
+            console.log('submitOffer', resp);
         });
     }
 }

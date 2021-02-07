@@ -108,13 +108,6 @@ const routes: Routes = [
             ),
     },
     {
-        path: 'realizar-oferta',
-        loadChildren: () =>
-            import('./pages/realizar-oferta/realizar-oferta.module').then(
-                (m) => m.RealizarOfertaPageModule
-            ),
-    },
-    {
         path: 'acerca-de',
         loadChildren: () =>
             import('./pages/acerca-de/acerca-de.module').then(
