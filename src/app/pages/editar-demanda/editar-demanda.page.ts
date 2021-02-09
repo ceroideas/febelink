@@ -87,12 +87,12 @@ export class EditarDemandaPage implements OnInit {
       (await this.api.editarDemanda(p)).subscribe( resp => {
 
         this.utilities.dismissLoading();
-        this.utilities.showToast('Se ha editado la demanda correctamente');
+        this.utilities.showToast('Se ha editado la búsqueda correctamente.'); // TODO
         this.closeModal();
 
       },err => {
         this.utilities.dismissLoading();
-        this.utilities.showToast('Error al editar la demanda');
+        this.utilities.showToast('Error al editar la búsqueda.'); // TODO
       });
     
   }

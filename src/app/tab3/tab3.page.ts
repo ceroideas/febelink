@@ -10,6 +10,7 @@ import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { IFavorite } from '../models/favorite.model';
+import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 
 @Component({
   selector: 'app-tab3',
@@ -56,6 +57,7 @@ export class Tab3Page {
       favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
     });
     this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0]), ...mySearchs];
+    console.log('this.offers', this.offers);
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.utilities.dismissLoading();
@@ -207,4 +209,16 @@ export class Tab3Page {
         this.detalleDemanda(search['id'], search?.estado)
     } else this.interiorOferta(search)
   }
+
+  async editItem(search: IOffer) {
+    const editarModal = await this.modalCtrl.create({
+      component: EditarDemandaPage,
+      componentProps: { demanda: search },
+    });
+
+    await editarModal.present();
+
+    const { data } = await editarModal.onWillDismiss();
+  }
+
 }
