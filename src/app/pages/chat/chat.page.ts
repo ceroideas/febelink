@@ -216,9 +216,7 @@ export class ChatPage implements OnInit {
             await this.setMessageDB(this.message, this.room_id, timestamp)
             this.message = '';
 
-            if (this.empty_chat) {
-                this.submitOffer();
-            }
+            this.submitOffer();
 
             this.empty_chat = false;
 

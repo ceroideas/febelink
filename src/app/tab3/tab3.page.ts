@@ -56,8 +56,16 @@ export class Tab3Page {
       favorite.type = "favorite";
       favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
     });
-    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0]), ...mySearchs];
-    console.log('this.offers', this.offers);
+
+    let myOffersF = myOffers.sort((a, b) => {
+      return b.id - a.id;
+    });
+    myOffersF = myOffersF.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    let receivedOffers = offers.sort((a, b) => {
+      return b.id - a.id;
+    });
+    receivedOffers = receivedOffers.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    this.offers = [...receivedOffers.flat(), ...myOffersF, ...Object.values(favorites[0]), ...mySearchs];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.utilities.dismissLoading();
