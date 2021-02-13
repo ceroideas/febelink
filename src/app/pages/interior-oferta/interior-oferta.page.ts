@@ -90,7 +90,7 @@ export class InteriorOfertaPage implements OnInit {
             room_id: JSON.stringify(room_id),
             create: JSON.stringify(res.id),
             demand_id: JSON.stringify(this.oferta.id_demanda),
-            search_title: JSON.stringify(this.oferta.descripcion),
+            search_title: JSON.stringify(this.oferta.nombre),
           }
         };
         this.modalCtrl.dismiss();

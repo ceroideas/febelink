@@ -86,6 +86,10 @@
             "alertChat": {
                 "message": "No puedes chatear contigo mismo."
             }
+        },
+        "editDemand": {
+            "messageSuccessEditDemand": "Se ha editado la búsqueda correctamente.",
+            "messageErrorEditDemand": "Error al editar la búsqueda."
         }
     }
 }

@@ -10,6 +10,7 @@ import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { IFavorite } from '../models/favorite.model';
+import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 
 @Component({
   selector: 'app-tab3',
@@ -55,9 +56,20 @@ export class Tab3Page {
       favorite.type = "favorite";
       favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
     });
-    this.offers = [...offers.flat(), ...myOffers, ...Object.values(favorites[0]), ...mySearchs];
+
+    let myOffersF = myOffers.sort((a, b) => {
+      return b.id - a.id;
+    });
+    myOffersF = myOffersF.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    let receivedOffers = offers.sort((a, b) => {
+      return b.id - a.id;
+    });
+    receivedOffers = receivedOffers.filter(r => r.id_ofertante !== this.currentUser.id);
+    receivedOffers = receivedOffers.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    const finalOffers = [...receivedOffers.flat(), ...myOffersF].filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda))===i);
+    this.offers = [...finalOffers, ...Object.values(favorites[0]), ...mySearchs];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
-    new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     this.utilities.dismissLoading();
     this.isLoading = false;
   }
@@ -207,4 +219,16 @@ export class Tab3Page {
         this.detalleDemanda(search['id'], search?.estado)
     } else this.interiorOferta(search)
   }
+
+  async editItem(search: IOffer) {
+    const editarModal = await this.modalCtrl.create({
+      component: EditarDemandaPage,
+      componentProps: { demanda: search },
+    });
+
+    await editarModal.present();
+
+    const { data } = await editarModal.onWillDismiss();
+  }
+
 }
