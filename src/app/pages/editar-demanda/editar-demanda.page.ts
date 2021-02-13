@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class EditarDemandaPage implements OnInit {
                private api: ApiService,
                private utilities: UtilitiesService,
                private camera: Camera,
-               private sanitizer: DomSanitizer ) {
+               private sanitizer: DomSanitizer,
+               private translateService: TranslateService ) {
 
     this.demanda = navParams.get('demanda');
     this.sector = this.demanda.sector;
@@ -87,12 +89,12 @@ export class EditarDemandaPage implements OnInit {
       (await this.api.editarDemanda(p)).subscribe( resp => {
 
         this.utilities.dismissLoading();
-        this.utilities.showToast('Se ha editado la búsqueda correctamente.'); // TODO
+        this.utilities.showToast(this.translateService.instant('pages.editDemand.messageSuccessEditDemand'));
         this.closeModal();
 
       },err => {
         this.utilities.dismissLoading();
-        this.utilities.showToast('Error al editar la búsqueda.'); // TODO
+        this.utilities.showToast(this.translateService.instant('pages.editDemand.messageErrorEditDemand'));
       });
     
   }

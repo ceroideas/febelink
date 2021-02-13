@@ -64,10 +64,12 @@ export class Tab3Page {
     let receivedOffers = offers.sort((a, b) => {
       return b.id - a.id;
     });
+    receivedOffers = receivedOffers.filter(r => r.id_ofertante !== this.currentUser.id);
     receivedOffers = receivedOffers.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
-    this.offers = [...receivedOffers.flat(), ...myOffersF, ...Object.values(favorites[0]), ...mySearchs];
+    const finalOffers = [...receivedOffers.flat(), ...myOffersF].filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda))===i);
+    this.offers = [...finalOffers, ...Object.values(favorites[0]), ...mySearchs];
     this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
-    new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     this.utilities.dismissLoading();
     this.isLoading = false;
   }

@@ -213,10 +213,9 @@ export class ChatPage implements OnInit {
 
             // @ts-ignore
             this.input_message.setFocus();
-            await this.setMessageDB(this.message, this.room_id, timestamp)
-            this.message = '';
-
+            await this.setMessageDB(this.message, this.room_id, timestamp);
             this.submitOffer();
+            this.message = '';
 
             this.empty_chat = false;
 
@@ -514,7 +513,7 @@ export class ChatPage implements OnInit {
     }
 
     async submitOffer() {
-        (await this.ApiService.realizarOferta(this.user_name, this.searchTitle, 0, this.demandId)).subscribe( resp => {
+        (await this.ApiService.realizarOferta(this.searchTitle, this.message, 0, this.demandId)).subscribe( resp => {
             console.log('submitOffer', resp);
         });
     }
