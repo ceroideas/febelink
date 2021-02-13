@@ -151,7 +151,7 @@ export class Tab1Page {
       this.showCookies = false;
     } else {
       if (!this.platform.is('cordova') && this.cookies !== 'wizard') {
-        this.openGuide();
+        //this.openGuide();
       }
       this.cookSvc.set('wizard', 'wizard');
       this.showCookies = true;
@@ -167,7 +167,7 @@ export class Tab1Page {
       if (this.perfil !== null) {
         if (this.perfil.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){
-          this.openGuide();
+          //this.openGuide();
           //}
           this.utilities.setGuia('other');
         }

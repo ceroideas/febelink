@@ -59,7 +59,7 @@ export class PerfilDemandantePage implements OnInit {
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){
-          this.openGuide();
+          //this.openGuide();
           //}
           this.utilities.setGuia('other');
         }
