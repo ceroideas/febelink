@@ -443,7 +443,7 @@ export class ChatPage implements OnInit {
             message: 'Si cierras un chat, el usuario no podrá seguir enviandote mensajes.',
             buttons: [
                 {
-                    text: 'Cancaler',
+                    text: 'Cancelar',
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
@@ -468,7 +468,7 @@ export class ChatPage implements OnInit {
             message: 'Si abres un chat el ofertante podrá enviarte mensajes.',
             buttons: [
                 {
-                    text: 'Cancaler',
+                    text: 'Cancelar',
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
