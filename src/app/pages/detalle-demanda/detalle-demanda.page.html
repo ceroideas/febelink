@@ -7,19 +7,19 @@
     <ion-buttons slot="end" class="desktop">
       <ion-button class="btn-header" (click)="irA('/menu/todas')">
         <ion-icon slot="start" name="search"></ion-icon>
-        Todas
+        {{ 'menu.tabs.searchEngine' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
-        <ion-icon slot="start" name="archive"></ion-icon>
-        Búsquedas
+        <ion-icon slot="start" name="heart"></ion-icon>
+        {{ 'menu.tabs.recommend' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
-        <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        <ion-icon slot="start" name="chatbubbles"></ion-icon>
+        {{ 'menu.tabs.chat' | translate }}
       </ion-button>
-      <ion-button class="btn-header" (click)="irA('/menu/perfil')">
+      <ion-button *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ perfil !== null ? 'Perfil' : 'Iniciar sesión'}}
+        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
       </ion-button>
     </ion-buttons>
 
@@ -75,9 +75,9 @@
             &nbsp;VER PERFIL
           </ion-button>
 
-          <ion-button class="apartado btn-info" (click)="ofertar(demanda?.id)">
-            <ion-icon name="hand-right" item-left></ion-icon>
-            &nbsp;RESPONDER
+          <ion-button class="apartado btn-info" (click)="viewChat()">
+            <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
+            &nbsp;CHAT
           </ion-button>
 
           <ion-button
@@ -109,9 +109,9 @@
           <ion-col size="12">
             <hr />
             <div class="apartado">
-              <h2 class="title">Otras demandas</h2>
+              <h2 class="title">Otras Búsquedas</h2>
               <em class="desc"
-                >Demandas relacionadas que te pueden interesar</em
+                >Búsquedas relacionadas que te pueden interesar</em
               >
             </div>
           </ion-col>
@@ -132,7 +132,7 @@
             <ion-card (click)="detalleDemanda(demanda)">
               <div>
                 <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-                <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
+                <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
               </div>
               <ion-card-header>
                 <strong style="color: #222"> {{demanda?.nombre}}</strong>
@@ -142,7 +142,7 @@
 
                 <ion-row>
                   <ion-col size="3">
-                    <ion-icon name="hand-right"></ion-icon>
+                    <ion-icon name="chatbubbles"></ion-icon>
                   </ion-col>
                   <ion-col size="3">
                     <ion-icon name="infinite"></ion-icon>
@@ -166,7 +166,7 @@
     <ion-slides>
       <ion-slide>
         <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
-        <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+        <ion-img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" appImgErrorFallback></ion-img>
       </ion-slide>
     </ion-slides>
 
@@ -184,13 +184,13 @@
     </ion-button>
 
     <ion-button
-      expand="full"
-      color="febelink"
-      class="apartado"
-      (click)="ofertar(demanda?.id)"
+    expand="full"
+    color="febelink"
+    class="apartado"
+    (click)="viewChat()"
     >
-      <ion-icon name="hand-right"></ion-icon>
-      &nbsp;RESPONDER
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      &nbsp;CHAT
     </ion-button>
 
     <ion-button
@@ -212,8 +212,8 @@
     <hr />
     <div *ngIf="demandasRelacionadas?.length>0">
       <div class="apartado">
-        <h2 class="title">Otras demandas</h2>
-        <em class="desc">Demandas relacionadas que te pueden interesar</em>
+        <h2 class="title">Otras Búsquedas</h2>
+        <em class="desc">Búsquedas relacionadas que te pueden interesar</em>
       </div>
       <hr />
 
@@ -224,12 +224,13 @@
           *ngFor="let demandaR of demandasRelacionadas"
         >
           <ion-thumbnail slot="start">
-            <img
+            <ion-img
               [src]="demandaR?.imagen"
               width="75"
               height="75"
               *ngIf="demandaR?.imagen"
-            />
+              appImgErrorFallback
+            ></ion-img>
             <img
               src="assets/imgs/4.jpg"
               width="75"

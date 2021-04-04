@@ -1,0 +1,95 @@
+{
+    "common": {
+        "labelSectors": "Sectors",
+        "labelSubsectors": "Subsectors",
+        "labelSectors2": "Sector/s",
+        "labelSubsectors2": "Subsector/s",
+        "labelSector": "Sector",
+        "labelSubsector": "Subsector",
+        "labelProvince": "Province",
+        "labelTown": "Town",
+        "labelNoElements": "No elements to show",
+        "labelLoading": "Loading...",
+        "searchPlaceholder": "Search in Febelink",
+        "labelDescription": "Description",
+        "cookies1": "We use cookies to provide you with the best possible experience. By continuing, we assume that you agree with our",
+        "cookies2": "cookie policy",
+        "labelName": "Name",
+        "labelEmail": "Email",
+        "labelAddress": "Address",
+        "labelPhone": "Phone",
+        "labelDNI": "DNI / CIF",
+        "labelNewPass": "New password",
+        "labelConfirmNewPass": "Confirm new password",
+        "labelTitle": "Title"
+    },
+    "menu": {
+        "tabs": {
+            "searchEngine": "Search",
+            "recommend": "Recommend",
+            "chat": "Chat",
+            "profile": "Profile",
+            "login": "Login"
+        },
+        "pages": {
+            "opinions": "Opinions",
+            "subscriptions": "Subscriptions"
+        },
+        "labels": {
+            "currentPlan": "Current plan"
+        }
+    },
+    "tabs": {
+        "tab1": {
+            "labelPhoto": "Do you want to add a photo?",
+            "labelAnswers": "How many answers do you want to receive?",
+            "buttonSend": "Send search",
+            "messageSearchDone": "A search has been made, look at your panel!",
+            "messageSearchSent": "Search sent. You will soon receive your answers. Good luck!",
+            "errorPublishSearch": "There was an error in publishing the search.",
+            "errorMissingProfileInfo": "You must fill in your profile fields to perform the searches."
+        },
+        "tab2": {
+            "filters": "Filters",
+            "messageAddedFavorite": "It has been added to favorites correctly.",
+            "messageRemovedFavorite": "It has been correctly removed from the favorites.",
+            "errorAddFavorite": "Error when adding to favorites.",
+            "errorRemoveFavorite": "Error when deleting from favorites."
+        },
+        "tab3": {
+            "alertDelete": {
+                "message": "¿Are you sure you want to remove this search??",
+                "btnCancel": "Cancel",
+                "btnDelete": "Delete"
+            },
+            "errorRemoveOffer": "The offer could not be deleted.",
+            "errorRemoveSearch": "The search could not be deleted."
+        },
+        "tab4": {
+            "buttonAskRecommendation": "Ask for a recommendation",
+            "buttonSave": "Save changes",
+            "labelNoOpinions": "No opinions yet",
+            "labelOpinions": "Opinions"
+        }
+    },
+    "pages": {
+        "offerDetails": {
+            "alertShowData": {
+                "header": "Show user data",
+                "message": "You will see the user's email and phone number and your data (email and phone number) will be visible. Are you sure?",
+                "buttonAccept": "Accept",
+                "buttonCancel": "Cancel"
+            }
+        },
+        "demandDetails": {
+            "messageFillProfileData": "You must fill in the fields in your profile to be able to chat.",
+            "alertChat": {
+                "message": "You can't chat with yourself."
+            }
+        },
+        "editDemand": {
+            "messageSuccessEditDemand": "The search has been successfully edited.",
+            "messageErrorEditDemand": "Error when editing the search."
+        }
+    }
+}

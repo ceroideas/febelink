@@ -1,0 +1,95 @@
+{
+    "common": {
+        "labelSectors": "Sectores",
+        "labelSubsectors": "Subsectores",
+        "labelSectors2": "Sector/es",
+        "labelSubsectors2": "Subsector/es",
+        "labelSector": "Sector",
+        "labelSubsector": "Subsector",
+        "labelProvince": "Provincia",
+        "labelTown": "Localidad",
+        "labelNoElements": "No hay elementos para mostrar",
+        "labelLoading": "Cargando...",
+        "searchPlaceholder": "Buscar en Febelink",
+        "labelDescription": "Descripción",
+        "cookies1": "Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra",
+        "cookies2": "política de cookies",
+        "labelName": "Nombre",
+        "labelEmail": "Email",
+        "labelAddress": "Dirección",
+        "labelPhone": "Teléfono",
+        "labelDNI": "DNI / CIF",
+        "labelNewPass": "Contraseña nueva",
+        "labelConfirmNewPass": "Confimar contraseña nueva",
+        "labelTitle": "Título"
+    },
+    "menu": {
+        "tabs": {
+            "searchEngine": "Buscador",
+            "recommend": "Recomendar",
+            "chat": "Chat",
+            "profile": "Perfil",
+            "login": "Iniciar sesión"
+        },
+        "pages": {
+            "opinions": "Opiniones",
+            "subscriptions": "Suscripciones"
+        },
+        "labels": {
+            "currentPlan": "Plan actual"
+        }
+    },
+    "tabs": {
+        "tab1": {
+            "labelPhoto": "¿Quieres añadir una foto?",
+            "labelAnswers": "¿Cuántas respuestas quieres recibir?",
+            "buttonSend": "Enviar búsqueda",
+            "messageSearchDone": "Se ha realizado una búsqueda, mira en tu panel!",
+            "messageSearchSent": "Búsqueda enviada. En breve recibirás tus respuestas. ¡Suerte!",
+            "errorPublishSearch": "Hubo un error al publicar la búsqueda.",
+            "errorMissingProfileInfo": "Debes rellenar los campos de tu perfil para realizar las búsquedas."
+        },
+        "tab2": {
+            "filters": "Filtros",
+            "messageAddedFavorite": "Se ha añadido a favoritos correctamente.",
+            "messageRemovedFavorite": "Se ha eliminado de favoritos correctamente.",
+            "errorAddFavorite": "Error al añadir a favoritos.",
+            "errorRemoveFavorite": "Error al eliminar de favoritos."
+        },
+        "tab3": {
+            "alertDelete": {
+                "message": "¿Estás seguro de que deseas eliminar esta búsqueda?",
+                "btnCancel": "Cancelar",
+                "btnDelete": "Eliminar"
+            },
+            "errorRemoveOffer": "No se ha podido borrar la oferta.",
+            "errorRemoveSearch": "No se ha podido borrar la búsqueda."
+        },
+        "tab4": {
+            "buttonAskRecommendation": "Pedir recomendación",
+            "buttonSave": "Guardar cambios",
+            "labelNoOpinions": "Sin opiniones aún",
+            "labelOpinions": "Opiniones"
+        }
+    },
+    "pages": {
+        "offerDetails": {
+            "alertShowData": {
+                "header": "Mostrar datos usuario",
+                "message": "Vas a ver el email y el teléfono del usuario y tus datos (email y teléfono) serán visibles. ¿Estás seguro?",
+                "buttonAccept": "Aceptar",
+                "buttonCancel": "Cancelar"
+            }
+        },
+        "demandDetails": {
+            "messageFillProfileData": "Debes rellenar los campos de tu perfil para poder chatear.",
+            "alertChat": {
+                "message": "No puedes chatear contigo mismo."
+            }
+        },
+        "editDemand": {
+            "messageSuccessEditDemand": "Se ha editado la búsqueda correctamente.",
+            "messageErrorEditDemand": "Error al editar la búsqueda."
+        }
+    }
+}

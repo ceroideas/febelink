@@ -16,7 +16,10 @@ export class RegistroPage implements OnInit {
   form: FormGroup;
   sectores: any;
   subsectores: any;
-
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+  passwordType2: string = 'password';
+  passwordIcon2: string = 'eye-off';
 
   constructor(public navCtrl: NavController,
     private formBuilder: FormBuilder,
@@ -47,6 +50,16 @@ export class RegistroPage implements OnInit {
     });
     this.obtenerSectores();
   }
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
+  hideShowPassword2() {
+    this.passwordType2 = this.passwordType2 === 'text' ? 'password' : 'text';
+    this.passwordIcon2 = this.passwordIcon2 === 'eye-off' ? 'eye' : 'eye-off';
+  }
+
 
     /**
    * Obtenemos todos lo sectores del servidor
@@ -86,6 +99,19 @@ export class RegistroPage implements OnInit {
   /**
    * Enviamos el registro al servidor
    */
+  loginBeforeRegister(p) {
+    this.utilities.showLoading();
+
+    const formData = new FormData();
+    formData.append('email', p.email);
+    formData.append('password', p.password);
+    formData.append('remember_me', '1');
+
+    (this.api.login(formData, 'login')).subscribe(
+      (res) => {this.utilities.dismissLoading();}
+    );
+  }
+
   async submitForm() {
 
     console.log("FORM",this.form);
@@ -105,14 +131,9 @@ export class RegistroPage implements OnInit {
       console.log("P",p);
 
        this.api.registro(p).subscribe(resp => {
-        
         console.log("RESP",resp);
+        this.loginBeforeRegister(p);
         this.utilities.dismissLoading();
-
-        this.navCtrl.navigateForward('/login').then(() => {
-          this.utilities.showToast("Se ha creado el usuario correctamente");
-        });
-
       }, err => {
         
         console.log("ERROR",err)

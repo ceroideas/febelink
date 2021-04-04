@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { ModalController, IonItemSliding } from '@ionic/angular';
+import { ModalController, IonItemSliding, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
-import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
 import { Router } from '@angular/router';
 import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
+import { IOffer } from '../models/offer.model';
+import { IUser } from '../models/user.model';
+import { TranslateService } from '@ngx-translate/core';
+import { TermsPage } from '../pages/terms/terms.page';
+import { IFavorite } from '../models/favorite.model';
+import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 
 @Component({
   selector: 'app-tab3',
@@ -13,144 +18,99 @@ import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.pag
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
-  settingsOfertas: string = 'ofertasPage'; // default button
-  ofertas: any;
-  misOfertas: any;
+  currentYear = new Date().getFullYear();
+  offers: IOffer[] = [];
   isLoading: boolean;
-  perfil: any;
+  currentUser: IUser = null;
 
   constructor(
     private modalCtrl: ModalController,
     private api: ApiService,
     private utilities: UtilitiesService,
-    private router: Router
-  ) {
-    this.settingsOfertas = 'ofertasPage';
-  }
+    private router: Router,
+    private translateService: TranslateService,
+    private alertCtrl: AlertController
+  ) {}
 
-  /**
-   * Obtenemos las ofertas cada vez que entramos en la pantalla
-   */
-  public async ionViewDidEnter() {
-    this.misOfertas = [];
-    this.ofertas = [];
-
-    await this.obtenerPerfil();
-
-    if (this.perfil !== null) {
+  async ionViewDidEnter() {
+    await this.getUserProfile();
+    if (this.currentUser) {
       this.isLoading = true;
-      await this.obtenerOfertas();
-      await this.obtenerMisOfertas();
+      await this.getOffers();
     }
   }
 
-  /**
-   * Obtener las ofertas del ofertante del servidor
-   */
-  async obtenerMisOfertas() {
-    (await this.api.misOfertas()).subscribe((ofertas) => {
-      this.misOfertas = ofertas;
-      this.isLoading = false;
-      console.log(this.ofertas);
-    });
+  async getUserProfile() {
+    this.currentUser = await this.utilities.getUserData();
   }
 
-  /**
-   * Modal para suscribirse
-   */
-  async suscribirse() {
-    const suscribirseModal = await this.modalCtrl.create({
-      component: SuscribirsePage,
+  async getOffers() {
+    this.utilities.showLoading();
+    const [ myOffers, offers, favorites, mySearchs ] = await Promise.all([
+      await (await this.api.misOfertas()).toPromise(),
+      await (await this.api.ofertasRecibidas()).toPromise(),
+      await (await this.api.getFavorites()).toPromise(),
+      await (await this.api.obtenerDemandasDemandante(this.currentUser.id)).toPromise()
+    ]);
+    Object.values(favorites[0]).forEach((favorite: IOffer) => {
+      favorite.type = "favorite";
+      favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
     });
 
-    await suscribirseModal.present();
-    const { data } = await suscribirseModal.onWillDismiss();
-    this.obtenerMisOfertas();
+    let myOffersF = myOffers.sort((a, b) => {
+      return b.id - a.id;
+    });
+    myOffersF = myOffersF.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    let receivedOffers = offers.sort((a, b) => {
+      return b.id - a.id;
+    });
+    receivedOffers = receivedOffers.filter(r => r.id_ofertante !== this.currentUser.id);
+    receivedOffers = receivedOffers.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    const finalOffers = [...receivedOffers.flat(), ...myOffersF].filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda))===i);
+    this.offers = [...finalOffers, ...Object.values(favorites[0]), ...mySearchs];
+    this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    this.utilities.dismissLoading();
+    this.isLoading = false;
   }
 
-  /**
-   * Recargar las ofertas del ofertante
-   * @param refresher
-   */
-  public doRefreshMisOfertas(refresher): void {
-    this.obtenerMisOfertas();
+  doRefreshOffers(refresher): void {
+    this.getOffers();
     refresher.event.complete();
   }
 
-  /**
-   * Borramos la oferta con un itemSliding
-   * @param oferta
-   * @param item
-   */
-  async borrarOferta(oferta, item: IonItemSliding) {
-    console.log(oferta);
-    (await this.api.borrarOferta(oferta.id)).subscribe(
-      (resp) => {
-        console.log('OFERTA BORRADA correctamente', resp);
-        this.obtenerMisOfertas();
-        item.close();
-      },
-      (err) => {
-        console.log(err);
-        this.utilities.showToast('No se ha podido borrar la oferta');
-      }
-    );
+  async deleteOffer(offer: IOffer) {
+    if (offer?.type === 'favorite') {
+      (await this.api.unFavouriteDemand({id: offer.id})).subscribe(result => {
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
+        this.getOffers();
+      },err => {
+        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
+      });
+    }
+    else if (offer?.id_ofertante) {
+      (await this.api.borrarOferta(offer.id)).subscribe(
+        (resp) => {
+          this.getOffers();
+        },
+        (err) => {
+          console.log(err);
+          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveOffer"));
+        }
+      );
+    } else {
+      (await this.api.borrarDemanda(offer.id)).subscribe(
+        (resp) => {
+          this.getOffers();
+        },
+        (err) => {
+          console.log(err);
+          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveSearch"));
+        }
+      );
+    }
   }
 
-  /**
-   * Ir a la demanda con su estado
-   * @param id_demanda
-   * @param estado
-   */
-  public detalleDemanda(id_demanda, estado): void {
-    let aceptada: boolean;
-    if (estado == 1) aceptada = true;
-    else aceptada = false;
-    this.router.navigate(['demanda/' + id_demanda], {
-      queryParams: { id_demanda: id_demanda, aceptada: aceptada },
-    });
-  }
-
-  /**
-   * Obtener datos del perfil
-   */
-  async obtenerPerfil() {
-    await this.utilities.getUserData().then((data) => {
-      this.perfil = data;
-    });
-  }
-
-  /**
-   * Obtener las ofertas del servidor y terminar de cargar
-   */
-  async obtenerOfertas() {
-    (await this.api.ofertasRecibidas()).subscribe((res) => {
-      let ofertas = [];
-      for (var i = 0; i < res.length; i++) {
-        let element = res[i];
-        Array.isArray(element)
-          ? ofertas.push(element[0])
-          : ofertas.push(element);
-      }
-      this.ofertas = ofertas;
-      console.log(this.ofertas);
-      this.isLoading = false;
-    });
-  }
-
-  /**
-   * Método para recargar las ofertas
-   * @param refresher
-   */
-  public doRefreshOfertas(refresher): void {
-    this.obtenerOfertas();
-    refresher.complete();
-  }
-
-  /**
-   * Creamos modal para el interior de la oferta
-   * @param oferta
-   */
   async interiorOferta(oferta) {
     const interiorOfertaModal = await this.modalCtrl.create({
       component: InteriorOfertaPage,
@@ -159,7 +119,16 @@ export class Tab3Page {
 
     await interiorOfertaModal.present();
     const { data } = await interiorOfertaModal.onWillDismiss();
-    this.obtenerOfertas();
+    this.getOffers();
+  }
+
+  detalleDemanda(id_demanda, estado): void {
+    let aceptada: boolean;
+    if (estado == 1) aceptada = true;
+    else aceptada = false;
+    this.router.navigate(['demanda/' + id_demanda], {
+      queryParams: { id_demanda: id_demanda, aceptada: aceptada },
+    });
   }
 
   async openGuide() {
@@ -170,17 +139,9 @@ export class Tab3Page {
     return await guideModal.present();
   }
 
-  home() {
-    this.router.navigate(['menu/todas']);
-  }
-
-  /**
-   * Navegar a la pantalla p
-   * @param p
-   */
-  public irA(p: string): void {
+  irA(p: string): void {
     if (p === '/menu/perfil') {
-      if (this.perfil === null) {
+      if (this.currentUser) {
         this.router.navigate(['login']);
       } else {
         this.router.navigate(['/menu/perfil']);
@@ -189,4 +150,85 @@ export class Tab3Page {
       this.router.navigate([p]);
     }
   }
+
+  getOfferBackgroundColor(offerStatus: number) {
+    switch(offerStatus) {
+      case 1: {
+        return "#19cf50";
+      }
+      case 2: {
+        return "#da1c1c";
+      }
+      case 3: {
+        return "#3289db";
+      }
+    }
+  }
+
+  getOfferText(offerStatus: number) {
+    switch(offerStatus) {
+      case 1: {
+        return "Aceptada";
+      }
+      case 2: {
+        return "Denegada";
+      }
+      case 3: {
+        return "Sin respuesta";
+      }
+    }
+  }
+
+  /**
+   * Modal para abrir terminos y condiciones
+   */
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
+  }
+
+  async deleteItem(offer: IOffer) {
+    let alert = await this.alertCtrl.create({
+      header: this.translateService.instant("menu.tabs.chat"),
+      message: this.translateService.instant("tabs.tab3.alertDelete.message"),
+      buttons: [
+        {
+          text: this.translateService.instant("tabs.tab3.alertDelete.btnCancel"),
+          role: 'cancel',
+        },
+        {
+          text: this.translateService.instant("tabs.tab3.alertDelete.btnDelete"),
+          handler: () => {
+            this.deleteOffer(offer);
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  onClickSearchHandler(search: IOffer) {
+    if (search?.type == 'favorite') {
+      this.detalleDemanda(search?.id, 0)
+    } else if (search?.demanda) {
+      this.detalleDemanda(search?.id_demanda, search?.estado)
+    } else if (search['id_demandante']) {
+        this.detalleDemanda(search['id'], search?.estado)
+    } else this.interiorOferta(search)
+  }
+
+  async editItem(search: IOffer) {
+    const editarModal = await this.modalCtrl.create({
+      component: EditarDemandaPage,
+      componentProps: { demanda: search },
+    });
+
+    await editarModal.present();
+
+    const { data } = await editarModal.onWillDismiss();
+  }
+
 }

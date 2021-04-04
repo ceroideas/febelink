@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-busquedas',
@@ -37,7 +38,7 @@ export class BusquedasPage implements OnInit {
         for (let demanda of demandas) {
           if (demanda.imagen != null) {
             if (!demanda.imagen.includes("http://") && !demanda.imagen.includes("https://")){
-              demanda.imagen = "https://api.febelink.com/storage/" + demanda.imagen;
+              demanda.imagen = `${environment.baseWebUrl}storage/${demanda.imagen}`;
             }
           }
           this.demandas.push(demanda);
