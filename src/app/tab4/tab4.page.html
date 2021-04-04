@@ -1,23 +1,28 @@
 <ion-header>
   <ion-toolbar color="light">
-    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()" />
+
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <img tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
 
     <ion-buttons slot="end" class="desktop">
       <ion-button class="btn-header" (click)="irA('/menu/todas')">
         <ion-icon slot="start" name="search"></ion-icon>
-        Todas
+        {{ 'menu.tabs.searchEngine' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
-        <ion-icon slot="start" name="archive"></ion-icon>
-        Búsquedas
+        <ion-icon slot="start" name="heart"></ion-icon>
+        {{ 'menu.tabs.recommend' | translate }}
       </ion-button>
       <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
-        <ion-icon slot="start" name="hand-right"></ion-icon>
-        Ofertas
+        <ion-icon slot="start" name="chatbubbles"></ion-icon>
+        {{ 'menu.tabs.chat' | translate }}
       </ion-button>
-      <ion-button class="btn-header active">
+      <ion-button *ngIf="perfil === null" class="btn-header active">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ perfil !== null ? 'Perfil' : 'Iniciar sesión'}}
+        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
       </ion-button>
     </ion-buttons>
 
@@ -33,7 +38,7 @@
 <ion-content class="ion-padding">
   <div class="ion-text-center" *ngIf="loading">
     <ion-spinner></ion-spinner>
-    <p>Cargando...</p>
+    <p>{{ 'common.labelLoading' | translate }}</p>
   </div>
 
   <div class="desktop-content" *ngIf="!loading">
@@ -45,18 +50,21 @@
             [src]="perfil?.logo"
             *ngIf="perfil?.logo && base64img==null"
             class="logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <img
             (click)="attachImage()"
             [src]="base64img"
             *ngIf="base64img!=null"
             class="logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <img
             (click)="attachImage()"
             src="assets/imgs/4.jpg"
             *ngIf="!perfil?.logo && base64img==null"
             class="logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <input
             *ngIf="!isNative"
@@ -73,7 +81,7 @@
             class="guardar-cambios"
             expand="block"
             (click)="recommend($event)"
-            >Pedir recomendación &nbsp;
+            >{{ 'tabs.tab4.buttonAskRecommendation' | translate }} &nbsp;
             <ion-icon name="checkmark"> </ion-icon>
           </ion-button>
         </div>
@@ -83,7 +91,7 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> Nombre: </ion-label>
+              <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -95,7 +103,7 @@
 
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> Email: </ion-label>
+              <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
               <ion-input
                 clearInput
                 type="email"
@@ -109,21 +117,20 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> Descripcion: </ion-label>
+              <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
               <ion-textarea
                 [value]="perfil?.descripcion"
+                type="text"
                 [maxlength]="max_bio"
                 formControlName="descripcion"
               ></ion-textarea>
             </ion-item>
           </ion-col>
           <ion-col size="6" style="margin-top: 23px">
-            <ion-item class="input" (click)="clickAddress()">
-              <ion-label position="floating"> Direccion: </ion-label>
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
               <ion-input
                 clearInput
-                (ionBlur)="checkHide()"
-                type="{{typeAddress}}"
                 [value]="perfil?.direccion"
                 formControlName="direccion"
               ></ion-input>
@@ -134,7 +141,7 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label>Provincia</ion-label>
+              <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
               <ionic-selectable
                 item-content
                 [(ngModel)]="provincia"
@@ -150,7 +157,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label>Localidad</ion-label>
+              <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
               <ionic-selectable
                 item-content
                 [(ngModel)]="localidad"
@@ -169,7 +176,7 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> Telefono: </ion-label>
+              <ion-label position="floating"> {{ 'common.labelPhone' | translate }} </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -179,13 +186,11 @@
             </ion-item>
           </ion-col>
           <ion-col size="6">
-            <ion-item class="input" (click)="clickDNI()">
-              <ion-label position="floating"> DNI / CIF </ion-label>
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelDNI' | translate }} </ion-label>
               <ion-input
+                id='dninie'
                 clearInput
-                (ionBlur)="checkHide()"
-                clearInput
-                type="{{typeDNI}}"
                 type="text"
                 [value]="perfil?.dni"
                 formControlName="dni"
@@ -197,7 +202,7 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input" *ngIf="sectores.length>0">
-              <ion-label position="floating"> Sector/es: </ion-label>
+              <ion-label position="floating"> {{ 'common.labelSectors2' | translate }} </ion-label>
               <ion-select
                 clearInput
                 (ionChange)="selectFamily()"
@@ -214,7 +219,7 @@
           </ion-col>
           <ion-col size="6">
             <ion-item class="input" *ngIf="subsectores.length>0">
-              <ion-label position="floating"> Subsector/es : </ion-label>
+              <ion-label position="floating"> {{ 'common.labelSubsectors2' | translate }} </ion-label>
               <ion-select
                 clearInput
                 [multiple]="subscription == null ? false : true"
@@ -232,64 +237,45 @@
           </ion-col>
         </ion-row>
 
-        <ion-row class="ion-padding">
-          <ion-col size="2"></ion-col>
-          <ion-col size="8">
-            <ion-card>
-              <ion-card-header>
-                <strong style="font-size: 20px; color: #222"
-                  >Suscripciones</strong
-                >
-              </ion-card-header>
-              <ion-card-content *ngIf="subscription === undefined">
-                <span style="font-size: 1rem; color: #222"
-                  >Actualmente no dispone de ningún plan</span
-                >
-                <ion-button
-                  (click)="suscribirse()"
-                  class="guardar-cambios"
-                  style="margin-top: 20px"
-                  >Suscríbete &nbsp;<ion-icon name="link"></ion-icon>
-                </ion-button>
-              </ion-card-content>
-
-              <ion-card-content *ngIf="subscription !== undefined">
-                <span style="font-size: 1.5rem"
-                  >Plan {{subscription_details?.name}}</span
-                >
-                <ion-button
-                  (click)="suscribirse()"
-                  class="guardar-cambios"
-                  style="margin-top: 20px"
-                  >Cambiar plan &nbsp;<ion-icon name="link"></ion-icon>
-                </ion-button>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-          <ion-col size="2"></ion-col>
-        </ion-row>
-
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> Contraseña nueva: </ion-label>
+              <ion-label position="floating"> {{ 'common.labelNewPass' | translate }} </ion-label>
+              <ion-icon
+                slot="end"
+                (click)="hideShowPassword()"
+                [name]="passwordIcon"
+                class="passwordIcon2"
+              ></ion-icon>
               <ion-input
+                [(ngModel)]="inputpass1"
+                (keyup)="showHidePassMessages()"
                 clearInput
-                type="password"
+                [type]="passwordType"
                 formControlName="password"
               ></ion-input>
+              <p id="msgpass1" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
             </ion-item>
           </ion-col>
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating">
-                Confimar contraseña nueva:
+                {{ 'common.labelConfirmNewPass' | translate }}
               </ion-label>
+              <ion-icon
+                slot="end"
+                (click)="hideShowPassword2()"
+                [name]="passwordIcon2"
+                class="passwordIcon2"
+              ></ion-icon>
               <ion-input
+                [(ngModel)]="inputpass2"
+                (keyup)="showHidePassMessages()"
                 clearInput
-                type="password"
+                [type]="passwordType2"
                 formControlName="passwordConfirmation"
               ></ion-input>
+              <p id="msgpass2" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -297,11 +283,11 @@
 
       <div class="mobile">
         <ion-item class="input">
-          <ion-label position="floating"> Nombre: </ion-label>
+          <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
           <ion-input clearInput type="text" formControlName="name"></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> Email: </ion-label>
+          <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
           <ion-input
             clearInput
             type="email"
@@ -309,23 +295,21 @@
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> Descripcion: </ion-label>
+          <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
           <ion-textarea
             [maxlength]="max_bio"
             formControlName="descripcion"
           ></ion-textarea>
         </ion-item>
-        <ion-item class="input" (click)="clickAddress()">
-          <ion-label position="floating"> Direccion: </ion-label>
+        <ion-item class="input">
+          <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
           <ion-input
-            (ionBlur)="checkHide()"
             clearInput
-            type="{{typeAddress}}"
             formControlName="direccion"
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label>Provincia</ion-label>
+          <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
           <ionic-selectable
             [(ngModel)]="provincia"
             item-content
@@ -339,7 +323,7 @@
           </ionic-selectable>
         </ion-item>
         <ion-item class="input">
-          <ion-label>Localidad</ion-label>
+          <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
           <ionic-selectable
             [(ngModel)]="localidad"
             item-content
@@ -353,24 +337,23 @@
           </ionic-selectable>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> Telefono: </ion-label>
+          <ion-label position="floating"> {{ 'common.labelPhone' | translate }} </ion-label>
           <ion-input
             clearInput
             type="text"
             formControlName="telefono"
           ></ion-input>
         </ion-item>
-        <ion-item class="input" (tap)="clickDNI()">
-          <ion-label position="floating"> DNI / CIF </ion-label>
+        <ion-item class="input">
+          <ion-label position="floating"> {{ 'common.labelDNI' | translate }} </ion-label>
           <ion-input
-            (ionBlur)="checkHide()"
+            id="dninie"
             clearInput
-            type="{{typeDNI}}"
             formControlName="dni"
           ></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="sectores.length>0">
-          <ion-label> sector/es: </ion-label>
+          <ion-label> {{ 'common.labelSectors2' | translate }} </ion-label>
           <ion-select
             clearInput
             [(ngModel)]="sectoresPerfil"
@@ -387,7 +370,7 @@
           </ion-select>
         </ion-item>
         <ion-item class="input" *ngIf="subsectores.length>0">
-          <ion-label> subsector/es : </ion-label>
+          <ion-label> {{ 'common.labelSubsectors2' | translate }} </ion-label>
           <ion-select
             clearInput
             [(ngModel)]="subSectoresPerfil"
@@ -403,62 +386,61 @@
           </ion-select>
         </ion-item>
 
-        <ion-card style="margin-top: 20px">
-          <ion-card-header>
-            <strong>Suscripciones</strong>
-          </ion-card-header>
-
-          <ion-card-content *ngIf="subscription === undefined">
-            Actualmente no dispone de ningún plan
-            <ion-button (click)="suscribirse()" class="guardar-cambios"
-              >Suscríbete &nbsp;<ion-icon name="link"></ion-icon>
-            </ion-button>
-          </ion-card-content>
-
-          <ion-card-content *ngIf="subscription !== undefined">
-            Plan {{subscription_details?.name}}
-            <ion-button (click)="suscribirse()" class="guardar-cambios"
-              >Cambiar plan &nbsp;<ion-icon name="link"></ion-icon>
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
-
         <ion-item class="input">
-          <ion-label position="floating"> Contraseña nueva: </ion-label>
+          <ion-label position="floating"> {{ 'common.labelNewPass' | translate }} </ion-label>
+          <ion-icon
+          slot="end"
+          (click)="hideShowPassword()"
+          [name]="passwordIcon"
+          class="passwordIcon"
+        ></ion-icon>
           <ion-input
+            [(ngModel)]="inputpass1"
+            (keyup)="showHidePassMessages()"
             clearInput
-            type="password"
+            [type]="passwordType"
             formControlName="password"
           ></ion-input>
         </ion-item>
+        <p id="msgpass3" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
         <ion-item class="input">
           <ion-label position="floating">
-            Confimar contraseña nueva:
+            {{ 'common.labelConfirmNewPass' | translate }}
           </ion-label>
+          <ion-icon
+            slot="end"
+            (click)="hideShowPassword2()"
+            [name]="passwordIcon2"
+            class="passwordIcon"
+        ></ion-icon>
           <ion-input
+            [(ngModel)]="inputpass2"
+            (keyup)="showHidePassMessages()"
             clearInput
-            type="password"
+            [type]="passwordType2"
             formControlName="passwordConfirmation"
           ></ion-input>
         </ion-item>
+        <p id="msgpass4" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
       </div>
       <ion-button
+        id="savebtn"
         type="submit"
         style="max-width: 200px"
         expand="block"
         class="guardar-cambios"
-        >Guardar cambios</ion-button
+        >{{ 'tabs.tab4.buttonSave' | translate }}</ion-button
       >
     </form>
 
     <ion-grid fixed>
       <ion-row>
         <ion-col size="12">
-          <span *ngIf="total_opinions<=0">Sin opiniones aún</span>
+          <span *ngIf="total_opinions<=0">{{ 'tabs.tab4.labelNoOpinions' | translate }}</span>
           <div class="opinions-container" [hidden]="!(total_opinions>0)">
             <div class="opinions">
               <span class="reviews">
-                <a>{{ total_opinions }} Opiniones</a>
+                <a>{{ total_opinions }} {{ 'tabs.tab4.labelOpinions' | translate }}</a>
               </span>
             </div>
             <div class="opinions-graphic">
@@ -470,18 +452,18 @@
     </ion-grid>
 
     <ion-button
-      style="max-width: 200px; margin-top: 20px"
-      class="guardar-cambios"
-      expand="block"
-      (click)="logout()"
-      >Cerrar Sesion &nbsp;<ion-icon name="log-out"></ion-icon>
+            style="max-width: 200px; margin-top: 20px"
+            class="guardar-cambios"
+
+            (click)="suspended_profile()"
+    >Deshabilitar cuenta<ion-icon name="suspended_profile"></ion-icon>
     </ion-button>
   </div>
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">© 2020 Febelink</p>
+    <p style="margin-bottom: 0px">© {{ currentYear }} Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>

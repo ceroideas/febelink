@@ -62,9 +62,15 @@
         <ion-label>
           <ion-icon name="lock-closed"></ion-icon>
         </ion-label>
+        <ion-icon
+          slot="end"
+          (click)="hideShowPassword()"
+          [name]="passwordIcon"
+          class="passwordIcon"
+        ></ion-icon>
         <ion-input
           clearInput
-          type="password"
+          [type]="passwordType"
           formControlName="password"
           placeholder="Contraseña"
           required
@@ -75,9 +81,15 @@
         <ion-label>
           <ion-icon name="lock-closed"></ion-icon>
         </ion-label>
+        <ion-icon
+          slot="end"
+          (click)="hideShowPassword2()"
+          [name]="passwordIcon2"
+          class="passwordIcon"
+        ></ion-icon>
         <ion-input
           clearInput
-          type="password"
+          [type]="passwordType2"
           formControlName="confirmPassword"
           placeholder="Confirmar contraseña"
           required

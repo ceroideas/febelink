@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController,NavController, AlertController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import {NavigationExtras} from "@angular/router";
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-interior-oferta',
@@ -10,13 +13,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./interior-oferta.page.scss'],
 })
 export class InteriorOfertaPage implements OnInit {
-
+  exist_chat=false;
   oferta:any;
-  constructor( public navParams: NavParams,
-               private modalCtrl: ModalController,
-               private api: ApiService,
-               private utilities: UtilitiesService,
-               private router: Router ) { 
+  constructor(public navParams: NavParams,
+              private navCtrl: NavController,
+              private modalCtrl: ModalController,
+              private api: ApiService,
+              private utilities: UtilitiesService,
+              private router: Router,
+              private storage: Storage,
+              private alertCtrl: AlertController,
+              private translateService: TranslateService) {
 
     this.oferta = navParams.get('oferta');
 
@@ -65,6 +72,52 @@ export class InteriorOfertaPage implements OnInit {
   public irAPerfil():void {
     this.closeModal();
     this.router.navigate(['perfil-demandante/'+this.oferta.id_ofertante],{ queryParams: { 'id_perfil': this.oferta.id_ofertante, 'contacto':this.oferta.estado != 3 }});
+  }
+
+  viewChat() {
+
+    this.storage.get('userData').then(res => {
+      if (res) {
+
+      let room_id = this.oferta.id_ofertante+""+this.oferta.id_demanda+""+res.id;
+
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            user_id: JSON.stringify(res.id),
+            user_name: JSON.stringify(res.name),
+            person_name: JSON.stringify('Chat'),
+            person_id: JSON.stringify(this.oferta.id_ofertante),
+            room_id: JSON.stringify(room_id),
+            create: JSON.stringify(res.id),
+            demand_id: JSON.stringify(this.oferta.id_demanda),
+            search_title: JSON.stringify(this.oferta.nombre),
+          }
+        };
+        this.modalCtrl.dismiss();
+        this.navCtrl.navigateForward('chat', navigationExtras);
+      }
+    });
+
+  }
+
+  async confirmShowInfoAlert(response: number) {
+    let alert = await this.alertCtrl.create({
+      header: this.translateService.instant("pages.offerDetails.alertShowData.header"),
+      message: this.translateService.instant("pages.offerDetails.alertShowData.message"),
+      buttons: [
+        {
+          text: this.translateService.instant("pages.offerDetails.alertShowData.buttonCancel"),
+          role: 'cancel',
+        },
+        {
+          text: this.translateService.instant("pages.offerDetails.alertShowData.buttonAccept"),
+          handler: () => {
+            this.responderOferta(1);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
 }
