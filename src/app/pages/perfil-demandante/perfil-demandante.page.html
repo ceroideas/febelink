@@ -122,7 +122,7 @@
     <ion-button
       color="febelink"
       class="boton"
-      *ngIf="contacto && sinOpiniones"
+      *ngIf="sinOpiniones"
       (click)="opinionModal()"
     >
       Publicar opinion
@@ -251,7 +251,7 @@
           <!-- Botón publicar opinión -->
           <ion-button
             class="boton"
-            *ngIf="contacto && sinOpiniones"
+            *ngIf="sinOpiniones"
             (click)="opinionModal()"
             style="max-width: 200px"
           >
