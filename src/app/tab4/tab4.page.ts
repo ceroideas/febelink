@@ -836,7 +836,7 @@ hideShowPassword() {
         let subject =
             this.perfil.name +
             ', de Febelink quiere que le des una valoración de su perfil!';
-        let url = 'https://febelink.com/perfil-demandante/' + this.perfil.reference;
+        let url = 'https://febelink.com/perfil/' + this.perfil.reference;
         let message = 'Febelink \n' + subject + ' \n';
 
         this.socialSharing.share(null, null, null, url);
@@ -855,7 +855,7 @@ hideShowPassword() {
         let subject =
             this.perfil.name +
             ', de Febelink quiere que le des una valoración de su perfil!';
-        let url = 'https://febelink.com/perfil-demandante/' + this.perfil.reference;
+        let url = 'https://febelink.com/perfil/' + this.perfil.reference;
         let message = 'Febelink \n' + subject + ' \n';
 
         const popover = await this.popoverController.create({

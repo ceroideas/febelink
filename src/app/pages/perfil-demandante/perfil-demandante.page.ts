@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ModalController, PopoverController, Platform } from '@ionic/angular';
+import { ModalController, PopoverController, Platform, AlertController } from '@ionic/angular';
 import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
 import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
 import { GuidePage } from '../guide/guide.page';
@@ -10,6 +10,7 @@ import { SharePopoverComponent } from 'src/app/components/share-popover/share-po
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { IUser } from 'src/app/models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -27,6 +28,8 @@ export class PerfilDemandantePage implements OnInit {
   refreshTab:any;
   isLogin: any;
   currentUser: IUser = null;
+  urlName:string;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +39,9 @@ export class PerfilDemandantePage implements OnInit {
     private modalCtrl: ModalController,
     public popoverController: PopoverController,
     private router: Router,
-    private utilities: UtilitiesService
+    public alertController: AlertController,
+    private utilities: UtilitiesService,
+    private translateService: TranslateService
   ) {
     var data: any = route.snapshot.queryParamMap;
     // this.id_perfil = data.params.id_perfil;
@@ -44,6 +49,7 @@ export class PerfilDemandantePage implements OnInit {
 
     this.route.paramMap.subscribe((params) => {
       this.id_perfil = params.get('id');
+      this.urlName = params.get('name');
     });
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
@@ -96,11 +102,26 @@ export class PerfilDemandantePage implements OnInit {
         this.isLoading = false;
         this.opinionesPerfil();
         this.comprobarOpinion();
+        this.isCorrectSearch() 
       },
       (err) => {
         this.isLoading = false;
       }
     );
+  }
+
+  async isCorrectSearch(){
+    if(this.urlName){
+      const nameToUrlType:string = this.utilities.textToUrl(this.perfilpublico.name);
+      if(nameToUrlType !== this.urlName){
+        const alert = await this.alertController.create({
+            header: this.translateService.instant('pages.perfilDemandante.alertNameDontMatch.header'),
+            message: this.translateService.instant('pages.perfilDemandante.alertNameDontMatch.message'),
+            buttons: ['Aceptar']
+        });
+        alert.present();
+      }
+    }
   }
 
   /**
@@ -123,40 +144,38 @@ export class PerfilDemandantePage implements OnInit {
   }
 
   public shareProfile(ev: any): void {
+
+    let subject =
+    'Mira el perfil de ' + this.perfilpublico.name + ' usuario de Febelink:';
+    const nameForUrl = this.utilities.textToUrl(this.perfilpublico.name);
+    let url = `https://febelink.com/perfil/${this.id_perfil}/${nameForUrl}`;//
+    let message = 'Febelink \n' + subject + ' \n';
+
     if (this.platform.is('cordova')) {
-      this.shareProfileNative();
+      this.shareProfileNative(url, message);
     } else {
-      this.shareProfileWeb(ev);
+      this.shareProfileWeb(ev, url, message);
     }
   }
 
   /**
    * Share Native ( Android/iOS)
    */
-  public shareProfileNative() {
-    let subject =
-      'Mira el perfil de ' + this.perfilpublico.name + ' usuario de Febelink:';
-    let url = 'https://febelink.com/perfil-demandante/' + this.id_perfil;
-    let message = 'Febelink \n' + subject + ' \n';
-
-    this.socialSharing.share(null, null, null, url);
+  public shareProfileNative(url:string, message:string) {
+    this.socialSharing.share(message, null, this.perfilpublico.logo, url);
   }
 
   /**
    * Share Web
    */
-  async shareProfileWeb(ev: any) {
-    let subject =
-      'Mira el perfil de ' + this.perfilpublico.name + ' usuario de Febelink:';
-    let url = 'https://febelink.com/perfil-demandante/' + this.id_perfil;
-    let message = 'Febelink \n' + subject + ' \n';
+  async shareProfileWeb(ev: any, url:string, message:string) {
 
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url: url, title: 'Febelink', desc: message },
+      componentProps: { url, title: 'Febelink', desc: message },
     });
     return await popover.present();
   }

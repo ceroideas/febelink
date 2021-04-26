@@ -85,11 +85,21 @@
             "messageFillProfileData": "Debes rellenar los campos de tu perfil para poder chatear.",
             "alertChat": {
                 "message": "No puedes chatear contigo mismo."
+            },
+            "alertNameDontMatch": {
+                "header": "Cuidado",
+                "message": "Asegúrate de que la búsqueda es la deseada."
             }
         },
         "editDemand": {
             "messageSuccessEditDemand": "Se ha editado la búsqueda correctamente.",
             "messageErrorEditDemand": "Error al editar la búsqueda."
+        },
+        "perfilDemandante": {
+            "alertNameDontMatch": {
+                "header": "Cuidado",
+                "message": "Asegúrate de que el perfil es el deseado."
+            }
         }
     }
 }

@@ -85,11 +85,21 @@
             "messageFillProfileData": "You must fill in the fields in your profile to be able to chat.",
             "alertChat": {
                 "message": "You can't chat with yourself."
+            },
+            "alertNameDontMatch": {
+                "header": "Beware",
+                "message": "Make sure the search is the correct one."
             }
         },
         "editDemand": {
             "messageSuccessEditDemand": "The search has been successfully edited.",
             "messageErrorEditDemand": "Error when editing the search."
+        },
+        "perfilDemandante": {
+            "alertNameDontMatch": {
+                "header": "Beware",
+                "message": "Make sure the profile is the correct one."
+            }
         }
     }
 }

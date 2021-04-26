@@ -41,6 +41,7 @@ export class DetalleDemandaPage implements OnInit {
   perfil: IUser = null;
   isLoading: boolean;
   showChat = false;
+  urlName:string;
 
   constructor(
     private utilities: UtilitiesService,
@@ -68,6 +69,8 @@ export class DetalleDemandaPage implements OnInit {
       this.route.paramMap.subscribe((params) => {
         this.obtenerDemanda(params.get('id'));
         this.aceptada = data.params.aceptada;
+        this.urlName = params.get('name');
+        
       });
     } else {
       this.aceptada = false;
@@ -98,12 +101,28 @@ export class DetalleDemandaPage implements OnInit {
         }
         this.demanda = demanda;
         this.obtenerOfertasRelacionadas();
+
+        this.isCorrectSearch() 
       },
       (err) => {
         this.isLoading = false;
         this.utilities.showToast('ERROR ' + JSON.stringify(err));
       }
     );
+  }
+
+  async isCorrectSearch(){
+    if(this.urlName){
+      const nameToUrlType:string = this.utilities.textToUrl(this.demanda.nombre);
+      if(nameToUrlType !== this.urlName){
+        const alert = await this.alertController.create({
+            header: this.translateService.instant('pages.demandDetails.alertNameDontMatch.header'),
+            message: this.translateService.instant('pages.demandDetails.alertNameDontMatch.message'),
+            buttons: ['Aceptar']
+        });
+        alert.present();
+      }
+    }
   }
 
   async obtenerOfertasRelacionadas() {
@@ -151,7 +170,7 @@ export class DetalleDemandaPage implements OnInit {
    * Ir a un perfil
    */
   public irAPerfil(): void {
-    this.router.navigate(['perfil-demandante/' + this.demanda.id_demandante], {
+    this.router.navigate(['perfil/' + this.demanda.id_demandante], {
       queryParams: {
         id_perfil: this.demanda.id_demandante,
         contacto: this.aceptada,
@@ -168,28 +187,29 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   public share(id, ev: any): void {
+    const nameForUrl = this.utilities.textToUrl(this.demanda.nombre);
+    let url = `https://febelink.com/busqueda/${id}/${nameForUrl}`;
+    var desc = this.demanda.descripcion;
+
+    if (desc.length > 50) {
+      desc = desc.substring(0, 49) + '...';
+    }
+    let message = '¿Conoces una solución para esta búsqueda?\n' + this.demanda.nombre + ': \n' + desc + ' \n-Febelink-\n';
+
     if (this.platform.is('cordova')) {
-      this.shareNative(id);
+      this.shareNative(url, message);
     } else {
-      this.shareWeb(ev);
+      this.shareWeb(ev, url, message);
     }
   }
 
   /**
    * Share Android/iOS
    */
-  shareNative(id) {
-    let url = 'https://febelink.com/demanda/' + id;
-    var desc = this.demanda.descripcion;
-
-    if (desc.length > 50) {
-      desc = desc.substring(0, 49) + '...';
-    }
-
-    let message = 'Febelink \n' + this.demanda.nombre + ': \n' + desc + ' \n';
+  shareNative(url:string, message:string) {
 
     this.socialSharing
-      .share(null, null, null, url)
+      .share(message, null, this.demanda.imagen, url)
       .then((result) => {})
       .catch((error) => {});
   }
@@ -197,22 +217,14 @@ export class DetalleDemandaPage implements OnInit {
   /**
    * Share Web
    */
-  async shareWeb(ev: any) {
-    let url = 'https://febelink.com/demanda/' + this.demanda.id;
-    var desc = this.demanda.descripcion;
-
-    if (desc.length > 50) {
-      desc = desc.substring(0, 49) + '...';
-    }
-
-    let message = 'Febelink \n' + this.demanda.nombre + ': \n' + desc + ' \n';
+  async shareWeb(ev: any, url:string, message:string) {
 
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url: url, title: message, desc: desc },
+      componentProps: { url, title: message, desc:null },
     });
     return await popover.present();
   }

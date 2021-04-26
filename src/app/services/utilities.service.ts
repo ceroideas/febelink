@@ -211,4 +211,11 @@ export class UtilitiesService {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  /**
+   * Remove accents, replace spaces by underscores and set all text in lowercase
+   */
+  textToUrl(str:string){
+    return str.normalize ("NFKD").replace(/[\u0300-\u036F]/g, "").replace(/\ /gi,"_").toLowerCase();
+  }
+
 }
