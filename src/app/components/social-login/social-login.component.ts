@@ -150,9 +150,11 @@ export class SocialLoginComponent implements OnInit {
 
       this.utilities.showLoading();
   
-      ( await this.api.login( formData, this.URL )).subscribe( results => {
+      const authResponse = await this.api.login( formData, this.URL );
       
-      }, err => {
+      this.utilities.dismissLoading();
+
+      authResponse.subscribe( results => {}, err => {
 
           console.log("Auth error: ", err);
           this.utilities.showToast('Error de conexión con el servidor');

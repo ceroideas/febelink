@@ -143,7 +143,7 @@ export class PerfilDemandantePage implements OnInit {
     );
   }
 
-  public shareProfile(ev: any): void {
+  public async shareProfile(ev: any): Promise<void> {
 
     let subject =
     'Mira el perfil de ' + this.perfilpublico.name + ' usuario de Febelink:';
@@ -151,34 +151,56 @@ export class PerfilDemandantePage implements OnInit {
     let url = `https://febelink.com/perfil/${this.id_perfil}/${nameForUrl}`;//
     let message = 'Febelink \n' + subject + ' \n';
 
+    let image = null;
+    if(await this.isImage(this.perfilpublico.logo)){
+      image = this.perfilpublico.logo;
+    } 
+
     if (this.platform.is('cordova')) {
-      this.shareProfileNative(url, message);
+      this.shareProfileNative(url, message, image);
     } else {
-      this.shareProfileWeb(ev, url, message);
+      this.shareProfileWeb(ev, url, message, image);
     }
   }
 
   /**
    * Share Native ( Android/iOS)
    */
-  public shareProfileNative(url:string, message:string) {
-    this.socialSharing.share(message, null, this.perfilpublico.logo, url);
+  public shareProfileNative(url:string, message:string, image?:string) {
+    this.socialSharing.share(message, message, image, url);
   }
 
   /**
    * Share Web
    */
-  async shareProfileWeb(ev: any, url:string, message:string) {
+  async shareProfileWeb(ev: any, url:string, message:string, image?:string) {
 
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url, title: 'Febelink', desc: message },
+      componentProps: { url, title: 'Febelink', desc: message, image  },
     });
     return await popover.present();
   }
+
+  /*
+  * Check if image exist
+  */
+  isImage(src):Promise<boolean> {
+    return new Promise(resolve => {
+      var image = new Image();
+      image.onerror = function() {
+          resolve(false);
+      };
+      image.onload = function() {
+          resolve(true);
+      };
+      image.src = src;
+    });
+  }
+
 
   /**
    * Modal para valorar el perfil

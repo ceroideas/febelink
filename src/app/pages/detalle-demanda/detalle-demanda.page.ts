@@ -186,7 +186,7 @@ export class DetalleDemandaPage implements OnInit {
     await registerModal.present();
   }
 
-  public share(id, ev: any): void {
+  public async share(id, ev: any): Promise<void> {
     const nameForUrl = this.utilities.textToUrl(this.demanda.nombre);
     let url = `https://febelink.com/busqueda/${id}/${nameForUrl}`;
     var desc = this.demanda.descripcion;
@@ -196,20 +196,25 @@ export class DetalleDemandaPage implements OnInit {
     }
     let message = '¿Conoces una solución para esta búsqueda?\n' + this.demanda.nombre + ': \n' + desc + ' \n-Febelink-\n';
 
+    let image = null;
+    if(await this.isImage(this.demanda.imagen)){
+      image = this.demanda.imagen;
+    } 
+
     if (this.platform.is('cordova')) {
-      this.shareNative(url, message);
+      this.shareNative(url, message, image);
     } else {
-      this.shareWeb(ev, url, message);
+      this.shareWeb(ev, url, message, image);
     }
   }
 
   /**
    * Share Android/iOS
    */
-  shareNative(url:string, message:string) {
+  shareNative(url:string, message:string, image?:string) {
 
     this.socialSharing
-      .share(message, null, this.demanda.imagen, url)
+      .share(message, message, image, url)
       .then((result) => {})
       .catch((error) => {});
   }
@@ -217,16 +222,32 @@ export class DetalleDemandaPage implements OnInit {
   /**
    * Share Web
    */
-  async shareWeb(ev: any, url:string, message:string) {
+  async shareWeb(ev: any, url:string, message:string, image?:string) {
 
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url, title: message, desc:null },
+      componentProps: { url, title: message, desc:message, image },
     });
     return await popover.present();
+  }
+
+  /*
+  * Check if image exist
+  */
+  isImage(src):Promise<boolean> {
+    return new Promise(resolve => {
+      var image = new Image();
+      image.onerror = function() {
+          resolve(false);
+      };
+      image.onload = function() {
+          resolve(true);
+      };
+      image.src = src;
+    });
   }
 
   /**
