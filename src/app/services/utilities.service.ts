@@ -34,15 +34,15 @@ export class UtilitiesService {
     await alert.present();
   }
 
-   showLoading(message?: string, duration?: number) {
-     this.loadingCtrl.create({
+   async showLoading(message?: string, duration?: number) {
+     const res = await this.loadingCtrl.create({
 
       message: message ? message : null,
       duration: duration ? duration : null
 
-    }).then((res) => {
-      res.present();
-    });
+    })
+      
+    return res.present();
   
   }
 
