@@ -197,13 +197,13 @@ export class AppComponent implements OnDestroy{
             },
             windows: {},
         };
-        console.log('en el push setup');
+        // console.log('en el push setup');
 
         const pushObject: PushObject = this.push.init(options);
 
         pushObject.on('notification').subscribe((notification) => {
-          console.log('en el notification');
-          console.log("NOTIFICACION DATA:", JSON.stringify(notification.additionalData));
+          // console.log('en el notification');
+          // console.log("NOTIFICACION DATA:", JSON.stringify(notification.additionalData));
             if (notification.additionalData.foreground) {
                 if (notification.additionalData.apiData.id) {
                     let id = notification.additionalData.apiData.id;
