@@ -14,7 +14,14 @@ const routes: Routes = [
             import('./pages/login/login.module').then((m) => m.LoginPageModule),
     },
     {
-        path: 'perfil-demandante/:id',
+        path: 'perfil/:id',
+        loadChildren: () =>
+            import('./pages/perfil-demandante/perfil-demandante.module').then(
+                (m) => m.PerfilDemandantePageModule
+            ),
+    },
+    {
+        path: 'perfil/:id/:name',
         loadChildren: () =>
             import('./pages/perfil-demandante/perfil-demandante.module').then(
                 (m) => m.PerfilDemandantePageModule
@@ -45,7 +52,14 @@ const routes: Routes = [
             import('./pages/guide/guide.module').then((m) => m.GuidePageModule),
     },
     {
-        path: 'demanda/:id',
+        path: 'busqueda/:id',
+        loadChildren: () =>
+            import('./pages/detalle-demanda/detalle-demanda.module').then(
+                (m) => m.DetalleDemandaPageModule
+            ),
+    },
+    {
+        path: 'busqueda/:id/:name',
         loadChildren: () =>
             import('./pages/detalle-demanda/detalle-demanda.module').then(
                 (m) => m.DetalleDemandaPageModule

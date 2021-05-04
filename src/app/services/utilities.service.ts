@@ -34,15 +34,15 @@ export class UtilitiesService {
     await alert.present();
   }
 
-   showLoading(message?: string, duration?: number) {
-     this.loadingCtrl.create({
+   async showLoading(message?: string, duration?: number) {
+     const res = await this.loadingCtrl.create({
 
       message: message ? message : null,
       duration: duration ? duration : null
 
-    }).then((res) => {
-      res.present();
-    });
+    })
+      
+    return res.present();
   
   }
 
@@ -209,6 +209,13 @@ export class UtilitiesService {
 
   capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  /**
+   * Remove accents, replace spaces by underscores and set all text in lowercase
+   */
+  textToUrl(str:string){
+    return str.normalize ("NFKD").replace(/[\u0300-\u036F]/g, "").replace(/\ /gi,"_").toLowerCase();
   }
 
 }

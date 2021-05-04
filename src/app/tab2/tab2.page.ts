@@ -98,7 +98,7 @@ export class Tab2Page {
   }
 
   public detalleDemanda(demanda): void {
-    this.router.navigate(['demanda/' + demanda.id], {
+    this.router.navigate(['busqueda/' + demanda.id], {
       queryParams: { demanda: JSON.stringify(demanda) },
     });
   }
