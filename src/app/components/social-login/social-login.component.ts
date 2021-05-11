@@ -148,7 +148,7 @@ export class SocialLoginComponent implements OnInit {
     */
     async auth( formData ) {
 
-      this.utilities.showLoading();
+      await this.utilities.showLoading();
   
       const authResponse = await this.api.login( formData, this.URL );
       
