@@ -124,43 +124,9 @@
   {{ 'common.labelNoElements' | translate }}
   </p>
 
-  <ion-list *ngIf="!isLoading">
-    <!-- DESKTOP -->
-    <ion-grid class="grid-card desktop">
-      <ion-row>
-        <ion-col
-          size="12"
-          size-lg="3"
-          side-md="4"
-          size-sm="6"
-          size-xs="12"
-          *ngFor="let demanda of searchResults | filter:mysearch.value"
-        >
-          <ion-card (click)="detalleDemanda(demanda)">
-            <div>
-              <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-              <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
-            </div>
-            <ion-item>
-              <ion-label>
-                <strong style="color: #222"> {{demanda?.nombre}}</strong>
-              </ion-label>
-              <ion-label slot="end">
-                <em class="username">{{demanda?.user?.name}}</em>
-              </ion-label>
-            </ion-item>
-            <ion-card-content>
-              <p class="description">{{demanda?.descripcion}}</p>
-              <ion-item lines="none">
-                <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"></ion-icon>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-list *ngIf="!isLoading" class="results-list">
 
-    <ion-item tappable class="mobile" lines="none" (click)="detalleDemanda(demanda)"
+    <ion-item tappable lines="none" (click)="detalleDemanda(demanda)"
       *ngFor="let demanda of searchResults | filter:mysearch.value"
     >
       <ion-avatar slot="start">

@@ -275,29 +275,29 @@ export class AppComponent implements OnDestroy{
    * Método para cerrar sesión
    */
   async logout() {
-    let alert = await this.alertCtrl.create({
-      header: 'Cerrar sesión',
-      message: '¿Estás seguro de que deseas cerrar sesión?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Cerrar sesión',
-          handler: () => {
-            this.storage.remove('userData').then(() => {
-              this.menu.enable(false);
-              this.authenticationService.logout();
-              this.api.refreshTabs();
-              this.router.navigate(['login']);
-              this.utilities.showToast('Sesión cerrada con éxito');
-            });
-          },
-        },
-      ],
+    this.storage.remove('userData').then(() => {
+      this.menu.enable(false);
+      this.authenticationService.logout();
+      this.api.refreshTabs();
+      this.router.navigate(['login']);
+      this.utilities.showToast('Sesión cerrada con éxito');
     });
-    await alert.present();
+    // let alert = await this.alertCtrl.create({
+    //   header: 'Cerrar sesión',
+    //   message: '¿Estás seguro de que deseas cerrar sesión?',
+    //   buttons: [
+    //     {
+    //       text: 'Cancelar',
+    //       role: 'cancel',
+    //     },
+    //     {
+    //       text: 'Cerrar sesión',
+    //       handler: () => {
+    //       },
+    //     },
+    //   ],
+    // });
+    // await alert.present();
   }
 
   // TODO: Use state management library to simplify data collection.
