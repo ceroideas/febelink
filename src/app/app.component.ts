@@ -98,7 +98,13 @@ export class AppComponent implements OnDestroy{
       }
     });
 
+    this.isRecomendation();
+
     // this.loginImplicito();
+  }
+  
+  isRecomendation() {
+    throw new Error('Method not implemented.');
   }
 
   setupLanguage() {

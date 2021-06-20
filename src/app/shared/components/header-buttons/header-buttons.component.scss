@@ -1,0 +1,17 @@
+.header-buttons{
+    display: flex;
+    float: right;
+}
+
+ion-button{
+    margin: 0 0.8rem;
+}
+
+
+.btn-header {
+    margin: 0 0.8rem;
+}
+
+.active {
+    color: var(--ion-color-primary) !important;
+}

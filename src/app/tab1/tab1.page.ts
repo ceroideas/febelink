@@ -137,14 +137,6 @@ export class Tab1Page {
     this.loadSubSectors(0);
   }
 
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
-  }
-
   async obtenerPerfil() {
     this.cookies = this.cookSvc.get('wizard');
     if (this.cookies === 'wizard') {
@@ -302,18 +294,6 @@ export class Tab1Page {
     });
 
     await registerModal.present();
-  }
-
-  irA(p: string): void {
-    if (p === '/menu/perfil') {
-      if (this.perfil === null) {
-        this.router.navigate(['login']);
-      } else {
-        this.router.navigate(['/menu/perfil']);
-      }
-    } else {
-      this.router.navigate([p]);
-    }
   }
 
   async openCookies() {

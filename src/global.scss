@@ -61,14 +61,25 @@ ionic-selectable-modal {
         padding: 0;
         margin: 0;
     
-         ion-item{
+        ion-item{
             box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
             0 2px 2px rgba(0,0,0,0.11), 
             0 4px 4px rgba(0,0,0,0.11), 
             0 6px 8px rgba(0,0,0,0.11);
-    
+
             margin: 15px 10px;
             border-radius: 7px;
-         }
+        }
     }
  }
+
+.desktop {
+    @media (max-width: 768px){
+        display: none;
+    }
+}
+.mobile {
+    @media (min-width: 768px){
+        display: none;
+    }
+}

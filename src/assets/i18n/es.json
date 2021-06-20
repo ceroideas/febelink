@@ -29,7 +29,9 @@
             "recommend": "Recomendar",
             "chat": "Chat",
             "profile": "Perfil",
-            "login": "Iniciar sesión"
+            "login": "Iniciar sesión",
+            "share-febelink": "Comparte Febelink",
+            "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales."
         },
         "pages": {
             "opinions": "Opiniones",
