@@ -12,7 +12,6 @@ import {
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
-import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 import {AlertController} from '@ionic/angular';
@@ -21,6 +20,7 @@ import { IUser } from 'src/app/models/user.model';
 import { ISearch } from 'src/app/models/search.model';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -56,7 +56,8 @@ export class DetalleDemandaPage implements OnInit {
     public alertController: AlertController,
     private storage: Storage,
     private navCtrl: NavController,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private authSvc:AuthenticationService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -176,14 +177,6 @@ export class DetalleDemandaPage implements OnInit {
         contacto: this.aceptada,
       },
     });
-  }
-
-  async userRegister() {
-    const registerModal = await this.modalCtrl.create({
-      component: SesionCtrlPage,
-    });
-
-    await registerModal.present();
   }
 
   public async share(id, ev: any): Promise<void> {
@@ -323,7 +316,7 @@ export class DetalleDemandaPage implements OnInit {
             this.goToChat();
         }
     } else {
-        this.userRegister();
+      this.authSvc.userNeedsToRegister();
     }
   }
 

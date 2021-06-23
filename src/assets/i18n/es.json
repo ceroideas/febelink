@@ -106,5 +106,8 @@
                 "message": "Asegúrate de que el perfil es el deseado."
             }
         }
+    },
+    "toast": {
+        "need-register":"¡Regístrate para disfrutar aún más de Febelink!"
     }
 }

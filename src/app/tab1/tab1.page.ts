@@ -4,7 +4,6 @@ import { ModalController, Platform } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
 import { UtilitiesService } from '../services/utilities.service';
 import { Router } from '@angular/router';
-import { SesionCtrlPage } from '../pages/sesion-ctrl/sesion-ctrl.page';
 import { CookiesComponent } from '../components/cookies/cookies.component';
 import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,6 +14,7 @@ import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 
 @Component({
   selector: 'app-tab1',
@@ -60,7 +60,8 @@ export class Tab1Page {
     private formBuilder: FormBuilder,
     private camera: Camera,
     private sanitizer: DomSanitizer,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private authSvc:AuthenticationService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.obtenerPerfil();
@@ -123,7 +124,7 @@ export class Tab1Page {
           this.utilities.showToast(this.translateService.instant("tabs.tab1.errorMissingProfileInfo"));
         }
     } else {
-      this.userRegister();
+      this.authSvc.userNeedsToRegister();
     }
   }
 
@@ -286,14 +287,6 @@ export class Tab1Page {
   clearBtn() {
     this.keywords = {};
     this.keys = [];
-  }
-
-  async userRegister() {
-    const registerModal = await this.modalCtrl.create({
-      component: SesionCtrlPage,
-    });
-
-    await registerModal.present();
   }
 
   async openCookies() {

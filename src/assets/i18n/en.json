@@ -105,5 +105,8 @@
                 "message": "Make sure the profile is the correct one."
             }
         }
+    },
+    "toast": {
+        "need-register":"Sign up to have a better experience with Febelink!"
     }
 }
