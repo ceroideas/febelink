@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Platform, AlertController, IonRouterOutlet, MenuController, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -16,6 +16,8 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
+import { CookieService } from 'ngx-cookie-service';
+import { first, take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-root',
@@ -62,7 +64,9 @@ export class AppComponent implements OnDestroy{
     private storage: Storage,
     private menu: MenuController,
     public authenticationService: AuthenticationService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private cookSvc: CookieService,
+    private activatedRoute:ActivatedRoute
   ) {
     this.initializeApp();
   }
@@ -97,14 +101,19 @@ export class AppComponent implements OnDestroy{
         this.getUserInfo();
       }
     });
-
+    
     this.isRecomendation();
 
     // this.loginImplicito();
   }
-  
+
   isRecomendation() {
-    throw new Error('Method not implemented.');
+    this.activatedRoute.queryParams.subscribe(params => {
+      const from = params['from'];
+      if(!from) return;
+      console.log('Recomended by', from); 
+      this.cookSvc.set('from', from, 1);
+    });    
   }
 
   setupLanguage() {
@@ -280,12 +289,13 @@ export class AppComponent implements OnDestroy{
     /**
    * Método para cerrar sesión
    */
+
   async logout() {
-    this.storage.remove('userData').then(() => {
-      this.menu.enable(false);
-      this.authenticationService.logout();
+    this.storage.remove('userData').then(async () => {
+      await this.menu.enable(false);
       this.api.refreshTabs();
       this.router.navigate(['login']);
+      this.authenticationService.logout();
       this.utilities.showToast('Sesión cerrada con éxito');
     });
     // let alert = await this.alertCtrl.create({

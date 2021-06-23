@@ -646,6 +646,7 @@ export class ApiService {
         formData.append('password', params.password);
         formData.append('password_confirmation', params.password_confirmation);
         formData.append('role_id', '5');
+        formData.append('afiliated', params.afiliated);
 
         return this.http.post(environment.API_URL_AUTH + 'signup', formData);
     }

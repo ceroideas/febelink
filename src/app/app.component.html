@@ -3,8 +3,8 @@
         <app-menu></app-menu>
         <ion-router-outlet id="main"></ion-router-outlet>
     -->
-    <ion-split-pane contentId="main-content" when=""> <!--empty "When" => close side bar by default-->
-        <ion-menu [hidden]="!authenticationService.isAuthenticated()" contentId="main-content" type="overlay">
+    <ion-split-pane contentId="main-content" [when]="platform.width() >= 992 && authenticationService.isAuthenticated()">
+        <ion-menu *ngIf="authenticationService.isAuthenticated()" contentId="main-content" type="overlay">
             <ion-header>
                 <ion-toolbar color="primary">
                     <ion-title>Menu</ion-title>

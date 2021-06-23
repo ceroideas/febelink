@@ -1,40 +1,44 @@
-<img *ngIf="showCard" tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
-<div class="header-buttons">
-  <!-- {{currentTab}} -->
-  <ion-buttons class="desktop">
-    <ion-button class="btn-header" [class]="(currentTab===tabs.Search)?'active':''" (click)="irA('/menu/todas')">
-      <ion-icon slot="start" name="search"></ion-icon>
-      {{ 'menu.tabs.searchEngine' | translate }}
-    </ion-button>
-    <ion-button class="btn-header" [class]="(currentTab===tabs.Recommend)?'active':''" (click)="irA('/menu/busquedas')">
-      <ion-icon slot="start" name="heart"></ion-icon>
-      {{ 'menu.tabs.recommend' | translate }}
-    </ion-button>
-    <ion-button class="btn-header" [class]="(currentTab===tabs.Chat)?'active':''" (click)="irA('/menu/ofertas')">
-      <ion-icon slot="start" name="chatbubbles"></ion-icon>
-      {{ 'menu.tabs.chat' | translate }}
-    </ion-button>
-    <ion-buttons *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
-      <ion-icon slot="start" name="person"></ion-icon>
-      {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
-    </ion-buttons>
-  </ion-buttons>
-  
-  <ion-buttons size="large">   
-  <ion-button class="btn-header" (click)="shareFebelink($event)">
-  <ion-icon slot="start" name="share-social"></ion-icon>
-  {{ 'menu.tabs.share-febelink' | translate }}
-  </ion-button>
+<div class="header-buttons" [class]="(currentTab==tabs.Search)?'right':''">
 
-    <ion-button
-      size="large"
-      color="primary"
-      slot="icon-only"
-      (click)="openGuide()"
-    >
+  <img width="120" tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" *ngIf="currentTab!=tabs.Search"/>
+  
+  <ion-buttons>
+    <div class="desktop">
+      <ion-button class="btn-header" [class]="(currentTab==tabs.Search)?'active':''" (click)="irA('/menu/todas')">
+        <ion-icon slot="start" name="search"></ion-icon>
+        {{ 'menu.tabs.searchEngine' | translate }}
+      </ion-button>
+      <ion-button class="btn-header" [class]="(currentTab==tabs.Recommend)?'active':''" (click)="irA('/menu/busquedas')">
+        <ion-icon slot="start" name="heart"></ion-icon>
+        {{ 'menu.tabs.recommend' | translate }}
+      </ion-button>
+      <ion-button class="btn-header" [class]="(currentTab==tabs.Chat)?'active':''" (click)="irA('/menu/ofertas')">
+        <ion-icon slot="start" name="chatbubbles"></ion-icon>
+        {{ 'menu.tabs.chat' | translate }}
+      </ion-button>
+        
+      <ion-button class="btn-header" (click)="irA('/menu/perfil')">
+        <ion-icon slot="start" name="person"></ion-icon>
+        {{ ((!perfil)? 'menu.tabs.login':'menu.tabs.profile') | translate }}
+      </ion-button>      
+      <ion-button class="btn-header" (click)="irA('/registro')" color="success" *ngIf="!perfil" fill="solid" style="--border-radius: 4px;">
+        <ion-icon slot="start" name="person"></ion-icon>
+        {{ 'menu.tabs.register' | translate }}
+      </ion-button>
+    </div>
+
+      
+    <ion-button class="btn-header" (click)="shareFebelink($event)">
+      <ion-icon slot="start" name="share-social"></ion-icon>
+      <span class="desktop" translate>menu.tabs.share-febelink</span>
+      <span class="mobile" translate>share</span>
+      
+    </ion-button>
+    <ion-button size="large" color="primary" slot="icon-only" (click)="openGuide()" >
       <ion-icon style="font-size: x-large" name="information-circle">
       </ion-icon>
     </ion-button>
+      
   </ion-buttons>
 </div>
 

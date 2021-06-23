@@ -16,9 +16,10 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class HeaderButtonsComponent implements OnInit {
 
-  @Input() perfil: IUser
-  currentTab:Tabs = Tabs.Search;
+  @Input() perfil: IUser;
+  @Input() currentTab:Tabs;
   tabs = Tabs;
+
   constructor(
     private modalCtrl: ModalController,
     private router: Router,
@@ -29,7 +30,9 @@ export class HeaderButtonsComponent implements OnInit {
     private utilities: UtilitiesService
     ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   async openGuide() {
     const guideModal = await this.modalCtrl.create({
@@ -41,17 +44,18 @@ export class HeaderButtonsComponent implements OnInit {
 
 
 
-  irA(p: string): void {
-    // debugger;
-    switch(p){
-      case '/menu/todas': this.currentTab = Tabs.Search; break;
-      case '/menu/busquedas': this.currentTab = Tabs.Recommend; break;
-      case '/menu/ofertas': this.currentTab = Tabs.Chat; break;
-    }
-    console.log(this.currentTab);
+  async irA(p: string): Promise<void> {
+    
+    // switch(p){
+    //   case '/menu/todas': this.currentTab = Tabs.Search; break;
+    //   case '/menu/busquedas': this.currentTab = Tabs.Recommend; break;
+    //   case '/menu/ofertas': this.currentTab = Tabs.Chat; break;
+    // }
+
+    // await this.utilities.wait(1000);
     
     if (p === '/menu/perfil') {
-      if (this.perfil === null) {
+      if (!this.perfil) {
         this.router.navigate(['login']);
       } else {
         this.router.navigate(['/menu/perfil']);
@@ -96,8 +100,8 @@ export class HeaderButtonsComponent implements OnInit {
     }
 }
 
-enum Tabs{
-  Search,
-  Recommend,
-  Chat
+export enum Tabs{
+  Search = 1,
+  Recommend = 2,
+  Chat = 3
 }

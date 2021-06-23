@@ -5,6 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { Router } from '@angular/router';
 import { TermsPage } from '../terms/terms.page';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-registro',
@@ -26,7 +27,8 @@ export class RegistroPage implements OnInit {
     private modalCtrl: ModalController,
     private api: ApiService,
     private utilities: UtilitiesService,
-    private router: Router) {
+    private router: Router,
+    private cookSvc: CookieService) {
 
   }
 
@@ -119,6 +121,8 @@ export class RegistroPage implements OnInit {
     if (this.form.valid) {
       await this.utilities.showLoading();
 
+      const afiliated:string = this.cookSvc.get("from");
+
       let p = {
         email: this.form.get('email').value,
         password: this.form.get('password').value,
@@ -126,11 +130,13 @@ export class RegistroPage implements OnInit {
         name: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
+        afiliated
       };
 
       console.log("P",p);
 
-       this.api.registro(p).subscribe(resp => {
+
+      this.api.registro(p).subscribe(resp => {
         console.log("RESP",resp);
         this.loginBeforeRegister(p);
         this.utilities.dismissLoading();
