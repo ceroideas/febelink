@@ -103,5 +103,6 @@ export class HeaderButtonsComponent implements OnInit {
 export enum Tabs{
   Search = 1,
   Recommend = 2,
-  Chat = 3
+  Chat = 3,
+  Profile = 4
 }

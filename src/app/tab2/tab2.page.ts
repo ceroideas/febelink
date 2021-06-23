@@ -171,20 +171,12 @@ export class Tab2Page {
     this.subsector = 'Todas';
   }
 
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
-  }
-
   async getUserProfile() {
     await this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
     await this.utilities.getUserData().then((data) => {
-      this.currentUser = {...data};
+      if(data) this.currentUser = {...data};
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){

@@ -935,14 +935,6 @@ hideShowPassword() {
         );
     }
 
-    async openGuide() {
-        const guideModal = await this.modalCtrl.create({
-            component: GuidePage,
-            cssClass: 'guide-modal',
-        });
-        return await guideModal.present();
-    }
-
     home() {
         this.router.navigate(['menu/todas']);
     }
@@ -968,11 +960,4 @@ hideShowPassword() {
         await TermsModal.present();
     }
 
-    /**
-     * Navegar a la pantalla p
-     * @param p
-     */
-    public irA(p: string): void {
-        this.router.navigate([p]);
-    }
 }

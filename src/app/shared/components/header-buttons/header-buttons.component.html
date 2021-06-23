@@ -1,6 +1,6 @@
 <div class="header-buttons" [class]="(currentTab==tabs.Search)?'right':''">
 
-  <img width="120" tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" *ngIf="currentTab!=tabs.Search"/>
+  <img width="120" tappable src="assets/imgs/logo.png" alt="" class="logo" (click)="irA('/menu/todas')" *ngIf="currentTab!=tabs.Search"/>
   
   <ion-buttons>
     <div class="desktop">
@@ -17,7 +17,7 @@
         {{ 'menu.tabs.chat' | translate }}
       </ion-button>
         
-      <ion-button class="btn-header" (click)="irA('/menu/perfil')">
+      <ion-button class="btn-header" (click)="irA('/menu/perfil')" [class]="(currentTab==tabs.Profile)?'active':''" >
         <ion-icon slot="start" name="person"></ion-icon>
         {{ ((!perfil)? 'menu.tabs.login':'menu.tabs.profile') | translate }}
       </ion-button>      

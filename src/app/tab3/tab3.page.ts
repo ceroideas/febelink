@@ -131,26 +131,6 @@ export class Tab3Page {
     });
   }
 
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
-  }
-
-  irA(p: string): void {
-    if (p === '/menu/perfil') {
-      if (this.currentUser) {
-        this.router.navigate(['login']);
-      } else {
-        this.router.navigate(['/menu/perfil']);
-      }
-    } else {
-      this.router.navigate([p]);
-    }
-  }
-
   getOfferBackgroundColor(offerStatus: number) {
     switch(offerStatus) {
       case 1: {
