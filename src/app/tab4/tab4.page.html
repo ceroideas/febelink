@@ -201,7 +201,7 @@
 
         <ion-row>
           <ion-col size="6">
-            <ion-item class="input" *ngIf="sectores.length>0">
+            <ion-item class="input" *ngIf="sectores?.length>0">
               <ion-label position="floating"> {{ 'common.labelSectors2' | translate }} </ion-label>
               <ion-select
                 clearInput
@@ -352,7 +352,7 @@
             formControlName="dni"
           ></ion-input>
         </ion-item>
-        <ion-item class="input" *ngIf="sectores.length>0">
+        <ion-item class="input" *ngIf="sectores?.length>0">
           <ion-label> {{ 'common.labelSectors2' | translate }} </ion-label>
           <ion-select
             clearInput
