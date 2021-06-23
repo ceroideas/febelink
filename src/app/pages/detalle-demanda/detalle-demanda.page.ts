@@ -21,6 +21,7 @@ import { ISearch } from 'src/app/models/search.model';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { DemandaService } from 'src/app/services/demanda.service';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -57,7 +58,8 @@ export class DetalleDemandaPage implements OnInit {
     private storage: Storage,
     private navCtrl: NavController,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService
+    private authSvc:AuthenticationService,
+    private demanadaSvc:DemandaService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -181,7 +183,7 @@ export class DetalleDemandaPage implements OnInit {
 
   public async share(id, ev: any): Promise<void> {
     const nameForUrl = this.utilities.textToUrl(this.demanda.nombre);
-    let url = `https://febelink.com/busqueda/${id}/${nameForUrl}`;
+    let url = `${environment.WEB_URL}busqueda/${id}/${nameForUrl}`;
     var desc = this.demanda.descripcion;
 
     if (desc.length > 50) {
@@ -326,5 +328,10 @@ export class DetalleDemandaPage implements OnInit {
     else
       return false;
 
+  }
+
+
+  async onClickAddToFavorites(demand) {
+    this.demanadaSvc.addToFavorites(demand);
   }
 }
