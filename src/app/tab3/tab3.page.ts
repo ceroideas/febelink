@@ -126,7 +126,7 @@ export class Tab3Page {
     let aceptada: boolean;
     if (estado == 1) aceptada = true;
     else aceptada = false;
-    this.router.navigate(['demanda/' + id_demanda], {
+    this.router.navigate(['busqueda/' + id_demanda], {
       queryParams: { id_demanda: id_demanda, aceptada: aceptada },
     });
   }

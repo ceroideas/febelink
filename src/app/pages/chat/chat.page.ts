@@ -5,6 +5,7 @@ import {NavController} from "@ionic/angular";
 import {ActivatedRoute} from "@angular/router";
 import {ApiService} from 'src/app/services/api.service';
 import {IonInfiniteScroll} from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 
@@ -13,7 +14,7 @@ declare var $: any;
     templateUrl: './chat.page.html',
     styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage {
 
     public message = '';
     public messages = [];
@@ -32,6 +33,7 @@ export class ChatPage implements OnInit {
     public exist_old_messages;
     public firstMessage;
     public finish_chat=false;
+    private reciveMessageSubscription:Subscription;
     @ViewChild(IonInfiniteScroll, {static: false}) infiniteScroll: IonInfiniteScroll;
     @ViewChild('id_input_message', {static: false}) input_message: Input;
 
@@ -52,12 +54,12 @@ export class ChatPage implements OnInit {
 
     }
 
-    ngOnInit() {
+    ionViewDidEnter() {
         this.socket.connect();
 
-        this.platform.pause.subscribe(() => {
-            this.socket.removeAllListeners();
-        });
+        // this.platform.pause.subscribe(() => {
+        //     this.socket.removeAllListeners();
+        // });
 
         this.route.queryParams.subscribe(params => {
             this.user_id = JSON.parse(params["user_id"]);
@@ -129,8 +131,7 @@ export class ChatPage implements OnInit {
             });
         });
 
-        this.socket.fromEvent('message').subscribe(message => {
-
+        this.reciveMessageSubscription = this.socket.fromEvent('message').subscribe(message => {     
                 var message_hour = new Date(message['timecreated']).getHours();
                 var message_min = new Date(message['timecreated']).getMinutes();
                 let message_hour_reset;
@@ -154,8 +155,11 @@ export class ChatPage implements OnInit {
                 this.scrollToBottomOnInit();
 
         });
+    }
 
-
+    ionViewDidLeave(){      
+        this.socket.disconnect();
+        this.reciveMessageSubscription.unsubscribe();
     }
 
 

@@ -121,23 +121,24 @@ export class AppComponent implements OnDestroy{
     public initDeeplinks() {
       this.deeplinks
         .route({
-          '/demanda/:id': 'detalle-demanda',
-          '/perfil-demandante/:id': 'perfil-demandante',
-          '/#/demanda/:id': 'detalle-demanda',
-          '/#/perfil-demandante/:id': 'perfil-demandante',
+          '/busqueda/:id/:name': 'detalle-demanda',
+          '/perfil/:id/:name': 'perfil-demandante',
+          '/#/busqueda/:id/:name': 'detalle-demanda',
+          '/#/perfil/:id/:name': 'perfil-demandante',
         })
         .subscribe(
           (match) => {
             let id = match.$args.id;
+            let name = match.$args.name;
             if (match.$route === 'detalle-demanda') {
               id = Number(id);
               setTimeout(() => {
-                this.router.navigate(['demanda/' + id], {
+                this.router.navigate(['busqueda', id, name], {
                   queryParams: { id_demanda: id },
                 });
               }, 500);
             } else if (match.$route === 'perfil-demandante') {
-              this.router.navigate(['perfil-demandante/' + id], {
+              this.router.navigate(['perfil/', id, name], {
                 queryParams: { id_perfil: id },
               });
             }
@@ -150,9 +151,9 @@ export class AppComponent implements OnDestroy{
               path.lastIndexOf('#') + 2,
               path.lastIndexOf('/')
             );
-            if (route === 'demanda') {
+            if (route === 'busqueda') {
               setTimeout(() => {
-                this.router.navigate(['demanda/' + id], {
+                this.router.navigate(['busqueda/' + id], {
                   queryParams: { id_demanda: Number(id) },
                 });
               }, 500);
@@ -196,11 +197,13 @@ export class AppComponent implements OnDestroy{
             },
             windows: {},
         };
-        console.log('en el push setup');
+        // console.log('en el push setup');
 
         const pushObject: PushObject = this.push.init(options);
 
         pushObject.on('notification').subscribe((notification) => {
+          // console.log('en el notification');
+          // console.log("NOTIFICACION DATA:", JSON.stringify(notification.additionalData));
             if (notification.additionalData.foreground) {
                 if (notification.additionalData.apiData.id) {
                     let id = notification.additionalData.apiData.id;

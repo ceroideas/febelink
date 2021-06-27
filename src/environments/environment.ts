@@ -18,7 +18,7 @@ export const environment = {
   */
 
   WEB_CLIENT_ID:
-    "470264817351-dj55lg6n7u6fllmkrj90cg9lnjfqrvcn.apps.googleusercontent.com",
+    "939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com",
   FACEBOOK_ID: "895023747604792",
 };
 
