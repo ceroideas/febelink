@@ -218,4 +218,8 @@ export class UtilitiesService {
     return str.normalize ("NFKD").replace(/[\u0300-\u036F]/g, "").replace(/\ /gi,"_").toLowerCase();
   }
 
+  wait(ms:number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 }

@@ -1,24 +1,6 @@
-.desktop {
-    @media (max-width: 768px){
-        display: none;
-    }
-}
-.mobile {
-    @media (min-width: 768px){
-        display: none;
-    }
-}
 ion-header{
     text-align: center;
     background: var(--ion-color-light);
-
-    .btn-header {
-        margin: 0 0.8rem;
-    }
-
-    .active {
-        color: var(--ion-color-primary) !important;
-    }
 
     ion-toolbar {
         @media (min-width: 768px){

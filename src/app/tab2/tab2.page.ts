@@ -11,6 +11,7 @@ import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { environment } from 'src/environments/environment';
+import { DemandaService } from '../services/demanda.service';
 
 @Component({
   selector: 'app-tab2',
@@ -42,7 +43,8 @@ export class Tab2Page {
     private utilities: UtilitiesService,
     private router: Router,
     private modalCtrl: ModalController,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private demanadaSvc:DemandaService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
@@ -171,20 +173,12 @@ export class Tab2Page {
     this.subsector = 'Todas';
   }
 
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
-  }
-
   async getUserProfile() {
     await this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
     await this.utilities.getUserData().then((data) => {
-      this.currentUser = {...data};
+      if(data) this.currentUser = {...data};
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){
@@ -333,32 +327,7 @@ export class Tab2Page {
   }
 
   async onClickAddToFavorites(demand) {
-    let p = {
-      id: demand.id,
-    };
-    // Add to favorites.
-    if (demand.favorito) {
-      this.utilities.showLoading();
-      (await this.api.favouriteDemand(p)).subscribe(result => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageAddedFavorite"));
-
-      },err => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorAddFavorite"));
-      });
-    }
-    // Remove from favorites.
-    else {
-      this.utilities.showLoading();
-      (await this.api.unFavouriteDemand(p)).subscribe(result => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
-      },err => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
-      });
-    }
+    this.demanadaSvc.addToFavorites(demand);
   }
 
   /**

@@ -113,13 +113,31 @@
               <em class="desc"
                 >Búsquedas relacionadas que te pueden interesar</em
               >
+              <ion-list  class="results-list desktop">
+                <ion-item lines="none" (click)="detalleDemanda(demanda)"
+                *ngFor="let demanda of demandasRelacionadas"
+              >
+                <ion-avatar slot="start">
+                  <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+                  <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
+                </ion-avatar>
+                <ion-label>
+                  <h2><strong>{{demanda?.nombre}}</strong></h2>
+                  <em class="desc">{{demanda?.descripcion}}</em>
+                </ion-label>
+                <ion-label slot="end">
+                  <em style="padding: 5px">{{demanda?.user?.name}}</em>
+                </ion-label>
+                <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"></ion-icon>
+              </ion-item>
+              </ion-list>
             </div>
           </ion-col>
         </ion-row>
       </ion-grid>
 
       <!-- DESKTOP -->
-      <ion-grid class="grid-card desktop" style="padding-left: 0px">
+      <!-- <ion-grid class="grid-card desktop" style="padding-left: 0px">
         <ion-row>
           <ion-col
             size="12"
@@ -158,7 +176,8 @@
             </ion-card>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
+      
     </div>
   </div>
 

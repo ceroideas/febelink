@@ -21,7 +21,8 @@
         "labelDNI": "DNI / CIF",
         "labelNewPass": "Contraseña nueva",
         "labelConfirmNewPass": "Confimar contraseña nueva",
-        "labelTitle": "Título"
+        "labelTitle": "Título",
+        "share": "Compartir"
     },
     "menu": {
         "tabs": {
@@ -29,7 +30,11 @@
             "recommend": "Recomendar",
             "chat": "Chat",
             "profile": "Perfil",
-            "login": "Iniciar sesión"
+            "login": "Iniciar sesión",
+            "share-febelink": "Comparte Febelink",
+            "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales.",
+            "register": "Register"
+
         },
         "pages": {
             "opinions": "Opiniones",
@@ -101,5 +106,8 @@
                 "message": "Asegúrate de que el perfil es el deseado."
             }
         }
+    },
+    "toast": {
+        "need-register":"¡Regístrate para disfrutar aún más de Febelink!"
     }
 }

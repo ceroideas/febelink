@@ -1,13 +1,4 @@
-.desktop {
-    @media (max-width: 768px){
-        display: none;
-    }
-}
-.mobile {
-    @media (min-width: 768px){
-        display: none;
-    }
-  }
+
 /*ion-header{
     .logo{
         position: absolute;
@@ -53,30 +44,9 @@ ion-header{
     }
 }
 ion-content {
-    .grid-card {
-        margin: 0 auto;
-        max-width: 1000px;
-
-        ion-card {
-            cursor: pointer;
-            ion-card-header {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-        }
-
-        img {
-            height: 150px;
-            object-fit: cover;
-            width: 100%;
-        }
-        .card-desc {
-            min-height:80px;overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 4;
+    .results-list{
+        ion-label{
+            flex: none;
         }
     }
     ion-list{

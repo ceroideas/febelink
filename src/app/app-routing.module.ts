@@ -115,13 +115,6 @@ const routes: Routes = [
             ),
     },
     {
-        path: 'sesion-ctrl',
-        loadChildren: () =>
-            import('./pages/sesion-ctrl/sesion-ctrl.module').then(
-                (m) => m.SesionCtrlPageModule
-            ),
-    },
-    {
         path: 'acerca-de',
         loadChildren: () =>
             import('./pages/acerca-de/acerca-de.module').then(

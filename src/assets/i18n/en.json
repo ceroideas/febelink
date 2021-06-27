@@ -21,7 +21,8 @@
         "labelDNI": "DNI / CIF",
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",
-        "labelTitle": "Title"
+        "labelTitle": "Title",
+        "share": "Share"
     },
     "menu": {
         "tabs": {
@@ -29,7 +30,10 @@
             "recommend": "Recommend",
             "chat": "Chat",
             "profile": "Profile",
-            "login": "Login"
+            "login": "Login",
+            "share-febelink": "Share Febelink",
+            "share-msg": "I want to share with you Febelink, the searcher for proffesional services.",
+            "register": "Register"
         },
         "pages": {
             "opinions": "Opinions",
@@ -101,5 +105,8 @@
                 "message": "Make sure the profile is the correct one."
             }
         }
+    },
+    "toast": {
+        "need-register":"Sign up to have a better experience with Febelink!"
     }
 }

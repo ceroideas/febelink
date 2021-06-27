@@ -4,38 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <img *ngIf="showCard" tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
-
-    <ion-buttons slot="end" class="desktop">
-      <ion-button class="btn-header active">
-        <ion-icon slot="start" name="search"></ion-icon>
-        {{ 'menu.tabs.searchEngine' | translate }}
-      </ion-button>
-      <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
-        <ion-icon slot="start" name="heart"></ion-icon>
-        {{ 'menu.tabs.recommend' | translate }}
-      </ion-button>
-      <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
-        <ion-icon slot="start" name="chatbubbles"></ion-icon>
-        {{ 'menu.tabs.chat' | translate }}
-      </ion-button>
-      <ion-button *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
-        <ion-icon slot="start" name="person"></ion-icon>
-        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
-      </ion-button>
-    </ion-buttons>
-
-    <ion-buttons size="large" slot="end">
-      <ion-button
-        size="large"
-        color="primary"
-        slot="icon-only"
-        (click)="openGuide()"
-      >
-        <ion-icon style="font-size: x-large" name="information-circle">
-        </ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <app-header-buttons [perfil]="perfil" currentTab=1></app-header-buttons>
   </ion-toolbar>
 </ion-header>
 
