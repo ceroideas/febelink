@@ -1,129 +1,130 @@
+ion-header {
+  text-align: center;
+  background: var(--ion-color-light);
 
-ion-header{
-    text-align: center;
-    background: var(--ion-color-light);
+  .btn-header {
+    margin: 0 0.8rem;
+  }
 
-    .btn-header {
-        margin: 0 0.8rem;
+  .active {
+    color: var(--ion-color-primary) !important;
+  }
+
+  ion-toolbar {
+    @media (min-width: 768px) {
+      margin: 0 auto;
+      max-width: 1400px;
     }
+  }
+  .logo {
+    position: absolute;
+    top: 10%;
+    left: 28%;
+    width: 45%;
+    max-width: 200px;
 
-    .active {
-        color: var(--ion-color-primary) !important;
+    @media (min-width: 768px) {
+      position: relative;
+      width: 45%;
+      max-width: 130px;
+      left: 0;
+      float: left;
+      margin-left: 20px;
     }
-
-    ion-toolbar {
-        @media (min-width: 768px){
-            margin:0 auto;
-            max-width: 1400px;
-        }
-    }
-    .logo{
-
-        position: absolute;
-        top:10%;
-        left:28%;
-        width: 45%;
-        max-width: 200px;
-
-        @media (min-width: 768px){
-            position: relative;
-            width: 45%;
-            max-width: 130px;
-            left: 0;
-            float:left;
-            margin-left: 20px;
-        }
-    }
+  }
+  .register-button {
+    background-color: #2dd36f;
+    border-radius: 5px;
+    color: white;
+  }
 }
-ion-content{
+ion-content {
+  ion-searchbar {
+    --background: #141414;
+    --border-radius: 25px;
+    --color: white;
+    --icon-color: white;
+    --placeholder-color: white;
+  }
 
-    ion-searchbar {
-        --background: #141414;
-        --border-radius: 25px;
-        --color: white;
-        --icon-color: white;
-        --placeholder-color: white;
+  .content-filter {
+    @media (min-width: 768px) {
+      margin: 40px 0px;
     }
+  }
 
-    .content-filter {
-        @media (min-width: 768px){
-            margin: 40px 0px;
-        }
+  ion-segment {
+    @media (min-width: 768px) {
+      max-width: 400px;
+      margin: 0 auto;
     }
+  }
+  .segment-title {
+    @media (min-width: 768px) {
+      font-size: 1.7rem;
+    }
+  }
+  .content-segment {
+    @media (min-width: 768px) {
+      max-width: 800px;
+      margin: 40px auto;
+    }
+    ion-list {
+      @media (min-width: 768px) {
+        margin-top: 40px;
+      }
+    }
+  }
 
-    ion-segment {
-        @media (min-width: 768px){
-            max-width: 400px;
-            margin: 0 auto;
-        }
-    }
-    .segment-title {
-        @media (min-width: 768px){
-            font-size: 1.7rem;
-        }
-    }
-    .content-segment {
-        @media (min-width: 768px){
-            max-width: 800px;
-            margin: 40px auto;
-        }
-        ion-list {
-            @media (min-width: 768px){
-               margin-top: 40px;
-            }
-        }
-    }
-    
-    .title{
-        font-size: 18px;
-    }
-    ion-list{
-        ion-item{
-            .demandante{
-                font-weight: bold;
-                font-size: 16px;
-                span{
-                    font-weight: normal;
-                }
-            }
-            padding-left: 0 !important;
-        }
-    }
-    .precio{
-        color:color(--ion-color-secondary);
+  .title {
+    font-size: 18px;
+  }
+  ion-list {
+    ion-item {
+      .demandante {
         font-weight: bold;
+        font-size: 16px;
+        span {
+          font-weight: normal;
+        }
+      }
+      padding-left: 0 !important;
+    }
+  }
+  .precio {
+    color: color(--ion-color-secondary);
+    font-weight: bold;
+  }
+  .vacio {
+    margin-top: 100px;
+  }
+  .estado {
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+  }
 
-    }
-    .vacio{
-        margin-top:100px;
-    }
-    .estado{
-        color:white;
-        font-size: 14px;
-        border-radius: 5px;
-        padding:5px;
-        font-weight: bold;
-    }
-
-    .aceptada{
-        background-color: #19cf50;
-    }
-    .sin-respuesta{
-        background: #3289db
-    }
-    .denegada{
-        background-color: #da1c1c;
-    }
+  .aceptada {
+    background-color: #19cf50;
+  }
+  .sin-respuesta {
+    background: #3289db;
+  }
+  .denegada {
+    background-color: #da1c1c;
+  }
 }
 
 ion-avatar {
-    width: 48px;
-    height: 48px;
+  width: 48px;
+  height: 48px;
 }
 
-.terms-text{
-    text-decoration: underline;
+.terms-text {
+  text-decoration: underline;
 }
-.terms-text:hover{
-    cursor: pointer;
+.terms-text:hover {
+  cursor: pointer;
 }
