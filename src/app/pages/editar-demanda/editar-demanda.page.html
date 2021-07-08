@@ -9,10 +9,14 @@
 
 <ion-content class="ion-padding ion-text-center">
 
-  <img [src]="base64img" *ngIf="base64img">
-  <img src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto && !demanda?.imagen" (click)="adjuntarImagen()" class="placeholder" width="125" height="125">
-  <img [src]="demanda?.imagen" *ngIf="demanda?.imagen && !base64img">
-  <span class="editar" (click)="adjuntarImagen()">Editar <ion-icon name="create"></ion-icon></span>   
+  <img [src]="base64img" *ngIf="base64img" class="placeholder">
+  <img src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto && !demanda?.imagen" (click)="adjuntarImagen()" class="placeholder">
+  <img [src]="demanda?.imagen" *ngIf="demanda?.imagen && !base64img" class="placeholder">
+  <div class="edit-image">
+    <span>Editar <ion-icon name="create"></ion-icon></span>
+    <input *ngIf="!isNative" class="input-file" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="adjuntarImagen()" /> 
+  </div>
+   
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
 
     <ion-list lines="none">
@@ -64,6 +68,6 @@
     <ion-textarea rows="6" cols="20" formControlName="descripcion" [(ngModel)]="demanda.descripcion"></ion-textarea>
   </ion-item>
   
-  <ion-button type="submit" color="primary" class="publicar">Editar</ion-button>
+  <ion-button type="submit" color="primary" class="publicar" translate>tabs.tab2.update-research</ion-button>
   </form>
 </ion-content>
