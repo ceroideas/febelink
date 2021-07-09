@@ -21,6 +21,7 @@
             <ion-searchbar #mysearch
               placeholder="{{ 'common.searchPlaceholder' | translate }}"
               debounce="500"
+              id="searchChat"
             >
             </ion-searchbar>
           </div>
@@ -63,7 +64,7 @@
             <div slot="end" class="ion-text-end">
 
             </div>
-            <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();">
+            <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();" id="editBtn">
               <ion-icon slot="icon-only" name="create-outline"></ion-icon>
             </ion-button>
             <ion-button color="danger" fill="clear" (click)="deleteItem(offer); $event.stopPropagation();">
