@@ -59,7 +59,7 @@ describe('Tab3Page', () => {
   });
 
   it('Edit button is created', () => {
-    const editBtn: DebugElement = el.query(By.css('#editBtn'));
+    const editBtn: DebugElement = el.query(By.css('.editBtn'));
     expect(editBtn).toBeTruthy();
   });
 });
