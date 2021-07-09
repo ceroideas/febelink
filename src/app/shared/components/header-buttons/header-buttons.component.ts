@@ -45,24 +45,17 @@ export class HeaderButtonsComponent implements OnInit {
 
 
   async irA(p: string): Promise<void> {
-    
-    // switch(p){
-    //   case '/menu/todas': this.currentTab = Tabs.Search; break;
-    //   case '/menu/busquedas': this.currentTab = Tabs.Recommend; break;
-    //   case '/menu/ofertas': this.currentTab = Tabs.Chat; break;
-    // }
 
-    // await this.utilities.wait(1000);
-    
-    if (p === '/menu/perfil') {
-      if (!this.perfil) {
-        this.router.navigate(['login']);
-      } else {
-        this.router.navigate(['/menu/perfil']);
-      }
-    } else {
-      this.router.navigate([p]);
-    }
+    this.router.navigate([p]);
+
+    // if (p === '/menu/perfil') {
+    //   if (!this.perfil) {
+    //     this.router.navigate(['login']);
+    //   } else {
+    //     this.router.navigate(['/menu/perfil']);
+    //   }
+    // } else {
+    // }
   }
 
   async shareFebelink(ev: any){
