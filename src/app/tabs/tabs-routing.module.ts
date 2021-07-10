@@ -8,6 +8,11 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: '',
+        redirectTo: 'todas',
+        pathMatch: 'full',
+      },
+      {
         path: 'todas',
         loadChildren: () =>
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
@@ -28,16 +33,11 @@ const routes: Routes = [
           import('../tab4/tab4.module').then((m) => m.Tab4PageModule),
       },
       {
-        path: 'menu',
-        redirectTo: '/menu/todas',
-        pathMatch: 'full',
+        path: 'welcome',
+        loadChildren: () =>
+          import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
     ],
-  },
-  {
-    path: 'menu',
-    redirectTo: '/menu/todas',
-    pathMatch: 'full',
   },
 ];
 

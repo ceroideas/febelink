@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-publicar-demanda',
@@ -32,7 +32,9 @@ export class PublicarDemandaPage implements OnInit {
                private utilities: UtilitiesService,
                private camera: Camera,
                private elementRef: ElementRef,
-               private sanitizer: DomSanitizer ) {
+               private sanitizer: DomSanitizer,
+               private authSvc:AuthenticationService
+               ) {
 
     this.sectorId = navParams.get('sector');
 
@@ -119,7 +121,7 @@ export class PublicarDemandaPage implements OnInit {
     } else {
 
       this.closeModal();
-      this.userRegister();
+      this.authSvc.userNeedsToRegister();
 
     }
     
@@ -283,16 +285,5 @@ export class PublicarDemandaPage implements OnInit {
     });
   }
 
-  /**
-   * Crear modal para registro de usuario
-   */
-  async userRegister() {
-
-    const registerModal = await this.modalCtrl.create({
-      component: SesionCtrlPage
-    });
-
-    await registerModal.present();
-  }
 
 }

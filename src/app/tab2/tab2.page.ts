@@ -11,6 +11,7 @@ import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { environment } from 'src/environments/environment';
+import { DemandaService } from '../services/demanda.service';
 
 @Component({
   selector: 'app-tab2',
@@ -42,7 +43,8 @@ export class Tab2Page {
     private utilities: UtilitiesService,
     private router: Router,
     private modalCtrl: ModalController,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private demanadaSvc: DemandaService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
@@ -52,8 +54,6 @@ export class Tab2Page {
       this.isLogin = data;
     });
   }
-
-  ngOnInit() {}
 
   ionViewDidEnter() {
     this.loadData();
@@ -72,24 +72,25 @@ export class Tab2Page {
     this.demandasCategoria = [];
     this.searchResults = [];
 
-    let userFavorites = await (await (await this.api.getFavorites()).toPromise());
+    let userFavorites = await await (await this.api.getFavorites()).toPromise();
     userFavorites = Object.keys(userFavorites[0]);
 
     (await this.api.obtenerDemandas()).subscribe((resp) => {
       console.log(resp);
       this.demandas = resp;
-      for (let demanda of this.demandas) {
+      for (const demanda of this.demandas) {
         if (demanda.imagen != null) {
           if (
             !demanda.imagen.includes('http://') &&
             !demanda.imagen.includes('https://')
           )
-            demanda.imagen =
-            `${environment.baseWebUrl}storage/${demanda.imagen}`;
+            demanda.imagen = `${environment.baseWebUrl}storage/${demanda.imagen}`;
         }
 
         demanda.valoracion = Number(demanda.valoracion);
-        userFavorites.includes(demanda.id.toString()) ? demanda.favorito = true : demanda.favorito = false;
+        userFavorites.includes(demanda.id.toString())
+          ? (demanda.favorito = true)
+          : (demanda.favorito = false);
         this.demandasCategoria.push(demanda);
         this.searchResults.push(demanda);
       }
@@ -111,7 +112,7 @@ export class Tab2Page {
       {
         id: 0,
         nombre: 'Todas',
-        id_sector: 0
+        id_sector: 0,
       },
     ];
     this.loadSubSectors(event.value.id);
@@ -171,25 +172,18 @@ export class Tab2Page {
     this.subsector = 'Todas';
   }
 
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
-  }
-
   async getUserProfile() {
     await this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
     await this.utilities.getUserData().then((data) => {
-      this.currentUser = {...data};
+      if (data) this.currentUser = { ...data };
       if (this.currentUser) {
+        this.currentUser = { ...data };
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
-          //if(this.platform.is('cordova')){
-          //this.openGuide();
-          //}
+          // if(this.platform.is('cordova')){
+          // this.openGuide();
+          // }
           this.utilities.setGuia('other');
         }
       }
@@ -200,34 +194,34 @@ export class Tab2Page {
     this.sectors.push({ id: 0, nombre: 'Todas' });
     this.sectors = [
       ...this.sectors,
-      ...await (await this.api.obtenerSectores()).toPromise()
+      ...(await (await this.api.obtenerSectores()).toPromise()),
     ];
     this.sector = this.sectors[0];
   }
 
   async loadSubSectors(id: number) {
-    this.subSectors.push({ id: 0, nombre: 'Todas', id_sector: 0});
+    this.subSectors.push({ id: 0, nombre: 'Todas', id_sector: 0 });
     this.subSectors = [
       ...this.subSectors,
-      ...await (await this.api.obtenerSubSectores(id)).toPromise()
+      ...(await (await this.api.obtenerSubSectores(id)).toPromise()),
     ];
     this.subsector = this.subSectors[0];
   }
 
   async loadProvinces() {
-    this.provinces = [ {id: 0, name: 'Todas' }];
+    this.provinces = [{ id: 0, name: 'Todas' }];
     this.provinces = [
       ...this.provinces,
-      ...await (await this.api.obtenerProvincias()).toPromise()
+      ...(await (await this.api.obtenerProvincias()).toPromise()),
     ];
     this.province = this.provinces[0];
   }
 
-  async loadTowns(id_provincia: number) {
-    this.towns = [ {id: 0, name: 'Todas' }];
+  async loadTowns(idProvincia: number) {
+    this.towns = [{ id: 0, name: 'Todas' }];
     this.towns = [
       ...this.towns,
-      await (await this.api.obtenerLocalidades(id_provincia)).toPromise()
+      await (await this.api.obtenerLocalidades(idProvincia)).toPromise(),
     ];
     this.town = this.towns[0];
   }
@@ -235,82 +229,81 @@ export class Tab2Page {
   filterSearchResults() {
     this.searchResults = [];
 
-    if (this.province.id == 0) {
-      //No Provincia
-      if (this.sector.id != 0) {
-        //Si Sector
-        if (this.subsector.id != 0) {
-          for (let demanda of this.demandas) {
-            if (demanda.sub_sector == this.subsector.id) {
+    if (this.province.id === 0) {
+      // No Provincia
+      if (this.sector.id !== 0) {
+        // Si Sector
+        if (this.subsector.id !== 0) {
+          for (const demanda of this.demandas) {
+            if (demanda.sub_sector === this.subsector.id) {
               this.searchResults.push(demanda);
             }
           }
         } else {
-          for (let demanda of this.demandas) {
-            if (demanda.sector == this.sector.id) {
+          for (const demanda of this.demandas) {
+            if (demanda.sector === this.sector.id) {
               this.searchResults.push(demanda);
             }
           }
         }
       } else {
-        //No sector
-        for (let demanda of this.demandas) {
+        // No sector
+        for (const demanda of this.demandas) {
           this.demandasProvincia.push(demanda);
           this.searchResults.push(demanda);
         }
       }
     } else {
-      //Si provincia
-      if (this.town.id != 0) {
-        //Si localidad
-        if (this.sector.id != 0) {
-          //Si sector
-          let aux = this.subsector.id != 0 ? this.subsector : this.sector;
-          for (let demanda of this.demandas) {
+      // Si provincia
+      if (this.town.id !== 0) {
+        // Si localidad
+        if (this.sector.id !== 0) {
+          // Si sector
+          const aux = this.subsector.id !== 0 ? this.subsector : this.sector;
+          for (const demanda of this.demandas) {
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
-              (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
-                aux.id &&
-              demanda.user.town_id == this.town.id
+              (this.subsector.id !== 0
+                ? demanda.sub_sector
+                : demanda.sector) === aux.id &&
+              demanda.user.town_id === this.town.id
             ) {
               this.searchResults.push(demanda);
             }
           }
         } else {
-          //No sector
-          for (let demanda of this.demandas) {
+          // No sector
+          for (const demanda of this.demandas) {
             this.demandasProvincia.push(demanda);
-            if (
-              demanda.user != null &&
-              demanda.user.town_id == this.town.id
-            ) {
+            if (demanda.user != null && demanda.user.town_id === this.town.id) {
               this.searchResults.push(demanda);
             }
           }
         }
       } else {
-        if (this.sector.id != 0) {
-          //Si sector
-          let aux = this.subsector.id != 0 ? this.subsector : this.sector;
-          for (let demanda of this.demandas) {
+        if (this.sector.id !== 0) {
+          // Si sector
+          const aux = this.subsector.id !== 0 ? this.subsector : this.sector;
+          for (const demanda of this.demandas) {
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
-              (this.subsector.id != 0 ? demanda.sub_sector : demanda.sector) ==
-                aux.id &&
-              demanda.user.province_id == this.province.id
+              (this.subsector.id !== 0
+                ? demanda.sub_sector
+                : demanda.sector) === aux.id &&
+              demanda.user.province_id === this.province.id
             ) {
               this.searchResults.push(demanda);
             }
           }
         } else {
-          //No sector
-          for (let demanda of this.demandas) {
+          // No sector
+          for (const demanda of this.demandas) {
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
-              demanda.user.province_id == this.province.id
+              demanda.user.province_id === this.province.id
             ) {
               this.searchResults.push(demanda);
             }
@@ -322,7 +315,7 @@ export class Tab2Page {
 
   public irA(p: string): void {
     if (p === '/menu/perfil') {
-      if (this.currentUser) {
+      if (!this.currentUser) {
         this.router.navigate(['login']);
       } else {
         this.router.navigate(['/menu/perfil']);
@@ -333,32 +326,7 @@ export class Tab2Page {
   }
 
   async onClickAddToFavorites(demand) {
-    let p = {
-      id: demand.id,
-    };
-    // Add to favorites.
-    if (demand.favorito) {
-      this.utilities.showLoading();
-      (await this.api.favouriteDemand(p)).subscribe(result => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageAddedFavorite"));
-
-      },err => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorAddFavorite"));
-      });
-    }
-    // Remove from favorites.
-    else {
-      this.utilities.showLoading();
-      (await this.api.unFavouriteDemand(p)).subscribe(result => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
-      },err => {
-        this.utilities.dismissLoading();
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
-      });
-    }
+    this.demanadaSvc.addToFavorites(demand);
   }
 
   /**
@@ -371,5 +339,4 @@ export class Tab2Page {
 
     await TermsModal.present();
   }
-
 }

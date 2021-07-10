@@ -2,16 +2,6 @@
 $userBackgroundColor: #dcf8c6;
 $toUserBackgroundColor: #fff;
 
-.desktop {
-  @media (max-width: 768px){
-      display: none;
-  }
-}
-.mobile {
-  @media (min-width: 768px){
-      display: none;
-  }
-}
 
 .logo {
   max-width: 150px;

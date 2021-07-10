@@ -1,0 +1,32 @@
+.header-buttons{
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 768px){
+        ion-button{
+            margin: 0 !important;
+        }
+    }
+
+    .logo{
+        margin-left: 10px;
+        width: 120px;
+    }
+}
+
+.right{
+    float: right;
+}
+
+ion-button{
+    margin: 0 0.8rem;
+}
+
+
+.btn-header {
+    margin: 0 0.8rem;
+}
+
+.active {
+    color: var(--ion-color-primary) !important;
+}

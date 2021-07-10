@@ -5,10 +5,11 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { ImgErrorFallbackDirective } from '../directives/img-error-fallback.directive';
+import { HeaderButtonsComponent } from './components/header-buttons/header-buttons.component';
 
 
 @NgModule({
-    declarations: [FilterPipe, ImgErrorFallbackDirective],
+    declarations: [FilterPipe, ImgErrorFallbackDirective, HeaderButtonsComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -16,7 +17,7 @@ import { ImgErrorFallbackDirective } from '../directives/img-error-fallback.dire
         IonicModule,
         TranslateModule.forChild(),
     ],
-    exports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TranslateModule, FilterPipe, ImgErrorFallbackDirective],
+    exports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TranslateModule, FilterPipe, ImgErrorFallbackDirective, HeaderButtonsComponent],
     entryComponents: []
 })
 export class SharedModule { }

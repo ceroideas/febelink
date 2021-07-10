@@ -4,50 +4,17 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <img *ngIf="showCard" tappable src="assets/imgs/logo.png" alt="" class="logo" routerLink="/menu/todas" />
-
-    <ion-buttons slot="end" class="desktop">
-      <ion-button class="btn-header active">
-        <ion-icon slot="start" name="search"></ion-icon>
-        {{ 'menu.tabs.searchEngine' | translate }}
-      </ion-button>
-      <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
-        <ion-icon slot="start" name="heart"></ion-icon>
-        {{ 'menu.tabs.recommend' | translate }}
-      </ion-button>
-      <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
-        <ion-icon slot="start" name="chatbubbles"></ion-icon>
-        {{ 'menu.tabs.chat' | translate }}
-      </ion-button>
-      <ion-button *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
-        <ion-icon slot="start" name="person"></ion-icon>
-        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
-      </ion-button>
-    </ion-buttons>
-
-    <ion-buttons size="large" slot="end">
-      <ion-button
-        size="large"
-        color="primary"
-        slot="icon-only"
-        (click)="openGuide()"
-      >
-        <ion-icon style="font-size: x-large" name="information-circle">
-        </ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <app-header-buttons [perfil]="perfil" currentTab="1"></app-header-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-grid fixed>
     <ion-row class="ion-align-items-center">
-        <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
-
-          <ion-item *ngIf="!showCard" lines="none">
-            <img src="assets/imgs/logo.png" alt="Febelink logo" />
-          </ion-item>
+      <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
+        <ion-item *ngIf="!showCard" lines="none">
+          <img src="assets/imgs/logo.png" alt="Febelink logo" />
+        </ion-item>
 
         <!-- Search engine. -->
         <div class="content-filter">
@@ -65,7 +32,10 @@
             </ion-searchbar>
 
             <div class="keys-dropdown">
-              <ion-list mode="ios" *ngIf="searchText.length > 2 && keys.length > 0">
+              <ion-list
+                mode="ios"
+                *ngIf="searchText.length > 2 && keys.length > 0"
+              >
                 <ion-item
                   (click)="getSectorsByKeys(key)"
                   *ngFor="let key of keys"
@@ -84,16 +54,32 @@
             <ion-item lines="none">
               <ion-list-header>
                 <ion-label>
-                  <em class="ion-text-wrap">{{ 'tabs.tab1.labelPhoto' | translate }}</em>
+                  <em class="ion-text-wrap"
+                    >{{ 'tabs.tab1.labelPhoto' | translate }}</em
+                  >
                 </ion-label>
               </ion-list-header>
             </ion-item>
             <!-- Image. -->
             <ion-item lines="none">
-              <img style="margin:auto" [src]="base64img" *ngIf="base64img">
-              <img style="margin:auto" src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto" class="placeholder" (click)="attachImage()"
-              [width]="platform.width() >= 576 ? 64 : 48" [height]="platform.width() >= 576 ? 64 : 48">
-              <input *ngIf="!isNative" class="input-file-demandas" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="attachImage()" />
+              <img style="margin: auto" [src]="base64img" *ngIf="base64img" />
+              <img
+                style="margin: auto"
+                src="assets/imgs/photo.png"
+                alt=""
+                *ngIf="!srcFoto"
+                class="placeholder"
+                (click)="attachImage()"
+                [width]="platform.width() >= 576 ? 64 : 48"
+                [height]="platform.width() >= 576 ? 64 : 48"
+              />
+              <input
+                *ngIf="!isNative"
+                class="input-file-demandas"
+                type="file"
+                accept="image/x-png,image/jpeg,image/gif"
+                (change)="attachImage()"
+              />
             </ion-item>
             <form [formGroup]="publishSearchForm" (ngSubmit)="submitForm()">
               <ion-list class="ion-no-padding" lines="none">
@@ -105,28 +91,60 @@
                   </ion-list-header>
                   <ion-item *ngFor="let answer of answerOptions" class="stars">
                     <ion-label>{{ answer.text }}</ion-label>
-                    <ion-radio [slot]="platform.width() >= 576 ? 'start' : ''" [value]="answer.value"></ion-radio>
+                    <ion-radio
+                      [slot]="platform.width() >= 576 ? 'start' : ''"
+                      [value]="answer.value"
+                    ></ion-radio>
                   </ion-item>
                 </ion-radio-group>
               </ion-list>
               <ion-row>
-                <ion-col class="ion-no-padding" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                <ion-col
+                  class="ion-no-padding"
+                  size-lg="6"
+                  size-md="6"
+                  size-sm="12"
+                  size-xs="12"
+                >
                   <ion-item class="input" *ngIf="sectors?.length>0">
                     <ion-label position="floating">
                       {{ 'common.labelSector' | translate }}
                     </ion-label>
-                    <ion-select clearInput type="text" formControlName="sector" (ionChange)="onChangeSector($event)">
-                      <ion-select-option *ngFor="let s of sectors" [value]="s?.id">{{s?.nombre}}</ion-select-option>
+                    <ion-select
+                      clearInput
+                      type="text"
+                      formControlName="sector"
+                      (ionChange)="onChangeSector($event)"
+                    >
+                      <ion-select-option
+                        *ngFor="let s of sectors"
+                        [value]="s?.id"
+                        >{{s?.nombre}}</ion-select-option
+                      >
                     </ion-select>
                   </ion-item>
                 </ion-col>
-                <ion-col class="ion-no-padding" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                <ion-col
+                  class="ion-no-padding"
+                  size-lg="6"
+                  size-md="6"
+                  size-sm="12"
+                  size-xs="12"
+                >
                   <ion-item class="input" *ngIf="subSectors?.length>0">
                     <ion-label position="floating">
                       {{ 'common.labelSubsector' | translate }}
                     </ion-label>
-                    <ion-select clearInput type="text" formControlName="sub_sector">
-                      <ion-select-option *ngFor="let subsector of subSectors" [value]="subsector?.id">{{subsector?.nombre}}</ion-select-option>
+                    <ion-select
+                      clearInput
+                      type="text"
+                      formControlName="sub_sector"
+                    >
+                      <ion-select-option
+                        *ngFor="let subsector of subSectors"
+                        [value]="subsector?.id"
+                        >{{subsector?.nombre}}</ion-select-option
+                      >
                     </ion-select>
                   </ion-item>
                 </ion-col>
@@ -135,10 +153,22 @@
                 <ion-label position="floating">
                   {{ 'common.labelDescription' | translate }}
                 </ion-label>
-                <ion-textarea placeholder="¿Quieres añadir una descripción?" autoGroup="true" rows="1" cols="20" formControlName="descripcion"></ion-textarea>
+                <ion-textarea
+                  placeholder="¿Quieres añadir una descripción?"
+                  autoGroup="true"
+                  rows="1"
+                  cols="20"
+                  formControlName="descripcion"
+                ></ion-textarea>
               </ion-item>
               <ion-item lines="none">
-                <ion-button style="margin:auto" type="submit" color="primary" class="publicar">{{ 'tabs.tab1.buttonSend' | translate }}</ion-button>
+                <ion-button
+                  style="margin: auto"
+                  type="submit"
+                  color="primary"
+                  class="publicar"
+                  >{{ 'tabs.tab1.buttonSend' | translate }}</ion-button
+                >
               </ion-item>
             </form>
           </ion-card-content>
@@ -146,7 +176,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>
 
 <ion-footer
@@ -176,7 +205,12 @@
 >
   <ion-toolbar color="febelink">
     <div>
-      <p style="margin-bottom: 0px">© {{ currentYear }} Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
+      <p style="margin-bottom: 0px">
+        © {{ currentYear }} Febelink |
+        <span class="terms-text" (click)="termsModal()"
+          >Terminos y condiciones</span
+        >
+      </p>
       <p style="margin-top: 5px">Contacto: info@febelink.com</p>
     </div>
   </ion-toolbar>

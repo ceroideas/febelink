@@ -4,13 +4,13 @@ import { ApiService } from 'src/app/services/api.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ModalController, PopoverController, Platform, AlertController } from '@ionic/angular';
 import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
-import { SesionCtrlPage } from '../sesion-ctrl/sesion-ctrl.page';
 import { GuidePage } from '../guide/guide.page';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { IUser } from 'src/app/models/user.model';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -41,7 +41,8 @@ export class PerfilDemandantePage implements OnInit {
     private router: Router,
     public alertController: AlertController,
     private utilities: UtilitiesService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private authSvc:AuthenticationService
   ) {
     var data: any = route.snapshot.queryParamMap;
     // this.id_perfil = data.params.id_perfil;
@@ -148,7 +149,7 @@ export class PerfilDemandantePage implements OnInit {
     let subject =
     'Mira el perfil de ' + this.perfilpublico.name + ' usuario de Febelink:';
     const nameForUrl = this.utilities.textToUrl(this.perfilpublico.name);
-    let url = `https://febelink.com/perfil/${this.id_perfil}/${nameForUrl}`;//
+    let url = `${environment.WEB_URL}perfil/${this.id_perfil}/${nameForUrl}`;//
     let message = 'Febelink \n' + subject + ' \n';
 
     let image = null;
@@ -220,20 +221,10 @@ export class PerfilDemandantePage implements OnInit {
       this.comprobarOpinion();
       this.obtenerPerfil();
     } else {
-      this.userRegister();
+      this.authSvc.userNeedsToRegister();
     }
   }
 
-  /**
-   * Crear modal para registro de usuario
-   */
-  async userRegister() {
-    const registerModal = await this.modalCtrl.create({
-      component: SesionCtrlPage,
-    });
-
-    await registerModal.present();
-  }
 
   home() {
     this.router.navigate(['menu/todas']);
