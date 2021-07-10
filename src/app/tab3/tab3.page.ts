@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ModalController, IonItemSliding, AlertController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
-import { GuidePage } from '../pages/guide/guide.page';
 import { Router } from '@angular/router';
 import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
 import { IOffer } from '../models/offer.model';

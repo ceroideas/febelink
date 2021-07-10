@@ -8,17 +8,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { Tab3Page } from './tab3.page';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { IOffer } from '../models/offer.model';
 
 describe('Tab3Page', () => {
   let component: Tab3Page;
   let fixture: ComponentFixture<Tab3Page>;
   let el: DebugElement;
-
-  const modalSpy = jasmine.createSpyObj('Modal', ['present']);
-  const modalCtrlSpy = jasmine.createSpyObj('ModalController', ['create']);
-  modalCtrlSpy.create.and.callFake(function () {
-      return modalSpy;
-  });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,7 +25,7 @@ describe('Tab3Page', () => {
       providers: [        
         {
           provide: ModalController,
-          useValue: modalCtrlSpy
+          useValue: null
         },
       ],
       imports: [
@@ -45,8 +40,56 @@ describe('Tab3Page', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(Tab3Page);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     el = fixture.debugElement;
+    
+    component.offers = [
+      {
+        demanda: "",
+        descripcion: "",
+        estado: 0,
+        estado_oferta: "",
+        id: 0,
+        id_demanda: 0,
+        id_ofertante: 0,
+        nombre: "",
+        precio: 0,
+        respondida: 0,
+        type: "",
+        created_at: "",
+        updated_at: "",
+        id_demandante: 1
+      }
+    ] as any as IOffer[];  
+    component.currentUser = {
+      id: 1,
+      role_id: 0,
+      name: "",
+      email: "",
+      avatar: "",
+      email_verified_at: "",
+      provider: "",
+      settings: "",
+      created_at: "",
+      updated_at: "",
+      descripcion: "",
+      direccion: "",
+      province_id: 0,
+      town_id: 0,
+      telefono: "",
+      logo: "",
+      dni: "",
+      card_brand: "",
+      card_last_four: "",
+      trial_ends_at: "",
+      stripe_id: 0,
+      skip_wizard: 0,
+      reference: "",
+      google_id: "",
+      facebook_id: "",
+      suspended: 0,
+    }
+
+    fixture.detectChanges();
   });
 
   it('should create', () => {
