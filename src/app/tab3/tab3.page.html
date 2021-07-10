@@ -3,128 +3,167 @@
     <ion-buttons buttons-start slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    
-    <app-header-buttons [perfil]="currentUser" currentTab=3></app-header-buttons>
+
+    <app-header-buttons
+      [perfil]="currentUser"
+      currentTab="3"
+    ></app-header-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-
   <ion-refresher slot="fixed" (ionRefresh)="doRefreshOffers($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-grid>
-  <ion-row class="ion-align-items-center">
-    <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
-      <div class="content-filter">
-        <div class="autocomplete">
-          <ion-searchbar #mysearch
-            placeholder="{{ 'common.searchPlaceholder' | translate }}"
-            debounce="500"
-          >
-          </ion-searchbar>
-        </div>
-      </div>
-
-      <ion-list *ngIf="!isLoading">
-        <!-- DESKTOP. -->
-        <ion-grid class="grid-card desktop">
-          <ion-row>
-            <ion-col
-              size="12"
-              size-lg="3"
-              side-md="4"
-              size-sm="6"
-              size-xs="12"
-              *ngFor="let offer of offers | filter:mysearch.value"
+    <ion-row class="ion-align-items-center">
+      <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
+        <div class="content-filter">
+          <div class="autocomplete">
+            <ion-searchbar
+              #mysearch
+              placeholder="{{ 'common.searchPlaceholder' | translate }}"
+              debounce="500"
             >
-              <ion-card (click)="onClickSearchHandler(offer)">
-                <div>
-                  <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
-                  <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
-                </div>
-                <ion-item>
-                  <ion-label class="ion-text-wrap">
-                    <strong style="color: #222"> {{offer?.nombre}}</strong>
-                  </ion-label>
-                  <ion-button slot="end" color="danger" fill="clear" (click)="deleteItem(offer); $event.stopPropagation();">
-                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                  </ion-button>
-                </ion-item>
-                <ion-card-content>
-                  <p>{{offer?.demanda}}</p>
-                  <p class="description">{{offer?.descripcion}}</p>
-                  <br>
-                  <ng-template [ngIf]="offer?.demanda" [ngIfElse]="offerReceived">
-                    <div class="ion-text-end">
+            </ion-searchbar>
+          </div>
+        </div>
+
+        <ion-list *ngIf="!isLoading">
+          <!-- DESKTOP. -->
+          <ion-grid class="grid-card desktop">
+            <ion-row>
+              <ion-col
+                size="12"
+                size-lg="3"
+                side-md="4"
+                size-sm="6"
+                size-xs="12"
+                *ngFor="let offer of offers | filter:mysearch.value"
+              >
+                <ion-card (click)="onClickSearchHandler(offer)">
+                  <div>
+                    <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
+                    <ion-img
+                      [src]="offer?.imagen"
+                      *ngIf="offer?.imagen"
+                      appImgErrorFallback
+                    ></ion-img>
+                  </div>
+                  <ion-item>
+                    <ion-label class="ion-text-wrap">
+                      <strong style="color: #222"> {{offer?.nombre}}</strong>
+                    </ion-label>
+                    <ion-button
+                      slot="end"
+                      color="danger"
+                      fill="clear"
+                      (click)="deleteItem(offer); $event.stopPropagation();"
+                    >
+                      <ion-icon
+                        slot="icon-only"
+                        name="trash-outline"
+                      ></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                  <ion-card-content>
+                    <p>{{offer?.demanda}}</p>
+                    <p class="description">{{offer?.descripcion}}</p>
+                    <br />
+                    <ng-template
+                      [ngIf]="offer?.demanda"
+                      [ngIfElse]="offerReceived"
+                    >
+                      <div class="ion-text-end">
+                        <span
+                          class="estado"
+                          [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
+                          >{{offer?.estado_oferta}}</span
+                        >
+                      </div>
+                    </ng-template>
+                    <ng-template #offerReceived>
                       <span
                         class="estado"
                         [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
-                        >{{offer?.estado_oferta}}</span
+                        >{{ getOfferText(offer?.estado) }}</span
                       >
-                    </div>
-                  </ng-template>
-                  <ng-template #offerReceived>
-                    <span
-                      class="estado"
-                      [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
-                      >{{ getOfferText(offer?.estado) }}</span
-                    >
-                  </ng-template>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+                    </ng-template>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <!-- MOBILE. -->
-        <ion-item tappable class="mobile" lines="none"
-          *ngFor="let offer of offers | filter:mysearch.value" (click)="onClickSearchHandler(offer)"
-        >
-          <ion-avatar slot="start">
-            <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
-            <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h2><strong>{{offer?.nombre}}</strong></h2>
-            <p>{{offer?.demanda}}</p>
-            <em class="desc">{{offer?.descripcion}}</em>
-          </ion-label>
-          <div slot="end" class="ion-text-end">
-            <ng-template [ngIf]="offer?.demanda" [ngIfElse]="offerReceived">
-              <div class="ion-text-end">
+          <!-- MOBILE. -->
+          <ion-item
+            tappable
+            class="mobile"
+            lines="none"
+            *ngFor="let offer of offers | filter:mysearch.value"
+            (click)="onClickSearchHandler(offer)"
+          >
+            <ion-avatar slot="start">
+              <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
+              <ion-img
+                [src]="offer?.imagen"
+                *ngIf="offer?.imagen"
+                appImgErrorFallback
+              ></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2><strong>{{offer?.nombre}}</strong></h2>
+              <p>{{offer?.demanda}}</p>
+              <em class="desc">{{offer?.descripcion}}</em>
+            </ion-label>
+            <div slot="end" class="ion-text-end">
+              <ng-template [ngIf]="offer?.demanda" [ngIfElse]="offerReceived">
+                <div class="ion-text-end">
+                  <span
+                    class="estado"
+                    [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
+                    >{{offer?.estado_oferta}}</span
+                  >
+                </div>
+              </ng-template>
+              <ng-template #offerReceived>
                 <span
                   class="estado"
                   [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
-                  >{{offer?.estado_oferta}}</span
+                  >{{ getOfferText(offer?.estado) }}</span
                 >
-              </div>
-            </ng-template>
-            <ng-template #offerReceived>
-              <span
-                class="estado"
-                [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
-                >{{ getOfferText(offer?.estado) }}</span
-              >
-            </ng-template>
-          </div>
-          <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();">
-            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-          </ion-button>
-          <ion-button color="danger" fill="clear" (click)="deleteItem(offer); $event.stopPropagation();">
-            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+              </ng-template>
+            </div>
+            <ion-button
+              *ngIf="currentUser.id === offer?.id_demandante"
+              fill="clear"
+              (click)="editItem(offer); $event.stopPropagation();"
+            >
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              color="danger"
+              fill="clear"
+              (click)="deleteItem(offer); $event.stopPropagation();"
+            >
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">© {{ currentYear }} Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
+    <p style="margin-bottom: 0px">
+      © {{ currentYear }} Febelink |
+      <span class="terms-text" (click)="termsModal()"
+        >Terminos y condiciones</span
+      >
+    </p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>
