@@ -58,7 +58,8 @@
             "messageAddedFavorite": "It has been added to favorites correctly.",
             "messageRemovedFavorite": "It has been correctly removed from the favorites.",
             "errorAddFavorite": "Error when adding to favorites.",
-            "errorRemoveFavorite": "Error when deleting from favorites."
+            "errorRemoveFavorite": "Error when deleting from favorites.",
+            "update-research": "Save changes"
         },
         "tab3": {
             "alertDelete": {

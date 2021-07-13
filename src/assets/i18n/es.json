@@ -58,7 +58,8 @@
             "messageAddedFavorite": "Se ha añadido a favoritos correctamente.",
             "messageRemovedFavorite": "Se ha eliminado de favoritos correctamente.",
             "errorAddFavorite": "Error al añadir a favoritos.",
-            "errorRemoveFavorite": "Error al eliminar de favoritos."
+            "errorRemoveFavorite": "Error al eliminar de favoritos.",
+            "update-research": "Guardar cambios"
         },
         "tab3": {
             "alertDelete": {

@@ -2,7 +2,7 @@ import { ImgErrorFallbackDirective } from './img-error-fallback.directive';
 
 describe('ImgErrorFallbackDirective', () => {
   it('should create an instance', () => {
-    const directive = new ImgErrorFallbackDirective();
+    const directive = new ImgErrorFallbackDirective(null);
     expect(directive).toBeTruthy();
   });
 });

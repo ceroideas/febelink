@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditarDemandaPageRoutingModule } from './editar-demanda-routing.module';
 
 import { EditarDemandaPage } from './editar-demanda.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { EditarDemandaPage } from './editar-demanda.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    EditarDemandaPageRoutingModule
+    EditarDemandaPageRoutingModule,
+    SharedModule
   ],
   declarations: [EditarDemandaPage],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

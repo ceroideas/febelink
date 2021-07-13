@@ -52,7 +52,6 @@ ion-content {
       margin: 40px 0px;
     }
   }
-
   ion-segment {
     @media (min-width: 768px) {
       max-width: 400px;
@@ -105,7 +104,6 @@ ion-content {
     padding: 5px;
     font-weight: bold;
   }
-
   .aceptada {
     background-color: #19cf50;
   }
@@ -127,4 +125,7 @@ ion-avatar {
 }
 .terms-text:hover {
   cursor: pointer;
+}
+.desc {
+    max-width: 400px;
 }
