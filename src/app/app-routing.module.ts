@@ -2,7 +2,16 @@ import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-    {path: '', redirectTo: 'menu/todas', pathMatch: 'full'},
+    {
+        path: '', 
+        redirectTo: 'menu/todas', 
+        pathMatch: 'full'
+    },
+    {
+        path: ':recommenderId',
+        loadChildren: () =>
+          import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+    },
     {
         path: 'menu',
         loadChildren: () =>
