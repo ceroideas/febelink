@@ -61,6 +61,11 @@
         </div>
       </div>
 
+      <div class="message" *ngIf="message" translate>
+        <span class="closebtn" (click)="message=null">&times;</span>
+        {{message}}
+      </div>
+
       <ion-grid class="desktop" fixed style="margin: 10px 0px">
         <ion-row>
           <ion-col size="6">

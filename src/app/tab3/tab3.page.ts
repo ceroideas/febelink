@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { ModalController, IonItemSliding, AlertController } from '@ionic/angular';
+import {
+  ModalController,
+  IonItemSliding,
+  AlertController,
+} from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
@@ -46,30 +50,56 @@ export class Tab3Page {
 
   async getOffers() {
     this.utilities.showLoading();
-    const [ myOffers, offers, favorites, mySearchs ] = await Promise.all([
+    const [myOffers, offers, favorites, mySearchs] = await Promise.all([
       await (await this.api.misOfertas()).toPromise(),
       await (await this.api.ofertasRecibidas()).toPromise(),
       await (await this.api.getFavorites()).toPromise(),
-      await (await this.api.obtenerDemandasDemandante(this.currentUser.id)).toPromise()
+      await (
+        await this.api.obtenerDemandasDemandante(this.currentUser.id)
+      ).toPromise(),
     ]);
     Object.values(favorites[0]).forEach((favorite: IOffer) => {
-      favorite.type = "favorite";
-      favorite.created_at = favorites[1].find((f: IFavorite) => f.favoriteable_id === favorite.id).created_at;
+      favorite.type = 'favorite';
+      favorite.created_at = favorites[1].find(
+        (f: IFavorite) => f.favoriteable_id === favorite.id
+      ).created_at;
     });
 
     let myOffersF = myOffers.sort((a, b) => {
       return b.id - a.id;
     });
-    myOffersF = myOffersF.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
+    myOffersF = myOffersF.filter(
+      (v, i, a) =>
+        a.findIndex(
+          (t) =>
+            t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante
+        ) === i
+    );
     let receivedOffers = offers.sort((a, b) => {
       return b.id - a.id;
     });
-    receivedOffers = receivedOffers.filter(r => r.id_ofertante !== this.currentUser.id);
-    receivedOffers = receivedOffers.filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante))===i);
-    const finalOffers = [...receivedOffers.flat(), ...myOffersF].filter((v,i,a)=>a.findIndex(t=>(t.id_demanda === v.id_demanda))===i);
-    this.offers = [...finalOffers, ...Object.values(favorites[0]), ...mySearchs];
-    this.offers = this.offers.sort((a: IOffer, b: IOffer) =>
-    new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    receivedOffers = receivedOffers.filter(
+      (r) => r.id_ofertante !== this.currentUser.id
+    );
+    receivedOffers = receivedOffers.filter(
+      (v, i, a) =>
+        a.findIndex(
+          (t) =>
+            t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante
+        ) === i
+    );
+    const finalOffers = [...receivedOffers.flat(), ...myOffersF].filter(
+      (v, i, a) => a.findIndex((t) => t.id_demanda === v.id_demanda) === i
+    );
+    this.offers = [
+      ...finalOffers,
+      ...Object.values(favorites[0]),
+      ...mySearchs,
+    ];
+    this.offers = this.offers.sort(
+      (a: IOffer, b: IOffer) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
     this.utilities.dismissLoading();
     this.isLoading = false;
   }
@@ -81,21 +111,29 @@ export class Tab3Page {
 
   async deleteOffer(offer: IOffer) {
     if (offer?.type === 'favorite') {
-      (await this.api.unFavouriteDemand({id: offer.id})).subscribe(result => {
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
-        this.getOffers();
-      },err => {
-        this.utilities.showToast(this.translateService.instant("tabs.tab2.errorRemoveFavorite"));
-      });
-    }
-    else if (offer?.id_ofertante) {
+      (await this.api.unFavouriteDemand({ id: offer.id })).subscribe(
+        (result) => {
+          this.utilities.showToast(
+            this.translateService.instant('tabs.tab2.messageRemovedFavorite')
+          );
+          this.getOffers();
+        },
+        (err) => {
+          this.utilities.showToast(
+            this.translateService.instant('tabs.tab2.errorRemoveFavorite')
+          );
+        }
+      );
+    } else if (offer?.id_ofertante) {
       (await this.api.borrarOferta(offer.id)).subscribe(
         (resp) => {
           this.getOffers();
         },
         (err) => {
           console.log(err);
-          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveOffer"));
+          this.utilities.showToast(
+            this.translateService.instant('tabs.tab3.errorRemoveOffer')
+          );
         }
       );
     } else {
@@ -105,7 +143,9 @@ export class Tab3Page {
         },
         (err) => {
           console.log(err);
-          this.utilities.showToast(this.translateService.instant("tabs.tab3.errorRemoveSearch"));
+          this.utilities.showToast(
+            this.translateService.instant('tabs.tab3.errorRemoveSearch')
+          );
         }
       );
     }
@@ -122,39 +162,59 @@ export class Tab3Page {
     this.getOffers();
   }
 
-  detalleDemanda(id_demanda, estado): void {
+  detalleDemanda(idDemanda, estado): void {
     let aceptada: boolean;
-    if (estado == 1) aceptada = true;
+    if (estado === 1) aceptada = true;
     else aceptada = false;
-    this.router.navigate(['busqueda/' + id_demanda], {
-      queryParams: { id_demanda: id_demanda, aceptada: aceptada },
+    this.router.navigate(['busqueda/' + idDemanda], {
+      queryParams: { id_demanda: idDemanda, aceptada: aceptada },
     });
   }
 
+  async openGuide() {
+    const guideModal = await this.modalCtrl.create({
+      component: GuidePage,
+      cssClass: 'guide-modal',
+    });
+    return await guideModal.present();
+  }
+
+  irA(p: string): void {
+    if (p === '/menu/perfil') {
+      if (!this.currentUser) {
+        this.router.navigate(['login']);
+      } else {
+        this.router.navigate(['/menu/perfil']);
+      }
+    } else {
+      this.router.navigate([p]);
+    }
+  }
+
   getOfferBackgroundColor(offerStatus: number) {
-    switch(offerStatus) {
+    switch (offerStatus) {
       case 1: {
-        return "#19cf50";
+        return '#19cf50';
       }
       case 2: {
-        return "#da1c1c";
+        return '#da1c1c';
       }
       case 3: {
-        return "#3289db";
+        return '#3289db';
       }
     }
   }
 
   getOfferText(offerStatus: number) {
-    switch(offerStatus) {
+    switch (offerStatus) {
       case 1: {
-        return "Aceptada";
+        return 'Aceptada';
       }
       case 2: {
-        return "Denegada";
+        return 'Denegada';
       }
       case 3: {
-        return "Sin respuesta";
+        return 'Sin respuesta';
       }
     }
   }
@@ -171,16 +231,20 @@ export class Tab3Page {
   }
 
   async deleteItem(offer: IOffer) {
-    let alert = await this.alertCtrl.create({
-      header: this.translateService.instant("menu.tabs.chat"),
-      message: this.translateService.instant("tabs.tab3.alertDelete.message"),
+    const alert = await this.alertCtrl.create({
+      header: this.translateService.instant('menu.tabs.chat'),
+      message: this.translateService.instant('tabs.tab3.alertDelete.message'),
       buttons: [
         {
-          text: this.translateService.instant("tabs.tab3.alertDelete.btnCancel"),
+          text: this.translateService.instant(
+            'tabs.tab3.alertDelete.btnCancel'
+          ),
           role: 'cancel',
         },
         {
-          text: this.translateService.instant("tabs.tab3.alertDelete.btnDelete"),
+          text: this.translateService.instant(
+            'tabs.tab3.alertDelete.btnDelete'
+          ),
           handler: () => {
             this.deleteOffer(offer);
           },
@@ -191,13 +255,13 @@ export class Tab3Page {
   }
 
   onClickSearchHandler(search: IOffer) {
-    if (search?.type == 'favorite') {
-      this.detalleDemanda(search?.id, 0)
+    if (search?.type === 'favorite') {
+      this.detalleDemanda(search?.id, 0);
     } else if (search?.demanda) {
-      this.detalleDemanda(search?.id_demanda, search?.estado)
+      this.detalleDemanda(search?.id_demanda, search?.estado);
     } else if (search['id_demandante']) {
-        this.detalleDemanda(search['id'], search?.estado)
-    } else this.interiorOferta(search)
+      this.detalleDemanda(search['id'], search?.estado);
+    } else this.interiorOferta(search);
   }
 
   async editItem(search: IOffer) {
@@ -210,5 +274,4 @@ export class Tab3Page {
 
     const { data } = await editarModal.onWillDismiss();
   }
-
 }

@@ -4,19 +4,19 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <app-header-buttons [perfil]="perfil" currentTab=1></app-header-buttons>
+    <app-header-buttons [perfil]="perfil" currentTab="1"></app-header-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-grid fixed>
     <ion-row class="ion-align-items-center">
-        <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
+      <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
+        <ion-item id="logo" *ngIf="!showCard" lines="none">
+          <img src="assets/imgs/logo.png" alt="Febelink logo" />
+        </ion-item>
 
-          <ion-item *ngIf="!showCard" lines="none">
-            <img src="assets/imgs/logo.png" alt="Febelink logo" />
-          </ion-item>
+        <h2>El buscador de servicios profesionales</h2>
 
         <!-- Search engine. -->
         <div class="content-filter">
@@ -34,7 +34,10 @@
             </ion-searchbar>
 
             <div class="keys-dropdown">
-              <ion-list mode="ios" *ngIf="searchText.length > 2 && keys.length > 0">
+              <ion-list
+                mode="ios"
+                *ngIf="searchText.length > 2 && keys.length > 0"
+              >
                 <ion-item
                   (click)="getSectorsByKeys(key)"
                   *ngFor="let key of keys"
@@ -53,16 +56,32 @@
             <ion-item lines="none">
               <ion-list-header>
                 <ion-label>
-                  <em class="ion-text-wrap">{{ 'tabs.tab1.labelPhoto' | translate }}</em>
+                  <em class="ion-text-wrap"
+                    >{{ 'tabs.tab1.labelPhoto' | translate }}</em
+                  >
                 </ion-label>
               </ion-list-header>
             </ion-item>
             <!-- Image. -->
             <ion-item lines="none">
-              <img style="margin:auto" [src]="base64img" *ngIf="base64img">
-              <img style="margin:auto" src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto" class="placeholder" (click)="attachImage()"
-              [width]="platform.width() >= 576 ? 64 : 48" [height]="platform.width() >= 576 ? 64 : 48">
-              <input *ngIf="!isNative" class="input-file-demandas" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="attachImage()" />
+              <img style="margin: auto" [src]="base64img" *ngIf="base64img" />
+              <img
+                style="margin: auto"
+                src="assets/imgs/photo.png"
+                alt=""
+                *ngIf="!srcFoto"
+                class="placeholder"
+                (click)="attachImage()"
+                [width]="platform.width() >= 576 ? 64 : 48"
+                [height]="platform.width() >= 576 ? 64 : 48"
+              />
+              <input
+                *ngIf="!isNative"
+                class="input-file-demandas"
+                type="file"
+                accept="image/x-png,image/jpeg,image/gif"
+                (change)="attachImage()"
+              />
             </ion-item>
             <form [formGroup]="publishSearchForm" (ngSubmit)="submitForm()">
               <ion-list class="ion-no-padding" lines="none">
@@ -74,28 +93,60 @@
                   </ion-list-header>
                   <ion-item *ngFor="let answer of answerOptions" class="stars">
                     <ion-label>{{ answer.text }}</ion-label>
-                    <ion-radio [slot]="platform.width() >= 576 ? 'start' : ''" [value]="answer.value"></ion-radio>
+                    <ion-radio
+                      [slot]="platform.width() >= 576 ? 'start' : ''"
+                      [value]="answer.value"
+                    ></ion-radio>
                   </ion-item>
                 </ion-radio-group>
               </ion-list>
               <ion-row>
-                <ion-col class="ion-no-padding" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                <ion-col
+                  class="ion-no-padding"
+                  size-lg="6"
+                  size-md="6"
+                  size-sm="12"
+                  size-xs="12"
+                >
                   <ion-item class="input" *ngIf="sectors?.length>0">
                     <ion-label position="floating">
                       {{ 'common.labelSector' | translate }}
                     </ion-label>
-                    <ion-select clearInput type="text" formControlName="sector" (ionChange)="onChangeSector($event)">
-                      <ion-select-option *ngFor="let s of sectors" [value]="s?.id">{{s?.nombre}}</ion-select-option>
+                    <ion-select
+                      clearInput
+                      type="text"
+                      formControlName="sector"
+                      (ionChange)="onChangeSector($event)"
+                    >
+                      <ion-select-option
+                        *ngFor="let s of sectors"
+                        [value]="s?.id"
+                        >{{s?.nombre}}</ion-select-option
+                      >
                     </ion-select>
                   </ion-item>
                 </ion-col>
-                <ion-col class="ion-no-padding" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+                <ion-col
+                  class="ion-no-padding"
+                  size-lg="6"
+                  size-md="6"
+                  size-sm="12"
+                  size-xs="12"
+                >
                   <ion-item class="input" *ngIf="subSectors?.length>0">
                     <ion-label position="floating">
                       {{ 'common.labelSubsector' | translate }}
                     </ion-label>
-                    <ion-select clearInput type="text" formControlName="sub_sector">
-                      <ion-select-option *ngFor="let subsector of subSectors" [value]="subsector?.id">{{subsector?.nombre}}</ion-select-option>
+                    <ion-select
+                      clearInput
+                      type="text"
+                      formControlName="sub_sector"
+                    >
+                      <ion-select-option
+                        *ngFor="let subsector of subSectors"
+                        [value]="subsector?.id"
+                        >{{subsector?.nombre}}</ion-select-option
+                      >
                     </ion-select>
                   </ion-item>
                 </ion-col>
@@ -104,18 +155,144 @@
                 <ion-label position="floating">
                   {{ 'common.labelDescription' | translate }}
                 </ion-label>
-                <ion-textarea placeholder="¿Quieres añadir una descripción?" autoGroup="true" rows="1" cols="20" formControlName="descripcion"></ion-textarea>
+                <ion-textarea
+                  placeholder="¿Quieres añadir una descripción?"
+                  autoGroup="true"
+                  rows="1"
+                  cols="20"
+                  formControlName="descripcion"
+                ></ion-textarea>
               </ion-item>
               <ion-item lines="none">
-                <ion-button style="margin:auto" type="submit" color="primary" class="publicar">{{ 'tabs.tab1.buttonSend' | translate }}</ion-button>
+                <ion-button
+                  style="margin: auto"
+                  type="submit"
+                  color="primary"
+                  class="publicar"
+                  >{{ 'tabs.tab1.buttonSend' | translate }}</ion-button
+                >
               </ion-item>
             </form>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
+    <div class="app-services">
+      <ion-row>
+        <div class="section-header">
+          <h3>¿Cómo funciona?</h3>
+          <p>Sólo 3 sencillos pasos</p>
+        </div>
+      </ion-row>
+      <ion-row class="flexed-row">
+        <section>
+          <img src="assets/imgs/home/services/service1.png" alt="service1" />
+          <h3>Crea tu perfil de usuario</h3>
+          <br />
+          <p>
+            Date de alta de forma rápida y sencilla con tan sólo un click en
+          </p>
+          <a id="registro" routerLink="/registro">
+            <ion-button
+              class="btn-header"
+              color="success"
+              fill="solid"
+              style="--border-radius: 4px"
+            >
+              <ion-icon slot="start" name="person"></ion-icon>
+              {{ 'menu.tabs.register' | translate }}
+            </ion-button>
+          </a>
+        </section>
+        <section>
+          <img src="assets/imgs/home/services/service2.png" alt="service2" />
+          <h3>Publica tu búsqueda y recibe múltiples respuestas</h3>
+          <p>
+            Selecciona el límite de respuestas que quieres recibir o recibe
+            ofertas ilimitadas.
+          </p>
+        </section>
+        <section>
+          <img src="assets/imgs/home/services/service3.png" alt="service3" />
+          <h3>Responde a otros usuarios, comparte y valora</h3>
+          <p>Colabora con la comunidad y recibe su apoyo.</p>
+        </section>
+      </ion-row>
+    </div>
+    <ion-item-divider></ion-item-divider>
+    <div class="app-whyUse">
+      <ion-row>
+        <div class="section-header">
+          <h3>
+            ¿Por qué usar
+            <img
+              class="image-aligned"
+              src="assets/imgs/logo.png"
+              alt="Febelink logo name"
+            />?
+          </h3>
+        </div>
+      </ion-row>
+      <ion-row class="flexed-row">
+        <section>
+          <img src="assets/imgs/home/whyUse/whyUse1.png" alt="whyUse1" />
+          <h3>Date de alta gratis</h3>
+          <p>
+            Con Febelink podrás encontrar al profesional que necesitas para
+            cubrir cualquier necesidad. Podrás comparar precios, las
+            valoraciones y su experiencia.
+          </p>
+        </section>
+        <section>
+          <img src="assets/imgs/home/whyUse/whyUse2.png" alt="whyUse2" />
+          <h3>Tienes el control</h3>
+          <p>
+            Tendrás en tu mano el poder de decisión. Elige al profesional que
+            mejor se ajuste a tus necesidades. Rápido y sencillo.
+          </p>
+        </section>
+        <section>
+          <img src="assets/imgs/home/whyUse/whyUse3.png" alt="whyUse3" />
+          <h3>Rapidísimo</h3>
+          <p>
+            Encontrar a tu profesional es más fácil que nunca. Obtén respuestas
+            de profesionales cercanos.
+          </p>
+        </section>
+      </ion-row>
+    </div>
+    <ion-item-divider></ion-item-divider>
+    <div class="downloads">
+      <ion-row>
+        <div class="section-header">
+          <h3>¡Descárgate la app!</h3>
+        </div>
+      </ion-row>
+      <ion-row class="flexed-row">
+        <section>
+          <p>
+            <ion-icon name="checkmark-outline"></ion-icon> Controla tu solicitud
+            donde y cuando quieras.
+          </p>
+          <p>
+            <ion-icon name="checkmark-outline"></ion-icon> Responde, Chatea y
+            obtén la información de los usuarios.
+          </p>
+          <p>
+            <ion-icon name="checkmark-outline"></ion-icon> Recibe notificaciones
+            relacionadas con tu búsqueda o con tu sector.
+          </p>
+          <a
+            href="https://play.google.com/store/apps/details?id=com.xerintel.febelink54831"
+            ><img
+              src="assets/imgs/home/playstore.png"
+              id="google-button"
+              alt="PlayStore Link"
+          /></a>
+        </section>
+      </ion-row>
+    </div>
   </ion-grid>
-
 </ion-content>
 
 <ion-footer
@@ -145,7 +322,12 @@
 >
   <ion-toolbar color="febelink">
     <div>
-      <p style="margin-bottom: 0px">© {{ currentYear }} Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
+      <p style="margin-bottom: 0px">
+        © {{ currentYear }} Febelink |
+        <span class="terms-text" (click)="termsModal()"
+          >Terminos y condiciones</span
+        >
+      </p>
       <p style="margin-top: 5px">Contacto: info@febelink.com</p>
     </div>
   </ion-toolbar>

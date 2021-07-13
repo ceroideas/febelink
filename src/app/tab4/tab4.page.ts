@@ -11,7 +11,7 @@ import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { GuidePage } from '../pages/guide/guide.page';
 import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Chart } from 'chart.js';
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -61,6 +61,7 @@ export class Tab4Page {
   passwordIcon: string = 'eye-off';
   passwordType2: string = 'password';
   passwordIcon2: string = 'eye-off';
+  message: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -75,7 +76,8 @@ export class Tab4Page {
     private storage: Storage,
     private socialSharing: SocialSharing,
     public popoverController: PopoverController,
-    private actionSheet: ActionSheetController
+    private actionSheet: ActionSheetController,
+    private route: ActivatedRoute
 ) {
     if (this.platform.is('cordova')) {
         this.isNative = true;
@@ -84,6 +86,16 @@ export class Tab4Page {
     }
 
     this.subsectores = [];
+
+
+
+    this.route.queryParams.subscribe(params => {
+        const navExtras = this.router.getCurrentNavigation().extras.state;        
+        if (navExtras) {
+          this.message = navExtras.msg;
+          console.log(navExtras);
+        }
+    });
 }
 //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
 showHidePassMessages(){
