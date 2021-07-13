@@ -3,7 +3,7 @@ import { ApiService } from '../services/api.service';
 import { ModalController, Platform } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
 import { UtilitiesService } from '../services/utilities.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CookiesComponent } from '../components/cookies/cookies.component';
 import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -63,7 +63,6 @@ export class Tab1Page {
     private sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private authSvc:AuthenticationService,
-    private activatedRoute:ActivatedRoute,
     private userSvc:UserService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
@@ -84,15 +83,6 @@ export class Tab1Page {
 
   ionViewDidEnter() {
     this.loadData();
-    this.recomendation();
-  }
-
-  private recomendation() {
-    const recommenderId: string = this.activatedRoute.snapshot.paramMap.get('recommenderId');
-    if(recommenderId){
-      console.log('Recomended by', recommenderId); 
-      this.cookSvc.set('recommenderId', recommenderId, 1);
-    }
   }
 
   ionViewDidLeave() {

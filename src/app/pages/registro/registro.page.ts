@@ -109,8 +109,7 @@ export class RegistroPage implements OnInit {
     if (this.form.valid) {
       await this.utilities.showLoading();
 
-
-      const afiliated:string = this.cookSvc.get("recommenderId");
+      const afiliated: string = this.cookSvc.get('from');
 
       const registrationPayload = {
         email: this.form.get('email').value,

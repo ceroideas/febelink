@@ -101,10 +101,20 @@ export class AppComponent implements OnDestroy{
         this.getUserInfo();
       }
     });
-  
+    
+    this.isRecomendation();
+
     // this.loginImplicito();
   }
 
+  isRecomendation() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      const from = params['from'];
+      if(!from) return;
+      console.log('Recomended by', from); 
+      this.cookSvc.set('from', from, 1);
+    });    
+  }
 
   setupLanguage() {
     const currentLanguage = this.translateService.getDefaultLanguage();
