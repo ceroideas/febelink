@@ -17,10 +17,10 @@
         {{ 'menu.tabs.chat' | translate }}
       </ion-button>
         
-      <ion-button class="btn-header" (click)="irA('/menu/perfil')" [class]="(currentTab==tabs.Profile)?'active':''" >
+      <ion-button class="btn-header" (click)="irA('/login')" *ngIf="!perfil">
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ ((!perfil)? 'menu.tabs.login':'menu.tabs.profile') | translate }}
-      </ion-button>      
+        {{ 'menu.tabs.login' | translate }}
+      </ion-button>    
       <ion-button class="btn-header" (click)="irA('/registro')" color="success" *ngIf="!perfil" fill="solid" style="--border-radius: 4px;">
         <ion-icon slot="start" name="person"></ion-icon>
         {{ 'menu.tabs.register' | translate }}
@@ -31,7 +31,7 @@
     <ion-button class="btn-header" (click)="shareFebelink($event)">
       <ion-icon slot="start" name="share-social"></ion-icon>
       <span class="desktop" translate>menu.tabs.share-febelink</span>
-      <span class="mobile" translate>share</span>
+      <span class="mobile" translate>common.share</span>
       
     </ion-button>
     <ion-button size="large" color="primary" slot="icon-only" (click)="openGuide()" >

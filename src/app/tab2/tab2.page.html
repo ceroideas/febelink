@@ -4,21 +4,24 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <app-header-buttons [perfil]="currentUser" currentTab=2></app-header-buttons>
+    <app-header-buttons
+      [perfil]="currentUser"
+      currentTab="2"
+    ></app-header-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <!-- Search component and filters. -->
-  <ion-grid style="max-width: 768px;">
+  <ion-grid style="max-width: 768px">
     <ion-row class="ion-align-items-center">
       <ion-col size="10">
-        <ion-searchbar #mysearch
+        <ion-searchbar
+          #mysearch
           placeholder="{{ 'common.searchPlaceholder' | translate }}"
           debounce="500"
         >
@@ -26,102 +29,123 @@
       </ion-col>
 
       <ion-col size="2">
-        <ion-icon size="large" tappable name="filter-outline" (click)="showFilters = !showFilters"></ion-icon>
+        <ion-icon
+          size="large"
+          tappable
+          name="filter-outline"
+          (click)="showFilters = !showFilters"
+        ></ion-icon>
       </ion-col>
     </ion-row>
 
-      <ng-container *ngIf="showFilters">
-        <div class="filtros">
-          <ion-item class="categorias">
-            <ion-label>{{ 'common.labelSectors' | translate }}</ion-label>
-            <ionic-selectable
-              item-content
-              [(ngModel)]="sector"
-              itemValueField="id"
-              itemTextField="nombre"
-              [items]="sectors"
-              [canSearch]="true"
-              (onChange)="sectorChange($event)"
-            >
-            </ionic-selectable>
-          </ion-item>
-          <ion-item class="categorias">
-            <ion-label>{{ 'common.labelSubsectors' | translate }}</ion-label>
-            <ionic-selectable
-              item-content
-              [(ngModel)]="subsector"
-              itemValueField="id"
-              itemTextField="nombre"
-              [items]="subSectors"
-              [canSearch]="true"
-              (onChange)="subSectorChange($event)"
-            >
-            </ionic-selectable> </ion-item
-          ><ion-item class="categorias">
-            <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-            <ionic-selectable
-              item-content
-              [(ngModel)]="province"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="provinces"
-              [canSearch]="true"
-              (onChange)="provincesChange($event)"
-            >
-            </ionic-selectable>
-          </ion-item>
-          <ion-item class="categorias">
-            <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-            <ionic-selectable
-              item-content
-              [(ngModel)]="town"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="towns"
-              [canSearch]="true"
-              (onChange)="townsChange($event)"
-            >
-            </ionic-selectable>
-          </ion-item>
-        </div>
-      </ng-container>
+    <ng-container *ngIf="showFilters">
+      <div class="filtros">
+        <ion-item class="categorias">
+          <ion-label>{{ 'common.labelSectors' | translate }}</ion-label>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="sector"
+            itemValueField="id"
+            itemTextField="nombre"
+            [items]="sectors"
+            [canSearch]="true"
+            (onChange)="sectorChange($event)"
+          >
+          </ionic-selectable>
+        </ion-item>
+        <ion-item class="categorias">
+          <ion-label>{{ 'common.labelSubsectors' | translate }}</ion-label>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="subsector"
+            itemValueField="id"
+            itemTextField="nombre"
+            [items]="subSectors"
+            [canSearch]="true"
+            (onChange)="subSectorChange($event)"
+          >
+          </ionic-selectable> </ion-item
+        ><ion-item class="categorias">
+          <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="province"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="provinces"
+            [canSearch]="true"
+            (onChange)="provincesChange($event)"
+          >
+          </ionic-selectable>
+        </ion-item>
+        <ion-item class="categorias">
+          <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="town"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="towns"
+            [canSearch]="true"
+            (onChange)="townsChange($event)"
+          >
+          </ionic-selectable>
+        </ion-item>
+      </div>
+    </ng-container>
 
-  <div class="cargando-container text-center" margin-top *ngIf="isLoading">
-    <ion-spinner></ion-spinner>
-    <p>{{ 'common.labelLoading' | translate }}</p>
-  </div>
-  <p
-    class="vacio text-center"
-    *ngIf="!(searchResults.length>0) && !isLoading"
-  >
-  {{ 'common.labelNoElements' | translate }}
-  </p>
-
-  <ion-list *ngIf="!isLoading" class="results-list">
-
-    <ion-item tappable lines="none" (click)="detalleDemanda(demanda)"
-      *ngFor="let demanda of searchResults | filter:mysearch.value"
+    <div class="cargando-container text-center" margin-top *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>{{ 'common.labelLoading' | translate }}</p>
+    </div>
+    <p
+      class="vacio text-center"
+      *ngIf="!(searchResults.length>0) && !isLoading"
     >
-      <ion-avatar slot="start">
-        <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-        <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
-      </ion-avatar>
-      <ion-label>
-        <h2><strong>{{demanda?.nombre}}</strong></h2>
-        <em class="desc">{{demanda?.descripcion}}</em>
-      </ion-label>
-      <ion-label slot="end">
-        <em style="padding: 5px">{{demanda?.user?.name}}</em>
-      </ion-label>
-      <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"></ion-icon>
-    </ion-item>
-  </ion-list>
-</ion-grid>
+      {{ 'common.labelNoElements' | translate }}
+    </p>
+
+    <ion-list *ngIf="!isLoading" class="results-list">
+      <ion-item
+        tappable
+        lines="none"
+        (click)="detalleDemanda(demanda)"
+        *ngFor="let demanda of searchResults | filter:mysearch.value"
+      >
+        <ion-avatar slot="start">
+          <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+          <ion-img
+            [src]="demanda?.imagen"
+            *ngIf="demanda?.imagen"
+            appImgErrorFallback
+          ></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2><strong>{{demanda?.nombre}}</strong></h2>
+          <em class="desc">{{demanda?.descripcion}}</em>
+        </ion-label>
+        <ion-label slot="end">
+          <em style="padding: 5px">{{demanda?.user?.name}}</em>
+        </ion-label>
+        <ion-icon
+          slot="end"
+          [color]="demanda.favorito ? 'danger' : 'grey'"
+          [name]="demanda.favorito ? 'heart' : 'heart-outline'"
+          (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"
+        ></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
 </ion-content>
 
 <ion-footer class="ion-no-border ion-text-center desktop" color="febelink">
   <ion-toolbar color="febelink">
-    <p style="margin-bottom: 0px">© {{ currentYear }} Febelink | <span class="terms-text" (click)="termsModal()">Terminos y condiciones</span></p>
+    <p style="margin-bottom: 0px">
+      © {{ currentYear }} Febelink |
+      <span class="terms-text" (click)="termsModal()"
+        >Terminos y condiciones</span
+      >
+    </p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>

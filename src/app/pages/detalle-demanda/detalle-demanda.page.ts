@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { DemandaService } from 'src/app/services/demanda.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -59,7 +60,8 @@ export class DetalleDemandaPage implements OnInit {
     private navCtrl: NavController,
     private translateService: TranslateService,
     private authSvc:AuthenticationService,
-    private demanadaSvc:DemandaService
+    private demanadaSvc:DemandaService,
+    private userSvc:UserService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -278,7 +280,8 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   goToChat() {
-    if (this.checkUserData()) {
+
+    if(this.userSvc.checkUserDataComplete(this.perfil)){
       this.storage.get('userData').then(res => {
         if (res) {
           const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
@@ -298,8 +301,6 @@ export class DetalleDemandaPage implements OnInit {
             this.navCtrl.navigateForward('chat', navigationExtras);
         }
       });
-    } else {
-      this.utilities.showToast(this.translateService.instant('pages.demandDetails.messageFillProfileData'));
     }
   }
 
@@ -321,15 +322,6 @@ export class DetalleDemandaPage implements OnInit {
       this.authSvc.userNeedsToRegister();
     }
   }
-
-  checkUserData(): boolean {
-    if (this.perfil.dni && this.perfil.telefono && this.perfil.direccion)
-      return true;
-    else
-      return false;
-
-  }
-
 
   async onClickAddToFavorites(demand) {
     this.demanadaSvc.addToFavorites(demand);

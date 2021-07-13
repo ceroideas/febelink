@@ -33,8 +33,7 @@
             "login": "Iniciar sesión",
             "share-febelink": "Comparte Febelink",
             "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales.",
-            "register": "Register"
-
+            "register": "Regístrate"
         },
         "pages": {
             "opinions": "Opiniones",
@@ -75,7 +74,8 @@
             "buttonAskRecommendation": "Pedir recomendación",
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
-            "labelOpinions": "Opiniones"
+            "labelOpinions": "Opiniones",
+            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil"
         }
     },
     "pages": {
