@@ -12,9 +12,11 @@
   <ion-grid fixed>
     <ion-row class="ion-align-items-center">
       <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
-        <ion-item *ngIf="!showCard" lines="none">
+        <ion-item id="logo" *ngIf="!showCard" lines="none">
           <img src="assets/imgs/logo.png" alt="Febelink logo" />
         </ion-item>
+
+        <h2>El buscador de servicios profesionales</h2>
 
         <!-- Search engine. -->
         <div class="content-filter">
@@ -178,12 +180,6 @@
     <div class="app-services">
       <ion-row>
         <div class="section-header">
-          <h2>Febelink es el buscador de servicios profesionales</h2>
-        </div>
-      </ion-row>
-      <ion-item-divider></ion-item-divider>
-      <ion-row>
-        <div class="section-header">
           <h3>¿Cómo funciona?</h3>
           <p>Sólo 3 sencillos pasos</p>
         </div>
@@ -192,7 +188,21 @@
         <section>
           <img src="assets/imgs/home/services/service1.png" alt="service1" />
           <h3>Crea tu perfil de usuario</h3>
-          <p>Date de alta de forma rápida y sencilla.</p>
+          <br />
+          <p>
+            Date de alta de forma rápida y sencilla con tan sólo un click en
+          </p>
+          <a id="registro" routerLink="/registro">
+            <ion-button
+              class="btn-header"
+              color="success"
+              fill="solid"
+              style="--border-radius: 4px"
+            >
+              <ion-icon slot="start" name="person"></ion-icon>
+              {{ 'menu.tabs.register' | translate }}
+            </ion-button>
+          </a>
         </section>
         <section>
           <img src="assets/imgs/home/services/service2.png" alt="service2" />
