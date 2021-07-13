@@ -73,7 +73,8 @@
             "buttonAskRecommendation": "Pedir recomendación",
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
-            "labelOpinions": "Opiniones"
+            "labelOpinions": "Opiniones",
+            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil"
         }
     },
     "pages": {

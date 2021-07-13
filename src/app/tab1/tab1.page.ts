@@ -15,6 +15,7 @@ import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { AuthenticationService } from '../services/authentication/authentication.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tab1',
@@ -61,7 +62,8 @@ export class Tab1Page {
     private camera: Camera,
     private sanitizer: DomSanitizer,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService
+    private authSvc:AuthenticationService,
+    private userSvc:UserService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.obtenerPerfil();
@@ -104,7 +106,9 @@ export class Tab1Page {
   async submitForm() {
     if( this.perfil !== null) {
       const { nombre, descripcion: texto, sector, sub_sector, ofertas_restantes } = this.publishSearchForm.value;
-      if (this.checkUserFields()) {
+
+
+      if( this.userSvc.checkUserDataComplete(this.perfil)){
         this.utilities.showLoading();
           (await this.api.publicarDemanda(nombre, texto, sector, sub_sector, ofertas_restantes, this.base64img)).subscribe(async resp => {
             if( sector !== -1 ) {
@@ -120,9 +124,7 @@ export class Tab1Page {
             this.utilities.dismissLoading();
             this.utilities.showToast(this.translateService.instant("tabs.tab1.errorPublishSearch"));
           });
-        } else {
-          this.utilities.showToast(this.translateService.instant("tabs.tab1.errorMissingProfileInfo"));
-        }
+      }
     } else {
       this.authSvc.userNeedsToRegister();
     }
