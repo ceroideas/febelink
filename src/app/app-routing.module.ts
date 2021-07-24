@@ -9,7 +9,7 @@ const routes: Routes = [
             import('./tabs/tabs.module').then((m) => m.TabsPageModule),
     },
     {
-        path: 'recomender/:recommenderId',
+        path: 'user/:recommenderId',
         loadChildren: () => import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
     },
     {
