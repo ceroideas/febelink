@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
@@ -712,5 +712,10 @@ export class ApiService {
     formData.append('id', id.toString());
     formData.append('message', message);
     return this._createData('notify-new-message', formData);
+  }
+
+  async getNotificacionsLog(){
+    const notifListObs:Observable<any> = await this._getData('getNotificationsByUserId');
+    return notifListObs.pipe(first()).toPromise();
   }
 }
