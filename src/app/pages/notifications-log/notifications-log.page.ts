@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotifType } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-notifications-log',
@@ -10,13 +11,13 @@ import { ApiService } from 'src/app/services/api.service';
 export class NotificationsLogPage implements OnInit {
 
   constructor(
-    private api: ApiService
+    private notificationSvc:NotificationService
   ) { }
 
   notifications: Notification;
 
   async ngOnInit() {
-    this.notifications = await this.api.getNotificacionsLog();
+    this.notifications = await this.notificationSvc.getNotificacionsLog();
   }
 
   getIconByType(type:NotifType) {

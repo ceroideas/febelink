@@ -11,3 +11,9 @@ export interface Notification {
 export enum NotifType {
     Chat = 1
 }
+
+export interface UnreadNotificationsCount{
+    chats:number; 
+    offers:number; 
+    ratings:number;
+}

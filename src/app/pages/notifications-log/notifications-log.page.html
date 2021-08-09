@@ -9,15 +9,15 @@
 
 <ion-content>
   <!-- {{notifications | json}} -->
-  <ion-list *ngIf="notifications" class="results-list">
+  <ion-list *ngIf="notifications" class="results-list limit-size">
 
     <ion-item tappable lines="none"
     *ngFor="let notif of notifications"  [routerLink]="notif.route">
 
         <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
-
-      <ion-label>
-        <h2><strong>{{notif.title}}</strong></h2>
+        
+      <ion-label [class]="(!notif.is_read)?'unread':''">
+        <h2>{{notif.title}}</h2>
         <p>{{notif.message}}</p>
       </ion-label>
       <!-- <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();" class="editBtn">

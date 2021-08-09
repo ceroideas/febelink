@@ -714,8 +714,4 @@ export class ApiService {
     return this._createData('notify-new-message', formData);
   }
 
-  async getNotificacionsLog(){
-    const notifListObs:Observable<any> = await this._getData('getNotificationsByUserId');
-    return notifListObs.pipe(first()).toPromise();
-  }
 }
