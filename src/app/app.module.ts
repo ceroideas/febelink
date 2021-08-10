@@ -27,6 +27,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {BrowserTab} from '@ionic-native/browser-tab/ngx';
+import { Badge } from '@ionic-native/badge/ngx';
 
 import {
     GoogleLoginProvider,
@@ -78,6 +79,7 @@ const config: SocketIoConfig = { url: environment.SOCKET_URL, options: {secure: 
     CookieService,
     Facebook,
     GooglePlus,
+    Badge,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

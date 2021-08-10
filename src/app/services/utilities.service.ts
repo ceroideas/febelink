@@ -14,7 +14,7 @@ export class UtilitiesService {
                public loadingCtrl: LoadingController,
                private platform: Platform,
                private storage: Storage,
-               private titleService: Title ) { }
+               private titleService: Title) { }
   
 
 
@@ -224,12 +224,12 @@ export class UtilitiesService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  changeFavicon(icon:string){
+  updateWebFavicon(icon:string){
     const favIcon: HTMLLinkElement = document.querySelector('#favicon');
     favIcon.href = `assets/icon/${icon}.png`;
   }
 
-  changeTitle(title:string){
+  updateWebTitle(title:string){
     this.titleService.setTitle(title);
   }
 
