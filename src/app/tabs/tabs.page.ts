@@ -29,7 +29,7 @@ export class TabsPage {
   ionViewWillEnter() {
     this.obtenerPerfil();
     this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
-      console.log(notifCount);       
+      // console.log(notifCount);       
       this.notifCount = notifCount;
     })   
   }
