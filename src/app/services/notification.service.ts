@@ -21,11 +21,11 @@ export class NotificationService {
   
   async getNotificacionsLog(){
     const notifListObs:Observable<any> = await this.api._getData('getNotificationsByUserId');
+    // console.log(await notifListObs.pipe(first()).toPromise());    
     return notifListObs.pipe(first()).toPromise();
   }
 
   async getUnreadNotificationsCount(){
-    // debugger;
     const notifListObs:Observable<any> = await this.api._getData('getNotificationsCount');
     const notifCount = await notifListObs.pipe(first()).toPromise()
     this.unreadNotificationsCount.next(notifCount);

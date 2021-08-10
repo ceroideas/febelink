@@ -36,7 +36,6 @@ export class HeaderButtonsComponent implements OnInit {
 
   async ngOnInit() {
     this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
-      // console.log(notifCount);       
       this.notifCount = notifCount;
     })    
   }

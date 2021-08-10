@@ -36,8 +36,9 @@
       <span class="mobile" translate>share</span>
     </ion-button>
 
-    <ion-button class="btn-header" (click)="irA('/notifications-log')">
+    <ion-button class="btn-header" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
+      <ion-badge color="danger" slot="end" *ngIf="notifCount?.chats+notifCount?.offers+notifCount?.ratings" class="little-badge">{{notifCount?.chats+notifCount?.offers+notifCount?.ratings}}</ion-badge>
     </ion-button>
 
     <ion-button size="large" color="primary" slot="icon-only" (click)="openGuide()" >

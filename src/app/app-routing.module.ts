@@ -124,11 +124,7 @@ const routes: Routes = [
     {
         path: 'chat',
         loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
-    },
-  {
-    path: 'notifications-log',
-    loadChildren: () => import('./pages/notifications-log/notifications-log.module').then( m => m.NotificationsLogPageModule)
-  }
+    }
 
 ];
 

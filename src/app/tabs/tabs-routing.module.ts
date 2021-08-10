@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsLoggedGuard } from '../guards/is-logged.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -36,6 +37,11 @@ const routes: Routes = [
         path: 'welcome',
         loadChildren: () =>
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
+      },
+      {
+        path: 'notificaciones',
+        loadChildren: () => import('../pages/notifications-log/notifications-log.module').then( m => m.NotificationsLogPageModule),
+        canActivate: [ IsLoggedGuard ]
       },
     ],
   },
