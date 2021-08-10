@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { NotifType, UnreadNotificationsCount } from '../models/notification';
 import { ApiService } from './api.service';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { ApiService } from './api.service';
 export class NotificationService {
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private utils: UtilitiesService
   ) { }
 
   unreadNotificationsCount:BehaviorSubject<UnreadNotificationsCount> = new BehaviorSubject(null);
@@ -23,8 +25,10 @@ export class NotificationService {
   async getUnreadNotificationsCount(){
     // debugger;
     const notifListObs:Observable<any> = await this.api._getData('getNotificationsCount');
-    const res = await notifListObs.pipe(first()).toPromise()
-    this.unreadNotificationsCount.next(res);
+    const notifCount = await notifListObs.pipe(first()).toPromise()
+    this.unreadNotificationsCount.next(notifCount);
+    this.faviconNotification(notifCount);
+    this.titleNotification(notifCount);
   }
 
   async setNotificationsAsRead(type:NotifType){
@@ -34,6 +38,24 @@ export class NotificationService {
     const response:Observable<any> = await this.api._createData('setNotificationsAsRead', formData);
     await response.pipe(first()).toPromise();
     this.getUnreadNotificationsCount();
+  }
+
+  faviconNotification(notifCount:UnreadNotificationsCount){
+    const count:number = notifCount.chats + notifCount.offers + notifCount.ratings;
+    if(count){
+      this.utils.changeFavicon('favicon-notif');
+    } else {
+      this.utils.changeFavicon('favicon');
+    }
+  }
+
+  titleNotification(notifCount:UnreadNotificationsCount){
+    const count:number = notifCount.chats + notifCount.offers + notifCount.ratings;
+    if(count){
+      this.utils.changeTitle(`(${count}) Febelink`)
+    } else {
+      this.utils.changeTitle('Febelink');
+    }
   }
 
 }
