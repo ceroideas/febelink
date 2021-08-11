@@ -10,16 +10,17 @@ ion-content {
     position: relative;
     background-color: white;
     margin: 0 auto;
-    padding: 2em;
+    padding: 0em 2em 1em 2em;
     border: 1px solid #dadce0;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+    
     @media (min-width: 768px) {
       max-width: 450px;
-      margin: 5% auto 0px;
+      margin: 1% auto 0px;
     }
     ion-item {
-      margin: 1.5em;
+      margin: 0.4em;
     }
     img {
       display: block;
@@ -67,7 +68,7 @@ ion-content {
     }
     .terms-conditions {
       display: block;
-      margin: 1.5em auto;
+      margin: 0.75em auto;
       ion-checkbox {
         vertical-align: bottom;
       }
@@ -79,7 +80,7 @@ ion-content {
     }
   }
   .cover-overlay {
-    margin: 1.5em;
+    margin: 0.6em;
   }
 }
 

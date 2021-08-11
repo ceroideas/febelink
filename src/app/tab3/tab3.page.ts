@@ -16,6 +16,7 @@ import { IFavorite } from '../models/favorite.model';
 import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 import { GuidePage } from '../pages/guide/guide.page';
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -169,14 +170,6 @@ export class Tab3Page {
     this.router.navigate(['busqueda/' + idDemanda], {
       queryParams: { id_demanda: idDemanda, aceptada: aceptada },
     });
-  }
-
-  async openGuide() {
-    const guideModal = await this.modalCtrl.create({
-      component: GuidePage,
-      cssClass: 'guide-modal',
-    });
-    return await guideModal.present();
   }
 
   irA(p: string): void {
