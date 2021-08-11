@@ -85,7 +85,8 @@ ion-content {
     display: block;
     height: 150px;
     margin: 0 auto;
-    max-width: 150px;
+    width: 150px;
+    border-radius: 50%;
   }
   .editar {
     color: var(--ion-color-primary);
