@@ -62,7 +62,7 @@ export class HeaderButtonsComponent implements OnInit {
     const currentUser: IUser = await this.utilities.getUserData();
     const message = await this.translateService.instant("menu.tabs.share-msg");
     let reference:string = "";
-    if(currentUser?.id) reference = '?from='+currentUser.id
+    if(currentUser?.id) reference = 'user/'+currentUser.id
     const url = environment.WEB_URL +  reference;
     if (this.platform.is('cordova')) {
       this.shareNative(url, message);
