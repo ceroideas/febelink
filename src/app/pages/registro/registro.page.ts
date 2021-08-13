@@ -109,7 +109,7 @@ export class RegistroPage implements OnInit {
     if (this.form.valid) {
       await this.utilities.showLoading();
 
-      const afiliated: string = this.cookSvc.get('from');
+      const afiliated: string = this.cookSvc.get('recommenderId');
 
       const registrationPayload = {
         email: this.form.get('email').value,
@@ -118,8 +118,11 @@ export class RegistroPage implements OnInit {
         name: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
-        afiliated,
+        idRecommender,
       };
+
+      console.log(registrationPayload);
+      
 
       this.api.registro(registrationPayload).subscribe(
         (resp) => {
