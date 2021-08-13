@@ -118,8 +118,11 @@ export class RegistroPage implements OnInit {
         name: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
-        afiliated,
+        idRecommender,
       };
+
+      console.log(registrationPayload);
+      
 
       this.api.registro(registrationPayload).subscribe(
         (resp) => {
