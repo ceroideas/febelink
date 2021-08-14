@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { UnreadNotificationsCount } from 'src/app/models/notification';
 
 @Component({
   selector: 'app-header-buttons',
@@ -19,6 +21,7 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() perfil: IUser;
   @Input() currentTab:Tabs;
   tabs = Tabs;
+  notifCount:UnreadNotificationsCount;
 
   constructor(
     private modalCtrl: ModalController,
@@ -27,11 +30,14 @@ export class HeaderButtonsComponent implements OnInit {
     private socialSharing: SocialSharing,
     public popoverController: PopoverController,
     private translateService: TranslateService,
-    private utilities: UtilitiesService
+    private utilities: UtilitiesService,
+    private notificationsSvc: NotificationService
     ) { }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
+      this.notifCount = notifCount;
+    })    
   }
 
   async openGuide() {

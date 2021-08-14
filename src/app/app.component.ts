@@ -18,6 +18,7 @@ import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
 import { CookieService } from 'ngx-cookie-service';
 import { first, take } from 'rxjs/operators';
+import { NotificationService } from './services/notification.service';
 
 @Component({
     selector: 'app-root',
@@ -66,7 +67,8 @@ export class AppComponent implements OnDestroy{
     public authenticationService: AuthenticationService,
     private modalCtrl: ModalController,
     private cookSvc: CookieService,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    private notificationSvc:NotificationService
   ) {
     this.initializeApp();
   }
@@ -101,8 +103,9 @@ export class AppComponent implements OnDestroy{
         this.getUserInfo();
       }
     });
-    // this.loginImplicito();
-  }
+    
+    this.isRecomendation();
+    this.notificationSvc.getUnreadNotificationsCount();
 
   setupLanguage() {
     const currentLanguage = this.translateService.getDefaultLanguage();

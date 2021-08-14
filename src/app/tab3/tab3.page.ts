@@ -15,7 +15,8 @@ import { TermsPage } from '../pages/terms/terms.page';
 import { IFavorite } from '../models/favorite.model';
 import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 import { GuidePage } from '../pages/guide/guide.page';
-
+import { NotificationService } from '../services/notification.service';
+import { NotifType } from '../models/notification';
 
 @Component({
   selector: 'app-tab3',
@@ -34,7 +35,8 @@ export class Tab3Page {
     private utilities: UtilitiesService,
     private router: Router,
     private translateService: TranslateService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private notificationSvc:NotificationService
   ) {}
 
   async ionViewDidEnter() {
@@ -43,6 +45,7 @@ export class Tab3Page {
       this.isLoading = true;
       await this.getOffers();
     }
+    this.notificationSvc.setNotificationsAsRead(NotifType.Chat);
   }
 
   async getUserProfile() {
@@ -170,6 +173,14 @@ export class Tab3Page {
     this.router.navigate(['busqueda/' + idDemanda], {
       queryParams: { id_demanda: idDemanda, aceptada: aceptada },
     });
+  }
+
+  async openGuide() {
+    const guideModal = await this.modalCtrl.create({
+      component: GuidePage,
+      cssClass: 'guide-modal',
+    });
+    return await guideModal.present();
   }
 
   irA(p: string): void {

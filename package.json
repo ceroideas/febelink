@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
     "@angular/service-worker": "~9.1.6",
+    "@ionic-native/badge": "^5.35.0",
     "@ionic-native/browser-tab": "^5.29.0",
     "@ionic-native/camera": "^5.26.0",
     "@ionic-native/core": "^5.0.7",
@@ -70,6 +71,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
@@ -140,7 +142,8 @@
         "PLAY_SERVICES_VERSION": "15.0.1"
       },
       "cordova-plugin-androidx": {},
-      "cordova-plugin-androidx-adapter": {}
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-badge": {}
     },
     "platforms": [
       "android",
