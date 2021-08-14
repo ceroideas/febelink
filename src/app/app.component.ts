@@ -15,6 +15,7 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
+import { NotificationService } from './services/notification.service';
 
 @Component({
     selector: 'app-root',
@@ -61,7 +62,8 @@ export class AppComponent implements OnDestroy{
     private storage: Storage,
     private menu: MenuController,
     public authenticationService: AuthenticationService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private notificationSvc:NotificationService
   ) {
     this.initializeApp();
   }
@@ -97,6 +99,7 @@ export class AppComponent implements OnDestroy{
       }
     });
     // this.loginImplicito();
+    this.notificationSvc.getUnreadNotificationsCount();
   }
 
   setupLanguage() {
