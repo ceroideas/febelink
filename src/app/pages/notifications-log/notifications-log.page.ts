@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { NotifType } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { TermsPage } from '../terms/terms.page';
 
 @Component({
   selector: 'app-notifications-log',
@@ -13,10 +15,12 @@ export class NotificationsLogPage implements OnInit {
 
   constructor(
     private notificationSvc:NotificationService,
-    private router: Router
+    private router: Router,
+    private modalCtrl: ModalController
   ) { }
 
   notifications: Notification;
+  currentYear = new Date().getFullYear();
 
   async ngOnInit() {
     this.notifications = await this.notificationSvc.getNotificacionsLog();
@@ -31,6 +35,14 @@ export class NotificationsLogPage implements OnInit {
 
   goTo(route:string){
     if(route) this.router.navigateByUrl(route)
+  }
+
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
 }
