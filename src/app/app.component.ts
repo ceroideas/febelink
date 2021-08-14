@@ -82,6 +82,7 @@ export class AppComponent implements OnDestroy{
       if (this.platform.is('cordova')) {
         this.splashScreen.hide();
         this.initDeeplinks();
+        this.router.navigate(['login']);
       }
 
       this.userSubscription = this.api.getUserLogged().subscribe((item) => {
