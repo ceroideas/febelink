@@ -12,8 +12,8 @@
   <!-- {{notifications | json}} -->
   <ion-list *ngIf="notifications" class="results-list limit-size">
 
-    <ion-item tappable lines="none"
-    *ngFor="let notif of notifications"  [routerLink]="notif.route">
+    <ion-item lines="none"
+    *ngFor="let notif of notifications" (click)="goTo(notif.route)" [class]="(notif.route)?'clickable':''">
 
         <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
         
