@@ -9,15 +9,12 @@ import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController } from '@ionic/angular';
-import { JsonPipe } from '@angular/common';
 import { TranslateConfigService } from './services/translate/translate-config.service';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
-import { CookieService } from 'ngx-cookie-service';
-import { first, take } from 'rxjs/operators';
 import { NotificationService } from './services/notification.service';
 
 @Component({
@@ -66,8 +63,6 @@ export class AppComponent implements OnDestroy{
     private menu: MenuController,
     public authenticationService: AuthenticationService,
     private modalCtrl: ModalController,
-    private cookSvc: CookieService,
-    private activatedRoute:ActivatedRoute,
     private notificationSvc:NotificationService
   ) {
     this.initializeApp();
@@ -103,9 +98,9 @@ export class AppComponent implements OnDestroy{
         this.getUserInfo();
       }
     });
-    
-    this.isRecomendation();
+    // this.loginImplicito();
     this.notificationSvc.getUnreadNotificationsCount();
+  }
 
   setupLanguage() {
     const currentLanguage = this.translateService.getDefaultLanguage();

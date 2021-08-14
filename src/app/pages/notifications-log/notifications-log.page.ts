@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NotifType } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -11,7 +12,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class NotificationsLogPage implements OnInit {
 
   constructor(
-    private notificationSvc:NotificationService
+    private notificationSvc:NotificationService,
+    private router: Router
   ) { }
 
   notifications: Notification;
@@ -25,6 +27,10 @@ export class NotificationsLogPage implements OnInit {
       case NotifType.Chat: return 'chatbubbles-outline';
       default: return 'notifications-outline';
     }
+  }
+
+  goTo(route:string){
+    if(route) this.router.navigateByUrl(route)
   }
 
 }
