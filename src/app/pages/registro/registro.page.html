@@ -97,9 +97,33 @@
       </ion-item>
 
       <span class="terms-conditions">
-        <ion-checkbox slot="start" formControlName="terminos"></ion-checkbox>
+        <ion-checkbox slot="start" formControlName="terminos"> </ion-checkbox>
         He leído, y acepto los
         <a (click)="openTerms()">terminos y condiciones</a>
+      </span>
+     
+      <span class="privacy-policy">
+        <ion-checkbox slot="start" formControlName="privacy"></ion-checkbox>
+        He leído, y acepto la
+        <a (click)="openPrivacyPolicy()">política de privacidad</a>
+      </span>
+    
+      <span class="legal-disclaimer">
+        <ion-checkbox slot="start" formControlName="disclaimer"></ion-checkbox>
+        He leído, y acepto el
+        <a (click)="openLegalDisclaimer()">aviso legal</a>
+      </span>
+      
+      <span class="use-conditions">
+        <ion-checkbox slot="start" formControlName="conditions"></ion-checkbox>
+        He leído, y acepto las
+        <a (click)="openUseConditions()">condiciones generales de uso</a>
+      </span>
+     
+      <span class="cookie-policy">
+        <ion-checkbox slot="start" formControlName="cookies"></ion-checkbox>
+        He leído, y acepto la
+        <a (click)="openCookiePolicy()">política de cookies</a>
       </span>
 
       <ion-button expand="full" type="submit" ion-button color="febelink"

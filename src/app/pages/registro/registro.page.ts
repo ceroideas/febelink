@@ -5,6 +5,10 @@ import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { Router } from '@angular/router';
 import { TermsPage } from '../terms/terms.page';
+import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
+import { LegalDisclaimerPage } from '../legal-disclaimer/legal-disclaimer.page';
+import { UseConditionsPage } from '../use-conditions/use-conditions.page';
+import { CookiePolicyPage } from '../cookie-policy/cookie-policy.page';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -43,6 +47,10 @@ export class RegistroPage implements OnInit {
       sub_sector: [''],
       confirmPassword: ['', Validators.required],
       terminos: [null, Validators.requiredTrue],
+      privacy: [null, Validators.requiredTrue],
+      disclaimer: [null, Validators.requiredTrue],
+      conditions: [null, Validators.requiredTrue],
+      cookies: [null, Validators.requiredTrue],
     });
 
     this.form.get('sector').valueChanges.subscribe((id) => {
@@ -174,7 +182,10 @@ export class RegistroPage implements OnInit {
         this.utilities.showToast(
           'Tienes que aceptar los términos y condiciones'
         );
-      } else {
+      }
+      
+      
+      else {
         this.utilities.showToast('Tienes que insertar los campos obligatorios');
       }
     }
@@ -185,5 +196,33 @@ export class RegistroPage implements OnInit {
       component: TermsPage,
     });
     return await termsModal.present();
+  }
+
+  async openPrivacyPolicy() {
+    const privacyModal = await this.modalCtrl.create({
+      component: PrivacyPolicyPage,
+    });
+    return await privacyModal.present();
+  }
+
+  async openLegalDisclaimer() {
+    const disclaimerModal = await this.modalCtrl.create({
+      component: LegalDisclaimerPage,
+    });
+    return await disclaimerModal.present();
+  }
+
+  async openUseConditions() {
+    const conditionsModal = await this.modalCtrl.create({
+      component: UseConditionsPage,
+    });
+    return await conditionsModal.present();
+  }
+
+  async openCookiePolicy() {
+    const cookiesModal = await this.modalCtrl.create({
+      component: CookiePolicyPage,
+    });
+    return await cookiesModal.present();
   }
 }

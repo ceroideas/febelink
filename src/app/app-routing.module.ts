@@ -128,7 +128,23 @@ const routes: Routes = [
     {
         path: 'chat',
         loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
-    }
+    },  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./pages/privacy-policy/privacy-policy.module').then( m => m.PrivacyPolicyPageModule)
+  },
+  {
+    path: 'legal-disclaimer',
+    loadChildren: () => import('./pages/legal-disclaimer/legal-disclaimer.module').then( m => m.LegalDisclaimerPageModule)
+  },
+  {
+    path: 'use-conditions',
+    loadChildren: () => import('./pages/use-conditions/use-conditions.module').then( m => m.UseConditionsPageModule)
+  },
+  {
+    path: 'cookie-policy',
+    loadChildren: () => import('./pages/cookie-policy/cookie-policy.module').then( m => m.CookiePolicyPageModule)
+  }
+
 
 ];
 
