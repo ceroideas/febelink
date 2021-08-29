@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Notification, NotifType } from 'src/app/models/notification';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { TermsPage } from '../terms/terms.page';
 
 @Component({
   selector: 'app-notifications-log',
@@ -13,7 +15,8 @@ export class NotificationsLogPage implements OnInit {
 
   constructor(
     private notificationSvc:NotificationService,
-    private router: Router
+    private router: Router,
+    private modalCtrl: ModalController
   ) { }
 
   notifications: Notification[];
@@ -33,6 +36,14 @@ export class NotificationsLogPage implements OnInit {
     if(notification.route) this.router.navigateByUrl(notification.route)
     await this.notificationSvc.setNotificationAsReadById(notification.id)
     notification.is_read = 1;
+  }
+
+  async termsModal() {
+    const TermsModal = await this.modalCtrl.create({
+      component: TermsPage,
+    });
+
+    await TermsModal.present();
   }
 
 }

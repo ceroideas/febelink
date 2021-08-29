@@ -14,7 +14,7 @@
   <img [src]="demanda?.imagen" *ngIf="demanda?.imagen && !base64img" class="placeholder" appImgErrorFallback>
   <div class="edit-image">
     <span>Editar <ion-icon name="create"></ion-icon></span>
-    <input *ngIf="!isNative" class="input-file" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="adjuntarImagen()" /> 
+    <input class="input-file" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="adjuntarImagen()" /> 
   </div>
    
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
