@@ -10,6 +10,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UnreadNotificationsCount } from 'src/app/models/notification';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-header-buttons',
@@ -22,9 +23,11 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() currentTab:Tabs;
   tabs = Tabs;
   notifCount:UnreadNotificationsCount;
+  totalUnreadMessages:number;
 
   constructor(
     private modalCtrl: ModalController,
+    private api: ApiService,
     private router: Router,
     private platform: Platform,
     private socialSharing: SocialSharing,
@@ -38,6 +41,13 @@ export class HeaderButtonsComponent implements OnInit {
     this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
       this.notifCount = notifCount;
     })    
+    await this.api.getUnreadMessages();
+    this.api.unreadChatMessages.subscribe(unreadMessages => {
+      this.totalUnreadMessages = 0;
+      unreadMessages?.forEach(room => {
+        this.totalUnreadMessages = +room.unread
+      })
+    })
   }
 
   async openGuide() {

@@ -120,6 +120,8 @@ export class ChatPage {
 
                     this.empty_chat = false;
                     this.scrollToBottomOnInit_one();
+                    this.ApiService.setMessagesAsRead();    
+                    
                 } else if (response.correct == true && response.message == 'NoChat') {
                     this.empty_chat = true;
                     this.view_finish=false;

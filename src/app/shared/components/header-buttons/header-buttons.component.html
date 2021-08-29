@@ -16,7 +16,7 @@
       <ion-button class="btn-header" [class]="(currentTab==tabs.Chat)?'active':''" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="chatbubbles"></ion-icon>
         {{ 'menu.tabs.chat' | translate }}
-        <ion-badge color="danger" slot="end" *ngIf="notifCount?.chats">{{notifCount?.chats}}</ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="totalUnreadMessages">{{totalUnreadMessages}}</ion-badge>
       </ion-button>
         
       <ion-button class="btn-header" (click)="irA('/login')" *ngIf="!perfil">

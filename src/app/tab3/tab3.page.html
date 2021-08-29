@@ -37,6 +37,7 @@
             <ion-avatar slot="start">
               <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
               <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
+              <ion-badge color="danger">{{getUnreadMessages(offer)}}</ion-badge>
             </ion-avatar>
             <ion-label>
               <div class="flex">
