@@ -38,15 +38,21 @@ export class HeaderButtonsComponent implements OnInit {
     ) { }
 
   async ngOnInit() {
+    //TODO: These subscribers are called multiple times because header component is in several pages. We should avoid this.
     this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
       this.notifCount = notifCount;
+      this.notificationsSvc.faviconNotification(this.notifCount, this.totalUnreadMessages);
+      this.notificationsSvc.titleNotification(this.notifCount, this.totalUnreadMessages);
     })    
     await this.api.getUnreadMessages();
-    this.api.unreadChatMessages.subscribe(unreadMessages => {
+    this.api.unreadChatMessages.subscribe(unreadMessages => {  
       this.totalUnreadMessages = 0;
       unreadMessages?.forEach(room => {
         this.totalUnreadMessages = +room.unread
       })
+
+    this.notificationsSvc.faviconNotification(this.notifCount, this.totalUnreadMessages);
+    this.notificationsSvc.titleNotification(this.notifCount, this.totalUnreadMessages);
     })
   }
 

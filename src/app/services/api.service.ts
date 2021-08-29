@@ -260,10 +260,11 @@ export class ApiService {
    * @param sector
    * @param subsector
    */
-  public enviarNotificacionAOfertantes(title, desc, sector, subsector) {
+  public enviarNotificacionAOfertantes(title, desc, sector, subsector, searchId?:string) {
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
+    formData.append('searchId', searchId);
 
     if (sector !== null) {
       formData.append('sector', sector);

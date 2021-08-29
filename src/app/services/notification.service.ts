@@ -29,8 +29,6 @@ export class NotificationService {
     const notifListObs:Observable<any> = await this.api._getData('getNotificationsCount');
     const notifCount = await notifListObs.pipe(first()).toPromise()
     this.unreadNotificationsCount.next(notifCount);
-    this.faviconNotification(notifCount);
-    this.titleNotification(notifCount);
   }
 
   async setNotificationsAsRead(type:NotifType){
@@ -42,8 +40,16 @@ export class NotificationService {
     this.getUnreadNotificationsCount();
   }
 
-  faviconNotification(notifCount:UnreadNotificationsCount){
-    const count:number = notifCount.chats + notifCount.offers + notifCount.ratings;
+  async setNotificationAsReadById(id: number) {
+    const formData = new FormData();
+    formData.append('id', id+'');
+    const response:Observable<any> = await this.api._createData('setNotificationAsReadById', formData);
+    await response.pipe(first()).toPromise();
+    this.getUnreadNotificationsCount();
+  }
+
+  faviconNotification(notifCount:UnreadNotificationsCount, totalUnreadMessages:number){
+    const count:number = notifCount?.chats + notifCount?.offers + notifCount?.ratings + totalUnreadMessages;
     this.badge.set(count).catch(err => {
       if(count){
         this.utils.updateWebFavicon('favicon-notif');
@@ -53,8 +59,8 @@ export class NotificationService {
     });
   }
 
-  titleNotification(notifCount:UnreadNotificationsCount){
-    const count:number = notifCount.chats + notifCount.offers + notifCount.ratings;
+  titleNotification(notifCount:UnreadNotificationsCount, totalUnreadMessages:number){
+    const count:number = notifCount?.chats + notifCount?.offers + notifCount?.ratings + totalUnreadMessages;
     if(count){
       this.utils.updateWebTitle(`(${count}) Febelink`)
     } else {

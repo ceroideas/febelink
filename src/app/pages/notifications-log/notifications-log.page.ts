@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotifType } from 'src/app/models/notification';
+import { Notification, NotifType } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -16,7 +16,7 @@ export class NotificationsLogPage implements OnInit {
     private router: Router
   ) { }
 
-  notifications: Notification;
+  notifications: Notification[];
 
   async ngOnInit() {
     this.notifications = await this.notificationSvc.getNotificacionsLog();
@@ -29,8 +29,10 @@ export class NotificationsLogPage implements OnInit {
     }
   }
 
-  goTo(route:string){
-    if(route) this.router.navigateByUrl(route)
+  async goTo(notification: Notification){
+    if(notification.route) this.router.navigateByUrl(notification.route)
+    await this.notificationSvc.setNotificationAsReadById(notification.id)
+    notification.is_read = 1;
   }
 
 }

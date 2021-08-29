@@ -116,7 +116,7 @@ export class Tab1Page {
             if( sector !== -1 ) {
               (await this.api.enviarNotificacionAOfertantes(this.translateService.instant("tabs.tab1.messageSearchDone"),
               `${this.translateService.instant("common.labelTitle")}:  ${nombre} \n${this.translateService.instant("common.labelDescription")}: ${texto}`,
-              sector, sub_sector)).subscribe( resp => {
+              sector, sub_sector, resp.id)).subscribe( resp => {
                 console.log("Notificacion enviada correctamente")
               });
             }

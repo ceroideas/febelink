@@ -13,7 +13,7 @@
   <ion-list *ngIf="notifications" class="results-list limit-size">
 
     <ion-item lines="none"
-    *ngFor="let notif of notifications" (click)="goTo(notif.route)" [class]="(notif.route)?'clickable':''">
+    *ngFor="let notif of notifications" (click)="goTo(notif)" [class]="(notif.route)?'clickable':''">
 
         <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
         
