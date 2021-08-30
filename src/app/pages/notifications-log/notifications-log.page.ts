@@ -28,6 +28,8 @@ export class NotificationsLogPage implements OnInit {
   getIconByType(type:NotifType) {
     switch (type) {
       case NotifType.Chat: return 'chatbubbles-outline';
+      case NotifType.Offer: return 'briefcase-outline';
+      case NotifType.AllUsers: return 'information-outline';
       default: return 'notifications-outline';
     }
   }
