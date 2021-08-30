@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
 
 @Component({
   selector: 'app-cookie-policy',
@@ -18,6 +19,13 @@ export class CookiePolicyPage implements OnInit {
    */
    public closeModal(): void {
     this.modalCtrl.dismiss();
+  }
+
+  async openPrivacyPolicy() {
+    const privacyModal = await this.modalCtrl.create({
+      component: PrivacyPolicyPage,
+    });
+    return await privacyModal.present();
   }
 
 }
