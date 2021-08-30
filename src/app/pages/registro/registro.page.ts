@@ -183,8 +183,28 @@ export class RegistroPage implements OnInit {
           'Tienes que aceptar los términos y condiciones'
         );
       }
-      
-      
+
+      else if(this.form.value.privacy === null || !this.form.value.privacy){
+        this.utilities.showToast(
+          'Tienes que aceptar la política de privacidad'
+        );
+      }
+      else if(this.form.value.disclaimer === null || !this.form.value.disclaimer){
+        this.utilities.showToast(
+          'Tienes que aceptar el aviso legal'
+        );
+      }
+      else if(this.form.value.conditions === null || !this.form.value.conditions){
+        this.utilities.showToast(
+          'Tienes que aceptar las condiciones generales de uso'
+        );
+      }
+      else if(this.form.value.cookies === null || !this.form.value.cookies){
+        this.utilities.showToast(
+          'Tienes que aceptar la política de cookies'
+        );
+      }
+  
       else {
         this.utilities.showToast('Tienes que insertar los campos obligatorios');
       }
