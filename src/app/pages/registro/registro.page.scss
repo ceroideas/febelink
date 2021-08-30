@@ -69,6 +69,7 @@ ion-content {
     .terms-conditions, .privacy-policy, .legal-disclaimer, .use-conditions, .cookie-policy {
       display: flex;
       margin: 0.35em auto;
+      gap: 2.2px;
       ion-checkbox {
         vertical-align: bottom;
       }
@@ -91,3 +92,4 @@ ion-content {
   top: 5px !important;
   margin: 0 auto !important;
 }
+
