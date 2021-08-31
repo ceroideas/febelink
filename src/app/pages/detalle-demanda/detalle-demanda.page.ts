@@ -140,7 +140,7 @@ export class DetalleDemandaPage implements OnInit {
     ).subscribe(
       (resp) => {
         this.demandasRelacionadas = resp;
-        console.log('this.demandasRelacionadas', this.demandasRelacionadas);
+        // console.log('this.demandasRelacionadas', this.demandasRelacionadas);
         for (let demanda of this.demandasRelacionadas) {
           if (demanda.imagen != null) {
             if (
@@ -282,17 +282,17 @@ export class DetalleDemandaPage implements OnInit {
   goToChat() {
 
     if(this.userSvc.checkUserDataComplete(this.perfil)){
-      this.storage.get('userData').then(res => {
-        if (res) {
-          const roomId = `${res.id}${this.demanda.id}${this.demanda.id_demandante}`;
+      this.storage.get('userData').then(user => {
+        if (user) {
+          const roomId = `${user.id}${this.demanda.id}${this.demanda.id_demandante}`;
             const navigationExtras: NavigationExtras = {
               queryParams: {
-                user_id: JSON.stringify(res.id),
-                user_name: JSON.stringify(res.name),
+                user_id: JSON.stringify(user.id),
+                user_name: JSON.stringify(user.name),
                 person_name: JSON.stringify('Chat'),
                 person_id: JSON.stringify(this.demanda.id_demandante),
                 room_id: JSON.stringify(roomId),
-                create: JSON.stringify(res.id),
+                create: JSON.stringify(user.id),
                 id_demandante: JSON.stringify(this.demanda.id_demandante),
                 demand_id: JSON.stringify(this.demanda.id),
                 search_title: JSON.stringify(this.demanda.nombre),

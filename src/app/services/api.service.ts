@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -7,6 +7,7 @@ import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
+import { UnreadMessages } from '../models/unreadMessages';
 
 @Injectable({
   providedIn: 'root',
@@ -259,10 +260,11 @@ export class ApiService {
    * @param sector
    * @param subsector
    */
-  public enviarNotificacionAOfertantes(title, desc, sector, subsector) {
+  public enviarNotificacionAOfertantes(title, desc, sector, subsector, searchId?:string) {
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
+    formData.append('searchId', searchId);
 
     if (sector !== null) {
       formData.append('sector', sector);
@@ -714,4 +716,14 @@ export class ApiService {
     return this._createData('notify-new-message', formData);
   }
 
+  unreadChatMessages:BehaviorSubject<UnreadMessages[]> = new BehaviorSubject(null);
+  public async getUnreadMessages() {
+    this.unreadChatMessages.next(await (await this._getData('getUnreadMessages')).toPromise())
+  }
+  public async setMessagesAsRead() {
+    const formData = new FormData();
+    const response:Observable<any> = await this._createData('setMessagesAsRead', formData);
+    await response.pipe(first()).toPromise();
+    await this.getUnreadMessages()
+  }
 }
