@@ -11,12 +11,14 @@
 <ion-content>
   <!-- {{notifications | json}} -->
   <ion-list *ngIf="notifications" class="results-list limit-size">
+    <ion-item
+      lines="none"
+      *ngFor="let notif of notifications"
+      (click)="goTo(notif)"
+      [class]="(notif.route)?'clickable':''"
+    >
+      <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
 
-    <ion-item lines="none"
-    *ngFor="let notif of notifications" (click)="goTo(notif)" [class]="(notif.route)?'clickable':''">
-
-        <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
-        
       <ion-label [class]="(!notif.is_read)?'unread':''">
         <h2>{{notif.title}}</h2>
         <p>{{notif.message}}</p>
@@ -42,4 +44,3 @@
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>
-
