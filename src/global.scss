@@ -83,3 +83,16 @@ ionic-selectable-modal {
         display: none;
     }
 }
+
+.flex{
+    display: flex;
+}
+
+.limit-size{
+    max-width: 768px; 
+    margin: auto;
+}
+
+.clickable{
+    cursor: pointer;
+}

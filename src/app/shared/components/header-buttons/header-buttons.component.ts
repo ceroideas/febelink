@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { UnreadNotificationsCount } from 'src/app/models/notification';
 
 @Component({
   selector: 'app-header-buttons',
@@ -19,6 +21,7 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() perfil: IUser;
   @Input() currentTab:Tabs;
   tabs = Tabs;
+  notifCount:UnreadNotificationsCount;
 
   constructor(
     private modalCtrl: ModalController,
@@ -27,11 +30,14 @@ export class HeaderButtonsComponent implements OnInit {
     private socialSharing: SocialSharing,
     public popoverController: PopoverController,
     private translateService: TranslateService,
-    private utilities: UtilitiesService
+    private utilities: UtilitiesService,
+    private notificationsSvc: NotificationService
     ) { }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
+      this.notifCount = notifCount;
+    })    
   }
 
   async openGuide() {
@@ -45,31 +51,24 @@ export class HeaderButtonsComponent implements OnInit {
 
 
   async irA(p: string): Promise<void> {
-    
-    // switch(p){
-    //   case '/menu/todas': this.currentTab = Tabs.Search; break;
-    //   case '/menu/busquedas': this.currentTab = Tabs.Recommend; break;
-    //   case '/menu/ofertas': this.currentTab = Tabs.Chat; break;
-    // }
 
-    // await this.utilities.wait(1000);
-    
-    if (p === '/menu/perfil') {
-      if (!this.perfil) {
-        this.router.navigate(['login']);
-      } else {
-        this.router.navigate(['/menu/perfil']);
-      }
-    } else {
-      this.router.navigate([p]);
-    }
+    this.router.navigate([p]);
+
+    // if (p === '/menu/perfil') {
+    //   if (!this.perfil) {
+    //     this.router.navigate(['login']);
+    //   } else {
+    //     this.router.navigate(['/menu/perfil']);
+    //   }
+    // } else {
+    // }
   }
 
   async shareFebelink(ev: any){
     const currentUser: IUser = await this.utilities.getUserData();
     const message = await this.translateService.instant("menu.tabs.share-msg");
     let reference:string = "";
-    if(currentUser?.id) reference = '?from='+currentUser.id
+    if(currentUser?.id) reference = 'user/'+currentUser.id
     const url = environment.WEB_URL +  reference;
     if (this.platform.is('cordova')) {
       this.shareNative(url, message);

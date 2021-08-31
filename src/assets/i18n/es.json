@@ -58,7 +58,8 @@
             "messageAddedFavorite": "Se ha añadido a favoritos correctamente.",
             "messageRemovedFavorite": "Se ha eliminado de favoritos correctamente.",
             "errorAddFavorite": "Error al añadir a favoritos.",
-            "errorRemoveFavorite": "Error al eliminar de favoritos."
+            "errorRemoveFavorite": "Error al eliminar de favoritos.",
+            "update-research": "Guardar cambios"
         },
         "tab3": {
             "alertDelete": {
@@ -73,7 +74,8 @@
             "buttonAskRecommendation": "Pedir recomendación",
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
-            "labelOpinions": "Opiniones"
+            "labelOpinions": "Opiniones",
+            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil"
         }
     },
     "pages": {

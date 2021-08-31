@@ -85,7 +85,8 @@ ion-content {
     display: block;
     height: 150px;
     margin: 0 auto;
-    max-width: 150px;
+    width: 150px;
+    border-radius: 50%;
   }
   .editar {
     color: var(--ion-color-primary);
@@ -160,4 +161,39 @@ ion-content {
   position: relative !important;
   top: 25px !important;
   margin: 0 auto !important;
+}
+
+.message{
+  position: absolute;
+  top: 10px;
+  right: 17px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  padding: 13px;
+  background-color: #a8dcfdec;
+  width: 230px;
+  text-align: left;
+  border: 1px solid #97C6E3;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+  animation-name: fadeIn;
+  animation-duration: 1.5s;
+
+  .closebtn{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      right: 37px;
+    }
+  
+    to {
+      opacity: 1;
+      right: 17px;
+    }
+  }
 }

@@ -12,10 +12,25 @@
         margin-left: 10px;
         width: 120px;
     }
+
 }
 
 .right{
     float: right;
+}
+
+ion-badge {
+    border-radius: 50%;
+    min-width: 20px;
+    margin-left: 3px;
+
+    &.little-badge {
+        margin-top: -10px;
+        margin-left: -8px;
+        font-size: 11px;
+        padding: 2px;
+        min-width: 15px;
+    }
 }
 
 ion-button{

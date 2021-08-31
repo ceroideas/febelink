@@ -9,15 +9,13 @@ import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController } from '@ionic/angular';
-import { JsonPipe } from '@angular/common';
 import { TranslateConfigService } from './services/translate/translate-config.service';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
-import { CookieService } from 'ngx-cookie-service';
-import { first, take } from 'rxjs/operators';
+import { NotificationService } from './services/notification.service';
 
 @Component({
     selector: 'app-root',
@@ -65,8 +63,7 @@ export class AppComponent implements OnDestroy{
     private menu: MenuController,
     public authenticationService: AuthenticationService,
     private modalCtrl: ModalController,
-    private cookSvc: CookieService,
-    private activatedRoute:ActivatedRoute
+    private notificationSvc:NotificationService
   ) {
     this.initializeApp();
   }
@@ -85,6 +82,7 @@ export class AppComponent implements OnDestroy{
       if (this.platform.is('cordova')) {
         this.splashScreen.hide();
         this.initDeeplinks();
+        this.router.navigate(['login']);
       }
 
       this.userSubscription = this.api.getUserLogged().subscribe((item) => {
@@ -101,19 +99,8 @@ export class AppComponent implements OnDestroy{
         this.getUserInfo();
       }
     });
-    
-    this.isRecomendation();
-
     // this.loginImplicito();
-  }
-
-  isRecomendation() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      const from = params['from'];
-      if(!from) return;
-      console.log('Recomended by', from); 
-      this.cookSvc.set('from', from, 1);
-    });    
+    this.notificationSvc.getUnreadNotificationsCount();
   }
 
   setupLanguage() {

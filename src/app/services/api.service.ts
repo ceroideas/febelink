@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
@@ -646,7 +646,7 @@ export class ApiService {
     formData.append('password', params.password);
     formData.append('password_confirmation', params.password_confirmation);
     formData.append('role_id', '5');
-    formData.append('afiliated', params.afiliated);
+    formData.append('idRecommender', params.idRecommender);
 
     return this.http.post(environment.API_URL_AUTH + 'signup', formData);
   }
@@ -713,4 +713,5 @@ export class ApiService {
     formData.append('message', message);
     return this._createData('notify-new-message', formData);
   }
+
 }

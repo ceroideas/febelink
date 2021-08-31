@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController, LoadingController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class UtilitiesService {
                public alertCtrl: AlertController,
                public loadingCtrl: LoadingController,
                private platform: Platform,
-               private storage: Storage ) { }
+               private storage: Storage,
+               private titleService: Title) { }
   
 
 
@@ -220,6 +222,15 @@ export class UtilitiesService {
 
   wait(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  updateWebFavicon(icon:string){
+    const favIcon: HTMLLinkElement = document.querySelector('#favicon');
+    favIcon.href = `assets/icon/${icon}.png`;
+  }
+
+  updateWebTitle(title:string){
+    this.titleService.setTitle(title);
   }
 
 }

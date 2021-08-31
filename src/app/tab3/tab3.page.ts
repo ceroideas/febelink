@@ -6,7 +6,6 @@ import {
 } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
-import { GuidePage } from '../pages/guide/guide.page';
 import { Router } from '@angular/router';
 import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
 import { IOffer } from '../models/offer.model';
@@ -15,6 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { IFavorite } from '../models/favorite.model';
 import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
+import { GuidePage } from '../pages/guide/guide.page';
+import { NotificationService } from '../services/notification.service';
+import { NotifType } from '../models/notification';
 
 @Component({
   selector: 'app-tab3',
@@ -33,7 +35,8 @@ export class Tab3Page {
     private utilities: UtilitiesService,
     private router: Router,
     private translateService: TranslateService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private notificationSvc:NotificationService
   ) {}
 
   async ionViewDidEnter() {
@@ -42,6 +45,7 @@ export class Tab3Page {
       this.isLoading = true;
       await this.getOffers();
     }
+    this.notificationSvc.setNotificationsAsRead(NotifType.Chat);
   }
 
   async getUserProfile() {

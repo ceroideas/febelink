@@ -237,11 +237,12 @@
   --ion-color-tint: var(--ion-color-sandybrown-tint);
 }
 
+/*
 @media (prefers-color-scheme: dark) {
-  /*
-   * Dark Colors
-   * -------------------------------------------
-   */
+  
+   // Dark Colors
+   // -------------------------------------------
+   
 
   body {
     --ion-color-primary: #428cff;
@@ -308,10 +309,9 @@
     --ion-color-light-tint: #383a3e;
   }
 
-  /*
-   * iOS Dark Theme
-   * -------------------------------------------
-   */
+   // iOS Dark Theme
+   // -------------------------------------------
+   
 
   .ios body {
     --ion-background-color: #000000;
@@ -346,10 +346,9 @@
   }
 
 
-  /*
-   * Material Design Dark Theme
-   * -------------------------------------------
-   */
+   // Material Design Dark Theme
+   // -------------------------------------------
+   
 
   .md body {
     --ion-background-color: #121212;
@@ -387,3 +386,4 @@
     --ion-tab-bar-background: #1f1f1f;
   }
 }
+*/
