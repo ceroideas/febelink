@@ -46,11 +46,7 @@ export class RegistroPage implements OnInit {
       sector: [''],
       sub_sector: [''],
       confirmPassword: ['', Validators.required],
-      terminos: [null, Validators.requiredTrue],
-      privacy: [null, Validators.requiredTrue],
-      disclaimer: [null, Validators.requiredTrue],
-      conditions: [null, Validators.requiredTrue],
-      cookies: [null, Validators.requiredTrue],
+      privacyConditions: [null, Validators.requiredTrue]
     });
 
     this.form.get('sector').valueChanges.subscribe((id) => {
@@ -178,33 +174,11 @@ export class RegistroPage implements OnInit {
         }
       );
     } else {
-      if (this.form.value.terminos === null || !this.form.value.terminos) {
+      if (this.form.value.privacyConditions === null || !this.form.value.privacyConditions) {
         this.utilities.showToast(
-          'Tienes que aceptar los términos y condiciones'
+          'Tienes que aceptar la política de privacidad y las condiciones generales de uso'
         );
       }
-
-      else if(this.form.value.privacy === null || !this.form.value.privacy){
-        this.utilities.showToast(
-          'Tienes que aceptar la política de privacidad'
-        );
-      }
-      else if(this.form.value.disclaimer === null || !this.form.value.disclaimer){
-        this.utilities.showToast(
-          'Tienes que aceptar el aviso legal'
-        );
-      }
-      else if(this.form.value.conditions === null || !this.form.value.conditions){
-        this.utilities.showToast(
-          'Tienes que aceptar las condiciones generales de uso'
-        );
-      }
-      else if(this.form.value.cookies === null || !this.form.value.cookies){
-        this.utilities.showToast(
-          'Tienes que aceptar la política de cookies'
-        );
-      }
-  
       else {
         this.utilities.showToast('Tienes que insertar los campos obligatorios');
       }
