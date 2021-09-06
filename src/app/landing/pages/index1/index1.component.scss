@@ -70,77 +70,77 @@
 }
 @keyframes slide {
   9% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_00.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_00.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   18% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_01.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_01.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   27% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_02.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_02.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   36% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_03.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_03.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   45% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_04.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_04.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   48% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_05.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_05.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   56% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_06.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_06.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   64% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_07.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_07.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   73% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_08.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_08.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   82% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_09.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_09.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
     border-radius: 9px;
   }
   91% {
-    background: url('../../assetsLanding/images/iCarrusel_00_Febe_10.png');
+    background: url('/assets/landing/iCarrusel_00_Febe_10.png');
     background-size: 400px 50px;
     border: 1px solid transparent;
     border-color: #76aadb;
@@ -151,3 +151,11 @@
 .kSlider:hover {
   animation-play-state: paused;
 }
+
+
+// .nav-sticky.navbar-custom {
+//   margin-top: 0px;
+//   padding: 10px 0px;
+//   background-color: #ffffff;
+//   box-shadow: 0 10px 33px -14px rgb(0 0 0 / 10%);
+// }
