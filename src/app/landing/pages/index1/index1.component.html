@@ -1,0 +1,199 @@
+<ion-content>
+  <!--Navbar Start-->
+  <nav
+    class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark"
+    (window:scroll)="windowScroll()"
+    id="navbar"
+  >
+    <div class="container">
+      <!-- LOGO -->
+      <a class="logo text-uppercase" href="/">
+        <img
+          src="assets/landing/logo-dark.png"
+          alt=""
+          class="logo-dark"
+          height="40"
+        />
+      </a>
+  
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        (click)="toggleMenu()"
+      >
+        <i class="mdi mdi-menu"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+          <li class="nav-item">
+            <!--<a [ngxScrollTo]="'#section-newsletter'" href="javascript: void(0);" class="nav-link">Buy ICO</a> OJO -->
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('features')"
+              class="nav-link"
+              >Token</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('services')"
+              class="nav-link"
+              >About Us</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('clients')"
+              class="nav-link"
+              >RRSS</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('section-pricing')"
+              class="nav-link"
+              >Team</a
+            >
+          </li>
+        </ul>
+        <!-- LOGIN
+        <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+          <li class="nav-item" [ngClass]="{'active':currentSection === 'clients'}">
+            <a [ngxScrollTo]="'#clients'" href="javascript: void(0);" class="nav-link">Login</a>
+          </li>
+        </ul>
+        <button class="btn btn-success btn-rounded navbar-btn">Sign Up</button>
+        -->
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+  <div
+    appScrollspy
+    [spiedTags]="['SECTION']"
+    (sectionChange)="onSectionChange($event)"
+  >
+    <!-- Hero section Start -->
+    <section class="hero-section hero-bg" id="home">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="hero-wrapper mb-4">
+              <p class="font-16 text-uppercase">Descubre Febelink</p>
+              <div>
+                <!-- OJO OMG COUNTDOWN -->
+                <h1 class="hero-title mb-4">
+                  Bienvenido a la ICO de
+                  <span class="text-primary" id="hero-strong">Febelink: </span
+                  >Token Áureo
+                </h1>
+                <div id="timer">
+                  <div id="timer-digits">
+                    <p>{{ gxTimer.szMs }}</p>
+                    <span>MESS</span>
+                  </div>
+                  <div id="timer-digits">
+                    <p>{{ gxTimer.szDs }}</p>
+                    <span>DÍAS</span>
+                  </div>
+                  <div id="timer-digits">
+                    <p>{{ gxTimer.szHs }}</p>
+                    <span>HORS</span>
+                  </div>
+                  <div id="timer-digits">
+                    <p>{{ gxTimer.szMns }}</p>
+                    <span>MINS</span>
+                  </div>
+                  <div id="timer-digits-2">
+                    <p>{{ gxTimer.szSgs }}</p>
+                    <span>SEGS</span>
+                  </div>
+                </div>
+              </div>
+              <p id="hero-texto">
+                Apúntate a la WhiteList y recibe toda la información actualizada.
+              </p>
+  
+              <div class="mt-4">
+                <!--
+                <a href="https://docs.google.com/document/d/1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n/edit" class="btn btn-primary mt-2 mr-2" id="button-hero-1">Descargar
+                  Whitepaper</a>
+                <a [ngxScrollTo]="'#section-newsletter'" href="javascript: void(0);" class="btn btn-success mt-2 mr-2"
+                  id="button-hero-2">Subscripción</a>
+                -->
+                <div class="subscribe">
+                  <form>
+                    <div class="row" id="input-newsletter">
+                      <div class="col-md-12">
+                        <a
+                          href="mailto:token@febelink.com?subject=Suscribirme a la WhiteList del token Áureo&body=Quiero recibir las últimas novedades relacionadas con el token Áureo de Febelink. "
+                          class="btn btn-success"
+                          >Suscribirme a la WhiteList
+                        </a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="kSlider"></div>
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- Hero section End -->
+  
+    <!-- Cta start -->
+    <!--
+    <section class="section" id="section-newsletter">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="text-center mb-5">
+              <h5 class="text-primary text-uppercase small-title" id="mini-titular">NEWSLETTER</h5>
+              <h1 class="mb-3" class="titular-seccion">Mantente al día de <br> todas las novedades</h1>
+              <p id="text-newsletter">Suscríbete a nuestra newsletter.</p>
+            </div>
+          </div>
+  
+          <div class="col-xl-8 col-lg-10">
+            <div class="text-center">
+              <div class="subscribe">
+                <form>
+                  <div class="row" id="input-newsletter">
+                    <div class="col-md-9">
+                      <div>
+                        <input type="text" class="form-control" placeholder="Enter your E-mail address">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="mt-3 mt-md-0">
+                        <button type="button" class="btn btn-primary btn-block">Subscribirme</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  -->
+    <!-- Cta end -->
+  
+    <app-features></app-features>
+    <app-services></app-services>
+    <app-clients></app-clients>
+    <app-plans></app-plans>
+    <app-footer></app-footer>
+  </div>
+</ion-content>
