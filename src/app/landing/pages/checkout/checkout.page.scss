@@ -1,8 +1,13 @@
 @import '../../scss/style.scss';
 
+.logo {
+    width: 200px;
+    margin: 70px auto 60px auto;
+}
+
 .card-container {
-    width: 50%;
-    margin: 10% auto;
+    max-width: 500px;
+    margin: 0 auto;
     box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
                 0 2px 4px rgba(0,0,0,0.07), 
                 0 4px 8px rgba(0,0,0,0.07), 
