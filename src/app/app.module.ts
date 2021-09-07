@@ -56,7 +56,7 @@ const config: SocketIoConfig = { url: environment.SOCKET_URL, options: {secure: 
             HttpClientModule,
             ComponentsModule,
             IonicStorageModule.forRoot(),
-            NgxStripeModule.forRoot('pk_live_26EQ8gc0INPEdZjy6Iy8DOnK004mMtUILK'),
+            NgxStripeModule.forRoot(environment.stripe_publick_key),
             SocialLoginModule,
             ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
             TranslateModule.forRoot({
