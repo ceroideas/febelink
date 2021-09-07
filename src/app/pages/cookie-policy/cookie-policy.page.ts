@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
-import { Router } from '@angular/router';
+import { NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'app-cookie-policy',
@@ -15,7 +15,15 @@ export class CookiePolicyPage implements OnInit {
   }
 
   public goBack(): void {
-    this.location.back();
+
+    if(document.referrer.length >0){
+      this.location.back();
+    }
+
+    else{
+      this.router.navigate(['menu/todas']);
+    }
+   
   }
 
   async openPrivacyPolicy() {

@@ -961,15 +961,16 @@ hideShowPassword() {
         await suscribirseModal.present();
     }
 
-    /**
-     * Modal para abrir terminos y condiciones
-     */
-    async termsModal() {
-        const TermsModal = await this.modalCtrl.create({
-            component: TermsPage,
-        });
-
-        await TermsModal.present();
+    public navegar(ruta: string){
+        this.router.navigate([ruta]);
+    }
+    
+    async openTerms() {
+        this.navegar('terms');
+    }
+    
+    async openLegalDisclaimer() {
+        this.navegar('legal-disclaimer');
     }
 
 }

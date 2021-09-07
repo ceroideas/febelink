@@ -29,7 +29,6 @@ export class PrivacyPolicyPage implements OnInit {
 
   async openCookiePolicy() {
     this.router.navigate(['cookie-policy']);
-   
   }
 
 }

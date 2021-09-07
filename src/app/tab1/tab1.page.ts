@@ -370,11 +370,12 @@ export class Tab1Page {
     this.router.navigate([ruta]);
   }
 
-  /**
-   * Modal para abrir terminos y condiciones
-   */
   async openTerms() {
     this.navegar('terms');
+  }
+
+  async openLegalDisclaimer() {
+    this.navegar('legal-disclaimer');
   }
 
   private recomendation() {

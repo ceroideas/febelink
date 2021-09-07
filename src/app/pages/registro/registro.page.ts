@@ -189,26 +189,12 @@ export class RegistroPage implements OnInit {
     this.router.navigate([ruta]);
   }
 
-  async openTerms() {
-    const termsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
-    return await termsModal.present();
-  }
-
   async openPrivacyPolicy() {
     this.navegar('privacy-policy');
-  }
-
-  async openLegalDisclaimer() {
-    this.navegar('legal-disclaimer');
   }
 
   async openUseConditions() {
     this.navegar('use-conditions');
   }
 
-  async openCookiePolicy() {
-    this.navegar('cookie-policy');
-  }
 }
