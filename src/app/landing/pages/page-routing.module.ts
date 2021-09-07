@@ -3,14 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { Index1Component } from './index1/index1.component';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: Index1Component
-    },
-    {
-        path: 'index-1',
-        component: Index1Component
-    }
+  {
+      path: '',
+      component: Index1Component
+  },
+  {
+    path: 'checkout',
+    loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  }
+
 ];
 
 @NgModule({

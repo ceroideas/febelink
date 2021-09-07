@@ -20,12 +20,13 @@ import { FeaturesComponent } from './features/features.component';
 import { ClientsComponent } from './clients/clients.component';
 import { PlansComponent } from './plans/plans.component';
 import { FooterComponent } from './footer/footer.component';
+import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 
 @NgModule({
-  declarations: [ServicesComponent, FeaturesComponent, ClientsComponent, PlansComponent, FooterComponent, ScrollspyDirective ],
+  declarations: [ServicesComponent, FeaturesComponent, ClientsComponent, PlansComponent, FooterComponent, ScrollspyDirective, BuyTokensComponent ],
   imports: [
     CommonModule, CarouselModule
   ],
-  exports: [ServicesComponent, FeaturesComponent, ClientsComponent, PlansComponent, FooterComponent, ScrollspyDirective],
+  exports: [ServicesComponent, FeaturesComponent, ClientsComponent, PlansComponent, FooterComponent, ScrollspyDirective, BuyTokensComponent ],
 })
 export class SharedModule { }
