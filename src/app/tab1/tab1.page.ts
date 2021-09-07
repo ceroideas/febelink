@@ -294,10 +294,7 @@ export class Tab1Page {
   }
 
   async openCookies() {
-    const cookiesModal = await this.modalCtrl.create({
-      component: CookiesComponent,
-    });
-    await cookiesModal.present();
+    this.navegar('cookie-policy');
   }
 
   closeCookies() {
@@ -369,15 +366,15 @@ export class Tab1Page {
     });
   }
 
+  public navegar(ruta: string){
+    this.router.navigate([ruta]);
+  }
+
   /**
    * Modal para abrir terminos y condiciones
    */
-  async termsModal() {
-    const TermsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
-
-    await TermsModal.present();
+  async openTerms() {
+    this.navegar('terms');
   }
 
   private recomendation() {

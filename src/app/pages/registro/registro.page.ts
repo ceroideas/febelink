@@ -185,6 +185,10 @@ export class RegistroPage implements OnInit {
     }
   }
 
+  public navegar(ruta: string){
+    this.router.navigate([ruta]);
+  }
+
   async openTerms() {
     const termsModal = await this.modalCtrl.create({
       component: TermsPage,
@@ -193,30 +197,18 @@ export class RegistroPage implements OnInit {
   }
 
   async openPrivacyPolicy() {
-    const privacyModal = await this.modalCtrl.create({
-      component: PrivacyPolicyPage,
-    });
-    return await privacyModal.present();
+    this.navegar('privacy-policy');
   }
 
   async openLegalDisclaimer() {
-    const disclaimerModal = await this.modalCtrl.create({
-      component: LegalDisclaimerPage,
-    });
-    return await disclaimerModal.present();
+    this.navegar('legal-disclaimer');
   }
 
   async openUseConditions() {
-    const conditionsModal = await this.modalCtrl.create({
-      component: UseConditionsPage,
-    });
-    return await conditionsModal.present();
+    this.navegar('use-conditions');
   }
 
   async openCookiePolicy() {
-    const cookiesModal = await this.modalCtrl.create({
-      component: CookiePolicyPage,
-    });
-    return await cookiesModal.present();
+    this.navegar('cookie-policy');
   }
 }
