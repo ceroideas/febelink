@@ -1,6 +1,6 @@
 <form (ngSubmit)="buy()" [formGroup]="stripeTest">
   <div class="text-center">
-    <img class="logo" src="assets/landing/logo-dark.png" alt="">
+    <img class="logo" src="assets/landing/logo-dark.png">
   </div>
   <div class="container card-container">
     <h3 class="text-center mb-3">Pagar con tarjeta</h3>
@@ -32,5 +32,6 @@
     </div>
     <p class="text-danger" style="height: 13px;"> {{error}}</p>
   <button type="submit" data-tid="elements_examples.form.pay_button" class="btn btn-success">Pago de 5€ por {{numTokens}} Febes</button>
+  <img class="stripe" src="assets/landing/stripe.svg">
   </div>
 </form>

@@ -31,7 +31,6 @@ export class Index1Component implements OnInit {
   gdDateTop: countdown.DateTime = new Date(2021, 9, 1);
 
   giTimerId: number = null;
-  gszData: string = 'AQUÍ VA EL COUNTDOWN';
   gxTimer: xTimer = {
     szMs: '00',
     szDs: '00',

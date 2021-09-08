@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import {
   StripeService,
@@ -8,6 +9,10 @@ import {
   Element as StripeElement,
   ElementsOptions
 } from 'ngx-stripe';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ApiService } from 'src/app/services/api.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,7 +24,7 @@ export class CheckoutPage implements OnInit {
   card: StripeElement;
   error:string = undefined;
 
-  numTokens:number = 200;
+  numTokens:number;
 
   elementsOptions: ElementsOptions = {
     locale: 'es'
@@ -27,9 +32,21 @@ export class CheckoutPage implements OnInit {
 
   stripeTest: FormGroup;
 
-  constructor(private fb: FormBuilder, private stripeSvc: StripeService) {}
+  constructor(private fb: FormBuilder
+    , private stripeSvc: StripeService
+    , private router: Router
+    , private api: ApiService
+    , private utils: UtilitiesService
+    ) {}
 
   ngOnInit() {
+    const navExtras = this.router.getCurrentNavigation().extras.state;
+    if (navExtras) {
+      this.numTokens = navExtras.numTokens;
+    } else {
+      this.numTokens = 200;
+    }
+
     this.stripeTest = this.fb.group({
       name: ['', Validators.required]
     });
@@ -90,16 +107,30 @@ export class CheckoutPage implements OnInit {
     }
   }
 
-  buy() {
+  async buy() {
     const name = this.stripeTest.get('name').value;
-    debugger;
-    this.stripeSvc.createToken(this.card, { name }).subscribe(result => {
-      if (result.token) {
-        console.log('Token', result.token);
-      } else if (result.error) {
-        console.log('Error', result.error.message);
-        this.error = result.error.message;
-      }
-    });
+    // debugger;
+    await this.utils.showLoading();
+    try{
+      this.stripeSvc.createToken(this.card, { name }).subscribe(async result => {
+        if (result.token) {
+          const formData = new FormData();
+          formData.append('stripeToken', result.token.id);
+          formData.append('amount', 6+'');
+          formData.append('userName', name);
+          const paymentObs:Observable<any> = await this.api._createData('buyTokens', formData);
+          const payment = await paymentObs.pipe(first()).toPromise();
+          this.utils.dismissLoading();
+          window.open(payment.receipt_url);
+        } else if (result.error) {
+          this.utils.dismissLoading();
+          console.log('Error', result.error.message);
+          this.error = result.error.message;
+        }
+      });
+    } catch (error) {
+      this.utils.dismissLoading();
+      this.error = error.message;
+    }
   }
 }
