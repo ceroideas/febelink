@@ -12,12 +12,13 @@ import { TermsPage } from '../terms/terms.page';
   styleUrls: ['./notifications-log.page.scss'],
 })
 export class NotificationsLogPage implements OnInit {
+  currentYear = new Date().getFullYear();
 
   constructor(
-    private notificationSvc:NotificationService,
+    private notificationSvc: NotificationService,
     private router: Router,
     private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   notifications: Notification[];
 
@@ -25,18 +26,23 @@ export class NotificationsLogPage implements OnInit {
     this.notifications = await this.notificationSvc.getNotificacionsLog();
   }
 
-  getIconByType(type:NotifType) {
+  getIconByType(type: NotifType) {
     switch (type) {
-      case NotifType.Chat: return 'chatbubbles-outline';
-      case NotifType.Offer: return 'briefcase-outline';
-      case NotifType.AllUsers: return 'information-outline';
-      default: return 'notifications-outline';
+      case NotifType.Chat:
+        return 'chatbubbles-outline';
+      case NotifType.Offer:
+        return 'briefcase-outline';
+      case NotifType.AllUsers:
+        return 'information-outline';
+      default:
+        return 'notifications-outline';
     }
   }
 
-  async goTo(notification: Notification){
-    if(notification.route) this.router.navigateByUrl(notification.route)
-    if(!notification.is_read) await this.notificationSvc.setNotificationAsReadById(notification.id)
+  async goTo(notification: Notification) {
+    if (notification.route) this.router.navigateByUrl(notification.route);
+    if (!notification.is_read)
+      await this.notificationSvc.setNotificationAsReadById(notification.id);
     notification.is_read = 1;
   }
 
@@ -47,5 +53,4 @@ export class NotificationsLogPage implements OnInit {
 
     await TermsModal.present();
   }
-
 }
