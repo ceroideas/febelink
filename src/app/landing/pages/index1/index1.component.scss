@@ -1,0 +1,161 @@
+@import '../../scss/style.scss';
+
+
+.kIdTeam {
+  width: 80%;
+  border: 1px solid blue;
+  text-align: center;
+}
+
+.kIdTeamChild {
+  display: inline-block;
+  margin: 4px;
+}
+
+#home {
+  margin: 0 !important;
+}
+
+#timer {
+  font-size: 5em;
+  font-weight: 500;
+  color: #343a40;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  width: 100%;
+  // min-width: 700px;
+  // margin-left: -80px;
+}
+
+#timer div {
+  display: inline-block;
+  min-width: 100px;
+  border-radius: 10px;
+  border: solid 2.5px #76aadb;
+  padding-top: 25px;
+  padding-bottom: 15px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#timer div span {
+  font-size: 0.18em;
+  text-align: center;
+  color: #5f6163;
+  display: block;
+  font-weight: 500;
+}
+
+#timer p {
+  font-size: 0.6em;
+  font-weight: 400;
+  color: #76aadb !important;
+  text-align: center;
+  line-height: 0.5em;
+}
+
+#timer-digits {
+  min-width: 1em;
+}
+
+#timer-digits-2 {
+  margin-right: 0px;
+}
+
+.kSlider {
+  width: 400px;
+  height: 50px;
+  margin: 100px auto;
+  animation: slide 20s infinite;
+}
+@keyframes slide {
+  9% {
+    background: url('/assets/landing/iCarrusel_00_Febe_00.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  18% {
+    background: url('/assets/landing/iCarrusel_00_Febe_01.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  27% {
+    background: url('/assets/landing/iCarrusel_00_Febe_02.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  36% {
+    background: url('/assets/landing/iCarrusel_00_Febe_03.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  45% {
+    background: url('/assets/landing/iCarrusel_00_Febe_04.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  48% {
+    background: url('/assets/landing/iCarrusel_00_Febe_05.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  56% {
+    background: url('/assets/landing/iCarrusel_00_Febe_06.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  64% {
+    background: url('/assets/landing/iCarrusel_00_Febe_07.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  73% {
+    background: url('/assets/landing/iCarrusel_00_Febe_08.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  82% {
+    background: url('/assets/landing/iCarrusel_00_Febe_09.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+  91% {
+    background: url('/assets/landing/iCarrusel_00_Febe_10.png');
+    background-size: 400px 50px;
+    border: 1px solid transparent;
+    border-color: #76aadb;
+    border-radius: 9px;
+  }
+}
+
+.kSlider:hover {
+  animation-play-state: paused;
+}
+
+
+// .nav-sticky.navbar-custom {
+//   margin-top: 0px;
+//   padding: 10px 0px;
+//   background-color: #ffffff;
+//   box-shadow: 0 10px 33px -14px rgb(0 0 0 / 10%);
+// }
