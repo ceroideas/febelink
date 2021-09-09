@@ -116,7 +116,7 @@ export class CheckoutPage implements OnInit {
         if (result.token) {
           const formData = new FormData();
           formData.append('stripeToken', result.token.id);
-          formData.append('amount', 6+'');
+          formData.append('amount', 5+'');
           formData.append('userName', name);
           const paymentObs:Observable<any> = await this.api._createData('buyTokens', formData);
           const payment = await paymentObs.pipe(first()).toPromise();

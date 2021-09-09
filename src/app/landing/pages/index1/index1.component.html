@@ -120,26 +120,15 @@
                 Apúntate a la WhiteList y recibe toda la información actualizada.
               </p>
   
-              <div class="mt-4">
+              <div>
                 <!--
                 <a href="https://docs.google.com/document/d/1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n/edit" class="btn btn-primary mt-2 mr-2" id="button-hero-1">Descargar
                   Whitepaper</a>
                 <a [ngxScrollTo]="'#section-newsletter'" href="javascript: void(0);" class="btn btn-success mt-2 mr-2"
                   id="button-hero-2">Subscripción</a>
                 -->
-                <div class="subscribe">
-                  <form>
-                    <div class="row" id="input-newsletter">
-                      <div class="col-md-12">
-                        <a
-                          href="mailto:token@febelink.com?subject=Suscribirme a la WhiteList del token Áureo&body=Quiero recibir las últimas novedades relacionadas con el token Áureo de Febelink. "
-                          class="btn btn-success"
-                          >Suscribirme a la WhiteList
-                        </a>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+
+                <app-whitelist></app-whitelist>
               </div>
             </div>
             <div class="kSlider"></div>
@@ -152,6 +141,7 @@
     <!-- Hero section End -->
   
     <!-- Cta start -->
+
     <!--
     <section class="section" id="section-newsletter">
       <div class="container">
