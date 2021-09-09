@@ -128,7 +128,8 @@ const routes: Routes = [
     {
         path: 'chat',
         loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
-    },  {
+    },
+  {
     path: 'privacy-policy',
     loadChildren: () => import('./pages/privacy-policy/privacy-policy.module').then( m => m.PrivacyPolicyPageModule)
   },
@@ -143,6 +144,10 @@ const routes: Routes = [
   {
     path: 'cookie-policy',
     loadChildren: () => import('./pages/cookie-policy/cookie-policy.module').then( m => m.CookiePolicyPageModule)
+  },
+  {
+    path: 'landing',
+    loadChildren: () => import('./landing/pages/pages.module').then( m => m.PagesModule)
   }
 
 

@@ -1,0 +1,18 @@
+<section class="section bg-light" id="features">
+  <div class="container">
+    <div class="justify-content-center">
+      <h4 class="mb-3 text-center" id="titular-seccion">
+        Compra nuestros tokens
+      </h4>
+      <div style="display: flex; justify-content: center;">
+        <ion-item style="width: 200px">
+          <ion-label position="floating" class="grey">Número de tokens</ion-label>
+          <ion-input type="number" #numTokens></ion-input>
+        </ion-item>
+        <div (click)="buyTokens(numTokens)" class="btn btn-success">
+          Comprar
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

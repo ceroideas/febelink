@@ -1,0 +1,20 @@
+<div class="subscribe">
+  <form>
+    <div class="row" id="input-newsletter">
+      <div class="col-md-8">
+        <div>
+          <input type="email" class="form-control" placeholder="Introduce tu dirección E-mail" #email>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mt-3 mt-md-0">
+          <button type="button" class="btn btn-primary btn-block" (click)="addEmailToWhitelist(email)" [disabled]="response?.id">{{(!response?.id)?'Subscribirme':'Suscrito ✔'}}</button>
+        </div>
+      </div>
+      <div *ngIf="response" class="mt-3 col-md-12">
+        <p *ngIf="response.title" class="text-danger">{{response.title}}</p>
+        <p *ngIf="response.id" class="text-success">Gracias por suscribirte a nuestra WhiteList</p>
+      </div>
+    </div>
+  </form>
+</div>
