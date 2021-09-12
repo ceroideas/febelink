@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
 import { RouterModule } from '@angular/router';
 import { Tab3Page } from './tab3.page';
-import { Tab3PageRoutingModule } from './tab3-routing.module'
+import { Tab3PageRoutingModule } from './tab3-routing.module';
 
 @NgModule({
   imports: [
@@ -11,6 +11,7 @@ import { Tab3PageRoutingModule } from './tab3-routing.module'
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
   ],
-  declarations: [Tab3Page]
+  declarations: [Tab3Page],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Tab3PageModule {}

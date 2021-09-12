@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
 import { PerfilDemandantePageRoutingModule } from './perfil-demandante-routing.module';
@@ -6,10 +6,8 @@ import { PerfilDemandantePageRoutingModule } from './perfil-demandante-routing.m
 import { PerfilDemandantePage } from './perfil-demandante.page';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    PerfilDemandantePageRoutingModule
-  ],
-  declarations: [PerfilDemandantePage]
+  imports: [SharedModule, PerfilDemandantePageRoutingModule],
+  declarations: [PerfilDemandantePage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PerfilDemandantePageModule {}
