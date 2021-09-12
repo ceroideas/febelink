@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   ModalController,
   IonItemSliding,
@@ -17,17 +17,19 @@ import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
 import { GuidePage } from '../pages/guide/guide.page';
 import { NotificationService } from '../services/notification.service';
 import { NotifType } from '../models/notification';
+import { ISearch } from '../models/search.model';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss'],
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
   currentYear = new Date().getFullYear();
   offers: IOffer[] = [];
   isLoading: boolean;
   currentUser: IUser = null;
+  unreadMessages:Map<number, number> = new Map();
 
   constructor(
     private modalCtrl: ModalController,
@@ -39,13 +41,25 @@ export class Tab3Page {
     private notificationSvc:NotificationService
   ) {}
 
+
+  async ngOnInit(): Promise<void> {
+    await this.api.getUnreadMessages()
+    this.api.unreadChatMessages.subscribe(unreadMessages => {
+      this.unreadMessages.clear();
+      unreadMessages?.forEach(room => {
+        this.unreadMessages.set(+room.room_id, room.unread)
+      })
+      // console.log("unreadNotificationsCount", this.unreadMessages);
+    })
+  }
+
   async ionViewDidEnter() {
     await this.getUserProfile();
     if (this.currentUser) {
       this.isLoading = true;
       await this.getOffers();
     }
-    this.notificationSvc.setNotificationsAsRead(NotifType.Chat);
+    // this.notificationSvc.setNotificationsAsRead(NotifType.Chat);
   }
 
   async getUserProfile() {
@@ -55,15 +69,13 @@ export class Tab3Page {
   async getOffers() {
     this.utilities.showLoading();
     const [myOffers, offers, favorites, mySearchs] = await Promise.all([
-      await (await this.api.misOfertas()).toPromise(),
-      await (await this.api.ofertasRecibidas()).toPromise(),
+      this.setType(await (await this.api.misOfertas()).toPromise(), Type.MyOffer),
+      this.setType(await (await this.api.ofertasRecibidas()).toPromise(), Type.ReceivedOffer),
       await (await this.api.getFavorites()).toPromise(),
-      await (
-        await this.api.obtenerDemandasDemandante(this.currentUser.id)
-      ).toPromise(),
+      this.setType(await (await this.api.obtenerDemandasDemandante(this.currentUser.id)).toPromise(), Type.PendingDemand),
     ]);
     Object.values(favorites[0]).forEach((favorite: IOffer) => {
-      favorite.type = 'favorite';
+      favorite.type = Type.Favorite;
       favorite.created_at = favorites[1].find(
         (f: IFavorite) => f.favoriteable_id === favorite.id
       ).created_at;
@@ -104,6 +116,7 @@ export class Tab3Page {
       (a: IOffer, b: IOffer) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
+    
     this.utilities.dismissLoading();
     this.isLoading = false;
   }
@@ -114,7 +127,7 @@ export class Tab3Page {
   }
 
   async deleteOffer(offer: IOffer) {
-    if (offer?.type === 'favorite') {
+    if (offer?.type === Type.Favorite) {
       (await this.api.unFavouriteDemand({ id: offer.id })).subscribe(
         (result) => {
           this.utilities.showToast(
@@ -259,13 +272,14 @@ export class Tab3Page {
   }
 
   onClickSearchHandler(search: IOffer) {
-    if (search?.type === 'favorite') {
-      this.detalleDemanda(search?.id, 0);
-    } else if (search?.demanda) {
-      this.detalleDemanda(search?.id_demanda, search?.estado);
-    } else if (search['id_demandante']) {
-      this.detalleDemanda(search['id'], search?.estado);
-    } else this.interiorOferta(search);
+    if(!search) return;
+    // debugger
+    switch(search.type){
+      case Type.Favorite: this.detalleDemanda(search?.id, 0); break;
+      case Type.MyOffer: this.detalleDemanda(search?.id_demanda, search?.estado); break;
+      case Type.PendingDemand: this.detalleDemanda(search['id'], search?.estado); break;
+      case Type.ReceivedOffer: this.interiorOferta(search); break;
+    }
   }
 
   async editItem(search: IOffer) {
@@ -278,4 +292,38 @@ export class Tab3Page {
 
     const { data } = await editarModal.onWillDismiss();
   }
+
+  getUnreadMessages(offer: any):number {
+    if(!offer || !this.unreadMessages.size) return;
+    let roomId:number;
+    switch(offer.type){
+      case Type.ReceivedOffer: {
+        roomId = +(offer.id_ofertante?.toString() + offer.id_demanda?.toString() + this.currentUser.id.toString())
+        break;
+      }
+      case Type.MyOffer: {
+        roomId = +(this.currentUser.id.toString() + offer.id_demanda?.toString() + offer.id_demandante?.toString())
+        break;
+      }
+    }
+    // debugger
+    const num = this.unreadMessages.get(roomId);
+    return num;
+  }
+
+  setType(item:any[], type:Type):any {
+    item.map(item => {
+      item.type = type;
+      return item;
+    })
+
+    return item;
+  }
+}
+
+enum Type {
+    MyOffer = 1
+  , ReceivedOffer = 2
+  , Favorite = 3
+  , PendingDemand = 4
 }
