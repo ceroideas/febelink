@@ -103,7 +103,6 @@ export class AppComponent implements OnDestroy {
         console.log('state', state);
         this.menu.enable(true);
         this.getUserInfo();
-        this.notificationSvc.getUnreadNotificationsCount();
       }
     });
     // this.loginImplicito();
@@ -315,6 +314,9 @@ export class AppComponent implements OnDestroy {
     await this.getUserSectorsAndSubsectors();
     await this.getUserSuscriptions();
     await this.getUserOpinions();
+
+    this.notificationSvc.getUnreadNotificationsCount();
+    this.api.getUnreadMessages();
   }
 
   async getUserData() {
