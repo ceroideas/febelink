@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Location } from '@angular/common'
 import { RegistroPage } from '../registro/registro.page';
 import { CookiePolicyPage } from '../cookie-policy/cookie-policy.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -12,7 +13,7 @@ export class PrivacyPolicyPage implements OnInit {
 
   register: RegistroPage;
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private location: Location,  private router: Router) {
    
    }
 
@@ -22,16 +23,12 @@ export class PrivacyPolicyPage implements OnInit {
   /**
    * Close modal
    */
-   public closeModal(): void {
-    this.modalCtrl.dismiss();
+   public goBack(): void {
+    this.location.back();
   }
 
   async openCookiePolicy() {
-    const cookiesModal = await this.modalCtrl.create({
-      component: CookiePolicyPage,
-    });
-    return await cookiesModal.present();
-   
+    this.router.navigate(['cookie-policy']);
   }
 
 }

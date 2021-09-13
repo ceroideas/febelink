@@ -294,10 +294,7 @@ export class Tab1Page {
   }
 
   async openCookies() {
-    const cookiesModal = await this.modalCtrl.create({
-      component: CookiesComponent,
-    });
-    await cookiesModal.present();
+    this.navegar('cookie-policy');
   }
 
   closeCookies() {
@@ -369,15 +366,16 @@ export class Tab1Page {
     });
   }
 
-  /**
-   * Modal para abrir terminos y condiciones
-   */
-  async termsModal() {
-    const TermsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
+  public navegar(ruta: string){
+    this.router.navigate([ruta]);
+  }
 
-    await TermsModal.present();
+  async openTerms() {
+    this.navegar('terms');
+  }
+
+  async openLegalDisclaimer() {
+    this.navegar('legal-disclaimer');
   }
 
   private recomendation() {

@@ -66,6 +66,7 @@ export class AppComponent implements OnDestroy{
     private notificationSvc:NotificationService
   ) {
     this.initializeApp();
+    this.openCookieBanner();
   }
 
   initializeApp() {
@@ -101,6 +102,33 @@ export class AppComponent implements OnDestroy{
     });
     // this.loginImplicito();
     this.notificationSvc.getUnreadNotificationsCount();
+  }
+
+  openCookieBanner(){
+    let cc = window as any;
+    cc.cookieconsent.initialise({
+      palette: {
+        popup: {
+          background: "#000000"
+        },
+        button: {
+          background: "#000000",
+          text: "#ffffff",
+          border: "5px"
+        }
+      },
+      theme: "classic",
+      content: {
+        message: "Este sitio web utiliza cookies para que usted tenga la mejor experiencia de usuario. Si continúa navegando está dando su consentimiento para la aceptación de las mencionadas cookies y la aceptación de nuestra política de cookies, pinche el enlace para mayor información.",
+        dismiss: "Aceptar",
+        link: "Política de Cookies",
+        href: "cookie-policy"
+      }
+    });
+  }
+
+  async openCookiePolicy() {
+    this.router.navigate(['cookie-policy']);
   }
 
   setupLanguage() {
