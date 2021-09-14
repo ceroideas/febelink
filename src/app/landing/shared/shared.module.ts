@@ -1,4 +1,8 @@
-import { NgModule } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ScrollspyDirective } from './scrollspy.directive';
@@ -24,10 +28,27 @@ import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
 
 @NgModule({
-  declarations: [ServicesComponent, FeaturesComponent, ClientsComponent, PlansComponent, FooterComponent, ScrollspyDirective, BuyTokensComponent, WhitelistComponent ],
-  imports: [
-    CommonModule, CarouselModule
+  declarations: [
+    ServicesComponent,
+    FeaturesComponent,
+    ClientsComponent,
+    PlansComponent,
+    FooterComponent,
+    ScrollspyDirective,
+    BuyTokensComponent,
+    WhitelistComponent,
   ],
-  exports: [ServicesComponent, FeaturesComponent, ClientsComponent, PlansComponent, FooterComponent, ScrollspyDirective, BuyTokensComponent, WhitelistComponent ],
+  imports: [CommonModule, CarouselModule],
+  exports: [
+    ServicesComponent,
+    FeaturesComponent,
+    ClientsComponent,
+    PlansComponent,
+    FooterComponent,
+    ScrollspyDirective,
+    BuyTokensComponent,
+    WhitelistComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
-export class SharedModule { }
+export class SharedModule {}
