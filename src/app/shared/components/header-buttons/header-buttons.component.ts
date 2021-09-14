@@ -44,7 +44,6 @@ export class HeaderButtonsComponent implements OnInit {
       this.notificationsSvc.faviconNotification(this.notifCount, this.totalUnreadMessages);
       this.notificationsSvc.titleNotification(this.notifCount, this.totalUnreadMessages);
     })    
-    await this.api.getUnreadMessages();
     this.api.unreadChatMessages.subscribe(unreadMessages => {  
       this.totalUnreadMessages = 0;
       unreadMessages?.forEach(room => {
