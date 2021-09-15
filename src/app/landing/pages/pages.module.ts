@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './page-routing.module';
@@ -10,9 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    Index1Component
-  ],
+  declarations: [Index1Component],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,5 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
     // NgbModalModule,
     // NgxYoutubePlayerModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PagesModule {}

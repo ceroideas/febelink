@@ -1,9 +1,15 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Platform, AlertController, IonRouterOutlet, MenuController, ModalController } from '@ionic/angular';
+import {
+  Platform,
+  AlertController,
+  IonRouterOutlet,
+  MenuController,
+  ModalController,
+} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import {Socket} from "ngx-socket-io";
+import { Socket } from 'ngx-socket-io';
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
@@ -18,16 +24,16 @@ import { ISector, ISubSector } from './models/sector.model';
 import { NotificationService } from './services/notification.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnDestroy{
+export class AppComponent implements OnDestroy {
   currentYear = new Date().getFullYear();
   public userSubscription: any;
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
-  @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet, { static: false }) routerOutlets: IonRouterOutlet;
 
   public appPages = [
     // NOTE: Hidden for the time being until Stripe development is completed.
@@ -38,7 +44,7 @@ export class AppComponent implements OnDestroy{
         icon: 'calendar'
     }
     */
-];
+  ];
   currentUser: IUser;
   showOpinions = true;
   userSector: ISector;
@@ -63,7 +69,7 @@ export class AppComponent implements OnDestroy{
     private menu: MenuController,
     public authenticationService: AuthenticationService,
     private modalCtrl: ModalController,
-    private notificationSvc:NotificationService
+    private notificationSvc: NotificationService
   ) {
     this.initializeApp();
     this.openCookieBanner();
@@ -93,7 +99,7 @@ export class AppComponent implements OnDestroy{
       });
     });
 
-    this.authenticationService.authenticationState.subscribe(state => {
+    this.authenticationService.authenticationState.subscribe((state) => {
       if (state) {
         console.log('state', state);
         this.menu.enable(true);
@@ -101,7 +107,6 @@ export class AppComponent implements OnDestroy{
       }
     });
     // this.loginImplicito();
-    this.notificationSvc.getUnreadNotificationsCount();
   }
 
   openCookieBanner(){
@@ -136,172 +141,172 @@ export class AppComponent implements OnDestroy{
     this.translateService.setLanguage(currentLanguage);
   }
 
-    backbutton() {
-        console.log('backbutton');
-        document.addEventListener('backbutton', () => {
-            console.log('backbutton1');
-            if (this.routerOutlets && this.routerOutlets.canGoBack()) {
-                this.routerOutlets.pop();
-            } else if (this.router.url === 'menu/todas') {
-                navigator['app'].exitApp();
-            }
-        });
-    }
+  backbutton() {
+    console.log('backbutton');
+    document.addEventListener('backbutton', () => {
+      console.log('backbutton1');
+      if (this.routerOutlets && this.routerOutlets.canGoBack()) {
+        this.routerOutlets.pop();
+      } else if (this.router.url === 'menu/todas') {
+        navigator['app'].exitApp();
+      }
+    });
+  }
 
-    public initDeeplinks() {
-      this.deeplinks
-        .route({
-          '/busqueda/:id/:name': 'detalle-demanda',
-          '/perfil/:id/:name': 'perfil-demandante',
-          '/#/busqueda/:id/:name': 'detalle-demanda',
-          '/#/perfil/:id/:name': 'perfil-demandante',
-        })
-        .subscribe(
-          (match) => {
-            let id = match.$args.id;
-            let name = match.$args.name;
-            if (match.$route === 'detalle-demanda') {
-              id = Number(id);
-              setTimeout(() => {
-                this.router.navigate(['busqueda', id, name], {
-                  queryParams: { id_demanda: id },
-                });
-              }, 500);
-            } else if (match.$route === 'perfil-demandante') {
-              this.router.navigate(['perfil/', id, name], {
+  public initDeeplinks() {
+    this.deeplinks
+      .route({
+        '/busqueda/:id/:name': 'detalle-demanda',
+        '/perfil/:id/:name': 'perfil-demandante',
+        '/#/busqueda/:id/:name': 'detalle-demanda',
+        '/#/perfil/:id/:name': 'perfil-demandante',
+      })
+      .subscribe(
+        (match) => {
+          let id = match.$args.id;
+          let name = match.$args.name;
+          if (match.$route === 'detalle-demanda') {
+            id = Number(id);
+            setTimeout(() => {
+              this.router.navigate(['busqueda', id, name], {
+                queryParams: { id_demanda: id },
+              });
+            }, 500);
+          } else if (match.$route === 'perfil-demandante') {
+            this.router.navigate(['perfil/', id, name], {
+              queryParams: { id_perfil: id },
+            });
+          }
+        },
+        (nomatch) => {
+          console.error("Got a deeplink that didn't match", nomatch);
+          let path = nomatch.$link.fragment;
+          let id = path.substring(path.lastIndexOf('/') + 1, path.length);
+          var route = path.substring(
+            path.lastIndexOf('#') + 2,
+            path.lastIndexOf('/')
+          );
+          if (route === 'busqueda') {
+            setTimeout(() => {
+              this.router.navigate(['busqueda/' + id], {
+                queryParams: { id_demanda: Number(id) },
+              });
+            }, 500);
+          } else if (route === 'perfil-demandante') {
+            setTimeout(() => {
+              this.router.navigate(['perfil-demandante'], {
                 queryParams: { id_perfil: id },
               });
-            }
-          },
-          (nomatch) => {
-            console.error("Got a deeplink that didn't match", nomatch);
-            let path = nomatch.$link.fragment;
-            let id = path.substring(path.lastIndexOf('/') + 1, path.length);
-            var route = path.substring(
-              path.lastIndexOf('#') + 2,
-              path.lastIndexOf('/')
-            );
-            if (route === 'busqueda') {
-              setTimeout(() => {
-                this.router.navigate(['busqueda/' + id], {
-                  queryParams: { id_demanda: Number(id) },
-                });
-              }, 500);
-            } else if (route === 'perfil-demandante') {
-              setTimeout(() => {
-                this.router.navigate(['perfil-demandante'], {
-                  queryParams: { id_perfil: id },
-                });
-              }, 500);
-            }
+            }, 500);
           }
-        );
-    }
+        }
+      );
+  }
 
-    ngOnDestroy() {
-      this.userSubscription.unsubscribe();
-    }
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
 
-    public pushSetup(): void {
-        // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
-        this.push
-            .createChannel({
-                id: 'testchannel1',
-                description: 'My first test channel',
-                // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
-                importance: 3,
-            })
-            .then(() => console.log('Channel created'));
+  public pushSetup(): void {
+    // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
+    this.push
+      .createChannel({
+        id: 'testchannel1',
+        description: 'My first test channel',
+        // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
+        importance: 3,
+      })
+      .then(() => console.log('Channel created'));
 
-        const options: PushOptions = {
-            android: {
-                senderID: '41183692404',
-                icon: 'notification',
-            },
-            ios: {
-                alert: 'true',
-                badge: true,
-                sound: 'true',
-                //senderID: '41183692404',
-                // gcmSandbox: true,
-            },
-            windows: {},
-        };
-        // console.log('en el push setup');
+    const options: PushOptions = {
+      android: {
+        senderID: '41183692404',
+        icon: 'notification',
+      },
+      ios: {
+        alert: 'true',
+        badge: true,
+        sound: 'true',
+        //senderID: '41183692404',
+        // gcmSandbox: true,
+      },
+      windows: {},
+    };
+    // console.log('en el push setup');
 
-        const pushObject: PushObject = this.push.init(options);
+    const pushObject: PushObject = this.push.init(options);
 
-        pushObject.on('notification').subscribe((notification) => {
-          // console.log('en el notification');
-          // console.log("NOTIFICACION DATA:", JSON.stringify(notification.additionalData));
-            if (notification.additionalData.foreground) {
-                if (notification.additionalData.apiData.id) {
-                    let id = notification.additionalData.apiData.id;
-                    this.pushAlert(notification.title, notification.message, id);
-                } else {
-                    this.utilities.showAlert(notification.title, notification.message);
-                }
-            } else {
-                if (notification.additionalData.apiData.id) {
-                    let id = notification.additionalData.apiData.id;
-                    this.router.navigate(['perfil-demandante'], {
-                        queryParams: {id_perfil: id, contacto: true},
-                    });
-                }
-            }
-        });
-        pushObject.on('registration').subscribe(async (registration) => {
-            console.log('en el registration');
-            console.log(JSON.stringify(registration));
+    pushObject.on('notification').subscribe((notification) => {
+      // console.log('en el notification');
+      // console.log("NOTIFICACION DATA:", JSON.stringify(notification.additionalData));
+      if (notification.additionalData.foreground) {
+        if (notification.additionalData.apiData.id) {
+          let id = notification.additionalData.apiData.id;
+          this.pushAlert(notification.title, notification.message, id);
+        } else {
+          this.utilities.showAlert(notification.title, notification.message);
+        }
+      } else {
+        if (notification.additionalData.apiData.id) {
+          let id = notification.additionalData.apiData.id;
+          this.router.navigate(['perfil-demandante'], {
+            queryParams: { id_perfil: id, contacto: true },
+          });
+        }
+      }
+    });
+    pushObject.on('registration').subscribe(async (registration) => {
+      console.log('en el registration');
+      console.log(JSON.stringify(registration));
 
-            (
-                await this.api.guardarTokenDeRegistro(registration.registrationId)
-            ).subscribe(
-                (response) => {
-                    console.log('response apiNotificaciones.guardarTokenDeRegistro = ');
-                    console.log(response);
-                },
-                (err) => {
-                    console.log('error apiNotificaciones.guardarTokenDeRegistro =');
-                    console.log(err);
-                }
-            );
-        });
-        pushObject
-            .on('error')
-            .subscribe((error) => alert('Error with Push plugin' + error));
-    }
+      (
+        await this.api.guardarTokenDeRegistro(registration.registrationId)
+      ).subscribe(
+        (response) => {
+          console.log('response apiNotificaciones.guardarTokenDeRegistro = ');
+          console.log(response);
+        },
+        (err) => {
+          console.log('error apiNotificaciones.guardarTokenDeRegistro =');
+          console.log(err);
+        }
+      );
+    });
+    pushObject
+      .on('error')
+      .subscribe((error) => alert('Error with Push plugin' + error));
+  }
 
-    async pushAlert(title, message, id) {
-        const alert = await this.alertCtrl.create({
-            header: title,
-            subHeader: message,
-            buttons: [
-                {
-                    text: 'Cerrar',
-                    handler: (data) => {
-                        console.log('Cancel clicked');
-                    },
-                },
-                {
-                    text: 'Ver perfil',
-                    handler: (data) => {
-                        this.router.navigate(['perfil-demandante'], {
-                            queryParams: {id_perfil: id, contacto: true},
-                        });
-                    },
-                },
-            ],
-        });
+  async pushAlert(title, message, id) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      subHeader: message,
+      buttons: [
+        {
+          text: 'Cerrar',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: 'Ver perfil',
+          handler: (data) => {
+            this.router.navigate(['perfil-demandante'], {
+              queryParams: { id_perfil: id, contacto: true },
+            });
+          },
+        },
+      ],
+    });
 
-        await alert.present();
-    }
+    await alert.present();
+  }
 
-    public loginImplicito(): void {
-        this.router.navigate(['menu/todas']);
-    }
+  public loginImplicito(): void {
+    this.router.navigate(['menu/todas']);
+  }
 
-    /**
+  /**
    * Método para cerrar sesión
    */
 
@@ -337,51 +342,68 @@ export class AppComponent implements OnDestroy{
     await this.getUserSectorsAndSubsectors();
     await this.getUserSuscriptions();
     await this.getUserOpinions();
+
+    this.notificationSvc.getUnreadNotificationsCount();
+    this.api.getUnreadMessages();
   }
 
   async getUserData() {
-    this.currentUser = {...await this.utilities.getUserData()};
+    this.currentUser = { ...(await this.utilities.getUserData()) };
   }
 
-
   async getUserSectorsAndSubsectors() {
-    const sectors: ISector[] = await (await this.api.obtenerSectores()).toPromise();
-    const userSectorsIds = await (await this.api.obtenerSectoresPerfil(this.currentUser.id)).toPromise();
+    const sectors: ISector[] = await (
+      await this.api.obtenerSectores()
+    ).toPromise();
+    const userSectorsIds = await (
+      await this.api.obtenerSectoresPerfil(this.currentUser.id)
+    ).toPromise();
     const sectorId = userSectorsIds[0]?.id_sector;
-    const subsectors: ISubSector[] = await (await this.api.obtenerSubSectores(sectorId)).toPromise();
-    const userSubsectorsIds = await (await this.api.obtenerSubSectoresPerfil(this.currentUser.id)).toPromise();
+    const subsectors: ISubSector[] = await (
+      await this.api.obtenerSubSectores(sectorId)
+    ).toPromise();
+    const userSubsectorsIds = await (
+      await this.api.obtenerSubSectoresPerfil(this.currentUser.id)
+    ).toPromise();
     this.userSector = sectors.filter((sector) => sector.id === sectorId).pop();
-    this.userSubsector = subsectors.filter((subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector).pop();
+    this.userSubsector = subsectors
+      .filter(
+        (subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector
+      )
+      .pop();
   }
 
   async getUserSuscriptions() {
     const userSubscription = await this.utilities.getUserSubscription();
     if (userSubscription.length !== 0) {
-      const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
+      const userSubscriptionDetails =
+        await this.utilities.getUserSubscriptionDetails();
       this.userSubscriptionDetails = userSubscriptionDetails?.name;
     }
   }
 
   async showSubscriptionsModal() {
-      const suscribirseModal = await this.modalCtrl.create({
-        component: SuscribirsePage,
-      });
-      await suscribirseModal.present();
+    const suscribirseModal = await this.modalCtrl.create({
+      component: SuscribirsePage,
+    });
+    await suscribirseModal.present();
   }
 
   async getUserOpinions() {
-    const result = await (await this.api.opinionesPerfil(this.currentUser.reference)).toPromise();
+    const result = await (
+      await this.api.opinionesPerfil(this.currentUser.reference)
+    ).toPromise();
     this.userFeedback = [];
     result.opinions.forEach((opinion, index) => {
-      this.userFeedback.push({count: opinion, type: result.types[index]})
-    })
+      this.userFeedback.push({ count: opinion, type: result.types[index] });
+    });
   }
 
   goToProfile() {
     this.router.navigate(['menu/perfil']).then(() => this.menu.close());
   }
 
-  onImgError(event){
+  onImgError(event) {
     event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
 }
