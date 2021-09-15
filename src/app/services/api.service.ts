@@ -100,7 +100,7 @@ export class ApiService {
   async _createData(endpoint: string, data: any) {
     let token;
     await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
-      token = tokenInfo.access_token;
+      token = tokenInfo ? tokenInfo.access_token : null;
     });
 
     //perform the API call
@@ -260,7 +260,13 @@ export class ApiService {
    * @param sector
    * @param subsector
    */
-  public enviarNotificacionAOfertantes(title, desc, sector, subsector, searchId?:string) {
+  public enviarNotificacionAOfertantes(
+    title,
+    desc,
+    sector,
+    subsector,
+    searchId?: string
+  ) {
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
@@ -716,14 +722,21 @@ export class ApiService {
     return this._createData('notify-new-message', formData);
   }
 
-  unreadChatMessages:BehaviorSubject<UnreadMessages[]> = new BehaviorSubject(null);
+  unreadChatMessages: BehaviorSubject<UnreadMessages[]> = new BehaviorSubject(
+    null
+  );
   public async getUnreadMessages() {
-    this.unreadChatMessages.next(await (await this._getData('getUnreadMessages')).toPromise())
+    this.unreadChatMessages.next(
+      await (await this._getData('getUnreadMessages')).toPromise()
+    );
   }
   public async setMessagesAsRead() {
     const formData = new FormData();
-    const response:Observable<any> = await this._createData('setMessagesAsRead', formData);
+    const response: Observable<any> = await this._createData(
+      'setMessagesAsRead',
+      formData
+    );
     await response.pipe(first()).toPromise();
-    await this.getUnreadMessages()
+    await this.getUnreadMessages();
   }
 }
