@@ -1,94 +1,182 @@
 <ion-app>
-    <!--
+  <!--
         <app-menu></app-menu>
         <ion-router-outlet id="main"></ion-router-outlet>
     -->
-    <ion-split-pane contentId="main-content" [when]="platform.width() >= 992 && authenticationService.isAuthenticated()">
-        <ion-menu *ngIf="authenticationService.isAuthenticated()" contentId="main-content" type="overlay">
-            <ion-header>
-                <ion-toolbar color="primary">
-                    <ion-title>Menu</ion-title>
-                    <ion-buttons slot="end">
-                        <ion-button (click)="logout()">
-                            <ion-icon slot="icon-only" name="log-out"></ion-icon>
-                        </ion-button>
-                    </ion-buttons>
-                </ion-toolbar>
-                <ion-toolbar color="primary">
-                    <ion-item color="primary">
-                        <ion-avatar slot="start">
-                        <img [src]="currentUser?.logo !== null ? currentUser?.logo : 'https://api.febelink.com/storage/users/default.png'" (error)="onImgError($event)" alt="Menu profile picture">
-                        </ion-avatar>
-                        <ion-label class="ion-text-wrap">
-                            <h2 class="menu-username"> {{ currentUser?.name }} </h2>
-                            <p>
-                                <ion-icon name="card-outline"></ion-icon>
-                                {{ 'menu.labels.currentPlan' | translate }}: {{ userSubscriptionDetails }}
-                            </p>
-                            <p *ngIf="userSector">
-                                <ion-icon name="pricetags-outline"></ion-icon>
-                                {{ userSector.nombre }} / {{ userSubsector.nombre }}
-                            </p>
-                        </ion-label>
-                    </ion-item>
-                    <ion-buttons slot="end">
-                        <ion-button (click)="goToProfile()">
-                            <ion-icon slot="icon-only" color="light" name="create"></ion-icon>
-                        </ion-button>
-                    </ion-buttons>
-                </ion-toolbar>
-                <ion-toolbar color="primary">
-                    <ion-item lines="none" color="primary">
-                        <div tabindex="0"></div>
-                        <ion-icon slot="start" name="people-outline"></ion-icon>
-                        <ion-label class="ion-text-wrap">
-                            <ion-text color="light">
-                                <h2>{{ 'menu.pages.opinions' | translate }}</h2>
-                            </ion-text>
-                        </ion-label>
-                        <ion-icon color="light" [name]="showOpinions ? 'remove-circle-outline' : 'add-circle-outline'" slot="end" (click)="showOpinions = !showOpinions"></ion-icon>
-                    </ion-item>
-                    <!-- Section options. -->
-                    <ng-container *ngIf="showOpinions">
-                        <ion-card>
-                            <ion-item lines="none">
-                                <div tabindex="0"></div>
-                                <ion-label color="sandybrown" class="ion-text-wrap">
-                                    <p *ngFor="let opinion of userFeedback">{{opinion.count}} {{opinion.type}}</p>
-                                </ion-label>
-                            </ion-item>
-                        </ion-card>
-                    </ng-container>
-                </ion-toolbar>
-            </ion-header>
-            <ion-content>
-                <ion-list id="inbox-list">
-                    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                        <ion-item *ngIf="p.key !== 'subscriptions'" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                            <div tabindex="0"></div>
-                            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="p.key === 'subscriptions'" lines="none" detail="false" routerLinkActive="selected" (click)="showSubscriptionsModal()">
-                            <div tabindex="0"></div>
-                            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
-                        </ion-item>
-                    </ion-menu-toggle>
-                </ion-list>
-
-            </ion-content>
-            <ion-footer>
-                <ion-toolbar>
-                    <ion-item color="primary">
-                        <ion-label>
-                            <p style="margin-bottom: 0px">© {{ currentYear }} Febelink</p>
-                            <p style="margin-top: 5px">soporte@febelink.com</p>
-                        </ion-label>
-                    </ion-item>
-                </ion-toolbar>
-            </ion-footer>
-        </ion-menu>
-        <ion-router-outlet id="main-content"></ion-router-outlet>
-    </ion-split-pane>
+  <ion-split-pane
+    contentId="main-content"
+    [when]="platform.width() >= 992 && authenticationService.isAuthenticated()"
+  >
+    <ion-menu
+      *ngIf="authenticationService.isAuthenticated()"
+      contentId="main-content"
+      type="overlay"
+    >
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Menu</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="logout()">
+              <ion-icon slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar color="primary">
+          <ion-item color="primary">
+            <ion-avatar slot="start">
+              <img
+                [src]="
+                  currentUser?.logo !== null
+                    ? currentUser?.logo
+                    : 'https://api.febelink.com/storage/users/default.png'
+                "
+                (error)="onImgError($event)"
+                alt="Menu profile picture"
+              />
+            </ion-avatar>
+            <ion-label class="ion-text-wrap">
+              <h2 class="menu-username">{{ currentUser?.name }}</h2>
+              <p>
+                <ion-icon name="card-outline"></ion-icon>
+                {{ 'menu.labels.currentPlan' | translate }}:
+                {{ userSubscriptionDetails }}
+              </p>
+              <p *ngIf="userSector">
+                <ion-icon name="pricetags-outline"></ion-icon>
+                {{ userSector.nombre }} / {{ userSubsector.nombre }}
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-buttons slot="end">
+            <ion-button (click)="goToProfile()">
+              <ion-icon slot="icon-only" color="light" name="create"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar
+          id="menu-wallet-section"
+          color="primary"
+          (click)="goToMyWallet()"
+        >
+          <ion-item lines="none" color="primary">
+            <div tabindex="0"></div>
+            <ion-icon slot="start" name="wallet-outline"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              <ion-text color="light">
+                <h2>{{ 'menu.pages.wallet' | translate }}</h2>
+              </ion-text>
+            </ion-label>
+            <ion-icon
+              color="light"
+              [name]="
+                showWallets ? 'remove-circle-outline' : 'add-circle-outline'
+              "
+              slot="end"
+              (click)="showWallets = !showWallets"
+            ></ion-icon>
+          </ion-item>
+          <!-- Section options. -->
+          <ng-container *ngIf="showWallets">
+            <ion-label class="ion-text-wrap menu-currency-section">
+              <div
+                *ngFor="let currency of userWallets"
+                class="span-crypto-currency"
+              >
+                <img
+                  src="assets/icon/{{ currency.currency.toLowerCase() }}.png"
+                />
+                <p>
+                  {{ currency.currency }} <br />
+                  {{ currency.ammount }}
+                </p>
+              </div>
+            </ion-label>
+          </ng-container>
+        </ion-toolbar>
+        <ion-toolbar color="primary">
+          <ion-item lines="none" color="primary">
+            <div tabindex="0"></div>
+            <ion-icon slot="start" name="people-outline"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              <ion-text color="light">
+                <h2>{{ 'menu.pages.opinions' | translate }}</h2>
+              </ion-text>
+            </ion-label>
+            <ion-icon
+              color="light"
+              [name]="
+                showOpinions ? 'remove-circle-outline' : 'add-circle-outline'
+              "
+              slot="end"
+              (click)="showOpinions = !showOpinions"
+            ></ion-icon>
+          </ion-item>
+          <!-- Section options. -->
+          <ng-container *ngIf="showOpinions">
+            <ion-card>
+              <ion-item lines="none">
+                <div tabindex="0"></div>
+                <ion-label color="sandybrown" class="ion-text-wrap">
+                  <p *ngFor="let opinion of userFeedback">
+                    {{ opinion.count }} {{ opinion.type }}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </ng-container>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content id="menu-list">
+        <ion-list id="inbox-list">
+          <ion-menu-toggle
+            auto-hide="false"
+            *ngFor="let p of appPages; let i = index"
+          >
+            <ion-item
+              *ngIf="p.key !== 'subscriptions'"
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <div tabindex="0"></div>
+              <ion-icon
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
+              <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
+            </ion-item>
+            <ion-item
+              *ngIf="p.key === 'subscriptions'"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+              (click)="showSubscriptionsModal()"
+            >
+              <div tabindex="0"></div>
+              <ion-icon
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
+              <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-item color="primary">
+            <ion-label>
+              <p style="margin-bottom: 0px">© {{ currentYear }} Febelink</p>
+              <p style="margin-top: 5px">soporte@febelink.com</p>
+            </ion-label>
+          </ion-item>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

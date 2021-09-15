@@ -164,6 +164,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./landing/pages/pages.module').then((m) => m.PagesModule),
   },
+  {
+    path: 'wallet',
+    loadChildren: () =>
+      import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
+  },
 ];
 
 @NgModule({

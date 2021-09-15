@@ -1,22 +1,45 @@
 h2 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 ion-avatar {
-    width: 48px;
-    height: 48px;
+  width: 48px;
+  height: 48px;
 }
 
 ion-label p {
-    font-size: 14px;
-    font-weight: bold;
-    padding-top: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 5px;
 }
 
 .menu-username {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 a:hover {
-    cursor:pointer;
+  cursor: pointer;
+}
+
+.menu-currency-section {
+  display: block;
+  margin-left: 2em;
+}
+
+.span-crypto-currency img {
+  display: block;
+  margin: 10px 15px 0 0;
+  float: left;
+}
+.span-crypto-currency span {
+  float: right;
+}
+
+#menu-wallet-section {
+  cursor: pointer;
+}
+
+ion-content {
+  --ion-background-color: rgb(62, 101, 137);
+  --background: rgb(62, 101, 137);
 }
