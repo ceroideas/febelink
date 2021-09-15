@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { UserLanding } from '../../models/user-landing';
 import { UserDataFormComponent } from '../user-data-form/user-data-form.component';
 
 @Component({
@@ -19,18 +20,31 @@ export class BuyTokensComponent {
 
   async buyTokens(numTokensInput){
     const numTokens = numTokensInput.value
-    console.log(numTokens);
+    
+    const profile = await this.utils.getUserData()
+
+    if(profile?.id) {
+      const userData:UserLanding = {
+        name: profile.name,
+        email: profile.email,
+        address: profile.direccion,
+        dni: profile.dni,
+        phone: profile.telefono,
+        id: profile.id
+      }
+  
+      const modal = await this.modalController.create({
+        component: UserDataFormComponent,
+        componentProps: {userData},
+      });
+      return await modal.present();
+    } else{
+      this.router.navigate(['login'])
+    }
+    
     const navigationExtras: NavigationExtras = {
       state: {numTokens}
     };
-    const profile = await this.utils.getUserData()
-
-    const modal = await this.modalController.create({
-      component: UserDataFormComponent,
-      cssClass: 'my-custom-class'
-    });
-    return await modal.present();
-    // if(profile.id) 
 
     // this.router.navigate(['token', 'checkout'], navigationExtras)
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { UserLanding } from '../../models/user-landing';
 
 @Component({
   selector: 'app-user-data-form',
@@ -13,33 +14,28 @@ export class UserDataFormComponent implements OnInit {
 
   ngOnInit() {}
 
-  getUserData(form:NgForm){
-    const userData = {
-      name: form.value.name
-      , email: form.value.email
-      , dni: form.value.dni
-      , address: form.value.adress
-      , phone: form.value.phone
-    };
+  userData:UserLanding = {};
 
-    if(!userData.name){
+  getUserData(){
+
+    if(!this.userData.name){
       this.utils.showToast("Rellena el nombre");
       return;
-    } else if(!userData.email){
+    } else if(!this.userData.email){
       this.utils.showToast("Rellena el email");
       return;
-    } else if(!userData.dni){
+    } else if(!this.userData.dni){
       this.utils.showToast("Rellena el DNI");
       return;
-    } else if(!userData.address){
+    } else if(!this.userData.address){
       this.utils.showToast("Introduce tu dirección completa");
       return;
-    } else if(!userData.phone){
+    } else if(!this.userData.phone){
       this.utils.showToast("Introduce tu número de teléfono");
       return;
     }
 
-    console.log(userData);    
+    console.log(this.userData);    
   }
 
 }

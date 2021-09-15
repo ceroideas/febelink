@@ -1,13 +1,13 @@
-<h5 class="mb-3 text-center" id="titular-seccion">
-  Comprueba tus datos
-</h5>
-<form #form="ngForm" (ngSubmit)="getUserData(form)">
+<form #form="ngForm" (ngSubmit)="getUserData()" style="margin: auto;">
+  <h5 class="mb-3 text-center" id="titular-seccion">
+    Completa tus datos
+  </h5>
   <ion-grid>
     <ion-row>
       <ion-col size="12">
         <ion-item>
           <ion-label position="floating">Nombre completo</ion-label>
-          <ion-input type="text" name="name" ngModel ngDefaultControl maxlength="200" required></ion-input>
+          <ion-input type="text" name="name" [(ngModel)]="userData.name" ngDefaultControl ngModel maxlength="200" required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>    
@@ -15,27 +15,27 @@
       <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input type="text" name="email" ngModel ngDefaultControl maxlength="100" required></ion-input>
+          <ion-input type="text" name="email" [(ngModel)]="userData.email" ngDefaultControl ngModel maxlength="100" required></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating">DNI (con letra)</ion-label>
-          <ion-input type="text" name="dni" ngModel ngDefaultControl maxlength="20"required></ion-input>
+          <ion-input type="text" name="dni" [(ngModel)]="userData.dni" ngDefaultControl ngModel maxlength="20"required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12" size-sm="6">
         <ion-item>
-          <ion-label position="floating">Dirección</ion-label>
-          <ion-input type="text" name="adress" ngModel ngDefaultControl maxlength="200" required></ion-input>
+          <ion-label position="floating">Dirección Completa</ion-label>
+          <ion-input type="text" name="address" [(ngModel)]="userData.address" ngDefaultControl ngModel maxlength="200" required></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating">Teléfono</ion-label>
-          <ion-input type="text" name="phone" ngModel ngDefaultControl maxlength="20" required></ion-input>
+          <ion-input type="text" name="phone" [(ngModel)]="userData.phone" ngDefaultControl ngModel maxlength="20" required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
