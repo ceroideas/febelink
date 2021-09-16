@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 
@@ -10,7 +11,10 @@ import { UserLanding } from '../../models/user-landing';
 })
 export class UserDataFormComponent implements OnInit {
 
-  constructor(private utils: UtilitiesService) { }
+  constructor(
+    private utils: UtilitiesService
+    , private modalCtrl: ModalController
+    ) { }
 
   ngOnInit() {}
 
@@ -34,8 +38,9 @@ export class UserDataFormComponent implements OnInit {
       this.utils.showToast("Introduce tu número de teléfono");
       return;
     }
-
-    console.log(this.userData);    
+    
+    this.modalCtrl.dismiss({userCompleteData: this.userData});
   }
+  
 
 }

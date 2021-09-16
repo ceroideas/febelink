@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
+import { LandingService } from '../../services/landing.service';
 import { UserDataFormComponent } from '../user-data-form/user-data-form.component';
 
 @Component({
@@ -16,12 +17,23 @@ export class BuyTokensComponent {
     private router: Router
     , private utils:UtilitiesService
     , private modalController: ModalController
+    , private landingSvc:LandingService
   ) { }
 
-  async buyTokens(numTokensInput){
-    const numTokens = numTokensInput.value
-    
+  numTokens:number;
+
+  async justLogged(){
+    // debugger;
+    if(!this.landingSvc.isJustLogged()) return;
     const profile = await this.utils.getUserData()
+    if(!profile) return;
+    this.buyTokens(profile)
+  }
+
+  async buyTokens(profile?: any){
+    console.log(this.numTokens);
+    
+    if(!profile) profile = await this.utils.getUserData()
 
     if(profile?.id) {
       const userData:UserLanding = {
@@ -36,17 +48,24 @@ export class BuyTokensComponent {
       const modal = await this.modalController.create({
         component: UserDataFormComponent,
         componentProps: {userData},
+        cssClass: 'landing-modal'
       });
-      return await modal.present();
-    } else{
-      this.router.navigate(['login'])
-    }
-    
-    const navigationExtras: NavigationExtras = {
-      state: {numTokens}
-    };
 
-    // this.router.navigate(['token', 'checkout'], navigationExtras)
+      this.landingSvc.setJustLogged(false);
+      modal.onDidDismiss().then(response => {
+        if(!response.data){
+          return;
+        }
+        console.log(response.data.userCompleteData);
+        this.landingSvc.setUser(response.data.userCompleteData);
+
+        this.router.navigate(['token', 'checkout'])
+      });
+      modal.present();
+    } else{
+      this.landingSvc.setJustLogged(true);
+      this.router.navigate(['login', 'token'])
+    }
   }
 
 }

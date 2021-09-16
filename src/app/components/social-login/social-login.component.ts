@@ -22,6 +22,7 @@ export class SocialLoginComponent {
   public user: SocialUser;
   public provider: string;
   @Input() firstLogin: boolean;
+  @Input() redirect: string;
 
   constructor(
     private authService: SocialAuthService,
@@ -140,7 +141,7 @@ export class SocialLoginComponent {
   async auth(formData, firstLogin?: boolean) {
     await this.utilities.showLoading();
 
-    const authResponse = await this.api.login(formData, this.URL, firstLogin);
+    const authResponse = await this.api.login(formData, this.URL, firstLogin, this.redirect);
 
     this.utilities.dismissLoading();
 

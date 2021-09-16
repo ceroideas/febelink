@@ -7,9 +7,9 @@
       <div style="display: flex; justify-content: center;">
         <ion-item style="width: 200px">
           <ion-label position="floating" class="grey">Número de tokens</ion-label>
-          <ion-input type="number" #numTokens></ion-input>
+          <ion-input type="number" name="numTokens" [(ngModel)]="numTokens" ngDefaultControl></ion-input>
         </ion-item>
-        <div (click)="buyTokens(numTokens)" class="btn btn-success">
+        <div (click)="buyTokens()" class="btn btn-success">
           Comprar
         </div>
       </div>
