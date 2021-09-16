@@ -735,4 +735,12 @@ export class ApiService {
     return this._getData('existe-usuario-dni/' + dni);
   }
 
+  /**
+   * Comprobar si existe un usuario con un email que le pasamos por parámetro
+   * @param email
+   */
+   public existeEmail(email) {
+    return this._getData('existe-usuario-email/' + email);
+  }
+
 }

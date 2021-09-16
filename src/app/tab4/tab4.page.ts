@@ -65,6 +65,7 @@ export class Tab4Page {
   message: string;
   existsDNI;
   dniPrevio;
+  emailPrevio;
 
   constructor(
     private modalCtrl: ModalController,
@@ -203,6 +204,7 @@ hideShowPassword() {
             await this.obtenerProvincias();
             this.initForm();
             this.dniPrevio = this.perfil.dni;
+            this.emailPrevio = this.perfil.email;
 
             //this.form.get('first').setValue('some value');
 
@@ -319,91 +321,111 @@ hideShowPassword() {
 
         if (p.password != null && p.password != '') {
             if (this.comprobarContraseña(p.password, p.passwordConfirmation)) {
+                (await this.api.existeEmail(p.email)).subscribe(async (value) => {
+                    if(!value || (p.email === this.emailPrevio)){
 
-                    (await this.api.existeDNI(p.dni)).subscribe(async (value) => {
+                        (await this.api.existeDNI(p.dni)).subscribe(async (value) => {
 
-                        if((p.dni == null || p.dni =='') || (p.dni === this.dniPrevio) || (p.dni != null && p.dni !='' && !value )){
-                            this.utilities.showLoading();
-                            (
-                                await this.api.editarOfertanteYContra(
-                                    p.name,
-                                    p.email,
-                                    p.descripcion,
-                                    p.telefono,
-                                    p.direccion,
-                                    p.provincia,
-                                    p.localidad,
-                                    p.sector,
-                                    p.sub_sector,
-                                    p.dni,
-                                    this.base64img,
-                                    p.password
-                                )
-                            ).subscribe((res) => {
-                                if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
-                                    res.user.descripcion="";
+                            if((p.dni == null || p.dni =='') || (p.dni === this.dniPrevio) || (p.dni != null && p.dni !='' && !value )){
+                                this.utilities.showLoading();
+                                (
+                                    await this.api.editarOfertanteYContra(
+                                        p.name,
+                                        p.email,
+                                        p.descripcion,
+                                        p.telefono,
+                                        p.direccion,
+                                        p.provincia,
+                                        p.localidad,
+                                        p.sector,
+                                        p.sub_sector,
+                                        p.dni,
+                                        this.base64img,
+                                        p.password
+                                    )
+                                ).subscribe((res) => {
+                                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                                        res.user.descripcion="";
+                                    }
+                                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                                        res.user.direccion="";
+                                    }
+                                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                                        res.user.telefono="";
+                                    }
+                                    response = res;
+                                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                                    dniinput.value=res.user.dni;
+                                    this.utilities.showToast(
+                                        'Se han producido los cambios correctamente'
+                                    );
+                                    this.dniPrevio = p.dni;
+                                    this.utilities.saveUserData(res.user);
+                                    this.utilities.dismissLoading();
+                                },
+                                (err) => {
+                                if (err.status === 422) {
+                                    let jsonError = err.error;
+                        
+                                    let arrayErrores = [];
+                        
+                                    for (let key in jsonError.errors) {
+                                    arrayErrores.push(jsonError.errors[key]);
+                                    }
+                        
+                                    // mergeamos los subarrays en uno solo
+                                    arrayErrores = [].concat.apply([], arrayErrores);
+                        
+                                    for (let i = 0; i < arrayErrores.length; i++) {
+                                    arrayErrores[i] = this.utilities.capitalizeFirstLetter(
+                                        arrayErrores[i]
+                                    );
+                                    }
+                        
+                                    let cadenaErrores = `<ul>`;
+                                    for (let error of arrayErrores) {
+                                    cadenaErrores += `<li>${error}</li>`;
+                                    }
+                                    cadenaErrores += `</ul>`;
+                        
+                                    this.utilities.showAlert(
+                                    'Error al editar los datos',
+                                    `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                                    );
+                                    // }
                                 }
-                                if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
-                                    res.user.direccion="";
-                                }
-                                if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
-                                    res.user.telefono="";
-                                }
-                                response = res;
-                                var dniinput = document.getElementById('dninie') as HTMLInputElement;
-                                dniinput.value=res.user.dni;
-                                this.utilities.showToast(
-                                    'Se han producido los cambios correctamente'
-                                );
-                                this.dniPrevio = p.dni;
-                                this.utilities.saveUserData(res.user);
                                 this.utilities.dismissLoading();
-                            },
-                            (err) => {
-                            if (err.status === 422) {
-                                let jsonError = err.error;
-                    
-                                let arrayErrores = [];
-                    
-                                for (let key in jsonError.errors) {
-                                arrayErrores.push(jsonError.errors[key]);
                                 }
-                    
-                                // mergeamos los subarrays en uno solo
-                                arrayErrores = [].concat.apply([], arrayErrores);
-                    
-                                for (let i = 0; i < arrayErrores.length; i++) {
-                                arrayErrores[i] = this.utilities.capitalizeFirstLetter(
-                                    arrayErrores[i]
                                 );
-                                }
-                    
-                                let cadenaErrores = `<ul>`;
-                                for (let error of arrayErrores) {
-                                cadenaErrores += `<li>${error}</li>`;
-                                }
-                                cadenaErrores += `</ul>`;
-                    
-                                this.utilities.showAlert(
-                                'Error al editar los datos',
-                                `Ocurrieron los siguientes errores: ${cadenaErrores}`
+        
+                            }
+        
+                            else{
+                                this.utilities.showToast(
+                                    'El DNI/NIE/CIF que has introducido no es válido'
                                 );
-                                // }
+                                this.form.controls.dni.setValue(this.dniPrevio);
                             }
-                            this.utilities.dismissLoading();
-                            }
-                            );
-    
-                        }
-    
-                        else{
-                            this.utilities.showToast(
-                                'El DNI/NIE/CIF que has introducido no es válido'
-                            );
-                            this.form.controls.dni.setValue(this.dniPrevio);
-                        }
 
-                    })
+                        })
+
+                    }
+
+                    else{
+                        this.utilities.showToast(
+                            'El email que has introducido ya existe'
+                        );
+                        this.form.controls.email.setValue(this.emailPrevio);
+                    }
+                },
+                (err) =>{
+                    if(p.email == ''){
+                        this.utilities.showToast(
+                            'El campo email no puede estar vacío'
+                        );
+                        this.form.controls.email.setValue(this.emailPrevio);
+                    }
+                })
                 
 
             } else {
@@ -416,102 +438,123 @@ hideShowPassword() {
         } else {
 
            
-               
-                (await this.api.existeDNI(p.dni)).subscribe(async (value) => {
+            (await this.api.existeEmail(p.email)).subscribe(async (value) => {
 
-                    if((p.dni == null || p.dni =='') || (p.dni === this.dniPrevio) || (p.dni != null && p.dni !='' && !value)){
-                        this.utilities.showLoading();
-    
-    
-                        (
-                            await this.api.editarOfertante(
-                                p.name,
-                                p.email,
-                                p.descripcion,
-                                p.telefono,
-                                p.direccion,
-                                p.provincia,
-                                p.localidad,
-                                p.sector,
-                                p.sub_sector,
-                                p.dni,
-                                this.base64img
-                            )
-                        ).subscribe(
-                            (res) => {
-                                if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
-                                    res.user.descripcion="";
-                                }
-                                if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
-                                    res.user.direccion="";
-                                }
-                                if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
-                                    res.user.telefono="";
-                                }
-                                response = res;
-                                var dniinput = document.getElementById('dninie') as HTMLInputElement;
-                                dniinput.value=res.user.dni;
-                                this.utilities.showToast(
-                                    'Se han producido los cambios correctamente'
-                                );
-                                this.dniPrevio = p.dni;
-                                this.utilities.saveUserData(res.user);
-                                this.utilities.dismissLoading();
-                            },
-                            (err) => {
-                                if (err.status === 422) {
-                                    let arrayErrores = [];
-                                    if(err.error.nombre == false){
-                                        arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
+                if(!value || (p.email === this.emailPrevio)){
+                    (await this.api.existeDNI(p.dni)).subscribe(async (value) => {
+
+                        if((p.dni == null || p.dni =='') || (p.dni === this.dniPrevio) || (p.dni != null && p.dni !='' && !value)){
+                            this.utilities.showLoading();
+        
+        
+                            (
+                                await this.api.editarOfertante(
+                                    p.name,
+                                    p.email,
+                                    p.descripcion,
+                                    p.telefono,
+                                    p.direccion,
+                                    p.provincia,
+                                    p.localidad,
+                                    p.sector,
+                                    p.sub_sector,
+                                    p.dni,
+                                    this.base64img
+                                )
+                            ).subscribe(
+                                (res) => {
+                                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                                        res.user.descripcion="";
                                     }
-                                    if(err.error.email == false){
-                                        arrayErrores.push("El correo no es válido");
+                                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                                        res.user.direccion="";
                                     }
-                                    //Check phone number
-                                    if(err.error.vTelefono == false){
-                                        arrayErrores.push("El formato del teléfono no es correcto");
+                                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                                        res.user.telefono="";
                                     }
-                                    //Check DNI
-                                    if(err.error.vDNI == false){
-                                        arrayErrores.push("El formato del DNI/NIE/CIF no es correcto");
-                                    }
-                                    
-                                    //Show all the errors
-                                    arrayErrores = [].concat.apply([], arrayErrores);
-    
-                                    let cadenaErrores = `<ul>`;
-                                    for (let error of arrayErrores) {
-                                        cadenaErrores += `<li>${error}</li>`;
-                                    }
-                                    cadenaErrores += `</ul>`;
-    
-                                    this.utilities.showAlert(
-                                        'Error al editar los datos',
-                                        `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                                    response = res;
+                                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                                    dniinput.value=res.user.dni;
+                                    this.utilities.showToast(
+                                        'Se han producido los cambios correctamente'
                                     );
-                                } else {
-                                    this.utilities.showAlert(
-                                        'Error al editar los datos',
-                                        'Comprueba que todos los campos están introducidos.'
-                                    );
+                                    this.dniPrevio = p.dni;
+                                    this.emailPrevio = p.email;
+                                    this.utilities.saveUserData(res.user);
+                                    this.utilities.dismissLoading();
+                                },
+                                (err) => {
+                                    if (err.status === 422) {
+                                        let arrayErrores = [];
+                                        if(err.error.nombre == false){
+                                            arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
+                                        }
+                                        if(err.error.email == false){
+                                            arrayErrores.push("El correo no es válido");
+                                        }
+                                        //Check phone number
+                                        if(err.error.vTelefono == false){
+                                            arrayErrores.push("El formato del teléfono no es correcto");
+                                        }
+                                        //Check DNI
+                                        if(err.error.vDNI == false){
+                                            arrayErrores.push("El formato del DNI/NIE/CIF no es correcto");
+                                        }
+                                        
+                                        //Show all the errors
+                                        arrayErrores = [].concat.apply([], arrayErrores);
+        
+                                        let cadenaErrores = `<ul>`;
+                                        for (let error of arrayErrores) {
+                                            cadenaErrores += `<li>${error}</li>`;
+                                        }
+                                        cadenaErrores += `</ul>`;
+        
+                                        this.utilities.showAlert(
+                                            'Error al editar los datos',
+                                            `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                                        );
+                                    } else {
+                                        this.utilities.showAlert(
+                                            'Error al editar los datos',
+                                            'Comprueba que todos los campos están introducidos.'
+                                        );
+                                    }
+                                    //this.utilities.showAlert('Error al editar los datos', 'Comprueba que todos los campos están introducidos.');
+                                    this.utilities.dismissLoading();
                                 }
-                                //this.utilities.showAlert('Error al editar los datos', 'Comprueba que todos los campos están introducidos.');
-                                this.utilities.dismissLoading();
-                            }
-                        );
-    
-                    }
+                            );
+        
+                        }
 
-                    else{
-                        this.utilities.showToast(
-                            'El DNI/NIE/CIF que has introducido no es válido'
-                        );
-                        this.form.controls.dni.setValue(this.dniPrevio);
-                    }
+                        else{
+                            this.utilities.showToast(
+                                'El DNI/NIE/CIF que has introducido no es válido'
+                            );
+                            this.form.controls.dni.setValue(this.dniPrevio);
+                        }
 
-                    
-                });   
-                         
+                        
+                    });
+                }
+
+                else{
+                    this.utilities.showToast(
+                        'El email que has introducido ya existe'
+                    );
+                    this.form.controls.email.setValue(this.emailPrevio);
+                }
+
+            },
+            (err) => {
+                if(p.email == ''){
+                    this.utilities.showToast(
+                        'El campo email no puede estar vacío'
+                    );
+                    this.form.controls.email.setValue(this.emailPrevio);
+                }
+                
+            });              
 
             
         }
