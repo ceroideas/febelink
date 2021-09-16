@@ -726,4 +726,13 @@ export class ApiService {
     await response.pipe(first()).toPromise();
     await this.getUnreadMessages()
   }
+
+  /**
+   * Comprobar si existe un usuario con un dni que le pasamos por parámetro
+   * @param dni
+   */
+   public existeDNI(dni) {
+    return this._getData('existe-usuario-dni/' + dni);
+  }
+
 }
