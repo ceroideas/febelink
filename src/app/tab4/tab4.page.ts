@@ -364,36 +364,42 @@ hideShowPassword() {
                                     this.utilities.dismissLoading();
                                 },
                                 (err) => {
-                                if (err.status === 422) {
-                                    let jsonError = err.error;
-                        
-                                    let arrayErrores = [];
-                        
-                                    for (let key in jsonError.errors) {
-                                    arrayErrores.push(jsonError.errors[key]);
+                                    if (err.status === 422) {
+                                        let arrayErrores = [];
+                                        if(err.error.nombre == false){
+                                            arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
+                                        }
+                                        if(err.error.email == false){
+                                            arrayErrores.push("El correo no es válido");
+                                        }
+                                        //Check phone number
+                                        if(err.error.vTelefono == false){
+                                            arrayErrores.push("El formato del teléfono no es correcto");
+                                        }
+                                        //Check DNI
+                                        if(err.error.vDNI == false){
+                                            arrayErrores.push("El formato del DNI/NIE/CIF no es correcto");
+                                        }
+                                        
+                                        //Show all the errors
+                                        arrayErrores = [].concat.apply([], arrayErrores);
+        
+                                        let cadenaErrores = `<ul>`;
+                                        for (let error of arrayErrores) {
+                                            cadenaErrores += `<li>${error}</li>`;
+                                        }
+                                        cadenaErrores += `</ul>`;
+        
+                                        this.utilities.showAlert(
+                                            'Error al editar los datos',
+                                            `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                                        );
+                                    } else {
+                                        this.utilities.showAlert(
+                                            'Error al editar los datos',
+                                            'Comprueba que todos los campos están introducidos.'
+                                        );
                                     }
-                        
-                                    // mergeamos los subarrays en uno solo
-                                    arrayErrores = [].concat.apply([], arrayErrores);
-                        
-                                    for (let i = 0; i < arrayErrores.length; i++) {
-                                    arrayErrores[i] = this.utilities.capitalizeFirstLetter(
-                                        arrayErrores[i]
-                                    );
-                                    }
-                        
-                                    let cadenaErrores = `<ul>`;
-                                    for (let error of arrayErrores) {
-                                    cadenaErrores += `<li>${error}</li>`;
-                                    }
-                                    cadenaErrores += `</ul>`;
-                        
-                                    this.utilities.showAlert(
-                                    'Error al editar los datos',
-                                    `Ocurrieron los siguientes errores: ${cadenaErrores}`
-                                    );
-                                    // }
-                                }
                                 this.utilities.dismissLoading();
                                 }
                                 );
