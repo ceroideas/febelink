@@ -10,6 +10,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { LandingService } from '../../services/landing.service';
 import { ModalController, Platform } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from 'src/app/services/api.service';
 
 export interface xTimer {
   szMs: string;
@@ -50,6 +51,7 @@ export class Index1Component implements OnInit {
     , private landingSvc:LandingService
     , private utils: UtilitiesService
     , private modalController: ModalController
+    , private api: ApiService
   ) {}
 
   navExtras: NavigationExtras
@@ -71,7 +73,7 @@ export class Index1Component implements OnInit {
   }
 
   ionViewDidEnter(){
-    (new BuyTokensComponent(this.router,this.utils,this.modalController, this.landingSvc)).justLogged();
+    (new BuyTokensComponent(this.router,this.utils,this.modalController, this.landingSvc, this.api)).justLogged();
   }
 
   // Destruimos cuando finaliza el contador
