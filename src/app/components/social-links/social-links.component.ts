@@ -14,6 +14,7 @@ export class SocialLinksComponent implements OnInit {
   private _instagram: string = 'https://www.instagram.com/febelink/?hl=es';
   private _youtube: string = 'https://www.youtube.com/channel/UCbfnUZt6hjYLab_OO9U385A';
   private _tiktok: string = 'https://www.tiktok.com/@febelink?';
+  private _linkedin: string = 'https://es.linkedin.com/company/febelink';
   private _mail: string = 'mailto:token@febelink.com';
 
   nothingSet: boolean;
@@ -25,6 +26,7 @@ export class SocialLinksComponent implements OnInit {
   @Input() instagram: string;   @Input() show_instagram: boolean = false;
   @Input() youtube: string;     @Input() show_youtube: boolean = false;
   @Input() tiktok: string;      @Input() show_tiktok: boolean = false;
+  @Input() linkedin: string;    @Input() show_linkedin: boolean = false;
   @Input() mail: string;        @Input() show_mail: boolean = false;
 
   @Input() target: string = '_blank';
@@ -41,12 +43,13 @@ export class SocialLinksComponent implements OnInit {
     // !this.rrss             = no ha seteado un valor a esta variable
     // !this.show_rrss        = no ha indicado que quiere mostrar la RRSS
 
-    this.nothingSet = !this.telegram && !this.show_telegram 
-          && !this.twitter && !this.show_twitter 
-          && !this.facebook && !this.show_facebook 
-          && !this.instagram && !this.show_instagram 
-          && !this.youtube && !this.show_youtube 
-          && !this.tiktok && !this.show_tiktok 
+    this.nothingSet = !this.telegram && !this.show_telegram
+          && !this.twitter && !this.show_twitter
+          && !this.facebook && !this.show_facebook
+          && !this.instagram && !this.show_instagram
+          && !this.youtube && !this.show_youtube
+          && !this.tiktok && !this.show_tiktok
+          && !this.linkedin && !this.show_linkedin
           && !this.mail && !this.show_mail ;
 
     // this.nothingSet        = no ha seteado nada, mostrar las por default
@@ -66,5 +69,8 @@ export class SocialLinksComponent implements OnInit {
     // con la condicion de que cuando se indique show_mail tome de this._mail
     // o en su defecto que indique el valor que contenga el Input() this.mail (por default = '' )
     this.mail = /* this.nothingSet || */ this.show_mail ? this._mail : this.mail;
+
+    // Idem que mail
+    this.linkedin = /* this.nothingSet || */ this.show_linkedin ? this._linkedin : this.linkedin;
   }
 }

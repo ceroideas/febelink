@@ -8,8 +8,9 @@
 }
   
 .flexed-row ion-col {
-flex: 1 1 0px;
-min-width: 1em;
+    flex: 1 1 0px;
+    min-width: 1em;
+    text-align: center;
 }
 
 .icon-circle {
@@ -58,9 +59,10 @@ min-width: 1em;
   }
   .tiktok {
       background-color: var(--ion-color-tiktok);
-      content: "\e07b";  /* this is your text. You can also use UTF-8 character codes as I do here */
-      font-family: FontAwesome;
     
+  }
+  .linkedin {
+      background-color: var(--ion-color-linkedin);
   }
   ion-icon, i {
     color: white;
