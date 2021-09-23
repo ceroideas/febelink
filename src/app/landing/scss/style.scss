@@ -699,6 +699,8 @@ a {
 
   #team-image {
     margin-top: 40px !important;
+    max-width: 30% !important;
+    max-height: 30% !important;
   }
 
   #footer-first-row {
@@ -763,6 +765,8 @@ a {
 
   #team-image {
     margin-top: 40px !important;
+    max-width: 30% !important;
+    max-height: 30% !important;
   }
 
   #team-row {
@@ -901,8 +905,17 @@ a {
 }
 
 #team-image {
-  max-width: 100% !important;
-  max-height: 100% !important;
+  max-width: 75% !important;
+  max-height: 75% !important;
+  margin-left: calc( 25% / 2 );
+  border-radius: 50%;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 11%),
+              0 2px 2px rgb(0 0 0 / 11%),
+              0 4px 4px rgb(0 0 0 / 11%),
+              0 6px 8px rgb(0 0 0 / 11%);
+}
+#social_linkedin {
+  margin-left: calc( 25% );
 }
 
 #team-link {

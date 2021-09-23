@@ -185,6 +185,13 @@
   --ion-color-tiktok-shade: #EE1D52;
   --ion-color-tiktok-tint: #69C9D0;
 
+  /** LinkedIn **/
+  --ion-color-linkedin: #0E76A8;
+  --ion-color-linkedin-rgb: 14, 118, 168;
+  --ion-color-linkedin-contrast: #ffffff;
+  --ion-color-linkedin-contrast-rgb: 255,255,255;
+  --ion-color-linkedin-shade: #0A6E9C;
+  --ion-color-linkedin-tint: #1699D6;
 }
 
 .ion-color-febelink {
@@ -293,6 +300,15 @@
   --ion-color-contrast-rgb: var(--ion-color-tiktok-contrast-rgb);
   --ion-color-shade: var(--ion-color-tiktok-shade);
   --ion-color-tint: var(--ion-color-tiktok-tint);
+}
+
+.ion-color-linkedin {
+  --ion-color-base: var(--ion-color-linkedin);
+  --ion-color-base-rgb: var(--ion-color-linkedin-rgb);
+  --ion-color-contrast: var(--ion-color-linkedin-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-linkedin-contrast-rgb);
+  --ion-color-shade: var(--ion-color-linkedin-shade);
+  --ion-color-tint: var(--ion-color-linkedin-tint);
 }
 
 /*
