@@ -26,6 +26,7 @@ import { PlansComponent } from './plans/plans.component';
 import { FooterComponent } from './footer/footer.component';
 import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
+import { SocialLinksComponent } from 'src/app/components/social-links/social-links.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { WhitelistComponent } from './whitelist/whitelist.component';
     ScrollspyDirective,
     BuyTokensComponent,
     WhitelistComponent,
+    SocialLinksComponent,
   ],
   imports: [CommonModule, CarouselModule],
   exports: [
@@ -48,6 +50,7 @@ import { WhitelistComponent } from './whitelist/whitelist.component';
     ScrollspyDirective,
     BuyTokensComponent,
     WhitelistComponent,
+    SocialLinksComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
