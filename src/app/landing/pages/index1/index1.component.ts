@@ -1,6 +1,5 @@
 // https://stackblitz.com/edit/countdown-timer?file=app%2Fhello.component.ts
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // OJO OMG es necesario instalar:
 // npm install @types/countdown
@@ -39,7 +38,7 @@ export class Index1Component implements OnInit {
     szSgs: '00',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor( private http: HttpClient ) {}
 
   ngOnInit(): void {
     // https://www.npmjs.com/package/countdown
