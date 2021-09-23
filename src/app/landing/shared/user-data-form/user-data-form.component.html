@@ -4,10 +4,16 @@
   </h5>
   <ion-grid>
     <ion-row>
-      <ion-col size="12">
+      <ion-col size="12" size-sm="6">
         <ion-item>
-          <ion-label position="floating">Nombre completo</ion-label>
+          <ion-label position="floating">Nombre</ion-label>
           <ion-input type="text" name="name" [(ngModel)]="userData.name" ngDefaultControl ngModel maxlength="200" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label position="floating">Apellidos</ion-label>
+          <ion-input type="text" name="lastName" [(ngModel)]="userData.lastName" ngDefaultControl ngModel maxlength="200" required></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>    
@@ -15,7 +21,7 @@
       <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input type="text" name="email" [(ngModel)]="userData.email" ngDefaultControl ngModel maxlength="100" required></ion-input>
+          <ion-input type="text" name="email" [(ngModel)]="userData.email" ngDefaultControl ngModel maxlength="100" [disabled]="userData.email"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="12" size-sm="6">
@@ -25,10 +31,46 @@
         </ion-item>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col size="12" size-sm="6">
         <ion-item>
-          <ion-label position="floating">Dirección Completa</ion-label>
+          <ion-label position="floating">Provincia</ion-label>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="provincia"
+            ngDefaultControl ngModel name="provincia"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="provincias"
+            [canSearch]="true"
+            (onChange)="provinciasChange($event)"
+          >
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label position="floating">Localidad</ion-label>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="localidad"
+            ngDefaultControl ngModel name="localidad"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="localidades"
+            [canSearch]="true"
+            (onChange)="localidadesChange($event)"
+          >
+          </ionic-selectable>
+        </ion-item> 
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label position="floating">Dirección</ion-label>
           <ion-input type="text" name="address" [(ngModel)]="userData.address" ngDefaultControl ngModel maxlength="200" required></ion-input>
         </ion-item>
       </ion-col>
@@ -39,6 +81,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col size="12" class="mt-3 text-center">
         <button type="submit" class="btn btn-success">

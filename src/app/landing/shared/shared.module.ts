@@ -28,6 +28,7 @@ import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
 import { UserDataFormComponent } from './user-data-form/user-data-form.component';
 import { FormsModule } from '@angular/forms';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule
     , CarouselModule
     , FormsModule
+    , IonicSelectableModule
   ],
   exports: [
     ServicesComponent,

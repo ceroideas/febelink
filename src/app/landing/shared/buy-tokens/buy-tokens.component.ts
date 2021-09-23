@@ -47,11 +47,14 @@ export class BuyTokensComponent {
     if(profile?.id) {
       const userData:UserLanding = {
         name: profile.name,
+        lastName: profile.lastName,
         email: profile.email,
         address: profile.direccion,
         dni: profile.dni,
         phone: profile.telefono,
-        id: profile.id
+        id: profile.id,
+        province_id: profile.province_id,
+        town_id: profile.town_id
       }
   
       const modal = await this.modalController.create({
@@ -71,22 +74,40 @@ export class BuyTokensComponent {
 
         const formData = new FormData();
         formData.append('name', userLanding.name);
+        formData.append('lastName', userLanding.lastName);
         formData.append('email', userLanding.email);
         formData.append('dni', userLanding.dni);
-        formData.append('address', userLanding.address);
-        formData.append('phone', userLanding.phone);
+        formData.append('province_id', userLanding.province_id.toString());
+        formData.append('town_id', userLanding.town_id.toString());
+        formData.append('direccion', userLanding.address);
+        formData.append('telefono', userLanding.phone);
         formData.append('num_tokens', numTokens.toString());
 
         try {
           const responseObs:Observable<any> = await this.api._createData('addUserToken', formData);
-          await responseObs.pipe(first()).toPromise();
-          // console.log(this.addUserTokenResponse);        
+          const res = await responseObs.pipe(first()).toPromise();
+          console.log(res);
+          
+          if(!res.success){
+            let errorMsg = 'Revisa los campos:';
+            const errorMsgBase = '\n - ';
+            if(!res.nombre) errorMsg += errorMsgBase+'Nombre'
+            if(!res.lastName) errorMsg += errorMsgBase+'Apellido'
+            if(!res.email) errorMsg += errorMsgBase+'Email'
+            if(!res.dni) errorMsg += errorMsgBase+'DNI'
+            if(!res.phone) errorMsg += errorMsgBase+'Teléfono'
+            alert(errorMsg);
+            
+          } else {
+            // this.router.navigate(['token', 'checkout'])
+          }
+          // debugger;
+
         } catch(ex) {
           alert("Error al comprar los tokens. Por favor, contacte con info@febelink.com");
           console.error(ex);          
         }
 
-        this.router.navigate(['token', 'checkout'])
       });
       modal.present();
     } else{
