@@ -35,13 +35,17 @@ export class BuyTokensComponent {
   }
 
   async buyTokens(profile?: any){
-    console.log(this.numTokens);
-
+    
     const numTokens = this.numTokens || this.landingSvc.getNumTokens();
     if(!numTokens) {
       this.utils.showToast("Indica cuantos tokens quieres comprar");  
       return
-    };
+    }
+    const faseTokens = this.landingSvc.getFaseTokens();
+    if(!faseTokens) {
+      this.utils.showToast("Indica en qué fase quieres comprar los tokens");  
+      return
+    }
     if(!profile) profile = await this.utils.getUserData()
 
     if(profile?.id) {
@@ -82,6 +86,7 @@ export class BuyTokensComponent {
         formData.append('direccion', userLanding.address);
         formData.append('telefono', userLanding.phone);
         formData.append('num_tokens', numTokens.toString());
+        formData.append('fase_tokens', faseTokens.toString());
 
         try {
           const responseObs:Observable<any> = await this.api._createData('addUserToken', formData);
@@ -113,6 +118,10 @@ export class BuyTokensComponent {
       this.landingSvc.setNumTokens(numTokens);
       this.router.navigate(['login', 'token'])
     }
+  }
+
+  faseChange(event){
+    this.landingSvc.setFaseTokens(+event.detail.value)
   }
 
 }

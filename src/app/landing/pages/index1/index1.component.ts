@@ -48,10 +48,6 @@ export class Index1Component implements OnInit {
   constructor(
     private http: HttpClient
     , private router: Router
-    , private landingSvc:LandingService
-    , private utils: UtilitiesService
-    , private modalController: ModalController
-    , private api: ApiService
   ) {}
 
   navExtras: NavigationExtras
@@ -70,10 +66,6 @@ export class Index1Component implements OnInit {
     );
 
     this.navExtras = this.router.getCurrentNavigation().extras
-  }
-
-  ionViewDidEnter(){
-    (new BuyTokensComponent(this.router,this.utils,this.modalController, this.landingSvc, this.api)).justLogged();
   }
 
   // Destruimos cuando finaliza el contador

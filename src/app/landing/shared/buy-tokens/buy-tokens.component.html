@@ -1,18 +1,27 @@
-<section class="section bg-light" id="features">
-  <div class="container">
-    <div class="justify-content-center">
-      <h4 class="mb-3 text-center" id="titular-seccion">
-        Compra nuestros tokens
-      </h4>
-      <div style="display: flex; justify-content: center;">
-        <ion-item style="width: 200px">
-          <ion-label position="floating" class="grey">Número de tokens</ion-label>
-          <ion-input type="number" name="numTokens" [(ngModel)]="numTokens" ngDefaultControl></ion-input>
-        </ion-item>
-        <div (click)="buyTokens()" class="btn btn-success">
-          Comprar
-        </div>
-      </div>
+<ion-row style="margin-top: 4vh;">
+  <ion-col size="12">
+    <h4>Cómpralos ya</h4>
+  </ion-col>
+  <ion-col size="12" size-sm="5">
+    <ion-item>
+      <ion-label position="floating" class="grey">Número de tokens</ion-label>
+      <ion-input type="number" name="numTokens" [(ngModel)]="numTokens" ngDefaultControl></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col size="12" size-sm="5">
+    <ion-item>
+      <ion-label position="floating" class="grey">Fase</ion-label>
+      <ion-select interface="popover" (ionChange)="faseChange($event)" ngDefaultControl>
+        <ion-select-option value="1">Primera fase</ion-select-option>
+        <ion-select-option value="2">Segunda fase</ion-select-option>
+        <ion-select-option value="3">Tercera fase</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+  <ion-col size="12" size-sm="2">
+    <div (click)="buyTokens()" class="btn btn-success">
+      Comprar
     </div>
-  </div>
-</section>
+  </ion-col>
+</ion-row>
+

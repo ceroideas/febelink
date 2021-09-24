@@ -52,7 +52,7 @@ export class ApiService {
             this.userLogged.emit('user:login');
             switch (redirect) {
               case 'token':
-                this.router.navigate(['token']);
+                this.router.navigate(['token', 'buy']);
                 break;
             
               default: 
