@@ -27,6 +27,8 @@ import { FooterComponent } from './footer/footer.component';
 import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
 import { SocialLinksComponent } from 'src/app/components/social-links/social-links.component';
+import { LinkPreviewComponent } from 'src/app/components/link-preview/link-preview.component';
+import { PhasesComponent } from './phases/phases.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { SocialLinksComponent } from 'src/app/components/social-links/social-lin
     BuyTokensComponent,
     WhitelistComponent,
     SocialLinksComponent,
+    LinkPreviewComponent,
+    PhasesComponent,
   ],
   imports: [CommonModule, CarouselModule],
   exports: [
@@ -51,6 +55,8 @@ import { SocialLinksComponent } from 'src/app/components/social-links/social-lin
     BuyTokensComponent,
     WhitelistComponent,
     SocialLinksComponent,
+    LinkPreviewComponent,
+    PhasesComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
