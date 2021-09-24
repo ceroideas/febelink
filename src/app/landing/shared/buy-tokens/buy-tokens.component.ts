@@ -97,15 +97,13 @@ export class BuyTokensComponent {
             if(!res.dni) errorMsg += errorMsgBase+'DNI'
             if(!res.phone) errorMsg += errorMsgBase+'Teléfono'
             alert(errorMsg);
-            
           } else {
-            // this.router.navigate(['token', 'checkout'])
+            window.location.href = res.externalCheckoutUrl;
           }
-          // debugger;
 
         } catch(ex) {
           alert("Error al comprar los tokens. Por favor, contacte con info@febelink.com");
-          console.error(ex);          
+          console.error(ex);
         }
 
       });
