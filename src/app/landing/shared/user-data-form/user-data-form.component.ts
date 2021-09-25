@@ -31,8 +31,8 @@ export class UserDataFormComponent implements OnInit {
 
   getUserData(){
 
-    this.userData.province_id = this.provincia.id;
-    this.userData.town_id = this.localidad.id;
+    this.userData.province_id = this.provincia?.id;
+    this.userData.town_id = this.localidad?.id;
 
     if(!this.userData.name){
       this.utils.showToast("Rellena el nombre");
