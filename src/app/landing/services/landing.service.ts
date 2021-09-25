@@ -7,7 +7,7 @@ import { UserLanding } from '../models/user-landing';
 export class LandingService {
 
   private numTokens:number;
-  private faseTokens:number;
+  private phaseTokens:number;
   private justLogged:boolean;
   private user:UserLanding;
 
@@ -19,12 +19,12 @@ export class LandingService {
     return this.numTokens;
   }
 
-  setFaseTokens(faseTokens:number) {
-    this.faseTokens = faseTokens;
+  setPhaseTokens(phaseTokens:number) {
+    this.phaseTokens = phaseTokens;
   }
 
-  getFaseTokens():number {
-    return this.faseTokens;
+  getPhaseTokens():number {
+    return this.phaseTokens;
   }
 
   setJustLogged(justLogged:boolean) {

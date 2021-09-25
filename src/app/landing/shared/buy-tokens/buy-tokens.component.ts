@@ -14,7 +14,7 @@ import { UserDataFormComponent } from '../user-data-form/user-data-form.componen
   templateUrl: './buy-tokens.component.html',
   styleUrls: ['./buy-tokens.component.scss'],
 })
-export class BuyTokensComponent {
+export class BuyTokensComponent implements OnInit {
   
   constructor(
     private router: Router
@@ -25,6 +25,12 @@ export class BuyTokensComponent {
   ) { }
     
   numTokens:number;
+  numFiat:number;
+  phaseToTokenCost:[];
+
+  async ngOnInit() {
+    this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
+  }
 
   async justLogged(){
     // debugger;
@@ -41,8 +47,8 @@ export class BuyTokensComponent {
       this.utils.showToast("Indica cuantos tokens quieres comprar");  
       return
     }
-    const faseTokens = this.landingSvc.getFaseTokens();
-    if(!faseTokens) {
+    const phaseTokens = this.landingSvc.getPhaseTokens();
+    if(!phaseTokens) {
       this.utils.showToast("Indica en qué fase quieres comprar los tokens");  
       return
     }
@@ -86,21 +92,24 @@ export class BuyTokensComponent {
         formData.append('direccion', userLanding.address);
         formData.append('telefono', userLanding.phone);
         formData.append('num_tokens', numTokens.toString());
-        formData.append('fase_tokens', faseTokens.toString());
+        formData.append('phase_tokens', phaseTokens.toString());
 
+        
         try {
           const responseObs:Observable<any> = await this.api._createData('addUserToken', formData);
           const res = await responseObs.pipe(first()).toPromise();
+
+          this.saveInSession(profile, userLanding);
           console.log(res);
           
           if(!res.success){
-            let errorMsg = 'Revisa los campos:';
+            let errorMsg = res.message;
             const errorMsgBase = '\n - ';
-            if(!res.nombre) errorMsg += errorMsgBase+'Nombre'
-            if(!res.lastName) errorMsg += errorMsgBase+'Apellido'
-            if(!res.email) errorMsg += errorMsgBase+'Email'
-            if(!res.dni) errorMsg += errorMsgBase+'DNI'
-            if(!res.phone) errorMsg += errorMsgBase+'Teléfono'
+            if(res.nombre === false) errorMsg += errorMsgBase+'Nombre'
+            if(res.lastName === false) errorMsg += errorMsgBase+'Apellido'
+            if(res.email === false) errorMsg += errorMsgBase+'Email'
+            if(res.dni === false) errorMsg += errorMsgBase+'DNI'
+            if(res.phone === false) errorMsg += errorMsgBase+'Teléfono'
             alert(errorMsg);
           } else {
             window.location.href = res.externalCheckoutUrl;
@@ -120,8 +129,45 @@ export class BuyTokensComponent {
     }
   }
 
-  faseChange(event){
-    this.landingSvc.setFaseTokens(+event.detail.value)
+  lastInput:LastInput;
+  private saveInSession(profile: any, userLanding: UserLanding) {
+    profile.name = userLanding.name;
+    profile.lastName = userLanding.lastName;
+    profile.direccion = userLanding.address;
+    profile.dni = userLanding.dni;
+    profile.telefono = userLanding.phone;
+    profile.province_id = userLanding.province_id;
+    profile.town_id = userLanding.town_id;
+    this.utils.saveUserData(profile);
   }
 
+  phaseChange(event){
+    this.landingSvc.setPhaseTokens(+event.detail.value)
+    if(this.lastInput === LastInput.Fiat){
+      this.fiatToTokens({target:{value: this.numFiat}});
+    } else if(this.lastInput === LastInput.Token){
+      this.tokensToFiat({target:{value: this.numTokens}});
+    }
+  }
+
+  tokensToFiat(event){
+    this.numFiat = Math.round(event.target.value * this.tokenCost() * 100) / 100;
+    this.lastInput = LastInput.Token;
+  }
+
+  fiatToTokens(event){
+    this.numTokens = Math.trunc(event.target.value / this.tokenCost());
+    this.lastInput = LastInput.Fiat;
+  }
+
+  tokenCost():number{
+    const phaseTokens = this.landingSvc.getPhaseTokens();
+    if(!phaseTokens) return 0;
+    return this.phaseToTokenCost[phaseTokens];
+  }
+}
+
+enum LastInput {
+  Token = 1,
+  Fiat = 2
 }
