@@ -79,7 +79,7 @@ export class BuyTokensComponent implements OnInit {
           return;
         }
         const userLanding:UserLanding = response.data.userCompleteData;
-        console.log(userLanding);
+        // console.log(userLanding);
         this.landingSvc.setUser(userLanding);
 
         const formData = new FormData();
@@ -100,7 +100,7 @@ export class BuyTokensComponent implements OnInit {
           const res = await responseObs.pipe(first()).toPromise();
 
           this.saveInSession(profile, userLanding);
-          console.log(res);
+          // console.log(res);
           
           if(!res.success){
             let errorMsg = res.message;
