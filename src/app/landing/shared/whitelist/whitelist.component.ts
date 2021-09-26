@@ -10,33 +10,31 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   styleUrls: ['./whitelist.component.scss'],
 })
 export class WhitelistComponent {
+  constructor(private api: ApiService, private utils: UtilitiesService) {}
 
-  constructor(
-    private api: ApiService,
-    private utils: UtilitiesService
-  ) { }
-
-  response:any
+  response: any;
 
   async addEmailToWhitelist(emailField: any) {
     // debugger
     const email = emailField?.value;
-    if(!email) {
+    if (!email) {
       alert('Introduce tu email');
       return;
     }
     await this.utils.showLoading();
-    try{
+    try {
       const formData = new FormData();
       formData.append('email', email);
-      const responseObs:Observable<any> = await this.api._createData('emailWhitelist', formData);
+      const responseObs: Observable<any> = await this.api._createData(
+        'emailWhitelist',
+        formData
+      );
       this.response = await responseObs.pipe(first()).toPromise();
-    }
-    catch(error) {}
-    finally {
+    } catch (error) {
+      console.error(error);
+    } finally {
       this.utils.dismissLoading();
     }
-    // console.log(this.response);    
+    // console.log(this.response);
   }
-
 }

@@ -84,9 +84,12 @@
   <ion-toolbar color="febelink">
     <p style="margin-bottom: 0px">
       © {{ currentYear }} Febelink |
-      <span class="terms-text" (click)="termsModal()"
-        >Terminos y condiciones</span
-      >
+      <span class="terms-text" (click)="openTerms()">
+        Términos y condiciones
+      </span> |
+      <span class="terms-text" (click)="openLegalDisclaimer()">
+        Aviso legal
+      </span>
     </p>
     <p style="margin-top: 5px">Contacto: info@febelink.com</p>
   </ion-toolbar>

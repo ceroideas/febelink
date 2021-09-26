@@ -1,3 +1,4 @@
+import { WalletService } from './services/wallet/wallet.service';
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -22,6 +23,8 @@ import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
 import { NotificationService } from './services/notification.service';
+import { CryptoCurrency, CryptoCurrencyType } from './models/currency.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -47,10 +50,12 @@ export class AppComponent implements OnDestroy {
   ];
   currentUser: IUser;
   showOpinions = true;
+  showWallets = true;
   userSector: ISector;
   userSubsector: ISubSector;
   userSubscriptionDetails = 'ninguno';
   userFeedback = [];
+  userWallets: CryptoCurrency[] = [];
 
   constructor(
     public platform: Platform,
@@ -69,9 +74,11 @@ export class AppComponent implements OnDestroy {
     private menu: MenuController,
     public authenticationService: AuthenticationService,
     private modalCtrl: ModalController,
-    private notificationSvc: NotificationService
+    private notificationSvc: NotificationService,
+    private walletService: WalletService
   ) {
     this.initializeApp();
+    this.openCookieBanner();
   }
 
   initializeApp() {
@@ -98,14 +105,48 @@ export class AppComponent implements OnDestroy {
       });
     });
 
-    this.authenticationService.authenticationState.subscribe((state) => {
+    this.authenticationService.authenticationState.subscribe(async (state) => {
       if (state) {
         console.log('state', state);
         this.menu.enable(true);
         this.getUserInfo();
+        this.notificationSvc.getUnreadNotificationsCount();
+        const serviceRequest: Observable<any> =
+          await this.walletService.getBalanceByUserId('CUSTOM1');
+        serviceRequest.subscribe((response) => {
+          this.userWallets = response.data;
+        });
       }
     });
     // this.loginImplicito();
+  }
+
+  openCookieBanner() {
+    let cc = window as any;
+    cc.cookieconsent.initialise({
+      palette: {
+        popup: {
+          background: '#000000',
+        },
+        button: {
+          background: '#000000',
+          text: '#ffffff',
+          border: '5px',
+        },
+      },
+      theme: 'classic',
+      content: {
+        message:
+          'Este sitio web utiliza cookies para que usted tenga la mejor experiencia de usuario. Si continúa navegando está dando su consentimiento para la aceptación de las mencionadas cookies y la aceptación de nuestra política de cookies, pinche el enlace para mayor información.',
+        dismiss: 'Aceptar',
+        link: 'Política de Cookies',
+        href: 'cookie-policy',
+      },
+    });
+  }
+
+  async openCookiePolicy() {
+    this.router.navigate(['cookie-policy']);
   }
 
   setupLanguage() {
@@ -373,6 +414,10 @@ export class AppComponent implements OnDestroy {
 
   goToProfile() {
     this.router.navigate(['menu/perfil']).then(() => this.menu.close());
+  }
+
+  goToMyWallet() {
+    this.router.navigate(['wallet']).then(() => this.menu.close());
   }
 
   onImgError(event) {

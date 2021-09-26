@@ -52,27 +52,26 @@ ion-content {
       font-size: 12px;
       opacity: 0.7;
     }
-    .terminos, .privacy, .disclaimer, .conditions, .cookies {
+    .privacyConditions {
       padding-left: 0 !important;
       font-size: 14px;
       ion-label {
         padding-left: 0 !important;
       }
       ion-checkbox {
-        margin: 5px !important;
+        margin: 2px !important;
+        width: 15px;
+        height: 15px;
+        vertical-align: baseline;
       }
     }
     .box-terms {
       margin: 5px 5px;
       margin-bottom: 15px;
     }
-    .terms-conditions, .privacy-policy, .legal-disclaimer, .use-conditions, .cookie-policy {
-      display: flex;
-      margin: 0.35em auto;
-      gap: 2.2px;
-      ion-checkbox {
-        vertical-align: bottom;
-      }
+    .privacyConditions {
+      display: block;
+      margin: 0.75em auto;
       a {
         text-decoration: underline;
         color: #55abdd;
@@ -92,4 +91,5 @@ ion-content {
   top: 5px !important;
   margin: 0 auto !important;
 }
+
 

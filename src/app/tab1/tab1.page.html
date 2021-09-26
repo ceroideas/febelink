@@ -295,7 +295,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer
+<!--<ion-footer
   class="ion-no-border ion-text-center desktop"
   [hidden]="!showCookies"
 >
@@ -314,7 +314,7 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-footer>
+</ion-footer>-->
 
 <ion-footer
   class="ion-no-border ion-text-center desktop"
@@ -324,9 +324,12 @@
     <div>
       <p style="margin-bottom: 0px">
         © {{ currentYear }} Febelink |
-        <span class="terms-text" (click)="termsModal()"
-          >Terminos y condiciones</span
-        >
+        <span class="terms-text" (click)="openTerms()">
+          Términos y condiciones
+        </span> |
+        <span class="terms-text" (click)="openLegalDisclaimer()">
+          Aviso legal
+        </span>
       </p>
       <p style="margin-top: 5px">Contacto: info@febelink.com</p>
     </div>

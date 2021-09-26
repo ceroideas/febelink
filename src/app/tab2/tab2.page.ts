@@ -329,14 +329,15 @@ export class Tab2Page {
     this.demanadaSvc.addToFavorites(demand);
   }
 
-  /**
-   * Modal para abrir terminos y condiciones
-   */
-  async termsModal() {
-    const TermsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
+  public navegar(ruta: string){
+    this.router.navigate([ruta]);
+  }
 
-    await TermsModal.present();
+  async openTerms() {
+    this.navegar('terms');
+  }
+
+  async openLegalDisclaimer() {
+    this.navegar('legal-disclaimer');
   }
 }
