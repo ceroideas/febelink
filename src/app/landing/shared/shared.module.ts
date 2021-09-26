@@ -26,6 +26,9 @@ import { PlansComponent } from './plans/plans.component';
 import { FooterComponent } from './footer/footer.component';
 import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
+import { SocialLinksComponent } from 'src/app/components/social-links/social-links.component';
+import { LinkPreviewComponent } from 'src/app/components/link-preview/link-preview.component';
+import { PhasesComponent } from './phases/phases.component';
 import { UserDataFormComponent } from './user-data-form/user-data-form.component';
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableModule } from 'ionic-selectable';
@@ -41,15 +44,13 @@ import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
     ScrollspyDirective,
     BuyTokensComponent,
     WhitelistComponent,
+    SocialLinksComponent,
+    LinkPreviewComponent,
+    PhasesComponent,
     UserDataFormComponent,
-    GoBuyTokensComponent
+    GoBuyTokensComponent,
   ],
-  imports: [
-    CommonModule
-    , CarouselModule
-    , FormsModule
-    , IonicSelectableModule
-  ],
+  imports: [CommonModule, CarouselModule, FormsModule, IonicSelectableModule],
   exports: [
     ServicesComponent,
     FeaturesComponent,
@@ -59,7 +60,10 @@ import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
     ScrollspyDirective,
     BuyTokensComponent,
     WhitelistComponent,
-    GoBuyTokensComponent
+    SocialLinksComponent,
+    LinkPreviewComponent,
+    PhasesComponent,
+    GoBuyTokensComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

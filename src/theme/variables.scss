@@ -131,6 +131,21 @@
   --ion-color-facebook-shade: #484da9;
   --ion-color-facebook-tint: #6368c6;
 
+  /** Instagram **/
+  --ion-color-instagram-blue: #285AEB;
+  --ion-color-instagram-blue-rgb: 80, 90, 235;
+  --ion-color-instagram-pink: #D6249F;
+  --ion-color-instagram-pink-rgb: 214, 36, 159;
+  --ion-color-instagram-ambar: #FDF497;
+  --ion-color-instagram-ambar-rgb: 253, 244, 151;
+  --ion-color-instagram-red: #FD5949;
+  --ion-color-instagram-red-rgb: 253, 89, 73;
+
+  --ion-color-instagram-contrast: var(----ion-color-instagram-pink);
+  --ion-color-instagram-contrast-rgb: var(----ion-color-instagram-pink-rgb);
+  --ion-color-instagram-shade: var(----ion-color-instagram-blue);
+  --ion-color-instagram-tint: var(----ion-color-instagram-blue);
+
   /** Twitter **/
   --ion-color-twitter: #1DA1F2;
   --ion-color-twitter-rgb: 29,161,242;
@@ -154,6 +169,29 @@
   --ion-color-sandybrown-shade: #e0a54d;
   --ion-color-sandybrown-tint: #ffc269;
 
+  /** Telegram **/
+  --ion-color-telegram: #0088CC;
+  --ion-color-telegram-rgb: 0, 136, 204;
+  --ion-color-telegram-contrast: #ffffff;
+  --ion-color-telegram-contrast-rgb: 255,255,255;
+  --ion-color-telegram-shade: #0684BE;
+  --ion-color-telegram-tint: #7681DE;
+
+  /** TikTok **/
+  --ion-color-tiktok: #010101;
+  --ion-color-tiktok-rgb: 1, 1, 1;
+  --ion-color-tiktok-contrast: #ffffff;
+  --ion-color-tiktok-contrast-rgb: 255,255,255;
+  --ion-color-tiktok-shade: #EE1D52;
+  --ion-color-tiktok-tint: #69C9D0;
+
+  /** LinkedIn **/
+  --ion-color-linkedin: #0E76A8;
+  --ion-color-linkedin-rgb: 14, 118, 168;
+  --ion-color-linkedin-contrast: #ffffff;
+  --ion-color-linkedin-contrast-rgb: 255,255,255;
+  --ion-color-linkedin-shade: #0A6E9C;
+  --ion-color-linkedin-tint: #1699D6;
 }
 
 .ion-color-febelink {
@@ -210,6 +248,15 @@
   --ion-color-tint: var(--ion-color-facebook-tint);
 }
 
+.ion-color-instagram {
+  --ion-color-base: var(--ion-color-instagram-purple);
+  --ion-color-base-rgb: var(--ion-color-instagram-purple-rgb);
+  --ion-color-contrast: var(--ion-color-instagram-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-instagram-contrast-rgb);
+  --ion-color-shade: var(--ion-color-instagram-shade);
+  --ion-color-tint: var(--ion-color-instagram-tint);
+}
+
 .ion-color-twitter {
   --ion-color-base: var(--ion-color-twitter);
   --ion-color-base-rgb: var(--ion-color-twitter-rgb);
@@ -235,6 +282,33 @@
   --ion-color-contrast-rgb: var(--ion-color-sandybrown-contrast-rgb);
   --ion-color-shade: var(--ion-color-sandybrown-shade);
   --ion-color-tint: var(--ion-color-sandybrown-tint);
+}
+
+.ion-color-telegram {
+  --ion-color-base: var(--ion-color-telegram);
+  --ion-color-base-rgb: var(--ion-color-telegram-rgb);
+  --ion-color-contrast: var(--ion-color-telegram-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-telegram-contrast-rgb);
+  --ion-color-shade: var(--ion-color-telegram-shade);
+  --ion-color-tint: var(--ion-color-telegram-tint);
+}
+
+.ion-color-tiktok {
+  --ion-color-base: var(--ion-color-tiktok);
+  --ion-color-base-rgb: var(--ion-color-tiktok-rgb);
+  --ion-color-contrast: var(--ion-color-tiktok-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-tiktok-contrast-rgb);
+  --ion-color-shade: var(--ion-color-tiktok-shade);
+  --ion-color-tint: var(--ion-color-tiktok-tint);
+}
+
+.ion-color-linkedin {
+  --ion-color-base: var(--ion-color-linkedin);
+  --ion-color-base-rgb: var(--ion-color-linkedin-rgb);
+  --ion-color-contrast: var(--ion-color-linkedin-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-linkedin-contrast-rgb);
+  --ion-color-shade: var(--ion-color-linkedin-shade);
+  --ion-color-tint: var(--ion-color-linkedin-tint);
 }
 
 /*

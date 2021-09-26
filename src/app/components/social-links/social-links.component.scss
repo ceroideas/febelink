@@ -1,0 +1,69 @@
+/*----font awesome -------*/
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.flexed-row {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+  
+.flexed-row ion-col {
+    flex: 1 1 0px;
+    min-width: 1em;
+    text-align: center;
+}
+
+.icon-circle {
+    position: relative;
+    display: inline-block;
+    margin: -1px;
+    padding: 10px;
+    line-height: 1;
+  
+    width: 45px;
+    height: 45px; 
+    font-size: 25px; 
+  
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    border-radius: 50%;
+  
+    text-align:center;
+    vertical-align: middle;
+  
+    box-shadow: 0 1px 1px rgba(0,0,0,0.11),
+        0 2px 2px rgba(0,0,0,0.11),
+        0 4px 4px rgba(0,0,0,0.11),
+        0 6px 8px rgba(0,0,0,0.11);
+  }
+  
+  .telegram {
+      background-color: var(--ion-color-telegram);
+  }
+  .twitter {
+      background-color: var(--ion-color-twitter);
+  }
+  .facebook {
+      background-color: var(--ion-color-facebook);
+  }
+  .instagram {
+        background-image: radial-gradient(circle at 30% 107%, 
+            var(--ion-color-instagram-ambar) 0%,
+            var(--ion-color-instagram-ambar) 5%,
+            var(--ion-color-instagram-red) 45%,
+            var(--ion-color-instagram-pink) 60%,
+            var(--ion-color-instagram-blue) 90%);
+  }
+  .google {
+      background-color: var(--ion-color-google);
+  }
+  .tiktok {
+      background-color: var(--ion-color-tiktok);
+    
+  }
+  .linkedin {
+      background-color: var(--ion-color-linkedin);
+  }
+  ion-icon, i {
+    color: white;
+}

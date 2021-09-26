@@ -1,0 +1,64 @@
+<ion-grid>
+  <ion-row class="flexed-row" id="row-beneficios-ico">
+    <!-- Telegram -->
+    <ion-col id="col-telegram" *ngIf="telegram">
+      <a class="icon-circle telegram" href="{{telegram}}" target=”_blank”>
+        <ion-icon name="paper-plane"></ion-icon>
+      </a>
+    </ion-col>
+
+    <!-- Twitter -->
+    <ion-col id="col-twitter" *ngIf="twitter">
+      <a class="icon-circle twitter" href="{{twitter}}" target=”_blank”>
+        <ion-icon name="logo-twitter"></ion-icon>
+      </a>
+    </ion-col>
+
+    <!-- Facebook -->
+    <ion-col id="col-facebook" *ngIf="facebook">
+      <a class="icon-circle facebook" href="{{facebook}}" target="{{target}}">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </a>
+    </ion-col>
+
+    <!-- Instagram -->
+    <ion-col id="col-instagram" *ngIf="instagram">
+      <a class="icon-circle instagram" href="{{instagram}}" target={{target}}>
+        <ion-icon name="logo-instagram"></ion-icon>
+      </a>
+    </ion-col>
+
+    <!-- YouTube -->
+    <ion-col id="col-youtube" *ngIf="youtube">
+      <a class="icon-circle google" href="{{youtube}}" target={{target}}>
+        <ion-icon name="logo-youtube"></ion-icon>
+      </a>
+    </ion-col>
+
+    <!-- TikTok -->
+    <ion-col id="col-tiktok" *ngIf="tiktok">
+      <a class="icon-circle tiktok" href="{{tiktok}}" target={{target}}>
+        <i class='fab fa-tiktok'>
+          <!-- Lo hago asi porque no conseguí el Icono en Ion Icons, y no quiero añadir fontawesome solo por esto -->
+          <svg data-icon="tiktok" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-tiktok fa-w-14 fa-3x">
+            <path fill="currentColor" d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"></path>
+          </svg>
+        </i>
+      </a>
+    </ion-col>
+
+    <!-- Mail -->
+    <ion-col id="col-mail" *ngIf="mail">
+      <a class="icon-circle google" href="{{mail}}" target={{target}}>
+        <ion-icon name="mail"></ion-icon>
+      </a>
+    </ion-col>
+
+    <!-- LinkedIn -->
+    <ion-col id="col-linkedin" *ngIf="linkedin">
+      <a class="icon-circle linkedin" href="{{linkedin}}" target={{target}}>
+        <ion-icon name="logo-linkedin"></ion-icon>
+      </a>
+    </ion-col>
+  </ion-row>
+</ion-grid>

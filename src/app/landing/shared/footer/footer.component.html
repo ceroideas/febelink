@@ -38,17 +38,7 @@
             style="text-align: center !important"
             id="footer-second-row"
           >
-            <span class="font-14"
-              ><a href="https://m.facebook.com/febelink" id="footer-link">FB</a>
-              /
-              <a href="https://www.instagram.com/febelink/" id="footer-link"
-                >IG</a
-              >
-              /
-              <a href="https://twitter.com/febelink" id="footer-link"
-                >TW</a
-              ></span
-            >
+            <app-social-links show_mail="true"></app-social-links>
           </p>
         </div>
       </div>
@@ -60,14 +50,13 @@
             style="text-align: right !important"
             id="footer-first-row"
           >
-            <a href="https://febelink.com" id="footer-link"
-              ><span
+            <a (click)="openPrivacyPolicy()">
+              <span
                 class="font-14"
                 id="footer-privacy"
                 style="font-weight: 300 !important"
-                >Política de Privacidad</span
-              ></a
-            >
+                >Política de Privacidad</span>
+            </a>
           </h5>
 
           <p
@@ -75,11 +64,10 @@
             style="text-align: right !important"
             id="footer-second-row"
           >
-            <a href="https://febelink.com" id="footer-link"
-              ><span class="font-14" id="footer-privacy"
-                >Condiciones y Términos</span
-              ></a
-            >
+            <a (click)="openUseConditions()">
+              <span class="font-14" id="footer-privacy"
+                >Condiciones y Términos</span>
+            </a>
           </p>
         </div>
       </div>

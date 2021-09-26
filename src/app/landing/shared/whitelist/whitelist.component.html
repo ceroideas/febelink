@@ -1,14 +1,25 @@
 <div class="subscribe">
   <form>
     <div class="row" id="input-newsletter">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div>
           <input type="email" class="form-control" placeholder="Introduce tu dirección E-mail" #email>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="mt-3 mt-md-0">
           <button type="button" class="btn btn-primary btn-block" (click)="addEmailToWhitelist(email)" [disabled]="response?.id">{{(!response?.id)?'Subscribirme':'Suscrito ✔'}}</button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="mt-3 mt-md-0">
+          <!-- Tomado de => https://docs.google.com/document/d/1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n/edit-->
+          <!-- Este lo descarga como doc => https://docs.google.com/uc?export=download&id=1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n-->
+          <a type="button" class="btn btn-block btn-download"
+              href="https://docs.google.com/document/export?format=pdf&id=1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n&includes_info_params=true">
+            <ion-icon name="download" color="#76aadb"></ion-icon>
+            Whitepaper
+          </a>
         </div>
       </div>
       <div *ngIf="response" class="mt-3 col-md-12">

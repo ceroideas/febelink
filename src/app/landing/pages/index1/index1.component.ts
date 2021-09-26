@@ -1,6 +1,5 @@
 // https://stackblitz.com/edit/countdown-timer?file=app%2Fhello.component.ts
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // OJO OMG es necesario instalar:
 // npm install @types/countdown
@@ -34,7 +33,7 @@ export class Index1Component implements OnInit {
 
   //public emailAddres = '';
   // FECHA DE REFERENCIA
-  gdDateTop: countdown.DateTime = new Date(2021, 9, 1);
+  gdDateTop: countdown.DateTime = new Date(2021, 10, 5);
 
   giTimerId: number = null;
   gxTimer: xTimer = {
@@ -45,12 +44,9 @@ export class Index1Component implements OnInit {
     szSgs: '00',
   };
 
-  constructor(
-    private http: HttpClient
-    , private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  navExtras: NavigationExtras
+  navExtras: NavigationExtras;
 
   ngOnInit(): void {
     // https://www.npmjs.com/package/countdown
@@ -65,7 +61,7 @@ export class Index1Component implements OnInit {
       })
     );
 
-    this.navExtras = this.router.getCurrentNavigation().extras
+    this.navExtras = this.router.getCurrentNavigation().extras;
   }
 
   // Destruimos cuando finaliza el contador
@@ -135,10 +131,10 @@ export class Index1Component implements OnInit {
       });
   }
 
-  scrollTo(id:string) {
+  scrollTo(id: string) {
     document.getElementById(id).scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'start',
     });
   }
 }
