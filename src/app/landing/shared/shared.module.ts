@@ -26,6 +26,10 @@ import { PlansComponent } from './plans/plans.component';
 import { FooterComponent } from './footer/footer.component';
 import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
+import { UserDataFormComponent } from './user-data-form/user-data-form.component';
+import { FormsModule } from '@angular/forms';
+import { IonicSelectableModule } from 'ionic-selectable';
+import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +41,15 @@ import { WhitelistComponent } from './whitelist/whitelist.component';
     ScrollspyDirective,
     BuyTokensComponent,
     WhitelistComponent,
+    UserDataFormComponent,
+    GoBuyTokensComponent
   ],
-  imports: [CommonModule, CarouselModule],
+  imports: [
+    CommonModule
+    , CarouselModule
+    , FormsModule
+    , IonicSelectableModule
+  ],
   exports: [
     ServicesComponent,
     FeaturesComponent,
@@ -48,6 +59,7 @@ import { WhitelistComponent } from './whitelist/whitelist.component';
     ScrollspyDirective,
     BuyTokensComponent,
     WhitelistComponent,
+    GoBuyTokensComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

@@ -3,7 +3,7 @@ import { NavController, MenuController, ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TermsPage } from '../terms/terms.page';
 import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
 import { LegalDisclaimerPage } from '../legal-disclaimer/legal-disclaimer.page';
@@ -25,6 +25,8 @@ export class RegistroPage implements OnInit {
   passwordType2 = 'password';
   passwordIcon2 = 'eye-off';
 
+  redirect: string;
+
   constructor(
     public navCtrl: NavController,
     private formBuilder: FormBuilder,
@@ -32,7 +34,8 @@ export class RegistroPage implements OnInit {
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
-    private cookSvc: CookieService
+    private cookSvc: CookieService,
+    private activatedRoute:ActivatedRoute
   ) {}
 
   /**
@@ -48,6 +51,8 @@ export class RegistroPage implements OnInit {
       confirmPassword: ['', Validators.required],
       privacyConditions: [null, Validators.requiredTrue]
     });
+
+    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect'); 
 
     this.form.get('sector').valueChanges.subscribe((id) => {
       this.obtenerSubSectores(id);
@@ -104,7 +109,7 @@ export class RegistroPage implements OnInit {
     formData.append('password', registrationPayload.password);
     formData.append('remember_me', '1');
 
-    this.api.login(formData, 'login', true).subscribe((res) => {
+    this.api.login(formData, 'login', true, this.redirect).subscribe((res) => {
       this.utilities.dismissLoading();
     });
   }
