@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
@@ -24,7 +24,7 @@ export class ApiService {
     private authenticationService: AuthenticationService
   ) {}
 
-  login(params, endpoint, firstLogin?: boolean): Observable<any> {
+  login(params, endpoint, firstLogin?: boolean, redirect?:string): Observable<any> {
     return this.http
       .post<any>(environment.API_URL_AUTH + endpoint, params)
       .pipe(
@@ -50,10 +50,18 @@ export class ApiService {
             await this.utilities.setGuia('login');
             this.authenticationService.login();
             this.userLogged.emit('user:login');
-            if (firstLogin) {
-              this.router.navigate(['menu/welcome']);
-            } else {
-              this.router.navigate(['menu/todas']);
+            switch (redirect) {
+              case 'token':
+                this.router.navigate(['token', 'buy']);
+                break;
+            
+              default: 
+                if (firstLogin) {
+                  this.router.navigate(['menu/welcome']);
+                } else {
+                  this.router.navigate(['menu/todas']);
+                }
+                break;
             }
 
             return res;
