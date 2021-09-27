@@ -1,7 +1,7 @@
 <ion-content>
   <div class="cover-content">
     <img src="assets/imgs/logo.png" alt="logo" />
-    <p class="title">Crear una nueva cuenta</p>
+    <p class="title">Crear una cuenta gratuita</p>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
       <ion-item class="input ion-no-padding">
         <ion-label>
@@ -16,7 +16,7 @@
         >
         </ion-input>
       </ion-item>
-      <ion-item class="input ion-no-padding">
+      <!-- <ion-item class="input ion-no-padding">
         <ion-label>
           <ion-icon name="person"></ion-icon>
         </ion-label>
@@ -45,7 +45,7 @@
             >{{subsector?.nombre}}</ion-select-option
           >
         </ion-select>
-      </ion-item>
+      </ion-item> -->
       <ion-item class="input ion-no-padding">
         <ion-label>
           <ion-icon name="mail"></ion-icon>
