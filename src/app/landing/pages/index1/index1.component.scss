@@ -19,7 +19,7 @@
 .kSlider_show {
   width: 400px;
   height: 50px;
-  margin: 100px auto;
+  margin: 0px auto 100px;
   overflow:hidden;
 }
 .kSlider_show .kSlider {
@@ -161,6 +161,18 @@
   73%  {left: calc( -400px *  9 );}
   82%  {left: calc( -400px * 10 );}
   100% {left:0;}
+}
+
+
+.hero-section {
+  padding-top: 150px;
+}
+
+
+@media (max-width: 991px) {
+  .hero-section {
+    padding-top: 91px;
+  }
 }
 
 

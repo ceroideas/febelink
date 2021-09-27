@@ -423,4 +423,20 @@ export class AppComponent implements OnDestroy {
   onImgError(event) {
     event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
+
+
+  
+
+
+  public navegar(ruta: string){
+    this.router.navigate([ruta]);
+  }
+
+  async openPrivacyPolicy() {
+    this.navegar('privacy-policy');
+  }
+
+  async openUseConditions() {
+    this.navegar('use-conditions');
+  }
 }
