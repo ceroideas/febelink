@@ -164,6 +164,18 @@
 }
 
 
+.hero-section {
+  padding-top: 150px;
+}
+
+
+@media (max-width: 991px) {
+  .hero-section {
+    padding-top: 91px;
+  }
+}
+
+
 // .nav-sticky.navbar-custom {
 //   margin-top: 0px;
 //   padding: 10px 0px;
