@@ -4,6 +4,12 @@ import { HttpClient } from '@angular/common/http';
 // OJO OMG es necesario instalar:
 // npm install @types/countdown
 import * as countdown from 'countdown';
+import { BuyTokensComponent } from '../../shared/buy-tokens/buy-tokens.component';
+import { NavigationExtras, Router } from '@angular/router';
+import { LandingService } from '../../services/landing.service';
+import { ModalController, Platform } from '@ionic/angular';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from 'src/app/services/api.service';
 
 export interface xTimer {
   szMs: string;
@@ -38,7 +44,9 @@ export class Index1Component implements OnInit {
     szSgs: '00',
   };
 
-  constructor( private http: HttpClient ) {}
+  constructor(private http: HttpClient, private router: Router) {}
+
+  navExtras: NavigationExtras;
 
   ngOnInit(): void {
     // https://www.npmjs.com/package/countdown
@@ -52,6 +60,8 @@ export class Index1Component implements OnInit {
         this.gxTimer.szSgs = this.szDigits2(x_Ts.seconds);
       })
     );
+
+    this.navExtras = this.router.getCurrentNavigation().extras;
   }
 
   // Destruimos cuando finaliza el contador
@@ -121,10 +131,10 @@ export class Index1Component implements OnInit {
       });
   }
 
-  scrollTo(id:string) {
+  scrollTo(id: string) {
     document.getElementById(id).scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'start',
     });
   }
 }

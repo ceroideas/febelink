@@ -19,6 +19,11 @@ const routes: Routes = [
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
   {
+    path: 'login/:redirect',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+  },
+  {
     path: 'perfil/:id',
     loadChildren: () =>
       import('./pages/perfil-demandante/perfil-demandante.module').then(
@@ -41,6 +46,13 @@ const routes: Routes = [
   },
   {
     path: 'registro',
+    loadChildren: () =>
+      import('./pages/registro/registro.module').then(
+        (m) => m.RegistroPageModule
+      ),
+  },
+  {
+    path: 'registro/:redirect',
     loadChildren: () =>
       import('./pages/registro/registro.module').then(
         (m) => m.RegistroPageModule

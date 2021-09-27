@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -16,6 +16,8 @@ export class LoginPage implements OnInit {
   form: FormGroup;
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
+  
+  redirect: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,6 +26,7 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private router: Router,
+    private activatedRoute:ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -32,6 +35,7 @@ export class LoginPage implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect'); 
   }
 
   submitForm() {
@@ -42,7 +46,7 @@ export class LoginPage implements OnInit {
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
 
-    (this.api.login(formData, 'login')).subscribe(
+    (this.api.login(formData, 'login', null, this.redirect)).subscribe(
       (res) => {        this.utilities.dismissLoading();},
       (err) => {
         console.log('ERROR', err);
@@ -86,7 +90,9 @@ export class LoginPage implements OnInit {
    * Open sign up page
    */
   openRegistro() {
-    this.router.navigate(['registro']);
+    const route = ['registro'];
+    if(this.redirect) route.push(this.redirect)
+    this.router.navigate(route);
   }
 
   /**
