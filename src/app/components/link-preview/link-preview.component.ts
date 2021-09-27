@@ -20,13 +20,14 @@ export interface Scraping {
  * */
 export class LinkPreviewComponent implements OnInit {
 
+  // Default Values
   private title: string = 'Título';
   private description: string = 'Descripción';
   private image: string = 'https://tecnotril.com/wp-content/uploads/2019/04/placeholder-image.png';
 
   @Input() url: string = "https://febelink.com"; // Pagina ejemplo base
   @Input() urls: Array<Scraping> = [{
-    u: "https://febelink.com",
+    u: this.url,
     t: this.title,
     d: this.description,
     i: this.image
@@ -44,7 +45,7 @@ export class LinkPreviewComponent implements OnInit {
   ]
   private param_url: string = 'q';
   */
-  private api: string = "http://api.embed.ly/1/oembed?";
+  private api: string = "https://api.embed.ly/1/oembed?";
   private keys: Array<string> = [
     "08b652e6b3ea11e0ae3f4040d3dc5c07",
   ]
