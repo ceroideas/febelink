@@ -17,7 +17,7 @@
         >
         </ion-input>
       </ion-item>
-      <ion-item class="input ion-no-padding">
+      <!-- <ion-item class="input ion-no-padding">
         <ion-label>
           <ion-icon name="person"></ion-icon>
         </ion-label>
@@ -46,7 +46,7 @@
             >{{subsector?.nombre}}</ion-select-option
           >
         </ion-select>
-      </ion-item>
+      </ion-item> -->
       <ion-item class="input ion-no-padding">
         <ion-label>
           <ion-icon name="mail"></ion-icon>
@@ -96,13 +96,16 @@
           required
         ></ion-input>
       </ion-item>
-     
+
       <span class="privacyConditions">
-        <ion-checkbox slot="start" formControlName="privacyConditions"></ion-checkbox>
-          He leído, y acepto la
-          <a (click)="openPrivacyPolicy()">política de privacidad</a>
-          y las 
-          <a (click)="openUseConditions()">condiciones generales de uso</a>
+        <ion-checkbox
+          slot="start"
+          formControlName="privacyConditions"
+        ></ion-checkbox>
+        He leído, y acepto la
+        <a (click)="openPrivacyPolicy()">política de privacidad</a>
+        y las
+        <a (click)="openUseConditions()">condiciones generales de uso</a>
       </span>
 
       <ion-button expand="full" type="submit" ion-button color="febelink"

@@ -28,7 +28,8 @@ export class ServicesComponent implements OnInit {
       { u: "https://blog.febelink.com/que-es-una-ico-de-criptomonedas", t: '', d: '', i: '' }
   ];
   private url_podcast: Array<Scraping> = [
-      { u: "https://podcasters.spotify.com/podcast/27euxhc9sJnLddV9PaXqX2/overview", t: '', d: '', i: '' },
+      // { u: "https://podcasters.spotify.com/podcast/27euxhc9sJnLddV9PaXqX2/overview", t: '', d: '', i: '' },
+      { u: "https://open.spotify.com/show/27euxhc9sJnLddV9PaXqX2?si=Z5tqZOh7T1uPr3fFsm1gfw&utm_source=whatsapp&dl_branch=1", t: '', d: '', i: '' },
       { u: "https://go.ivoox.com/rf/73515302", t: '', d: '', i: '' },
       { u: "https://www.ivoox.com/block-world-tour-motril-edition-2021-audios-mp3_rf_74746015_1.html", t: '', d: '', i: '' },
       { u: "https://www.ivoox.com/que-es-febelink-bitcoin-ya-oficial-legal-audios-mp3_rf_75226758_1.html", t: '', d: '', i: '' }

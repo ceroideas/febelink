@@ -26,6 +26,8 @@
     },
     "menu": {
         "tabs": {
+            "landingICO": "Token FLAU",
+            "token": "Token",
             "searchEngine": "Buscador",
             "recommend": "Recomendar",
             "chat": "Chat",

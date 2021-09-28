@@ -1,9 +1,10 @@
-<section class="section bg-light" id="features">
+<section
+  [ngClass]="{ section: !hideTitle, 'no-title': hideTitle }"
+  id="features"
+>
   <div class="container">
     <div class="justify-content-center">
-      <h4 class="mb-3 text-center" id="titular-seccion">
-        Reserva tus tokens
-      </h4>
+      <h4 class="mb-3 text-center" id="titular-seccion">Reserva tus tokens</h4>
       <div style="margin-top: 25px; text-align: center">
         <div (click)="goBuyTokens()" class="btn btn-success">
           Reservar tokens

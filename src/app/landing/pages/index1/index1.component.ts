@@ -4,12 +4,8 @@ import { HttpClient } from '@angular/common/http';
 // OJO OMG es necesario instalar:
 // npm install @types/countdown
 import * as countdown from 'countdown';
-import { BuyTokensComponent } from '../../shared/buy-tokens/buy-tokens.component';
 import { NavigationExtras, Router } from '@angular/router';
-import { LandingService } from '../../services/landing.service';
-import { ModalController, Platform } from '@ionic/angular';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { ApiService } from 'src/app/services/api.service';
+import { SeoService } from 'src/app/services/seo.service';
 
 export interface xTimer {
   szMs: string;
@@ -44,7 +40,7 @@ export class Index1Component implements OnInit {
     szSgs: '00',
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private seoSvc:SeoService) {}
 
   navExtras: NavigationExtras;
 
@@ -62,6 +58,12 @@ export class Index1Component implements OnInit {
     );
 
     this.navExtras = this.router.getCurrentNavigation().extras;
+
+    this.seoSvc.generateTags(
+      'Febelink Token'
+      , 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
+      , 'https://febelink.com/assets/imgs/token_febelink.png'
+    )
   }
 
   // Destruimos cuando finaliza el contador
