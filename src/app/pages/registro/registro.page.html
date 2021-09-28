@@ -1,7 +1,8 @@
 <ion-content>
   <div class="cover-content">
     <img src="assets/imgs/logo.png" alt="logo" />
-    <p class="title">Crear una cuenta gratuita</p>
+    <div class="slogan">El buscador de servicios profesionales</div>
+    <p class="title">Crea tu cuenta gratuita</p>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
       <ion-item class="input ion-no-padding">
         <ion-label>
@@ -95,13 +96,16 @@
           required
         ></ion-input>
       </ion-item>
-     
+
       <span class="privacyConditions">
-        <ion-checkbox slot="start" formControlName="privacyConditions"></ion-checkbox>
-          He leído, y acepto la
-          <a (click)="openPrivacyPolicy()">política de privacidad</a>
-          y las 
-          <a (click)="openUseConditions()">condiciones generales de uso</a>
+        <ion-checkbox
+          slot="start"
+          formControlName="privacyConditions"
+        ></ion-checkbox>
+        He leído, y acepto la
+        <a (click)="openPrivacyPolicy()">política de privacidad</a>
+        y las
+        <a (click)="openUseConditions()">condiciones generales de uso</a>
       </span>
 
       <ion-button expand="full" type="submit" ion-button color="febelink"
