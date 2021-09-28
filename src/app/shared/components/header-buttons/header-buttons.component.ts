@@ -11,6 +11,8 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UnreadNotificationsCount } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
+import { LangsComponent } from 'src/app/components/langs/langs.component';
+import { ILang } from 'src/app/models/langs.model';
 
 @Component({
   selector: 'app-header-buttons',
@@ -24,6 +26,7 @@ export class HeaderButtonsComponent implements OnInit {
   tabs = Tabs;
   notifCount:UnreadNotificationsCount;
   totalUnreadMessages:number;
+  langSelected: ILang =  { id: 0, lang: 'Español', flag: 'Flag_SP', shortCode: 'ES-SP' };
 
   constructor(
     private modalCtrl: ModalController,
@@ -34,7 +37,7 @@ export class HeaderButtonsComponent implements OnInit {
     public popoverController: PopoverController,
     private translateService: TranslateService,
     private utilities: UtilitiesService,
-    private notificationsSvc: NotificationService
+    private notificationsSvc: NotificationService,
     ) { }
 
   async ngOnInit() {
@@ -111,6 +114,23 @@ export class HeaderButtonsComponent implements OnInit {
         componentProps: { url, title: 'Febelink', desc: message, image  },
       });
       return await popover.present();
+    }
+
+    /**
+     * 
+     */
+    async openLangs( ev: any ) {
+      const langs = await this.popoverController.create({
+        component: LangsComponent,
+        cssClass: 'app-langs',
+        event: ev,
+        translucent: true
+      });
+      await langs.present();
+
+      const { data } = await langs.onDidDismiss();
+      this.langSelected = data.item as ILang;
+      console.log('Got Lang', data );
     }
 }
 
