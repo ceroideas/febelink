@@ -3,6 +3,12 @@
   <img tappable src="assets/imgs/logo.png" alt="Febelink logo" class="logo" (click)="irA('/menu/todas')" *ngIf="currentTab!=tabs.Search"/>
   
   <ion-buttons>
+    <ion-button class="btn-header" [class]="(currentTab==tabs.ICO)?'active':''" (click)="irA('/token')">
+      <img slot="start" density="ldpi" src="assets/icon/febicon.png" width="20px" height="20px" />
+      <ion-label class="desktop" style="margin-left: 10px;">{{ 'menu.tabs.landingICO' | translate }}</ion-label>
+      <ion-label class="mobile" style="margin-left: 10px;" *ngIf="currentTab==tabs.Search">{{ 'menu.tabs.token' | translate }}</ion-label>
+    </ion-button>
+
     <div class="desktop">
       <ion-button class="btn-header" [class]="(currentTab==tabs.Search)?'active':''" (click)="irA('/menu/todas')">
         <ion-icon slot="start" name="search"></ion-icon>
@@ -33,7 +39,7 @@
     <ion-button class="btn-header" (click)="shareFebelink($event)">
       <ion-icon slot="start" name="share-social"></ion-icon>
       <span class="desktop" translate>menu.tabs.share-febelink</span>
-      <span class="mobile" translate>common.share</span>
+      <span class="mobile" translate *ngIf="currentTab==tabs.Search">common.share</span>
       
     </ion-button>
 
@@ -46,6 +52,11 @@
       <ion-icon style="font-size: x-large" name="information-circle">
       </ion-icon>
     </ion-button>
+
+    <!-- <ion-button size="large" color="primary" slot="icon-only" (click)="openLangs( $event )" >
+      <img slot="start" density="ldpi" src="assets/icon-flags/{{langSelected.flag}}.png" width="30px" height="30px"/>
+      <ion-label class="desktop">{{langSelected.shortCode}}</ion-label>
+    </ion-button> -->
       
   </ion-buttons>
 </div>

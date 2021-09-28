@@ -18,8 +18,8 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class RegistroPage implements OnInit {
   form: FormGroup;
-  // sectores: any;
-  // subsectores: any;
+  sectores: any;
+  subsectores: any;
   passwordType = 'password';
   passwordIcon = 'eye-off';
   passwordType2 = 'password';
@@ -46,18 +46,18 @@ export class RegistroPage implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       name: ['', Validators.required],
-      // sector: [''],
-      // sub_sector: [''],
+      sector: [''],
+      sub_sector: [''],
       confirmPassword: ['', Validators.required],
       privacyConditions: [null, Validators.requiredTrue]
     });
 
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect'); 
 
-    /** this.form.get('sector').valueChanges.subscribe((id) => {
+    this.form.get('sector').valueChanges.subscribe((id) => {
       this.obtenerSubSectores(id);
     });
-    this.obtenerSectores(); */
+    this.obtenerSectores();
   }
 
   hideShowPassword() {
@@ -72,22 +72,22 @@ export class RegistroPage implements OnInit {
   /**
    * Obtenemos todos lo sectores del servidor
    */
-  /* async obtenerSectores() {
+  async obtenerSectores() {
     (await this.api.obtenerSectores()).subscribe((sectores) => {
       this.sectores = sectores;
     });
-  } */
+  }
 
   /**
    * Método para obtener los subsectores de un sector
    * @param idSector: Identifier of a sector
    */
-  /* async obtenerSubSectores(idSector) {
+  async obtenerSubSectores(idSector) {
     (await this.api.obtenerSubSectores(idSector)).subscribe((subsectores) => {
       this.subsectores = subsectores;
       this.form.patchValue({ sub_sector: this.subsectores[0].id });
     });
-  } */
+  }
 
   /**
    * Navegar a la pantalla p
@@ -125,8 +125,8 @@ export class RegistroPage implements OnInit {
         password: this.form.get('password').value,
         password_confirmation: this.form.get('confirmPassword').value,
         name: this.form.get('name').value,
-        // sector: this.form.get('sector').value,
-        // sub_sector: this.form.get('sub_sector').value,
+        sector: this.form.get('sector').value,
+        sub_sector: this.form.get('sub_sector').value,
         idRecommender,
       };
 
