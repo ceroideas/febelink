@@ -46,8 +46,8 @@ export class RegistroPage implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       name: ['', Validators.required],
-      // sector: [''],
-      // sub_sector: [''],
+      sector: [''],
+      sub_sector: [''],
       confirmPassword: ['', Validators.required],
       privacyConditions: [null, Validators.requiredTrue]
     });
@@ -125,8 +125,8 @@ export class RegistroPage implements OnInit {
         password: this.form.get('password').value,
         password_confirmation: this.form.get('confirmPassword').value,
         name: this.form.get('name').value,
-        // sector: this.form.get('sector').value,
-        // sub_sector: this.form.get('sub_sector').value,
+        sector: this.form.get('sector').value,
+        sub_sector: this.form.get('sub_sector').value,
         idRecommender,
       };
 
