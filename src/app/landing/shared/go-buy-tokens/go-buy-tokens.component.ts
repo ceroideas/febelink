@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-go-buy-tokens',
@@ -10,7 +11,7 @@ export class GoBuyTokensComponent {
 
   @Input() hideTitle: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor( private router: Router,  private translateService: TranslateConfigService ) { }
 
   goBuyTokens(){
     this.router.navigate(['token','buy'])
