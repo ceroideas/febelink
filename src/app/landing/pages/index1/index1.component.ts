@@ -62,7 +62,7 @@ export class Index1Component implements OnInit {
     this.seoSvc.generateTags(
       'Febelink Token'
       , 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
-      , 'https://febelink.com/assets/imgs/token_febelink.png'
+      , 'http://test.febelink.com/assets/imgs/token-share-img.png'
     )
   }
 
