@@ -1,28 +1,24 @@
-<div class="subscribe">
+<div class="subscribe">            
+  <p id="hero-texto">
+    {{ 'landing.whitelist.signUp' | translate }}
+  </p>
+  
   <form>
     <div class="row" id="input-newsletter">
       <div class="col-md-5">
         <div>
-          <input type="email" class="form-control" placeholder="Introduce tu dirección E-mail" #email>
+          <input type="email" class="form-control" placeholder="{{ 'landing.whitelist.mail' | translate }}" #email>
         </div>
       </div>
       <div class="col-md-3">
         <div class="mt-3 mt-md-0">
-          <button type="button" class="btn btn-primary btn-block" (click)="addEmailToWhitelist(email)" [disabled]="response?.id">{{(!response?.id)?'Subscribirme':'Suscrito ✔'}}</button>
+          <button type="button" class="btn btn-primary btn-block" (click)="addEmailToWhitelist(email)" [disabled]="response?.id">
+            {{ ( !response?.id ? 'landing.whitelist.action.toDo' : 'landing.whitelist.action.done' ) | translate }}
+          </button>
         </div>
       </div>
       <div class="col-md-4">
         <div class="mt-3 mt-md-0">
-          <!--
-          <a href="https://docs.google.com/document/d/1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n/edit" class="btn btn-primary mt-2 mr-2" id="button-hero-1">Descargar
-            Descargar Whitepaper</a>
-          <a [ngxScrollTo]="'#section-newsletter'" href="javascript: void(0);" class="btn btn-success mt-2 mr-2"
-            id="button-hero-2">Subscripción</a>
-          -->
-          
-          <!-- Tomado de => https://docs.google.com/document/d/1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n/edit-->
-          <!-- Este lo descarga como doc => https://docs.google.com/uc?export=download&id=1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n-->
-          <!-- Este lo descarga como pdf => https://docs.google.com/document/export?format=pdf&id=1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n&includes_info_params=true" -->
           <a type="button" class="btn btn-block btn-download"
               href="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a81a6c99-ef22-4477-a965-cbb4f93b2e21/febelink-whitepaper.es.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210927%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210927T094501Z&X-Amz-Expires=86400&X-Amz-Signature=af4c14d754da2dd44f7cf5503f5ebbda0c71a695f0f5d8c019ebe75ba9b20e0a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22febelink-whitepaper.es.pdf%22"
               download="Febelink's Whitepaper"
@@ -30,13 +26,13 @@
               type='application/pdf'
               target='_blank'>
             <ion-icon name="download" color="#76aadb"></ion-icon>
-            Descargar Whitepaper
+            {{ 'landing.whitelist.download' | translate }}
           </a>
         </div>
       </div>
       <div *ngIf="response" class="mt-3 col-md-12">
-        <p *ngIf="response.title" class="text-danger">{{response.title}}</p>
-        <p *ngIf="response.id" class="text-success">Gracias por suscribirte a nuestra WhiteList</p>
+        <p *ngIf="response.title" class="text-danger">{{ response.title }}</p>
+        <p *ngIf="response.id" class="text-success">{{ 'landing.whitelist.success' | translate }}</p>
       </div>
     </div>
   </form>

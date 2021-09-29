@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
@@ -10,7 +11,10 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   styleUrls: ['./whitelist.component.scss'],
 })
 export class WhitelistComponent {
-  constructor(private api: ApiService, private utils: UtilitiesService) {}
+  constructor(
+    private api: ApiService,
+    private utils: UtilitiesService,
+    private translateService: TranslateConfigService ) {}
 
   response: any;
 
@@ -35,6 +39,6 @@ export class WhitelistComponent {
     } finally {
       this.utils.dismissLoading();
     }
-    // console.log(this.response);
+    console.log(this.response);
   }
 }
