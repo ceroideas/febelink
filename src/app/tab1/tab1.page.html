@@ -295,43 +295,4 @@
   </ion-grid>
 </ion-content>
 
-<!--<ion-footer
-  class="ion-no-border ion-text-center desktop"
-  [hidden]="!showCookies"
->
-  <ion-toolbar color="dark">
-    <p>
-      {{ 'common.cookies1' | translate }}
-      <a
-        (click)="openCookies()"
-        style="text-decoration: underline; cursor: pointer"
-        >{{ 'common.cookies2' | translate }}</a
-      >.
-    </p>
-    <ion-buttons size="large" slot="end">
-      <ion-button size="large" slot="icon-only" (click)="closeCookies()">
-        <ion-icon style="font-size: x-large" name="close"> </ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>-->
-
-<ion-footer
-  class="ion-no-border ion-text-center desktop"
-  [hidden]="showCookies"
->
-  <ion-toolbar color="febelink">
-    <div>
-      <p style="margin-bottom: 0px">
-        © {{ currentYear }} Febelink |
-        <span class="terms-text" (click)="openTerms()">
-          Términos y condiciones
-        </span> |
-        <span class="terms-text" (click)="openLegalDisclaimer()">
-          Aviso legal
-        </span>
-      </p>
-      <p style="margin-top: 5px">Contacto: info@febelink.com</p>
-    </div>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

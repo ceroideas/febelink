@@ -1057,16 +1057,4 @@ hideShowPassword() {
         await suscribirseModal.present();
     }
 
-    public navegar(ruta: string){
-        this.router.navigate([ruta]);
-    }
-    
-    async openTerms() {
-        this.navegar('terms');
-    }
-    
-    async openLegalDisclaimer() {
-        this.navegar('legal-disclaimer');
-    }
-
 }
