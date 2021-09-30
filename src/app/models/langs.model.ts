@@ -29,4 +29,14 @@ export interface ILang {
       ];
       return arr;
     }
+    static getLang( id?: number ) : ILang {
+      if( id ) {
+        ILangDEFAULTS.getLangs().forEach( iLang => {
+          if( iLang.id === id )
+            return iLang;
+        });
+      }
+
+      return ILangDEFAULTS.spSP;
+    }
 }
