@@ -16,7 +16,7 @@
         />
       </a>
 
-      <app-lang-btn></app-lang-btn>
+      <app-lang-btn (onLangSelected)="onLangSelected( $event )"></app-lang-btn>
 
       <ion-icon 
       name="menu-outline"
@@ -107,7 +107,7 @@
               <app-whitelist></app-whitelist>
             </div>
             
-            <app-go-buy-tokens></app-go-buy-tokens>
+            <app-go-buy-tokens lang="{{ langSelected.lang }}"></app-go-buy-tokens>
             
             <div class="kSlider_show">
               <div class="kSlider">
@@ -204,6 +204,6 @@
     <!-- Hero section End -->
 
     
-    <app-footer></app-footer>
+    <app-footer lang="{{ langSelected.lang }}" ></app-footer>
   </div>
 </ion-content>
