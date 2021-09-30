@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -16,6 +17,7 @@ export class WhitelistComponent {
     private utils: UtilitiesService,
     private translateService: TranslateConfigService ) {}
 
+  @Input() lang: string = ILangDEFAULTS.getLangDEFAULT().lang;
   response: any;
 
   async addEmailToWhitelist(emailField: any) {
