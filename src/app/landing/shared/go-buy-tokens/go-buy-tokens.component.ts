@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 
 @Component({
   selector: 'app-go-buy-tokens',
@@ -10,11 +10,12 @@ import { TranslateConfigService } from 'src/app/services/translate/translate-con
 export class GoBuyTokensComponent {
 
   @Input() hideTitle: boolean = false;
+  @Input() lang: string = ILangDEFAULTS.getLangDEFAULT().lang;
 
-  constructor( private router: Router,  private translateService: TranslateConfigService ) { }
+  constructor( private router: Router ) { }
 
   goBuyTokens(){
-    this.router.navigate(['token','buy'])
+    this.router.navigate([ 'token','buy' ], { queryParams: { lang: this.lang }})
   }
 
 }
