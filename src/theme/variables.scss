@@ -310,6 +310,26 @@
   --ion-color-shade: var(--ion-color-linkedin-shade);
   --ion-color-tint: var(--ion-color-linkedin-tint);
 }
+.pop-yt {
+  ion-backdrop {
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+  }
+  .popover-content {
+    top: 5vh;
+    left: 5vw;
+    transform-origin: left top;
+    --width: 90vw;
+    --max-width: 90vw;
+    --height: 90vh;
+    --max-height: 90vh;
+    background: transparent;
+
+    app-youtube-pop {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
 
 /*
 @media (prefers-color-scheme: dark) {
