@@ -24,6 +24,9 @@ export class NotificationsLogPage implements OnInit {
 
   async ngOnInit() {
     this.notifications = await this.notificationSvc.getNotificacionsLog();
+    this.notifications.map(notif => {
+      notif['open'] = false;
+    });
   }
 
   getIconByType(type: NotifType) {

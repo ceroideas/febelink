@@ -9,19 +9,22 @@
 </ion-header>
 
 <ion-content>
-  <!-- {{notifications | json}} -->
   <ion-list *ngIf="notifications" class="results-list limit-size">
     <ion-item
       lines="none"
       *ngFor="let notif of notifications"
-      (click)="goTo(notif)"
-      [class]="(notif.route)?'clickable':''"
-    >
+      (click)="notif.open = !notif.open"
+      class="clickable">
+
       <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
 
-      <ion-label [class]="(!notif.is_read)?'unread':''">
+      <ion-label [class]="(!notif.is_read)?'unread':''" [style]="(notif.open)?'white-space: initial':'white-space: nowrap'">
         <h2>{{notif.title}}</h2>
         <p>{{notif.message}}</p>
+        <ion-button (click)="goTo(notif)" expand="block" fill="clear" shape="round" *ngIf="notif.open && notif.route">
+          Abrir
+          <ion-icon name="chevron-forward" slot="end"></ion-icon>
+        </ion-button>
       </ion-label>
       <!-- <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();" class="editBtn">
         <ion-icon slot="icon-only" name="create-outline"></ion-icon>
