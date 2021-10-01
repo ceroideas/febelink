@@ -23,6 +23,25 @@
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
         "share": "Share",
+        "slogan": "The professional services search engine",
+
+        "personal": {
+            "surname": "Surnames",
+            "pass": "Passwword",
+            "tel": "Phone",
+            "id": "ID (with letter)"
+        },
+
+        "buttons": {
+            "confirm": "Confirm",
+            "back": "Back"
+        },
+
+        "address": {
+            "state": "Province",
+            "locality": "Locality",
+            "address": "Address"
+        },
 
         "timer": {
             "months": "MONS",
@@ -119,6 +138,19 @@
                 "header": "Beware",
                 "message": "Make sure the profile is the correct one."
             }
+        },
+        "registro": {
+            "title": "Create your free account",
+            "userName": "Username",
+            "confirmPass": "Confirm Password",
+            "cond1": "I have read, and accept the",
+            "cond2": "privacy policy",
+            "cond3": "and the",
+            "cond4": "general conditions of use",
+            "button": "REGISTER",
+            "or": "OR",
+            "contactUs": "Contact Febelink",
+            "continueWith": "Continue with "
         }
     },
     "toast": {
@@ -175,7 +207,10 @@
             "third": "Third ",
             "coin": "Euros",
             "number": "Number of Tokens",
-            "button": "Save"
+            "button": "Save",
+            "modal": {
+                "title": "Fill in your details"
+            }
         },
         "phases": {
             "phase": "Stage",
@@ -239,6 +274,12 @@
         },
         "footer": {
             "doubts": "Do you have any doubt? Contact us"
+        },
+        "success": {
+            "title": "Thank you!",
+            "subtitle": "You have completed your registration in the reservation list.",
+            "mssg1": "You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.",
+            "mssg2": "If the email does not reach you in the next 5 minutes, fill in the form again here."
         }
     }
 }

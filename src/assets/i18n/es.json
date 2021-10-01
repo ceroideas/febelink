@@ -23,6 +23,25 @@
         "labelConfirmNewPass": "Confimar contraseña nueva",
         "labelTitle": "Título",
         "share": "Compartir",
+        "slogan": "El buscador de servicios profesionales",
+
+        "personal": {
+            "surname": "Apellidos",
+            "pass": "Contraseña",
+            "tel": "Teléfono",
+            "id": "DNI (con letra)"
+        },
+
+        "buttons": {
+            "confirm": "Confirmar",
+            "back": "Volver"
+        },
+
+        "address": {
+            "state": "Provincia",
+            "locality": "Localidad",
+            "address": "Dirección"
+        },
 
         "timer": {
             "months": "MESS",
@@ -120,6 +139,19 @@
                 "header": "Cuidado",
                 "message": "Asegúrate de que el perfil es el deseado."
             }
+        },
+        "registro": {
+            "title": "Crea tu cuenta gratuita",
+            "userName": "Nombre de Usuario",
+            "confirmPass": "Confirmar contraseña",
+            "cond1": "He leído, y acepto la",
+            "cond2": "política de privacidad",
+            "cond3": "y las",
+            "cond4": "condiciones generales de uso",
+            "button": "REGISTRARSE",
+            "or": "Ó",
+            "contactUs": "Contacta con Febelink",
+            "continueWith": "Continuar con "
         }
     },
     "toast": {
@@ -176,7 +208,10 @@
             "third": "Tercera ",
             "coin": "Euros",
             "number": "Número de Tokens",
-            "button": "Reservar"
+            "button": "Reservar",
+            "modal": {
+                "title": "Completa tus datos"
+            }
         },
         "phases": {
             "phase": "Fase",
@@ -240,6 +275,12 @@
         },
         "footer": {
             "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
+        },
+        "success": {
+            "title": "¡Gracias!",
+            "subtitle": "Has completado tu inscripción en el listado de reservas.",
+            "mssg1": "Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.",
+            "mssg2": "Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí."
         }
     }
 }
