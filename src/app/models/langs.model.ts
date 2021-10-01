@@ -49,7 +49,7 @@ export interface ILang {
     // Para traer el idioma por default
     static getLangDEFAULT( cookSvc?: CookieService ): ILang {
       // Si han pasado parametro de Cookie, entonces intentar buscar alli
-      let lang: ILang = cookSvc ? null : ILangDEFAULTS.getLangCOOKIE( cookSvc );
+      let lang: ILang = !cookSvc ? null : ILangDEFAULTS.getLangCOOKIE( cookSvc );
 
       // Si no hay cookies guardadas, entonces
       // utilizo por defecto el Español  
