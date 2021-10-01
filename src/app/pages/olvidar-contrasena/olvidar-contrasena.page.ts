@@ -39,7 +39,7 @@ export class OlvidarContrasenaPage implements OnInit {
    */
   async submitForm() {
 
-    this.utilities.showLoading();
+    await this.utilities.showLoading();
     try {
       let p = {
         email: this.form.get('email').value
