@@ -9,6 +9,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 import { LandingService } from '../../services/landing.service';
 import { UserDataFormComponent } from '../user-data-form/user-data-form.component';
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: 'app-buy-tokens',
@@ -23,15 +24,19 @@ export class BuyTokensComponent implements OnInit {
     , private modalController: ModalController
     , private landingSvc:LandingService
     , private api:ApiService
+    , private cookSvc: CookieService
   ) { }
     
   numTokens:number;
   numFiat:number;
   phaseToTokenCost:[];
-  langSelected: ILang = ILangDEFAULTS.getLangDEFAULT();
+  langSelected: ILang;
 
   async ngOnInit() {
     this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
+    
+    this.langSelected = this.langSelected ? this.langSelected :
+        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
   }
 
   async justLogged(){
@@ -95,6 +100,7 @@ export class BuyTokensComponent implements OnInit {
         formData.append('telefono', userLanding.phone);
         formData.append('num_tokens', numTokens.toString());
         formData.append('phase_tokens', phaseTokens.toString());
+        formData.append('lang', this.langSelected.lang);
 
         
         try {
