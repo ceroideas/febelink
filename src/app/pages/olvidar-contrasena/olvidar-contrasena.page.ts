@@ -40,11 +40,11 @@ export class OlvidarContrasenaPage implements OnInit {
   async submitForm() {
 
     await this.utilities.showLoading();
+    const email = this.form.get('email').value
     try {
-      let p = {
-        email: this.form.get('email').value
-      };
-      let resp = await this.api.recuperarContraseña(p.email);
+      let resp = await this.api.recuperarContraseña(email);
+      console.log(resp);
+      
       this.utilities.showToast(resp['status']);
     } catch (e) {
       this.utilities.showToast('Se ha producido un error');
