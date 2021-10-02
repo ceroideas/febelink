@@ -1,18 +1,37 @@
-<section class="section bg-light" id="features">
-  <div class="container">
-    <div class="justify-content-center">
-      <h4 class="mb-3 text-center" id="titular-seccion">
-        Compra nuestros tokens
-      </h4>
-      <div style="display: flex; justify-content: center;">
-        <ion-item style="width: 200px">
-          <ion-label position="floating" class="grey">Número de tokens</ion-label>
-          <ion-input type="number" #numTokens></ion-input>
-        </ion-item>
-        <div (click)="buyTokens(numTokens)" class="btn btn-success">
-          Comprar
-        </div>
-      </div>
+<ion-row style="margin-top: 4vh;">
+  <ion-col size="12">
+    <h5 class="text-primary text-center small-title text-uppercase" id="mini-titular">
+      Selecciona tu reserva
+    </h5>
+  </ion-col>
+  <ion-col size="12" size-sm="4">
+    <ion-item>
+      <ion-label position="floating" class="grey">Fase</ion-label>
+      <ion-select interface="popover" (ionChange)="phaseChange($event)">
+        <ion-select-option value="1">Primera fase</ion-select-option>
+        <ion-select-option value="2">Segunda fase</ion-select-option>
+        <ion-select-option value="3">Tercera fase</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+  <ion-col size="12" size-sm="3">
+    <ion-item>
+      <ion-label position="floating" class="grey">Euros</ion-label>
+      <ion-input type="number" name="numFiat" [(ngModel)]="numFiat" ngDefaultControl (ionInput)="fiatToTokens($event)" [debounce]="300"></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col size="12" size-sm="3">
+    <ion-item>
+      <ion-label position="floating" class="grey">Número de tokens</ion-label>
+      <ion-input type="number" name="numTokens" [(ngModel)]="numTokens" ngDefaultControl (ionChange)="tokensToFiat($event)" [debounce]="300"></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col size="12" size-sm="2">
+    <div (click)="buyTokens()" class="btn btn-success">
+      Reservar
     </div>
-  </div>
-</section>
+  </ion-col>
+</ion-row>
+
+
+<app-phases></app-phases>

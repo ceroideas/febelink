@@ -1,8 +1,8 @@
 <ion-content>
   <div class="cover-content">
     <img src="assets/imgs/logo.png" alt="logo" />
+    <div class="slogan">El buscador de servicios profesionales</div>
     <h2 class="title">Iniciar sesión</h2>
-    <hr />
     <form
       *ngIf="form"
       [formGroup]="form"
@@ -50,7 +50,7 @@
       >
         INICIAR SESIÓN
       </ion-button>
-      <social-login></social-login>
+      <social-login [redirect]="redirect"></social-login>
     </form>
     <div class="links">
       <div class="clear"></div>

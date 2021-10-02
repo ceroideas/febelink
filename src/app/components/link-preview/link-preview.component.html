@@ -1,0 +1,19 @@
+<div class="scraping">
+  <div class="scrapingChild">
+    <div class="row" id="scraping-row">
+      <ion-card *ngFor="let url of urls"
+            
+            (click)="goTo([ url.u ])" data-url="{{url.u}}">
+        <ion-card-header>
+          <ion-img [src]="url.i"></ion-img>
+          <!-- <img [src]="url.image"/> -->
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-card-title>{{url.t}}</ion-card-title>
+          <p>{{url.d}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</div>

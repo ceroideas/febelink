@@ -1,10 +1,11 @@
 // https://stackblitz.com/edit/countdown-timer?file=app%2Fhello.component.ts
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // OJO OMG es necesario instalar:
 // npm install @types/countdown
 import * as countdown from 'countdown';
+import { NavigationExtras, Router } from '@angular/router';
+import { SeoService } from 'src/app/services/seo.service';
 
 export interface xTimer {
   szMs: string;
@@ -28,7 +29,7 @@ export class Index1Component implements OnInit {
 
   //public emailAddres = '';
   // FECHA DE REFERENCIA
-  gdDateTop: countdown.DateTime = new Date(2021, 9, 1);
+  gdDateTop: countdown.DateTime = new Date(2021, 10, 5);
 
   giTimerId: number = null;
   gxTimer: xTimer = {
@@ -39,7 +40,9 @@ export class Index1Component implements OnInit {
     szSgs: '00',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, private seoSvc:SeoService) {}
+
+  navExtras: NavigationExtras;
 
   ngOnInit(): void {
     // https://www.npmjs.com/package/countdown
@@ -53,6 +56,14 @@ export class Index1Component implements OnInit {
         this.gxTimer.szSgs = this.szDigits2(x_Ts.seconds);
       })
     );
+
+    this.navExtras = this.router.getCurrentNavigation().extras;
+
+    this.seoSvc.generateTags(
+      'Febelink Token'
+      , 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
+      , 'https://febelink.com/assets/imgs/token_febelink.png'
+    )
   }
 
   // Destruimos cuando finaliza el contador
@@ -122,10 +133,10 @@ export class Index1Component implements OnInit {
       });
   }
 
-  scrollTo(id:string) {
+  scrollTo(id: string) {
     document.getElementById(id).scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'start',
     });
   }
 }

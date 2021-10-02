@@ -79,12 +79,11 @@
     (sectionChange)="onSectionChange($event)"
   >
     <!-- Hero section Start -->
-    <section class="hero-section hero-bg" id="home">
+    <section class="hero-section" id="home">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-6">
+          <div class="col-lg-9">
             <div class="hero-wrapper mb-4">
-              <p class="font-16 text-uppercase">Descubre Febelink</p>
               <div>
                 <!-- OJO OMG COUNTDOWN -->
                 <h1 class="hero-title mb-4">
@@ -92,46 +91,43 @@
                   <span class="text-primary" id="hero-strong">Febelink: </span
                   >Token Áureo
                 </h1>
-                <div id="timer">
-                  <div id="timer-digits">
-                    <p>{{ gxTimer.szMs }}</p>
-                    <span>MESS</span>
-                  </div>
-                  <div id="timer-digits">
-                    <p>{{ gxTimer.szDs }}</p>
-                    <span>DÍAS</span>
-                  </div>
-                  <div id="timer-digits">
-                    <p>{{ gxTimer.szHs }}</p>
-                    <span>HORS</span>
-                  </div>
-                  <div id="timer-digits">
-                    <p>{{ gxTimer.szMns }}</p>
-                    <span>MINS</span>
-                  </div>
-                  <div id="timer-digits-2">
-                    <p>{{ gxTimer.szSgs }}</p>
-                    <span>SEGS</span>
-                  </div>
-                </div>
+                <app-timer
+                    mess="{{ gxTimer.szMs }}"
+                    dias="{{ gxTimer.szDs }}"
+                    hors="{{ gxTimer.szHs }}"
+                    mins="{{ gxTimer.szMns }}"
+                    segs="{{ gxTimer.szSgs }}">
+                </app-timer>
               </div>
+
+              <app-social-links></app-social-links>
               
               <p id="hero-texto">
                 Apúntate a la WhiteList y recibe toda la información actualizada.
               </p>
   
               <div>
-                <!--
-                <a href="https://docs.google.com/document/d/1AI2EaTbh9XrweEdt6qvdLx28-CkUXT-n/edit" class="btn btn-primary mt-2 mr-2" id="button-hero-1">Descargar
-                  Whitepaper</a>
-                <a [ngxScrollTo]="'#section-newsletter'" href="javascript: void(0);" class="btn btn-success mt-2 mr-2"
-                  id="button-hero-2">Subscripción</a>
-                -->
-
                 <app-whitelist></app-whitelist>
               </div>
             </div>
-            <div class="kSlider"></div>
+            
+            <app-go-buy-tokens></app-go-buy-tokens>
+            
+            <div class="kSlider_show">
+              <div class="kSlider">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </div>
           </div>
         </div>
         <!-- end row -->
@@ -180,11 +176,42 @@
   -->
     <!-- Cta end -->
   
-    <!-- <app-buy-tokens></app-buy-tokens> -->
     <app-features></app-features>
     <app-services></app-services>
     <app-clients></app-clients>
     <app-plans></app-plans>
+
+    <!-- Hero section Start -->
+    <section class="hero-section" id="home" style="padding-top: 0px;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="hero-wrapper mb-4">           
+              <app-timer
+                  mess="{{ gxTimer.szMs }}"
+                  dias="{{ gxTimer.szDs }}"
+                  hors="{{ gxTimer.szHs }}"
+                  mins="{{ gxTimer.szMns }}"
+                  segs="{{ gxTimer.szSgs }}">
+              </app-timer>
+
+              <app-social-links></app-social-links>
+              
+              <p id="hero-texto">
+                Apúntate a la WhiteList y recibe toda la información actualizada.
+              </p>
+              
+              <app-whitelist></app-whitelist>
+            </div>
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- Hero section End -->
+
+    
     <app-footer></app-footer>
   </div>
 </ion-content>

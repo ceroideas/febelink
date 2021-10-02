@@ -1,1 +1,11 @@
 @import '../../scss/style.scss';
+
+
+#img_container {
+    position: relative;
+}
+#social_linkedin {
+    position: absolute;
+    bottom: -15%;
+    left: 32%;
+}

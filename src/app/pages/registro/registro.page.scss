@@ -25,7 +25,12 @@ ion-content {
     img {
       display: block;
       width: 30%;
-      margin: 1.5em auto;
+      margin: 1.5em auto 0 auto;
+    }
+    .slogan{
+      color: rgb(185, 185, 185);
+      margin-top: 0.5em;
+      font-size: 14px;
     }
     ion-button {
       width: 100%;
@@ -39,7 +44,7 @@ ion-content {
     .title {
       font-size: 24px;
       font-weight: bold;
-      margin: 0;
+      margin: .8em 0 0 0;
     }
     .subtitle {
       margin-top: 5px;

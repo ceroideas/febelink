@@ -115,4 +115,9 @@ ionic-selectable-modal {
         background-color: darkgrey;
         outline: 1px solid slategrey;
     }
+
+    .landing-modal .modal-wrapper {
+        --border-radius: 7px;
+        --height: 460px;
+    }
 }
