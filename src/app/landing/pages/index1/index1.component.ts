@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import * as countdown from 'countdown';
 import { NavigationExtras, Router } from '@angular/router';
 import { SeoService } from 'src/app/services/seo.service';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { PopoverController } from '@ionic/angular';
 
 export interface xTimer {
   szMs: string;
@@ -39,8 +41,14 @@ export class Index1Component implements OnInit {
     szMns: '00',
     szSgs: '00',
   };
+  langSelected: ILang = ILangDEFAULTS.spSP;
 
-  constructor(private http: HttpClient, private router: Router, private seoSvc:SeoService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private seoSvc:SeoService,
+    public popoverController: PopoverController,
+  ) { }
 
   navExtras: NavigationExtras;
 

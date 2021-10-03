@@ -3,163 +3,78 @@
     <div>
       <div class="text-center mb-5" id="content-ico">
         <h5 class="text-primary text-uppercase small-title" id="mini-titular">
-          Inicio Venta Pública (ICO)
+          {{ 'landing.phases.title' | translate }}
         </h5>
 
         <ion-row class="flexed-row">
-          <section class="col-lg-4 sect">
+          <section class="col-lg-4 sect" *ngFor="let phase of [ 0, 1, 2 ]">
             <ion-card>
               <ion-card-header>
                 <ion-grid>
                   <ion-row class="fase_title">
                     <ion-col>
-                      <ion-card-title class="fase_title_text" >Fase</ion-card-title>
+                      <ion-card-title class="fase_title_text" >
+                        {{ 'landing.phases.phase' | translate }}
+                      </ion-card-title>
                     </ion-col>
                     <ion-col>
-                      <ion-card-title class="fase_title_number" >1</ion-card-title>
+                      <ion-card-title class="fase_title_number" >
+                        {{ 'landing.phases.card.' + phase + '.phase' | translate }}
+                      </ion-card-title>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
                 <div class="divider"></div>
                 <ion-card-subtitle class="fase_subtitle">
-                  Desde las 00:00 del 5 de noviembre de 2021 
-                  a las 23:59 del 11 de noviembre de 2021 
-                  (hora de Madrid UTC+2)
+                  {{ 'landing.phases.card.' + phase + '.date' | translate }}
                 </ion-card-subtitle>
               </ion-card-header>
             
               <ion-card-content>
                 <ion-grid>
                   <ion-row>
-                    <ion-col class="col_left">Precio por token:</ion-col>
-                    <ion-col class="col_right">0,10€ (-66,6% de descuento)</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Bloqueo:</ion-col>
-                    <ion-col class="col_right">6 meses posteriores al cierre de la venta pública, liberación 01/06/2022</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Liberación:</ion-col>
-                    <ion-col class="col_right">5 meses de forma progresiva a razón del 20% por mes</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Límites de compra:</ion-col>
-                    <ion-col class="col_right">mínimo 1.000€, máximo 60.000€<br>% del total: 10%</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Nº de tokens:</ion-col>
-                    <ion-col class="col_right">10 MM </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
-            </ion-card>
-          </section>
-
-          
-          <section class="col-lg-4 sect">
-            <ion-card>
-              <ion-card-header>
-                <ion-grid>
-                  <ion-row class="fase_title">
-                    <ion-col>
-                      <ion-card-title class="fase_title_text" >Fase</ion-card-title>
+                    <ion-col class="col_left">
+                      {{ 'landing.phases.price' | translate }}
                     </ion-col>
-                    <ion-col>
-                      <ion-card-title class="fase_title_number" >2</ion-card-title>
+                    <ion-col class="col_right br-ln">
+                      {{ 'landing.phases.card.' + phase + '.price' | translate }}
                     </ion-col>
                   </ion-row>
-                </ion-grid>
-                <div class="divider"></div>
-                <ion-card-subtitle class="fase_subtitle">
-                  Desde las 00:00 del 12 de noviembre de 2021 
-                  a las 23:59 del 18 de noviembre de 2021 
-                  (hora de Madrid UTC+2)
-                </ion-card-subtitle>
-              </ion-card-header>
-            
-              <ion-card-content>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col class="col_left">Precio por token:</ion-col>
-                    <ion-col class="col_right">0,20€ (-33,3% de descuento) </ion-col>
-                  </ion-row>
                   
                   <ion-row>
-                    <ion-col class="col_left">Bloqueo:</ion-col>
-                    <ion-col class="col_right">3 meses posteriores al cierre de la venta pública, liberación 01/03/2022</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Liberación:</ion-col>
-                    <ion-col class="col_right">5 meses de forma progresiva a razón del 20% por mes</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Límites de compra:</ion-col>
-                    <ion-col class="col_right">mínimo 500€, máximo 30.000€<br>% del total: 10%</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Nº de tokens:</ion-col>
-                    <ion-col class="col_right">10 MM</ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
-            </ion-card>
-          </section>
-
-          
-          <section class="col-lg-4 sect">
-            <ion-card>
-              <ion-card-header>
-                <ion-grid>
-                  <ion-row class="fase_title">
-                    <ion-col>
-                      <ion-card-title class="fase_title_text" >Fase</ion-card-title>
+                    <ion-col class="col_left">
+                      {{ 'landing.phases.blocking' | translate }}
                     </ion-col>
-                    
-                    <ion-col>
-                      <ion-card-title class="fase_title_number" >3</ion-card-title>
+                    <ion-col class="col_right">
+                      {{ 'landing.phases.card.' + phase + '.blocking' | translate }}
                     </ion-col>
                   </ion-row>
-                </ion-grid>
-                <div class="divider"></div>
-                <ion-card-subtitle class="fase_subtitle">
-                  Desde las 00:00 del 19 de noviembre de 2021 
-                  a las 23:59 del 30 de noviembre de 2021 
-                  (hora de Madrid UTC+2) 
-                </ion-card-subtitle>
-              </ion-card-header>
-            
-              <ion-card-content>
-                <ion-grid>
+                  
                   <ion-row>
-                    <ion-col class="col_left">Precio por token:</ion-col>
-                    <ion-col class="col_right">0,30€</ion-col>
+                    <ion-col class="col_left">
+                      {{ 'landing.phases.release' | translate }}
+                    </ion-col>
+                    <ion-col class="col_right br-ln">
+                      {{ 'landing.phases.card.' + phase + '.release' | translate }}
+                    </ion-col>
                   </ion-row>
                   
                   <ion-row>
-                    <ion-col class="col_left">Bloqueo:</ion-col>
-                    <ion-col class="col_right">1 mes después del cierre de la venta pública, liberación el 01/01/2022 </ion-col>
+                    <ion-col class="col_left">
+                      {{ 'landing.phases.limit' | translate }}
+                    </ion-col>
+                    <ion-col class="col_right br-ln">
+                      {{ 'landing.phases.card.' + phase + '.limit' | translate }}
+                    </ion-col>
                   </ion-row>
                   
                   <ion-row>
-                    <ion-col class="col_left">Liberación:</ion-col>
-                    <ion-col class="col_right">inmediata tras el bloqueo</ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Límites de compra:</ion-col>
-                    <ion-col class="col_right">mínimo 100€, máximo 10.000€<br>% del total: 5% </ion-col>
-                  </ion-row>
-                  
-                  <ion-row>
-                    <ion-col class="col_left">Nº de tokens:</ion-col>
-                    <ion-col class="col_right">5 MM</ion-col>
+                    <ion-col class="col_left">
+                      {{ 'landing.phases.number' | translate }}
+                    </ion-col>
+                    <ion-col class="col_right">
+                      {{ 'landing.phases.card.' + phase + '.number' | translate }}
+                    </ion-col>
                   </ion-row>
                 </ion-grid>
               </ion-card-content>

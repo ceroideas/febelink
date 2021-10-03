@@ -25,6 +25,7 @@ import { ISector, ISubSector } from './models/sector.model';
 import { NotificationService } from './services/notification.service';
 import { CryptoCurrency, CryptoCurrencyType } from './models/currency.model';
 import { Observable } from 'rxjs';
+import { ILangDEFAULTS } from './models/langs.model';
 
 @Component({
   selector: 'app-root',
@@ -151,6 +152,11 @@ export class AppComponent implements OnDestroy {
 
   setupLanguage() {
     const currentLanguage = this.translateService.getDefaultLanguage();
+    
+    // Añadí esta linea porque sino no cargaba el archivo en.json de i18n
+    // Y cuando cambiaba al lenguaje 'es' no encontrba los valores
+    this.translateService.setLanguage( ILangDEFAULTS.enUK.lang );
+
     this.translateService.setLanguage(currentLanguage);
   }
 

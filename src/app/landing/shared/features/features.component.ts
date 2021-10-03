@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-features',
@@ -10,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
  */
 export class FeaturesComponent implements OnInit {
 
-  constructor() { }
+  constructor( private translateService: TranslateConfigService ) { }
 
   ngOnInit(): void {
   }
