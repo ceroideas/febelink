@@ -32,4 +32,8 @@ export class TranslateConfigService {
     setCurrentLang( language: string ) {
         this.translateService.currentLang = language;
     }
+
+    instant( key : string ) {
+        this.translateService.instant( key );
+    }
 }

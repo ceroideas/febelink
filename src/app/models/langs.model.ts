@@ -29,14 +29,23 @@ export interface ILang {
       ];
       return arr;
     }
-    static getLang( id?: number ) : ILang {
-      if( id ) {
+    static getLang( lang?: string ) : ILang {
+      let langSelected;
+      
+      if( lang ) {
         ILangDEFAULTS.getLangs().forEach( iLang => {
-          if( iLang.id === id )
-            return iLang;
+          if( iLang.lang.trim() === lang.trim() )
+            return langSelected = iLang;
         });
       }
 
+      return langSelected ? langSelected : this.getLangDEFAULT();
+    }
+
+    // Para traer el idioma por default
+    // Por ahora español, mas adelante
+    // el que tenga el usuario guardado en las DDBB
+    static getLangDEFAULT(): ILang {
       return ILangDEFAULTS.spSP;
     }
 }

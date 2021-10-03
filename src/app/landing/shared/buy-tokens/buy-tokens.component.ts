@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
@@ -27,6 +28,7 @@ export class BuyTokensComponent implements OnInit {
   numTokens:number;
   numFiat:number;
   phaseToTokenCost:[];
+  langSelected: ILang = ILangDEFAULTS.getLangDEFAULT();
 
   async ngOnInit() {
     this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
@@ -164,6 +166,11 @@ export class BuyTokensComponent implements OnInit {
     const phaseTokens = this.landingSvc.getPhaseTokens();
     if(!phaseTokens) return 0;
     return this.phaseToTokenCost[phaseTokens];
+  }
+
+  setLang( lang: ILang ): BuyTokensComponent {
+    this.langSelected = lang;
+    return this;
   }
 }
 

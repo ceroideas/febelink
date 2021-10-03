@@ -11,7 +11,7 @@ import { LangPopComponent } from '../popover/pop.component';
 })
 export class LangBtnComponent implements OnInit {
   
-  @Input() langSelected: ILang = ILangDEFAULTS.spSP;
+  @Input() langSelected: ILang = ILangDEFAULTS.getLangDEFAULT();
   @Output() onLangSelected: EventEmitter<ILang> = new EventEmitter()
 
   constructor(

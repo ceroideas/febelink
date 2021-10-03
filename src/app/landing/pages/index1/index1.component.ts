@@ -41,7 +41,7 @@ export class Index1Component implements OnInit {
     szMns: '00',
     szSgs: '00',
   };
-  langSelected: ILang = ILangDEFAULTS.spSP;
+  langSelected: ILang = ILangDEFAULTS.getLangDEFAULT();
 
   constructor(
     private http: HttpClient,
@@ -146,5 +146,10 @@ export class Index1Component implements OnInit {
       behavior: 'smooth',
       block: 'start',
     });
+  }
+
+  onLangSelected( iLang: ILang ) {
+    console.log( 'Language selected: ', iLang );
+    this.langSelected = iLang;
   }
 }
