@@ -54,7 +54,7 @@ export class Tab4Page {
   typeDNI: string = 'password';
   typeAddress: string = 'password';
   loading: boolean = true;
-  max_bio: any = 15;
+  max_bio: any = 50;
   isNative: boolean = true;
   inputpass1: String = '';
   inputpass2: String = '';
