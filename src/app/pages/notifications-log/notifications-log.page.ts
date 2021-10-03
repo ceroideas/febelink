@@ -48,12 +48,4 @@ export class NotificationsLogPage implements OnInit {
       await this.notificationSvc.setNotificationAsReadById(notification.id);
     notification.is_read = 1;
   }
-
-  async termsModal() {
-    const TermsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
-
-    await TermsModal.present();
-  }
 }

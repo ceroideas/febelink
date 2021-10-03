@@ -370,14 +370,6 @@ export class Tab1Page {
     this.router.navigate([ruta]);
   }
 
-  async openTerms() {
-    this.navegar('terms');
-  }
-
-  async openLegalDisclaimer() {
-    this.navegar('legal-disclaimer');
-  }
-
   private recomendation() {
     const recommenderId: string = this.activatedRoute.snapshot.paramMap.get('recommenderId');
     if(recommenderId){
