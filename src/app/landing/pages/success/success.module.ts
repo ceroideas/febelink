@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { SuccessPageRoutingModule } from './success-routing.module';
 
 import { SuccessPage } from './success.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SuccessPageRoutingModule
+    SuccessPageRoutingModule,
+    TranslateModule.forChild(),
   ],
-  declarations: [SuccessPage]
+  declarations: [ SuccessPage ],
+  exports: [ TranslateModule ]
 })
 export class SuccessPageModule {}

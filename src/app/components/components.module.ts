@@ -5,6 +5,7 @@ import { MenuComponent } from './menu/menu.component';
 import { CookiesComponent } from './cookies/cookies.component';
 import { SharePopoverComponent } from './share-popover/share-popover.component';
 import { SocialLoginComponent } from './social-login/social-login.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     entryComponents: [
@@ -20,10 +21,12 @@ import { SocialLoginComponent } from './social-login/social-login.component';
       CookiesComponent,
       SharePopoverComponent,
       SocialLoginComponent,
+      TranslateModule
     ],
     imports: [
       CommonModule,
-      IonicModule
+      IonicModule,
+      TranslateModule.forChild()
     ]
   })
   export class ComponentsModule { }

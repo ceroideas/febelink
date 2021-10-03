@@ -3,6 +3,7 @@ import { PopoverController } from '@ionic/angular';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { LangPopComponent } from '../popover/pop.component';
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: 'app-lang-btn',
@@ -11,17 +12,21 @@ import { LangPopComponent } from '../popover/pop.component';
 })
 export class LangBtnComponent implements OnInit {
   
-  @Input() langSelected: ILang = ILangDEFAULTS.getLangDEFAULT();
+  @Input() langSelected: ILang;
   @Output() onLangSelected: EventEmitter<ILang> = new EventEmitter()
 
   constructor(
     public popoverController: PopoverController,
-    private translateService: TranslateConfigService ) {
-      // Si no ejecuto esta linea el currentLang me lo deja en ingles
-      translateService.setCurrentLang( this.langSelected.lang );
-  }
+    private cookSvc: CookieService,
+    private translateService: TranslateConfigService ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.langSelected = this.langSelected ? this.langSelected :
+        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
+
+      // Si no ejecuto esta linea el currentLang me lo deja en ingles
+      this.translateService.setCurrentLang( this.langSelected.lang );
+  }
 
 
   /**
@@ -39,8 +44,12 @@ export class LangBtnComponent implements OnInit {
 
     const { data } = await popover.onDidDismiss();
 
+    // Una vez que obtengo el Lang lo asigno
     this.langSelected = data.lang as ILang;
     this.translateService.setLanguage( this.langSelected.lang );
+
+    // Ahora lo guardo en las Cookies
+    ILangDEFAULTS.saveLangCOOKIE( this.cookSvc, this.langSelected );
 
     // En caso de necesitar en algun momento un callback para saber que lenguaje ha escogido
     this.onLangSelected.emit( this.langSelected );
