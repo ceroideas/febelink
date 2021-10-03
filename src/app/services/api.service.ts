@@ -130,15 +130,14 @@ export class ApiService {
    * Recuperar contraseña y enviar email
    * @param email
    */
-  public recuperarContraseña(email) {
+  public async recuperarContraseña(email) {
     const formData = new FormData();
     formData.append('email', email);
-    return this.http
-      .post(environment.API_URL_AUTH + 'recuperar-contrasena', formData, {
-        headers: { Authorization: `Bearer ${this.getToken()}` },
-      })
-      .toPromise()
-      .then((response) => response);
+    const responseObs: Observable<any> = await this._createData(
+      'recuperar-contrasena',
+      formData
+    );
+    return responseObs.pipe(first()).toPromise();
   }
 
   /**
@@ -685,7 +684,7 @@ export class ApiService {
    */
   async getToken() {
     await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
-      return tokenInfo.access_token;
+      return tokenInfo?.access_token;
     });
   }
   public getAllMessages(params) {
