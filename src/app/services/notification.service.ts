@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { NotifType, UnreadNotificationsCount } from '../models/notification';
+import { NotifType } from '../models/notification';
 import { ApiService } from './api.service';
 import { UtilitiesService } from './utilities.service';
 import { Badge } from '@ionic-native/badge/ngx';
@@ -17,7 +17,7 @@ export class NotificationService {
     private badge: Badge
   ) { }
 
-  unreadNotificationsCount:BehaviorSubject<UnreadNotificationsCount> = new BehaviorSubject(null);
+  unreadNotificationsCount:BehaviorSubject<number> = new BehaviorSubject(null);
   
   async getNotificacionsLog(){
     const notifListObs:Observable<any> = await this.api._getData('getNotificationsByUserId');
@@ -28,6 +28,7 @@ export class NotificationService {
   async getUnreadNotificationsCount(){
     const notifListObs:Observable<any> = await this.api._getData('getNotificationsCount');
     const notifCount = await notifListObs.pipe(first()).toPromise()
+    // debugger;
     this.unreadNotificationsCount.next(notifCount);
   }
 
@@ -48,8 +49,8 @@ export class NotificationService {
     this.getUnreadNotificationsCount();
   }
 
-  faviconNotification(notifCount:UnreadNotificationsCount, totalUnreadMessages:number){
-    const count:number = notifCount?.chats + notifCount?.offers + notifCount?.ratings + totalUnreadMessages;
+  faviconNotification(notifCount:number, totalUnreadMessages:number){
+    const count:number = notifCount + totalUnreadMessages;
     this.badge.set(count).catch(err => {
       if(count){
         this.utils.updateWebFavicon('favicon-notif');
@@ -59,8 +60,8 @@ export class NotificationService {
     });
   }
 
-  titleNotification(notifCount:UnreadNotificationsCount, totalUnreadMessages:number){
-    const count:number = notifCount?.chats + notifCount?.offers + notifCount?.ratings + totalUnreadMessages;
+  titleNotification(notifCount:number, totalUnreadMessages:number){
+    const count:number = notifCount + totalUnreadMessages;
     if(count){
       this.utils.updateWebTitle(`(${count}) Febelink`)
     } else {

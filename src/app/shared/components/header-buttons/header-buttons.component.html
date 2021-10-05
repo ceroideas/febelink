@@ -45,7 +45,7 @@
 
     <ion-button class="btn-header" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
-      <ion-badge color="danger" slot="end" *ngIf="notifCount?.chats+notifCount?.offers+notifCount?.ratings" class="little-badge">{{notifCount?.chats+notifCount?.offers+notifCount?.ratings}}</ion-badge>
+      <ion-badge color="danger" slot="end" *ngIf="notifCount" class="little-badge">{{notifCount}}</ion-badge>
     </ion-button>
 
     <ion-button size="large" color="primary" slot="icon-only" (click)="openYTguide()" >
