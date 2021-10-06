@@ -43,7 +43,8 @@ export class NotificationService {
 
   async setNotificationAsReadById(id: number) {
     const formData = new FormData();
-    formData.append('id', id+'');
+    
+    formData.append('idNotif', id+'');
     const response:Observable<any> = await this.api._createData('setNotificationAsReadById', formData);
     await response.pipe(first()).toPromise();
     this.getUnreadNotificationsCount();
