@@ -183,6 +183,7 @@ ion-content {
     @media (max-width: 768px) {
       --inner-padding-end: 0px;
       --padding-start:0px;
+      padding: 0px !important;
     }
   }
 
