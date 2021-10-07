@@ -79,7 +79,7 @@ export class DetalleDemandaPage implements OnInit {
       });
     } else {
       this.aceptada = false;
-      this.demanda = JSON.parse(data.params.demanda);
+      this.demanda = this.checkDescrip( JSON.parse(data.params.demanda));
       this.obtenerOfertasRelacionadas();
     }
   }
@@ -104,7 +104,7 @@ export class DetalleDemandaPage implements OnInit {
             demanda.imagen =
             `${environment.baseWebUrl}storage/${demanda.imagen}`;
         }
-        this.demanda = demanda;
+        this.demanda = this.checkDescrip( demanda );
         this.obtenerOfertasRelacionadas();
 
         this.isCorrectSearch() 
@@ -165,10 +165,16 @@ export class DetalleDemandaPage implements OnInit {
    * @param demanda
    */
   public detalleDemanda(demanda): void {
-    this.demanda = demanda;
+    this.demanda = this.checkDescrip( demanda );
     this.obtenerOfertasRelacionadas();
     this.content.scrollToTop(1500);
     //this.router.navigate(['detalle-demanda'],{ queryParams: { 'demanda': JSON.stringify(demanda), 'contacto': false  }});
+  }
+
+  public checkDescrip( demanda: any ) : any {
+    demanda.descripcion = demanda.descripcion === null || demanda.descripcion.trim() === 'null' ?
+        '' : demanda.descripcion;
+    return demanda;
   }
 
   /**
