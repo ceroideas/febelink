@@ -178,6 +178,18 @@ ion-content {
       }
     }
   }
+
+  ion-item {
+    @media (max-width: 768px) {
+      --inner-padding-end: 0px;
+      --padding-start:0px;
+    }
+  }
+
+  .no-pad {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
 }
 
 ion-thumbnail {
