@@ -160,6 +160,10 @@ export class DetalleDemandaPage implements OnInit {
     );
   }
 
+  public handleImgError( ev: any ){
+    this.demanda.imagen = null;
+  }
+
   /**
    * Ir a otra demanda
    * @param demanda
