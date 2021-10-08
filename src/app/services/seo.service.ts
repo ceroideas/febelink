@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeoService {
 
-  constructor(private meta:Meta) {}
+  constructor(
+      private meta:Meta
+    , private utils: UtilitiesService
+  ) {}
 
-  generateTags(title:string, description: string, image:string){
+  generateTags(
+      title: string = 'Febelink',
+      description: string = "El buscador de servicios profesionales",
+      image: string = "http://test.febelink.com/assets/imgs/febelink-share-img.png" ){
+    // El titulo en la pestaña
+    this.utils.updateWebTitle( title );
 
     // this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     // this.meta.updateTag({ name: 'twitter:site', content: '@febelink' });
