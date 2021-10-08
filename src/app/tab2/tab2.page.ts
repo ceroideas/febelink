@@ -66,11 +66,11 @@ export class Tab2Page {
       
       if( this.searchParam )
         // Seteo las tags según la búsqueda pasada en parámetros
-        this.seoSvc.generateTags(
-          'Febelink - ' + this.searchParam
-          , "Buscando Servicio Profesional: " + this.searchParam
+        this.seoSvc.generateTags({
+            title: 'Febelink - ' + this.searchParam[0].toUpperCase() + this.searchParam.substr(1).toLowerCase()
+          , description: "Buscando Servicio Profesional: " + this.searchParam
             + ( !this.provinceParam ? "" : " en Provincia: " + this.provinceParam)
-        );
+        });
     });
   }
 
@@ -79,7 +79,7 @@ export class Tab2Page {
   }
   ionViewWillLeave() {
     // Vuelvo las tags a su valor por defecto
-    this.seoSvc.generateTags();
+    this.seoSvc.setPreviousTags();
   }
 
   async loadData() {
