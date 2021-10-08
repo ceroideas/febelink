@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -11,6 +11,7 @@ import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { DemandaService } from '../services/demanda.service';
+import { SeoService } from '../services/seo.service';
 
 @Component({
   selector: 'app-tab2',
@@ -18,6 +19,9 @@ import { DemandaService } from '../services/demanda.service';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
+  searchParam: string = '';
+  provinceParam: string = '';
+
   currentYear = new Date().getFullYear();
   currentUser: IUser = null;
   demandas: any;
@@ -41,9 +45,11 @@ export class Tab2Page {
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
+    private route: ActivatedRoute,
     private modalCtrl: ModalController,
     private translateService: TranslateService,
-    private demanadaSvc: DemandaService
+    private demanadaSvc: DemandaService,
+    private seoSvc:SeoService,
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
@@ -52,10 +58,28 @@ export class Tab2Page {
     this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
+    
+    this.route.paramMap.subscribe((params) => {
+      this.searchParam = params.get('search');
+      if( params.get('province') )
+        this.provinceParam = params.get('province').normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      
+      if( this.searchParam )
+        // Seteo las tags según la búsqueda pasada en parámetros
+        this.seoSvc.generateTags(
+          'Febelink - ' + this.searchParam
+          , "Buscando Servicio Profesional: " + this.searchParam
+            + ( !this.provinceParam ? "" : " en Provincia: " + this.provinceParam)
+        );
+    });
   }
 
   ionViewDidEnter() {
     this.loadData();
+  }
+  ionViewWillLeave() {
+    // Vuelvo las tags a su valor por defecto
+    this.seoSvc.generateTags();
   }
 
   async loadData() {
@@ -75,7 +99,6 @@ export class Tab2Page {
     userFavorites = Object.keys(userFavorites[0]);
 
     (await this.api.obtenerDemandas()).subscribe((resp) => {
-      console.log(resp);
       this.demandas = resp;
       for (const demanda of this.demandas) {
         if (demanda.imagen != null) {
@@ -213,7 +236,21 @@ export class Tab2Page {
       ...this.provinces,
       ...(await (await this.api.obtenerProvincias()).toPromise()),
     ];
-    this.province = this.provinces[0];
+    let hasProvinceMatch: boolean = false;
+    if( this.provinceParam )
+      // Si ha pasado el parametro en la url controlar si hay alguna coincidencia
+      this.provinces.forEach( province => {
+        let provName = province.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        if( provName.indexOf( this.provinceParam ) >= 0 ) {
+          this.province = province;
+          hasProvinceMatch = true;
+          return;
+        }
+      });
+
+    // Si no hay coincidencia seleccionar la provincia: Todas
+    if( !hasProvinceMatch )
+      this.province = this.provinces[0];
   }
 
   async loadTowns(idProvincia: number) {
