@@ -24,6 +24,9 @@ export class NotificationsLogPage implements OnInit {
 
   async ngOnInit() {
     this.notifications = await this.notificationSvc.getNotificacionsLog();
+    this.notifications.map(notif => {
+      notif['open'] = false;
+    });
   }
 
   getIconByType(type: NotifType) {
@@ -44,13 +47,5 @@ export class NotificationsLogPage implements OnInit {
     if (!notification.is_read)
       await this.notificationSvc.setNotificationAsReadById(notification.id);
     notification.is_read = 1;
-  }
-
-  async termsModal() {
-    const TermsModal = await this.modalCtrl.create({
-      component: TermsPage,
-    });
-
-    await TermsModal.present();
   }
 }

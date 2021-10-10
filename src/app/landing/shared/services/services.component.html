@@ -5,16 +5,13 @@
       <div class="col-lg-8">
         <div class="text-center mb-5" id="content-sobre-nosotros">
           <h5 class="text-primary text-uppercase small-title" id="mini-titular">
-            SOBRE NOSOTROS
+            {{ 'landing.aboutUs.title' | translate }}
           </h5>
-          <h1 class="mb-3" id="titular-seccion">Nuestra Historia</h1>
+          <h1 class="mb-3" id="titular-seccion">
+            {{ 'landing.aboutUs.story' | translate }}
+          </h1>
           <p id="text-sobre-nosotros">
-            Febelink es un buscador de servicios profesionales, una red social
-            donde los usuarios publican sus búsquedas y el sistema envía las
-            notificaciones a los profesionales relacionados con la actividad.
-            Nuestro objetivo es ayudar a las personas a encontrar de forma más
-            eficiente a los profesionales y empresas que necesitan, y ayudar a
-            las empresas y profesionales a encontrar nuevos clientes.
+            {{ 'landing.aboutUs.description' | translate }}
           </p>
         </div>
       </div>
@@ -51,7 +48,7 @@
                 />
               </span>
             </div>
-            <h5 class="font-24">PRENSA</h5>
+            <h5 class="font-24">{{ 'landing.aboutUs.press' | translate }}</h5>
             <!-- <p class="mb-0 font-16">NOTICIAS</p>-->
             <div id="icons-row-links">
               <a
@@ -93,29 +90,29 @@
                 />
               </span>
             </div>
-            <h5 class="font-24">BLOG</h5>
+            <h5 class="font-24">{{ 'landing.aboutUs.blog' | translate }}</h5>
             <!--<p class="mb-0 font-16">INFORMACIÓN</p>-->
             <div id="icons-row-links">
               <a href="{{url_blog[ 0 ].u}}" class="mb-0" target="_blank"
-                >BLOG DE FEBELINk</a
+                >{{ 'landing.aboutUs.blogFebelink' | translate }}</a
               ><br />
               <a
                 href="{{url_blog[ 1 ].u}}"
                 class="mb-0"
                 target="_blank"
-                >LOS MEDIOS HABLAN</a
+                >{{ 'landing.aboutUs.blogMedia' | translate }}</a
               ><br />
               <a
                 href="{{url_blog[ 2 ].u}}"
                 class="mb-0"
                 target="_blank"
-                >¿QUÉ SON LOS BUSCADORES?</a
+                >{{ 'landing.aboutUs.blogSearchEng' | translate }}</a
               ><br />
               <a
                 href="{{url_blog[ 3 ].u}}"
                 class="mb-0"
                 target="_blank"
-                >¿QUÉ ES UNA ICO?</a
+                >{{ 'landing.aboutUs.blogICO' | translate }}</a
               ><br />
             </div>
           </div>
@@ -131,7 +128,7 @@
                 />
               </span>
             </div>
-            <h5 class="font-24">PODCAST</h5>
+            <h5 class="font-24">{{ 'landing.aboutUs.podcast' | translate }}</h5>
             <!--<p class="mb-0 font-16">PROGRESO</p>-->
             <div id="icons-row-links">
               <!-- <a
@@ -168,13 +165,13 @@
                 href="{{url_podcast[ 2 ].u}}"
                 class="mb-0"
                 target="_blank"
-                >TERRITORIO BLOCKCHAIN</a
+                >{{ 'landing.aboutUs.podcastBlockchain' | translate }}</a
               ><br />
               <a
                 href="{{url_podcast[ 3 ].u}}"
                 class="mb-0"
                 target="_blank"
-                >ENTREVISTA a CEO DE FEBELINK</a
+                >{{ 'landing.aboutUs.podcastInterview' | translate }}</a
               ><br />
               <!-- <a
                 href="https://bitcoindaily.es/un-empresario-malagueno-crea-el-google-de-los-negocios-ser-malaga-hora-14-malaga"

@@ -16,6 +16,8 @@
         />
       </a>
 
+      <app-lang-btn (onLangSelected)="onLangSelected( $event )"></app-lang-btn>
+
       <ion-icon 
       name="menu-outline"
       class="navbar-toggler"
@@ -87,31 +89,25 @@
               <div>
                 <!-- OJO OMG COUNTDOWN -->
                 <h1 class="hero-title mb-4">
-                  Bienvenido a la ICO de
-                  <span class="text-primary" id="hero-strong">Febelink: </span
-                  >Token Áureo
+                  {{ 'landing.header.welcome1' | translate }}
+                  <span class="text-primary" id="hero-strong">{{ 'landing.header.welcome2' | translate }}</span
+                  >{{ 'landing.header.welcome3' | translate }}
                 </h1>
                 <app-timer
-                    mess="{{ gxTimer.szMs }}"
-                    dias="{{ gxTimer.szDs }}"
-                    hors="{{ gxTimer.szHs }}"
+                    months="{{ gxTimer.szMs }}"
+                    days="{{ gxTimer.szDs }}"
+                    hours="{{ gxTimer.szHs }}"
                     mins="{{ gxTimer.szMns }}"
-                    segs="{{ gxTimer.szSgs }}">
+                    secs="{{ gxTimer.szSgs }}" >
                 </app-timer>
               </div>
 
               <app-social-links></app-social-links>
-              
-              <p id="hero-texto">
-                Apúntate a la WhiteList y recibe toda la información actualizada.
-              </p>
   
-              <div>
-                <app-whitelist></app-whitelist>
-              </div>
+              <app-whitelist lang="{{ langSelected.lang }}"></app-whitelist>
             </div>
             
-            <app-go-buy-tokens></app-go-buy-tokens>
+            <app-go-buy-tokens lang="{{ langSelected.lang }}"></app-go-buy-tokens>
             
             <div class="kSlider_show">
               <div class="kSlider">
@@ -186,22 +182,18 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-9">
-            <div class="hero-wrapper mb-4">           
+            <div class="hero-wrapper mb-4">   
               <app-timer
-                  mess="{{ gxTimer.szMs }}"
-                  dias="{{ gxTimer.szDs }}"
-                  hors="{{ gxTimer.szHs }}"
+                  months="{{ gxTimer.szMs }}"
+                  days="{{ gxTimer.szDs }}"
+                  hours="{{ gxTimer.szHs }}"
                   mins="{{ gxTimer.szMns }}"
-                  segs="{{ gxTimer.szSgs }}">
+                  secs="{{ gxTimer.szSgs }}" >
               </app-timer>
 
               <app-social-links></app-social-links>
-              
-              <p id="hero-texto">
-                Apúntate a la WhiteList y recibe toda la información actualizada.
-              </p>
-              
-              <app-whitelist></app-whitelist>
+
+              <app-whitelist lang="{{ langSelected.lang }}"></app-whitelist>
             </div>
           </div>
         </div>
@@ -212,6 +204,6 @@
     <!-- Hero section End -->
 
     
-    <app-footer></app-footer>
+    <app-footer lang="{{ langSelected.lang }}" ></app-footer>
   </div>
 </ion-content>

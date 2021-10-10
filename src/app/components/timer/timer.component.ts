@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-timer',
@@ -7,13 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TimerComponent implements OnInit {
 
-  @Input() mess: string = "00";
-  @Input() dias: string = "00";
-  @Input() hors: string = "00";
+  @Input() months: string = "00";
+  @Input() days: string = "00";
+  @Input() hours: string = "00";
   @Input() mins: string = "00";
-  @Input() segs: string = "00";
+  @Input() secs: string = "00";
 
-  constructor() { }
+  constructor( private translateService: TranslateConfigService ) { }
 
   ngOnInit() {}
 

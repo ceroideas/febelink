@@ -33,6 +33,9 @@ import { UserDataFormComponent } from './user-data-form/user-data-form.component
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
+import { LangPopComponent } from 'src/app/components/langs/popover/pop.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +52,15 @@ import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
     PhasesComponent,
     UserDataFormComponent,
     GoBuyTokensComponent,
+    LangBtnComponent,
+    LangPopComponent,
   ],
-  imports: [CommonModule, CarouselModule, FormsModule, IonicSelectableModule],
+  imports: [CommonModule,
+    CarouselModule,
+    FormsModule,
+    IonicSelectableModule, 
+    TranslateModule.forChild(),
+  ],
   exports: [
     ServicesComponent,
     FeaturesComponent,
@@ -64,6 +74,9 @@ import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
     LinkPreviewComponent,
     PhasesComponent,
     GoBuyTokensComponent,
+    TranslateModule,
+    LangBtnComponent,
+    LangPopComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

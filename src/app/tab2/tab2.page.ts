@@ -9,7 +9,6 @@ import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
-import { TermsPage } from '../pages/terms/terms.page';
 import { environment } from 'src/environments/environment';
 import { DemandaService } from '../services/demanda.service';
 
@@ -329,15 +328,4 @@ export class Tab2Page {
     this.demanadaSvc.addToFavorites(demand);
   }
 
-  public navegar(ruta: string){
-    this.router.navigate([ruta]);
-  }
-
-  async openTerms() {
-    this.navegar('terms');
-  }
-
-  async openLegalDisclaimer() {
-    this.navegar('legal-disclaimer');
-  }
 }

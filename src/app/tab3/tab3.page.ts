@@ -236,18 +236,6 @@ export class Tab3Page implements OnInit {
     }
   }
 
-  public navegar(ruta: string){
-    this.router.navigate([ruta]);
-  }
-
-  async openTerms() {
-    this.navegar('terms');
-  }
-
-  async openLegalDisclaimer() {
-    this.navegar('legal-disclaimer');
-  }
-
   async deleteItem(offer: IOffer) {
     const alert = await this.alertCtrl.create({
       header: this.translateService.instant('menu.tabs.chat'),

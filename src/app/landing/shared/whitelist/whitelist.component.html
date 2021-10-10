@@ -1,4 +1,8 @@
 <div class="subscribe">
+  <p id="hero-texto">
+    {{ 'landing.whitelist.signUp' | translate }}
+  </p>
+
   <form>
     <div class="row" id="input-newsletter">
       <div class="col-md-5">
@@ -6,7 +10,7 @@
           <input
             type="email"
             class="form-control"
-            placeholder="Introduce tu dirección E-mail"
+            placeholder="{{ 'landing.whitelist.mail' | translate }}"
             #email
           />
         </div>
@@ -19,30 +23,39 @@
             (click)="addEmailToWhitelist(email)"
             [disabled]="response?.id"
           >
-            {{ !response?.id ? 'Subscribirme' : 'Suscrito ✔' }}
+            {{
+              (!response?.id
+                ? 'landing.whitelist.action.toDo'
+                : 'landing.whitelist.action.done'
+              ) | translate
+            }}
           </button>
         </div>
       </div>
       <div class="col-md-4">
         <div class="mt-3 mt-md-0">
           <a
-            type="button"
-            class="btn btn-block btn-download"
-            href="assets/landing/febelink-whitepaper.es.pdf"
-            download="Febelink's Whitepaper"
-            title="pdf"
             type="application/pdf"
+            href="{{ 'assets/landing/febelink-whitepaper.' + lang + '.pdf' }}"
+            download="{{ 'febelink-whitepaper.' + lang + '.pdf' }}"
+            title="pdf"
             target="_blank"
+            class="btn btn-block btn-download"
           >
-            <ion-icon name="download" color="#76aadb"></ion-icon>
-            Descargar Whitepaper
+            <ion-icon
+              name="download"
+              color="#76aadb"
+              role="img"
+              aria-label="download"
+            ></ion-icon>
+            {{ 'landing.whitelist.download' | translate }}
           </a>
         </div>
       </div>
       <div *ngIf="response" class="mt-3 col-md-12">
         <p *ngIf="response.title" class="text-danger">{{ response.title }}</p>
         <p *ngIf="response.id" class="text-success">
-          Gracias por suscribirte a nuestra WhiteList
+          {{ 'landing.whitelist.success' | translate }}
         </p>
       </div>
     </div>

@@ -22,7 +22,37 @@
         "labelNewPass": "Contraseña nueva",
         "labelConfirmNewPass": "Confimar contraseña nueva",
         "labelTitle": "Título",
-        "share": "Compartir"
+        "share": "Compartir",
+        "slogan": "El buscador de servicios profesionales",
+
+        "personal": {
+            "surname": "Apellidos",
+            "pass": "Contraseña",
+            "tel": "Teléfono",
+            "id": "DNI (con letra)"
+        },
+
+        "buttons": {
+            "confirm": "Confirmar",
+            "back": "Volver"
+        },
+
+        "address": {
+            "state": "Provincia",
+            "locality": "Localidad",
+            "address": "Dirección"
+        },
+
+        "timer": {
+            "months": "MESS",
+            "days": "DÍAS",
+            "hours": "HORS",
+            "mins": "MINS",
+            "secs": "SEGS"
+        },
+
+        "privacyPolicy": "Política de Privacidad",
+        "termsNconds": "Condiciones y Términos"
     },
     "menu": {
         "tabs": {
@@ -109,9 +139,148 @@
                 "header": "Cuidado",
                 "message": "Asegúrate de que el perfil es el deseado."
             }
+        },
+        "registro": {
+            "title": "Crea tu cuenta gratuita",
+            "userName": "Nombre de Usuario",
+            "confirmPass": "Confirmar contraseña",
+            "cond1": "He leído, y acepto la",
+            "cond2": "política de privacidad",
+            "cond3": "y las",
+            "cond4": "condiciones generales de uso",
+            "button": "REGISTRARSE",
+            "or": "Ó",
+            "contactUs": "Contacta con Febelink",
+            "continueWith": "Continuar con "
         }
     },
     "toast": {
         "need-register":"¡Regístrate para disfrutar aún más de Febelink!"
+    },
+    "landing": {
+        "header": {
+            "welcome1": "Bienvenido a la ICO de ",
+            "welcome2": "Febelink",
+            "welcome3": ": Token Áureo"
+        },
+        "whitelist": {
+            "signUp": "Apúntate a la WhiteList y recibe toda la información actualizada.",
+            "mail": "Introduce tu dirección de E-mail",
+            "action": {
+                "toDo": "Suscribirme",
+                "done": "Suscripto ✔"
+            },
+            "download": "Descargar Whitepaper",
+            "success": "Gracias por suscribirte a nuestra WhiteList"
+        },
+        "tokens": {
+            "title": "Reserva tus tokens",
+            "button": "Reservar tokens"
+        },
+        "aboutTk": {
+            "initial": "INITIAL COIN OFFERING",
+            "title": "Información General\nSobre el Token",
+            "detail": "El Token Áureo forma parte del ecosistema de la plataforma Febelink, ayudando a los usuarios a realizar sus transacciones de una forma más segura, sencilla, rápida y eficiente, contando además con muchos beneficios por uso, descuentos, y servicios exclusivos.",
+            "subtitle": "Probablemente el token más usable del mundo",
+            
+            "discounts": "DESCUENTOS",
+            "discountsDetail": "Con el token Áureo de Febelink obtienes automáticamente grandes descuentos en la plataforma, como en suscripciones Profesionales y Premium, y servicios gratuitos.",
+            "exclusive": "PRODUCTOS EXCLUSIVOS",
+            "exclusiveDetail": "Gracias al token Áureo de Febelink tienes el acceso a productos específicos para la comunidad.",
+            "governance": "GOBERNANZA",
+            "governanceDetail": "Tener el token Áureo de Febelink te da derecho a participar de muchas decisiones en la plataforma, como nuevos productos o proyectos de ayuda.",
+            "economy": "ECONOMIA REAL",
+            "economyDetail": "Con el token Áureo de Febelink puedes intercambiar productos y servicios con otros usuarios, directamente desde el token o cambiando a cualquier moneda FIAT o Cripto."
+        },
+        "reserveTk": {
+            "title": "Reserva ahora tus tokens para la fase pública de la ICO del token Áureo de Febelink.",
+            "info": [
+                "Las compras se ejecutan por orden de inscripción.",
+                "La reserva no garantiza la participación, ya que no hay límites de reservas.",
+                "La disponibilidad es limitada.",
+                "La cantidad tiene que estar depositada en la wallet de Febelink.",
+                "Elige las fases en las que quieres participar y haz tu reserva ahora."
+            ],
+            "select": "SELECCIONA TU RESERVA",
+            "stage": "Fase",
+            "first": "Primera ",
+            "second": "Segunda ",
+            "third": "Tercera ",
+            "coin": "Euros",
+            "number": "Número de Tokens",
+            "button": "Reservar",
+            "modal": {
+                "title": "Completa tus datos"
+            }
+        },
+        "phases": {
+            "phase": "Fase",
+            "title": "INICIO VENTA PÚBLICA (ICO)",
+            "price": "Precio por token:",
+            "blocking": "Bloqueo:",
+            "release": "Liberación:",
+            "limit": "Límites de compra:",
+            "number": "Nº de tokens:",
+            "card": [
+                {
+                    "phase": 1,
+                    "date": "Desde las 00:00 del 5 de noviembre de 2021 a las 23:59 del 11 de noviembre de 2021 (hora de Madrid UTC+2)",
+                    "price": "€ 0,10 (-66,6% de descuento)",
+                    "blocking": "6 meses posteriores al cierre de la venta pública, liberación 01/Jun/2022",
+                    "release": "5 meses de forma progresiva a razón del 20% por mes",
+                    "limit": "mínimo € 1.000, máximo € 60.000\n% del total: 10%",
+                    "number": "10 MM"
+                },
+                {
+                    "phase": 2,
+                    "date": "Desde las 00:00 del 12 de noviembre de 2021 a las 23:59 del 18 de noviembre de 2021 (hora de Madrid UTC+2)",
+                    "price": "€ 0,20 (-33,3% de descuento)",
+                    "blocking": "3 meses posteriores al cierre de la venta pública, liberación 01/Mar/2022",
+                    "release": "5 meses de forma progresiva a razón del 20% por mes",
+                    "limit": "mínimo € 500, máximo € 30.000\n% del total: 10%",
+                    "number": "10 MM"
+                },
+                {
+                    "phase": 3,
+                    "date": "Desde las 00:00 del 19 de noviembre de 2021 a las 23:59 del 30 de noviembre de 2021 (hora de Madrid UTC+2)",
+                    "price": "€ 0,30\n",
+                    "blocking": "1 mes después del cierre de la venta pública, liberación el 01/Ene/2022",
+                    "release": "inmediata tras el bloqueo\n",
+                    "limit": "mínimo € 100, máximo € 10.000\n% del total: 5%",
+                    "number": "5 MM"
+                }
+            ]
+        },
+        "aboutUs": {
+            "title": "SOBRE NOSOTROS",
+            "story": "Nuestra Historia",
+            "description": "Febelink es un buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar de forma más eficiente a los profesionales y empresas que necesitan, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
+            "press": "PRENSA",
+            "blog": "BLOG",
+            "blogFebelink": "BLOG DE FEBELINK",
+            "blogMedia": "LOS MEDIOS HABLAN",
+            "blogSearchEng": "¿QUÉ SON LOS BUSCADORES?",
+            "blogICO": "¿QUÉ ES UNA ICO?",
+            "podcast": "PODCAST",
+            "podcastBlockchain": "TERRITORIO BLOCKCHAIN",
+            "podcastInterview": "ENTREVISTA a CEO DE FEBELINK"
+        },
+        "aboutTeam": {
+            "title": "NUESTRO EQUIPO",
+            "description": "La experiencia y el conocimiento son señas de identidad de las personas que conforman nuestro grupo de trabajo. Únete a nuestro equipo en expansión.",
+            "juan": "Founder & CEO. Empresario con 27 años de experiencia, desarrollando su carrera principalmente en la consultoría financiera y en el sector de la automoción.",
+            "david": "Co-Founder & CTO. Desarrollador con gran experiencia en sistemas en Cloud. Ha trabajo en grandes instituciones públicas y casas de subastas online como: Christie's, Hilco StremBank o LeasePlan.",
+            "miguel": "Profesional de marketing con amplia experiencia en tecnología y FMCG. responsable de marketing de diversas multinacionales como Hewlett-Packard o WD-40 Company.",
+            "oscar": "Empresario. Creador de Ingenierías de Tráfico alternativas, Sistemas de Comunicaciones, Proyectos 3D/VR/AR, Estabilización de Satélites, etc."
+        },
+        "footer": {
+            "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
+        },
+        "success": {
+            "title": "¡Gracias!",
+            "subtitle": "Has completado tu inscripción en el listado de reservas.",
+            "mssg1": "Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.",
+            "mssg2": "Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí."
+        }
     }
 }

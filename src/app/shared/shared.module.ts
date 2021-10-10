@@ -6,10 +6,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { ImgErrorFallbackDirective } from '../directives/img-error-fallback.directive';
 import { HeaderButtonsComponent } from './components/header-buttons/header-buttons.component';
+import { FooterComponent } from '../components/footer/footer.component';
 
 
 @NgModule({
-    declarations: [FilterPipe, ImgErrorFallbackDirective, HeaderButtonsComponent],
+    declarations: [
+        FilterPipe
+        , ImgErrorFallbackDirective
+        , HeaderButtonsComponent
+        , FooterComponent
+    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -17,7 +23,17 @@ import { HeaderButtonsComponent } from './components/header-buttons/header-butto
         IonicModule,
         TranslateModule.forChild(),
     ],
-    exports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TranslateModule, FilterPipe, ImgErrorFallbackDirective, HeaderButtonsComponent],
+    exports: [
+        CommonModule
+        , FormsModule
+        , ReactiveFormsModule
+        , IonicModule
+        , TranslateModule
+        , FilterPipe
+        , ImgErrorFallbackDirective
+        , HeaderButtonsComponent
+        , FooterComponent
+    ],
     entryComponents: []
 })
 export class SharedModule { }

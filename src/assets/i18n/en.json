@@ -22,7 +22,37 @@
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
-        "share": "Share"
+        "share": "Share",
+        "slogan": "The professional services search engine",
+
+        "personal": {
+            "surname": "Surnames",
+            "pass": "Passwword",
+            "tel": "Phone",
+            "id": "ID (with letter)"
+        },
+
+        "buttons": {
+            "confirm": "Confirm",
+            "back": "Back"
+        },
+
+        "address": {
+            "state": "Province",
+            "locality": "Locality",
+            "address": "Address"
+        },
+
+        "timer": {
+            "months": "MONS",
+            "days": "DAYS",
+            "hours": "HORS",
+            "mins": "MINS",
+            "secs": "SECS"
+        },
+
+        "privacyPolicy": "Privacy Policy",
+        "termsNconds": "Terms and Conditions"
     },
     "menu": {
         "tabs": {
@@ -108,9 +138,148 @@
                 "header": "Beware",
                 "message": "Make sure the profile is the correct one."
             }
+        },
+        "registro": {
+            "title": "Create your free account",
+            "userName": "Username",
+            "confirmPass": "Confirm Password",
+            "cond1": "I have read, and accept the",
+            "cond2": "privacy policy",
+            "cond3": "and the",
+            "cond4": "general conditions of use",
+            "button": "REGISTER",
+            "or": "OR",
+            "contactUs": "Contact Febelink",
+            "continueWith": "Continue with "
         }
     },
     "toast": {
         "need-register":"Sign up to have a better experience with Febelink!"
+    },
+    "landing": {
+        "header": {
+            "welcome1": "Welcome to ",
+            "welcome2": "Febelink",
+            "welcome3": "'s ICO: Token Aureo"
+        },
+        "whitelist": {
+            "signUp": "Sign up to the WhiteList and receive all the updated information.",
+            "mail": "Enter your email address",
+            "action": {
+                "toDo": "Subscribe me",
+                "done": "Subscribed ✔"
+            },
+            "download": "Download Whitepaper",
+            "success": "Thank you for subscribing to our WhiteList"
+        },
+        "tokens": {
+            "title": "Save your tokens",
+            "button": "Save tokens"
+        },
+        "aboutTk": {
+            "initial": "INITIAL COIN OFFERING",
+            "title": "General information\nAbout the Token", 
+            "detail": "The Aureo Token is part of Febelink's platform ecosystem, helping users to carry out their transactions in a safer, simpler, faster and more efficient way, also having many benefits for use, discounts, and exclusive services.",
+            "subtitle": "Probably the most usable token in the world",
+
+            "discounts": "DISCOUNTS",
+            "discountsDetail": "With Febelink's Aureo Token you automatically get great discounts on the platform, such as Professional and Premium subscriptions, and free services.",
+            "exclusive": "EXCLUSIVE PRODUCTS",
+            "exclusiveDetail": "Thanks to Febelink's Aureo Token you have access to specific products for the community.",
+            "governance": "GOVERNANCE",
+            "governanceDetail": "Having Febelink's Aureo Token gives you the right to participate in many decisions on the platform, such as new products or aid projects.",
+            "economy": "REAL ECONOMY",
+            "economyDetail": "With Febelink's Aureo Token you can exchange products and services with other users, directly from the token or by changing to any FIAT or Crypto currency."
+        },
+        "reserveTk": {
+            "title": "Save now your tokens for the public stage of the Febelink Aureo Token ICO.",
+            "info": [
+                "Purchases are executed in order of registration.",
+                "The reservation does not guarantee participation, as there are no reservation limits.",
+                "Availability is limited.",
+                "The amount has to be deposited in Febelink's wallet.",
+                "Choose the stage in which you want to participate and make your reservation now."
+            ],
+            "select": "SELECT YOUR RESERVATION",
+            "stage": "Stage",
+            "first": "First ",
+            "second": "Second ",
+            "third": "Third ",
+            "coin": "Euros",
+            "number": "Number of Tokens",
+            "button": "Save",
+            "modal": {
+                "title": "Fill in your details"
+            }
+        },
+        "phases": {
+            "phase": "Stage",
+            "title": "PUBLIC SALE's START (ICO)",
+            "price": "Price per token:",
+            "blocking": "Blocking:",
+            "release": "Release:",
+            "limit": "Purchase limits:",
+            "number": "No. of tokens:",
+            "card": [
+                {
+                    "phase": 1,
+                    "date": "From 00:00 on November 5, 2021 to 23:59 on November 11, 2021 (Madrid time UTC + 2)",
+                    "price": "€ 0.10 (-66.6% discount)",
+                    "blocking": "6 months after the closing of the public sale, release Jun/01/2022",
+                    "release": "5 months progressively at a rate of 20% per month",
+                    "limit": "minimum € 1,000, maximum € 60,000\n% of the total: 10%",
+                    "number": "10 MM"
+                },
+                {
+                    "phase": 2,
+                    "date": "From 00:00 on November 12, 2021 to 23:59 on November 18, 2021 (Madrid time UTC + 2)",
+                    "price": "€ 0.20 (-33.3% discount)",
+                    "blocking": "3 months after the closing of the public sale, release Mar/01/2022",
+                    "release": "5 months progressively at a rate of 20% per month",
+                    "limit": "minimum € 500, maximum € 30,000\n% of total: 10%",
+                    "number": "10 MM"
+                },
+                {
+                    "phase": 3,
+                    "date": "From 00:00 on November 19 2021 to 23:59 on November 30 2021 (Madrid time UTC + 2)",
+                    "price": "€ 0,30\n",
+                    "blocking": "1 month after the closing of the public sale, release on Jan/01/2022",
+                    "release": "immediate after blocking\n",
+                    "limit": "minimum € 100, maximum € 10,000\n% of total: 5%",
+                    "number": "5 MM"
+                }
+            ]
+        },
+        "aboutUs": {
+            "title": "ABOUT US",
+            "story": "Our story",
+            "description": "Febelink is a search engine for professional services, a social network where users publish their searches and the system sends notifications to professionals related to the activity. Our goal is to help people more efficiently find the professionals and companies they need, and to help companies and professionals find new clients.",
+            "press": "PRESS",
+            "blog": "BLOG",
+            "blogFebelink": "FEBELINK's BLOG",
+            "blogMedia": "THE MEDIA SPEAKS",
+            "blogSearchEng": "WHAT ARE SEARCH ENGINES?",
+            "blogICO": "WHAT IS AN ICO?",
+            "podcast": "PODCAST",
+            "podcastBlockchain": "BLOCKCHAIN TERRITORY",
+            "podcastInterview": "INTERVIEW with CEO OF FEBELINK"
+        },
+        "aboutTeam": {
+            "title": "OUR TEAM",
+            "description": "Experience and knowledge are identity signs of the people who make up our work group. Join our expanding team.",
+            "juan": "Founder & CEO. Entrepreneur with 27 years of experience, developing his career mainly in financial consulting and in the automotive sector.",
+            "david": "Co-Founder & CTO. Developer with extensive experience in Cloud systems. He has worked in large public institutions and online auction houses such as: Christie's, Hilco StremBank or LeasePlan.",
+            "miguel": "Marketing professional with extensive experience in technology and FMCG. Marketing manager of various multinationals such as Hewlett-Packard or WD-40 Company.",
+            "oscar": "Entrepreneur. Creator of alternative Traffic Engineering, Communications Systems, 3D / VR / AR Projects, Satellite Stabilization, etc."
+        },
+        "footer": {
+            "doubts": "Do you have any doubt? Contact us"
+        },
+        "success": {
+            "title": "Thank you!",
+            "subtitle": "You have completed your registration in the reservation list.",
+            "mssg1": "You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.",
+            "mssg2": "If the email does not reach you in the next 5 minutes, fill in the form again here."
+        }
     }
 }

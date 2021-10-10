@@ -11,6 +11,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UnreadNotificationsCount } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
+import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
 
 @Component({
   selector: 'app-header-buttons',
@@ -37,7 +38,7 @@ export class HeaderButtonsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    //TODO: These subscribers are called multiple times because header component is in several pages. We should avoid this.
+    // ToDo: These subscribers are called multiple times because header component is in several pages. We should avoid this.
     this.notificationsSvc.unreadNotificationsCount.subscribe((notifCount) => {
       this.notifCount = notifCount;
       this.notificationsSvc.faviconNotification(
@@ -72,6 +73,19 @@ export class HeaderButtonsComponent implements OnInit {
       cssClass: 'guide-modal',
     });
     return await guideModal.present();
+  }
+
+  /**
+   * Open YouTube popover
+   */
+  async openYTguide() {
+    const popover = await this.popoverController.create({
+      component: YouTubePopComponent,
+      translucent: true,
+      mode: 'md',
+      cssClass: 'pop-yt',
+    });
+    return await popover.present();
   }
 
   async irA(p: string): Promise<void> {

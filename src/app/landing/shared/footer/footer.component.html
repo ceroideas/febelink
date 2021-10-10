@@ -2,8 +2,8 @@
 <footer class="footer">
   <div class="container">
     <app-go-buy-tokens
-        style="margin-bottom: 20px;" hideTitle="true">
-      </app-go-buy-tokens>
+      lang="{{ lang }}" style="margin-bottom: 20px;" hideTitle="true">
+    </app-go-buy-tokens>
       
     <div class="row" id="footer-row">
       <div class="col-lg-4 col-sm-6">
@@ -34,7 +34,7 @@
             style="text-align: center !important"
             id="footer-first-row"
           >
-            ¿Tienes Alguna Duda? Contacta con Nosotros
+            {{ 'landing.footer.doubts' | translate }}
           </h5>
 
           <p
@@ -59,7 +59,7 @@
                 class="font-14"
                 id="footer-privacy"
                 style="font-weight: 300 !important"
-                >Política de Privacidad</span>
+                >{{ 'common.privacyPolicy' | translate }}</span>
             </a>
           </h5>
 
@@ -70,7 +70,7 @@
           >
             <a (click)="openUseConditions()">
               <span class="font-14" id="footer-privacy"
-                >Condiciones y Términos</span>
+                >{{ 'common.termsNconds' | translate }}</span>
             </a>
           </p>
         </div>

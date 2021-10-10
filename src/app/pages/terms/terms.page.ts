@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-terms',
@@ -8,14 +9,15 @@ import { Location } from '@angular/common'
 })
 export class TermsPage implements OnInit {
 
-  constructor(private location: Location) { }
+  constructor(private location: Location, private modalCtrl: ModalController) { }
 
   ngOnInit() {
   }
 
  
   public goBack(): void {
-    this.location.back();
+    // this.location.back();
+    this.modalCtrl.dismiss();
   }
 
 }

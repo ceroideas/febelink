@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import * as countdown from 'countdown';
 import { NavigationExtras, Router } from '@angular/router';
 import { SeoService } from 'src/app/services/seo.service';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { PopoverController } from '@ionic/angular';
+import { CookieService } from "ngx-cookie-service";
 
 export interface xTimer {
   szMs: string;
@@ -39,8 +42,15 @@ export class Index1Component implements OnInit {
     szMns: '00',
     szSgs: '00',
   };
+  langSelected: ILang;
 
-  constructor(private http: HttpClient, private router: Router, private seoSvc:SeoService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private seoSvc:SeoService,
+    public popoverController: PopoverController,
+    private cookSrv: CookieService,
+  ) { }
 
   navExtras: NavigationExtras;
 
@@ -62,8 +72,11 @@ export class Index1Component implements OnInit {
     this.seoSvc.generateTags(
       'Febelink Token'
       , 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
-      , 'https://febelink.com/assets/imgs/token_febelink.png'
+      , 'http://test.febelink.com/assets/imgs/token-share-img.png'
     )
+
+    this.langSelected = this.langSelected ? this.langSelected :
+        ILangDEFAULTS.getLangDEFAULT( this.cookSrv );
   }
 
   // Destruimos cuando finaliza el contador
@@ -138,5 +151,9 @@ export class Index1Component implements OnInit {
       behavior: 'smooth',
       block: 'start',
     });
+  }
+
+  onLangSelected( iLang: ILang ) {
+    this.langSelected = iLang;
   }
 }

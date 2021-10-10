@@ -27,4 +27,13 @@ export class TranslateConfigService {
     setLanguage(language: string) {
         this.translateService.use(language);
     }
+
+    // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
+    setCurrentLang( language: string ) {
+        this.translateService.currentLang = language;
+    }
+
+    instant( key : string ) {
+        this.translateService.instant( key );
+    }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-legal-disclaimer',
@@ -10,13 +11,18 @@ import { Router } from '@angular/router';
 })
 export class LegalDisclaimerPage implements OnInit {
 
-  constructor(private location: Location, private router: Router) { }
+  constructor(
+    private location: Location
+    , private router: Router
+    , private modalCtrl: ModalController
+  ) { }
 
   ngOnInit() {
   }
 
   public goBack(): void {
-    this.location.back();
+    this.modalCtrl.dismiss();
+    // this.location.back();
   }
 
   async openPrivacyPolicy() {
