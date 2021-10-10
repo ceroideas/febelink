@@ -31,6 +31,8 @@ export class WhitelistComponent {
     try {
       const formData = new FormData();
       formData.append('email', email);
+      formData.append('lang', this.lang);
+      
       const responseObs: Observable<any> = await this.api._createData(
         'emailWhitelist',
         formData
