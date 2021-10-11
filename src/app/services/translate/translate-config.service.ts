@@ -33,7 +33,17 @@ export class TranslateConfigService {
         this.translateService.currentLang = language;
     }
 
-    instant( key : string ) {
-        this.translateService.instant( key );
+    instant( key : string ): string {
+        return this.translateService.instant( key );
+    }
+
+    get( key : string, interpolateParams?: Object,
+            next?: ( text: string ) => void,
+            error?: ( error: any ) => void,
+            complete?: () => void ) {
+        this.translateService.get( key, interpolateParams ).subscribe(
+            ( text: string ) => { if( next ) next( text ); },
+            ( error: any ) => { if( error ) error( error ); },
+            () => { if( complete ) complete(); });
     }
 }
