@@ -24,17 +24,23 @@
         "labelTitle": "Title",
         "share": "Share",
         "slogan": "The professional services search engine",
+        "contactUs": "Contact Febelink",
+        "contact": "Contact",
+        "labelSubsribe": "Subscribe",
 
         "personal": {
             "surname": "Surnames",
             "pass": "Passwword",
+            "passEr": "The password must be at least 8 digits with numbers and letters",
             "tel": "Phone",
             "id": "ID (with letter)"
         },
 
         "buttons": {
             "confirm": "Confirm",
-            "back": "Back"
+            "back": "Back",
+            "cancel": "Cancel",
+            "send": "Enviar"
         },
 
         "address": {
@@ -51,8 +57,12 @@
             "secs": "SECS"
         },
 
-        "privacyPolicy": "Privacy Policy",
-        "termsNconds": "Terms and Conditions"
+        "legal": {
+            "privacyPolicy": "Privacy Policy",
+            "termsNconds": "Terms and Conditions",
+            "condsNterms": "Conditions and Terms",
+            "warning": "Legal Warning"
+        }
     },
     "menu": {
         "tabs": {
@@ -69,6 +79,7 @@
         },
         "pages": {
             "opinions": "Opinions",
+            "wallet": "My Wallet",
             "subscriptions": "Subscriptions"
         },
         "labels": {
@@ -107,7 +118,59 @@
             "buttonSave": "Save changes",
             "labelNoOpinions": "No opinions yet",
             "labelOpinions": "Opinions",
-            "need-to-complete": "To enjoy more of Febelink, complete your profile"
+            "need-to-complete": "To enjoy more of Febelink, complete your profile",
+            "labelDisable": "Disable account",
+            "labelDisableConfirm": "Are you sure you want to disable your account?",
+            "buttonDisable": "Disable",
+            "labelDisableConfirmed": "Account disabled successfully",
+            "done": "Changes done successfully",
+
+            "valuation": {
+                "from": ", from Febelink wants you to give them an evaluation of their profile!",
+                "recommendation": " from Febelink wants you to recommend their profile!",
+                "panel": "Go to their panel to see their ratings!",
+                "notif": "A notification has been sent to the user",
+                "noMailuser": "There is no user with that email"
+            },
+
+            "errors": {
+                "title": "Error editing data",
+                "message": "The following errors occurred: ",
+                "messageChk": "Check that all the fields are entered.",
+
+                "name": "The name must be at least 3 characters long",
+
+                "passMatch": "Enter the password confirmation correctly",
+
+                "mail": "The email is not valid",
+                "mailExists": "The email you have entered already exists",
+                "mailEmpty": "The email field cannot be empty",
+
+                "phone": "The phone's format is not correct",
+
+                "id": "The DNI/NIE/CIF you have entered is not valid",
+                "idFormat": "The format of DNI/NIE/CIF is not correct",
+
+                "image": "Error getting image",
+                "imageMaxSize": "Image too large, max. 300KB",
+
+                "noFileSelected": "No file selected.",
+                "noFileProvided": "No file provided",
+
+                "limitSelectSectors_1": "You can only select ",
+                "limitSelectSectors_2": " sectors with your current subscription"
+            },
+
+            "alerts": {
+                "improve": "Improve your profile",
+
+                "chooseShare": "Choose where you want to share",
+                "shareInside": "Within the app",
+                "shareOutside": "Outside the app",
+
+                "recommendation": "Ask for a recommendation",
+                "mail": "Write the user's email"
+            }
         }
     },
     "pages": {
@@ -149,7 +212,6 @@
             "cond4": "general conditions of use",
             "button": "REGISTER",
             "or": "OR",
-            "contactUs": "Contact Febelink",
             "continueWith": "Continue with "
         }
     },
