@@ -10,6 +10,8 @@ import { LegalDisclaimerPage } from '../legal-disclaimer/legal-disclaimer.page';
 import { UseConditionsPage } from '../use-conditions/use-conditions.page';
 import { CookiePolicyPage } from '../cookie-policy/cookie-policy.page';
 import { CookieService } from 'ngx-cookie-service';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-registro',
@@ -26,7 +28,8 @@ export class RegistroPage implements OnInit {
   passwordIcon2 = 'eye-off';
 
   redirect: string;
-
+  langSelected: ILang;
+  
   constructor(
     public navCtrl: NavController,
     private formBuilder: FormBuilder,
@@ -35,7 +38,8 @@ export class RegistroPage implements OnInit {
     private utilities: UtilitiesService,
     private router: Router,
     private cookSvc: CookieService,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    private translateService: TranslateConfigService
   ) {}
 
   /**
@@ -58,6 +62,9 @@ export class RegistroPage implements OnInit {
       this.obtenerSubSectores(id);
     });
     this.obtenerSectores();
+    
+    this.langSelected = this.langSelected ? this.langSelected :
+        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
   }
 
   hideShowPassword() {
@@ -127,6 +134,7 @@ export class RegistroPage implements OnInit {
         name: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
+        lang: this.langSelected.lang,
         idRecommender,
       };
 
@@ -166,13 +174,13 @@ export class RegistroPage implements OnInit {
             cadenaErrores += `</ul>`;
 
             this.utilities.showAlert(
-              'Error al registrarse',
-              `Ocurrieron los siguientes errores al registrarse: ${cadenaErrores}`
+              this.translateService.instant("pages.registro.errors.title"),
+              this.translateService.instant("pages.registro.errors.list") + cadenaErrores
             );
           } else {
             this.utilities.showAlert(
-              'Error al registrarse',
-              'Hubo un error en el servidor al registrarse. Inténtalo de nuevo más tarde'
+              this.translateService.instant("pages.registro.errors.title"),
+              this.translateService.instant("pages.registro.errors.server")
             );
           }
           this.utilities.dismissLoading();
@@ -181,11 +189,12 @@ export class RegistroPage implements OnInit {
     } else {
       if (this.form.value.privacyConditions === null || !this.form.value.privacyConditions) {
         this.utilities.showToast(
-          'Tienes que aceptar la política de privacidad y las condiciones generales de uso'
+          this.translateService.instant("pages.registro.errors.terms")
         );
       }
       else {
-        this.utilities.showToast('Tienes que insertar los campos obligatorios');
+        this.utilities.showToast(
+          this.translateService.instant("pages.registro.errors.fields"));
       }
     }
   }
@@ -202,4 +211,7 @@ export class RegistroPage implements OnInit {
     this.navegar('use-conditions');
   }
 
+  onLangSelected( iLang: ILang ) {
+    this.langSelected = iLang;
+  }
 }
