@@ -24,17 +24,23 @@
         "labelTitle": "Título",
         "share": "Compartir",
         "slogan": "El buscador de servicios profesionales",
+        "contactUs": "Contacta con Febelink",
+        "contact": "Contacto",
+        "labelSubsribe": "Suscribirse",
 
         "personal": {
             "surname": "Apellidos",
             "pass": "Contraseña",
+            "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
             "id": "DNI (con letra)"
         },
 
         "buttons": {
             "confirm": "Confirmar",
-            "back": "Volver"
+            "back": "Volver",
+            "cancel": "Cancelar",
+            "send": "Enviar"
         },
 
         "address": {
@@ -51,8 +57,12 @@
             "secs": "SEGS"
         },
 
-        "privacyPolicy": "Política de Privacidad",
-        "termsNconds": "Condiciones y Términos"
+        "legal": {
+            "privacyPolicy": "Política de Privacidad",
+            "termsNconds": "Condiciones y Términos",
+            "condsNterms": "Términos y Condiciones",
+            "warning": "Aviso Legal"
+        }
     },
     "menu": {
         "tabs": {
@@ -150,7 +160,6 @@
             "cond4": "condiciones generales de uso",
             "button": "REGISTRARSE",
             "or": "Ó",
-            "contactUs": "Contacta con Febelink",
             "continueWith": "Continuar con "
         }
     },
