@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { OlvidarContrasenaPageRoutingModule } from './olvidar-contrasena-routing.module';
 
 import { OlvidarContrasenaPage } from './olvidar-contrasena.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,8 +15,10 @@ import { OlvidarContrasenaPage } from './olvidar-contrasena.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    OlvidarContrasenaPageRoutingModule
+    OlvidarContrasenaPageRoutingModule,
+    TranslateModule.forChild(),
   ],
-  declarations: [OlvidarContrasenaPage]
+  declarations: [OlvidarContrasenaPage],
+  exports: [ TranslateModule ],
 })
 export class OlvidarContrasenaPageModule {}
