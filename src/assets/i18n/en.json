@@ -24,17 +24,23 @@
         "labelTitle": "Title",
         "share": "Share",
         "slogan": "The professional services search engine",
+        "contactUs": "Contact Febelink",
+        "contact": "Contact",
+        "labelSubsribe": "Subscribe",
 
         "personal": {
             "surname": "Surnames",
             "pass": "Passwword",
+            "passEr": "The password must be at least 8 digits with numbers and letters",
             "tel": "Phone",
             "id": "ID (with letter)"
         },
 
         "buttons": {
             "confirm": "Confirm",
-            "back": "Back"
+            "back": "Back",
+            "cancel": "Cancel",
+            "send": "Send"
         },
 
         "address": {
@@ -51,8 +57,12 @@
             "secs": "SECS"
         },
 
-        "privacyPolicy": "Privacy Policy",
-        "termsNconds": "Terms and Conditions"
+        "legal": {
+            "privacyPolicy": "Privacy Policy",
+            "termsNconds": "Terms and Conditions",
+            "condsNterms": "Conditions and Terms",
+            "warning": "Legal Warning"
+        }
     },
     "menu": {
         "tabs": {
@@ -69,6 +79,7 @@
         },
         "pages": {
             "opinions": "Opinions",
+            "wallet": "My Wallet",
             "subscriptions": "Subscriptions"
         },
         "labels": {
@@ -149,8 +160,29 @@
             "cond4": "general conditions of use",
             "button": "REGISTER",
             "or": "OR",
-            "contactUs": "Contact Febelink",
             "continueWith": "Continue with "
+        },
+        "login": {
+            "title": "Log in",
+            "forgotPass": "Forgot your password?",
+            "rememberPass": "Remember now",
+            "button": "LOG IN",
+            "newUser": "New user?",
+            "register": "Create Account",
+            "logging": "Logging in...",
+
+            "recover": {
+                "title": "Recover password",
+                "subtitle": "Enter the email to recover the password"
+            },
+
+            "errors": {
+                "title": "Failed to login",
+                "message": "There was an error logging in. Try again later",
+
+                "data": "The data entered is not correct",
+                "email": "The format of the email entered is not correct"
+            }
         }
     },
     "toast": {
