@@ -130,9 +130,10 @@ export class ApiService {
    * Recuperar contraseña y enviar email
    * @param email
    */
-  public async recuperarContraseña(email) {
+  public async recuperarContraseña( email, lang: string ) {
     const formData = new FormData();
     formData.append('email', email);
+    formData.append('lang', lang);
     const responseObs: Observable<any> = await this._createData(
       'recuperar-contrasena',
       formData
