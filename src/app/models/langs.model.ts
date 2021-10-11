@@ -64,7 +64,6 @@ export interface ILang {
     // Para obtener el Lang en las Cookies
     static getLangCOOKIE( cookSvc: CookieService ) : ILang {
       let lang = cookSvc.get( ILangDEFAULTS.coookie );
-      console.log( 'Lang in cookie: ', lang );
       return !lang ? null : ILangDEFAULTS.getLang( lang );
     }
 }
