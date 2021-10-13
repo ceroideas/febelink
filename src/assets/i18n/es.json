@@ -108,7 +108,13 @@
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
             "labelOpinions": "Opiniones",
-            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil"
+            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil",
+
+            "search": {
+                "of": " de ",
+                "title": "Los 10 mejores {{ subsector }}{{ provincia }}",
+                "descript": "En Febelink tienes los mejores profesionales de tu zona para que hables directamente con ellos de forma gratuita, rápida y sencilla."
+            }
         }
     },
     "pages": {
