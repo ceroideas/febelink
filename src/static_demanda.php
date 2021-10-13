@@ -61,8 +61,7 @@ function makePage($data,$default_img) {
     $html .= '<meta property="og:type" content="article"/>'.PHP_EOL;
     $html .= '<meta property="fb:app_id" content="895023747604792" />'.PHP_EOL;
     $html .= '</head>'.PHP_EOL;
-    $html .= '<body></body>'.PHP_EOL;
-    $html .= '<body>' /* .$twitter */. '</body>'.PHP_EOL;
+    $html .= '<body>' .$twitter. '</body>'.PHP_EOL;
     $html .= '</html>';
     // 3. return the page
     echo $html;

@@ -30,7 +30,8 @@ function makePage($data,$default_img) {
     }
 
     // 0. Add Twitter Conversion Tracking
-    $twitter = "<!-- Twitter universal website tag code -->
+    $twitter = "
+        <!-- Twitter universal website tag code -->
         <script>
             !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
             },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
@@ -55,7 +56,7 @@ function makePage($data,$default_img) {
     $html .= '<meta property="og:type" content="article"/>'.PHP_EOL;
     $html .= '<meta property="fb:app_id" content="895023747604792" />'.PHP_EOL;
     $html .= '</head>'.PHP_EOL;
-    $html .= '<body>'.$size.' - picture to display '.$image.' Name '.$name.' Description '.$description. /* $twitter. */ '</body>'.PHP_EOL;
+    $html .= '<body>'.$size.' - picture to display '.$image.' Name '.$name.' Description '.$description. $twitter. '</body>'.PHP_EOL;
     $html .= '</html>';
     // 3. return the page
     echo $html;
