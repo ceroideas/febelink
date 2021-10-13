@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   // Para tomar los PathValues en menu/busquedas/:search/:province
   {
-    path: ':search/:province',
+    path: ':subsector/:province',
     component: Tab2Page,
   }
 ];
