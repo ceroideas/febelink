@@ -8,10 +8,12 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
-import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { DemandaService } from '../services/demanda.service';
 import { SeoService } from '../services/seo.service';
+import { TranslateConfigService } from '../services/translate/translate-config.service';
+import { ILangDEFAULTS } from '../models/langs.model';
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: 'app-tab2',
@@ -19,7 +21,7 @@ import { SeoService } from '../services/seo.service';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
-  searchParam: string = '';
+  subsectorParam: string = '';
   provinceParam: string = '';
 
   currentYear = new Date().getFullYear();
@@ -47,10 +49,14 @@ export class Tab2Page {
     private router: Router,
     private route: ActivatedRoute,
     private modalCtrl: ModalController,
-    private translateService: TranslateService,
+    private translateService: TranslateConfigService,
     private demanadaSvc: DemandaService,
     private seoSvc:SeoService,
+    private cookSvc: CookieService
   ) {
+    // Para que capture el lang actual
+    this.translateService.setCurrentLang( ILangDEFAULTS.getLangCOOKIE( this.cookSvc ).lang );
+
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
     });
@@ -60,17 +66,31 @@ export class Tab2Page {
     });
     
     this.route.paramMap.subscribe((params) => {
-      this.searchParam = params.get('search');
+      // Parametros pasados en el PathVariable. e.g.: ../busquedas/{{albañil}}/{{provincia}}
+      this.subsectorParam = params.get('subsector');
       if( params.get('province') )
         this.provinceParam = params.get('province').normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
       
-      if( this.searchParam )
-        // Seteo las tags según la búsqueda pasada en parámetros
-        this.seoSvc.generateTags({
-            title: 'Febelink - ' + this.searchParam[0].toUpperCase() + this.searchParam.substr(1).toLowerCase()
-          , description: "Buscando Servicio Profesional: " + this.searchParam
-            + ( !this.provinceParam ? "" : " en Provincia: " + this.provinceParam)
+      if( this.subsectorParam ) {
+        // Mayuscula la primer letra, el resto a minuscula
+        const subsector = this.subsectorParam[0].toUpperCase() + this.subsectorParam.substr(1).toLowerCase();
+        
+        // En caso de que no pase el parámetro de provincia
+        const provincia = !this.provinceParam ? '' :
+          this.translateService.instant('tabs.tab4.search.of') +
+          this.provinceParam[0].toUpperCase() + this.provinceParam.substr(1).toLowerCase();
+        
+        // Descripcion a poner en la meta
+        const descript = this.translateService.instant('tabs.tab4.search.descript');
+
+        // Busco el titulo pasandole los parametros y espero a su respuesta
+        this.translateService.get( 'tabs.tab4.search.title',
+              { "subsector": subsector, "provincia": provincia }, ( text ) => {
+
+          // Seteo las tags según la búsqueda pasada en parámetros
+          this.seoSvc.generateTags({ title: text, description: descript });
         });
+      }
     });
   }
 
