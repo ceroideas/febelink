@@ -1,27 +1,38 @@
 <div class="header-buttons" [class]="(currentTab==tabs.Search)?'right':''">
 
-  <img tappable src="assets/imgs/logo.png" alt="Febelink logo" class="logo" (click)="irA('/menu/todas')" *ngIf="currentTab!=tabs.Search"/>
+  <img tappable src="assets/imgs/logo.png" alt="Febelink logo" (click)="irA('/menu/todas')" *ngIf="currentTab!=tabs.Search"
+      [class]=" ( currentTab == tabs.Profile ) ? 'logoNlang logo' : 'logo'"/>
+
+  <app-lang-btn *ngIf="currentTab == tabs.Profile"></app-lang-btn>
   
   <ion-buttons>
     <ion-button class="btn-header" [class]="(currentTab==tabs.ICO)?'active':''" (click)="irA('/token')">
       <img slot="start" density="ldpi" src="assets/icon/febicon.png" width="20px" height="20px" />
-      <ion-label class="desktop" style="margin-left: 10px;">{{ 'menu.tabs.landingICO' | translate }}</ion-label>
-      <ion-label class="mobile" style="margin-left: 10px;" *ngIf="currentTab==tabs.Search">{{ 'menu.tabs.token' | translate }}</ion-label>
+      <ion-label class="responsive-max" style="margin-left: 10px;">{{ 'menu.tabs.landingICO' | translate }}</ion-label>
+      <ion-label class="responsive-min" style="margin-left: 10px;" *ngIf="currentTab==tabs.Search">
+          {{ 'menu.tabs.token' | translate }}
+      </ion-label>
     </ion-button>
 
     <div class="desktop">
       <ion-button class="btn-header" [class]="(currentTab==tabs.Search)?'active':''" (click)="irA('/menu/todas')">
         <ion-icon slot="start" name="search"></ion-icon>
-        {{ 'menu.tabs.searchEngine' | translate }}
+        <ion-label class="responsive-max">
+          {{ 'menu.tabs.searchEngine' | translate }}
+        </ion-label>
       </ion-button>
       <ion-button class="btn-header" [class]="(currentTab==tabs.Recommend)?'active':''" (click)="irA('/menu/busquedas')">
         <ion-icon slot="start" name="heart"></ion-icon>
-        {{ 'menu.tabs.recommend' | translate }}
+        <ion-label class="responsive-max">
+           {{ 'menu.tabs.recommend' | translate }}
+        </ion-label>
         <!-- <ion-badge color="danger" slot="end">1</ion-badge> -->
       </ion-button>
       <ion-button class="btn-header" [class]="(currentTab==tabs.Chat)?'active':''" (click)="irA('/menu/ofertas')">
         <ion-icon slot="start" name="chatbubbles"></ion-icon>
-        {{ 'menu.tabs.chat' | translate }}
+        <ion-label class="responsive-max">
+          {{ 'menu.tabs.chat' | translate }}
+        </ion-label>
         <ion-badge color="danger" slot="end" *ngIf="totalUnreadMessages">{{totalUnreadMessages}}</ion-badge>
       </ion-button>
         
@@ -38,14 +49,14 @@
       
     <ion-button class="btn-header" (click)="shareFebelink($event)">
       <ion-icon slot="start" name="share-social"></ion-icon>
-      <span class="desktop" translate>menu.tabs.share-febelink</span>
-      <span class="mobile" translate *ngIf="currentTab==tabs.Search">common.share</span>
+      <span class="responsive-max" translate>common.share</span>
+      <span class="responsive-min" translate *ngIf="currentTab==tabs.Search">common.share</span>
       
     </ion-button>
 
     <ion-button class="btn-header" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
-      <ion-badge color="danger" slot="end" *ngIf="notifCount?.chats+notifCount?.offers+notifCount?.ratings" class="little-badge">{{notifCount?.chats+notifCount?.offers+notifCount?.ratings}}</ion-badge>
+      <ion-badge color="danger" slot="end" *ngIf="notifCount" class="little-badge">{{notifCount}}</ion-badge>
     </ion-button>
 
     <ion-button size="large" color="primary" slot="icon-only" (click)="openYTguide()" >

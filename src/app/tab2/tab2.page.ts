@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
@@ -39,6 +39,7 @@ export class Tab2Page {
 
   constructor(
     private api: ApiService,
+    public platform: Platform,
     private utilities: UtilitiesService,
     private router: Router,
     private modalCtrl: ModalController,
@@ -87,6 +88,7 @@ export class Tab2Page {
         }
 
         demanda.valoracion = Number(demanda.valoracion);
+        this.checkDescrip( demanda );
         userFavorites.includes(demanda.id.toString())
           ? (demanda.favorito = true)
           : (demanda.favorito = false);
@@ -235,19 +237,20 @@ export class Tab2Page {
         if (this.subsector.id !== 0) {
           for (const demanda of this.demandas) {
             if (demanda.sub_sector === this.subsector.id) {
-              this.searchResults.push(demanda);
+              this.searchResults.push( this.checkDescrip( demanda ));
             }
           }
         } else {
           for (const demanda of this.demandas) {
             if (demanda.sector === this.sector.id) {
-              this.searchResults.push(demanda);
+              this.searchResults.push( this.checkDescrip( demanda ));
             }
           }
         }
       } else {
         // No sector
         for (const demanda of this.demandas) {
+          this.checkDescrip( demanda );
           this.demandasProvincia.push(demanda);
           this.searchResults.push(demanda);
         }
@@ -260,6 +263,7 @@ export class Tab2Page {
           // Si sector
           const aux = this.subsector.id !== 0 ? this.subsector : this.sector;
           for (const demanda of this.demandas) {
+            this.checkDescrip( demanda );
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
@@ -274,6 +278,7 @@ export class Tab2Page {
         } else {
           // No sector
           for (const demanda of this.demandas) {
+            this.checkDescrip( demanda );
             this.demandasProvincia.push(demanda);
             if (demanda.user != null && demanda.user.town_id === this.town.id) {
               this.searchResults.push(demanda);
@@ -285,6 +290,7 @@ export class Tab2Page {
           // Si sector
           const aux = this.subsector.id !== 0 ? this.subsector : this.sector;
           for (const demanda of this.demandas) {
+            this.checkDescrip( demanda );
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
@@ -299,6 +305,7 @@ export class Tab2Page {
         } else {
           // No sector
           for (const demanda of this.demandas) {
+            this.checkDescrip( demanda );
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
@@ -310,6 +317,12 @@ export class Tab2Page {
         }
       }
     }
+  }
+
+  public checkDescrip( demanda: any ) : any {
+    demanda.descripcion = demanda.descripcion === null || demanda.descripcion.trim() === 'null' ?
+        '' : demanda.descripcion;
+    return demanda;
   }
 
   public irA(p: string): void {

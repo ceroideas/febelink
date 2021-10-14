@@ -64,7 +64,14 @@
             </ion-item>
             <!-- Image. -->
             <ion-item lines="none">
-              <img style="margin: auto" [src]="base64img" *ngIf="base64img" />
+              <img
+                (click)="attachImage()"
+                [src]="base64img"
+                *ngIf="base64img"
+                class="placeholder img-file-demandas"
+                [width]="platform.width() >= 576 ? 200 : 150"
+                [height]="platform.width() >= 576 ? 200 : 150"
+                [ngStyle]="{'max-height.px': platform.width() >= 576 ? 200 : 150}" />
               <img
                 style="margin: auto"
                 src="assets/imgs/photo.png"

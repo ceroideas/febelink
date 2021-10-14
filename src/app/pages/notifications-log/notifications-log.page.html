@@ -13,7 +13,7 @@
     <ion-item
       lines="none"
       *ngFor="let notif of notifications"
-      (click)="notif.open = !notif.open"
+      (click)="open(notif)"
       class="clickable">
 
       <ion-icon slot="start" [name]="getIconByType(notif.type)"></ion-icon>
