@@ -5,59 +5,67 @@ import { ILangDEFAULTS } from 'src/app/models/langs.model';
 import { supportedLanguages } from 'src/utils/utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TranslateConfigService {
+  constructor(
+    private translateService: TranslateService,
+    private cookSvc: CookieService
+  ) {}
 
-    constructor(
-        private translateService: TranslateService
-      , private cookSvc: CookieService
-    ) {}
+  getDefaultLanguage() {
+    let language = ILangDEFAULTS.getLangCOOKIE(this.cookSvc).lang;
+    // Si no tiene guardado Lang en Cookies, tomar del Browser
+    if (!language) language = this.translateService.getBrowserLang();
 
-    getDefaultLanguage(){
-        let language = ILangDEFAULTS.getLangCOOKIE( this.cookSvc ).lang;
-        // Si no tiene guardado Lang en Cookies, tomar del Browser
-        if( !language )
-            language = this.translateService.getBrowserLang();
-
-        if (!supportedLanguages().includes(language)) {
-            language = ILangDEFAULTS.enUK.lang;
-        }
-
-        this.translateService.setDefaultLang(language);
-        return language;
+    if (!supportedLanguages().includes(language)) {
+      language = ILangDEFAULTS.enUK.lang;
     }
 
-    getCurrentLanguage() {
-        return this.translateService.currentLang;
-    }
+    this.translateService.setDefaultLang(language);
+    return language;
+  }
 
-    setLanguage(language: string) {
-        this.translateService.use(language);
-        this.translateService.currentLang = language;
-    }
+  getCurrentLanguage() {
+    return this.translateService.currentLang;
+  }
 
-    // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
-    setCurrentLang( language: string ) {
-        // ToDo: eliminar este método porque ya lo solucioné
-        // this.translateService.currentLang = language;
-    }
+  setLanguage(language: string) {
+    this.translateService.use(language);
+    this.translateService.currentLang = language;
+  }
 
-    instant( key : string ) : string {
-        return this.translateService.instant( key );
-    }
+  // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
+  setCurrentLang(language: string) {
+    // ToDo: eliminar este método porque ya lo solucioné
+    // this.translateService.currentLang = language;
+  }
 
-    get( key : string, interpolateParams?: Object,
-            next?: ( text: string ) => void,
-            error?: ( error: any ) => void,
-            complete?: () => void ) {
-        this.translateService.get( key, interpolateParams ).subscribe(
-            ( text: string ) => { if( next ) next( text ); },
-            ( error: any ) => { if( error ) error( error ); },
-            () => { if( complete ) complete(); });
-    }
+  instant(key: string): string {
+    return this.translateService.instant(key);
+  }
 
-    addLangs( ...lang: string[] ) {
-        this.translateService.addLangs( lang );
-    }
+  get(
+    key: string,
+    interpolateParams?: Object,
+    next?: (text: string) => void,
+    error?: (error: any) => void,
+    complete?: () => void
+  ) {
+    this.translateService.get(key, interpolateParams).subscribe(
+      (text: string) => {
+        if (next) next(text);
+      },
+      (error: any) => {
+        if (error) error(error);
+      },
+      () => {
+        if (complete) complete();
+      }
+    );
+  }
+
+  addLangs(...lang: string[]) {
+    this.translateService.addLangs(lang);
+  }
 }

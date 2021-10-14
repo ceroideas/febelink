@@ -44,8 +44,11 @@ export class NotificationsLogPage implements OnInit {
 
   async goTo(notification: Notification) {
     if (notification.route) this.router.navigateByUrl(notification.route);
-    if (!notification.is_read)
-      await this.notificationSvc.setNotificationAsReadById(notification.id);
-    notification.is_read = 1;
+  }
+
+  async open(notif){
+    notif.open = !notif.open
+    if (!notif.is_read) await this.notificationSvc.setNotificationAsReadById(notif.id);
+    notif.is_read = 1;
   }
 }
