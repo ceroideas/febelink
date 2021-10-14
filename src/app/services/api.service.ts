@@ -753,6 +753,9 @@ export class ApiService {
    * @param dni
    */
    public existeDNI(dni) {
+    // Agrego esta linea porque sino cuando quiere borrar
+    // su dni, no pasa párametro y provoca error
+    dni = dni ? dni : 'null';
     return this._getData('existe-usuario-dni/' + dni);
   }
 
