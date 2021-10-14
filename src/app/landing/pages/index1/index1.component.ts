@@ -69,11 +69,11 @@ export class Index1Component implements OnInit {
 
     this.navExtras = this.router.getCurrentNavigation().extras;
 
-    this.seoSvc.generateTags(
-      'Febelink Token'
-      , 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
-      , 'http://test.febelink.com/assets/imgs/token-share-img.png'
-    )
+    this.seoSvc.generateTags({
+          title: 'Febelink Token'
+        , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
+        , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
+    })
 
     this.langSelected = this.langSelected ? this.langSelected :
         ILangDEFAULTS.getLangDEFAULT( this.cookSrv );

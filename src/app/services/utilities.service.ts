@@ -232,5 +232,8 @@ export class UtilitiesService {
   updateWebTitle(title:string){
     this.titleService.setTitle(title);
   }
+  getWebTitle(): string {
+    return this.titleService.getTitle() ? this.titleService.getTitle() : 'Febelink';
+  }
 
 }

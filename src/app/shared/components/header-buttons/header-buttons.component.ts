@@ -9,8 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { UnreadNotificationsCount } from 'src/app/models/notification';
 import { ApiService } from 'src/app/services/api.service';
+import { filter } from 'rxjs/operators';
 import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
 
 @Component({
@@ -23,7 +23,7 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() perfil: IUser;
   @Input() currentTab:Tabs;
   tabs = Tabs;
-  notifCount:UnreadNotificationsCount;
+  notifCount:number;
   totalUnreadMessages:number;
 
   constructor(
@@ -40,7 +40,7 @@ export class HeaderButtonsComponent implements OnInit {
 
   async ngOnInit() {
     //TODO: These subscribers are called multiple times because header component is in several pages. We should avoid this.
-    this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
+    this.notificationsSvc.unreadNotificationsCount.pipe(filter(element => !!element)).subscribe(notifCount => {
       this.notifCount = notifCount;
       this.notificationsSvc.faviconNotification(this.notifCount, this.totalUnreadMessages);
       this.notificationsSvc.titleNotification(this.notifCount, this.totalUnreadMessages);

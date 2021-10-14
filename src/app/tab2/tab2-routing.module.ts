@@ -6,6 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
+  },
+  // Para tomar los PathValues en menu/busquedas/:search/:province
+  {
+    path: ':subsector/:province',
+    component: Tab2Page,
   }
 ];
 
