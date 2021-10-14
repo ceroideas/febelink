@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { GuidePage } from '../pages/guide/guide.page';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
@@ -13,7 +13,7 @@ import { DemandaService } from '../services/demanda.service';
 import { SeoService } from '../services/seo.service';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
 import { ILangDEFAULTS } from '../models/langs.model';
-import { CookieService } from "ngx-cookie-service";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tab2',
@@ -45,17 +45,20 @@ export class Tab2Page {
 
   constructor(
     private api: ApiService,
+    public platform: Platform,
     private utilities: UtilitiesService,
     private router: Router,
     private route: ActivatedRoute,
     private modalCtrl: ModalController,
     private translateService: TranslateConfigService,
     private demanadaSvc: DemandaService,
-    private seoSvc:SeoService,
+    private seoSvc: SeoService,
     private cookSvc: CookieService
   ) {
     // Para que capture el lang actual
-    this.translateService.setCurrentLang( ILangDEFAULTS.getLangCOOKIE( this.cookSvc ).lang );
+    this.translateService.setCurrentLang(
+      ILangDEFAULTS.getLangCOOKIE(this.cookSvc).lang
+    );
 
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
@@ -64,32 +67,44 @@ export class Tab2Page {
     this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
-    
+
     this.route.paramMap.subscribe((params) => {
       // Parametros pasados en el PathVariable. e.g.: ../busquedas/{{albañil}}/{{provincia}}
       this.subsectorParam = params.get('subsector');
-      if( params.get('province') )
-        this.provinceParam = params.get('province').normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-      
-      if( this.subsectorParam ) {
+      if (params.get('province'))
+        this.provinceParam = params
+          .get('province')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase();
+
+      if (this.subsectorParam) {
         // Mayuscula la primer letra, el resto a minuscula
-        const subsector = this.subsectorParam[0].toUpperCase() + this.subsectorParam.substr(1).toLowerCase();
-        
+        const subsector =
+          this.subsectorParam[0].toUpperCase() +
+          this.subsectorParam.substr(1).toLowerCase();
+
         // En caso de que no pase el parámetro de provincia
-        const provincia = !this.provinceParam ? '' :
-          this.translateService.instant('tabs.tab4.search.of') +
-          this.provinceParam[0].toUpperCase() + this.provinceParam.substr(1).toLowerCase();
-        
+        const provincia = !this.provinceParam
+          ? ''
+          : this.translateService.instant('tabs.tab4.search.of') +
+            this.provinceParam[0].toUpperCase() +
+            this.provinceParam.substr(1).toLowerCase();
+
         // Descripcion a poner en la meta
-        const descript = this.translateService.instant('tabs.tab4.search.descript');
+        const descript = this.translateService.instant(
+          'tabs.tab4.search.descript'
+        );
 
         // Busco el titulo pasandole los parametros y espero a su respuesta
-        this.translateService.get( 'tabs.tab4.search.title',
-              { "subsector": subsector, "provincia": provincia }, ( text ) => {
-
-          // Seteo las tags según la búsqueda pasada en parámetros
-          this.seoSvc.generateTags({ title: text, description: descript });
-        });
+        this.translateService.get(
+          'tabs.tab4.search.title',
+          { subsector: subsector, provincia: provincia },
+          (text) => {
+            // Seteo las tags según la búsqueda pasada en parámetros
+            this.seoSvc.generateTags({ title: text, description: descript });
+          }
+        );
       }
     });
   }
@@ -130,6 +145,7 @@ export class Tab2Page {
         }
 
         demanda.valoracion = Number(demanda.valoracion);
+        this.checkDescrip(demanda);
         userFavorites.includes(demanda.id.toString())
           ? (demanda.favorito = true)
           : (demanda.favorito = false);
@@ -257,11 +273,14 @@ export class Tab2Page {
       ...(await (await this.api.obtenerProvincias()).toPromise()),
     ];
     let hasProvinceMatch: boolean = false;
-    if( this.provinceParam )
+    if (this.provinceParam)
       // Si ha pasado el parametro en la url controlar si hay alguna coincidencia
-      this.provinces.forEach( province => {
-        let provName = province.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        if( provName.indexOf( this.provinceParam ) >= 0 ) {
+      this.provinces.forEach((province) => {
+        let provName = province.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase();
+        if (provName.indexOf(this.provinceParam) >= 0) {
           this.province = province;
           hasProvinceMatch = true;
           return;
@@ -269,8 +288,7 @@ export class Tab2Page {
       });
 
     // Si no hay coincidencia seleccionar la provincia: Todas
-    if( !hasProvinceMatch )
-      this.province = this.provinces[0];
+    if (!hasProvinceMatch) this.province = this.provinces[0];
   }
 
   async loadTowns(idProvincia: number) {
@@ -292,19 +310,20 @@ export class Tab2Page {
         if (this.subsector.id !== 0) {
           for (const demanda of this.demandas) {
             if (demanda.sub_sector === this.subsector.id) {
-              this.searchResults.push(demanda);
+              this.searchResults.push(this.checkDescrip(demanda));
             }
           }
         } else {
           for (const demanda of this.demandas) {
             if (demanda.sector === this.sector.id) {
-              this.searchResults.push(demanda);
+              this.searchResults.push(this.checkDescrip(demanda));
             }
           }
         }
       } else {
         // No sector
         for (const demanda of this.demandas) {
+          this.checkDescrip(demanda);
           this.demandasProvincia.push(demanda);
           this.searchResults.push(demanda);
         }
@@ -317,6 +336,7 @@ export class Tab2Page {
           // Si sector
           const aux = this.subsector.id !== 0 ? this.subsector : this.sector;
           for (const demanda of this.demandas) {
+            this.checkDescrip(demanda);
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
@@ -331,6 +351,7 @@ export class Tab2Page {
         } else {
           // No sector
           for (const demanda of this.demandas) {
+            this.checkDescrip(demanda);
             this.demandasProvincia.push(demanda);
             if (demanda.user != null && demanda.user.town_id === this.town.id) {
               this.searchResults.push(demanda);
@@ -342,6 +363,7 @@ export class Tab2Page {
           // Si sector
           const aux = this.subsector.id !== 0 ? this.subsector : this.sector;
           for (const demanda of this.demandas) {
+            this.checkDescrip(demanda);
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
@@ -356,6 +378,7 @@ export class Tab2Page {
         } else {
           // No sector
           for (const demanda of this.demandas) {
+            this.checkDescrip(demanda);
             this.demandasProvincia.push(demanda);
             if (
               demanda.user != null &&
@@ -367,6 +390,14 @@ export class Tab2Page {
         }
       }
     }
+  }
+
+  public checkDescrip(demanda: any): any {
+    demanda.descripcion =
+      demanda.descripcion === null || demanda.descripcion.trim() === 'null'
+        ? ''
+        : demanda.descripcion;
+    return demanda;
   }
 
   public irA(p: string): void {
@@ -384,5 +415,4 @@ export class Tab2Page {
   async onClickAddToFavorites(demand) {
     this.demanadaSvc.addToFavorites(demand);
   }
-
 }

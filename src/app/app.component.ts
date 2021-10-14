@@ -155,7 +155,7 @@ export class AppComponent implements OnDestroy {
     
     // Añadí esta linea porque sino no cargaba el archivo en.json de i18n
     // Y cuando cambiaba al lenguaje 'es' no encontrba los valores
-    this.translateService.setLanguage( ILangDEFAULTS.enUK.lang );
+    this.translateService.addLangs( ILangDEFAULTS.enUK.lang );
 
     this.translateService.setLanguage(currentLanguage);
   }

@@ -1,9 +1,9 @@
 <ion-header>
 
   <ion-toolbar color="febelink">
-    <ion-title>Recuperar contraseña</ion-title>
+    <ion-title>{{ 'pages.login.recover.title' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Cancelar</ion-button>
+      <ion-button (click)="closeModal()">{{ 'common.buttons.cancel' | translate }}</ion-button>
     </ion-buttons>
   </ion-toolbar>
   
@@ -11,15 +11,15 @@
 
 <ion-content class="ion-padding">
   <div class="contenido">
-    <h2 class="title">Introduce el email para recuperar la contraseña</h2>
+    <h2 class="title">{{ 'pages.login.recover.subtitle' | translate }}</h2>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()" class="ion-padding-top">
       <ion-item>
         <ion-label position="floating">
-          Email
+          {{ 'common.labelEmail' | translate }}
         </ion-label>
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
-      <ion-button type="submit" class="enviar" color="febelink">ENVIAR</ion-button>
+      <ion-button type="submit" class="enviar" color="febelink">{{ 'common.buttons.send' | translate }}</ion-button>
     </form>
   </div>
 </ion-content>

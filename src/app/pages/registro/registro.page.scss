@@ -22,10 +22,18 @@ ion-content {
     ion-item {
       margin: 0.4em;
     }
+    .logo {
+      position: relative;
+    }
     img {
       display: block;
       width: 30%;
       margin: 1.5em auto 0 auto;
+    }
+    app-lang-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
     .slogan{
       color: rgb(185, 185, 185);

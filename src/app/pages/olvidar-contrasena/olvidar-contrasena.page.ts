@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { CookieService } from 'ngx-cookie-service';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
 
 @Component({
   selector: 'app-olvidar-contrasena',
@@ -14,10 +17,14 @@ export class OlvidarContrasenaPage implements OnInit {
   public form: FormGroup;
   public email: any;
 
-  constructor( private formBuilder: FormBuilder,
-               private modalCtrl: ModalController,
-               private utilities: UtilitiesService,
-               private api: ApiService ) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private modalCtrl: ModalController,
+    private utilities: UtilitiesService,
+    private api: ApiService,
+    private translateService: TranslateConfigService,
+    private cookSvc: CookieService
+  ) { }
 
   ngOnInit() {
 
@@ -42,7 +49,7 @@ export class OlvidarContrasenaPage implements OnInit {
     await this.utilities.showLoading();
     const email = this.form.get('email').value
     try {
-      let resp = await this.api.recuperarContraseña(email);
+      let resp = await this.api.recuperarContraseña( email, ILangDEFAULTS.getLangDEFAULT( this.cookSvc ).lang );
       console.log(resp);
       
       this.utilities.showToast(resp['status']);
