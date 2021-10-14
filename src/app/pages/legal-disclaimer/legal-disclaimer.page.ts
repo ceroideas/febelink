@@ -11,13 +11,26 @@ import { ModalController } from '@ionic/angular';
 })
 export class LegalDisclaimerPage implements OnInit {
 
+  currentYear = new Date().getFullYear();
+
   constructor(
     private location: Location
     , private router: Router
     , private modalCtrl: ModalController
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.setClickPrivacyPolicy( document.getElementById( 'openprivacypolicy1' ));
+    this.setClickPrivacyPolicy( document.getElementById( 'openprivacypolicy2' ));
+  }
+
+  setClickPrivacyPolicy( el) {
+    if( el )
+      el.addEventListener('click', ( e ) => this.openPrivacyPolicy() );
+    else
+      console.log( 'can`t recept clicks to open privacy policy' );
   }
 
   public goBack(): void {
