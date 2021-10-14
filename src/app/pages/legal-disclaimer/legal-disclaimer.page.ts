@@ -40,6 +40,10 @@ export class LegalDisclaimerPage implements OnInit {
 
   async openPrivacyPolicy() {
     this.router.navigate(['privacy-policy']);
+
+    // Agregué esta linea porque sino cuando abría
+    // Las Politicas de Privacidad quedaba por detras
+    this.goBack();
   }
 
 }
