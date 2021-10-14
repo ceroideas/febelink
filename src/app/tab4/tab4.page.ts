@@ -362,6 +362,9 @@ hideShowPassword() {
                                     this.dniPrevio = p.dni;
                                     this.utilities.saveUserData(res.user);
                                     this.utilities.dismissLoading();
+
+                                    // Para actualizar la imagen en el menú cuando haya seleccionado en perfil
+                                    ( document.getElementById( 'menuImg' ) as HTMLImageElement ).src = this.base64img;
                                 },
                                 (err) => {
                                     if (err.status === 422) {
@@ -488,6 +491,9 @@ hideShowPassword() {
                                     this.emailPrevio = p.email;
                                     this.utilities.saveUserData(res.user);
                                     this.utilities.dismissLoading();
+
+                                    // Para actualizar la imagen en el menú cuando haya seleccionado en perfil
+                                    ( document.getElementById( 'menuImg' ) as HTMLImageElement ).src = this.base64img;
                                 },
                                 (err) => {
                                     if (err.status === 422) {
