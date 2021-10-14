@@ -13,10 +13,7 @@ import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LangPopComponent } from 'src/app/components/langs/popover/pop.component';
 
 @NgModule({
-  declarations: [
-      RegistroPage
-    , LangBtnComponent
-    , LangPopComponent ],
+  declarations: [RegistroPage, LangBtnComponent, LangPopComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,10 +23,6 @@ import { LangPopComponent } from 'src/app/components/langs/popover/pop.component
     ComponentsModule,
     TranslateModule.forChild(),
   ],
-  exports: [
-      TranslateModule
-    , LangBtnComponent
-    , LangPopComponent
-  ]
+  exports: [TranslateModule, LangBtnComponent, LangPopComponent],
 })
 export class RegistroPageModule {}

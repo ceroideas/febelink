@@ -40,7 +40,7 @@
             "confirm": "Confirm",
             "back": "Back",
             "cancel": "Cancel",
-            "send": "Enviar"
+            "send": "Send"
         },
 
         "address": {
@@ -215,6 +215,28 @@
             "button": "REGISTER",
             "or": "OR",
             "continueWith": "Continue with "
+        },
+        "login": {
+            "title": "Log in",
+            "forgotPass": "Forgot your password?",
+            "rememberPass": "Remember now",
+            "button": "LOG IN",
+            "newUser": "New user?",
+            "register": "Create Account",
+            "logging": "Logging in...",
+
+            "recover": {
+                "title": "Recover password",
+                "subtitle": "Enter the email to recover the password"
+            },
+
+            "errors": {
+                "title": "Failed to login",
+                "message": "There was an error logging in. Try again later",
+
+                "data": "The data entered is not correct",
+                "email": "The format of the email entered is not correct"
+            }
         }
     },
     "toast": {

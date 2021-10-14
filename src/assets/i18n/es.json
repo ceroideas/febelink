@@ -216,6 +216,28 @@
             "button": "REGISTRARSE",
             "or": "Ó",
             "continueWith": "Continuar con "
+        },
+        "login": {
+            "title": "Iniciar sesión",
+            "forgotPass": "¿Olvidaste tu contraseña?",
+            "rememberPass": "Recordar ahora",
+            "button": "INICIAR SESIÓN",
+            "newUser": "¿Nuevo usuario?",
+            "register": "Crear cuenta",
+            "loging": "Iniciando sesión...",
+
+            "recover": {
+                "title": "Recuperar contraseña",
+                "subtitle": "Introduce el email para recuperar la contraseña"
+            },
+
+            "errors": {
+                "title": "Error al iniciar sesión",
+                "message": "Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde",
+
+                "data": "Los datos introducidos no son correctos",
+                "email": "El formato del email introducido no es correcto"
+            }
         }
     },
     "toast": {

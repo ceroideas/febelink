@@ -1,8 +1,12 @@
 <ion-content>
   <div class="cover-content">
-    <img src="assets/imgs/logo.png" alt="logo" />
-    <div class="slogan">El buscador de servicios profesionales</div>
-    <h2 class="title">Iniciar sesión</h2>
+    <div class="logo">
+      <img src="assets/imgs/logo.png" alt="logo" />
+      <app-lang-btn (onLangSelected)="onLangSelected( $event )"></app-lang-btn>
+    </div>
+
+    <div class="slogan">{{ 'common.slogan' | translate }}</div>
+    <h2 class="title">{{ 'pages.login.title' | translate }}</h2>
     <form
       *ngIf="form"
       [formGroup]="form"
@@ -15,7 +19,7 @@
         </ion-label>
         <ion-input
           type="email"
-          placeholder="Email"
+          placeholder="{{ 'common.labelEmail' | translate }}"
           formControlName="email"
           required
         ></ion-input>
@@ -33,22 +37,25 @@
         <ion-input
           (key.enter)="submitForm()"
           [type]="passwordType"
-          placeholder="Contraseña"
+          placeholder="{{ 'common.personal.pass' | translate }}"
           formControlName="password"
           required
         ></ion-input>
       </ion-item>
-      ¿Olvidaste tu contraseña?<a (click)="openModal()"
-        ><i class="fa fa-eye"></i> Recordar ahora</a
-      ><br />
+      
+      {{ 'pages.login.forgotPass' | translate }}
+      <a (click)="openModal()" style="cursor: pointer;">
+        <i class="fa fa-eye"></i> {{ 'pages.login.rememberPass' | translate }}
+      </a>
+      <br />
+
       <ion-button
         expand="block"
         type="submit"
         [disabled]="!form.valid"
         ion-button
-        color="febelink"
-      >
-        INICIAR SESIÓN
+        color="febelink" >
+        {{ 'pages.login.button' | translate }}
       </ion-button>
       <social-login [redirect]="redirect"></social-login>
     </form>
@@ -57,12 +64,12 @@
     </div>
   </div>
   <div class="cover-content newAccountBox">
-    <ion-label>¿Nuevo usuario?</ion-label>
-    <ion-button color="success" (click)="openRegistro()"
-      >Crear cuenta</ion-button
-    >
+    <ion-label>{{ 'pages.login.newUser' | translate }}</ion-label>
+    <ion-button color="success" (click)="openRegistro()">
+      {{ 'pages.login.register' | translate }}
+    </ion-button>
   </div>
   <div class="cover-overlay">
-    <a href="mailto:info@febelink.com">Contacta con Febelink</a>
+    <a href="mailto:info@febelink.com">{{ 'common.contactUs' | translate }}</a>
   </div>
 </ion-content>
