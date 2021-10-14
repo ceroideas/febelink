@@ -126,7 +126,6 @@
             "buttonDisable": "Disable",
             "labelDisableConfirmed": "Account disabled successfully",
             "done": "Changes done successfully",
-
             "valuation": {
                 "from": ", from Febelink wants you to give them an evaluation of their profile!",
                 "recommendation": " from Febelink wants you to recommend their profile!",
@@ -134,7 +133,6 @@
                 "notif": "A notification has been sent to the user",
                 "noMailuser": "There is no user with that email"
             },
-
             "errors": {
                 "title": "Error editing data",
                 "message": "The following errors occurred: ",
@@ -162,7 +160,6 @@
                 "limitSelectSectors_1": "You can only select ",
                 "limitSelectSectors_2": " sectors with your current subscription"
             },
-
             "alerts": {
                 "improve": "Improve your profile",
 
@@ -172,6 +169,11 @@
 
                 "recommendation": "Ask for a recommendation",
                 "mail": "Write the user's email"
+            },
+            "search": {
+                "of": " in ",
+                "title": "The 10 best {{ subsector }}{{ provincia }}",
+                "descript": "At Febelink you have the best professionals in your area so that you can speak directly to them for free, quickly and easily."
             }
         }
     },

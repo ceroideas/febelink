@@ -127,7 +127,6 @@
             "buttonDisable": "Deshabilitar",
             "labelDisableConfirmed": "Cuenta deshabilitada con éxito",
             "done": "Se han producido los cambios correctamente",
-
             "valuation": {
                 "from": ", de Febelink quiere que le des una valoración de su perfil!",
                 "recommendation": " de Febelink quiere que recomiendes su perfil!",
@@ -135,7 +134,6 @@
                 "notif": "Se ha enviado una notificación al usuario",
                 "noMailuser": "No existe un usuario con ese email"
             },
-
             "errors": {
                 "title": "Error al editar los datos",
                 "message": "Ocurrieron los siguientes errores: ",
@@ -163,7 +161,6 @@
                 "limitSelectSectors_1": "Solo puedes seleccionar ",
                 "limitSelectSectors_2": " sectores con tu suscripción actual"
             },
-
             "alerts": {
                 "improve": "Mejora tu perfil",
 
@@ -173,6 +170,11 @@
 
                 "recommendation": "Pedir Recomendación",
                 "mail": "Escribe el email de un usuario"
+            },
+            "search": {
+                "of": " de ",
+                "title": "Los 10 mejores {{ subsector }}{{ provincia }}",
+                "descript": "En Febelink tienes los mejores profesionales de tu zona para que hables directamente con ellos de forma gratuita, rápida y sencilla."
             }
         }
     },
