@@ -55,7 +55,7 @@
         <ion-col size="6">
           <ion-slides>
             <ion-slide>
-              <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
+              <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" (error)="handleImgError( $event )" />
               <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
             </ion-slide>
           </ion-slides>

@@ -3,47 +3,56 @@ import { TranslateService } from '@ngx-translate/core';
 import { supportedLanguages } from 'src/utils/utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TranslateConfigService {
+  constructor(private translateService: TranslateService) {}
 
-  constructor(private translateService: TranslateService) { }
+  getDefaultLanguage() {
+    let language = this.translateService.getBrowserLang();
 
-    getDefaultLanguage(){
-        let language = this.translateService.getBrowserLang();
-
-        if (!supportedLanguages().includes(language)) {
-            language = 'en';
-        }
-
-        this.translateService.setDefaultLang(language);
-        return language;
+    if (!supportedLanguages().includes(language)) {
+      language = 'en';
     }
 
-    getCurrentLanguage() {
-        return this.translateService.currentLang;
-    }
+    this.translateService.setDefaultLang(language);
+    return language;
+  }
 
-    setLanguage(language: string) {
-        this.translateService.use(language);
-    }
+  getCurrentLanguage() {
+    return this.translateService.currentLang;
+  }
 
-    // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
-    setCurrentLang( language: string ) {
-        this.translateService.currentLang = language;
-    }
+  setLanguage(language: string) {
+    this.translateService.use(language);
+  }
 
-    instant( key : string ): string {
-        return this.translateService.instant( key );
-    }
+  // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
+  setCurrentLang(language: string) {
+    this.translateService.currentLang = language;
+  }
 
-    get( key : string, interpolateParams?: Object,
-            next?: ( text: string ) => void,
-            error?: ( error: any ) => void,
-            complete?: () => void ) {
-        this.translateService.get( key, interpolateParams ).subscribe(
-            ( text: string ) => { if( next ) next( text ); },
-            ( error: any ) => { if( error ) error( error ); },
-            () => { if( complete ) complete(); });
-    }
+  instant(key: string): string {
+    return this.translateService.instant(key);
+  }
+
+  get(
+    key: string,
+    interpolateParams?: Object,
+    next?: (text: string) => void,
+    error?: (error: any) => void,
+    complete?: () => void
+  ) {
+    this.translateService.get(key, interpolateParams).subscribe(
+      (text: string) => {
+        if (next) next(text);
+      },
+      (error: any) => {
+        if (error) error(error);
+      },
+      () => {
+        if (complete) complete();
+      }
+    );
+  }
 }

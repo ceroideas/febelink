@@ -33,6 +33,7 @@
             "pass": "Contraseña",
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
+            "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "id": "DNI (con letra)"
         },
 
@@ -118,7 +119,59 @@
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
             "labelOpinions": "Opiniones",
-            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil"
+            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil",
+            "labelDisable": "Deshabilitar cuenta",
+            "labelDisableConfirm": "¿Estás seguro de que deseas deshabilitar tu cuenta?",
+            "buttonDisable": "Deshabilitar",
+            "labelDisableConfirmed": "Cuenta deshabilitada con éxito",
+            "done": "Se han producido los cambios correctamente",
+
+            "valuation": {
+                "from": ", de Febelink quiere que le des una valoración de su perfil!",
+                "recommendation": " de Febelink quiere que recomiendes su perfil!",
+                "panel": "Ve a su panel para ver sus valoraciones!",
+                "notif": "Se ha enviado una notificación al usuario",
+                "noMailuser": "No existe un usuario con ese email"
+            },
+
+            "errors": {
+                "title": "Error al editar los datos",
+                "message": "Ocurrieron los siguientes errores: ",
+                "messageChk": "Comprueba que todos los campos están introducidos.",
+
+                "name": "El nombre tiene que tener al menos 3 caracteres",
+
+                "passMatch": "Introduce correctamente la confirmación de contraseña",
+
+                "mail": "El correo no es válido",
+                "mailExists": "El email que has introducido ya existe",
+                "mailEmpty": "El campo email no puede estar vacío",
+
+                "phone": "El formato del teléfono no es correcto",
+
+                "id": "El DNI/NIE/CIF que has introducido no es válido",
+                "idFormat": "El formato del DNI/NIE/CIF no es correcto",
+
+                "image": "Error al obtener imagen",
+                "imageMaxSize": "Imágen demasiado grande, max. 300KB",
+
+                "noFileSelected": "No has seleccionado archivo.",
+                "noFileProvided": "No has provisto archivo",
+
+                "limitSelectSectors_1": "Solo puedes seleccionar ",
+                "limitSelectSectors_2": " sectores con tu suscripción actual"
+            },
+
+            "alerts": {
+                "improve": "Mejora tu perfil",
+
+                "chooseShare": "Elige donde quieres compartir",
+                "shareInside": "Dentro de la aplicación",
+                "shareOutside": "Fuera de la aplicación",
+
+                "recommendation": "Pedir Recomendación",
+                "mail": "Escribe el email de un usuario"
+            }
         }
     },
     "pages": {
