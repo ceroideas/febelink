@@ -2,13 +2,13 @@
   <ion-toolbar color="febelink">
     <p style="margin-bottom: 0px">
       © {{ currentYear }} Febelink |
-      <span class="terms-text" (click)="termsModal()"
-        >Terminos y condiciones</span
-      > |
+      <span class="terms-text" (click)="termsModal()">
+        {{ 'common.legal.condsNterms' | translate }}
+      </span > |
       <span class="terms-text" (click)="openLegalDisclaimer()">
-        Aviso legal
+        {{ 'common.legal.warning' | translate }}
       </span>
     </p>
-    <p style="margin-top: 5px">Contacto: info@febelink.com</p>
+    <p style="margin-top: 5px">{{ 'common.contact' | translate }}: info@febelink.com</p>
   </ion-toolbar>
 </ion-footer>

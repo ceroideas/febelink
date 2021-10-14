@@ -21,6 +21,7 @@ import { Storage } from '@ionic/storage';
 import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
 import { TermsPage } from '../pages/terms/terms.page';
 import { environment } from 'src/environments/environment';
+import { TranslateConfigService } from '../services/translate/translate-config.service';
 
 
 @Component({
@@ -81,7 +82,8 @@ export class Tab4Page {
     private socialSharing: SocialSharing,
     public popoverController: PopoverController,
     private actionSheet: ActionSheetController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translateService: TranslateConfigService
 ) {
     if (this.platform.is('cordova')) {
         this.isNative = true;
@@ -125,7 +127,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
     }
 }
 
-hideShowPassword() {
+  hideShowPassword() {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
@@ -357,7 +359,7 @@ hideShowPassword() {
                                     var dniinput = document.getElementById('dninie') as HTMLInputElement;
                                     dniinput.value=res.user.dni;
                                     this.utilities.showToast(
-                                        'Se han producido los cambios correctamente'
+                                        this.translateService.instant("tabs.tab4.done")
                                     );
                                     this.dniPrevio = p.dni;
                                     this.utilities.saveUserData(res.user);
@@ -370,18 +372,18 @@ hideShowPassword() {
                                     if (err.status === 422) {
                                         let arrayErrores = [];
                                         if(err.error.nombre == false){
-                                            arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.name") );
                                         }
                                         if(err.error.email == false){
-                                            arrayErrores.push("El correo no es válido");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.mail") );
                                         }
                                         //Check phone number
                                         if(err.error.vTelefono == false){
-                                            arrayErrores.push("El formato del teléfono no es correcto");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.phone") );
                                         }
                                         //Check DNI
                                         if(err.error.vDNI == false){
-                                            arrayErrores.push("El formato del DNI/NIE/CIF no es correcto");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.idFormat") );
                                         }
                                         
                                         //Show all the errors
@@ -394,13 +396,13 @@ hideShowPassword() {
                                         cadenaErrores += `</ul>`;
         
                                         this.utilities.showAlert(
-                                            'Error al editar los datos',
-                                            `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                                            this.translateService.instant("tabs.tab4.errors.title"),
+                                            this.translateService.instant("tabs.tab4.errors.message") + cadenaErrores
                                         );
                                     } else {
                                         this.utilities.showAlert(
-                                            'Error al editar los datos',
-                                            'Comprueba que todos los campos están introducidos.'
+                                            this.translateService.instant("tabs.tab4.errors.title"),
+                                            this.translateService.instant("tabs.tab4.errors.messageChk")
                                         );
                                     }
                                 this.utilities.dismissLoading();
@@ -411,7 +413,7 @@ hideShowPassword() {
         
                             else{
                                 this.utilities.showToast(
-                                    'El DNI/NIE/CIF que has introducido no es válido'
+                                    this.translateService.instant("tabs.tab4.errors.id")
                                 );
                                 this.form.controls.dni.setValue(this.dniPrevio);
                             }
@@ -422,7 +424,7 @@ hideShowPassword() {
 
                     else{
                         this.utilities.showToast(
-                            'El email que has introducido ya existe'
+                            this.translateService.instant("tabs.tab4.errors.mailExists")
                         );
                         this.form.controls.email.setValue(this.emailPrevio);
                     }
@@ -430,7 +432,7 @@ hideShowPassword() {
                 (err) =>{
                     if(p.email == ''){
                         this.utilities.showToast(
-                            'El campo email no puede estar vacío'
+                            this.translateService.instant("tabs.tab4.errors.mailEmpty")
                         );
                         this.form.controls.email.setValue(this.emailPrevio);
                     }
@@ -439,7 +441,7 @@ hideShowPassword() {
 
             } else {
                 this.utilities.showToast(
-                    'Introduce correctamente la confirmación de contraseña'
+                    this.translateService.instant("tabs.tab4.errors.passMatch")
                 );
             }
 
@@ -485,7 +487,7 @@ hideShowPassword() {
                                     var dniinput = document.getElementById('dninie') as HTMLInputElement;
                                     dniinput.value=res.user.dni;
                                     this.utilities.showToast(
-                                        'Se han producido los cambios correctamente'
+                                        this.translateService.instant("tabs.tab4.done")
                                     );
                                     this.dniPrevio = p.dni;
                                     this.emailPrevio = p.email;
@@ -499,18 +501,18 @@ hideShowPassword() {
                                     if (err.status === 422) {
                                         let arrayErrores = [];
                                         if(err.error.nombre == false){
-                                            arrayErrores.push("El nombre tiene que tener al menos 3 caracteres");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.name") );
                                         }
                                         if(err.error.email == false){
-                                            arrayErrores.push("El correo no es válido");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.mail") );
                                         }
                                         //Check phone number
                                         if(err.error.vTelefono == false){
-                                            arrayErrores.push("El formato del teléfono no es correcto");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.phone") );
                                         }
                                         //Check DNI
                                         if(err.error.vDNI == false){
-                                            arrayErrores.push("El formato del DNI/NIE/CIF no es correcto");
+                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.idFormat") );
                                         }
                                         
                                         //Show all the errors
@@ -523,13 +525,13 @@ hideShowPassword() {
                                         cadenaErrores += `</ul>`;
         
                                         this.utilities.showAlert(
-                                            'Error al editar los datos',
-                                            `Ocurrieron los siguientes errores: ${cadenaErrores}`
+                                            this.translateService.instant("tabs.tab4.errors.title"),
+                                            this.translateService.instant("tabs.tab4.errors.message") + cadenaErrores
                                         );
                                     } else {
                                         this.utilities.showAlert(
-                                            'Error al editar los datos',
-                                            'Comprueba que todos los campos están introducidos.'
+                                            this.translateService.instant("tabs.tab4.errors.title"),
+                                            this.translateService.instant("tabs.tab4.errors.messageChk")
                                         );
                                     }
                                     //this.utilities.showAlert('Error al editar los datos', 'Comprueba que todos los campos están introducidos.');
@@ -541,7 +543,7 @@ hideShowPassword() {
 
                         else{
                             this.utilities.showToast(
-                                'El DNI/NIE/CIF que has introducido no es válido'
+                                this.translateService.instant("tabs.tab4.errors.id")
                             );
                             this.form.controls.dni.setValue(this.dniPrevio);
                         }
@@ -552,7 +554,7 @@ hideShowPassword() {
 
                 else{
                     this.utilities.showToast(
-                        'El email que has introducido ya existe'
+                        this.translateService.instant("tabs.tab4.errors.mailExists")
                     );
                     this.form.controls.email.setValue(this.emailPrevio);
                 }
@@ -561,7 +563,7 @@ hideShowPassword() {
             (err) => {
                 if(p.email == ''){
                     this.utilities.showToast(
-                        'El campo email no puede estar vacío'
+                        this.translateService.instant("tabs.tab4.errors.mailEmpty")
                     );
                     this.form.controls.email.setValue(this.emailPrevio);
                 }
@@ -594,9 +596,9 @@ hideShowPassword() {
                 this.sectoresPerfil = [];
                 this.sectoresPerfil = firstThree;
                 this.showSubscription(
-                    'Solo puedes seleccionar ' +
+                    this.translateService.instant("tabs.tab4.errors.limitSelectSectors_1") +
                     this.subscription_details.max_families +
-                    ' sectores con tu suscripción actual'
+                    this.translateService.instant("tabs.tab4.errors.limitSelectSectors_2")
                 );
             }
         }
@@ -623,9 +625,9 @@ hideShowPassword() {
                 this.subSectoresPerfil = [];
                 this.subSectoresPerfil = firstThree;
                 this.showSubscription(
-                    'Solo puedes seleccionar ' +
+                    this.translateService.instant("tabs.tab4.errors.limitSelectSectors_1") +
                     this.subscription_details.max_subfamilies +
-                    ' subsectores con tu suscripción actual'
+                    this.translateService.instant("tabs.tab4.errors.limitSelectSectors_2")
                 );
             }
         }
@@ -659,7 +661,8 @@ hideShowPassword() {
                 this.base64img = 'data:image/jpeg;base64,' + urlFoto;
             })
             .catch((error) => {
-                this.utilities.showAlert('Error al obtener imagen', error);
+                this.utilities.showAlert(
+                    this.translateService.instant("tabs.tab4.errors.image"), error);
         });
     }
 
@@ -670,13 +673,14 @@ hideShowPassword() {
             );
 
             if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
-                reject('No file selected.');
+                reject( this.translateService.instant("tabs.tab4.errors.noFileSelected"));
                 return;
             }
             const myFile = filePicker.files[0];
 
             if (myFile.size > 307200) {
-                this.utilities.showToast('Imágen demasiado grande, max. 300KB');
+                this.utilities.showToast(
+                    this.translateService.instant("tabs.tab4.errors.imageMaxSize"));
                 //reject('Image is too big (max. 300KB)');
                 return;
             }
@@ -706,22 +710,22 @@ hideShowPassword() {
                     reject(error);
                 };
             } else {
-                reject('No file provided');
+                reject( this.translateService.instant("tabs.tab4.errors.noFileProvided"));
             }
         });
     }
 
     async showSubscription(alert_message) {
         let alert = await this.alertCtrl.create({
-            header: 'Mejora tu perfil',
+            header: this.translateService.instant("tabs.tab4.alerts.improve"),
             message: alert_message,
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: this.translateService.instant("common.buttons.cancel"),
                     role: 'cancel',
                 },
                 {
-                    text: 'Suscribirse',
+                    text: this.translateService.instant("common.labelSubsribe"),
                     handler: async () => {
                         const suscribirseModal = await this.modalCtrl.create({
                             component: SuscribirsePage,
@@ -750,15 +754,15 @@ hideShowPassword() {
     async suspended_profile() {
 
         let alert = await this.alertCtrl.create({
-            header: 'Deshabilitar cuenta',
-            message: '¿Estás seguro de que deseas deshabilitar tu cuenta?',
+            header: this.translateService.instant('tabs.tab4.labelDisable'),
+            message: this.translateService.instant('tabs.tab4.labelDisableConfirm'),
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: this.translateService.instant('common.buttons.cancel'),
                     role: 'cancel',
                 },
                 {
-                    text: 'Deshabilitar',
+                    text: this.translateService.instant('tabs.tab4.buttonDisable'),
                     handler: () => {
 
                         this.setSuspendedUser(this.perfil.id);
@@ -767,7 +771,7 @@ hideShowPassword() {
                             this.api.refreshTabs();
                             this.router.navigate(['menu/todas']);
                             //this.router.navigateByUrl('menu/todas');
-                            this.utilities.showToast('Cuenta deshabilitada con éxito');
+                            this.utilities.showToast(this.translateService.instant('tabs.tab4.labelDisableConfirmed'));
                         });
                     },
                 },
@@ -883,17 +887,17 @@ hideShowPassword() {
      */
     async recommend(ev: any) {
         const actionSheet = await this.actionSheet.create({
-            header: 'Elige donde quieres compartir',
+            header: this.translateService.instant("tabs.tab4.alerts.chooseShare"),
             buttons: [
                 {
-                    text: 'Dentro de la aplicación',
+                    text: this.translateService.instant("tabs.tab4.alerts.shareInside"),
                     role: 'destructive',
                     handler: () => {
                         this.recomendacionAlert();
                     },
                 },
                 {
-                    text: 'Fuera de la aplicación',
+                    text: this.translateService.instant("tabs.tab4.alerts.shareOutside"),
                     handler: () => {
                         if (this.platform.is('cordova')) {
                             this.shareProfileNative();
@@ -912,22 +916,22 @@ hideShowPassword() {
      */
     async recomendacionAlert() {
         let alert = await this.alertCtrl.create({
-            header: 'Pedir Recomendación',
-            subHeader: 'Escribe el email de un usuario',
+            header: this.translateService.instant("tabs.tab4.alerts.recommendation"),
+            subHeader: this.translateService.instant("tabs.tab4.alerts.mail"),
             inputs: [
                 {
                     name: 'email',
-                    placeholder: 'Email',
+                    placeholder: this.translateService.instant("common.labelEmail"),
                 },
             ],
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: this.translateService.instant("common.buttons.cancel"),
                     handler: (data) => {
                     },
                 },
                 {
-                    text: 'Enviar',
+                    text: this.translateService.instant("common.buttons.send"),
                     handler: (data) => {
                         this.enviarRecomendacion(data.email);
                     },
@@ -949,7 +953,7 @@ hideShowPassword() {
 
         let subject =
             this.perfil.name +
-            ', de Febelink quiere que le des una valoración de su perfil!';
+            this.translateService.instant("tabs.tab4.errors.valorationFrom");
         let url = 'https://febelink.com/perfil/' + this.perfil.reference;
         let message = 'Febelink \n' + subject + ' \n';
 
@@ -968,7 +972,7 @@ hideShowPassword() {
 
         let subject =
             this.perfil.name +
-            ', de Febelink quiere que le des una valoración de su perfil!';
+            this.translateService.instant("tabs.tab4.valuation.from");
         let url = 'https://febelink.com/perfil/' + this.perfil.reference;
         let message = 'Febelink \n' + subject + ' \n';
 
@@ -1001,16 +1005,17 @@ hideShowPassword() {
         (await this.api.existeUsuario(name)).subscribe(async (value) => {
             if (value) {
                 let title =
-                    this.perfil.name + ' de Febelink quiere que recomiendes su perfil!';
-                let desc = 'Ve a su panel para ver sus valoraciones!';
+                    this.perfil.name +
+                    this.translateService.instant("tabs.tab4.valuation.recommendation");
+                let desc = this.translateService.instant("tabs.tab4.valuation.panel");
 
                 (
                     await this.api.enviarNotificacionPedirRecomendacion(title, desc, name)
                 ).subscribe((resp) => {
-                    this.utilities.showToast('Se ha enviado una notificación al usuario');
+                    this.utilities.showToast( this.translateService.instant("tabs.tab4.valuation.notif" ));
                 });
             } else {
-                this.utilities.showToast('No existe un usuario con ese email');
+                this.utilities.showToast( this.translateService.instant("tabs.tab4.valuation.noMailuser" ));
             }
             this.utilities.dismissLoading();
         });
