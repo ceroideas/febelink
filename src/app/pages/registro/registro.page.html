@@ -1,8 +1,12 @@
 <ion-content>
   <div class="cover-content">
-    <img src="assets/imgs/logo.png" alt="logo" />
-    <div class="slogan">El buscador de servicios profesionales</div>
-    <p class="title">Crea tu cuenta gratuita</p>
+    <div class="logo">
+      <img src="assets/imgs/logo.png" alt="logo" />
+      <app-lang-btn (onLangSelected)="onLangSelected( $event )"></app-lang-btn>
+    </div>
+
+    <div class="slogan">{{ 'common.slogan' | translate }}</div>
+    <p class="title">{{ 'pages.registro.title' | translate }}</p>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
       <ion-item class="input ion-no-padding">
         <ion-label>
@@ -12,7 +16,7 @@
           clearInput
           type="text"
           formControlName="name"
-          placeholder="Nombre de usuario"
+          placeholder="{{ 'pages.registro.userName' | translate }}"
           required
         >
         </ion-input>
@@ -55,7 +59,7 @@
           clearInput
           type="email"
           formControlName="email"
-          placeholder="Email"
+          placeholder="{{ 'common.labelEmail' | translate }}"
           required
         ></ion-input>
       </ion-item>
@@ -73,7 +77,7 @@
           clearInput
           [type]="passwordType"
           formControlName="password"
-          placeholder="Contraseña"
+          placeholder="{{ 'common.personal.pass' | translate }}"
           required
         >
         </ion-input>
@@ -92,7 +96,7 @@
           clearInput
           [type]="passwordType2"
           formControlName="confirmPassword"
-          placeholder="Confirmar contraseña"
+          placeholder="{{ 'pages.registro.confirmPass' | translate }}"
           required
         ></ion-input>
       </ion-item>
@@ -102,19 +106,20 @@
           slot="start"
           formControlName="privacyConditions"
         ></ion-checkbox>
-        He leído, y acepto la
-        <a (click)="openPrivacyPolicy()">política de privacidad</a>
-        y las
-        <a (click)="openUseConditions()">condiciones generales de uso</a>
+        {{ 'pages.registro.cond1' | translate }}
+        <a (click)="openPrivacyPolicy()">{{ 'pages.registro.cond2' | translate }}</a>
+          <br>
+        {{ 'pages.registro.cond3' | translate }}
+        <a (click)="openUseConditions()">{{ 'pages.registro.cond4' | translate }}</a>
       </span>
 
-      <ion-button expand="full" type="submit" ion-button color="febelink"
-        >REGISTRARSE</ion-button
-      >
+      <ion-button expand="full" type="submit" ion-button color="febelink">
+        {{ 'pages.registro.button' | translate }}
+      </ion-button>
       <social-login firstLogin="true" [redirect]="redirect"></social-login>
     </form>
   </div>
   <div class="cover-overlay">
-    <a href="mailto:info@febelink.com">Contacta con Febelink</a>
+    <a href="mailto:info@febelink.com">{{ 'common.contactUs' | translate }}</a>
   </div>
 </ion-content>
