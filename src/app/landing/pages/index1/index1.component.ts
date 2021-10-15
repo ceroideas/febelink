@@ -8,7 +8,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { SeoService } from 'src/app/services/seo.service';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { PopoverController } from '@ionic/angular';
-import { CookieService } from "ngx-cookie-service";
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 export interface xTimer {
   szMs: string;
@@ -49,7 +49,7 @@ export class Index1Component implements OnInit {
     private router: Router,
     private seoSvc:SeoService,
     public popoverController: PopoverController,
-    private cookSrv: CookieService,
+    private translateService: TranslateConfigService,
   ) { }
 
   navExtras: NavigationExtras;
@@ -76,7 +76,7 @@ export class Index1Component implements OnInit {
     })
 
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSrv );
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   // Destruimos cuando finaliza el contador
