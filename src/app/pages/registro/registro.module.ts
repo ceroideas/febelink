@@ -9,11 +9,10 @@ import { RegistroPageRoutingModule } from './registro-routing.module';
 import { RegistroPage } from './registro.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
-import { LangPopComponent } from 'src/app/components/langs/popover/pop.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [RegistroPage, LangBtnComponent, LangPopComponent],
+  declarations: [RegistroPage],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,7 +21,8 @@ import { LangPopComponent } from 'src/app/components/langs/popover/pop.component
     RegistroPageRoutingModule,
     ComponentsModule,
     TranslateModule.forChild(),
+    SharedModule,
   ],
-  exports: [TranslateModule, LangBtnComponent, LangPopComponent],
+  exports: [TranslateModule],
 })
 export class RegistroPageModule {}

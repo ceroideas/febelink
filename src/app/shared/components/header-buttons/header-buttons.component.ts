@@ -19,12 +19,11 @@ import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.comp
   styleUrls: ['./header-buttons.component.scss'],
 })
 export class HeaderButtonsComponent implements OnInit {
-
   @Input() perfil: IUser;
-  @Input() currentTab:Tabs;
+  @Input() currentTab: Tabs;
   tabs = Tabs;
-  notifCount:number;
-  totalUnreadMessages:number;
+  notifCount: number;
+  totalUnreadMessages: number;
 
   constructor(
     private modalCtrl: ModalController,
@@ -35,25 +34,39 @@ export class HeaderButtonsComponent implements OnInit {
     public popoverController: PopoverController,
     private translateService: TranslateService,
     private utilities: UtilitiesService,
-    private notificationsSvc: NotificationService,
-    ) { }
+    private notificationsSvc: NotificationService
+  ) {}
 
   async ngOnInit() {
     //TODO: These subscribers are called multiple times because header component is in several pages. We should avoid this.
-    this.notificationsSvc.unreadNotificationsCount.pipe(filter(element => !!element)).subscribe(notifCount => {
-      this.notifCount = notifCount;
-      this.notificationsSvc.faviconNotification(this.notifCount, this.totalUnreadMessages);
-      this.notificationsSvc.titleNotification(this.notifCount, this.totalUnreadMessages);
-    })    
-    this.api.unreadChatMessages.subscribe(unreadMessages => {  
+    this.notificationsSvc.unreadNotificationsCount
+      .pipe(filter((element) => !!element))
+      .subscribe((notifCount) => {
+        this.notifCount = notifCount;
+        this.notificationsSvc.faviconNotification(
+          this.notifCount,
+          this.totalUnreadMessages
+        );
+        this.notificationsSvc.titleNotification(
+          this.notifCount,
+          this.totalUnreadMessages
+        );
+      });
+    this.api.unreadChatMessages.subscribe((unreadMessages) => {
       this.totalUnreadMessages = 0;
-      unreadMessages?.forEach(room => {
-        this.totalUnreadMessages = +room.unread
-      })
+      unreadMessages?.forEach((room) => {
+        this.totalUnreadMessages = +room.unread;
+      });
 
-    this.notificationsSvc.faviconNotification(this.notifCount, this.totalUnreadMessages);
-    this.notificationsSvc.titleNotification(this.notifCount, this.totalUnreadMessages);
-    })
+      this.notificationsSvc.faviconNotification(
+        this.notifCount,
+        this.totalUnreadMessages
+      );
+      this.notificationsSvc.titleNotification(
+        this.notifCount,
+        this.totalUnreadMessages
+      );
+    });
   }
 
   async openGuide() {
@@ -67,20 +80,17 @@ export class HeaderButtonsComponent implements OnInit {
   /**
    * Open YouTube popover
    */
-   async openYTguide() {
+  async openYTguide() {
     const popover = await this.popoverController.create({
       component: YouTubePopComponent,
       translucent: true,
       mode: 'md',
-      cssClass: 'pop-yt'
+      cssClass: 'pop-yt',
     });
     return await popover.present();
   }
 
-
-
   async irA(p: string): Promise<void> {
-
     this.router.navigate([p]);
 
     // if (p === '/menu/perfil') {
@@ -93,12 +103,12 @@ export class HeaderButtonsComponent implements OnInit {
     // }
   }
 
-  async shareFebelink(ev: any){
+  async shareFebelink(ev: any) {
     const currentUser: IUser = await this.utilities.getUserData();
-    const message = await this.translateService.instant("menu.tabs.share-msg");
-    let reference:string = "";
-    if(currentUser?.id) reference = 'user/'+currentUser.id
-    const url = environment.WEB_URL +  reference;
+    const message = await this.translateService.instant('menu.tabs.share-msg');
+    let reference: string = '';
+    if (currentUser?.id) reference = 'user/' + currentUser.id;
+    const url = environment.WEB_URL + reference;
     if (this.platform.is('cordova')) {
       this.shareNative(url, message);
     } else {
@@ -106,36 +116,36 @@ export class HeaderButtonsComponent implements OnInit {
     }
   }
 
-    /**
+  /**
    * Share Native ( Android/iOS)
    */
-     public shareNative(url:string, message:string, image?:string) {
-      this.socialSharing.share(message, message, image, url);
-    }
-  
-    /**
-     * Share Web
-     */
-    async shareWeb(ev: any, url:string, message:string, image?:string) {
-      const popover = await this.popoverController.create({
-        component: SharePopoverComponent,
-        event: ev,
-        translucent: true,
-        mode: 'ios',
-        componentProps: { url, title: 'Febelink', desc: message, image  },
-      });
-      return await popover.present();
-    }
+  public shareNative(url: string, message: string, image?: string) {
+    this.socialSharing.share(message, message, image, url);
+  }
 
-    /**
-     * 
-     */
-    
+  /**
+   * Share Web
+   */
+  async shareWeb(ev: any, url: string, message: string, image?: string) {
+    const popover = await this.popoverController.create({
+      component: SharePopoverComponent,
+      event: ev,
+      translucent: true,
+      mode: 'ios',
+      componentProps: { url, title: 'Febelink', desc: message, image },
+    });
+    return await popover.present();
+  }
+
+  /**
+   *
+   */
 }
 
-export enum Tabs{
+export enum Tabs {
   Search = 1,
   Recommend = 2,
   Chat = 3,
-  Profile = 4
+  Profile = 4,
+  ICO = 5,
 }

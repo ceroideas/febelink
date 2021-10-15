@@ -18,19 +18,14 @@ import { SafeHtmlPipe } from 'src/app/pipes/safehtml.pipe';
     FormsModule,
     IonicModule,
     LegalDisclaimerPageRoutingModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
   declarations: [
-      LegalDisclaimerPage
-    , TranslateModule
-    , TypeofPipe
-    , SafeHtmlPipe
-    , LegalPointComponent
+    LegalDisclaimerPage,
+    TypeofPipe,
+    SafeHtmlPipe,
+    LegalPointComponent,
   ],
-  exports: [
-      TypeofPipe
-    , SafeHtmlPipe
-    , LegalPointComponent
-  ]
+  exports: [TypeofPipe, SafeHtmlPipe, LegalPointComponent, TranslateModule],
 })
 export class LegalDisclaimerPageModule {}
