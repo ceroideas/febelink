@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-go-buy-tokens',
@@ -15,11 +15,11 @@ export class GoBuyTokensComponent {
 
   constructor(
         private router: Router
-      , private cookSvc: CookieService ) { }
+      , private translateService: TranslateConfigService ) { }
 
   ngOnInit() {
     this.lang = this.lang ? this.lang :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSvc ).lang;
+        ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
   }
 
   goBuyTokens(){

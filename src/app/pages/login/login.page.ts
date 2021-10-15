@@ -5,8 +5,6 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { CookieService } from 'ngx-cookie-service';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
@@ -30,7 +28,6 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private router: Router,
-    private cookSvc: CookieService,
     private activatedRoute:ActivatedRoute,
     private translateService: TranslateConfigService
   ) {}
@@ -44,7 +41,7 @@ export class LoginPage implements OnInit {
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
     
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   submitForm() {

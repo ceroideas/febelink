@@ -22,10 +22,7 @@ export class LangBtnComponent implements OnInit {
 
   ngOnInit() {
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
-
-      // Si no ejecuto esta linea el currentLang me lo deja en ingles
-      this.translateService.setCurrentLang( this.langSelected.lang );
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
 
