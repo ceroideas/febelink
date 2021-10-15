@@ -77,9 +77,14 @@ export class NotificationService {
     const count:number = notifCount + totalUnreadMessages;
 
     // Lo traigo al titulo que tiene asignado para a este añadirle el contador de notif
-    const title: string = this.utils.getWebTitle();
+    let title: string =  this.utils.getWebTitle();
+
     if (count) {
-      this.utils.updateWebTitle(`(${count}) ` + title);
+      // Para eliminar los contadores de notificaciones que pueda ya tener
+      // y luego añadirlo ( para evitar `(1)(1) Title` )
+      title = title.replace(/\([0-9]*\)/g, '');
+
+      this.utils.updateWebTitle( `(${count}) ` + title );
     } else {
       this.utils.updateWebTitle(title);
     }
