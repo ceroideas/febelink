@@ -15,9 +15,12 @@ export class WhitelistComponent {
   constructor(
     private api: ApiService,
     private utils: UtilitiesService,
-    private translateService: TranslateConfigService ) {}
+    private translateService: TranslateConfigService ) {
+      this.lang = this.lang ? this.lang :
+        ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    }
 
-  @Input() lang: string = ILangDEFAULTS.getLangDEFAULT().lang;
+  @Input() lang: string;
   response: any;
 
   async addEmailToWhitelist(emailField: any) {

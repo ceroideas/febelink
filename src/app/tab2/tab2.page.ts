@@ -55,11 +55,6 @@ export class Tab2Page {
     private seoSvc: SeoService,
     private cookSvc: CookieService
   ) {
-    // Para que capture el lang actual
-    this.translateService.setCurrentLang(
-      ILangDEFAULTS.getLangCOOKIE(this.cookSvc).lang
-    );
-
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
     });

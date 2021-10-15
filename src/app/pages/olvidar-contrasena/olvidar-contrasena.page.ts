@@ -4,7 +4,6 @@ import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { CookieService } from 'ngx-cookie-service';
 import { ILangDEFAULTS } from 'src/app/models/langs.model';
 
 @Component({
@@ -22,8 +21,7 @@ export class OlvidarContrasenaPage implements OnInit {
     private modalCtrl: ModalController,
     private utilities: UtilitiesService,
     private api: ApiService,
-    private translateService: TranslateConfigService,
-    private cookSvc: CookieService
+    private translateService: TranslateConfigService
   ) { }
 
   ngOnInit() {
@@ -49,7 +47,7 @@ export class OlvidarContrasenaPage implements OnInit {
     await this.utilities.showLoading();
     const email = this.form.get('email').value
     try {
-      let resp = await this.api.recuperarContraseña( email, ILangDEFAULTS.getLangDEFAULT( this.cookSvc ).lang );
+      let resp = await this.api.recuperarContraseña( email, ILangDEFAULTS.getCurrentLang( this.translateService ).lang );
       console.log(resp);
       
       this.utilities.showToast(resp['status']);

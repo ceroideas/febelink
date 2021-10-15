@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 import { LandingService } from '../../services/landing.service';
 import { UserDataFormComponent } from '../user-data-form/user-data-form.component';
-import { CookieService } from "ngx-cookie-service";
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-buy-tokens',
@@ -24,7 +24,7 @@ export class BuyTokensComponent implements OnInit {
     , private modalController: ModalController
     , private landingSvc:LandingService
     , private api:ApiService
-    , private cookSvc: CookieService
+    , private translateService: TranslateConfigService
   ) { }
     
   numTokens:number;
@@ -36,7 +36,7 @@ export class BuyTokensComponent implements OnInit {
     this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
     
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   async justLogged(){

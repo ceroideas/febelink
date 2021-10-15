@@ -64,7 +64,7 @@ export class RegistroPage implements OnInit {
     this.obtenerSectores();
     
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSvc );
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   hideShowPassword() {
