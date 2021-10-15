@@ -71,14 +71,10 @@ export class NotificationService {
   }
 
   titleNotification(
-    notifCount: UnreadNotificationsCount,
+    notifCount: number,
     totalUnreadMessages: number
   ) {
-    const count: number =
-      notifCount?.chats +
-      notifCount?.offers +
-      notifCount?.ratings +
-      totalUnreadMessages;
+    const count:number = notifCount + totalUnreadMessages;
 
     // Lo traigo al titulo que tiene asignado para a este añadirle el contador de notif
     const title: string = this.utils.getWebTitle();
