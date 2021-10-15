@@ -10,13 +10,15 @@ import { supportedLanguages } from 'src/utils/utils';
 export class TranslateConfigService {
   constructor(
     private translateService: TranslateService,
-    private cookSvc: CookieService
+    public cookSvc: CookieService
   ) {}
 
   getDefaultLanguage() {
-    let language = ILangDEFAULTS.getLangCOOKIE(this.cookSvc).lang;
-    // Si no tiene guardado Lang en Cookies, tomar del Browser
-    if (!language) language = this.translateService.getBrowserLang();
+    let language = this.translateService.getBrowserLang();
+
+    // Si tiene guardado Lang en Cookies, tomar de la selección
+    let lang = ILangDEFAULTS.getLangCOOKIE(this.cookSvc);
+    if( lang != null ) language = lang.lang;
 
     if (!supportedLanguages().includes(language)) {
       language = ILangDEFAULTS.enUK.lang;
@@ -33,12 +35,6 @@ export class TranslateConfigService {
   setLanguage(language: string) {
     this.translateService.use(language);
     this.translateService.currentLang = language;
-  }
-
-  // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
-  setCurrentLang(language: string) {
-    // ToDo: eliminar este método porque ya lo solucioné
-    // this.translateService.currentLang = language;
   }
 
   instant(key: string): string {
