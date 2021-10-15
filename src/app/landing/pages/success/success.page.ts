@@ -17,10 +17,7 @@ export class SuccessPage {
     private translateService: TranslateConfigService
   ) { }
 
-  ngOnInit() {
-      // Si no ejecuto esta linea el currentLang me lo deja en ingles
-      this.translateService.setCurrentLang( ILangDEFAULTS.getLangCOOKIE( this.cookSvc ).lang );
-  }
+  ngOnInit() { }
 
   back(){
     this.router.navigate(['token'])
