@@ -18,9 +18,16 @@ export interface IUser {
     created_at: string;
     updated_at: string;
     descripcion: string | null;
+    
     direccion: string | null;
     province_id: number;
     town_id: number | null;
+    country: string | null;
+    state: string | null;
+    department: string | null;
+    locality: string | null;
+    place_id: string | null;
+
     telefono: string | null;
     logo: string | null;
     dni: string | null;
