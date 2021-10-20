@@ -109,45 +109,10 @@
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
               <ion-input
-                clearInput
                 [value]="perfil?.direccion"
                 formControlName="direccion"
+                id="direccion_desktop"
               ></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-item class="input">
-              <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-              <ionic-selectable
-                item-content
-                [(ngModel)]="provincia"
-                formControlName="provincia"
-                itemValueField="id"
-                itemTextField="name"
-                [items]="provincias"
-                [canSearch]="true"
-                (onChange)="provinciasChange($event)"
-              >
-              </ionic-selectable>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item class="input">
-              <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-              <ionic-selectable
-                item-content
-                [(ngModel)]="localidad"
-                formControlName="localidad"
-                itemValueField="id"
-                itemTextField="name"
-                [items]="localidades"
-                [canSearch]="true"
-                (onChange)="localidadesChange($event)"
-              >
-              </ionic-selectable>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -283,37 +248,10 @@
         <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
           <ion-input
-            clearInput
+            [value]="perfil?.direccion"
             formControlName="direccion"
+            id="direccion_mobile"
           ></ion-input>
-        </ion-item>
-        <ion-item class="input">
-          <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-          <ionic-selectable
-            [(ngModel)]="provincia"
-            item-content
-            formControlName="provincia"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="provincias"
-            [canSearch]="true"
-            (onChange)="provinciasChange($event)"
-          >
-          </ionic-selectable>
-        </ion-item>
-        <ion-item class="input">
-          <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-          <ionic-selectable
-            [(ngModel)]="localidad"
-            item-content
-            formControlName="localidad"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="localidades"
-            [canSearch]="true"
-            (onChange)="localidadesChange($event)"
-          >
-          </ionic-selectable>
         </ion-item>
         <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelPhone' | translate }} </ion-label>

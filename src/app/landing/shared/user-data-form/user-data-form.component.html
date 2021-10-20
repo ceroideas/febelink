@@ -31,47 +31,11 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
-    <ion-row>
-      <ion-col size="12" size-sm="6">
-        <ion-item>
-          <ion-label position="floating">{{ 'common.address.state' | translate }}</ion-label>
-          <ionic-selectable
-            item-content
-            [(ngModel)]="provincia"
-            ngDefaultControl ngModel name="provincia"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="provincias"
-            [canSearch]="true"
-            (onChange)="provinciasChange($event)"
-          >
-          </ionic-selectable>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12" size-sm="6">
-        <ion-item>
-          <ion-label position="floating">{{ 'common.address.locality' | translate }}</ion-label>
-          <ionic-selectable
-            item-content
-            [(ngModel)]="localidad"
-            ngDefaultControl ngModel name="localidad"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="localidades"
-            [canSearch]="true"
-            (onChange)="localidadesChange($event)"
-          >
-          </ionic-selectable>
-        </ion-item> 
-      </ion-col>
-    </ion-row>
-
     <ion-row>
       <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating">{{ 'common.address.address' | translate }}</ion-label>
-          <ion-input type="text" name="address" [(ngModel)]="userData.address" ngDefaultControl ngModel maxlength="200" required></ion-input>
+          <ion-input id="address" type="text" name="address" [(ngModel)]="userData.address" ngDefaultControl ngModel maxlength="200" required></ion-input>
         </ion-item>
       </ion-col>
       <ion-col size="12" size-sm="6">
