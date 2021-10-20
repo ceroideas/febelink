@@ -14,7 +14,6 @@ import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Chart } from 'chart.js';
-import { IonicSelectableComponent } from 'ionic-selectable';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Storage } from '@ionic/storage';
@@ -22,6 +21,8 @@ import { SharePopoverComponent } from '../components/share-popover/share-popover
 import { TermsPage } from '../pages/terms/terms.page';
 import { environment } from 'src/environments/environment';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
+import { GeoPlacesApi } from '../services/geoplaces.service';
+import { GeoPlacesModel } from '../models/geoplaces.model';
 
 
 @Component({
@@ -48,10 +49,6 @@ export class Tab4Page {
   subscription: any;
   subscription_details: any;
   barChart: Chart;
-  provincia: any;
-  localidad: any;
-  provincias: any[] = [];
-  localidades: any[] = [];
   typeDNI: string = 'password';
   typeAddress: string = 'password';
   loading: boolean = true;
@@ -83,7 +80,8 @@ export class Tab4Page {
     public popoverController: PopoverController,
     private actionSheet: ActionSheetController,
     private route: ActivatedRoute,
-    private translateService: TranslateConfigService
+    private translateService: TranslateConfigService,
+    private geoPlaces: GeoPlacesApi
 ) {
     if (this.platform.is('cordova')) {
         this.isNative = true;
@@ -147,13 +145,21 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
   initForm() {
     let value = 0;
 
+    // Seteo inicial para que tenga GeoPlaces los valores guardados
+    this.geoPlaces.setUserPlace( this.perfil );
+
     this.form = this.formBuilder.group({
       name: [this.perfil.name],
       telefono: [this.perfil.telefono],
       descripcion: [this.perfil.descripcion],
-      direccion: [this.perfil.direccion],
-      provincia: [this.provincia],
-      localidad: [this.localidad],
+
+      direccion: [this.geoPlaces.place.address],
+      country: [this.perfil.country],
+      state: [this.perfil.state],
+      department: [this.perfil.department],
+      locality: [this.perfil.locality],
+      place_id: [this.perfil.place_id],
+
       dni: [this.perfil.dni],
       sector: [this.sectoresPerfil],
       sub_sector: [this.subSectoresPerfil],
@@ -203,7 +209,6 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
 
             await this.obtenerSectoresPerfil();
             await this.obtenerSubSectoresPerfil();
-            await this.obtenerProvincias();
             this.initForm();
             this.dniPrevio = this.perfil.dni;
             this.emailPrevio = this.perfil.email;
@@ -216,6 +221,11 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                 this.opinion_types = data.types;
 
                 this.displayOpnionsGraphics();
+                
+                this.geoPlaces
+                    .OnResponse(( place: GeoPlacesModel ) => {})
+                    .OnError(( err ) => {})
+                    .init( 'direccion_desktop', 'direccion_mobile' );
             });
             this.loading = false;
         });
@@ -285,34 +295,27 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
     public irAInicio(): void {
     }
 
-    saveProvince:String;
-
-    public provinciasChange(event: {
-        component: IonicSelectableComponent;
-        value: any;
-    }): void {
-        this.localidades = [];
-        this.provincia = event.value;
-        this.localidad = null;
-        this.obtenerLocalidades(event.value.id);
-        this.saveProvince = event.value.name;
-        //console.log(this.saveProvince);
-    }
-
     /**
      * Metido a mano campos para enviarlos al servidor
      */
     async submitForm() {
         let p: any;
         let response: any;
+        const place = this.geoPlaces.getPlaceSelected();
 
         p = {
             name: this.form.get('name').value,
             descripcion: this.form.get('descripcion').value,
             telefono: this.form.get('telefono').value,
+            
+            // TODO: reemplazar por GeoPlacesAPI columns
             direccion: this.form.get('direccion').value,
-            provincia: this.form.get('provincia').value,
-            localidad: this.form.get('localidad').value,
+            country: place.Country.short,
+            state: place.State.long,
+            department: place.Department.long,
+            locality: place.Locality.long,
+            place_id: place.place_id,
+            
             sector: this.form.get('sector').value,
             sub_sector: this.form.get('sub_sector').value,
             dni: this.form.get('dni').value,
@@ -336,9 +339,14 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                                         p.email,
                                         p.descripcion,
                                         p.telefono,
+                                        
                                         p.direccion,
-                                        p.provincia,
-                                        p.localidad,
+                                        p.country,
+                                        p.state,
+                                        p.department,
+                                        p.locality,
+                                        p.place_id,
+
                                         p.sector,
                                         p.sub_sector,
                                         p.dni,
@@ -464,9 +472,14 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                                     p.email,
                                     p.descripcion,
                                     p.telefono,
+                                    
                                     p.direccion,
-                                    p.provincia,
-                                    p.localidad,
+                                    p.country,
+                                    p.state,
+                                    p.department,
+                                    p.locality,
+                                    p.place_id,
+
                                     p.sector,
                                     p.sub_sector,
                                     p.dni,
@@ -1019,39 +1032,6 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
             }
             this.utilities.dismissLoading();
         });
-    }
-
-    public localidadesChange(event: {
-        component: IonicSelectableComponent;
-        value: any;
-    }): void {
-        this.localidad = event.value;
-    }
-
-    async obtenerProvincias() {
-        (await this.api.obtenerProvincias()).subscribe((provincias) => {
-            this.provincias = provincias;
-            if (this.perfil.province_id != null) {
-                let prov = this.provincias.filter(
-                    (x) => x.id == this.perfil.province_id
-                );
-                this.provincia = prov[0];
-                //this.form.get('provincia').setValue(this.provincia);
-                this.obtenerLocalidades(this.perfil.province_id);
-            }
-        });
-    }
-
-    async obtenerLocalidades(id_provincia) {
-        (await this.api.obtenerLocalidades(id_provincia)).subscribe(
-            (localidades) => {
-                this.localidades = localidades;
-                if (this.perfil.town_id != null) {
-                    let loc = this.localidades.filter((x) => x.id == this.perfil.town_id);
-                    this.localidad = loc[0];
-                }
-            }
-        );
     }
 
     home() {
