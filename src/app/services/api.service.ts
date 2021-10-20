@@ -467,9 +467,14 @@ export class ApiService {
     email,
     descripcion,
     telefono,
+
     direccion,
-    provincia,
-    localidad,
+    country,
+    state,
+    department,
+    locality,
+    place_id,
+
     sector,
     sub_sector,
     dni,
@@ -480,11 +485,14 @@ export class ApiService {
     formData.append('name', name);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
+    
     formData.append('direccion', direccion);
-    if (provincia !== undefined && provincia !== null)
-      formData.append('province_id', provincia.id);
-    if (localidad !== undefined && localidad !== null)
-      formData.append('town_id', localidad.id);
+    formData.append('country', country);
+    formData.append('state', state);
+    formData.append('department', department);
+    formData.append('locality', locality);
+    formData.append('place_id', place_id);
+    
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
@@ -511,9 +519,14 @@ export class ApiService {
     email,
     descripcion,
     telefono,
+
     direccion,
-    provincia,
-    localidad,
+    country,
+    state,
+    department,
+    locality,
+    place_id,
+
     sector,
     sub_sector,
     dni,
@@ -523,11 +536,14 @@ export class ApiService {
     formData.append('name', name);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
+    
     formData.append('direccion', direccion);
-    if (provincia !== undefined && provincia !== null)
-      formData.append('province_id', provincia.id);
-    if (localidad !== undefined && localidad !== null)
-      formData.append('town_id', localidad.id);
+    formData.append('country', country);
+    formData.append('state', state);
+    formData.append('department', department);
+    formData.append('locality', locality);
+    formData.append('place_id', place_id);
+    
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
