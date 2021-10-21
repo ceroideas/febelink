@@ -83,6 +83,16 @@ ionic-selectable-modal {
         display: none;
     }
 }
+.responsive-max {
+    @media (max-width: 1165px ){
+        display: none;
+    }
+}
+.responsive-min {
+    @media (min-width: 1165px ){
+        display: none;
+    }
+}
 
 .flex{
     display: flex;

@@ -1,39 +1,67 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
 import { supportedLanguages } from 'src/utils/utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TranslateConfigService {
+  constructor(
+    private translateService: TranslateService,
+    public cookSvc: CookieService
+  ) {}
 
-  constructor(private translateService: TranslateService) { }
+  getDefaultLanguage() {
+    let language = this.translateService.getBrowserLang();
 
-    getDefaultLanguage(){
-        let language = this.translateService.getBrowserLang();
+    // Si tiene guardado Lang en Cookies, tomar de la selección
+    let lang = ILangDEFAULTS.getLangCOOKIE(this.cookSvc);
+    if( lang != null ) language = lang.lang;
 
-        if (!supportedLanguages().includes(language)) {
-            language = 'en';
-        }
-
-        this.translateService.setDefaultLang(language);
-        return language;
+    if (!supportedLanguages().includes(language)) {
+      language = ILangDEFAULTS.enUK.lang;
     }
 
-    getCurrentLanguage() {
-        return this.translateService.currentLang;
-    }
+    this.translateService.setDefaultLang(language);
+    return language;
+  }
 
-    setLanguage(language: string) {
-        this.translateService.use(language);
-    }
+  getCurrentLanguage() {
+    return this.translateService.currentLang;
+  }
 
-    // Agregué este metodo para evitar que por defecto el currentLang lo setee a ingles
-    setCurrentLang( language: string ) {
-        this.translateService.currentLang = language;
-    }
+  setLanguage(language: string) {
+    this.translateService.use(language);
+    this.translateService.currentLang = language;
+  }
 
-    instant( key : string ) {
-        this.translateService.instant( key );
-    }
+  instant(key: string): string {
+    return this.translateService.instant(key);
+  }
+
+  get(
+    key: string,
+    interpolateParams?: Object,
+    next?: (text: string) => void,
+    error?: (error: any) => void,
+    complete?: () => void
+  ) {
+    this.translateService.get(key, interpolateParams).subscribe(
+      (text: string) => {
+        if (next) next(text);
+      },
+      (error: any) => {
+        if (error) error(error);
+      },
+      () => {
+        if (complete) complete();
+      }
+    );
+  }
+
+  addLangs(...lang: string[]) {
+    this.translateService.addLangs(lang);
+  }
 }

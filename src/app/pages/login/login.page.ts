@@ -5,7 +5,8 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginPage implements OnInit {
   passwordIcon: string = 'eye-off';
   
   redirect: string;
+  langSelected: ILang;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +28,8 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private router: Router,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    private translateService: TranslateConfigService
   ) {}
 
   ngOnInit() {
@@ -35,7 +38,10 @@ export class LoginPage implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
-    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect'); 
+    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
+    
+    this.langSelected = this.langSelected ? this.langSelected :
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   submitForm() {
@@ -45,6 +51,8 @@ export class LoginPage implements OnInit {
     formData.append('email', this.form.get('email').value);
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
+    formData.append('lang', this.langSelected.lang );
+
 
     (this.api.login(formData, 'login', null, this.redirect)).subscribe(
       (res) => {        this.utilities.dismissLoading();},
@@ -53,17 +61,17 @@ export class LoginPage implements OnInit {
 
         // credenciales incorrectas
         if (err.status === 401) {
-          this.utilities.showToast('Los datos introducidos no son correctos');
+          this.utilities.showToast( this.translateService.instant( 'pages.login.errors.data' ));
         }
         // 422 (email no válido)
         else if (err.status === 422) {
           this.utilities.showToast(
-            'El formato del email introducido no es correcto'
+            this.translateService.instant( 'pages.login.errors.email' )
           );
         } else {
           this.utilities.showAlert(
-            'Error al iniciar sesión',
-            'Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde'
+            this.translateService.instant( 'pages.login.errors.title' ),
+            this.translateService.instant( 'pages.login.errors.message' )
           );
         }
         this.utilities.dismissLoading();
@@ -102,7 +110,7 @@ export class LoginPage implements OnInit {
     this.utilities.getUserData().then(async (userData) => {
       if (userData) {
         let loading = await this.loadingCtrl.create({
-          message: 'Iniciando sesión...',
+          message: this.translateService.instant( 'pages.login.logging' ),
           duration: 1500,
         });
 
@@ -113,5 +121,9 @@ export class LoginPage implements OnInit {
         this.utilities.setGuia('login');
       }
     });
+  }
+
+  onLangSelected( iLang: ILang ) {
+    this.langSelected = iLang;
   }
 }

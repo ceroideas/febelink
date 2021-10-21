@@ -8,7 +8,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { SeoService } from 'src/app/services/seo.service';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { PopoverController } from '@ionic/angular';
-import { CookieService } from "ngx-cookie-service";
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 export interface xTimer {
   szMs: string;
@@ -49,7 +49,7 @@ export class Index1Component implements OnInit {
     private router: Router,
     private seoSvc:SeoService,
     public popoverController: PopoverController,
-    private cookSrv: CookieService,
+    private translateService: TranslateConfigService,
   ) { }
 
   navExtras: NavigationExtras;
@@ -69,14 +69,14 @@ export class Index1Component implements OnInit {
 
     this.navExtras = this.router.getCurrentNavigation().extras;
 
-    this.seoSvc.generateTags(
-      'Febelink Token'
-      , 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
-      , 'http://test.febelink.com/assets/imgs/token-share-img.png'
-    )
+    this.seoSvc.generateTags({
+          title: 'Febelink Token'
+        , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
+        , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
+    })
 
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getLangDEFAULT( this.cookSrv );
+        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   // Destruimos cuando finaliza el contador

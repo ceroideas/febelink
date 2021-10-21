@@ -130,9 +130,10 @@ export class ApiService {
    * Recuperar contraseña y enviar email
    * @param email
    */
-  public async recuperarContraseña(email) {
+  public async recuperarContraseña( email, lang: string ) {
     const formData = new FormData();
     formData.append('email', email);
+    formData.append('lang', lang);
     const responseObs: Observable<any> = await this._createData(
       'recuperar-contrasena',
       formData
@@ -662,6 +663,7 @@ export class ApiService {
     formData.append('password_confirmation', params.password_confirmation);
     formData.append('role_id', '5');
     formData.append('idRecommender', params.idRecommender);
+    formData.append('lang', params.lang);
 
     return this.http.post(environment.API_URL_AUTH + 'signup', formData);
   }
@@ -752,6 +754,9 @@ export class ApiService {
    * @param dni
    */
    public existeDNI(dni) {
+    // Agrego esta linea porque sino cuando quiere borrar
+    // su dni, no pasa párametro y provoca error
+    dni = dni ? dni : 'null';
     return this._getData('existe-usuario-dni/' + dni);
   }
 

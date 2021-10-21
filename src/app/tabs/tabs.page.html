@@ -13,7 +13,7 @@
     <ion-tab-button tab="ofertas">
       <ion-icon name="chatbubbles"></ion-icon>
       <ion-label>{{ 'menu.tabs.chat' | translate }}</ion-label>
-      <ion-badge color="danger" *ngIf="notifCount?.chats">{{notifCount?.chats}}</ion-badge>
+      <ion-badge color="danger" *ngIf="totalUnreadMessages">{{totalUnreadMessages}}</ion-badge>
     </ion-tab-button>
     <ion-tab-button *ngIf="perfil === null" (click)="irA('perfil')">
       <ion-icon name="person"></ion-icon>

@@ -10,10 +10,9 @@ import { TermsPage } from 'src/app/pages/terms/terms.page';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
+  currentYear = new Date().getFullYear();
 
-  constructor(
-    private modalCtrl: ModalController
-    ) { }
+  constructor(private modalCtrl: ModalController) {}
 
   async termsModal() {
     const TermsModal = await this.modalCtrl.create({
@@ -30,5 +29,4 @@ export class FooterComponent {
 
     await TermsModal.present();
   }
-
 }

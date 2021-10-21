@@ -6,7 +6,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { LandingService } from '../../services/landing.service';
 import { BuyTokensComponent } from '../../shared/buy-tokens/buy-tokens.component';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { CookieService } from 'ngx-cookie-service';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
   selector: 'app-page-buy-tokens',
@@ -24,7 +24,7 @@ export class BuyTokensPage {
     , private landingSvc:LandingService
     , private api:ApiService
     , private activatedRoute: ActivatedRoute
-    , private cookSrv: CookieService
+    , private translateService: TranslateConfigService
   ) { }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class BuyTokensPage {
         this.modalController,
         this.landingSvc,
         this.api,
-        this.cookSrv
+        this.translateService
       ).setLang( this.langSelected )
     ).justLogged();
   }

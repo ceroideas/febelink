@@ -1,4 +1,5 @@
 import { CookieService } from "ngx-cookie-service";
+import { TranslateConfigService } from "../services/translate/translate-config.service";
 
 /**
  * Description [Interface to define User Language Selection.]
@@ -32,7 +33,7 @@ export interface ILang {
       ];
       return arr;
     }
-    static getLang( lang?: string, cookSvc?: CookieService ) : ILang {
+    static getLang( lang?: string, translateService?: TranslateConfigService ) : ILang {
       let langSelected;
       
       if( lang ) {
@@ -43,17 +44,11 @@ export interface ILang {
       }
 
       // Si langSelected existe, asignar ese valor || Sino ir a traer el default
-      return langSelected ? langSelected : this.getLangDEFAULT( cookSvc );
+      return langSelected ? langSelected :
+          ( translateService ? translateService.getCurrentLanguage() : ILangDEFAULTS.enUK );
     }
-
-    // Para traer el idioma por default
-    static getLangDEFAULT( cookSvc?: CookieService ): ILang {
-      // Si han pasado parametro de Cookie, entonces intentar buscar alli
-      let lang: ILang = !cookSvc ? null : ILangDEFAULTS.getLangCOOKIE( cookSvc );
-
-      // Si no hay cookies guardadas, entonces
-      // utilizo por defecto el Español  
-      return lang ? lang : ILangDEFAULTS.spSP;
+    static getCurrentLang( translateService: TranslateConfigService ) : ILang {
+      return this.getLang( translateService.getCurrentLanguage(), translateService );
     }
 
     // Para guardar el Lang en las Cookies
@@ -64,7 +59,6 @@ export interface ILang {
     // Para obtener el Lang en las Cookies
     static getLangCOOKIE( cookSvc: CookieService ) : ILang {
       let lang = cookSvc.get( ILangDEFAULTS.coookie );
-      console.log( 'Lang in cookie: ', lang );
       return !lang ? null : ILangDEFAULTS.getLang( lang );
     }
 }

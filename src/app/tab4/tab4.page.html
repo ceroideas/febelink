@@ -233,7 +233,7 @@
                 [type]="passwordType"
                 formControlName="password"
               ></ion-input>
-              <p id="msgpass1" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
+              <p id="msgpass1" class="hide">{{ 'common.personal.passEr' | translate }}</p>
             </ion-item>
           </ion-col>
           <ion-col size="6">
@@ -254,7 +254,7 @@
                 [type]="passwordType2"
                 formControlName="passwordConfirmation"
               ></ion-input>
-              <p id="msgpass2" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
+              <p id="msgpass2" class="hide">{{ 'common.personal.passEr' | translate }}</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -381,7 +381,7 @@
             formControlName="password"
           ></ion-input>
         </ion-item>
-        <p id="msgpass3" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
+        <p id="msgpass3" class="hide">{{ 'common.personal.passEr' | translate }}</p>
         <ion-item class="input">
           <ion-label position="floating">
             {{ 'common.labelConfirmNewPass' | translate }}
@@ -400,7 +400,7 @@
             formControlName="passwordConfirmation"
           ></ion-input>
         </ion-item>
-        <p id="msgpass4" class="hide">La contraseña debe tener al menos 8 dígitos con números y letras</p>
+        <p id="msgpass4" class="hide">{{ 'common.personal.passEr' | translate }}</p>
       </div>
       <ion-button
         id="savebtn"
@@ -434,8 +434,9 @@
             style="max-width: 200px; margin-top: 20px"
             class="guardar-cambios"
 
-            (click)="suspended_profile()"
-    >Deshabilitar cuenta<ion-icon name="suspended_profile"></ion-icon>
+            (click)="suspended_profile()">
+        {{ 'tabs.tab4.labelDisable' | translate }}
+    <ion-icon name="suspended_profile"></ion-icon>
     </ion-button>
   </div>
 </ion-content>

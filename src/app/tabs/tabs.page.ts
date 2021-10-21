@@ -3,7 +3,7 @@ import { UtilitiesService } from '../services/utilities.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { NotificationService } from '../services/notification.service';
-import { UnreadNotificationsCount } from '../models/notification';
+import { UnreadMessages } from '../models/unreadMessages';
 
 @Component({
   selector: 'app-tabs',
@@ -13,8 +13,10 @@ import { UnreadNotificationsCount } from '../models/notification';
 export class TabsPage {
   perfil: any;
   public refreshTabs: any;
-  notifCount:UnreadNotificationsCount;
-  
+  notifCount: number;
+  totalUnreadMessages: number;
+  unreadMessages: UnreadMessages[];
+
   constructor(
     private utilities: UtilitiesService,
     private api: ApiService,
@@ -28,10 +30,13 @@ export class TabsPage {
 
   ionViewWillEnter() {
     this.obtenerPerfil();
-    this.notificationsSvc.unreadNotificationsCount.subscribe(notifCount => {
-      // console.log(notifCount);       
-      this.notifCount = notifCount;
-    })   
+    this.api.unreadChatMessages.subscribe((unreadMessages) => {
+      this.totalUnreadMessages = 0;
+      this.unreadMessages = unreadMessages;
+      unreadMessages?.forEach((room) => {
+        this.totalUnreadMessages = +room.unread;
+      });
+    });
   }
 
   async obtenerPerfil() {

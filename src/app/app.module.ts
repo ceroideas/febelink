@@ -1,15 +1,15 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {RouteReuseStrategy} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouteReuseStrategy } from '@angular/router';
 
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Push } from '@ionic-native/push/ngx';
@@ -24,56 +24,67 @@ import { ComponentsModule } from './components/components.module';
 import { CookieService } from 'ngx-cookie-service';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import {BrowserTab} from '@ionic-native/browser-tab/ngx';
+import { BrowserTab } from '@ionic-native/browser-tab/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
 
 import {
-    GoogleLoginProvider,
-    FacebookLoginProvider,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
 } from 'angularx-social-login';
 
 /* NGX Translate imports. */
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LoginPageModule } from './pages/login/login.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-const config: SocketIoConfig = { url: environment.SOCKET_URL, options: {secure: true, rejectUnauthorized: false}};
+const config: SocketIoConfig = {
+  url: environment.SOCKET_URL,
+  options: { secure: true, rejectUnauthorized: false },
+};
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule,
-            IonicModule.forRoot(),
-            AppRoutingModule,
-            FormsModule,
-      SocketIoModule.forRoot(config),
-            ReactiveFormsModule,
-            HttpClientModule,
-            ComponentsModule,
-            IonicStorageModule.forRoot(),
-            NgxStripeModule.forRoot(environment.stripe_publick_key),
-            SocialLoginModule,
-            ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-            TranslateModule.forRoot({
-              loader: {
-                  provide: TranslateLoader,
-                  useFactory: (createTranslateLoader),
-                  deps: [HttpClient]
-              }
-          }),
-            ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    FormsModule,
+    SocketIoModule.forRoot(config),
+    ReactiveFormsModule,
+    HttpClientModule,
+    ComponentsModule,
+    IonicStorageModule.forRoot(),
+    NgxStripeModule.forRoot(environment.stripe_publick_key),
+    SocialLoginModule,
+    LoginPageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Push,
     SocialSharing,
-      BrowserTab,
+    BrowserTab,
     Camera,
     Deeplinks,
     CookieService,
@@ -87,19 +98,16 @@ const config: SocketIoConfig = { url: environment.SOCKET_URL, options: {secure: 
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              environment.WEB_CLIENT_ID
-            ),
+            provider: new GoogleLoginProvider(environment.WEB_CLIENT_ID),
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
-          }
+          },
         ],
       } as SocialAuthServiceConfig,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

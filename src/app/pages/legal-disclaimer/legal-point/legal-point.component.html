@@ -1,0 +1,30 @@
+<!-- Título ( solo si lo posee ) -->
+<ng-container *ngIf="item.title">
+  <!-- Añado el <br> solo si es el principal-->
+  <br *ngIf="addBreak">
+
+  <strong>{{ item.title }}</strong><br>
+  
+  <!-- Añado el <br> solo si es el principal-->
+  <br *ngIf="addBreak">
+</ng-container>
+
+<!-- Descripción ( solo si la posee ) -->
+<p *ngIf="item.descript" [innerHTML]="item.descript | safeHtml"></p>
+
+<!-- If el array es de tipo string[], añadir List -->
+  <ol *ngIf="(item.items | typeof) === 'string[]'">
+    <ng-container *ngFor="let subitem of item.items">
+      <li> {{ subitem }} </li>
+      <br>
+    </ng-container>
+  </ol>
+
+<!--Else if object[], le digo que vuelva a este bucle para analizarse -->
+<ng-container *ngIf="(item.items | typeof) === 'object[]'">
+  <!-- Lo hago recursive ( saldrá cuando no hayan mas )-->
+  <app-legal-point *ngFor="let subitem of item.items" [item]="subitem"></app-legal-point>
+</ng-container>
+
+<!-- Añado el <br> solo si es el principal y si no trae break de <li>-->
+<br *ngIf="addBreak && (item.items | typeof) === 'string[]'">
