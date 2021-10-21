@@ -256,7 +256,7 @@
             "mail": "Introduce tu dirección de E-mail",
             "action": {
                 "toDo": "Suscribirme",
-                "done": "Suscripto ✔"
+                "done": "Suscrito ✔"
             },
             "download": "Descargar Whitepaper",
             "success": "Gracias por suscribirte a nuestra WhiteList"
@@ -357,9 +357,9 @@
             "title": "NUESTRO EQUIPO",
             "description": "La experiencia y el conocimiento son señas de identidad de las personas que conforman nuestro grupo de trabajo. Únete a nuestro equipo en expansión.",
             "juan": "Founder & CEO. Empresario con 27 años de experiencia, desarrollando su carrera principalmente en la consultoría financiera y en el sector de la automoción.",
-            "david": "Co-Founder & CTO. Desarrollador con gran experiencia en sistemas en Cloud. Ha trabajo en grandes instituciones públicas y casas de subastas online como: Christie's, Hilco StremBank o LeasePlan.",
+            "david": "Founder & CTO. Desarrollador con gran experiencia en sistemas en Cloud. Ha trabajo en grandes instituciones públicas y casas de subastas online como: Christie's, Hilco StremBank o LeasePlan.",
             "miguel": "Profesional de marketing con amplia experiencia en tecnología y FMCG. responsable de marketing de diversas multinacionales como Hewlett-Packard o WD-40 Company.",
-            "oscar": "Empresario. Creador de Ingenierías de Tráfico alternativas, Sistemas de Comunicaciones, Proyectos 3D/VR/AR, Estabilización de Satélites, etc."
+            "miguelAngel": "(Minery Report) Especialista en Digitalización, Ciberseguridad y tecnología Blockchain. Cofundador de la dirección de Ciberseguridad del Ejercito del Aire, Ministerio de Defensa de España."
         },
         "footer": {
             "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"

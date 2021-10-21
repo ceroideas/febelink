@@ -10,6 +10,7 @@ import { LoginPage } from './login.page';
 import { OlvidarContrasenaPageModule } from '../olvidar-contrasena/olvidar-contrasena.module';
 import { RegistroPageModule } from '../registro/registro.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -20,8 +21,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     LoginPageRoutingModule,
     OlvidarContrasenaPageModule,
     RegistroPageModule,
-    ComponentsModule
+    ComponentsModule,
+    SharedModule,
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
 })
 export class LoginPageModule {}
