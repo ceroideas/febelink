@@ -66,12 +66,16 @@ export class BuyTokensComponent implements OnInit {
         name: profile.name,
         lastName: profile.lastName,
         email: profile.email,
-        address: profile.direccion,
         dni: profile.dni,
         phone: profile.telefono,
         id: profile.id,
-        province_id: profile.province_id,
-        town_id: profile.town_id
+
+        address: profile.direccion,
+        country: profile.country,
+        state: profile.state,
+        department: profile.department,
+        locality: profile.locality,
+        place_id: profile.place_id
       }
   
       const modal = await this.modalController.create({
@@ -94,9 +98,14 @@ export class BuyTokensComponent implements OnInit {
         formData.append('lastName', userLanding.lastName);
         formData.append('email', userLanding.email);
         formData.append('dni', userLanding.dni);
-        formData.append('province_id', userLanding.province_id.toString());
-        formData.append('town_id', userLanding.town_id.toString());
+        
         formData.append('direccion', userLanding.address);
+        formData.append('country', userLanding.country);
+        formData.append('state', userLanding.state);
+        formData.append('department', userLanding.department);
+        formData.append('locality', userLanding.locality);
+        formData.append('place_id', userLanding.place_id);
+
         formData.append('telefono', userLanding.phone);
         formData.append('num_tokens', numTokens.toString());
         formData.append('phase_tokens', phaseTokens.toString());
@@ -141,11 +150,16 @@ export class BuyTokensComponent implements OnInit {
   private saveInSession(profile: any, userLanding: UserLanding) {
     profile.name = userLanding.name;
     profile.lastName = userLanding.lastName;
-    profile.direccion = userLanding.address;
     profile.dni = userLanding.dni;
     profile.telefono = userLanding.phone;
-    profile.province_id = userLanding.province_id;
-    profile.town_id = userLanding.town_id;
+    
+    profile.direccion = userLanding.address;
+    profile.country = userLanding.country;
+    profile.state = userLanding.state;
+    profile.department = userLanding.department;
+    profile.locality = userLanding.locality;
+    profile.place_id = userLanding.place_id;
+
     this.utils.saveUserData(profile);
   }
 
