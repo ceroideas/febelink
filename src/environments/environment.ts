@@ -24,7 +24,7 @@ export const environment = {
   stripe_publick_key:'pk_test_9BatjAPV71ZLV0LLXxtvgMaT00zyRzltzM',
 
   // GooglePlaces API
-  G_PLACES_API_KEY: '',
+  G_PLACES_API_KEY: 'AIzaSyB-s7c6IF_G7k30a0kxWFgM21PDy_dSSCs',
 };
 
 /*

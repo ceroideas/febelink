@@ -10,5 +10,5 @@ export const environment = {
   WEB_URL:'https://febelink.com/',
   stripe_publick_key:'pk_live_26EQ8gc0INPEdZjy6Iy8DOnK004mMtUILK',
   // GooglePlaces API
-  G_PLACES_API_KEY: '',
+  G_PLACES_API_KEY: 'AIzaSyB-s7c6IF_G7k30a0kxWFgM21PDy_dSSCs',
 };
