@@ -12,6 +12,7 @@ export class YouTubePopComponent implements OnInit {
   @Input() url: string = '3XeE6fOsGiE';
   @Input() autoplay: boolean = true;
   @Input() rel: number = 0;
+  @Input() title: string = '¿Cómo funciona la app?';
 
   trustedVideoUrl: SafeResourceUrl;
 
@@ -26,8 +27,6 @@ export class YouTubePopComponent implements OnInit {
         + '?' + 'rel=' + this.rel
         + '&' + 'autoplay=' + ( this.autoplay ? 1 : 0 );
     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl( video );
-    console.log( 'this.video', video );
-    console.log( 'this.trustedVideoUrl', this.trustedVideoUrl );
   }
 
   onDismiss( ) {
