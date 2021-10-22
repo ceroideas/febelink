@@ -223,15 +223,19 @@ export class GeoPlacesApi {
         return geoplace;
     }
 
+    private ifUndefined( val: string, alternative: string = '' ): string {
+        return val === undefined || val === null ? alternative : val;
+    }
+
     // Funcion creada para llenar place con su valores guardados
     public setUserPlace( user: IUser | UserLanding ) {
         const address: string = (user as IUser).direccion ? (user as IUser).direccion : (user as UserLanding).address;
-        const country: string = user.country;
-        const state: string = user.state;
-        const department: string = user.department;
-        const locality: string = user.locality;
+        const country: string = this.ifUndefined( user.country );
+        const state: string = this.ifUndefined( user.state );
+        const department: string = this.ifUndefined( user.department );
+        const locality: string = this.ifUndefined( user.locality );
         
-        const place_id: string = user.place_id;
+        const place_id: string = this.ifUndefined( user.place_id );
 
         this.place = {
             address: address,
@@ -333,6 +337,7 @@ export class GeoPlacesApi {
     }
     public hasSelected(): boolean {
         // Controla que no sea null y a su vez que tenga asignado country
-        return this.getPlaceSelected() && this.getPlaceSelected().Country.short ? true : false;
+        const country = this.getPlaceSelected() ? '' : this.getPlaceSelected().Country.short;
+        return  country !== null && country !== '' ? true : false;
     }
 }

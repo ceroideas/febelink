@@ -251,6 +251,10 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
 
     displayOpnionsGraphics() {
         if (this.total_opinions > 0) {
+            // Extra control just in case that element is not declared yet
+            if( this.barCanvas === null || this.barCanvas === undefined )
+                this.barCanvas = this.elementRef.nativeElement.querySelector( '#barCanvas' );
+            
             this.barChart = new Chart(this.barCanvas.nativeElement, {
                 type: 'horizontalBar',
                 data: {
