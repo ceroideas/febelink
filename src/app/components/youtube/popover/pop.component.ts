@@ -12,7 +12,7 @@ export class YouTubePopComponent implements OnInit {
   @Input() url: string = '3XeE6fOsGiE';
   @Input() autoplay: boolean = true;
   @Input() rel: number = 0;
-  @Input() title: string = '¿Cómo funciona la app?';
+  @Input() title: string = '¿Cómo funciona la app de Febelink?';
 
   trustedVideoUrl: SafeResourceUrl;
 
