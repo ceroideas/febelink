@@ -222,10 +222,12 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
 
                 this.displayOpnionsGraphics();
                 
+                const direccion_desktop = this.elementRef.nativeElement.querySelector( '#direccion_desktop' );
+                const direccion_mobile = this.elementRef.nativeElement.querySelector( '#direccion_mobile' );
                 this.geoPlaces
                     .OnResponse(( place: GeoPlacesModel ) => {})
                     .OnError(( err ) => {})
-                    .init( 'direccion_desktop', 'direccion_mobile' );
+                    .init( direccion_desktop, direccion_mobile );
             });
             this.loading = false;
         });
@@ -309,7 +311,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
             telefono: this.form.get('telefono').value,
             
             // TODO: reemplazar por GeoPlacesAPI columns
-            direccion: this.form.get('direccion').value,
+            direccion: place.address,
             country: place.Country.short,
             state: place.State.long,
             department: place.Department.long,
