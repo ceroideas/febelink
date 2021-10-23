@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, Platform } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -29,7 +29,10 @@ export class EditarDemandaPage implements OnInit {
                private utilities: UtilitiesService,
                private camera: Camera,
                private sanitizer: DomSanitizer,
-               private translateService: TranslateService ) {
+               private translateService: TranslateService,
+               private platform: Platform,
+               private elementRef: ElementRef,
+  ) {
 
     this.demanda = navParams.get('demanda');
     this.sector = this.demanda.sector;
@@ -102,26 +105,79 @@ export class EditarDemandaPage implements OnInit {
   /**
    * Método para adjuntar imagen a la demanda
    */
-  public adjuntarImagen():void {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      mediaType: this.camera.MediaType.PICTURE,
-      encodingType: this.camera.EncodingType.JPEG,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      targetWidth: 1920,
-      targetHeight: 1080,
-      allowEdit: false
+  public attachImage(): void {
+    if (this.platform.is('cordova')) {
+        this.attachImageNative();
+    } else {
+        this.attachImageWeb();
     }
-
-    this.camera.getPicture(options).then((urlFoto) => {
-      
-      this.srcFoto = this.sanitizer.bypassSecurityTrustUrl(urlFoto);
-      this.base64img = 'data:image/jpeg;base64,' + urlFoto;
-      
-    }).catch(error => {
-      this.utilities.showAlert('Error al obtener imagen', error);
-    })
   }
 
+  /**
+   * Cambiar imagen
+   */
+  public attachImageNative(): void {
+      const options: CameraOptions = {
+          quality: 100,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          mediaType: this.camera.MediaType.PICTURE,
+          encodingType: this.camera.EncodingType.JPEG,
+          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+          targetWidth: 1920,
+          targetHeight: 1080,
+          allowEdit: false,
+      };
+      this.camera
+          .getPicture(options)
+          .then((urlFoto) => {
+            this.srcFoto = this.sanitizer.bypassSecurityTrustUrl(urlFoto);
+            this.base64img = 'data:image/jpeg;base64,' + urlFoto;
+          })
+          .catch((error) => {
+            this.utilities.showAlert(
+                this.translateService.instant("tabs.tab4.errors.image"), error);
+      });
+  }
+
+  attachImageWeb(): Promise<void> {
+      return new Promise<void>(async (resolve, reject) => {
+          let filePicker = this.elementRef.nativeElement.querySelector(
+              '.input-file'
+          );
+
+          if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
+              reject( this.translateService.instant("tabs.tab4.errors.noFileSelected"));
+              return;
+          }
+          const myFile = filePicker.files[0];
+
+          if (myFile.size > 307200) {
+              this.utilities.showToast(
+                  this.translateService.instant("tabs.tab4.errors.imageMaxSize"));
+              //reject('Image is too big (max. 300KB)');
+              return;
+          }
+
+          this.base64img = await this.convert(myFile);
+          resolve();
+      });
+  }
+
+  private convert(myFile: File): Promise<string | ArrayBuffer> {
+      return new Promise<string | ArrayBuffer>((resolve, reject) => {
+          const fileReader = new FileReader();
+          if (fileReader && myFile) {
+              fileReader.readAsDataURL(myFile);
+              fileReader.onload = () => {
+                  resolve(fileReader.result);
+              };
+
+              fileReader.onerror = (error) => {
+                  reject(error);
+              };
+          } else {
+              reject( this.translateService.instant("tabs.tab4.errors.noFileProvided"));
+          }
+      });
+  }
 }
