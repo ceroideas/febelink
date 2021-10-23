@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { IUser } from '../models/user.model';
 import { UserLanding } from '../landing/models/user-landing';
 import { environment } from 'src/environments/environment';
-declare const google;
+import { Loader } from '@googlemaps/js-api-loader';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class GeoPlacesApi {
     API_URL_ID: string = "https://maps.googleapis.com/maps/api/js";
     inputs: any[];
     place: GeoPlacesModel = null;
+    loader: Loader;
     fields: string[] = [
         "address_components",
         "adr_address",
@@ -67,53 +68,37 @@ export class GeoPlacesApi {
 
         await inputs.forEach( async input => {
             input = await this.checkInput( input );
-
-            // Solo añade el input si no es null
+            
+            // Just add input if not null
             if( input !== null )
                 this.inputs.push( input );
         });
         
         if( this.inputs.length === 0 )
-            // No tiene elementos encontrados para GooglePlacesApi
+            // Has no elements for GooglePlacesApi
             return;
 
-        // Busqueda segun idioma por default
+        // To Search acording to the selected|default language
         const lang = this.translateService.getDefaultLanguage();
-        const url = `${ this.API_URL }?key=${ environment.G_PLACES_API_KEY }&libraries=places&language=${ lang }`;
-        this.loadScript( url ).then(() => this.initAutocomplete() );
-    }
 
-    // Este metodo es para no tener que declarar Google Places Script en el index
-    // Sino mas bien crearlo programaticamente a demanda
-    private loadScript(url) {
-        return new Promise((resolve, reject) => {
-            const id = 'GoogePlacesAPI';
-            // To not add Script Twice
-            if(document.getElementById(id) === null) {
-                const renderer2 = this.rendererFactory.createRenderer(null, null);
-                const script = renderer2.createElement('script');
-                script.type = 'text/javascript';
-                script.src = url;
-                script.text = ``;
-                script.async = true;
-                script.defer = true;
-                script.onload = resolve;
-                script.onerror = reject;
-                script.setAttribute('id', id)
-                renderer2.appendChild( this.document.head, script);
-            } else
-                // Script ya declarado, invoca tu la funcion
-                this.initAutocomplete();
-        })
+        this.loader = new Loader({
+            apiKey: environment.G_PLACES_API_KEY,
+            version: "weekly",
+            libraries: ["places"],
+            language: lang
+        });
+        this.loader.load()
+            .then((google) => {
+                this.initAutocomplete( google );
+            })
+            .catch(e => {
+                // do something
+            });
     }
 
     private async checkInput( input: any ) : Promise<HTMLInputElement> {
-        // Ha pasado un id?
-        if( typeof input === 'string' )
-            input = document.getElementById( input );
-
-        // Control si no es input, extraccion de input
-        // Dado que la API solo acepta este elemento
+        // Control if it is not an input, try to extract it
+        // Since the API just accepts this element
         if( input instanceof HTMLInputElement )
             return input;
         else if ( input instanceof HTMLElement )
@@ -121,11 +106,11 @@ export class GeoPlacesApi {
         else if ( input instanceof HTMLIonInputElement )
             return await (input as HTMLIonInputElement).getInputElement();
         
-        // No ha logrado encontrar un input en este elemento
+        // No input found, get out of here
         return null;
     }
   
-    initAutocomplete() {
+    initAutocomplete( google ) {
         this.inputs.forEach( input => {
             const autocomplete = new google.maps.places.Autocomplete( input );
             autocomplete.setFields( this.fields );
@@ -154,7 +139,7 @@ export class GeoPlacesApi {
                 }
             });
 
-            // Controla para quitar seleccion de GooglePlace si el texto cambia
+            // Control to remove GooglePlace selection if text changes
             input.addEventListener( 'input', ( e ) => {
                 if( this.place !== null && this.place.address !== input.value )
                     this.place = null;
@@ -163,7 +148,7 @@ export class GeoPlacesApi {
     }
 
     private setDefaults( place, modifyThis: boolean =  true ) : GeoPlacesModel {
-        // Declaracion en base a place
+        // Declaration based on place
         const geoplace : GeoPlacesModel = {
             span_address: place.adr_address,
             address: place.formatted_address,
@@ -182,7 +167,7 @@ export class GeoPlacesApi {
             CP_SUFIX: { long: '', short: '' }
         };
 
-        // Loop para asignar al alcance los parametros de GeoPlaces
+        // Loop to assign the params of GeoPlaces
         for( let i = 0; i < place.address_components.length; i++ ) {
             const item = place.address_components[ i ];
             if( item.types.includes( 'country' ))
@@ -238,15 +223,19 @@ export class GeoPlacesApi {
         return geoplace;
     }
 
+    private ifUndefined( val: string, alternative: string = '' ): string {
+        return val === undefined || val === null ? alternative : val;
+    }
+
     // Funcion creada para llenar place con su valores guardados
     public setUserPlace( user: IUser | UserLanding ) {
         const address: string = (user as IUser).direccion ? (user as IUser).direccion : (user as UserLanding).address;
-        const country: string = user.country;
-        const state: string = user.state;
-        const department: string = user.department;
-        const locality: string = user.locality;
+        const country: string = this.ifUndefined( user.country );
+        const state: string = this.ifUndefined( user.state );
+        const department: string = this.ifUndefined( user.department );
+        const locality: string = this.ifUndefined( user.locality );
         
-        const place_id: string = user.place_id;
+        const place_id: string = this.ifUndefined( user.place_id );
 
         this.place = {
             address: address,
@@ -348,6 +337,7 @@ export class GeoPlacesApi {
     }
     public hasSelected(): boolean {
         // Controla que no sea null y a su vez que tenga asignado country
-        return this.getPlaceSelected() && this.getPlaceSelected().Country.short ? true : false;
+        const country = this.getPlaceSelected() ? '' : this.getPlaceSelected().Country.short;
+        return  country !== null && country !== '' ? true : false;
     }
 }
