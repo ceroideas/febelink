@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IonicSelectableComponent } from 'ionic-selectable';
+import { GeoPlacesModel } from 'src/app/models/geoplaces.model';
 import { ApiService } from 'src/app/services/api.service';
+import { GeoPlacesApi } from 'src/app/services/geoplaces.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 
@@ -11,29 +11,42 @@ import { UserLanding } from '../../models/user-landing';
   templateUrl: './user-data-form.component.html',
   styleUrls: ['./user-data-form.component.scss'],
 })
-export class UserDataFormComponent implements OnInit {
-  provincias: any[];
-  localidades: any[];
-  provincia: any;
-  localidad: any;
+export class UserDataFormComponent implements OnInit, AfterViewInit {
+  
 
   constructor(
     private utils: UtilitiesService
     , private modalCtrl: ModalController
-    , private api: ApiService
+    , private geoPlaces: GeoPlacesApi
     ) { }
 
-  ngOnInit() {
-    this.obtenerProvincias()
+  ngOnInit() { }
+
+  ngAfterViewInit() {
+    this.geoPlaces
+      .OnResponse(( place: GeoPlacesModel ) => {
+          this.userData.address = place.address;
+          this.userData.country = place.Country.short;
+          this.userData.state = place.State.long;
+          this.userData.department = place.Department.long;
+          this.userData.locality = place.Locality.long;
+          this.userData.place_id = place.place_id;
+      })
+      .OnError(( err ) => {
+          console.log( 'Got this err', err );
+          this.userData.address = null;
+          this.userData.country = null;
+          this.userData.state = null;
+          this.userData.department = null;
+          this.userData.locality = null;
+          this.userData.place_id = null;
+      })
+      .initModal( 'address' );
   }
 
   userData:UserLanding = {};
 
-  getUserData(){
-
-    this.userData.province_id = this.provincia?.id;
-    this.userData.town_id = this.localidad?.id;
-
+  public getUserData(){
     if(!this.userData.name){
       this.utils.showToast("Rellena el nombre");
       return;
@@ -46,66 +59,16 @@ export class UserDataFormComponent implements OnInit {
     } else if(!this.userData.dni){
       this.utils.showToast("Rellena el DNI");
       return;
-    } else if(!this.userData.address){
-      this.utils.showToast("Introduce tu dirección completa");
+    } else if( !this.geoPlaces.hasSelected() ){
+      this.utils.showToast("Escribe y selecciona tu dirección completa");
       return;
     } else if(!this.userData.phone){
       this.utils.showToast("Introduce tu número de teléfono");
       return;
-    } else if(!this.userData.province_id){
-      this.utils.showToast("Introduce tu provincia");
-      return;
-    } else if(!this.userData.town_id){
-      this.utils.showToast("Introduce tu localidad");
-      return;
     }
-    // console.log(this.userData);
+    // Esto es para que actualice los datos con lo que ha seleccionado
+    this.geoPlaces.fillUserPlace( this.userData );
+
     this.modalCtrl.dismiss({userCompleteData: this.userData});
   }
-
-  async obtenerProvincias() {
-    (await this.api.obtenerProvincias()).subscribe((provincias) => {
-        this.provincias = provincias;
-        
-        if (this.userData.province_id != null) {
-            let prov = this.provincias.filter(
-                (x) => x.id == this.userData.province_id
-            );
-            this.provincia = prov[0];
-            //this.form.get('provincia').setValue(this.provincia);
-            this.obtenerLocalidades(this.userData.province_id);
-        }
-    });
-  }
-
-  async obtenerLocalidades(id_provincia) {
-      (await this.api.obtenerLocalidades(id_provincia)).subscribe(
-          (localidades) => {
-              this.localidades = localidades;
-              if (this.userData.town_id != null) {
-                  let loc = this.localidades.filter((x) => x.id == this.userData.town_id);
-                  this.localidad = loc[0];
-              }
-          }
-      );
-  }
-
-  public provinciasChange(event: {
-    component: IonicSelectableComponent;
-    value: any;
-  }): void {
-      this.localidades = [];
-      this.provincia = event.value;
-      this.localidad = null;
-      this.obtenerLocalidades(event.value.id);
-      // this.saveProvince = event.value.name;
-      //console.log(this.saveProvince);
-  }
-
-  public localidadesChange(event: {
-    component: IonicSelectableComponent;
-    value: any;
-}): void {
-    this.localidad = event.value;
-}
 }

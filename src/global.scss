@@ -131,3 +131,9 @@ ionic-selectable-modal {
         --height: 460px;
     }
 }
+
+// Para eliminar el **Powered By Google** en el Autocomplete de Google Places API
+.pac-container:after {
+    background-image: none !important;
+    height: 0px;
+}
