@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GeoPlacesModel } from 'src/app/models/geoplaces.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -12,17 +12,19 @@ import { UserLanding } from '../../models/user-landing';
   styleUrls: ['./user-data-form.component.scss'],
 })
 export class UserDataFormComponent implements OnInit, AfterViewInit {
-  
 
   constructor(
     private utils: UtilitiesService
     , private modalCtrl: ModalController
     , private geoPlaces: GeoPlacesApi
+    , private elementRef: ElementRef
     ) { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
+    const address = this.elementRef.nativeElement.querySelector( '#address' );
+               
     this.geoPlaces
       .OnResponse(( place: GeoPlacesModel ) => {
           this.userData.address = place.address;
@@ -41,7 +43,7 @@ export class UserDataFormComponent implements OnInit, AfterViewInit {
           this.userData.locality = null;
           this.userData.place_id = null;
       })
-      .initModal( 'address' );
+      .initModal( address );
   }
 
   userData:UserLanding = {};

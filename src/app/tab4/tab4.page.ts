@@ -222,10 +222,12 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
 
                 this.displayOpnionsGraphics();
                 
+                const direccion_desktop = this.elementRef.nativeElement.querySelector( '#direccion_desktop' );
+                const direccion_mobile = this.elementRef.nativeElement.querySelector( '#direccion_mobile' );
                 this.geoPlaces
                     .OnResponse(( place: GeoPlacesModel ) => {})
                     .OnError(( err ) => {})
-                    .init( 'direccion_desktop', 'direccion_mobile' );
+                    .init( direccion_desktop, direccion_mobile );
             });
             this.loading = false;
         });
@@ -249,7 +251,14 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
 
     displayOpnionsGraphics() {
         if (this.total_opinions > 0) {
-            this.barChart = new Chart(this.barCanvas.nativeElement, {
+            // Extra control just in case that element is not declared yet
+            let barCanvasNativeEl;
+            if( this.barCanvas === null || this.barCanvas === undefined ) {
+                barCanvasNativeEl = this.elementRef.nativeElement.querySelector( '#barCanvas' );
+             } else
+                barCanvasNativeEl = this.barCanvas.nativeElement;
+            
+            this.barChart = new Chart( barCanvasNativeEl, {
                 type: 'horizontalBar',
                 data: {
                     labels: this.opinion_types,
@@ -309,7 +318,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
             telefono: this.form.get('telefono').value,
             
             // TODO: reemplazar por GeoPlacesAPI columns
-            direccion: this.form.get('direccion').value,
+            direccion: place.address,
             country: place.Country.short,
             state: place.State.long,
             department: place.Department.long,
