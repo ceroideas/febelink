@@ -1,3 +1,49 @@
+ul {
+  font-size: 14px;
+  color: var(--ion-color-darken);
+  li{
+    margin-top: 10px;
+  }
+}
+
+.advantages{
+  display: flex;
+  margin-top: 20px;
+
+  .icon{
+    height: 50px;
+    display: flex;
+    margin-right: 10px;
+    ion-icon {
+      font-size: 30px;
+      color: var(--ion-color-success);
+    }   
+  }
+  .info{
+    height: 50px;
+    p{
+      margin: 0;
+      font-size: 12px;
+      opacity: .8;
+    }
+  }
+
+}
+.container{
+  margin: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+
+/*
 .btn-container {
   width: 100%;
   display: flex;
@@ -66,3 +112,4 @@ ion-card-title ion-icon {
 .md.hidden_md {
   display: none;
 }
+*/

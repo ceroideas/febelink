@@ -716,29 +716,37 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
     }
 
     async showSubscription(alert_message) {
-        let alert = await this.alertCtrl.create({
-            header: this.translateService.instant("tabs.tab4.alerts.improve"),
-            message: alert_message,
-            buttons: [
-                {
-                    text: this.translateService.instant("common.buttons.cancel"),
-                    role: 'cancel',
-                },
-                {
-                    text: this.translateService.instant("common.labelSubsribe"),
-                    handler: async () => {
-                        const suscribirseModal = await this.modalCtrl.create({
-                            component: SuscribirsePage,
-                        });
-
-                        await suscribirseModal.present();
-                        const {data} = await suscribirseModal.onWillDismiss();
-                        this.obtenerPerfil();
-                    },
-                },
-            ],
+        const suscribirseModal = await this.modalCtrl.create({
+            component: SuscribirsePage,
         });
-        await alert.present();
+
+        await suscribirseModal.present();
+        const {data} = await suscribirseModal.onWillDismiss();
+        this.obtenerPerfil();
+
+        // let alert = await this.alertCtrl.create({
+        //     header: this.translateService.instant("tabs.tab4.alerts.improve"),
+        //     message: alert_message,
+        //     buttons: [
+        //         {
+        //             text: this.translateService.instant("common.buttons.cancel"),
+        //             role: 'cancel',
+        //         },
+        //         {
+        //             text: this.translateService.instant("common.labelSubsribe"),
+        //             handler: async () => {
+        //                 const suscribirseModal = await this.modalCtrl.create({
+        //                     component: SuscribirsePage,
+        //                 });
+
+        //                 await suscribirseModal.present();
+        //                 const {data} = await suscribirseModal.onWillDismiss();
+        //                 this.obtenerPerfil();
+        //             },
+        //         },
+        //     ],
+        // });
+        // await alert.present();
     }
 
     /**

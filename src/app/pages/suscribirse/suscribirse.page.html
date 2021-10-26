@@ -1,12 +1,41 @@
-<ion-header>
-    <ion-toolbar color="febelink">
-        <ion-title *ngIf="subscription == null">Suscripciones</ion-title>
-        <ion-title *ngIf="subscription != null">Mis suscripciones</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="closeModal()">Cancelar</ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header>
+<ion-icon class="close" name="close" (click)="closeModal()"></ion-icon>
+
+<!--
+<ion-content>
+    <div class="container">
+        <div class="ion-text-center">
+            <h2>¡Febelink Pro!</h2>
+            <ion-text color="medium">
+                <h5 style="font-size: 16px">9,95€/mes + IVA. Sin compromiso, cancelación en cualquier momento.</h5>
+            </ion-text>
+        </div>
+        <div class="advantages">
+            <div class="icon">
+                <ion-icon name="checkmark-circle-sharp"></ion-icon>
+            </div>
+            <div class="info">
+                <b>Tres subsectores</b>
+                <p>Permite elegir tres subsectores dentro del mismo sector para tener más visibilidad y llegar a más clientes.</p>
+            </div>
+        </div>
+        <div class="advantages">
+            <div class="icon">
+                <ion-icon name="checkmark-circle-sharp"></ion-icon>
+            </div>
+            <div class="info">
+                <b>Descripción ilimitada</b>
+                <p>Cuenta todo lo que necesites sobre tu servicio sin límite de caracteres en la descripción.</p>
+            </div>
+        </div>
+    </div>
+    <img src="assets/imgs/profesionales.jpg">
+    <div class="ion-text-center">
+        <ion-button (click)="onClick()" shape="round" >
+            ¡Vamos allá!
+        </ion-button>
+    </div>
+</ion-content>
+-->
 
 <ion-content class="ion-padding">
     <div *ngIf="subscription == null">
