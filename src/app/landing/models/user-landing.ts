@@ -7,6 +7,8 @@ export interface UserLanding {
     phone?: string;
 
     address?: string;
+    address_rest?: string;
+
     province_id?:number;
     town_id?:number;
     country?: string;

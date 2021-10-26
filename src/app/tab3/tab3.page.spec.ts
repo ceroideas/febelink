@@ -74,6 +74,7 @@ describe('Tab3Page', () => {
       descripcion: "",
       
       direccion: "",
+      direccion_resto: "",
       province_id: 0,
       town_id: 0,
       country: "",

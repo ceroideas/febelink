@@ -152,8 +152,10 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
       name: [this.perfil.name],
       telefono: [this.perfil.telefono],
       descripcion: [this.perfil.descripcion],
-
+      
       direccion: [this.geoPlaces.place.address],
+      direccion_resto: [this.perfil.direccion_resto],
+
       country: [this.perfil.country],
       state: [this.perfil.state],
       department: [this.perfil.department],
@@ -318,12 +320,14 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
             telefono: this.form.get('telefono').value,
             
             // TODO: reemplazar por GeoPlacesAPI columns
-            direccion: place.address,
-            country: place.Country.short,
-            state: place.State.long,
-            department: place.Department.long,
-            locality: place.Locality.long,
-            place_id: place.place_id,
+            direccion: !place ? '' : place.address,
+            direccion_resto: this.form.get('direccion_resto').value,
+
+            country: !place ? '' : place.Country.short,
+            state: !place ? '' : place.State.long,
+            department: !place ? '' : place.Department.long,
+            locality: !place ? '' : place.Locality.long,
+            place_id: !place ? '' : place.place_id,
             
             sector: this.form.get('sector').value,
             sub_sector: this.form.get('sub_sector').value,
@@ -350,6 +354,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                                         p.telefono,
                                         
                                         p.direccion,
+                                        p.direccion_resto,
                                         p.country,
                                         p.state,
                                         p.department,
@@ -483,6 +488,7 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
                                     p.telefono,
                                     
                                     p.direccion,
+                                    p.direccion_resto,
                                     p.country,
                                     p.state,
                                     p.department,

@@ -337,7 +337,7 @@ export class GeoPlacesApi {
     }
     public hasSelected(): boolean {
         // Controla que no sea null y a su vez que tenga asignado country
-        const country = this.getPlaceSelected() ? '' : this.getPlaceSelected().Country.short;
+        const country = this.getPlaceSelected() ? this.getPlaceSelected().Country.short : '';
         return  country !== null && country !== '' ? true : false;
     }
 }

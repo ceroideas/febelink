@@ -17,6 +17,7 @@
         "labelName": "Name",
         "labelEmail": "Email",
         "labelAddress": "Address",
+        "labelAddressRest": "Rest Address",
         "labelPhone": "Phone",
         "labelDNI": "DNI / CIF",
         "labelNewPass": "New password",
@@ -33,7 +34,16 @@
             "pass": "Passwword",
             "passEr": "The password must be at least 8 digits with numbers and letters",
             "tel": "Phone",
-            "id": "ID (with letter)"
+            "id": "ID (with letter)",
+
+            "errors": {
+                "name": "Fill in the name",
+                "surname": "Fill in the surname",
+                "email": "Fill in the email",
+                "id": "Fill in the Identity Document",
+                "address": "Write and select your full Address",
+                "phone": "Fill in your Phone Number"
+            }
         },
 
         "buttons": {

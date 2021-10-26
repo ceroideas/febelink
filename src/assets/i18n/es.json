@@ -17,6 +17,7 @@
         "labelName": "Nombre",
         "labelEmail": "Email",
         "labelAddress": "Dirección",
+        "labelAddressRest": "Resto Dirección",
         "labelPhone": "Teléfono",
         "labelDNI": "DNI / CIF",
         "labelNewPass": "Contraseña nueva",
@@ -34,7 +35,16 @@
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
-            "id": "DNI (con letra)"
+            "id": "DNI (con letra)",
+
+            "errors": {
+                "name": "Rellena el nombre",
+                "surname": "Rellena el apellido",
+                "email": "Rellena el email",
+                "id": "Rellena el Documento de Identidad",
+                "address": "Escribe y selecciona tu dirección completa",
+                "phone": "Introduce tu número de teléfono"
+            }
         },
 
         "buttons": {
