@@ -337,106 +337,101 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
             if (this.comprobarContraseña(p.password, p.passwordConfirmation)) {
                 (await this.api.existeEmail(p.email)).subscribe(async (value) => {
                     if(!value || (p.email === this.emailPrevio)){
+                        
+                        if((p.dni === this.dniPrevio) || (p.dni != null && p.dni.trim() !='' )){
+                            this.utilities.showLoading();
+                            (
+                                await this.api.editarOfertanteYContra(
+                                    p.name,
+                                    p.email,
+                                    p.descripcion,
+                                    p.telefono,
+                                    
+                                    p.direccion,
+                                    p.country,
+                                    p.state,
+                                    p.department,
+                                    p.locality,
+                                    p.place_id,
 
-                        (await this.api.existeDNI(p.dni)).subscribe(async (value) => {
-
-                            if((p.dni == null || p.dni =='') || (p.dni === this.dniPrevio) || (p.dni != null && p.dni !='' && !value )){
-                                this.utilities.showLoading();
-                                (
-                                    await this.api.editarOfertanteYContra(
-                                        p.name,
-                                        p.email,
-                                        p.descripcion,
-                                        p.telefono,
-                                        
-                                        p.direccion,
-                                        p.country,
-                                        p.state,
-                                        p.department,
-                                        p.locality,
-                                        p.place_id,
-
-                                        p.sector,
-                                        p.sub_sector,
-                                        p.dni,
-                                        this.base64img,
-                                        p.password
-                                    )
-                                ).subscribe((res) => {
-                                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
-                                        res.user.descripcion="";
-                                    }
-                                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
-                                        res.user.direccion="";
-                                    }
-                                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
-                                        res.user.telefono="";
-                                    }
-                                    response = res;
-                                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
-                                    dniinput.value=res.user.dni;
-                                    this.utilities.showToast(
-                                        this.translateService.instant("tabs.tab4.done")
-                                    );
-                                    this.dniPrevio = p.dni;
-                                    this.utilities.saveUserData(res.user);
-                                    this.utilities.dismissLoading();
-
-                                    // Para actualizar la imagen en el menú cuando haya seleccionado en perfil
-                                    ( document.getElementById( 'menuImg' ) as HTMLImageElement ).src = this.base64img;
-                                },
-                                (err) => {
-                                    if (err.status === 422) {
-                                        let arrayErrores = [];
-                                        if(err.error.nombre == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.name") );
-                                        }
-                                        if(err.error.email == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.mail") );
-                                        }
-                                        //Check phone number
-                                        if(err.error.vTelefono == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.phone") );
-                                        }
-                                        //Check DNI
-                                        if(err.error.vDNI == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.idFormat") );
-                                        }
-                                        
-                                        //Show all the errors
-                                        arrayErrores = [].concat.apply([], arrayErrores);
-        
-                                        let cadenaErrores = `<ul>`;
-                                        for (let error of arrayErrores) {
-                                            cadenaErrores += `<li>${error}</li>`;
-                                        }
-                                        cadenaErrores += `</ul>`;
-        
-                                        this.utilities.showAlert(
-                                            this.translateService.instant("tabs.tab4.errors.title"),
-                                            this.translateService.instant("tabs.tab4.errors.message") + cadenaErrores
-                                        );
-                                    } else {
-                                        this.utilities.showAlert(
-                                            this.translateService.instant("tabs.tab4.errors.title"),
-                                            this.translateService.instant("tabs.tab4.errors.messageChk")
-                                        );
-                                    }
-                                this.utilities.dismissLoading();
+                                    p.sector,
+                                    p.sub_sector,
+                                    p.dni,
+                                    this.base64img,
+                                    p.password
+                                )
+                            ).subscribe((res) => {
+                                if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                                    res.user.descripcion="";
                                 }
-                                );
-        
-                            }
-        
-                            else{
+                                if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                                    res.user.direccion="";
+                                }
+                                if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                                    res.user.telefono="";
+                                }
+                                response = res;
+                                var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                                dniinput.value=res.user.dni;
                                 this.utilities.showToast(
-                                    this.translateService.instant("tabs.tab4.errors.id")
+                                    this.translateService.instant("tabs.tab4.done")
                                 );
-                                this.form.controls.dni.setValue(this.dniPrevio);
+                                this.dniPrevio = p.dni;
+                                this.utilities.saveUserData(res.user);
+                                this.utilities.dismissLoading();
+
+                                // Para actualizar la imagen en el menú cuando haya seleccionado en perfil
+                                ( document.getElementById( 'menuImg' ) as HTMLImageElement ).src = this.base64img;
+                            },
+                            (err) => {
+                                if (err.status === 422) {
+                                    let arrayErrores = [];
+                                    if(err.error.nombre == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.name") );
+                                    }
+                                    if(err.error.email == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.mail") );
+                                    }
+                                    //Check phone number
+                                    if(err.error.vTelefono == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.phone") );
+                                    }
+                                    //Check DNI
+                                    if(err.error.vDNI == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.idFormat") );
+                                    }
+                                    
+                                    //Show all the errors
+                                    arrayErrores = [].concat.apply([], arrayErrores);
+    
+                                    let cadenaErrores = `<ul>`;
+                                    for (let error of arrayErrores) {
+                                        cadenaErrores += `<li>${error}</li>`;
+                                    }
+                                    cadenaErrores += `</ul>`;
+    
+                                    this.utilities.showAlert(
+                                        this.translateService.instant("tabs.tab4.errors.title"),
+                                        this.translateService.instant("tabs.tab4.errors.message") + cadenaErrores
+                                    );
+                                } else {
+                                    this.utilities.showAlert(
+                                        this.translateService.instant("tabs.tab4.errors.title"),
+                                        this.translateService.instant("tabs.tab4.errors.messageChk")
+                                    );
+                                }
+                            this.utilities.dismissLoading();
                             }
-
-                        })
-
+                            );
+    
+                        }
+    
+                        else{
+                            this.utilities.showToast(
+                                this.translateService.instant("tabs.tab4.errors.id")
+                            );
+                            this.form.controls.dni.setValue(this.dniPrevio);
+                        }
                     }
 
                     else{
@@ -469,109 +464,105 @@ if(this.inputpass1.trim().match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[
             (await this.api.existeEmail(p.email)).subscribe(async (value) => {
 
                 if(!value || (p.email === this.emailPrevio)){
-                    (await this.api.existeDNI(p.dni)).subscribe(async (value) => {
+                    
+                    if((p.dni != null && p.dni.trim() !='')){
+                        this.utilities.showLoading();
+    
+    
+                        (
+                            await this.api.editarOfertante(
+                                p.name,
+                                p.email,
+                                p.descripcion,
+                                p.telefono,
+                                
+                                p.direccion,
+                                p.country,
+                                p.state,
+                                p.department,
+                                p.locality,
+                                p.place_id,
 
-                        if((p.dni == null || p.dni =='') || (p.dni === this.dniPrevio) || (p.dni != null && p.dni !='' && !value)){
-                            this.utilities.showLoading();
-        
-        
-                            (
-                                await this.api.editarOfertante(
-                                    p.name,
-                                    p.email,
-                                    p.descripcion,
-                                    p.telefono,
-                                    
-                                    p.direccion,
-                                    p.country,
-                                    p.state,
-                                    p.department,
-                                    p.locality,
-                                    p.place_id,
-
-                                    p.sector,
-                                    p.sub_sector,
-                                    p.dni,
-                                    this.base64img
-                                )
-                            ).subscribe(
-                                (res) => {
-                                    if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
-                                        res.user.descripcion="";
-                                    }
-                                    if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
-                                        res.user.direccion="";
-                                    }
-                                    if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
-                                        res.user.telefono="";
-                                    }
-                                    response = res;
-                                    var dniinput = document.getElementById('dninie') as HTMLInputElement;
-                                    dniinput.value=res.user.dni;
-                                    this.utilities.showToast(
-                                        this.translateService.instant("tabs.tab4.done")
-                                    );
-                                    this.dniPrevio = p.dni;
-                                    this.emailPrevio = p.email;
-                                    this.utilities.saveUserData(res.user);
-                                    this.utilities.dismissLoading();
-
-                                    // Para actualizar la imagen en el menú cuando haya seleccionado en perfil
-                                    ( document.getElementById( 'menuImg' ) as HTMLImageElement ).src = this.base64img;
-                                },
-                                (err) => {
-                                    if (err.status === 422) {
-                                        let arrayErrores = [];
-                                        if(err.error.nombre == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.name") );
-                                        }
-                                        if(err.error.email == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.mail") );
-                                        }
-                                        //Check phone number
-                                        if(err.error.vTelefono == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.phone") );
-                                        }
-                                        //Check DNI
-                                        if(err.error.vDNI == false){
-                                            arrayErrores.push( this.translateService.instant("tabs.tab4.errors.idFormat") );
-                                        }
-                                        
-                                        //Show all the errors
-                                        arrayErrores = [].concat.apply([], arrayErrores);
-        
-                                        let cadenaErrores = `<ul>`;
-                                        for (let error of arrayErrores) {
-                                            cadenaErrores += `<li>${error}</li>`;
-                                        }
-                                        cadenaErrores += `</ul>`;
-        
-                                        this.utilities.showAlert(
-                                            this.translateService.instant("tabs.tab4.errors.title"),
-                                            this.translateService.instant("tabs.tab4.errors.message") + cadenaErrores
-                                        );
-                                    } else {
-                                        this.utilities.showAlert(
-                                            this.translateService.instant("tabs.tab4.errors.title"),
-                                            this.translateService.instant("tabs.tab4.errors.messageChk")
-                                        );
-                                    }
-                                    //this.utilities.showAlert('Error al editar los datos', 'Comprueba que todos los campos están introducidos.');
-                                    this.utilities.dismissLoading();
+                                p.sector,
+                                p.sub_sector,
+                                p.dni,
+                                this.base64img
+                            )
+                        ).subscribe(
+                            (res) => {
+                                if(p.descripcion=="" || p.descripcion=="null" || p.descripcion==null){
+                                    res.user.descripcion="";
                                 }
-                            );
-        
-                        }
+                                if(p.direccion=="" || p.direccion=="null" || p.direccion==null){
+                                    res.user.direccion="";
+                                }
+                                if(p.telefono=="" || p.telefono=="null" || p.telefono==null){
+                                    res.user.telefono="";
+                                }
+                                response = res;
+                                var dniinput = document.getElementById('dninie') as HTMLInputElement;
+                                dniinput.value=res.user.dni;
+                                this.utilities.showToast(
+                                    this.translateService.instant("tabs.tab4.done")
+                                );
+                                this.dniPrevio = p.dni;
+                                this.emailPrevio = p.email;
+                                this.utilities.saveUserData(res.user);
+                                this.utilities.dismissLoading();
 
-                        else{
-                            this.utilities.showToast(
-                                this.translateService.instant("tabs.tab4.errors.id")
-                            );
-                            this.form.controls.dni.setValue(this.dniPrevio);
-                        }
+                                // Para actualizar la imagen en el menú cuando haya seleccionado en perfil
+                                ( document.getElementById( 'menuImg' ) as HTMLImageElement ).src = this.base64img;
+                            },
+                            (err) => {
+                                if (err.status === 422) {
+                                    let arrayErrores = [];
+                                    if(err.error.nombre == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.name") );
+                                    }
+                                    if(err.error.email == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.mail") );
+                                    }
+                                    //Check phone number
+                                    if(err.error.vTelefono == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.phone") );
+                                    }
+                                    //Check DNI
+                                    if(err.error.vDNI == false){
+                                        arrayErrores.push( this.translateService.instant("tabs.tab4.errors.idFormat") );
+                                    }
+                                    
+                                    //Show all the errors
+                                    arrayErrores = [].concat.apply([], arrayErrores);
+    
+                                    let cadenaErrores = `<ul>`;
+                                    for (let error of arrayErrores) {
+                                        cadenaErrores += `<li>${error}</li>`;
+                                    }
+                                    cadenaErrores += `</ul>`;
+    
+                                    this.utilities.showAlert(
+                                        this.translateService.instant("tabs.tab4.errors.title"),
+                                        this.translateService.instant("tabs.tab4.errors.message") + cadenaErrores
+                                    );
+                                } else {
+                                    this.utilities.showAlert(
+                                        this.translateService.instant("tabs.tab4.errors.title"),
+                                        this.translateService.instant("tabs.tab4.errors.messageChk")
+                                    );
+                                }
+                                //this.utilities.showAlert('Error al editar los datos', 'Comprueba que todos los campos están introducidos.');
+                                this.utilities.dismissLoading();
+                            }
+                        );
+    
+                    }
 
-                        
-                    });
+                    else{
+                        this.utilities.showToast(
+                            this.translateService.instant("tabs.tab4.errors.id")
+                        );
+                        this.form.controls.dni.setValue(this.dniPrevio);
+                    }
                 }
 
                 else{
