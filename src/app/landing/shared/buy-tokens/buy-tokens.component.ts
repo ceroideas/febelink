@@ -71,6 +71,7 @@ export class BuyTokensComponent implements OnInit {
         id: profile.id,
 
         address: profile.direccion,
+        address_rest: profile.direccion_resto,
         country: profile.country,
         state: profile.state,
         department: profile.department,
@@ -100,6 +101,7 @@ export class BuyTokensComponent implements OnInit {
         formData.append('dni', userLanding.dni);
         
         formData.append('direccion', userLanding.address);
+        formData.append('direccion_resto', userLanding.address_rest);
         formData.append('country', userLanding.country);
         formData.append('state', userLanding.state);
         formData.append('department', userLanding.department);
@@ -154,6 +156,7 @@ export class BuyTokensComponent implements OnInit {
     profile.telefono = userLanding.phone;
     
     profile.direccion = userLanding.address;
+    profile.direccion_resto = userLanding.address_rest;
     profile.country = userLanding.country;
     profile.state = userLanding.state;
     profile.department = userLanding.department;

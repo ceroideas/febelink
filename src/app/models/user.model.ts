@@ -6,7 +6,7 @@
  *
  * @interface
  */
-export interface IUser {
+ export interface IUser {
     id: number;
     role_id: number;
     name: string;
@@ -20,6 +20,8 @@ export interface IUser {
     descripcion: string | null;
     
     direccion: string | null;
+    direccion_resto: string | null;
+    
     province_id: number;
     town_id: number | null;
     country: string | null;

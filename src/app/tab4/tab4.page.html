@@ -68,6 +68,20 @@
 
       <ion-grid class="desktop" fixed style="margin: 10px 0px">
         <ion-row>
+          <ion-col size="12">
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
+              <ion-textarea
+                [value]="perfil?.descripcion"
+                type="text"
+                [maxlength]="max_bio"
+                formControlName="descripcion"
+              ></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
@@ -94,24 +108,25 @@
         </ion-row>
 
         <ion-row>
-          <ion-col size="6">
-            <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
-              <ion-textarea
-                [value]="perfil?.descripcion"
-                type="text"
-                [maxlength]="max_bio"
-                formControlName="descripcion"
-              ></ion-textarea>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6" style="margin-top: 23px">
+          <ion-col size="12">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
               <ion-input
                 [value]="perfil?.direccion"
                 formControlName="direccion"
                 id="direccion_desktop"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelAddressRest' | translate }} </ion-label>
+              <ion-input
+                [value]="perfil?.direccion_resto"
+                formControlName="direccion_resto"
               ></ion-input>
             </ion-item>
           </ion-col>
@@ -227,6 +242,13 @@
 
       <div class="mobile">
         <ion-item class="input">
+          <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
+          <ion-textarea
+            [maxlength]="max_bio"
+            formControlName="descripcion"
+          ></ion-textarea>
+        </ion-item>
+        <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
           <ion-input clearInput type="text" formControlName="name"></ion-input>
         </ion-item>
@@ -239,18 +261,18 @@
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
-          <ion-textarea
-            [maxlength]="max_bio"
-            formControlName="descripcion"
-          ></ion-textarea>
-        </ion-item>
-        <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
           <ion-input
             [value]="perfil?.direccion"
             formControlName="direccion"
             id="direccion_mobile"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="input">
+          <ion-label position="floating"> {{ 'common.labelAddressRest' | translate }} </ion-label>
+          <ion-input
+            [value]="perfil?.direccion_resto"
+            formControlName="direccion_resto"
           ></ion-input>
         </ion-item>
         <ion-item class="input">
