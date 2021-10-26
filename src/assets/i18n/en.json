@@ -19,7 +19,7 @@
         "labelAddress": "Address",
         "labelAddressRest": "Rest Address",
         "labelPhone": "Phone",
-        "labelDNI": "DNI / CIF",
+        "labelDNI": "Identity Document",
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
@@ -34,7 +34,7 @@
             "pass": "Passwword",
             "passEr": "The password must be at least 8 digits with numbers and letters",
             "tel": "Phone",
-            "id": "ID (with letter)",
+            "id": "Identity Document",
 
             "errors": {
                 "name": "Fill in the name",
@@ -158,8 +158,8 @@
 
                 "phone": "The phone's format is not correct",
 
-                "id": "The DNI/NIE/CIF you have entered is not valid",
-                "idFormat": "The format of DNI/NIE/CIF is not correct",
+                "id": "The Identity Document you have entered is not valid",
+                "idFormat": "The format of Identity Document is not correct",
 
                 "image": "Error getting image",
                 "imageMaxSize": "Image too large, max. 300KB",
