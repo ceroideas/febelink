@@ -22,10 +22,11 @@ export class SuscribirsePage implements OnInit {
 
     card: any;
     subscription: any;
-    selected: any = null;
+    selected:string;
     clicked: any = 0;
     subscriptions: any[];
     perfil: any;
+    subscriptionDetails:Map<string, SubscriptionDetails> = new Map();
 
     constructor(private stripeService: StripeService,
                 private modalCtrl: ModalController,
@@ -39,17 +40,17 @@ export class SuscribirsePage implements OnInit {
 
     async ngOnInit() {
 
-        (await this.api.getAllSubscriptions()).subscribe(suscriptions => {
+        this.fillSubscriptionStaticInfo();
 
+        (await this.api.getAllSubscriptions()).subscribe((suscriptions:[]) => {
 
             this.subscriptions = suscriptions;
 
             this.utilities.getUserSubscription().then(async subscription => {
-
                 this.subscription = subscription;
                 if (this.subscription.length == 0) {
                     this.subscription = null;
-                    this.selected = 1;//NEW
+                    this.selected = this.subscriptions[0].id;//NEW
                 }
 
                 console.log(this.subscription);
@@ -57,7 +58,7 @@ export class SuscribirsePage implements OnInit {
                     this.selected = this.subscription[0].stripe_plan;
                 }
 
-                this.setupStripe();
+                // this.setupStripe();
 
             });
         });
@@ -67,79 +68,97 @@ export class SuscribirsePage implements OnInit {
         });
     }
 
-    ionViewDidLoad() {
-        this.setupStripe();
+    private fillSubscriptionStaticInfo() {
+        const advantagesPro = [
+            { title: 'Tres subsectores', description: 'Permite elegir tres subsectores dentro del mismo sector para tener más visibilidad y llegar a más clientes.' },
+            { title: 'Descripción de 1000 caracteres', description: 'Cuenta todo lo que necesites sobre tu servicio sin límite de caracteres en la descripción.' },
+            { title: 'Ventajas Free', description: 'Incluye todas las ventajas que puedes disfrutar en el plan free.' },
+            { title: 'Recibe pagos de forma fácil', description: 'Recibe y realiza pagos con otros usuarios a través de Febelink.' },
+        ];
+        const advantagesFree = [
+            { title: 'Publica tus búsquedas', description: 'Realiza todas las búsquedas que necesites, encuentra clientes y recomienda a otros usuarios.' },
+            { title: 'Contacta con usuarios', description: 'Puedes hacer y responder ofertas sin limitaciones.' },
+            { title: 'Chat y notificaciones', description: 'Habla con tus potenciales clientes todo lo que necesites y reibe notificaciones para no perderte ninguna oportunidad.' },
+            { title: 'Foto o logo', description: 'Puedes poner una imagen de tu empresa o marca personal.' },
+            { title: 'Descripción de 50 caracteres', description: 'Perfecta para una breve descripción sobre tu servicio' },
+        ];
+        this.subscriptionDetails.set('febe-pro', { description: '9,95€/mes + IVA. Sin compromiso, cancelación en cualquier momento.', advantages: advantagesPro });
+        this.subscriptionDetails.set('febe-prom', { description: 'Promoción Pro + Foto/Logo por 0€/mes.', advantages: advantagesFree });
     }
 
-    setupStripe() {
+    // ionViewDidLoad() {
+    //     this.setupStripe();
+    // }
 
-        var style = {
-            base: {
-                color: '#32325d',
-                lineHeight: '24px',
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                    color: '#aab7c4'
-                }
-            },
-            invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a'
-            }
-        };
+    // setupStripe() {
 
-        this.stripeService.elements(this.elementsOptions)
-            .subscribe(elements => {
-                this.elements = elements;
+    //     var style = {
+    //         base: {
+    //             color: '#32325d',
+    //             lineHeight: '24px',
+    //             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    //             fontSmoothing: 'antialiased',
+    //             fontSize: '16px',
+    //             '::placeholder': {
+    //                 color: '#aab7c4'
+    //             }
+    //         },
+    //         invalid: {
+    //             color: '#fa755a',
+    //             iconColor: '#fa755a'
+    //         }
+    //     };
 
-                if (!this.card) {
-                    this.card = this.elements.create('card', {hidePostalCode: true, style: style});
-                    this.card.mount('#card-element');
-                }
-            });
+    //     this.stripeService.elements(this.elementsOptions)
+    //         .subscribe(elements => {
+    //             this.elements = elements;
 
-        this.card.addEventListener('change', event => {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
+    //             if (!this.card) {
+    //                 this.card = this.elements.create('card', {hidePostalCode: true, style: style});
+    //                 this.card.mount('#card-element');
+    //             }
+    //         });
 
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', event => {
-            event.preventDefault();
+    //     this.card.addEventListener('change', event => {
+    //         var displayError = document.getElementById('card-errors');
+    //         if (event.error) {
+    //             displayError.textContent = event.error.message;
+    //         } else {
+    //             displayError.textContent = '';
+    //         }
+    //     });
 
-            if (this.selected != null) {
-                this.stripeService.createToken(this.card, {}).subscribe(async result => {
-                    if (result.error) {
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-                    } else {
-                        this.utilities.showLoading();
+    //     var form = document.getElementById('payment-form');
+    //     form.addEventListener('submit', event => {
+    //         event.preventDefault();
 
-                        (await this.api.subscribe(this.selected, result.token.id)).subscribe(async response => {
+    //         if (this.selected != null) {
+    //             this.stripeService.createToken(this.card, {}).subscribe(async result => {
+    //                 if (result.error) {
+    //                     var errorElement = document.getElementById('card-errors');
+    //                     errorElement.textContent = result.error.message;
+    //                 } else {
+    //                     this.utilities.showLoading();
 
-                            console.log(response);
-                            await this.utilities.saveUserSubscription(response.subscription);
-                            console.log(result.token.id);
-                            this.card.clear();
-                            this.subscription = await this.utilities.getUserSubscription();
-                            this.utilities.dismissLoading();
-                            this.utilities.showToast('Suscrito correctamente');
+    //                     (await this.api.subscribe(this.selected, result.token.id)).subscribe(async response => {
 
-                        });
+    //                         console.log(response);
+    //                         await this.utilities.saveUserSubscription(response.subscription);
+    //                         console.log(result.token.id);
+    //                         this.card.clear();
+    //                         this.subscription = await this.utilities.getUserSubscription();
+    //                         this.utilities.dismissLoading();
+    //                         this.utilities.showToast('Suscrito correctamente');
 
-                    }
-                });
-            }
-        });
+    //                     });
+
+    //                 }
+    //             });
+    //         }
+    //     });
 
 
-    }
+    // }
 
 
     async openStripe(stripe_plan) {
@@ -190,4 +209,10 @@ export class SuscribirsePage implements OnInit {
 
     }
 
+}
+
+
+interface SubscriptionDetails {
+    description: string;
+    advantages: {title: string, description: string}[]
 }

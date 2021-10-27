@@ -41,45 +41,42 @@
     <div *ngIf="subscription == null">
         <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.id)"
                   [class.selected]="selected == subs.id">
+                  <!-- {{subs | json}} -->
             <ion-card-header>
                 <ion-card-title>
                     <ion-icon name="checkbox-outline" *ngIf="selected == subs.id"></ion-icon>
                     <ion-icon name="square-outline" *ngIf="selected != subs.id"></ion-icon>
                     {{ subs.name }}
-                    <div *ngIf="subs.id ===1" class="free-message-box">
+                    <!-- <div *ngIf="subs.stripe_plan === 'febe-pro'" class="free-message-box">
                         <span class="free-message">¡Disfruta de tus 15 días Premium gratis!</span>
-                    </div>
+                    </div> -->
                 </ion-card-title>
             </ion-card-header>
             <ion-card-content>
 
-                <div *ngIf="subs.id ===1">
-                    ¡Suscríbete a nuestro plan {{ subs.name }} por solo <span class="text-removed">{{ subs.price }}
-                    €</span> al mes! <br>
-                    Con este plan podrás: <br>
-                    <ul>
-                        <li>Añadir foto/logo de perfil.</li>
-                        <li>Usar más de 15 caracteres en tu descripción.</li>
-                        <li *ngIf="subs.max_families > 1">Elegir hasta {{ subs.max_families }} sectores.</li>
-                        <li>Elegir hasta {{ subs.max_subfamilies }} subsectores.</li>
-                    </ul>
+                <div >
+                    <div class="ion-text-center">
+                        <ion-text color="medium">
+                            <h5 style="font-size: 16px">{{subscriptionDetails.get(subs.stripe_plan)?.description}}</h5>
+                        </ion-text>
+                    </div>
+                    <div class="advantages" *ngFor="let advantage of subscriptionDetails.get(subs.stripe_plan)?.advantages">
+                        <div class="icon">
+                            <ion-icon name="checkmark-circle-sharp"></ion-icon>
+                        </div>
+                        <div class="info">
+                            <b>{{advantage.title}}</b>
+                            <p>{{advantage.description}}</p>
+                        </div>
+                    </div>
                 </div>
-
-                <div *ngIf="subs.id ===2">
-                    ¡Suscríbete a nuestro plan {{ subs.name }} por solo {{ subs.price }}€ al mes! <br>
-                    Con este plan podrás: <br>
-                    <ul>
-                        <li>Añadir foto/logo de perfil.</li>
-                        <li>Usar más de 15 caracteres en tu descripción.</li>
-                        <li *ngIf="subs.max_families > 1">Elegir hasta {{ subs.max_families }} sectores.</li>
-                        <li>Elegir hasta {{ subs.max_subfamilies }} subsectores.</li>
-                    </ul>
-                </div>
-
 
             </ion-card-content>
         </ion-card>
-        <ion-row style="width: 100%" class="hidden_ios">
+        <ion-button (click)="swapSubscription(selected)" expand="block" fill="clear" shape="round">
+            Cambiar mi plan
+        </ion-button>
+        <!-- <ion-row style="width: 100%" class="hidden_ios">
             <form action="/" method="post" id="payment-form" style="width: 100%">
                 <div class="form-row">
                     <div id="card-element">
@@ -100,11 +97,11 @@
         <ion-row style="width: 100%" class="hidden_md">
             <div style="text-align: center;padding-top: 20px;width: 100%">
                 <a target="_blank" class="button_a"
-                   href="http://febelink.com/menu/suscription-browser/{{selected}}/{{perfil.id}}">Suscribirme</a>
+                   href="http://febelink.com/menu/suscription-browser/{{selected}}/{{perfil?.id}}">Suscribirme</a>
             </div>
-        </ion-row>
+        </ion-row> -->
     </div>
-    <div *ngIf="subscription != null">
+    <!-- <div *ngIf="subscription != null">
         <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.stripe_plan)"
                   [class.selected]="selected == subs.stripe_plan">
             <ion-card-header>
@@ -156,5 +153,5 @@
         <ion-button color="danger" (click)="cancelSubscription()">
             Darme de baja
         </ion-button>
-    </div>
+    </div> -->
 </ion-content>

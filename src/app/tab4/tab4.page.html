@@ -58,6 +58,10 @@
             >{{ 'tabs.tab4.buttonAskRecommendation' | translate }} &nbsp;
             <ion-icon name="checkmark"> </ion-icon>
           </ion-button>
+
+    <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
+      Suscripción
+    </ion-button>
         </div>
       </div>
 
@@ -437,9 +441,6 @@
             (click)="suspended_profile()">
         {{ 'tabs.tab4.labelDisable' | translate }}
     <ion-icon name="suspended_profile"></ion-icon>
-    </ion-button>
-    <ion-button (click)="showSubscription('HOLA')" expand="block" fill="clear" shape="round">
-      PRO
     </ion-button>
   </div>
 </ion-content>
