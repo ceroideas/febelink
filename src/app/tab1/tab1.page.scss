@@ -150,8 +150,20 @@ ion-icon {
   color: green;
 }
 
-#google-button {
-  margin: 1.5em;
+.row-store {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5em;
+}
+
+.col-store {
+  text-align: center;
+}
+
+#google-button,
+#apple-button {
+  margin-top: 1.5em;
   width: 15em;
 }
 
