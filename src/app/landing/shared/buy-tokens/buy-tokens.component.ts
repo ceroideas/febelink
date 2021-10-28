@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
@@ -30,13 +30,9 @@ export class BuyTokensComponent implements OnInit {
   numTokens:number;
   numFiat:number;
   phaseToTokenCost:[];
-  langSelected: ILang;
 
   async ngOnInit() {
     this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
-    
-    this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   async justLogged(){
@@ -93,6 +89,7 @@ export class BuyTokensComponent implements OnInit {
         const userLanding:UserLanding = response.data.userCompleteData;
         // console.log(userLanding);
         this.landingSvc.setUser(userLanding);
+        const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
 
         const formData = new FormData();
         formData.append('name', userLanding.name);
@@ -111,7 +108,7 @@ export class BuyTokensComponent implements OnInit {
         formData.append('telefono', userLanding.phone);
         formData.append('num_tokens', numTokens.toString());
         formData.append('phase_tokens', phaseTokens.toString());
-        formData.append('lang', this.langSelected.lang);
+        formData.append('lang', lang);
 
         
         try {
@@ -189,11 +186,6 @@ export class BuyTokensComponent implements OnInit {
     const phaseTokens = this.landingSvc.getPhaseTokens();
     if(!phaseTokens) return 0;
     return this.phaseToTokenCost[phaseTokens];
-  }
-
-  setLang( lang: ILang ): BuyTokensComponent {
-    this.langSelected = lang;
-    return this;
   }
 }
 

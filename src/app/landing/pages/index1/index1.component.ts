@@ -6,9 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import * as countdown from 'countdown';
 import { NavigationExtras, Router } from '@angular/router';
 import { SeoService } from 'src/app/services/seo.service';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { PopoverController } from '@ionic/angular';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 export interface xTimer {
   szMs: string;
@@ -42,14 +40,12 @@ export class Index1Component implements OnInit {
     szMns: '00',
     szSgs: '00',
   };
-  langSelected: ILang;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private seoSvc:SeoService,
     public popoverController: PopoverController,
-    private translateService: TranslateConfigService,
   ) { }
 
   navExtras: NavigationExtras;
@@ -74,9 +70,6 @@ export class Index1Component implements OnInit {
         , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
         , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
     })
-
-    this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   // Destruimos cuando finaliza el contador
@@ -151,9 +144,5 @@ export class Index1Component implements OnInit {
       behavior: 'smooth',
       block: 'start',
     });
-  }
-
-  onLangSelected( iLang: ILang ) {
-    this.langSelected = iLang;
   }
 }

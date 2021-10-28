@@ -5,7 +5,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
@@ -19,7 +19,6 @@ export class LoginPage implements OnInit {
   passwordIcon: string = 'eye-off';
   
   redirect: string;
-  langSelected: ILang;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,19 +38,18 @@ export class LoginPage implements OnInit {
       password: ['', Validators.required],
     });
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
-    
-    this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   submitForm() {
     this.utilities.showLoading();
 
+    const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+
     const formData = new FormData();
     formData.append('email', this.form.get('email').value);
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
-    formData.append('lang', this.langSelected.lang );
+    formData.append('lang', lang );
 
 
     (this.api.login(formData, 'login', null, this.redirect)).subscribe(
@@ -121,9 +119,5 @@ export class LoginPage implements OnInit {
         this.utilities.setGuia('login');
       }
     });
-  }
-
-  onLangSelected( iLang: ILang ) {
-    this.langSelected = iLang;
   }
 }
