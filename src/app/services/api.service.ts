@@ -483,6 +483,7 @@ export class ApiService {
     sector,
     sub_sector,
     dni,
+    link_url,
     imagen,
     pass
   ) {
@@ -502,6 +503,7 @@ export class ApiService {
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
+    formData.append('link_url', link_url);
     if (imagen !== undefined) formData.append('file', imagen);
     formData.append('email', email);
     formData.append('password', pass);
@@ -537,6 +539,7 @@ export class ApiService {
     sector,
     sub_sector,
     dni,
+    link_url,
     imagen
   ) {
     const formData = new FormData();
@@ -555,6 +558,7 @@ export class ApiService {
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
+    formData.append('link_url', link_url);
     if (imagen !== undefined) formData.append('file', imagen);
     formData.append('email', email);
     return this._createData('editar-ofertante', formData);
