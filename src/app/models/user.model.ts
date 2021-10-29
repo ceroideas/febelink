@@ -33,6 +33,7 @@
     telefono: string | null;
     logo: string | null;
     dni: string | null;
+    link_url?: string;
     card_brand: string | null;
     card_last_four: string | null;
     trial_ends_at: string | null;

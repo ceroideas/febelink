@@ -67,6 +67,7 @@ export class BuyTokensComponent implements OnInit {
         lastName: profile.lastName,
         email: profile.email,
         dni: profile.dni,
+        link_url: profile.link_url,
         phone: profile.telefono,
         id: profile.id,
 
