@@ -796,12 +796,4 @@ export class ApiService {
     return this._getData('existe-usuario-email/' + email);
   }
 
-  /**
-   * Scrapping URL pages
-   * @param email
-   */
-   public urlScrapping( url: string, bringAll: boolean = false ) {
-    return this._getData( `url-scrapping/${ url }/${ bringAll }` );
-  }
-
 }
