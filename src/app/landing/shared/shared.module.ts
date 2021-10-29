@@ -27,7 +27,6 @@ import { FooterComponent } from './footer/footer.component';
 import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
 import { SocialLinksComponent } from 'src/app/components/social-links/social-links.component';
-import { LinkPreviewComponent } from 'src/app/components/link-preview/link-preview.component';
 import { PhasesComponent } from './phases/phases.component';
 import { UserDataFormComponent } from './user-data-form/user-data-form.component';
 import { FormsModule } from '@angular/forms';
@@ -47,7 +46,6 @@ import { SharedModule as GeneralSharedModule } from 'src/app/shared/shared.modul
     BuyTokensComponent,
     WhitelistComponent,
     SocialLinksComponent,
-    LinkPreviewComponent,
     PhasesComponent,
     UserDataFormComponent,
     GoBuyTokensComponent,
@@ -70,7 +68,6 @@ import { SharedModule as GeneralSharedModule } from 'src/app/shared/shared.modul
     BuyTokensComponent,
     WhitelistComponent,
     SocialLinksComponent,
-    LinkPreviewComponent,
     PhasesComponent,
     GoBuyTokensComponent,
     TranslateModule,
