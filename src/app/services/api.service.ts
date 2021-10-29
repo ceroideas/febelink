@@ -393,6 +393,10 @@ export class ApiService {
     return this._getData('get-subscriptions');
   }
 
+  public hasSubscription( userId ) {
+    return this._getData( `has-subscription/${ userId }` );
+  }
+
   /**
    * Search by keys
    */
@@ -786,6 +790,14 @@ export class ApiService {
    */
    public existeEmail(email) {
     return this._getData('existe-usuario-email/' + email);
+  }
+
+  /**
+   * Scrapping URL pages
+   * @param email
+   */
+   public urlScrapping( url: string, bringAll: boolean = false ) {
+    return this._getData( `url-scrapping/${ url }/${ bringAll }` );
   }
 
 }
