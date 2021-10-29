@@ -64,6 +64,17 @@
       <h2 class="title">Descripción</h2>
       <p class="desc">{{perfilpublico?.descripcion}}</p>
     </div>
+    
+    <!-- Link URL -->
+    <div class="apartado" *ngIf="hasSubscription && perfilpublico?.link_url">
+      <h2 class="title">Link URL</h2>
+      <!-- Link Preview -->
+      <app-link-preview
+        columns="1"
+        [urls]="[{ u: perfilpublico?.link_url, d: null, showLink: true }]" >
+      </app-link-preview>
+    </div>
+
     <div class="apartado" *ngIf="contacto ==='true'">
       <h2 class="title">Datos de contacto</h2>
       <p>
@@ -172,6 +183,21 @@
           <div class="apartado" *ngIf="perfilpublico?.descripcion">
             <h2 class="title">Descripción</h2>
             <p class="desc">{{perfilpublico?.descripcion}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+      
+      <!-- Link URL -->
+      <ion-row *ngIf="hasSubscription && perfilpublico?.link_url">
+        <ion-col size="8">
+          <div class="apartado">
+            <h2 class="title">Link URL</h2>
+
+            <!-- Link Preview -->
+            <app-link-preview
+              columns="1"
+              [urls]="[{ u: perfilpublico?.link_url, d: null, showLink: true }]" >
+            </app-link-preview>
           </div>
         </ion-col>
       </ion-row>
