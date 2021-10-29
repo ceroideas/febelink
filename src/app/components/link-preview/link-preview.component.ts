@@ -3,10 +3,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 
 export interface Scraping {
-  u: string; // url
-  t: string; // title
-  d: string; // description
-  i: string; // image
+  u?: string; // url
+  t?: string; // title
+  d?: string; // description
+  i?: string; // image
+  showLink?: boolean;
 }
 
 @Component({
@@ -103,10 +104,10 @@ export class LinkPreviewComponent implements OnInit {
      * Hago un bucle por cada url para ir a consultar en paralelo
      * */
     this.urls.forEach((scraping) => {
-      if (!scraping.t) scraping.t = this.title;
-      if (!scraping.d) scraping.d = this.description;
-      if (!scraping.i) scraping.i = this.image;
-
+      if (scraping.t === '' || scraping.t === undefined) scraping.t = this.title;
+      if (scraping.d === '' || scraping.d === undefined) scraping.d = this.description;
+      if (scraping.i === '' || scraping.i === undefined) scraping.i = this.image;
+      
       // Almaceno los observables dentro de esta variable
       this.obs.push(this.http.get(this.fullUrl(scraping)));
     });
@@ -132,13 +133,13 @@ export class LinkPreviewComponent implements OnInit {
           let data = results[i];
 
           // seteo su info para que lo actualice en .html
-          this.urls[i].t = data['title'] ? data['title'] : this.title;
-          this.urls[i].d = data['description']
+          this.urls[i].t = this.urls[i].t === null ? '' : ( data['title'] ? data['title'] : this.title );
+          this.urls[i].d = this.urls[i].d === null ? '' : ( data['description']
             ? data['description']
-            : this.description;
-          this.urls[i].i = data['thumbnail_url']
+            : this.description );
+          this.urls[i].i = this.urls[i].i === null ? '' : ( data['thumbnail_url']
             ? data['thumbnail_url']
-            : this.image;
+            : this.image );
           // this.urls[ i ].i = data[ 'image' ] ? data[ 'image' ] : this.image;
 
           // En caso de tener callback lo llamo para decirle que terminé con esta info
