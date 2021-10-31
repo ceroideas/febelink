@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { GeoPlacesModel } from 'src/app/models/geoplaces.model';
 import { ApiService } from 'src/app/services/api.service';
 import { GeoPlacesApi } from 'src/app/services/geoplaces.service';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 
@@ -18,6 +19,7 @@ export class UserDataFormComponent implements OnInit, AfterViewInit {
     , private modalCtrl: ModalController
     , private geoPlaces: GeoPlacesApi
     , private elementRef: ElementRef
+    , private translateService: TranslateConfigService
     ) { }
 
   ngOnInit() { }
@@ -44,28 +46,35 @@ export class UserDataFormComponent implements OnInit, AfterViewInit {
           this.userData.place_id = null;
       })
       .initModal( address );
+      this.geoPlaces.setUserPlace( this.userData );
   }
 
   userData:UserLanding = {};
 
   public getUserData(){
     if(!this.userData.name){
-      this.utils.showToast("Rellena el nombre");
+      this.utils.showToast(
+        this.translateService.instant("common.personal.errors.name"));
       return;
     } else if(!this.userData.lastName){
-      this.utils.showToast("Rellena el apellido");
+      this.utils.showToast(
+        this.translateService.instant("common.personal.errors.surname"));
       return;
     } else if(!this.userData.email){
-      this.utils.showToast("Rellena el email");
+      this.utils.showToast(
+        this.translateService.instant("common.personal.errors.email"));
       return;
     } else if(!this.userData.dni){
-      this.utils.showToast("Rellena el DNI");
+      this.utils.showToast(
+        this.translateService.instant("common.personal.errors.id"));
       return;
     } else if( !this.geoPlaces.hasSelected() ){
-      this.utils.showToast("Escribe y selecciona tu dirección completa");
+      this.utils.showToast(
+        this.translateService.instant("common.personal.errors.address"));
       return;
     } else if(!this.userData.phone){
-      this.utils.showToast("Introduce tu número de teléfono");
+      this.utils.showToast(
+        this.translateService.instant("common.personal.errors.phone"));
       return;
     }
     // Esto es para que actualice los datos con lo que ha seleccionado

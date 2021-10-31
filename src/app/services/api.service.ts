@@ -469,6 +469,7 @@ export class ApiService {
     telefono,
 
     direccion,
+    direccion_resto,
     country,
     state,
     department,
@@ -487,6 +488,7 @@ export class ApiService {
     formData.append('telefono', telefono);
     
     formData.append('direccion', direccion);
+    formData.append('direccion_resto', direccion_resto);
     formData.append('country', country);
     formData.append('state', state);
     formData.append('department', department);
@@ -521,6 +523,7 @@ export class ApiService {
     telefono,
 
     direccion,
+    direccion_resto,
     country,
     state,
     department,
@@ -538,6 +541,7 @@ export class ApiService {
     formData.append('telefono', telefono);
     
     formData.append('direccion', direccion);
+    formData.append('direccion_resto', direccion_resto);
     formData.append('country', country);
     formData.append('state', state);
     formData.append('department', department);

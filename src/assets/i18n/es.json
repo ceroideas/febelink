@@ -17,8 +17,9 @@
         "labelName": "Nombre",
         "labelEmail": "Email",
         "labelAddress": "Dirección",
+        "labelAddressRest": "Resto Dirección",
         "labelPhone": "Teléfono",
-        "labelDNI": "DNI / CIF",
+        "labelDNI": "Documento de Identidad",
         "labelNewPass": "Contraseña nueva",
         "labelConfirmNewPass": "Confimar contraseña nueva",
         "labelTitle": "Título",
@@ -34,7 +35,16 @@
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
-            "id": "DNI (con letra)"
+            "id": "Documento de Identidad",
+
+            "errors": {
+                "name": "Rellena el nombre",
+                "surname": "Rellena el apellido",
+                "email": "Rellena el email",
+                "id": "Rellena el Documento de Identidad",
+                "address": "Escribe y selecciona tu dirección completa",
+                "phone": "Introduce tu número de teléfono"
+            }
         },
 
         "buttons": {
@@ -149,8 +159,8 @@
 
                 "phone": "El formato del teléfono no es correcto",
 
-                "id": "El DNI/NIE/CIF que has introducido no es válido",
-                "idFormat": "El formato del DNI/NIE/CIF no es correcto",
+                "id": "El Documento de Identidad que has introducido no es válido",
+                "idFormat": "El formato del Documento de Identidad no es correcto",
 
                 "image": "Error al obtener imagen",
                 "imageMaxSize": "Imágen demasiado grande, max. 300KB",
