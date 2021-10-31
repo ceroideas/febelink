@@ -77,6 +77,7 @@ export class PerfilDemandantePage implements OnInit {
   ngOnInit() {
     this.obtenerPerfil();
     this.getUserProfile();
+    this.checkHasSubscription();
   }
 
   /**
@@ -142,6 +143,16 @@ export class PerfilDemandantePage implements OnInit {
         this.sinOpiniones = sinOpiniones.sin_opiniones;
       }
     );
+  }
+  
+  /**
+   * `hasSubscription` is to show special fields. e.g.: link_url
+   */
+  hasSubscription: boolean = false;
+  async checkHasSubscription() {
+    (await this.api.hasSubscription( this.id_perfil )).subscribe(async ( hasSubscription ) => {
+      this.hasSubscription = hasSubscription;
+    });
   }
 
   public async shareProfile(ev: any): Promise<void> {

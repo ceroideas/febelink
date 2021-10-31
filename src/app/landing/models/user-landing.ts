@@ -4,6 +4,7 @@ export interface UserLanding {
     lastName?:string;
     email?: string;
     dni?: string;
+    link_url?: string;
     phone?: string;
 
     address?: string;

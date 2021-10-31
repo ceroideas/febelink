@@ -187,6 +187,7 @@ export class Tab4Page {
       place_id: [this.perfil.place_id],
 
       dni: [this.perfil.dni],
+      link_url: [this.perfil.link_url],
       sector: [this.sectoresPerfil],
       sub_sector: [this.subSectoresPerfil],
       email: [this.perfil.email],
@@ -356,6 +357,7 @@ export class Tab4Page {
       sub_sector: this.form.get('sub_sector').value,
       dni: this.form.get('dni').value,
       email: this.form.get('email').value,
+      link_url: this.form.get('link_url').value,
       password: this.form.get('password').value,
       passwordConfirmation: this.form.get('passwordConfirmation').value,
     };
@@ -388,6 +390,7 @@ export class Tab4Page {
                     p.sector,
                     p.sub_sector,
                     p.dni,
+                    p.link_url,
                     this.base64img,
                     p.password
                   )
@@ -539,6 +542,7 @@ export class Tab4Page {
                   p.sector,
                   p.sub_sector,
                   p.dni,
+                  p.link_url,
                   this.base64img
                 )
               ).subscribe(
