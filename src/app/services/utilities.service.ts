@@ -120,7 +120,7 @@ export class UtilitiesService {
   saveUserSubscriptionDetails(subscription_details): Promise<any> {
     return new Promise((resolve, reject) => {
       this.storage.set('subscription_details', subscription_details).then(() => {
-        resolve();
+        resolve(null);
       }).catch(error => {
         reject(error);
       })

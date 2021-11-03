@@ -180,7 +180,11 @@ const routes: Routes = [
     path: 'wallet',
     loadChildren: () =>
       import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
+  },  {
+    path: 'success',
+    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
   },
+
 ];
 
 @NgModule({

@@ -5,6 +5,8 @@ import {StripeService, Elements, Element as StripeElement, ElementsOptions} from
 import {ModalController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -180,11 +182,25 @@ export class SuscribirsePage implements OnInit {
         })
     }
 
+    async paySubscription(idSelectedSubscription:number){
+        console.log(idSelectedSubscription);
+        await this.utilities.showLoading()
+        try{
+            const checkout = await this.api.paySubscription(idSelectedSubscription);
+            console.log(checkout);
+            window.location.href = checkout.externalCheckoutUrl
+        } catch(e){
+            console.error(e);            
+        } finally {
+            this.utilities.dismissLoading();
+        }
+    }
 
-    async swapSubscription(stripe_plan) {
+
+    async swapSubscription(idSelectedSubscription:number) {
         this.utilities.showLoading();
 
-        (await this.api.swapSubscription(stripe_plan)).subscribe(async response => {
+        (await this.api.swapSubscription(idSelectedSubscription)).subscribe(async response => {
 
             await this.utilities.saveUserSubscription(response.subscription);
             this.subscription = await this.utilities.getUserSubscription();

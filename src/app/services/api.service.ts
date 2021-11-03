@@ -323,9 +323,16 @@ export class ApiService {
     return this._createData('notificacion-oferta', formData);
   }
 
+  public async paySubscription(idSelectedSubscription:number) {
+    const formData = new FormData();
+    formData.append('subscriptionId', idSelectedSubscription+'');
+    const responseObs:Observable<any> = await this._createData('paySubscription', formData);
+    return responseObs.pipe(first()).toPromise();
+  }
+
   public swapSubscription(stripe_plan) {
     const formData = new FormData();
-    formData.append('stripe_plan', stripe_plan);
+    formData.append('subscriptionId', stripe_plan);
     return this._createData('swap-subscription', formData);
   }
 

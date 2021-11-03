@@ -7,10 +7,10 @@ const routes: Routes = [
       path: '',
       component: Index1Component
   },
-  {
-    path: 'checkout',
-    loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
-  },
+  // {
+  //   path: 'checkout',
+  //   loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  // },
   {
     path: 'success',
     loadChildren: () => import('./success/success.module').then( m => m.SuccessPageModule)
