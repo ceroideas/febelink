@@ -1,9 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>success</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="text-center container">
+  <img class="logo" src="assets/landing/logo-dark.png">
+  <h2>{{ 'landing.success.title' | translate }}</h2>
+  <h4>{{ 'landing.success.subtitle' | translate }}</h4>
+  <p>
+    {{ 'landing.success.mssg1' | translate }}
+  </p>
+  <p>
+    {{ 'landing.success.mssg2' | translate }}
+  </p>
+  <div style="margin-top: 30px;">
+    <ion-button (click)="back()"  shape="round">
+      {{ 'common.buttons.back' | translate }}
+    </ion-button>
+  </div>
+</div>
 
-<ion-content>
-
-</ion-content>

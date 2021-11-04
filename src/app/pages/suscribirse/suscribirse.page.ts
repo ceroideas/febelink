@@ -57,11 +57,13 @@ export class SuscribirsePage implements OnInit {
 
                 console.log(this.subscription);
                 if (this.subscription != null) {
-                    this.selected = this.subscription[0].stripe_plan;
+                    const stripePlan = this.subscription[0].stripe_plan;
+                    const selSub = this.subscriptions.filter(s => s.stripe_plan === stripePlan)[0];
+                    this.selected = selSub.id;
                 }
 
                 // this.setupStripe();
-
+                console.log(this.selected);    
             });
         });
 
@@ -165,6 +167,7 @@ export class SuscribirsePage implements OnInit {
 
     async openStripe(stripe_plan) {
         this.selected = stripe_plan;
+        console.log(this.selected);        
     }
 
     public closeModal(): void {

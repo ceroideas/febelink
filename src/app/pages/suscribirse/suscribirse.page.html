@@ -38,7 +38,6 @@
 -->
 
 <ion-content class="ion-padding">
-    <div *ngIf="subscription == null">
         <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.id)"
                   [class.selected]="selected == subs.id">
                   <!-- {{subs | json}} -->
@@ -100,7 +99,6 @@
                    href="http://febelink.com/menu/suscription-browser/{{selected}}/{{perfil?.id}}">Suscribirme</a>
             </div>
         </ion-row> -->
-    </div>
     <!-- <div *ngIf="subscription != null">
         <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.stripe_plan)"
                   [class.selected]="selected == subs.stripe_plan">
