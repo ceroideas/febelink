@@ -51,7 +51,8 @@
             "confirm": "Confirm",
             "back": "Back",
             "cancel": "Cancel",
-            "send": "Send"
+            "send": "Send",
+            "close": "Close"
         },
 
         "address": {
@@ -75,6 +76,24 @@
             "warning": "Legal Warning",
             "lastUpdate": "Last update",
             "rights": "All rights reserved. FEBELINK DIGITAL S.L."
+        },
+
+        "verif": {
+            "email": {
+                "head": "Data Verification",
+                "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
+                "pompadour": "Check that your email is correct, to receive and verify your account: ",
+                "not-verified": "Email not verified",
+                "sending": "sending verification to the email {{ email }}",
+                "error": "It seems that there was an error when trying to validate the email",
+                "sent": "Verify your email",
+                "message": "Check your mailbox {{email}}"
+            },
+
+            "buttons": {
+                "now": "Verify",
+                "not-now": "Later"
+            }
         }
     },
     "menu": {
@@ -250,6 +269,12 @@
                 "data": "The data entered is not correct",
                 "email": "The format of the email entered is not correct"
             }
+        },
+        "email-verification": {
+            "title": "Email Verification",
+            "done": "Great! You've verified your email account",
+            "error": "Oops.. it seems that you have arrived here by mistake",
+            "redirect": "in {{ seconds }} seconds you will be redircted to the Home Page"
         }
     },
     "toast": {
