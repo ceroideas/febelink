@@ -205,7 +205,6 @@ export class Tab4Page {
   loadSuscriptions() {
     this.utilities.getUserSubscription().then(async (subscriptions) => {
       this.subscription = subscriptions != null ? subscriptions[0] : null;
-
       this.utilities
         .getUserSubscriptionDetails()
         .then((subscription_details) => {
@@ -818,30 +817,40 @@ export class Tab4Page {
     });
   }
 
-  async showSubscription(alert_message) {
-    let alert = await this.alertCtrl.create({
-      header: this.translateService.instant('tabs.tab4.alerts.improve'),
-      message: alert_message,
-      buttons: [
-        {
-          text: this.translateService.instant('common.buttons.cancel'),
-          role: 'cancel',
-        },
-        {
-          text: this.translateService.instant('common.labelSubsribe'),
-          handler: async () => {
-            const suscribirseModal = await this.modalCtrl.create({
-              component: SuscribirsePage,
-            });
-
-            await suscribirseModal.present();
-            const { data } = await suscribirseModal.onWillDismiss();
-            this.obtenerPerfil();
-          },
-        },
-      ],
+  async showSubscription(alert_message?:string) {
+    const suscribirseModal = await this.modalCtrl.create({
+        component: SuscribirsePage,
     });
-    await alert.present();
+
+    if(alert_message){            
+        let alert = await this.alertCtrl.create({
+            header: this.translateService.instant("tabs.tab4.alerts.improve"),
+            message: alert_message,
+            buttons: [
+                {
+                    text: this.translateService.instant("common.buttons.cancel"),
+                    role: 'cancel',
+                },
+                {
+                    text: this.translateService.instant("common.labelSubsribe"),
+                    handler: async () => {
+                        const suscribirseModal = await this.modalCtrl.create({
+                            component: SuscribirsePage,
+                        });
+
+                        await suscribirseModal.present();
+                        const {data} = await suscribirseModal.onWillDismiss();
+                        this.obtenerPerfil();
+                    },
+                },
+            ],
+        });
+        await alert.present();
+    } else{
+        await suscribirseModal.present();
+        const {data} = await suscribirseModal.onWillDismiss();
+        this.obtenerPerfil();
+    }
   }
 
   /**

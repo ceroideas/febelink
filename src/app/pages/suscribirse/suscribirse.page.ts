@@ -26,6 +26,7 @@ export class SuscribirsePage implements OnInit {
     clicked: any = 0;
     subscriptions: any[];
     perfil: any;
+    subscriptionChanged:string;
 
     constructor(private stripeService: StripeService,
                 private modalCtrl: ModalController,
@@ -92,22 +93,26 @@ export class SuscribirsePage implements OnInit {
 
         this.stripeService.elements(this.elementsOptions)
             .subscribe(elements => {
+                
                 this.elements = elements;
 
                 if (!this.card) {
                     this.card = this.elements.create('card', {hidePostalCode: true, style: style});
                     this.card.mount('#card-element');
                 }
+                this.card.addEventListener('change', event => {
+                    // debugger
+                    this.subscriptionChanged = "Te has suscrito correctamente";
+                    var displayError = document.getElementById('card-errors');
+                    if (event.error) {
+                        // displayError.textContent = event.error.message;
+                        console.log(event.error.message);                        
+                    } else {
+                        // displayError.textContent = '';
+                    }
+                });
             });
 
-        this.card.addEventListener('change', event => {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
 
         var form = document.getElementById('payment-form');
         form.addEventListener('submit', event => {
@@ -117,7 +122,8 @@ export class SuscribirsePage implements OnInit {
                 this.stripeService.createToken(this.card, {}).subscribe(async result => {
                     if (result.error) {
                         var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
+                        // errorElement.textContent = result.error.message;
+                        console.log(result.error.message); 
                     } else {
                         this.utilities.showLoading();
 
@@ -151,6 +157,7 @@ export class SuscribirsePage implements OnInit {
     }
 
     public logout(): void {
+        this.closeModal();
         this.storage.remove('userData').then(() => {
             this.storage.remove('subscription').then(() => {
 
@@ -180,11 +187,16 @@ export class SuscribirsePage implements OnInit {
         this.utilities.showLoading();
 
         (await this.api.cancelSubscription()).subscribe(async response => {
-
-            await this.utilities.saveUserSubscription(response.subscription);
-            this.closeModal();
-            this.utilities.dismissLoading();
-            this.logout();
+            
+            if(response === "Suscripción cancelada correctamente"){
+                await this.utilities.removeUserSubscription();
+                // this.closeModal();
+                this.utilities.dismissLoading();
+                this.subscriptionChanged = "Te has desuscrito correctamente";
+                // this.logout();
+            } else {
+                console.error(response);                
+            }
 
         });
 
