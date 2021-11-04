@@ -181,6 +181,19 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
   },
+    
+  /**
+   * Email Verified from mailbox
+   */
+  {
+    path: 'email-verified/:id',
+    loadChildren: () => import('./pages/email-verified/email-verified.module').then( m => m.EmailVerifiedPageModule)
+  },
+  // If no id, redirect to home
+  {
+    path: 'email-verified', redirectTo: 'menu/todas', pathMatch: 'full'
+  },
+
 ];
 
 @NgModule({
