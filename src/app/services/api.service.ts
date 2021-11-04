@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
+import { TranslateConfigService } from './translate/translate-config.service';
+import { ILangDEFAULTS } from '../models/langs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,8 @@ export class ApiService {
     private http: HttpClient,
     private utilities: UtilitiesService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private translateService: TranslateConfigService
   ) {}
 
   login(params, endpoint, firstLogin?: boolean, redirect?:string): Observable<any> {
@@ -794,6 +797,23 @@ export class ApiService {
    */
    public existeEmail(email) {
     return this._getData('existe-usuario-email/' + email);
+  }
+
+  /**
+   * To verify Email account and save on user info
+   * @param email
+   */
+  public async verifyEmail( id, email ) {
+    const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    return await this._getData( `verify-email/${ id }/${ lang }/${ email }` );
+  }
+
+  /**
+   * To verify Email account and save on user info
+   * @param email
+   */
+  public async emailVerified( id ) {
+    return await this._getData( 'email-verified/' + id );
   }
 
 }
