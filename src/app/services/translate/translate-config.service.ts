@@ -37,8 +37,8 @@ export class TranslateConfigService {
     this.translateService.currentLang = language;
   }
 
-  instant(key: string): string {
-    return this.translateService.instant(key);
+  instant(key: string, params: Object = {}): string {
+    return this.translateService.instant( key, params );
   }
 
   get(
