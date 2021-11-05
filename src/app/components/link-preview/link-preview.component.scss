@@ -2,7 +2,6 @@
 
 .scraping {
     width: 80%;
-    text-align: center;
     margin-left: 10%;
 }
   
@@ -19,7 +18,6 @@
 
 ion-card {
     cursor: pointer;
-    max-width: calc( 100% / 4 );
     min-width: 150px;
     padding: 0px;
     margin-left: 0px;
@@ -55,6 +53,16 @@ ion-card-content ion-card-title, ion-card-content p {
     word-wrap: break-word;
     overflow: hidden;
     line-height: 1.8em;
+}
+
+a {
+    cursor: pointer;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    max-height: 1.8em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 @media ( max-width: 992px ) {

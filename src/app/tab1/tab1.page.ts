@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TermsPage } from '../pages/terms/terms.page';
 import { AuthenticationService } from '../services/authentication/authentication.service';
 import { UserService } from '../services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tab1',
@@ -49,6 +50,9 @@ export class Tab1Page {
   base64img: any;
   isNative: boolean = true;
   showCard = false;
+
+  googlestore: string = environment.GOOGLE_STORE;
+  appstore: string = environment.APP_STORE;
 
   constructor(
     private api: ApiService,
