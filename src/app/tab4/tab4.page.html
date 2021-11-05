@@ -58,6 +58,10 @@
             >{{ 'tabs.tab4.buttonAskRecommendation' | translate }} &nbsp;
             <ion-icon name="checkmark"> </ion-icon>
           </ion-button>
+
+          <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
+            {{(!subscription)?'Suscríbete y sube a nivel profesional':'Usuario Pro'}}
+          </ion-button>
         </div>
       </div>
 
