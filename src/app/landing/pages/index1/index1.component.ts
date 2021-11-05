@@ -32,7 +32,7 @@ export class Index1Component implements OnInit {
 
   //public emailAddres = '';
   // FECHA DE REFERENCIA
-  gdDateTop: countdown.DateTime = new Date(2021, 10, 5);
+  gdDateTop: countdown.DateTime = new Date(2021, 10, 12);
 
   giTimerId: number = null;
   gxTimer: xTimer = {
@@ -47,10 +47,10 @@ export class Index1Component implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private seoSvc:SeoService,
+    private seoSvc: SeoService,
     public popoverController: PopoverController,
-    private translateService: TranslateConfigService,
-  ) { }
+    private translateService: TranslateConfigService
+  ) {}
 
   navExtras: NavigationExtras;
 
@@ -70,13 +70,15 @@ export class Index1Component implements OnInit {
     this.navExtras = this.router.getCurrentNavigation().extras;
 
     this.seoSvc.generateTags({
-          title: 'Febelink Token'
-        , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
-        , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
-    })
+      title: 'Febelink Token',
+      description:
+        'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink',
+      image: 'http://test.febelink.com/assets/imgs/token-share-img.png',
+    });
 
-    this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getCurrentLang( this.translateService );
+    this.langSelected = this.langSelected
+      ? this.langSelected
+      : ILangDEFAULTS.getCurrentLang(this.translateService);
   }
 
   // Destruimos cuando finaliza el contador
@@ -153,7 +155,7 @@ export class Index1Component implements OnInit {
     });
   }
 
-  onLangSelected( iLang: ILang ) {
+  onLangSelected(iLang: ILang) {
     this.langSelected = iLang;
   }
 }
