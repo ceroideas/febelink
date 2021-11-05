@@ -289,13 +289,23 @@
             <ion-icon name="checkmark-outline"></ion-icon> Recibe notificaciones
             relacionadas con tu búsqueda o con tu sector.
           </p>
-          <a
-            href="https://play.google.com/store/apps/details?id=com.xerintel.febelink54831"
-            ><img
-              src="assets/imgs/home/playstore.png"
-              id="google-button"
-              alt="PlayStore Link"
-          /></a>
+
+          <ion-row class="row-store">
+            <!-- Google Play Store icon -->
+            <ion-col size="12" size-sm="6" class="col-store">
+                <a [href]="googlestore">
+                  <img src="assets/imgs/home/playstore.png" id="google-button" alt="PlayStore Link"/>
+                </a>
+            </ion-col>
+
+            <!-- App Store icon -->
+            <ion-col size="12" size-sm="6" class="col-store">
+              <a [href]="appstore">
+                <img src="assets/imgs/home/apple.svg" id="apple-button" alt="App Store Link" />
+              </a>
+            </ion-col>
+          </ion-row>
+
         </section>
       </ion-row>
     </div>

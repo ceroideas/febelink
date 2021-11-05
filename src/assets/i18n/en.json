@@ -19,6 +19,7 @@
         "labelAddress": "Address",
         "labelAddressRest": "Rest Address",
         "labelPhone": "Phone",
+        "labelLink": "URL Link",
         "labelDNI": "Identity Document",
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",

@@ -10,6 +10,7 @@ import { FooterComponent } from '../components/footer/footer.component';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LangPopComponent } from 'src/app/components/langs/popover/pop.component';
 import { YouTubePopComponent } from '../components/youtube/popover/pop.component';
+import { LinkPreviewComponent } from '../components/link-preview/link-preview.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { YouTubePopComponent } from '../components/youtube/popover/pop.component
     LangPopComponent,
     FooterComponent,
     YouTubePopComponent,
+    LinkPreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { YouTubePopComponent } from '../components/youtube/popover/pop.component
     LangBtnComponent,
     LangPopComponent,
     YouTubePopComponent,
+    LinkPreviewComponent,
   ],
   entryComponents: [],
 })
