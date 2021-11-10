@@ -60,7 +60,7 @@
           </ion-button>
 
     <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
-      Suscripción
+      {{ ((!subscription)?'tabs.tab4.buttonSuscription':'tabs.tab4.proUser') | translate }}
     </ion-button>
         </div>
       </div>

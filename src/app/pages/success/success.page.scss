@@ -1,4 +1,22 @@
 .logo {
     width: 200px;
-    margin: 70px auto 60px auto;
+    margin: 40px auto 30px auto;
+}
+
+.container {
+    text-align: center;
+    padding: 0px 15px;
+    max-width: 500px;
+    margin: auto;
+    
+    .text {
+        margin: 20px 0;
+        color: var(--ion-color-medium);
+        font-size: 14px;
+    }
+
+    ion-icon {
+        font-size: 100px;
+        color: var(--ion-color-success);
+    }
 }

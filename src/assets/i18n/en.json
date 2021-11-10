@@ -117,6 +117,8 @@
         },
         "tab4": {
             "buttonAskRecommendation": "Ask for a recommendation",
+            "buttonSuscription": "Subscribe and upgrade to PRO",
+            "proUser": "PRO User",
             "buttonSave": "Save changes",
             "labelNoOpinions": "No opinions yet",
             "labelOpinions": "Opinions",
@@ -366,8 +368,7 @@
         "success": {
             "title": "Thank you!",
             "subtitle": "You have completed your registration in the reservation list.",
-            "mssg1": "You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.",
-            "mssg2": "If the email does not reach you in the next 5 minutes, fill in the form again here."
+            "text": "<p>You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.</p><p>If the email does not reach you in the next 5 minutes, fill in the form again here.</p>"
         }
     },
     "legal": {

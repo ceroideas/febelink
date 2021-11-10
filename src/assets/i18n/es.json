@@ -118,6 +118,8 @@
         },
         "tab4": {
             "buttonAskRecommendation": "Pedir recomendación",
+            "buttonSuscription": "Suscríbete y sube a nivel PRO",
+            "proUser": "Usuario PRO",
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
             "labelOpinions": "Opiniones",
@@ -239,6 +241,23 @@
 
                 "data": "Los datos introducidos no son correctos",
                 "email": "El formato del email introducido no es correcto"
+            }
+        }
+        , "success":{
+            "token": {
+                "title": "¡Gracias!",
+                "subtitle": "Has completado tu inscripción en el listado de reservas.",
+                "text": "<p>Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.</p><p>Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí.</p>"
+            }
+            , "subscription-pro": {
+                "title": "¡Gracias!"
+                , "subtitle": "Suscriptión realizada"
+                , "text": "Te has suscrito con éxito al plan Pro. Desde este momento puedes empezar a aprovechar todas sus ventajas"
+            }
+            , "default": {
+                "title": "¡Gracias!"
+                , "subtitle": "Tu compra ha sido realizad con éxito"
+                , "text": ""
             }
         }
     },
@@ -363,12 +382,6 @@
         },
         "footer": {
             "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
-        },
-        "success": {
-            "title": "¡Gracias!",
-            "subtitle": "Has completado tu inscripción en el listado de reservas.",
-            "mssg1": "Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.",
-            "mssg2": "Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí."
         }
     },
     "legal": {

@@ -40,6 +40,7 @@ export class SuscribirsePage implements OnInit {
 
     }
 
+    myCurrentPlan = null;
     async ngOnInit() {
 
         this.fillSubscriptionStaticInfo();
@@ -52,18 +53,16 @@ export class SuscribirsePage implements OnInit {
                 this.subscription = subscription;
                 if (this.subscription.length == 0) {
                     this.subscription = null;
-                    this.selected = this.subscriptions[0].id;//NEW
+                    this.myCurrentPlan = this.subscriptions.filter(s => s.price === 0)[0];
                 }
-
-                console.log(this.subscription);
-                if (this.subscription != null) {
+                else {
                     const stripePlan = this.subscription[0].stripe_plan;
-                    const selSub = this.subscriptions.filter(s => s.stripe_plan === stripePlan)[0];
-                    this.selected = selSub.id;
+                    this.myCurrentPlan = this.subscriptions.filter(s => s.stripe_plan === stripePlan)[0];
                 }
-
+                
+                this.selected = this.myCurrentPlan.id;
                 // this.setupStripe();
-                console.log(this.selected);    
+                // console.log(this.selected);    
             });
         });
 

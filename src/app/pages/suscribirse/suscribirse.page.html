@@ -72,7 +72,8 @@
 
             </ion-card-content>
         </ion-card>
-        <ion-button (click)="paySubscription(selected)" expand="block" fill="clear" shape="round">
+        
+        <ion-button (click)="paySubscription(selected)" expand="block" fill="clear" shape="round" [disabled]="selected===myCurrentPlan?.id">
             Cambiar mi plan
         </ion-button>
         <!-- <ion-row style="width: 100%" class="hidden_ios">
