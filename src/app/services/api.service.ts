@@ -44,9 +44,7 @@ export class ApiService {
             await this.utilities.saveAccessTokenInfo(res);
             await this.utilities.saveUserData(res.user);
             await this.utilities.saveUserSubscription(res.subscription);
-            await this.utilities.saveUserSubscriptionDetails(
-              res.subscription_details
-            );
+            await this.utilities.saveUserSubscriptionDetails(res.subscription_details);
             await this.utilities.setGuia('login');
             this.authenticationService.login();
             this.userLogged.emit('user:login');
@@ -336,9 +334,14 @@ export class ApiService {
     return this._createData('swap-subscription', formData);
   }
 
-  public cancelSubscription() {
+  public async cancelSubscription() {
     const formData = new FormData();
-    return this._createData('cancel-subscription', formData);
+    const responseObs:Observable<any> = await this._createData('cancel-subscription', formData);
+    return responseObs.pipe(first()).toPromise();
+  }
+
+  async getUserSusbcription(){
+    return (await this._getData('getUserSusbcription')).pipe(first()).toPromise();
   }
 
   /**

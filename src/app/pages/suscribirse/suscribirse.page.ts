@@ -7,6 +7,7 @@ import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { Subscription } from 'src/app/models/subscription';
 
 
 @Component({
@@ -23,12 +24,13 @@ export class SuscribirsePage implements OnInit {
     };
 
     card: any;
-    subscription: any;
+    subscription: Subscription[];
     selected:string;
     clicked: any = 0;
-    subscriptions: any[];
+    subscriptions: Subscription[];
     perfil: any;
     subscriptionDetails:Map<string, SubscriptionDetails> = new Map();
+    subscriptionChanged:boolean
 
     constructor(private stripeService: StripeService,
                 private modalCtrl: ModalController,
@@ -46,9 +48,7 @@ export class SuscribirsePage implements OnInit {
         this.fillSubscriptionStaticInfo();
 
         (await this.api.getAllSubscriptions()).subscribe((suscriptions:[]) => {
-
             this.subscriptions = suscriptions;
-
             this.utilities.getUserSubscription().then(async subscription => {
                 this.subscription = subscription;
                 if (this.subscription.length == 0) {
@@ -170,7 +170,7 @@ export class SuscribirsePage implements OnInit {
     }
 
     public closeModal(): void {
-        this.modalCtrl.dismiss();
+        this.modalCtrl.dismiss({subscriptionChanged: this.subscriptionChanged});
     }
 
     public logout(): void {
@@ -187,15 +187,25 @@ export class SuscribirsePage implements OnInit {
     async paySubscription(idSelectedSubscription:number){
         console.log(idSelectedSubscription);
         await this.utilities.showLoading()
-        try{
-            const checkout = await this.api.paySubscription(idSelectedSubscription);
-            console.log(checkout);
-            window.location.href = checkout.externalCheckoutUrl
-        } catch(e){
-            console.error(e);            
-        } finally {
-            this.utilities.dismissLoading();
+        const myNewPlan:Subscription = this.subscriptions.filter(s => s.id === idSelectedSubscription)[0];
+        if(myNewPlan.price>0){
+            try{
+                const checkout = await this.api.paySubscription(idSelectedSubscription);
+                console.log(checkout);
+                if(checkout.externalCheckoutUrl) window.location.href = checkout.externalCheckoutUrl
+                else this.utilities.showToast(checkout.message);
+            } catch(e){
+                console.error(e);            
+            }
+        } else{
+            const checkout = await this.api.cancelSubscription();
+            const subscriptionInfo:{subscription, subscription_details:Subscription} = await this.api.getUserSusbcription();
+            await this.utilities.saveUserSubscription(subscriptionInfo.subscription);
+            await this.utilities.saveUserSubscriptionDetails(subscriptionInfo.subscription_details);
+            this.utilities.showToast(checkout.message);
         }
+        this.subscriptionChanged = true;
+        this.utilities.dismissLoading();
     }
 
 

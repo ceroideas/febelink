@@ -149,7 +149,7 @@ export class UtilitiesService {
     return new Promise((resolve, reject) => {
       this.storage.ready().then(() => {
         this.storage.get('subscription_details').then(subscription_details => {
-          resolve(subscription_details);
+          resolve(JSON.parse(subscription_details));
         }).catch(error => {
           reject(JSON.stringify(error));
         })
