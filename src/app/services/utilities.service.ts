@@ -110,11 +110,20 @@ export class UtilitiesService {
   saveUserSubscription(subscription): Promise<any> {
     return new Promise((resolve, reject) => {
       this.storage.set('subscription', subscription).then(() => {
-        resolve();
+        resolve(null);
       }).catch(error => {
         reject(error);
       })
     })
+  }
+  async removeUserSubscription(): Promise<any> {
+    try{
+      await this.storage.remove('subscription');
+      await this.storage.remove('subscription_details');
+      return true;
+    } catch(ex){
+      return ex;
+    }
   }
 
   saveUserSubscriptionDetails(subscription_details): Promise<any> {

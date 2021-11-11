@@ -16,7 +16,7 @@
   </div>
 
   <div class="desktop-content" *ngIf="!loading">
-    <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="verifyToSubmit()">
       <div>
         <div>
           <img
@@ -72,6 +72,20 @@
 
       <ion-grid class="desktop" fixed style="margin: 10px 0px">
         <ion-row>
+          <ion-col size="12">
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
+              <ion-textarea
+                [value]="perfil?.descripcion"
+                type="text"
+                [maxlength]="max_bio"
+                formControlName="descripcion"
+              ></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
@@ -87,71 +101,44 @@
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
-              <ion-input
-                clearInput
-                type="email"
-                formControlName="email"
-                [value]="perfil?.email"
-              ></ion-input>
+              <ion-row style="width: 100%;">
+                <ion-input
+                  clearInput
+                  type="email"
+                  formControlName="email"
+                  [value]="perfil?.email"
+                  (ionInput)="emailChanged( $event.target.value )"
+                ></ion-input>
+                <img src="assets/imgs/verified.svg" *ngIf="emailVerified"/>
+              </ion-row>
             </ion-item>
+            <ion-label position="floating" class="verif" *ngIf="!emailVerified" (click)="verify( verifWhich.Email )">
+              {{ 'common.verif.email.not-verified' | translate }}
+            </ion-label>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col size="6">
-            <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
-              <ion-textarea
-                [value]="perfil?.descripcion"
-                type="text"
-                [maxlength]="max_bio"
-                formControlName="descripcion"
-              ></ion-textarea>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6" style="margin-top: 23px">
+          <ion-col size="12">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
               <ion-input
-                clearInput
                 [value]="perfil?.direccion"
                 formControlName="direccion"
+                id="direccion_desktop"
               ></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col size="6">
+          <ion-col size="12">
             <ion-item class="input">
-              <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-              <ionic-selectable
-                item-content
-                [(ngModel)]="provincia"
-                formControlName="provincia"
-                itemValueField="id"
-                itemTextField="name"
-                [items]="provincias"
-                [canSearch]="true"
-                (onChange)="provinciasChange($event)"
-              >
-              </ionic-selectable>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item class="input">
-              <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-              <ionic-selectable
-                item-content
-                [(ngModel)]="localidad"
-                formControlName="localidad"
-                itemValueField="id"
-                itemTextField="name"
-                [items]="localidades"
-                [canSearch]="true"
-                (onChange)="localidadesChange($event)"
-              >
-              </ionic-selectable>
+              <ion-label position="floating"> {{ 'common.labelAddressRest' | translate }} </ion-label>
+              <ion-input
+                [value]="perfil?.direccion_resto"
+                formControlName="direccion_resto"
+              ></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -177,6 +164,20 @@
                 type="text"
                 [value]="perfil?.dni"
                 formControlName="dni"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="subscription != null">
+          <ion-col size="12">
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelLink' | translate }} </ion-label>
+              <ion-input
+                clearInput
+                type="text"
+                [value]="perfil?.link_url"
+                formControlName="link_url"
               ></ion-input>
             </ion-item>
           </ion-col>
@@ -266,18 +267,6 @@
 
       <div class="mobile">
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
-          <ion-input clearInput type="text" formControlName="name"></ion-input>
-        </ion-item>
-        <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
-          <ion-input
-            clearInput
-            type="email"
-            formControlName="email"
-          ></ion-input>
-        </ion-item>
-        <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
           <ion-textarea
             [maxlength]="max_bio"
@@ -285,45 +274,47 @@
           ></ion-textarea>
         </ion-item>
         <ion-item class="input">
+          <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
+          <ion-input clearInput type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item class="input" style="margin-bottom: 5px">
+          <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
+          <ion-row style="width: 100%;">
+            <ion-input
+              clearInput
+              type="email"
+              formControlName="email"
+              [value]="perfil?.email"
+              (ionInput)="emailChanged( $event.target.value )"
+            ></ion-input>
+            <img src="assets/imgs/verified.svg" *ngIf="emailVerified"/>
+          </ion-row>
+        </ion-item>
+        <ion-label class="input" class="verif" *ngIf="!emailVerified" (click)="verify( verifWhich.Email )">
+          {{ 'common.verif.email.not-verified' | translate }}
+        </ion-label>
+
+        <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
           <ion-input
-            clearInput
+            [value]="perfil?.direccion"
             formControlName="direccion"
+            id="direccion_mobile"
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-          <ionic-selectable
-            [(ngModel)]="provincia"
-            item-content
-            formControlName="provincia"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="provincias"
-            [canSearch]="true"
-            (onChange)="provinciasChange($event)"
-          >
-          </ionic-selectable>
-        </ion-item>
-        <ion-item class="input">
-          <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-          <ionic-selectable
-            [(ngModel)]="localidad"
-            item-content
-            formControlName="localidad"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="localidades"
-            [canSearch]="true"
-            (onChange)="localidadesChange($event)"
-          >
-          </ionic-selectable>
+          <ion-label position="floating"> {{ 'common.labelAddressRest' | translate }} </ion-label>
+          <ion-input
+            [value]="perfil?.direccion_resto"
+            formControlName="direccion_resto"
+          ></ion-input>
         </ion-item>
         <ion-item class="input">
           <ion-label position="floating"> {{ 'common.labelPhone' | translate }} </ion-label>
           <ion-input
             clearInput
             type="text"
+            [value]="perfil?.telefono"
             formControlName="telefono"
           ></ion-input>
         </ion-item>
@@ -333,6 +324,15 @@
             id="dninie"
             clearInput
             formControlName="dni"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="input" *ngIf="subscription != null">
+          <ion-label position="floating"> {{ 'common.labelLink' | translate }} </ion-label>
+          <ion-input
+            clearInput
+            type="text"
+            [value]="perfil?.link_url"
+            formControlName="link_url"
           ></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="sectores?.length>0">
@@ -427,7 +427,7 @@
               </span>
             </div>
             <div class="opinions-graphic">
-              <canvas #barCanvas></canvas>
+              <canvas #barCanvas id="barCanvas" ></canvas>
             </div>
           </div>
         </ion-col>

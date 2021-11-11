@@ -17,8 +17,10 @@
         "labelName": "Name",
         "labelEmail": "Email",
         "labelAddress": "Address",
+        "labelAddressRest": "Rest Address",
         "labelPhone": "Phone",
-        "labelDNI": "DNI / CIF",
+        "labelLink": "URL Link",
+        "labelDNI": "Identity Document",
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
@@ -33,14 +35,24 @@
             "pass": "Passwword",
             "passEr": "The password must be at least 8 digits with numbers and letters",
             "tel": "Phone",
-            "id": "ID (with letter)"
+            "id": "Identity Document",
+
+            "errors": {
+                "name": "Fill in the name",
+                "surname": "Fill in the surname",
+                "email": "Fill in the email",
+                "id": "Fill in the Identity Document",
+                "address": "Write and select your full Address",
+                "phone": "Fill in your Phone Number"
+            }
         },
 
         "buttons": {
             "confirm": "Confirm",
             "back": "Back",
             "cancel": "Cancel",
-            "send": "Send"
+            "send": "Send",
+            "close": "Close"
         },
 
         "address": {
@@ -64,6 +76,24 @@
             "warning": "Legal Warning",
             "lastUpdate": "Last update",
             "rights": "All rights reserved. FEBELINK DIGITAL S.L."
+        },
+
+        "verif": {
+            "email": {
+                "head": "Data Verification",
+                "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
+                "pompadour": "Check that your email is correct, to receive and verify your account: ",
+                "not-verified": "Email not verified",
+                "sending": "sending verification to the email {{ email }}",
+                "error": "It seems that there was an error when trying to validate the email",
+                "sent": "Verify your email",
+                "message": "Check your mailbox {{email}}"
+            },
+
+            "buttons": {
+                "now": "Verify",
+                "not-now": "Later"
+            }
         }
     },
     "menu": {
@@ -150,8 +180,8 @@
 
                 "phone": "The phone's format is not correct",
 
-                "id": "The DNI/NIE/CIF you have entered is not valid",
-                "idFormat": "The format of DNI/NIE/CIF is not correct",
+                "id": "The Identity Document you have entered is not valid",
+                "idFormat": "The format of Identity Document is not correct",
 
                 "image": "Error getting image",
                 "imageMaxSize": "Image too large, max. 300KB",
@@ -241,6 +271,12 @@
                 "data": "The data entered is not correct",
                 "email": "The format of the email entered is not correct"
             }
+        },
+        "email-verification": {
+            "title": "Email Verification",
+            "done": "Great! You've verified your email account",
+            "error": "Oops.. it seems that you have arrived here by mistake",
+            "redirect": "in {{ seconds }} seconds you will be redircted to the Home Page"
         }
     },
     "toast": {
@@ -358,9 +394,9 @@
             "title": "OUR TEAM",
             "description": "Experience and knowledge are identity signs of the people who make up our work group. Join our expanding team.",
             "juan": "Founder & CEO. Entrepreneur with 27 years of experience, developing his career mainly in financial consulting and in the automotive sector.",
-            "david": "Co-Founder & CTO. Developer with extensive experience in Cloud systems. He has worked in large public institutions and online auction houses such as: Christie's, Hilco StremBank or LeasePlan.",
+            "david": "Founder & CTO. Developer with extensive experience in Cloud systems. He has worked in large public institutions and online auction houses such as: Christie's, Hilco StremBank or LeasePlan.",
             "miguel": "Marketing professional with extensive experience in technology and FMCG. Marketing manager of various multinationals such as Hewlett-Packard or WD-40 Company.",
-            "oscar": "Entrepreneur. Creator of alternative Traffic Engineering, Communications Systems, 3D / VR / AR Projects, Satellite Stabilization, etc."
+            "miguelAngel": "(Minery Report) Specialist in Digitization, Cybersecurity and Blockchain technology. Co-founder of the Cybersecurity Directorate of the Air Force, Ministry of Defense of Spain."
         },
         "footer": {
             "doubts": "Do you have any doubt? Contact us"

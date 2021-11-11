@@ -11,6 +11,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { IUser } from 'src/app/models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -42,7 +43,8 @@ export class PerfilDemandantePage implements OnInit {
     public alertController: AlertController,
     private utilities: UtilitiesService,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService
+    private authSvc:AuthenticationService,
+    private userSvc:UserService
   ) {
     var data: any = route.snapshot.queryParamMap;
     // this.id_perfil = data.params.id_perfil;
@@ -77,6 +79,7 @@ export class PerfilDemandantePage implements OnInit {
   ngOnInit() {
     this.obtenerPerfil();
     this.getUserProfile();
+    this.checkHasSubscription();
   }
 
   /**
@@ -142,6 +145,16 @@ export class PerfilDemandantePage implements OnInit {
         this.sinOpiniones = sinOpiniones.sin_opiniones;
       }
     );
+  }
+  
+  /**
+   * `hasSubscription` is to show special fields. e.g.: link_url
+   */
+  hasSubscription: boolean = false;
+  async checkHasSubscription() {
+    (await this.api.hasSubscription( this.id_perfil )).subscribe(async ( hasSubscription ) => {
+      this.hasSubscription = hasSubscription;
+    });
   }
 
   public async shareProfile(ev: any): Promise<void> {
@@ -209,17 +222,21 @@ export class PerfilDemandantePage implements OnInit {
   async opinionModal() {
     console.log(this.currentUser.id);
     if (this.currentUser.id != undefined) {
-      const publicarModal = await this.modalCtrl.create({
-        component: PublicarOpinionPage,
-        componentProps: { id_demandante: this.perfilpublico.id },
-      });
+      
+      // If User has main data completed
+      if(this.userSvc.checkUserDataComplete(this.currentUser)){
+        const publicarModal = await this.modalCtrl.create({
+          component: PublicarOpinionPage,
+          componentProps: { id_demandante: this.perfilpublico.id },
+        });
 
-      await publicarModal.present();
+        await publicarModal.present();
 
-      const { data } = await publicarModal.onWillDismiss();
-      this.opinionesPerfil();
-      this.comprobarOpinion();
-      this.obtenerPerfil();
+        const { data } = await publicarModal.onWillDismiss();
+        this.opinionesPerfil();
+        this.comprobarOpinion();
+        this.obtenerPerfil();
+      }
     } else {
       this.authSvc.userNeedsToRegister();
     }

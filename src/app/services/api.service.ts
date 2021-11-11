@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
+import { TranslateConfigService } from './translate/translate-config.service';
+import { ILangDEFAULTS } from '../models/langs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,8 @@ export class ApiService {
     private http: HttpClient,
     private utilities: UtilitiesService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private translateService: TranslateConfigService
   ) {}
 
   login(params, endpoint, firstLogin?: boolean, redirect?:string): Observable<any> {
@@ -403,6 +406,10 @@ export class ApiService {
     return this._getData('get-subscriptions');
   }
 
+  public hasSubscription( userId ) {
+    return this._getData( `has-subscription/${ userId }` );
+  }
+
   /**
    * Search by keys
    */
@@ -477,12 +484,19 @@ export class ApiService {
     email,
     descripcion,
     telefono,
+
     direccion,
-    provincia,
-    localidad,
+    direccion_resto,
+    country,
+    state,
+    department,
+    locality,
+    place_id,
+
     sector,
     sub_sector,
     dni,
+    link_url,
     imagen,
     pass
   ) {
@@ -490,14 +504,19 @@ export class ApiService {
     formData.append('name', name);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
+    
     formData.append('direccion', direccion);
-    if (provincia !== undefined && provincia !== null)
-      formData.append('province_id', provincia.id);
-    if (localidad !== undefined && localidad !== null)
-      formData.append('town_id', localidad.id);
+    formData.append('direccion_resto', direccion_resto);
+    formData.append('country', country);
+    formData.append('state', state);
+    formData.append('department', department);
+    formData.append('locality', locality);
+    formData.append('place_id', place_id);
+    
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
+    formData.append('link_url', link_url);
     if (imagen !== undefined) formData.append('file', imagen);
     formData.append('email', email);
     formData.append('password', pass);
@@ -521,26 +540,38 @@ export class ApiService {
     email,
     descripcion,
     telefono,
+
     direccion,
-    provincia,
-    localidad,
+    direccion_resto,
+    country,
+    state,
+    department,
+    locality,
+    place_id,
+
     sector,
     sub_sector,
     dni,
+    link_url,
     imagen
   ) {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
+    
     formData.append('direccion', direccion);
-    if (provincia !== undefined && provincia !== null)
-      formData.append('province_id', provincia.id);
-    if (localidad !== undefined && localidad !== null)
-      formData.append('town_id', localidad.id);
+    formData.append('direccion_resto', direccion_resto);
+    formData.append('country', country);
+    formData.append('state', state);
+    formData.append('department', department);
+    formData.append('locality', locality);
+    formData.append('place_id', place_id);
+    
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
+    formData.append('link_url', link_url);
     if (imagen !== undefined) formData.append('file', imagen);
     formData.append('email', email);
     return this._createData('editar-ofertante', formData);
@@ -776,6 +807,23 @@ export class ApiService {
    */
    public existeEmail(email) {
     return this._getData('existe-usuario-email/' + email);
+  }
+
+  /**
+   * To verify Email account and save on user info
+   * @param email
+   */
+  public async verifyEmail( id, email ) {
+    const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    return await this._getData( `verify-email/${ id }/${ lang }/${ email }` );
+  }
+
+  /**
+   * To verify Email account and save on user info
+   * @param email
+   */
+  public async emailVerified( id ) {
+    return await this._getData( 'email-verified/' + id );
   }
 
 }

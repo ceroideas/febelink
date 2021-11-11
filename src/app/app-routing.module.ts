@@ -189,6 +189,17 @@ const routes: Routes = [
     path: 'success',
     loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
   },
+  /**
+   * Email Verified from mailbox
+   */
+  {
+    path: 'email-verified/:id',
+    loadChildren: () => import('./pages/email-verified/email-verified.module').then( m => m.EmailVerifiedPageModule)
+  },
+  // If no id, redirect to home
+  {
+    path: 'email-verified', redirectTo: 'menu/todas', pathMatch: 'full'
+  },
 
 ];
 

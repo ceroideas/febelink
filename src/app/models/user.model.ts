@@ -6,7 +6,7 @@
  *
  * @interface
  */
-export interface IUser {
+ export interface IUser {
     id: number;
     role_id: number;
     name: string;
@@ -18,12 +18,22 @@ export interface IUser {
     created_at: string;
     updated_at: string;
     descripcion: string | null;
+    
     direccion: string | null;
+    direccion_resto: string | null;
+    
     province_id: number;
     town_id: number | null;
+    country: string | null;
+    state: string | null;
+    department: string | null;
+    locality: string | null;
+    place_id: string | null;
+
     telefono: string | null;
     logo: string | null;
     dni: string | null;
+    link_url?: string;
     card_brand: string | null;
     card_last_four: string | null;
     trial_ends_at: string | null;

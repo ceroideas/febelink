@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController, ModalController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TermsPage } from '../terms/terms.page';
-import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
-import { LegalDisclaimerPage } from '../legal-disclaimer/legal-disclaimer.page';
-import { UseConditionsPage } from '../use-conditions/use-conditions.page';
-import { CookiePolicyPage } from '../cookie-policy/cookie-policy.page';
 import { CookieService } from 'ngx-cookie-service';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
@@ -33,7 +28,7 @@ export class RegistroPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private formBuilder: FormBuilder,
-    private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
@@ -118,6 +113,7 @@ export class RegistroPage implements OnInit {
 
     this.api.login(formData, 'login', true, this.redirect).subscribe((res) => {
       this.utilities.dismissLoading();
+      this.verifSent( registrationPayload );
     });
   }
 
@@ -138,7 +134,7 @@ export class RegistroPage implements OnInit {
         idRecommender,
       };
 
-      console.log(registrationPayload);
+      // console.log(registrationPayload);
       
 
       this.api.registro(registrationPayload).subscribe(
@@ -197,6 +193,16 @@ export class RegistroPage implements OnInit {
           this.translateService.instant("pages.registro.errors.fields"));
       }
     }
+  }
+
+  async verifSent( registrationPayload ) {
+    const alert = await this.alertCtrl.create({
+      header: this.translateService.instant("common.verif.email.sent"),
+      subHeader: this.translateService.instant( 'common.verif.email.message', { email: registrationPayload.email }),
+      buttons: [ 'OK' ],
+    });
+
+    await alert.present();
   }
 
   public navegar(ruta: string){

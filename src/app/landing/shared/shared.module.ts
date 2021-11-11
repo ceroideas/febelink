@@ -27,15 +27,13 @@ import { FooterComponent } from './footer/footer.component';
 import { BuyTokensComponent } from './buy-tokens/buy-tokens.component';
 import { WhitelistComponent } from './whitelist/whitelist.component';
 import { SocialLinksComponent } from 'src/app/components/social-links/social-links.component';
-import { LinkPreviewComponent } from 'src/app/components/link-preview/link-preview.component';
 import { PhasesComponent } from './phases/phases.component';
 import { UserDataFormComponent } from './user-data-form/user-data-form.component';
 import { FormsModule } from '@angular/forms';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { GoBuyTokensComponent } from './go-buy-tokens/go-buy-tokens.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
-import { LangPopComponent } from 'src/app/components/langs/popover/pop.component';
+import { SharedModule as GeneralSharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -48,18 +46,17 @@ import { LangPopComponent } from 'src/app/components/langs/popover/pop.component
     BuyTokensComponent,
     WhitelistComponent,
     SocialLinksComponent,
-    LinkPreviewComponent,
     PhasesComponent,
     UserDataFormComponent,
     GoBuyTokensComponent,
-    LangBtnComponent,
-    LangPopComponent,
   ],
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     CarouselModule,
     FormsModule,
-    IonicSelectableModule, 
+    IonicSelectableModule,
     TranslateModule.forChild(),
+    GeneralSharedModule,
   ],
   exports: [
     ServicesComponent,
@@ -71,13 +68,10 @@ import { LangPopComponent } from 'src/app/components/langs/popover/pop.component
     BuyTokensComponent,
     WhitelistComponent,
     SocialLinksComponent,
-    LinkPreviewComponent,
     PhasesComponent,
     GoBuyTokensComponent,
     TranslateModule,
-    LangBtnComponent,
-    LangPopComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
-export class SharedModule {}
+export class SharedModule {} // ToDo: DUPLICATED NAMES!!! We should change the name to LandingSharedModule
