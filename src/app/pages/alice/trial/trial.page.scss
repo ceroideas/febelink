@@ -1,0 +1,62 @@
+@import 'https://unpkg.com/aliceonboarding@latest/dist/aliceonboarding.css';
+
+html {
+  font-family: Helvetica, Arial, Sans-serif;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#startButton {
+  margin-top: 1rem;
+}
+
+
+ion-header {
+  text-align: center;
+  background: var(--ion-color-light);
+
+  .btn-header {
+    margin: 0 0.8rem;
+  }
+
+  .active {
+    color: var(--ion-color-primary) !important;
+  }
+
+  ion-toolbar {
+    @media (min-width: 768px) {
+      margin: 0 auto;
+      max-width: 1200px;
+    }
+  }
+  .logo {
+    position: absolute;
+    top: 10%;
+    left: 28%;
+    width: 45%;
+    max-width: 200px;
+
+    @media (min-width: 768px) {
+      position: relative;
+      width: 45%;
+      max-width: 130px;
+      left: 0;
+      float: left;
+      margin-left: 20px;
+    }
+  }
+}
+
+
+ion-content {
+  background: #fff;
+}
+
+.floating {
+  margin-bottom: 10px;
+}

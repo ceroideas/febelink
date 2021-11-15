@@ -1,0 +1,330 @@
+<ion-header>
+  <ion-toolbar color="light">
+
+    <ion-buttons slot="start">
+      <ion-button (click)="home()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-row>
+      <ion-title>Testing Alice Onboarding</ion-title>
+  
+      <app-lang-btn></app-lang-btn>
+    </ion-row>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="enableWelcomeButton()">
+        <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="restart()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!--
+    Fill Fields
+  -->
+  <ion-grid *ngIf="!creating && !done">
+  
+    <!-- Doc Types -->
+    <ion-row>
+      <!-- ID -->
+      <ion-col size="2">
+        <ion-item class="input" >
+          <ion-label position="floating">ID</ion-label>
+          <ion-checkbox [(ngModel)]="type_id" color="primary" (ionChange)="onChecked( $event.target.checked, 'id' )"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+  
+      <!-- PASSPORT -->
+      <ion-col size="2">
+        <ion-item class="input" >
+          <ion-label position="floating">Pasaporte</ion-label>
+          <ion-checkbox [(ngModel)]="type_passport" color="secondary" (ionChange)="onChecked( $event.target.checked, 'passport' )"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+  
+      <!-- RESIDENCE -->
+      <ion-col size="3">
+        <ion-item class="input" >
+          <ion-label position="floating">Permiso de Residencia</ion-label>
+          <ion-checkbox [(ngModel)]="type_residence" color="danger" (ionChange)="onChecked( $event.target.checked, 'residence' )"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+  
+      <!-- DRIVER LICENSE -->
+      <ion-col size="3">
+        <ion-item class="input" >
+          <ion-label position="floating">Licencia de Conducir</ion-label>
+          <ion-checkbox [(ngModel)]="type_driver" color="dark" (ionChange)="onChecked( $event.target.checked, 'driver' )"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+  
+      <!-- SELFIE -->
+      <ion-col size="2">
+        <ion-item class="input" >
+          <ion-label position="floating">Selfie</ion-label>
+          <ion-checkbox [(ngModel)]="selfie" color="primary" (ionChange)="onChecked( $event.target.checked, 'selfie' )"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+  
+    <!-- Inputs -->
+    <ion-row>
+      <ion-col size="3">
+        <ion-item class="input" >
+          <ion-label position="floating">Email</ion-label>
+          <ion-input 
+            type="email"
+            clearInput
+            (ionInput)="onEmail( $event.target.value )">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item class="input" >
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input 
+            type="text"
+            clearInput
+            (ionInput)="onName( $event.target.value )">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item class="input" >
+          <ion-label position="floating">Apellido</ion-label>
+          <ion-input 
+            type="text"
+            clearInput
+            (ionInput)="onSurname( $event.target.value )">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item class="input" >
+          <ion-button (click)="onCreate()">Crear Usuario</ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Data AliceKYC -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item class="input" >
+          <ion-label position="floating">Data</ion-label>
+          <ion-input 
+            type="text"
+            clearInput
+            (ionInput)="onData( $event.target.value )">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+
+  <!--
+    Alice Onboarding
+  -->
+  <div id="demo-onboarding" *ngIf="creating && !done">
+    <div id="alice-onboarding-mount"></div>
+  </div>
+
+
+  <!--
+    KYC finished - Info Returned
+  -->
+  <ion-grid *ngIf="done">
+    <!-- Info Basica -->
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="input" >
+            <ion-label>Info Básica ---------------------</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="input" >
+            <ion-label position="floating" class="floating">Data</ion-label>
+            <ion-input 
+              type="text"
+              clearInput
+              (ionInput)="onData( $event.target.value )">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ng-container *ngIf="aliceKYC">
+        <ion-row >
+          <!-- Created At -->
+          <ion-col size="6">
+            <ion-item class="input" >
+              <ion-label position="floating" class="floating">Crado: </ion-label>
+              <ion-input>{{ aliceKYC?.created_at }}</ion-input>
+            </ion-item>
+          </ion-col>
+
+          <!-- User ID -->
+          <ion-col size="6">
+            <ion-item class="input" >
+              <ion-label position="floating" class="floating">User-id: </ion-label>
+              <ion-input>{{ aliceKYC?.user_id }}</ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Summary -->
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="input" >
+              <ion-label>Resumen ---------------------</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        
+        <!-- Devices -->
+          <ion-row *ngFor="let device of aliceKYC?.summary?.devices">
+            <!-- Ip -->
+            <ion-col size="4">
+              <ion-item class="input" >
+                <ion-label position="floating" class="floating">Device => Ip: </ion-label>
+                <ion-input>{{ device?.ip }}</ion-input>
+              </ion-item>
+            </ion-col>
+            <!-- Browser -->
+            <ion-col size="4">
+              <ion-item class="input" >
+                <ion-label position="floating" class="floating">Browser: </ion-label>
+                <ion-input>{{ device?.model }}</ion-input>
+              </ion-item>
+            </ion-col>
+            <!-- OS -->
+            <ion-col size="4">
+              <ion-item class="input" >
+                <ion-label position="floating" class="floating">Platform: </ion-label>
+                <ion-input>{{ device?.platform }}</ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        
+          <!-- User Data -->
+        <ion-row *ngFor="let data of aliceKYC?.summary?.user_data">
+          <!-- Key | Value pair -->
+          <ion-col size="6">
+            <ion-item class="input" >
+              <ion-label position="floating" class="floating">{{ data?.name }}</ion-label>
+              <ion-input>{{ data?.value }}</ion-input>
+            </ion-item>
+          </ion-col>
+          <!-- Score -->
+          <ion-col size="6">
+            <ion-item class="input" >
+              <ion-label position="floating" class="floating">Score: </ion-label>
+              <ion-input>{{ data?.score }}</ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <!-- Documents -->
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="input" >
+              <ion-label>Documents ---------------------</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        
+        <ng-container *ngFor="let doc of aliceKYC?.documents">
+          <!-- Doc Info -->
+          <ion-row>
+            <ion-col size="4">
+              <ion-item class="input" >
+                <ion-label position="floating" class="floating">Pais: </ion-label>
+                <ion-input>{{ doc?.meta?.issuing_country }}</ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item class="input" >
+                <ion-label position="floating" class="floating">Type: </ion-label>
+                <ion-input>{{ doc?.meta?.type }}</ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item class="input" >
+                <ion-label position="floating" class="floating">Completado: </ion-label>
+                <ion-input>{{ doc?.meta?.completed }}</ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <!-- Summary Fields -->
+            <ion-row *ngFor="let field of doc?.summary_fields">
+              <!-- Key | Value pair -->
+              <ion-col size="6">
+                <ion-item class="input" >
+                  <ion-label position="floating" class="floating">{{ field?.name }}</ion-label>
+                  <ion-input>{{ field?.value }}</ion-input>
+                </ion-item>
+              </ion-col>
+              <!-- Score -->
+              <ion-col size="6">
+                <ion-item class="input" >
+                  <ion-label position="floating" class="floating">Score: </ion-label>
+                  <ion-input>{{ field?.score }}</ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+          <!-- Media -->
+            <!-- Back -->
+              <ion-row>
+                <!-- Extension -->
+                <ion-col size="4">
+                  <ion-item class="input" >
+                    <ion-label position="floating" class="floating">Back => Extension: </ion-label>
+                    <ion-input>{{ doc?.sides?.back?.media?.extension }}</ion-input>
+                  </ion-item>
+                </ion-col>
+                <!-- Href -->
+                <ion-col size="8">
+                  <ion-item class="input" >
+                    <ion-label position="floating" class="floating">Href: </ion-label>
+                    <ion-input>{{ doc?.sides?.back?.media?.href }}</ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+            <!-- Front -->
+              <ion-row>
+                <!-- Extension -->
+                <ion-col size="4">
+                  <ion-item class="input" >
+                    <ion-label position="floating" class="floating">Front => Extension: </ion-label>
+                    <ion-input>{{ doc?.sides?.front?.media?.extension }}</ion-input>
+                  </ion-item>
+                </ion-col>
+                <!-- Href -->
+                <ion-col size="8">
+                  <ion-item class="input" >
+                    <ion-label position="floating" class="floating">Href: </ion-label>
+                    <ion-input>{{ doc?.sides?.front?.media?.href }}</ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+        </ng-container>
+      </ng-container>
+
+  </ion-grid>
+
+</ion-content>
