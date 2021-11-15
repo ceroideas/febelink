@@ -37,11 +37,11 @@
             </ion-avatar>
             <ion-label class="ion-text-wrap">
               <h2 class="menu-username">{{ currentUser?.name }}</h2>
-              <!-- <p>
+              <p>
                 <ion-icon name="card-outline"></ion-icon>
                 {{ 'menu.labels.currentPlan' | translate }}:
                 {{ userSubscriptionDetails }}
-              </p> -->
+              </p>
               <p *ngIf="userSector">
                 <ion-icon name="pricetags-outline"></ion-icon>
                 {{ userSector?.nombre }} / {{ userSubsector?.nombre }}

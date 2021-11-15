@@ -206,6 +206,8 @@ export class SuscribirsePage implements OnInit {
         }
         this.subscriptionChanged = true;
         this.utilities.dismissLoading();
+        this.utilities.wait(500);
+        this.closeModal();
     }
 
 
