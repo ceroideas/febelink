@@ -25,7 +25,7 @@ export class SuscribirsePage implements OnInit {
 
     card: any;
     subscription: Subscription[];
-    selected:string;
+    selected:number;
     clicked: any = 0;
     subscriptions: Subscription[];
     perfil: any;
