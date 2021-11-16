@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'menu/todas', pathMatch: 'full' },
@@ -202,4 +202,15 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+  constructor(private router: Router) {
+    /**
+     * To prevent 'Error: Cannot match any routes' when wrong url
+     */
+    this.router.errorHandler = (error: any) => {
+      // Redirect to Main Page | Home Page
+      this.router.navigate(['/menu/todas']);
+    }
+  }
+}
