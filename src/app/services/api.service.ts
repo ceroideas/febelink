@@ -47,9 +47,7 @@ export class ApiService {
             await this.utilities.saveAccessTokenInfo(res);
             await this.utilities.saveUserData(res.user);
             await this.utilities.saveUserSubscription(res.subscription);
-            await this.utilities.saveUserSubscriptionDetails(
-              res.subscription_details
-            );
+            await this.utilities.saveUserSubscriptionDetails(res.subscription_details);
             await this.utilities.setGuia('login');
             this.authenticationService.login();
             this.userLogged.emit('user:login');
@@ -326,15 +324,27 @@ export class ApiService {
     return this._createData('notificacion-oferta', formData);
   }
 
+  public async paySubscription(idSelectedSubscription:number) {
+    const formData = new FormData();
+    formData.append('subscriptionId', idSelectedSubscription+'');
+    const responseObs:Observable<any> = await this._createData('paySubscription', formData);
+    return responseObs.pipe(first()).toPromise();
+  }
+
   public swapSubscription(stripe_plan) {
     const formData = new FormData();
-    formData.append('stripe_plan', stripe_plan);
+    formData.append('subscriptionId', stripe_plan);
     return this._createData('swap-subscription', formData);
   }
 
-  public cancelSubscription() {
+  public async cancelSubscription() {
     const formData = new FormData();
-    return this._createData('cancel-subscription', formData);
+    const responseObs:Observable<any> = await this._createData('cancel-subscription', formData);
+    return responseObs.pipe(first()).toPromise();
+  }
+
+  async getUserSusbcription(){
+    return (await this._getData('getUserSusbcription')).pipe(first()).toPromise();
   }
 
   /**

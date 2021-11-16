@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
     formData.append('remember_me', '1');
     formData.append('lang', lang );
 
-
+    
     (this.api.login(formData, 'login', null, this.redirect)).subscribe(
       (res) => {        this.utilities.dismissLoading();},
       (err) => {

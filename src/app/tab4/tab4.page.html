@@ -59,9 +59,9 @@
             <ion-icon name="checkmark"> </ion-icon>
           </ion-button>
 
-          <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
-            {{(!subscription)?'Suscríbete y sube a nivel profesional':'Usuario Pro'}}
-          </ion-button>
+    <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
+      {{ ((!subscription)?'tabs.tab4.buttonSuscription':'tabs.tab4.proUser') | translate }}
+    </ion-button>
         </div>
       </div>
 

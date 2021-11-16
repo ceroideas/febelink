@@ -181,7 +181,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
   },
-    
+  {
+    path: 'success/:ref',
+    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+  },
+  {
+    path: 'success',
+    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+  },
   /**
    * Email Verified from mailbox
    */

@@ -869,25 +869,26 @@ export class Tab4Page {
                 },
                 {
                     text: this.translateService.instant("common.labelSubsribe"),
-                    handler: async () => {
-                        const suscribirseModal = await this.modalCtrl.create({
-                            component: SuscribirsePage,
-                        });
-
-                        await suscribirseModal.present();
-                        const {data} = await suscribirseModal.onWillDismiss();
-                        this.obtenerPerfil();
+                    handler: async () => {    
+                        await this.showSubscriptionsModal(suscribirseModal);
                     },
                 },
             ],
         });
         await alert.present();
     } else{
-        await suscribirseModal.present();
-        const {data} = await suscribirseModal.onWillDismiss();
-        this.obtenerPerfil();
+        await this.showSubscriptionsModal(suscribirseModal);
     }
-  }
+}
+
+private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
+    await suscribirseModal.present();
+    this.obtenerPerfil();
+    suscribirseModal.onDidDismiss().then(response => {
+        if (response?.data?.subscriptionChanged)
+            this.loadSuscriptions();
+    });
+}
 
   /**
    * Navegación a la demanda
