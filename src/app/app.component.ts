@@ -124,7 +124,7 @@ export class AppComponent implements OnDestroy {
 
   openCookieBanner() {
     let cc = window as any;
-    cc.cookieconsent.initialise({
+    cc.cookieconsent?.initialise({
       palette: {
         popup: {
           background: '#000000',

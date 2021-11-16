@@ -44,8 +44,9 @@ export interface ILang {
       }
 
       // Si langSelected existe, asignar ese valor || Sino ir a traer el default
-      return langSelected ? langSelected :
-          ( translateService ? translateService.getCurrentLanguage() : ILangDEFAULTS.enUK );
+      const language = langSelected || translateService.getCurrentLanguage() || ILangDEFAULTS.enUK;
+      
+      return language;
     }
     static getCurrentLang( translateService: TranslateConfigService ) : ILang {
       return this.getLang( translateService.getCurrentLanguage(), translateService );
