@@ -16,7 +16,7 @@
         />
       </a>
 
-      <app-lang-btn></app-lang-btn>
+      <app-lang-btn (onLangSelected)="onLangSelected( $event )"></app-lang-btn>
 
       <ion-icon 
       name="menu-outline"
@@ -104,7 +104,7 @@
 
               <app-social-links></app-social-links>
   
-              <app-whitelist></app-whitelist>
+              <app-whitelist lang="{{ langSelected.lang }}"></app-whitelist>
             </div>
             
             <app-go-buy-tokens></app-go-buy-tokens>
@@ -193,7 +193,7 @@
 
               <app-social-links></app-social-links>
 
-              <app-whitelist></app-whitelist>
+              <app-whitelist lang="{{ langSelected.lang }}"></app-whitelist>
             </div>
           </div>
         </div>
