@@ -86,6 +86,18 @@ export class Tab1Page {
     }
   }
 
+  ngOnInit() {
+    /**
+     * If searchbar param passed
+    */
+    const searchbar = this.activatedRoute.snapshot.paramMap.get('searchbar');
+
+    if( searchbar !== null && searchbar !== '' ) {
+      this.showCard = true;
+      this.searchText = searchbar;
+    }
+  }
+
   ionViewDidEnter() {
     this.loadData();
     this.recomendation();
