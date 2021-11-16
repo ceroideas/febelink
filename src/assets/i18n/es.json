@@ -35,7 +35,6 @@
             "pass": "Contraseña",
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
-            "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "id": "Documento de Identidad",
 
             "errors": {
@@ -247,7 +246,15 @@
             "cond4": "condiciones generales de uso",
             "button": "REGISTRARSE",
             "or": "Ó",
-            "continueWith": "Continuar con "
+            "continueWith": "Continuar con ",
+
+            "errors": {
+                "title": "Error al registrarse",
+                "list": "Ocurrieron los siguientes errores al registrarse: ",
+                "server": "Hubo un error en el servidor al registrarse. Inténtalo de nuevo más tarde",
+                "terms": "Tienes que aceptar la política de privacidad y las condiciones generales de uso",
+                "fields": "Tienes que insertar los campos obligatorios"
+            }
         },
         "login": {
             "title": "Iniciar sesión",

@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 
 @Component({
   selector: 'app-footer',
@@ -10,15 +9,11 @@ import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 /**
  * Footer component
  */
-export class FooterComponent implements OnInit {
+export class FooterComponent {
 
   year = new Date().getFullYear();
-  @Input() lang: string = ILangDEFAULTS.spSP.lang;
 
   constructor( private router: Router ) { }
-
-  ngOnInit(): void {
-  }
 
 
   public navegar(ruta: string){

@@ -246,7 +246,15 @@
             "cond4": "general conditions of use",
             "button": "REGISTER",
             "or": "OR",
-            "continueWith": "Continue with "
+            "continueWith": "Continue with ",
+
+            "errors": {
+                "title": "Registration failed",
+                "list": "The following errors occurred when registering:",
+                "server": "There was a server error registering. Try again later",
+                "terms": "You have to accept the privacy policy and the general conditions of use",
+                "fields": "You have to insert the required fields"
+            }
         },
         "login": {
             "title": "Log in",
