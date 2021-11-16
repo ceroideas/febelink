@@ -32,7 +32,7 @@ export class Index1Component implements OnInit {
 
   //public emailAddres = '';
   // FECHA DE REFERENCIA
-  gdDateTop: countdown.DateTime = new Date(2021, 10, 12);
+  gdDateTop: countdown.DateTime = new Date(2021, 10, 19);
 
   giTimerId: number = null;
   gxTimer: xTimer = {
