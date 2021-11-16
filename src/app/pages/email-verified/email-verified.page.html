@@ -1,0 +1,26 @@
+<ion-content>
+  <div class="ion-text-center loading" *ngIf="loading">
+    <ion-spinner></ion-spinner>
+    <p>{{ 'common.labelLoading' | translate }}</p>
+  </div>
+
+  <div class="cover-content" *ngIf="!loading">
+    <div class="logo">
+      <img src="assets/imgs/logo.png" alt="logo" />
+      <app-lang-btn></app-lang-btn>
+    </div>
+
+    <div class="slogan">{{ 'common.slogan' | translate }}</div>
+    <h2 class="title">{{ 'pages.email-verification.title' | translate }}</h2>
+    
+    <ion-card>
+      <ion-card-content>
+        <h2 *ngIf="noerror">{{ 'pages.email-verification.done' | translate }}</h2>
+        <h2 *ngIf="!noerror">{{ 'pages.email-verification.error' | translate }}</h2>
+          <br>
+        <p>{{ 'pages.email-verification.redirect' | translate: { seconds: seconds } }}</p>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

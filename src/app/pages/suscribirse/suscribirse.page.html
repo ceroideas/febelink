@@ -17,14 +17,14 @@
                     <ion-icon name="checkbox-outline" *ngIf="selected == subs.id"></ion-icon>
                     <ion-icon name="square-outline" *ngIf="selected != subs.id"></ion-icon>
                     {{ subs.name }}
-                    <div *ngIf="subs.id ===1" class="free-message-box">
+                    <!-- <div *ngIf="subs.id ===1" class="free-message-box">
                         <span class="free-message">¡Disfruta de tus 15 días Premium gratis!</span>
-                    </div>
+                    </div> -->
                 </ion-card-title>
             </ion-card-header>
             <ion-card-content>
 
-                <div *ngIf="subs.id ===1">
+                <!-- <div *ngIf="subs.id ===1 || subs.id ===2">
                     ¡Suscríbete a nuestro plan {{ subs.name }} por solo <span class="text-removed">{{ subs.price }}
                     €</span> al mes! <br>
                     Con este plan podrás: <br>
@@ -34,23 +34,32 @@
                         <li *ngIf="subs.max_families > 1">Elegir hasta {{ subs.max_families }} sectores.</li>
                         <li>Elegir hasta {{ subs.max_subfamilies }} subsectores.</li>
                     </ul>
-                </div>
+                </div> -->
 
                 <div *ngIf="subs.id ===2">
                     ¡Suscríbete a nuestro plan {{ subs.name }} por solo {{ subs.price }}€ al mes! <br>
                     Con este plan podrás: <br>
                     <ul>
-                        <li>Añadir foto/logo de perfil.</li>
-                        <li>Usar más de 15 caracteres en tu descripción.</li>
-                        <li *ngIf="subs.max_families > 1">Elegir hasta {{ subs.max_families }} sectores.</li>
-                        <li>Elegir hasta {{ subs.max_subfamilies }} subsectores.</li>
+                        <li>Usar hasta 1000 caracteres en tu descripción.</li>
+                        <li>Permite elegir 3 subsectores dentro del mismo sector</li>
+                        <li>Recibe y realiza pagos con otros usuarios a través de Febelink.</li>
+                        <li>Incluye las ventajas del plan Free.</li>
+                    </ul>
+                </div>
+                <div *ngIf="subs.id ===3">
+                    <ul>
+                        <li>Realiza todas las búsquedas que necesites, encuentra clientes y recomienda a otros usuarios.</li>
+                        <li>Puedes hacer y responder ofertas sin limitaciones.</li>
+                        <li>Habla con tus potenciales clientes todo lo que necesites y reibe notificaciones para no perderte ninguna oportunidad.</li>
+                        <li>Puedes poner una imagen de tu empresa o marca personal.</li>
+                        <li>Usar hasta 50 caracteres en tu descripción.</li>
                     </ul>
                 </div>
 
 
             </ion-card-content>
         </ion-card>
-        <ion-row style="width: 100%" class="hidden_ios">
+        <ion-row style="width: 100%">
             <form action="/" method="post" id="payment-form" style="width: 100%">
                 <div class="form-row">
                     <div id="card-element">
@@ -68,12 +77,12 @@
                 </div>
             </form>
         </ion-row>
-        <ion-row style="width: 100%" class="hidden_md">
+        <!-- <ion-row style="width: 100%" class="hidden_md">
             <div style="text-align: center;padding-top: 20px;width: 100%">
                 <a target="_blank" class="button_a"
-                   href="http://febelink.com/menu/suscription-browser/{{selected}}/{{perfil.id}}">Suscribirme</a>
+                   href="http://febelink.com/menu/suscription-browser/{{selected}}/{{perfil?.id}}">Suscribirme</a>
             </div>
-        </ion-row>
+        </ion-row> -->
     </div>
     <div *ngIf="subscription != null">
         <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.stripe_plan)"
@@ -91,7 +100,7 @@
             </ion-card-header>
             <ion-card-content>
 
-                <div *ngIf="subs.id ===1">
+                <!-- <div *ngIf="subs.id ===1">
 
                     ¡Suscríbete a nuestro plan {{ subs.name }} por solo <span class="text-removed">{{ subs.price }}
                     €</span> al mes! <br>
@@ -103,29 +112,41 @@
                         <li>Elegir hasta {{ subs.max_subfamilies }} subsectores.</li>
                     </ul>
 
-                </div>
+                </div> -->
 
                 <div *ngIf="subs.id ===2">
 
                     ¡Suscríbete a nuestro plan {{ subs.name }} por solo {{ subs.price }}€ al mes! <br>
                     Con este plan podrás: <br>
                     <ul>
-                        <li>Añadir foto/logo de perfil.</li>
-                        <li>Usar más de 15 caracteres en tu descripción.</li>
-                        <li *ngIf="subs.max_families > 1">Elegir hasta {{ subs.max_families }} sectores.</li>
-                        <li>Elegir hasta {{ subs.max_subfamilies }} subsectores.</li>
+                        <li>Usar más de 1000 caracteres en tu descripción.</li>
+                        <li>Permite elegir 3 subsectores dentro del mismo sector</li>
+                        <li>Recibe y realiza pagos con otros usuarios a través de Febelink.</li>
+                        <li>Incluye las ventajas del plan Free.</li>
                     </ul>
 
+                </div>
+                <div *ngIf="subs.id ===3">
+                    <ul>
+                        <li>Realiza todas las búsquedas que necesites, encuentra clientes y recomienda a otros usuarios.</li>
+                        <li>Puedes hacer y responder ofertas sin limitaciones.</li>
+                        <li>Habla con tus potenciales clientes todo lo que necesites y reibe notificaciones para no perderte ninguna oportunidad.</li>
+                        <li>Puedes poner una imagen de tu empresa o marca personal.</li>
+                        <li>Usar hasta 50 caracteres en tu descripción.</li>
+                    </ul>
                 </div>
 
             </ion-card-content>
         </ion-card>
-        <ion-button *ngIf="subscription[0]?.stripe_plan != selected" color="primary"
+        <!-- <ion-button *ngIf="subscription[0]?.stripe_plan != selected" color="primary"
                     (click)="swapSubscription(selected)">
             Cambiar de suscripción
-        </ion-button>
+        </ion-button> -->
         <ion-button color="danger" (click)="cancelSubscription()">
             Darme de baja
         </ion-button>
+        <div class="ion-text-center" *ngIf="subscriptionChanged">
+            <p>{{subscriptionChanged}}. Inicia sesión de nuevo para ver los cambios. <a (click)="logout()" style="cursor: pointer;">Cerrar sesión</a></p>
+        </div>
     </div>
 </ion-content>

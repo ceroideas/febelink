@@ -9,7 +9,6 @@ import {
 } from '@ionic/angular';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
-import { GuidePage } from '../pages/guide/guide.page';
 import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -18,11 +17,11 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Storage } from '@ionic/storage';
 import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
-import { TermsPage } from '../pages/terms/terms.page';
 import { environment } from 'src/environments/environment';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
 import { GeoPlacesApi } from '../services/geoplaces.service';
 import { GeoPlacesModel } from '../models/geoplaces.model';
+import { VerificationComponent, VerifWhich } from '../components/verification/verification.component';
 
 @Component({
   selector: 'app-tab4',
@@ -32,6 +31,8 @@ import { GeoPlacesModel } from '../models/geoplaces.model';
 export class Tab4Page {
   @ViewChild('barCanvas', { static: true }) barCanvas: ElementRef;
   @ViewChild(IonContent, { static: false }) content: IonContent;
+
+  verifWhich = VerifWhich;
 
   currentYear = new Date().getFullYear();
   perfil: any;
@@ -63,6 +64,7 @@ export class Tab4Page {
   existsDNI;
   dniPrevio;
   emailPrevio;
+  emailVerified: boolean = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -94,7 +96,7 @@ export class Tab4Page {
       const navExtras = this.router.getCurrentNavigation().extras.state;
       if (navExtras) {
         this.message = navExtras.msg;
-        console.log(navExtras);
+        // console.log(navExtras);
       }
     });
   }
@@ -175,10 +177,10 @@ export class Tab4Page {
     this.form = this.formBuilder.group({
       name: [this.perfil.name],
       telefono: [this.perfil.telefono],
-      descripcion: [this.perfil.descripcion],
+      descripcion: [this.perfil.descripcion == null || this.perfil.descripcion == 'null' ? '' : this.perfil.descripcion],
 
       direccion: [this.geoPlaces.place.address],
-      direccion_resto: [this.perfil.direccion_resto],
+      direccion_resto: [this.perfil.direccion_resto == null || this.perfil.direccion_resto == 'null' ? '' : this.perfil.direccion_resto],
 
       country: [this.perfil.country],
       state: [this.perfil.state],
@@ -205,7 +207,6 @@ export class Tab4Page {
   loadSuscriptions() {
     this.utilities.getUserSubscription().then(async (subscriptions) => {
       this.subscription = subscriptions != null ? subscriptions[0] : null;
-
       this.utilities
         .getUserSubscriptionDetails()
         .then((subscription_details) => {
@@ -237,7 +238,7 @@ export class Tab4Page {
       this.initForm();
       this.dniPrevio = this.perfil.dni;
       this.emailPrevio = this.perfil.email;
-
+      this.emailVerified = this.isEmailVerified();
       //this.form.get('first').setValue('some value');
 
       (await this.api.opinionesPerfil(data.reference)).subscribe((data) => {
@@ -331,6 +332,22 @@ export class Tab4Page {
   public irAInicio(): void {}
 
   /**
+   * Verify Email and KYC Data before submit
+   * ToDo: KYC
+   */
+  verifyToSubmit() {
+    const onVerificationDone = ( hasError: boolean, verifSent: boolean ) => {
+      if( hasError )
+        return;
+
+      if( verifSent ) // Email controlled and saved on verification
+        this.emailPrevio = this.form.get('email').value;
+
+      this.submitForm();
+    };
+    this.verify( VerifWhich.Save, onVerificationDone );
+  }
+  /**
    * Metido a mano campos para enviarlos al servidor
    */
   async submitForm() {
@@ -338,14 +355,16 @@ export class Tab4Page {
     let response: any;
     const place = this.geoPlaces.getPlaceSelected();
 
+    const descripcion = this.form.get('descripcion').value;
+    const direccion_resto = this.form.get('direccion_resto').value;
+
     p = {
       name: this.form.get('name').value,
-      descripcion: this.form.get('descripcion').value,
+      descripcion: descripcion == null || descripcion == 'null' ? '' : descripcion,
       telefono: this.form.get('telefono').value,
 
-      // TODO: reemplazar por GeoPlacesAPI columns
       direccion: !place ? '' : place.address,
-      direccion_resto: this.form.get('direccion_resto').value,
+      direccion_resto: direccion_resto == null || direccion_resto == 'null' ? '' : direccion_resto,
 
       country: !place ? '' : place.Country.short,
       state: !place ? '' : place.State.long,
@@ -362,6 +381,7 @@ export class Tab4Page {
       passwordConfirmation: this.form.get('passwordConfirmation').value,
     };
 
+    // ToDo: Refactor this
     if (p.password != null && p.password != '') {
       if (this.comprobarContraseña(p.password, p.passwordConfirmation)) {
         (await this.api.existeEmail(p.email)).subscribe(
@@ -426,6 +446,14 @@ export class Tab4Page {
                       this.translateService.instant('tabs.tab4.done')
                     );
                     this.dniPrevio = p.dni;
+
+                    // Email has changed, need to verify it
+                    if( this.emailPrevio != p.email ) {
+                      this.perfil.email_verified_at = null;
+                      this.emailVerified = false;
+                    }
+                    this.emailPrevio = p.email;
+                    
                     this.utilities.saveUserData(res.user);
                     this.utilities.dismissLoading();
 
@@ -577,7 +605,14 @@ export class Tab4Page {
                     this.translateService.instant('tabs.tab4.done')
                   );
                   this.dniPrevio = p.dni;
+
+                  // Email has changed, need to verify it
+                  if( this.emailPrevio != p.email ) {
+                    this.perfil.email_verified_at = null;
+                    this.emailVerified = false;
+                  }
                   this.emailPrevio = p.email;
+
                   this.utilities.saveUserData(res.user);
                   this.utilities.dismissLoading();
 
@@ -818,30 +853,40 @@ export class Tab4Page {
     });
   }
 
-  async showSubscription(alert_message) {
-    let alert = await this.alertCtrl.create({
-      header: this.translateService.instant('tabs.tab4.alerts.improve'),
-      message: alert_message,
-      buttons: [
-        {
-          text: this.translateService.instant('common.buttons.cancel'),
-          role: 'cancel',
-        },
-        {
-          text: this.translateService.instant('common.labelSubsribe'),
-          handler: async () => {
-            const suscribirseModal = await this.modalCtrl.create({
-              component: SuscribirsePage,
-            });
-
-            await suscribirseModal.present();
-            const { data } = await suscribirseModal.onWillDismiss();
-            this.obtenerPerfil();
-          },
-        },
-      ],
+  async showSubscription(alert_message?:string) {
+    const suscribirseModal = await this.modalCtrl.create({
+        component: SuscribirsePage,
     });
-    await alert.present();
+
+    if(alert_message){            
+        let alert = await this.alertCtrl.create({
+            header: this.translateService.instant("tabs.tab4.alerts.improve"),
+            message: alert_message,
+            buttons: [
+                {
+                    text: this.translateService.instant("common.buttons.cancel"),
+                    role: 'cancel',
+                },
+                {
+                    text: this.translateService.instant("common.labelSubsribe"),
+                    handler: async () => {
+                        const suscribirseModal = await this.modalCtrl.create({
+                            component: SuscribirsePage,
+                        });
+
+                        await suscribirseModal.present();
+                        const {data} = await suscribirseModal.onWillDismiss();
+                        this.obtenerPerfil();
+                    },
+                },
+            ],
+        });
+        await alert.present();
+    } else{
+        await suscribirseModal.present();
+        const {data} = await suscribirseModal.onWillDismiss();
+        this.obtenerPerfil();
+    }
   }
 
   /**
@@ -885,7 +930,7 @@ export class Tab4Page {
 
   async setSuspendedUser(user_id) {
     (await this.api.suspendedUser(user_id)).subscribe((response) => {
-      console.log(response);
+      // console.log(response);
     });
   }
 
@@ -1137,5 +1182,71 @@ export class Tab4Page {
       component: SuscribirsePage,
     });
     await suscribirseModal.present();
+  }
+
+  /**
+   * When input email changed, verify it
+   */
+  public emailChanged( email ) {
+    if( this.hasEmailChanged( email ))
+      this.emailVerified = false;
+    else
+      this.emailVerified = this.isEmailVerified();
+  }
+
+  /**
+   * Check if mail is verified
+   */
+  isEmailVerified(): boolean {
+    return this.perfil?.email_verified_at !== null && this.perfil?.email_verified_at !== '';
+  }
+
+  /**
+   * Check if mail has changed
+   */
+  hasEmailChanged( email : string = this.form.get('email').value ): boolean {
+    return email !== this.perfil?.email;
+  }
+
+  /**
+   * Alert to Verify email
+   */
+  public async verify( which, onVerificationDone?: Function ) {
+    const email = this.form.get('email').value;
+    if( email === null || email === '' ) {
+      this.utilities.showToast(
+        this.translateService.instant('tabs.tab4.errors.mailEmpty')
+      );
+      return;
+    }
+
+    if( !this.hasEmailChanged() && this.isEmailVerified() ) {
+      if( onVerificationDone )
+        onVerificationDone( false, true );
+      return;
+    }
+
+    const verif = await this.modalCtrl.create({
+      component: VerificationComponent,
+      componentProps: { 
+        which: which,
+        id: this.perfil.id,
+        email: email,
+      },
+      backdropDismiss: false,
+      mode: 'md',
+      cssClass: 'pop-yt',
+    });
+    
+    verif.onDidDismiss()
+      .then((data) => {
+        const hasError: boolean = data.data?.hasError;
+        const verifSent: boolean = data.role !== 'backdrop' && data.data?.verifSent;
+
+        if( onVerificationDone )
+          onVerificationDone( hasError, verifSent );
+    });
+
+    await verif.present();
   }
 }

@@ -1,0 +1,70 @@
+ion-content {
+    --background: none;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    background-color: white;
+  
+    .loading {
+        margin-top: 25vh;
+    }
+
+    .cover-content {
+      z-index: 99 !important;
+      position: relative;
+      background-color: white;
+      margin: 25vh auto 0 !important;
+      padding: 0em 2em 1em 2em;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+      
+      @media (min-width: 768px) {
+        max-width: 450px;
+        padding: 0em 1em 1em 1em;
+      }
+      ion-item {
+        margin: 0.4em;
+      }
+      .logo {
+        position: relative;
+      }
+      img {
+        display: block;
+        width: 30%;
+        margin: 1.5em auto 0 auto;
+      }
+      app-lang-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+      .slogan{
+        color: rgb(185, 185, 185);
+        margin-top: 0.5em;
+        font-size: 14px;
+      }
+      ion-button {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: .8em 0 0 0;
+      }
+      .subtitle {
+        margin-top: 5px;
+        font-size: 10px;
+        opacity: 0.8;
+      }
+      h2 {
+          color: black;
+      }
+    }
+    .cover-overlay {
+      margin: 0.6em;
+    }
+  }  
+  

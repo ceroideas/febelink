@@ -51,7 +51,8 @@
             "confirm": "Confirmar",
             "back": "Volver",
             "cancel": "Cancelar",
-            "send": "Enviar"
+            "send": "Enviar",
+            "close": "Cerrar"
         },
 
         "address": {
@@ -75,6 +76,24 @@
             "warning": "Aviso Legal",
             "lastUpdate": "Última actualización",
             "rights": "Todos los derechos reservados. FEBELINK DIGITAL S.L."
+        },
+
+        "verif": {
+            "email": {
+                "head": "Verificacion de Datos",
+                "title": "Deberá validar su cuenta de email para poder disfrutar de funciones como: <ul><li>interactuar</li><li>publicar búsquedas</li><li>chatear</li> <li>valorar</li><li>entre otras..</li></ul>",
+                "pompadour": "Controla que tu email es correcto, para recibir y verificar tu cuenta: ",
+                "not-verified": "Email no verificado",
+                "sending": "enviando verificacion al email {{ email }}",
+                "error": "Parece que hubo un error al intentar validar el email",
+                "sent": "Verifica tu email",
+                "message": "Checkea tu correo {{ email }}"
+            },
+
+            "buttons": {
+                "now": "Verificar",
+                "not-now": "Mas tarde"
+            }
         }
     },
     "menu": {
@@ -258,6 +277,12 @@
                 "data": "Los datos introducidos no son correctos",
                 "email": "El formato del email introducido no es correcto"
             }
+        },
+        "email-verification": {
+            "title": "Verificación de email",
+            "done": "Genial! Has verificado tu cuenta de email",
+            "error": "Oops.. parece que has llegado aqui por error",
+            "redirect": "en {{ seconds }} segundos seras redirigido a la Página Principal"
         }
     },
     "toast": {
