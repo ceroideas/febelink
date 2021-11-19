@@ -61,6 +61,7 @@ export class TrialPage implements OnInit {
   
   publishSearchForm: FormGroup;
 
+  isLoading: boolean = false;
   showCard: boolean = false;
 
   //NEW SEARCH COMPONENT
@@ -135,6 +136,8 @@ export class TrialPage implements OnInit {
 
       this.showCard = true;
       this.removeFocus();
+      
+      this.isLoading = false;
     }); */
   }
 

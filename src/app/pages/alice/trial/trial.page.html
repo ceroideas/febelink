@@ -41,8 +41,14 @@
       </ion-col>
     </ion-row>
 
+    <!-- Loading. -->
+    <div class="cargando-container" margin-top *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>{{ 'common.labelLoading' | translate }}</p>
+    </div>
+
     <!-- Search engine. -->
-    <div class="content-filter">
+    <div class="content-filter" *ngIf="!isLoading">
       <div class="autocomplete">
         <ion-searchbar
           placeholder="{{ 'common.searchPlaceholder' | translate }}"
