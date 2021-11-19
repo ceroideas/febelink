@@ -6,17 +6,17 @@ import { UserLanding } from '../models/user-landing';
 })
 export class LandingService {
 
-  private numTokens:number;
+  private numFiat:number;
   private phaseTokens:number;
   private justLogged:boolean;
   private user:UserLanding;
 
-  setNumTokens(numTokens:number) {
-    this.numTokens = numTokens;
+  setNumFiat(numFiat:number) {
+    this.numFiat = numFiat;
   }
 
-  getNumTokens():number {
-    return this.numTokens;
+  getNumFiat():number {
+    return this.numFiat;
   }
 
   setPhaseTokens(phaseTokens:number) {
