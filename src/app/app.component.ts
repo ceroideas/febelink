@@ -124,7 +124,7 @@ export class AppComponent implements OnDestroy {
 
   openCookieBanner() {
     let cc = window as any;
-    cc.cookieconsent.initialise({
+    cc.cookieconsent?.initialise({
       palette: {
         popup: {
           background: '#000000',
@@ -395,8 +395,7 @@ export class AppComponent implements OnDestroy {
   async getUserSuscriptions() {
     const userSubscription = await this.utilities.getUserSubscription();
     if (userSubscription.length !== 0) {
-      const userSubscriptionDetails =
-        await this.utilities.getUserSubscriptionDetails();
+      const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
       this.userSubscriptionDetails = userSubscriptionDetails?.name;
     }
   }

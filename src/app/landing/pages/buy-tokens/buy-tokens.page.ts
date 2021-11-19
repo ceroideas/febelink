@@ -44,7 +44,7 @@ export class BuyTokensPage {
         this.landingSvc,
         this.api,
         this.translateService
-      ).setLang( this.langSelected )
+      )
     ).justLogged();
   }
 }

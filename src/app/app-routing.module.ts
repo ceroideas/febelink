@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'menu/todas', pathMatch: 'full' },
@@ -181,7 +181,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
   },
-    
+  {
+    path: 'success/:ref',
+    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+  },
+  {
+    path: 'success',
+    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+  },
   /**
    * Email Verified from mailbox
    */
@@ -202,4 +209,15 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+  constructor(private router: Router) {
+    /**
+     * To prevent 'Error: Cannot match any routes' when wrong url
+     */
+    this.router.errorHandler = (error: any) => {
+      // Redirect to Main Page | Home Page
+      this.router.navigate(['/menu/todas']);
+    }
+  }
+}

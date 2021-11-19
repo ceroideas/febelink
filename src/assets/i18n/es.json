@@ -35,7 +35,6 @@
             "pass": "Contraseña",
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
-            "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "id": "Documento de Identidad",
 
             "errors": {
@@ -148,6 +147,8 @@
         },
         "tab4": {
             "buttonAskRecommendation": "Pedir recomendación",
+            "buttonSuscription": "Suscríbete y sube a nivel PRO",
+            "proUser": "Usuario PRO",
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
             "labelOpinions": "Opiniones",
@@ -247,7 +248,15 @@
             "cond4": "condiciones generales de uso",
             "button": "REGISTRARSE",
             "or": "Ó",
-            "continueWith": "Continuar con "
+            "continueWith": "Continuar con ",
+
+            "errors": {
+                "title": "Error al registrarse",
+                "list": "Ocurrieron los siguientes errores al registrarse: ",
+                "server": "Hubo un error en el servidor al registrarse. Inténtalo de nuevo más tarde",
+                "terms": "Tienes que aceptar la política de privacidad y las condiciones generales de uso",
+                "fields": "Tienes que insertar los campos obligatorios"
+            }
         },
         "login": {
             "title": "Iniciar sesión",
@@ -276,6 +285,23 @@
             "done": "Genial! Has verificado tu cuenta de email",
             "error": "Oops.. parece que has llegado aqui por error",
             "redirect": "en {{ seconds }} segundos seras redirigido a la Página Principal"
+        }
+        , "success":{
+            "token": {
+                "title": "¡Gracias!",
+                "subtitle": "Has completado tu inscripción en el listado de reservas.",
+                "text": "<p>Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.</p><p>Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí.</p>"
+            }
+            , "subscription-pro": {
+                "title": "¡Gracias!"
+                , "subtitle": "Suscriptión realizada"
+                , "text": "Te has suscrito con éxito al plan Pro. Desde este momento puedes empezar a aprovechar todas sus ventajas"
+            }
+            , "default": {
+                "title": "¡Gracias!"
+                , "subtitle": "Tu compra ha sido realizad con éxito"
+                , "text": ""
+            }
         }
     },
     "toast": {
@@ -399,12 +425,6 @@
         },
         "footer": {
             "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
-        },
-        "success": {
-            "title": "¡Gracias!",
-            "subtitle": "Has completado tu inscripción en el listado de reservas.",
-            "mssg1": "Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.",
-            "mssg2": "Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí."
         }
     },
     "legal": {

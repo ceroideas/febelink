@@ -29,7 +29,7 @@ export class TranslateConfigService {
   }
 
   getCurrentLanguage() {
-    return this.translateService.currentLang;
+    return this.translateService.getBrowserLang();
   }
 
   setLanguage(language: string) {
