@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import * as aliceonboarding from 'aliceonboarding';
 import { Onboarding, OnboardingConfig, DocumentType } from "aliceonboarding";
 import "aliceonboarding/dist/aliceonboarding.css";
@@ -9,7 +10,7 @@ import { IUser } from 'src/app/models/user.model';
 import { KYCAliceService } from 'src/app/services/kyc.alice.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { AliceKYC } from './alice.model';
+import { KYC_Country, KYC_DOCtype, KYC_ERR_Validation } from './alice.model';
 
 @Component({
   selector: 'app-trial',
@@ -42,6 +43,7 @@ export class TrialPage implements OnInit {
     , private kycAliceService: KYCAliceService
     , private translateService: TranslateConfigService
     , private router: Router
+    , private alertCtrl: AlertController
   ) { }
 
   async ngOnInit() {
@@ -52,7 +54,6 @@ export class TrialPage implements OnInit {
   //SEARCH COMPONENT
   searchText: string = '';
   keyText: string = '';
-  keywords: any = {};
   keys: any = [];
   openKeys: boolean = false;
   selectorEnabled: boolean = false;
@@ -62,6 +63,12 @@ export class TrialPage implements OnInit {
   publishSearchForm: FormGroup;
 
   isLoading: boolean = false;
+  nothingFound: boolean = false;
+  subscription = null;
+  cntrySelected: KYC_Country;
+  docTypes = KYC_DOCtype;
+  docTypeSelected: KYC_DOCtype
+
   showCard: boolean = false;
 
   //NEW SEARCH COMPONENT
@@ -70,31 +77,61 @@ export class TrialPage implements OnInit {
   }
 
   async search() {
-    console.log('SEARCH', this.searchText, this.selectorEnabled);
-    if (this.searchText === '') {
-      this.keys = [];
+    this.nothingFound = false;
+    this.keys = [];
+
+    if ( this.searchText === '' )
       this.selectorEnabled = true;
-    }
-    this.publishSearchForm.patchValue({nombre: this.searchText});
-    /* if ((this.searchText.length > 2) && (this.selectorEnabled)) {
-      (await this.api.searchByKeys(this.searchText)).subscribe((keywords) => {
-        if (keywords.length !== 0) {
+
+    // To remove listener of previous call
+    if( this.subscription !== null )
+      this.subscription.unsubscribe();
+
+    if (( this.searchText.length > 2 ) && ( this.selectorEnabled )) {
+      // To show on list the loading spinner
+      this.keys.push({ name: 'Cargando...', value: 'loading' });
+
+      this.subscription = ( await this.kycAliceService.getCountriesByKey( this.searchText )).subscribe(
+        ( response ) => {
+          this.kycAliceService.handleBackendToken( response );
+
           let keys = [];
-          for (let key of keywords) {
-            let item = { name: this.highlight(key.keyword), value: key.keyword };
-            keys.push(item);
-          }
+
+          if( Object.keys( response.hierarchy ).length > 0 ) {
+            for( const key in response.hierarchy ) {
+              const country = response.hierarchy[ key ];
+              let item: KYC_Country = {
+                name: this.highlight( country.name ),
+                value: country.name,
+                countryISO: key,
+                docTypes: country.document_types
+              };
+
+              console.log( item );
+              keys.push( item );
+            };
+          } else
+            this.nothingFound = true;
+          
           this.keys = keys;
+        },
+        ( err ) => {
+          this.onError( err );
         }
-        else {
-          setTimeout(() => {
-            this.selectorEnabled = false;
-            this.showCard = true;
-          }, 500);
-        }
-        console.log('keys', this.keys);
+      );
+    }
+  }
+
+  highlight( query ) {
+    if ( !this.searchText ) {
+      return query;
+    }
+
+    return query
+      .toString()
+      .replace(new RegExp(this.searchText, 'gi'), (match) => {
+        return '<strong>' + match + '</strong>';
       });
-    } */
   }
 
   removeFocus() {
@@ -102,16 +139,20 @@ export class TrialPage implements OnInit {
       this.keyText = this.searchText;
       this.selectorEnabled = false;
       this.keys.length = 0;
-    }, 500);
+
+      // To remove listener of previous call
+      if( this.subscription !== null )
+        this.subscription.unsubscribe();
+    }, 500 );
   }
 
   clearBtn() {
-    this.keywords = {};
     this.keys = [];
+    this.cntrySelected = null;
   }
 
   detectKeyPressed(event) {
-    if ((event.key === 'Enter') && (this.searchText.length > 2)) {
+    if ((event.key === 'Enter') && ( this.searchText.length > 2 )) {
       this.showCard = true;
       setTimeout(() => {
         this.keys.length = 0;
@@ -119,26 +160,30 @@ export class TrialPage implements OnInit {
     }
   }
 
-  async countrySelected(key) {
-    /* console.log('getSectorsByKeys');
+  async countrySelected( country: KYC_Country ) {
+    // Prevent click on Loading spinner
+    if( country.value == 'loading' ) {
+      this.addFocus();
+      return;
+    }
+
+    console.log( 'countrySelected: ', country );
     this.keys = [];
 
-    (await this.api.getSectorsByKeys(key.value)).subscribe((keywords) => {
-      console.log('keywords', keywords);
-      this.searchText = key.value;
-      this.keyText = this.searchText;
-      this.keywords = keywords;
-      this.selectorEnabled = true;
-      this.publishSearchForm.patchValue({sector: this.keywords.main.sector_id});
+    this.searchText = country.value;
+    this.keyText = this.searchText;
+    this.selectorEnabled = true;
+    this.cntrySelected = country;
+  }
 
-      this.subSectors = [];
-      this.loadSubSectors(this.keywords.main.sector_id);
+  docSelected( docType: KYC_DOCtype ) {
+    this.creating = true;
 
-      this.showCard = true;
-      this.removeFocus();
-      
-      this.isLoading = false;
-    }); */
+    this.getUserToken( docType, {
+      email: this.email,           // Mandatory
+      firstName: 'Abdias Natanael',   // Optional
+      lastName: 'Vrech'      // Optional
+    });
   }
 
 
@@ -154,75 +199,43 @@ export class TrialPage implements OnInit {
   onEmail( email ) {
     this.email = email;
   }
-  onChecked( isChecked: boolean, type: string ) {
-    switch( type ) {
-      case 'id':
-        this.type_id = isChecked;
-        break;
-      case 'passport':
-        this.type_id = isChecked;
-        break;
-      case 'residence':
-        this.type_id = isChecked;
-        break;
-      case 'driver':
-        this.type_id = isChecked;
-        break;
-      case 'selfie':
-        this.selfie = isChecked;
-        break;
-    }
-  }
-  onCreate() {
-    if( this.email === '' ) {
-      this.utilities.showToast( 'Debe indicar el email' );
-      return;
-    }
-
-    this.creating = true;
-    this.onUserInfo( this.setUserInfo( this.email, this.currentUser.name ));
-  }
   restart() {
     this.creating = false;
     this.done = false;
   }
-
-  setUserInfo( email: string, firstName?: string, lastName?: string ) {
-    return {
-      email: email,           // Mandatory
-      firstName: firstName,   // Optional
-      lastName: lastName      // Optional
-    }
-  }
   
-  onUserInfo( userInfo?: any ) {
+  getUserToken( docType: KYC_DOCtype, userInfo ) {
+    this.isLoading = true;
+
     let authenticator = new aliceonboarding.SandboxAuthenticator( this.SANDBOX_TOKEN, userInfo );
     authenticator.execute()
       .then(userToken => {
         this.userToken = userToken;
-        this.aliceOnboardingWelcome( userInfo, userToken );
-        // this.aliceOnboarding( userToken );
+        this.aliceOnboarding( userToken, docType );
+        
+        this.isLoading = false;
       })
       .catch(error => {
         alert("Please, add a valid SANDBOX_TOKEN (JavaScript)\n" + error.toString());
         console.log( 'error: ', error.toString() );
+
+      this.isLoading = false;
       })
   }
   
   // Fuera de mantenimiento, no utilizar de momento la bienvenida de Alice ( hasta que lo habiliten )
-  aliceOnboardingWelcome( userInfo, userToken ) {
+  aliceOnboardingWelcome( userInfo, userToken, docType: KYC_DOCtype ) {
     new aliceonboarding.OnboardingWelcome( "alice-onboarding-mount", userInfo )
       .run(
         ( res ) => {
-          this.aliceOnboarding( userToken );
+          this.aliceOnboarding( userToken, docType );
         },
         () => { this.onCancel(  ); }
     );
   }
   
-  aliceOnboarding( userToken ) {
-    console.log( 'userToken: ', userToken );
-    const config = this.setConfig( userToken );
+  aliceOnboarding( userToken, docType: KYC_DOCtype ) {
+    const config = this.setConfig( userToken, docType );
   
     new aliceonboarding.Onboarding( "alice-onboarding-mount", config )
       .run(
@@ -232,47 +245,57 @@ export class TrialPage implements OnInit {
       );
   }
 
-  setConfig( userToken?: string ) {
+  setConfig( userToken: string, docType: KYC_DOCtype ) {
+    this.docTypeSelected = docType;
+    
     const lang: string = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
 
-    let documentStageConfig = new aliceonboarding.DocumentStageConfig(
-      aliceonboarding.DocumentCapturerType.ALL, true, aliceonboarding.CameraType.BACK
-    );
-
     const config = new aliceonboarding.OnboardingConfig()
-      // Load Document By FILE EXPLORER || CAMERA
-      .withAddDocumentStage( aliceonboarding.DocumentCapturerType.ALL )
 
       // Language
       .withCustomLocalization( lang );
 
+    let documentType: DocumentType;
     // Type of Documents
-    if( this.type_id )
-      config.withAddDocumentStage( aliceonboarding.DocumentType.IDCARD, null, documentStageConfig );
-    if( this.type_passport )
-      config.withAddDocumentStage( aliceonboarding.DocumentType.PASSPORT, null, documentStageConfig );
-    if( this.type_residence )
-      config.withAddDocumentStage( aliceonboarding.DocumentType.RESIDENCEPERMIT, null, documentStageConfig );
-    if( this.type_driver )
-      config.withAddDocumentStage( aliceonboarding.DocumentType.DRIVERLICENSE, null, documentStageConfig );
-      
-    if( this.selfie )
-      config.withAddSelfieStage();
+    switch( docType ) {
+      case KYC_DOCtype.ID:
+        documentType = aliceonboarding.DocumentType.IDCARD;
+        break;
+      case KYC_DOCtype.PASSPORT:
+        documentType = aliceonboarding.DocumentType.PASSPORT;
+        break;
+      case KYC_DOCtype.RESIDENCE:
+        documentType = aliceonboarding.DocumentType.RESIDENCEPERMIT;
+        break;
+      case KYC_DOCtype.DRIVER:
+        documentType = aliceonboarding.DocumentType.DRIVERLICENSE;
+        break;
+    }
+    
+    // Load Document By FILE EXPLORER || CAMERA
+    let documentStageConfig = new aliceonboarding.DocumentStageConfig(
+      aliceonboarding.DocumentCapturerType.ALL, true, aliceonboarding.CameraType.BACK
+    );
+    config.withAddDocumentStage( documentType, this.cntrySelected.countryISO, documentStageConfig );
+    
+    // Requieres Selfie validation
+    config.withAddSelfieStage();
 
-    if( userToken )
-      config.withUserToken( userToken );
+    // This token identifies each user ( Will create a new one unless already exists )
+    config.withUserToken( userToken );
 
     return config;
   }
 
-  async onFinished( res ) {
-    console.log("Onboarding complete. User info: " + JSON.stringify( res ));
-    
-    (await this.kycAliceService.validateUser( res.user_id )).subscribe(
+  async onFinished( res ) {    
+    (await this.kycAliceService.checkLifeProof( res.user_id, this.docTypeSelected )).subscribe(
       ( response ) => {
-        this.kycAliceService.handleBackendToken( response );
-
         console.log( 'response: ', response );
+
+        if( !response.isValid )
+          this.errOnLifeProof( response );
+        else
+          this.utilities.showToast( 'Verificacion de Vida exitosa' );
 
         this.utilities.dismissLoading();
       },
@@ -282,19 +305,92 @@ export class TrialPage implements OnInit {
     )
   }
 
+  errOnLifeProof( response: KYC_ERR_Validation ) {
+    let title = 'Tienes errores en la validación de Prueba de Vida\n';
+    let msg = '';
+
+    /** Error With Document */
+    if( !response.document )
+      msg += '\n' + 'No ha cargado un documento para validar';
+    else if( !response.document.isValid ) {
+      if( !response.document.backHasFields )
+        msg += '\n' + 'No he podido corroborar ningun campo de la parte trasera del documento';
+
+      if( !response.document.frontHasFields )
+        msg += '\n' + 'No he podido corroborar ningun campo de la parte frontal del documento';
+
+      if( !response.document.allFieldsOK ) {
+        msg += '\n' + 'Checkea que los siguientes campos del Documento no tengan problemas:';
+        if( !response.document.nameOK )
+          msg += '\n' + 'Nombre';
+        if( !response.document.surnameOK )
+          msg += '\n' + 'Apellido';
+        if( !response.document.birthOK )
+          msg += '\n' + 'Fecha de Nacimiento';
+        /* if( !response.document.isOver18 )
+          msg += '\n' + 'Mayoria de Edad'; */
+        if( response.document.dateExpired )
+          msg += '\n' + 'Fecha de Caducidad';
+        if( response.document.docNumberOK )
+          msg += '\n' + 'Numero de Documento';
+      }
+    }
+
+    /** Error With Selfie */
+    if( !response.selfie )
+      msg += '\n' + 'No ha realizado la prueba de Selfie';
+    else if( !response.selfie.isValid ) {
+      msg += '\n' + 'Los errores con respecto a la Selfie son:';
+      if( !response.selfie.isRealPerson )
+        msg += '\n' + 'No ha pasado la prueba de suplantación ( imagenes impresas, videos en pantallas, mascaras, entre otras ) ';
+      if( !response.selfie.hasFaceMatching )
+        msg += '\n' + 'No se ha encontrado relacion entre la Selfie y la foto del documento';
+    }
+
+    this.retryAlert( title, msg );
+  }
+
   onError( err ) {
-    console.error("Onboarding error. Error: " + err.toString());
+    console.error("Onboarding error. Error: ", JSON.stringify( err.toString()));
     this.done = false;
 
-    this.utilities.dismissLoading();
+    // this.utilities.dismissLoading();
+
+    this.retryAlert( 'Parece que hubo un error', 'Desea reintentar para poder seguir con el proceso?' );
   }
 
   onCancel(  ) {
     console.log("Onboarding was canceled by the user");
     this.done = false;
+
+    this.retryAlert( 'Para continuar debe completar la prueba de vida', 'Desea reintentar para poder seguir con el proceso?' );
   }
 
   home() {
     this.router.navigate(['menu/todas']);
+  }
+
+  async retryAlert( title, msg ) {
+    let alert = await this.alertCtrl.create({
+      header: title,
+      message: msg,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: 'RE-INTENTAR',
+          handler: () => {
+            this.aliceOnboarding( this.userToken, this.docTypeSelected );
+          }
+        },
+        {
+          text: 'VOLVER',
+          handler: () => {
+            this.utilities.showToast( 'GoBack callback missing' );
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
