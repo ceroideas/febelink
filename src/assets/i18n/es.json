@@ -683,7 +683,8 @@
             "title": "Tienes errores en la validación de Prueba de Vida",
             "document": {
                 "none": "No ha cargado un documento para validar",
-                "sideFields": "No he podido corroborar ningun campo de la parte {{ side }} del documento",
+                "frontFields": "No he podido corroborar ningun campo de la parte Frontal del documento",
+                "backFields": "No he podido corroborar ningun campo de la parte Trasera del documento",
                 
                 "err": "Checkea que los siguientes campos del <b>Documento</b> no tengan problemas",
                 "name": "Nombre",

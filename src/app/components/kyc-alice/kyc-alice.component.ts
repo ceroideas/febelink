@@ -318,10 +318,10 @@ export class KYCAliceComponent implements OnInit {
       msg += '<br><br>' + this.translateService.instant( 'kyc.errors.document.none' );
     else if( !response.document.isValid ) {
       if( !response.document.backHasFields )
-        msg += '<br>' + this.translateService.instant( 'kyc.errors.document.sideFields', { side: 'Trasera' });
+        msg += '<br>' + this.translateService.instant( 'kyc.errors.document.backFields' );
 
       if( !response.document.frontHasFields )
-        msg += '<br>' + this.translateService.instant( 'kyc.errors.document.sideFields', { side: 'Frontal' });
+        msg += '<br>' + this.translateService.instant( 'kyc.errors.document.frontFields' );
 
       if( !response.document.allFieldsOK ) {
         msg += '<br><br>' + this.translateService.instant( 'kyc.errors.document.err' ) + '<br><ul>';

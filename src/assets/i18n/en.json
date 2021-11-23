@@ -52,7 +52,8 @@
             "back": "Back",
             "cancel": "Cancel",
             "send": "Send",
-            "close": "Close"
+            "close": "Close",
+            "retry": "Retry"
         },
 
         "address": {
@@ -641,5 +642,57 @@
                 }
             ]
         }
+    },
+    "kyc": {
+        "start": {
+            "header": "Identity Verification and Proof of Life",
+            "title": "To continue, we will need to verify your identity.",
+            "subtitle": "It will only take a minute",
+            "toProceed": "To proceed with the capture of the document, select the issuing country",
+            "selectCountry": "Select the issuing country of the Document",
+            "noCountry": "No country found"
+        },
+        "docTypes": {
+            "IDCARD": "ID Card",
+            "PASSPORT": "Passport",
+            "RESIDENCE": "Residence Permit",
+            "DRIVER": "Driver's License"
+        },
+        "loading": "Processing the data",
+        "cancel": {
+            "title": "To continue you must complete the life test",
+            "message": "Do you want to retry so that you can continue with the process?"
+        },
+        "errors": {
+            "alice": {
+                "title": "It seems there was an error",
+                "message": "Do you want to retry so that you can continue with the process?"
+            },
+            "title": "You have errors in the validation of Proof of Life",
+            "document": {
+                "none": "You have not uploaded a document to validate",
+                "frontFields": "I have not been able to corroborate any field in the Front side of the document",
+                "backFields": "I have not been able to corroborate any field in the Back side of the document",
+                
+                "err": "Check that the following fields of the <b>Document</b> do not have problems",
+                "name": "Name",
+                "surname": "Surname",
+                "birthdate": "Date of birth",
+                "legal_age": "Age of Majority",
+                "expire": "Date of Expiry",
+                "number": "Document Number",
+
+                "consistent": "There are at least 2 inconsistent fields between both sides of the document",
+                "expected": "The selected Document type and / or the issuing country do not match the uploaded Document"
+            },
+            "selfie": {
+                "none": "You have not taken the Selfie test",
+                
+                "err": "The errors regarding the <b>Selfie</b> are:",
+                "is_real": "It has not passed the impersonation test (printed images, videos on screens, masks, among others)",
+                "face_match": "No relationship was found between the Selfie and the document photo"
+            }
+        },
+        "verified": "Life Verification {{ verified }}"
     }
 }
