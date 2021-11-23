@@ -10,6 +10,7 @@
     id: number;
     role_id: number;
     name: string;
+    lastName?: string;
     email: string;
     avatar: string;
     email_verified_at: string | null;
