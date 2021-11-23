@@ -47,8 +47,13 @@
       <p>{{ 'common.labelLoading' | translate }}</p>
     </div>
 
-    <!-- Search engine. -->
+    <!-- Search engine -->
     <div class="content-filter" *ngIf="!isLoading">
+      
+      <h4>Para continuar, necesitaremos Verificar tu identidad. Solo tomará un minuto</h4>
+      
+      <p>Para proceder con la captura del documento, selecciona el país emisor</p>
+
       <div class="autocomplete">
         <ion-searchbar
           placeholder="{{ 'common.searchPlaceholder' | translate }}"
@@ -62,93 +67,71 @@
         >
         </ion-searchbar>
 
+        <span class="error" *ngIf="nothingFound">Nothing found</span>
+
         <div class="keys-dropdown">
           <ion-list
             mode="ios"
-            *ngIf="searchText.length > 2 && keys.length > 0"
-          >
+            *ngIf="keys.length > 0"
+          >            
             <ion-item
               (click)="countrySelected(key)"
               *ngFor="let key of keys"
               style="font-size: 16px"
             >
-              <ion-icon slot="start" name="search-outline"></ion-icon>
+              <!-- On searching => show loading -->
+              <ion-spinner slot="start" name="dots" *ngIf="key.value == 'loading'"></ion-spinner>
+              <!-- On result => show countries -->
+              <ion-icon slot="start" name="globe" *ngIf="key.value != 'loading'"></ion-icon>
+
               <span [innerHTML]="key.name"></span>
             </ion-item>
           </ion-list>
         </div>
       </div>
     </div>
-    
-  </ion-grid>
 
-  <!--
-    Fill Fields
-  -->
-  <ion-grid *ngIf="!creating && !done">
-  
-    <!-- Doc Types -->
-    <ion-row>
-      <!-- ID -->
-      <ion-col size="2">
-        <ion-item class="input" >
-          <ion-label position="floating">ID</ion-label>
-          <ion-checkbox [(ngModel)]="type_id" color="primary" (ionChange)="onChecked( $event.target.checked, 'id' )"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-  
-      <!-- PASSPORT -->
-      <ion-col size="2">
-        <ion-item class="input" >
-          <ion-label position="floating">Pasaporte</ion-label>
-          <ion-checkbox [(ngModel)]="type_passport" color="secondary" (ionChange)="onChecked( $event.target.checked, 'passport' )"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-  
-      <!-- RESIDENCE -->
-      <ion-col size="3">
-        <ion-item class="input" >
-          <ion-label position="floating">Permiso de Residencia</ion-label>
-          <ion-checkbox [(ngModel)]="type_residence" color="danger" (ionChange)="onChecked( $event.target.checked, 'residence' )"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-  
-      <!-- DRIVER LICENSE -->
-      <ion-col size="3">
-        <ion-item class="input" >
-          <ion-label position="floating">Licencia de Conducir</ion-label>
-          <ion-checkbox [(ngModel)]="type_driver" color="dark" (ionChange)="onChecked( $event.target.checked, 'driver' )"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-  
-      <!-- SELFIE -->
-      <ion-col size="2">
-        <ion-item class="input" >
-          <ion-label position="floating">Selfie</ion-label>
-          <ion-checkbox [(ngModel)]="selfie" color="primary" (ionChange)="onChecked( $event.target.checked, 'selfie' )"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    <!-- Doc Type -->
+    <ion-item
+      (click)="docSelected( docTypes.ID )"
+      *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.ID ) > -1"
+    >
+      <ion-avatar slot="start" class="avatar">
+        <img src="/assets/imgs/alice/idcard.svg">
+      </ion-avatar>
+      <ion-label>Carnet de Identidad</ion-label>
+    </ion-item>
+
+    <ion-item
+      (click)="docSelected( docTypes.PASSPORT )"
+      *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.PASSPORT ) > -1"
+    >
+      <ion-avatar slot="start" class="avatar">
+        <img src="/assets/imgs/alice/passport.svg">
+      </ion-avatar>
+      <ion-label>Pasaporte</ion-label>
+    </ion-item>
+
+    <ion-item
+      (click)="docSelected( docTypes.RESIDENCE )"
+      *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.RESIDENCE ) > -1"
+    >
+      <ion-avatar slot="start" class="avatar">
+        <img src="/assets/imgs/alice/residence.svg">
+      </ion-avatar>
+      <ion-label>Permiso de Residencia</ion-label>
+    </ion-item>
+
+    <ion-item
+      (click)="docSelected( docTypes.DRIVER )"
+      *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.DRIVER ) > -1"
+    >
+      <ion-avatar slot="start" class="avatar">
+        <img src="/assets/imgs/alice/driverlicense.svg">
+      </ion-avatar>
+      <ion-label>Licencia de Conducir</ion-label>
+    </ion-item>
     
-  
-    <!-- Inputs -->
-    <ion-row>
-      <ion-col size="3">
-        <ion-item class="input" >
-          <ion-label position="floating">Email</ion-label>
-          <ion-input 
-            type="email"
-            clearInput
-            (ionInput)="onEmail( $event.target.value )">
-          </ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="3">
-        <ion-item class="input" >
-          <ion-button (click)="onCreate()">Crear Usuario</ion-button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
   </ion-grid>
   
 

@@ -60,6 +60,21 @@ ion-content {
     text-align: center;
   }
 
+  .error {
+    color: var(--ion-color-danger);
+    font-size: 12px;
+    margin-left: 18px;
+  }
+
+  ion-item {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .avatar {
+    padding: 3px;
+    background: var(--ion-color-febelink);
+  }
 }
 
 .floating {
