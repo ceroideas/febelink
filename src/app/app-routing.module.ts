@@ -201,17 +201,6 @@ const routes: Routes = [
     path: 'email-verified', redirectTo: 'menu/todas', pathMatch: 'full'
   },
 
-  /**
-   * Alice OnBoarding
-   */
-  {
-    path: 'alice',
-    loadChildren: () =>
-      import( './pages/alice/trial/trial.module' ).then(
-        (m) => m.TrialPageModule
-      ),
-  },
-
 ];
 
 @NgModule({
