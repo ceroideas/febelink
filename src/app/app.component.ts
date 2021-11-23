@@ -176,25 +176,37 @@ export class AppComponent implements OnDestroy {
     this.deeplinks
       .route({
         '/busqueda/:id/:name': 'detalle-demanda',
+        '/busqueda/:id': 'detalle-demanda',
         '/perfil/:id/:name': 'perfil-demandante',
+        '/menu/ofertas': 'ofertas',
         '/#/busqueda/:id/:name': 'detalle-demanda',
+        '/#/busqueda/:id': 'detalle-demanda',
         '/#/perfil/:id/:name': 'perfil-demandante',
+        '/#/menu/ofertas': 'ofertas',
       })
       .subscribe(
         (match) => {
           let id = match.$args.id;
           let name = match.$args.name;
-          if (match.$route === 'detalle-demanda') {
-            id = Number(id);
-            setTimeout(() => {
-              this.router.navigate(['busqueda', id, name], {
-                queryParams: { id_demanda: id },
+          switch (match.$route) {
+            case 'detalle-demanda': {
+              id = Number(id);
+              setTimeout(() => {
+                const route:string[] = ['busqueda', id];
+                if(name) route.push(name);
+                this.router.navigate(route, {
+                  queryParams: { id_demanda: id },
+                });
+              }, 500);
+            }
+            case 'perfil-demandante': {
+              this.router.navigate(['perfil', id, name], {
+                queryParams: { id_perfil: id },
               });
-            }, 500);
-          } else if (match.$route === 'perfil-demandante') {
-            this.router.navigate(['perfil/', id, name], {
-              queryParams: { id_perfil: id },
-            });
+            }
+            case 'ofertas': {
+              this.router.navigate(['menu', 'ofertas']);
+            }
           }
         },
         (nomatch) => {
