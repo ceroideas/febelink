@@ -1,0 +1,87 @@
+@import 'https://unpkg.com/aliceonboarding@latest/dist/aliceonboarding.css';
+
+html {
+  font-family: Helvetica, Arial, Sans-serif;
+}
+
+ion-header {
+
+    ion-col {
+        display: flex;
+    }
+    ion-title {
+
+        @media (max-width: 768px) {
+            margin: 0px;
+            padding: 0px;
+            text-overflow: ellipsis;
+            line-break: normal;
+            overflow: hidden;
+        }
+    }
+
+    app-lang-btn {
+
+        ion-label {
+            color: white !important;
+        }
+    }
+}
+
+ion-content {
+    width: 100%;
+    height: 90%;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    
+    .cargando-container {
+      text-align: center;
+      margin-top: 10px;
+
+      ion-spinner {
+        margin: 10px auto;
+      }
+    }
+  
+    .error {
+      color: var(--ion-color-danger);
+      font-size: 12px;
+      margin-left: 18px;
+    }
+  
+    ion-item {
+      padding: 5px;
+      cursor: pointer;
+    }
+  
+    .avatar {
+      padding: 3px;
+      background: var(--ion-color-febelink);
+    }
+
+    .align-init {
+        text-align: initial;
+    }
+
+    li {
+        font-style: italic;
+    }
+}
+
+.alice-menu-section-button {
+    font-size: 14px;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#startButton {
+  margin-top: 1rem;
+}
