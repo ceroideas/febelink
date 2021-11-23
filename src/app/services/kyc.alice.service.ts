@@ -34,16 +34,26 @@ export class KYCAliceService {
   }
   
 
-  validateUser( userId, showLoading: boolean = true ) {
+  getUserReport( userId, showLoading: boolean = true ) {
     if( showLoading )
       this.utilities.showLoading();
 
     const routes = this.route( KYCRoutes.BACKEND ) + 'userReport/' + userId;
-      console.log( 'routes: ', routes );
-      
+    return this.api._getData( routes );
+  }
+  
+
+  checkLifeProof( userId, doc, showLoading: boolean = true ) {
+    if( showLoading )
+      this.utilities.showLoading();
+
+    const routes = this.route( KYCRoutes.CHECK ) + `checkLifeProof/${ userId }/${ doc }`;
     return this.api._getData( routes );
   }
 
 
-  
+  getCountriesByKey( key: string ) {
+    const routes = this.route( KYCRoutes.INFO ) + 'docsPerCountry/' + key;      
+    return this.api._getData( routes );
+  }
 }
