@@ -324,19 +324,20 @@
     --max-height: 90vh;
     background: transparent;
 
-    app-youtube-pop {
+    app-youtube-pop,
+    app-kyc-alice {
       width: 100%;
       height: 100%;
     }
   }
   @media (max-width: 768px){
     .popover-content {
-      top: 10vh;
+      /* top: 10vh;
       left: 10vw;
       --width: 80vw;
       --max-width: 80vw;
       --height: 80vh;
-      --max-height: 80vh;
+      --max-height: 80vh; */
     }
   }
 }
