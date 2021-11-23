@@ -52,7 +52,8 @@
             "back": "Volver",
             "cancel": "Cancelar",
             "send": "Enviar",
-            "close": "Cerrar"
+            "close": "Cerrar",
+            "retry": "Reintentar"
         },
 
         "address": {
@@ -653,5 +654,56 @@
                 }
             ]
         }
+    },
+    "kyc": {
+        "start": {
+            "header": "Verificación de Identidad y Prueba de Vida",
+            "title": "Para continuar, necesitaremos Verificar tu identidad.",
+            "subtitle": "Solo tomará un minuto",
+            "toProceed": "Para proceder con la captura del documento, selecciona el país emisor",
+            "selectCountry": "Selecciona el país emisor del Documento",
+            "noCountry": "Ningún país encontrado"
+        },
+        "docTypes": {
+            "IDCARD": "Carnet de Identidad",
+            "PASSPORT": "Pasaporte",
+            "RESIDENCE": "Permiso de Residencia",
+            "DRIVER": "Licencia de Conducir"
+        },
+        "loading": "Procesando los datos",
+        "cancel": {
+            "title": "Para continuar debe completar la prueba de vida",
+            "message": "¿Desea reintentar para poder seguir con el proceso?"
+        },
+        "errors": {
+            "alice": {
+                "title": "Parece que hubo un error",
+                "message": "Desea reintentar para poder seguir con el proceso?"
+            },
+            "title": "Tienes errores en la validación de Prueba de Vida",
+            "document": {
+                "none": "No ha cargado un documento para validar",
+                "sideFields": "No he podido corroborar ningun campo de la parte {{ side }} del documento",
+                
+                "err": "Checkea que los siguientes campos del <b>Documento</b> no tengan problemas",
+                "name": "Nombre",
+                "surname": "Apellido",
+                "birthdate": "Fecha de Nacimiento",
+                "legal_age": "Mayoria de Edad",
+                "expire": "Fecha de Caducidad",
+                "number": "Numero de Documento",
+
+                "consistent": "Hay al menos 2 campos inconsistentes entre ambos lados del documento",
+                "expected": "El tipo de Documento seleccionado y/o el país emisor no concuerdan con el Documento cargado"
+            },
+            "selfie": {
+                "none": "No ha realizado la prueba de Selfie",
+                
+                "err": "Los errores con respecto a la <b>Selfie</b> son:",
+                "is_real": "No ha pasado la prueba de suplantación ( imagenes impresas, videos en pantallas, mascaras, entre otras )",
+                "face_match": "No se ha encontrado relacion entre la Selfie y la foto del documento"
+            }
+        },
+        "verified": "Verificacion de Vida {{ verified }}"
     }
 }
