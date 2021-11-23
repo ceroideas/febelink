@@ -97,7 +97,6 @@ export class HeaderButtonsComponent implements OnInit {
    * Open Alice
    */
   async openAlice() {
-    this.irA( '/alice' ); return;
     const popover = await this.popoverController.create({
       component: KYCAliceComponent,
       translucent: true,
@@ -115,7 +114,7 @@ export class HeaderButtonsComponent implements OnInit {
 
     this.utilities.showToast(
       this.translateService.instant( 'kyc.verified',
-      { verified: data.isValidated ? 'exitosa' : 'fallida' })
+      { verified: data.result.isValidated ? 'exitosa' : 'fallida' })
     );
   }
 
