@@ -705,6 +705,7 @@
                 "face_match": "No se ha encontrado relacion entre la Selfie y la foto del documento"
             }
         },
-        "verified": "Verificacion de Vida {{ verified }}"
+        "verified": "Verificacion de Vida Exitosa",
+        "unverified": "Verificacion de Vida Fallida"
     }
 }

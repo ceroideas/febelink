@@ -103,6 +103,8 @@ export class HeaderButtonsComponent implements OnInit {
       mode: 'md',
       cssClass: 'pop-yt',
       componentProps: {
+        // This is for testing purposes, to try with a different email than the user one
+        // In case of needing
         email: 'abdias.dev8@gmail.com'
       },
       backdropDismiss: false
@@ -113,8 +115,7 @@ export class HeaderButtonsComponent implements OnInit {
     const { data } = await popover.onDidDismiss();
 
     this.utilities.showToast(
-      this.translateService.instant( 'kyc.verified',
-      { verified: data.result.isValidated ? 'exitosa' : 'fallida' })
+      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
     );
   }
 

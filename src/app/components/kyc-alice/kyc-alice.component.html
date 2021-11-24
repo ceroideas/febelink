@@ -7,15 +7,11 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-row>
-      <ion-col size="9">
-        <ion-title>{{ 'kyc.start.header' | translate }}</ion-title>
-      </ion-col>
-
-      <ion-col size="3">
-        <app-lang-btn></app-lang-btn>
-      </ion-col>
-    </ion-row>
+    <ion-title>
+      <div class="ion-text-wrap">
+        {{ 'kyc.start.header' | translate }}
+      </div>
+    </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="restart()">

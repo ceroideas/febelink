@@ -11,6 +11,38 @@ import * as aliceonboarding from 'aliceonboarding';
 import { Onboarding, OnboardingConfig, DocumentType } from "aliceonboarding";
 import "aliceonboarding/dist/aliceonboarding.css";
 
+
+
+  /**
+   * To call this PopOver, here is an example on how to
+   */
+  /*  async openAlice() {
+    const popover = await this.popoverController.create({
+      component: KYCAliceComponent,
+      translucent: true,
+      mode: 'md',
+      cssClass: 'pop-yt',
+      componentProps: {
+        // This is for testing purposes, to try with a different email than the user one
+        // In case of needing it || else, remove it
+        email: 'abdias.dev8@gmail.com'
+      },
+      backdropDismiss: false // To prevent user cancel on touch outside by error
+    });
+
+    await popover.present();
+
+    // The data always returns `data.result`
+    const { data } = await popover.onDidDismiss();
+
+    // According to `isValidated` == true => perform the needed task
+    this.utilities.showToast(
+      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
+    );
+
+    // That's it, you've validated the user
+  } */
+
 @Component({
   selector: 'app-kyc-alice',
   templateUrl: './kyc-alice.component.html',
@@ -35,6 +67,7 @@ export class KYCAliceComponent implements OnInit {
 
   SANDBOX_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpc3N1ZXItc2FuZGJveCIsInR5cCI6IlNBTkRCT1giLCJleHAiOjE2NDE1NjQyNDMsImlhdCI6MTYzNjM4MDI0MywiY2xpIjoiZmViZWxpbmstdHJpYWwifQ.LRnJX4GWcqKy-DWgLte6_4p8loIbpNFPJPf36gZNT5bYZVost3iKzbXH-7-WDiwVlPlVdnQ55pgQf0hFeLLJ3U03XwlqYKiaf1q0iwRetEpeM1V1jm3E1HOZ_-1A2i5MfxRpy0mJ2j6wy_omOPgZRe5FV23xsZW6yba9CKAfntNdaAf0ETJoP-0tfFcEGEfpVdpIsBv_rUCmjh9PADEY1UCgmsGQbnMm7L1wgT-LL9jqUhlwXB2894N8C0ubG7s-EB5ve9dbcQhXVN1xdoBnklMONSmk74NnRvrA7qqKk8jecZT26InIJI8QQyKcY7hd6PrpFKeukfYZSD3t5XG0sA";
 
+  lang: string;
   
   //SEARCH COMPONENT
   searchText: string = '';
@@ -65,6 +98,12 @@ export class KYCAliceComponent implements OnInit {
 
   async ngOnInit() {
     this.currentUser = { ...(await this.utilities.getUserData()) };
+    this.lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+  }
+
+  // Delete this
+  ionViewDidEnter() {
+    this.docSelected( KYC_DOCtype.PASSPORT );
   }
 
   getUserInfo() {
@@ -103,7 +142,7 @@ export class KYCAliceComponent implements OnInit {
       // To show on list the loading spinner
       this.keys.push({ name: 'Cargando...', value: 'loading' });
 
-      this.subscription = ( await this.kycAliceService.getCountriesByKey( this.searchText )).subscribe(
+      this.subscription = ( await this.kycAliceService.getCountriesByKey( this.lang, this.searchText )).subscribe(
         ( response ) => {
           this.kycAliceService.handleBackendToken( response );
 
@@ -252,13 +291,11 @@ export class KYCAliceComponent implements OnInit {
 
   setConfig( userToken: string, docType: KYC_DOCtype ) {
     this.docTypeSelected = docType;
-    
-    const lang: string = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
 
     const config = new aliceonboarding.OnboardingConfig()
 
       // Language
-      .withCustomLocalization( lang );
+      .withCustomLocalization( this.lang );
 
     let documentType: DocumentType;
     // Type of Documents
@@ -281,7 +318,7 @@ export class KYCAliceComponent implements OnInit {
     let documentStageConfig = new aliceonboarding.DocumentStageConfig(
       aliceonboarding.DocumentCapturerType.ALL, true, aliceonboarding.CameraType.BACK
     );
-    config.withAddDocumentStage( documentType, this.cntrySelected.countryISO, documentStageConfig );
+    config.withAddDocumentStage( documentType, this.cntrySelected?.countryISO, documentStageConfig );
     
     // Requieres Selfie validation
     config.withAddSelfieStage();
@@ -410,6 +447,8 @@ export class KYCAliceComponent implements OnInit {
   }
 
   dismiss( result ) {
+    /* if( result.isValidated )
+      this.utilities.storage */
     this.popoverController.dismiss({ result })
   }
 }
