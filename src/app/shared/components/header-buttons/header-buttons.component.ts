@@ -27,6 +27,9 @@ export class HeaderButtonsComponent implements OnInit {
   notifCount: number;
   totalUnreadMessages: number;
 
+  // TODO: Added this param for testing purpposes, this will be deleated on KYC implementation
+  showAliceTrial: boolean = false;
+
   constructor(
     private modalCtrl: ModalController,
     private api: ApiService,
