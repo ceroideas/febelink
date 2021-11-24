@@ -88,7 +88,6 @@ export class KYCAliceComponent implements OnInit {
   docTypes = KYC_DOCtype;
   docTypeSelected: KYC_DOCtype
 
-  showCard: boolean = false;
   errorMsg: string;
 
   constructor(
@@ -104,7 +103,7 @@ export class KYCAliceComponent implements OnInit {
     this.checkPlatform();
   }
 
-  retriedTimes: number = 1;
+  retryTimes: number = 1;
   checkPlatform() {
     this.platform.ready().then(() => {
       if ( this.platform.is( 'android' ))
@@ -155,7 +154,7 @@ export class KYCAliceComponent implements OnInit {
         {
           text: 'VOLVER',
           handler: () => {
-            this.retriedTimes = 0;
+            this.retryTimes = 0;
             this.retryPermissions();
           }
         }
@@ -167,24 +166,19 @@ export class KYCAliceComponent implements OnInit {
 
   retryPermissions() {
     // Retry this number of times
-    if( this.retriedTimes > 0 ) {
-      this.retriedTimes--;
+    if( this.retryTimes > 0 ) {
+      this.retryTimes--;
       this.checkPlatform();
     } else
       this.dismiss({ isValidated: false });
   }
 
   async initialize() {
-    // Enabled later
+    // TODO: Enable KYC Tokens
     // this.KYC_TOKEN = enironment.KYC_TOKEN;
 
     this.currentUser = { ...(await this.utilities.getUserData()) };
     this.lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
-  }
-
-  // Delete this
-  ionViewDidEnter() {
-    this.docSelected( KYC_DOCtype.PASSPORT );
   }
 
   getUserInfo() {
@@ -291,7 +285,6 @@ export class KYCAliceComponent implements OnInit {
 
   detectKeyPressed(event) {
     if ((event.key === 'Enter') && ( this.searchText.length > 2 )) {
-      this.showCard = true;
       setTimeout(() => {
         this.keys.length = 0;
       }, 500);

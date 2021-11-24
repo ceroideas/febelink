@@ -117,13 +117,13 @@
       </ion-icon>
     </ion-button>
 
-    <ion-button
+    <ion-button *ngIf="showAliceTrial"
       size="large"
       color="primary"
       slot="icon-only"
       (click)="openAlice()"
     >
-      <img style="width: 50px;" src="assets/imgs/lice/alice.svg"/>
+      <img style="width: 50px;" src="assets/imgs/alice/alice.svg"/>
     </ion-button>
   </ion-buttons>
 </div>
