@@ -705,6 +705,12 @@
                 "face_match": "No se ha encontrado relacion entre la Selfie y la foto del documento"
             }
         },
+        "alert": {
+            "ios": {
+                "tile": "Validacion de KYC en Fase Beta",
+                "message": "Al encontrarse en Desarrollo para iOS, puede tener fallas. Si no puede terminar el proceso, continuelo desde el navegador en www.febelink.com"
+            }
+        },
         "verified": "Verificacion de Vida Exitosa",
         "unverified": "Verificacion de Vida Fallida"
     }

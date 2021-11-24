@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, Platform, PopoverController } from '@ionic/angular';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { IUser } from 'src/app/models/user.model';
@@ -10,6 +10,8 @@ import { KYC_Country, KYC_DOCtype, KYC_ERR_Validation } from 'src/app/models/kyc
 import * as aliceonboarding from 'aliceonboarding';
 import { Onboarding, OnboardingConfig, DocumentType } from "aliceonboarding";
 import "aliceonboarding/dist/aliceonboarding.css";
+
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 
 
@@ -65,7 +67,7 @@ export class KYCAliceComponent implements OnInit {
 
   userToken: string;
 
-  SANDBOX_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpc3N1ZXItc2FuZGJveCIsInR5cCI6IlNBTkRCT1giLCJleHAiOjE2NDE1NjQyNDMsImlhdCI6MTYzNjM4MDI0MywiY2xpIjoiZmViZWxpbmstdHJpYWwifQ.LRnJX4GWcqKy-DWgLte6_4p8loIbpNFPJPf36gZNT5bYZVost3iKzbXH-7-WDiwVlPlVdnQ55pgQf0hFeLLJ3U03XwlqYKiaf1q0iwRetEpeM1V1jm3E1HOZ_-1A2i5MfxRpy0mJ2j6wy_omOPgZRe5FV23xsZW6yba9CKAfntNdaAf0ETJoP-0tfFcEGEfpVdpIsBv_rUCmjh9PADEY1UCgmsGQbnMm7L1wgT-LL9jqUhlwXB2894N8C0ubG7s-EB5ve9dbcQhXVN1xdoBnklMONSmk74NnRvrA7qqKk8jecZT26InIJI8QQyKcY7hd6PrpFKeukfYZSD3t5XG0sA";
+  KYC_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpc3N1ZXItc2FuZGJveCIsInR5cCI6IlNBTkRCT1giLCJleHAiOjE2NDE1NjQyNDMsImlhdCI6MTYzNjM4MDI0MywiY2xpIjoiZmViZWxpbmstdHJpYWwifQ.LRnJX4GWcqKy-DWgLte6_4p8loIbpNFPJPf36gZNT5bYZVost3iKzbXH-7-WDiwVlPlVdnQ55pgQf0hFeLLJ3U03XwlqYKiaf1q0iwRetEpeM1V1jm3E1HOZ_-1A2i5MfxRpy0mJ2j6wy_omOPgZRe5FV23xsZW6yba9CKAfntNdaAf0ETJoP-0tfFcEGEfpVdpIsBv_rUCmjh9PADEY1UCgmsGQbnMm7L1wgT-LL9jqUhlwXB2894N8C0ubG7s-EB5ve9dbcQhXVN1xdoBnklMONSmk74NnRvrA7qqKk8jecZT26InIJI8QQyKcY7hd6PrpFKeukfYZSD3t5XG0sA";
 
   lang: string;
   
@@ -94,9 +96,88 @@ export class KYCAliceComponent implements OnInit {
     , private translateService: TranslateConfigService
     , private utilities: UtilitiesService
     , private kycAliceService: KYCAliceService
-    , private alertCtrl: AlertController ) { }
+    , private alertCtrl: AlertController
+    , private androidPermissions : AndroidPermissions
+    , private platform: Platform ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.checkPlatform();
+  }
+
+  retriedTimes: number = 1;
+  checkPlatform() {
+    this.platform.ready().then(() => {
+      if ( this.platform.is( 'android' ))
+        this.askAndroidPermissions();
+      else if ( this.platform.is( 'ios' ))
+        this.askIOSPermissions();
+      else
+        this.initialize();
+    });
+  }
+
+  private hasSetAndroidListener: boolean = false;
+  askAndroidPermissions() {
+    // To never add more than 1 listener
+    if( !this.hasSetAndroidListener ) {
+      this.hasSetAndroidListener = true;
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
+        result => {
+          console.log( 'Has permission?', result.hasPermission );
+
+          if( !result.hasPermission )
+            this.retryPermissions();
+          else
+            this.initialize();
+        },
+        err => this.retryPermissions()
+      );
+    }
+    
+    this.androidPermissions.requestPermissions([
+      this.androidPermissions.PERMISSION.CAMERA,
+      this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE,
+      this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE,
+    ]);
+  }
+
+  async askIOSPermissions() {
+    let alert = await this.alertCtrl.create({
+      header: this.translateService.instant( 'kyc.alert.ios.title' ) ,
+      message: this.translateService.instant( 'kyc.alert.ios.title' ) ,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: 'INTENTAR',
+          handler: () => this.initialize()
+        },
+        {
+          text: 'VOLVER',
+          handler: () => {
+            this.retriedTimes = 0;
+            this.retryPermissions();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  retryPermissions() {
+    // Retry this number of times
+    if( this.retriedTimes > 0 ) {
+      this.retriedTimes--;
+      this.checkPlatform();
+    } else
+      this.dismiss({ isValidated: false });
+  }
+
+  async initialize() {
+    // Enabled later
+    // this.KYC_TOKEN = enironment.KYC_TOKEN;
+
     this.currentUser = { ...(await this.utilities.getUserData()) };
     this.lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
   }
@@ -251,7 +332,7 @@ export class KYCAliceComponent implements OnInit {
   getUserToken( docType: KYC_DOCtype, userInfo ) {
     this.isLoading = true;
 
-    let authenticator = new aliceonboarding.SandboxAuthenticator( this.SANDBOX_TOKEN, userInfo );
+    let authenticator = new aliceonboarding.SandboxAuthenticator( this.KYC_TOKEN, userInfo );
     authenticator.execute()
       .then(userToken => {
         this.userToken = userToken;
