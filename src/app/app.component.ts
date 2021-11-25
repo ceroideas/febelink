@@ -417,12 +417,8 @@ export class AppComponent implements OnDestroy {
     });
   }
 
-  goToProfile() {
-    this.router.navigate(['menu/perfil']).then(() => this.menu.close());
-  }
-
-  goToMyWallet() {
-    this.router.navigate(['wallet']).then(() => this.menu.close());
+  goTo(route:string){
+    this.router.navigate([route]).then(() => this.menu.close());
   }
 
   onImgError(event) {

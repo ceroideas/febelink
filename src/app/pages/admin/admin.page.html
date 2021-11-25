@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu/todas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Panel de Administrador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item [routerLink]="option.link" *ngFor="let option of options">
+      <ion-icon slot="start" [name]="option.icon"></ion-icon>
+      <ion-label>{{option.title}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

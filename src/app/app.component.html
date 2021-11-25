@@ -49,15 +49,18 @@
             </ion-label>
           </ion-item>
           <ion-buttons slot="end">
-            <ion-button (click)="goToProfile()">
+            <ion-button (click)="goTo('menu/perfil')">
               <ion-icon slot="icon-only" color="light" name="create"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
+        <ion-button expand="block" fill="clear" shape="round" (click)="goTo('admin')">
+          Admin panel
+        </ion-button>
         <ion-toolbar
           id="menu-wallet-section"
           color="primary"
-          (click)="goToMyWallet()"
+          (click)="goTo('wallet')"
         >
           <ion-item lines="none" color="primary">
             <div tabindex="0"></div>
