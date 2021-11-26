@@ -653,17 +653,22 @@
             "noCountry": "No country found"
         },
         "docTypes": {
-            "IDCARD": "ID Card",
-            "PASSPORT": "Passport",
-            "RESIDENCE": "Residence Permit",
-            "DRIVER": "Driver's License"
+            "idcard": "ID Card",
+            "passport": "Passport",
+            "residencepermit": "Residence Permit",
+            "driverlicense": "Driver's License"
         },
+        "verifying": "Verifying User",
         "loading": "Processing the data",
         "cancel": {
             "title": "To continue you must complete the life test",
             "message": "Do you want to retry so that you can continue with the process?"
         },
         "errors": {
+            "user": {
+                "title": "User not found",
+                "message": "You must first create an account to validate your identity"
+            },
             "alice": {
                 "title": "It seems there was an error",
                 "message": "Do you want to retry so that you can continue with the process?"

@@ -665,17 +665,22 @@
             "noCountry": "Ningún país encontrado"
         },
         "docTypes": {
-            "IDCARD": "Carnet de Identidad",
-            "PASSPORT": "Pasaporte",
-            "RESIDENCE": "Permiso de Residencia",
-            "DRIVER": "Licencia de Conducir"
+            "idcard": "Carnet de Identidad",
+            "passport": "Pasaporte",
+            "residencepermit": "Permiso de Residencia",
+            "driverlicense": "Licencia de Conducir"
         },
+        "verifying": "Verificando Usuario",
         "loading": "Procesando los datos",
         "cancel": {
             "title": "Para continuar debe completar la prueba de vida",
             "message": "¿Desea reintentar para poder seguir con el proceso?"
         },
         "errors": {
+            "user": {
+                "title": "Usuario no encontrado",
+                "message": "Primero debe crear una cuenta para validar su identidad"
+            },
             "alice": {
                 "title": "Parece que hubo un error",
                 "message": "Desea reintentar para poder seguir con el proceso?"
