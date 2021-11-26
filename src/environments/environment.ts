@@ -31,7 +31,7 @@ export const environment = {
   APP_STORE: 'https://febelink.us19.list-manage.com/track/click?u=2c62737fce42bba9ebb2f5d05&id=f9ee5da0af&e=45535eea63',
 
   // KYC Alice Token
-  KYC_TOKEN: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpc3N1ZXItc2FuZGJveCIsInR5cCI6IlNBTkRCT1giLCJleHAiOjE2NDI5MjkzNjAsImlhdCI6MTYzNzc0NTM2MCwiY2xpIjoiZmViZWxpbmstZGV2In0.Clzkpz19wEXnbkjsVtPwUceOd09hMVMy7sBGaaz9chcMESkuZ1VfFvIlp-gedt79vZ67rIJ7XHskjZdjEnFyUN0rc-TaV9XRodBIGGbbfq8-LDjjpzAVKvILH8lguHqQQXoT9LNppmxC9OYFbqkhuTeaS1p2FISdgYBHe8DFMmoAdu7M7x8KNAgGbfJ5jZ4NAgl1dGoESnBaBmyj_oRQhL9u-PsUHZpDrmpTyRLTD3Fwuzyq6YMFEQE7EG1YSGMBTLkVvFVXQjDaXO7L_-RFUDS2Idy5UCFKnAL97f2qH0tvA6hA0A1Ki2Hi8sHvHhJ7VLnz5U5UyIXWm9H0F3f01g'
+  KYC_SELFIE: false
 };
 
 /*

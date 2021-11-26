@@ -15,5 +15,5 @@ export const environment = {
   GOOGLE_STORE: 'https://play.google.com/store/apps/details?id=com.xerintel.febelink54831',
   APP_STORE: 'https://febelink.us19.list-manage.com/track/click?u=2c62737fce42bba9ebb2f5d05&id=f9ee5da0af&e=45535eea63',
   // KYC Alice
-  KYC_TOKEN: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpc3N1ZXItc2FuZGJveCIsInR5cCI6IlNBTkRCT1giLCJleHAiOjE2NDI5MjkzNzEsImlhdCI6MTYzNzc0NTM3MSwiY2xpIjoiZmViZWxpbmsifQ.ScVSlkKxRljAjXgLT3zkePeBxEbW3OdLZH9bI0ONUeXw78KOu5ro1_oe1eQ-_6QhVK5wyTLjMIKoS6sHHzIIMaKghhyMqh-c95VhbiY4jFSXyTgpPr2X2ywJB15t1agGlY4U5QiOhBhl0Hnqhp-NP-rQG03PGZGbCo7Iu8nxD8rF9jST8_fReBE8iZb9p_R85KPtMrJ-WMR7FiBm4uj8BGFvWCmqux6BwTzut8C5ZyK_m0KHg6oaVsZdBcAFFfQPNhmpNKTyj33trVpR93CfogGRli3_RQA5SSxyWOFQL_Y6mUkKfmXHDqZnchQgLRONHU_T4nnnO_m7LuI9TtCutA'
+  KYC_SELFIE: true
 };
