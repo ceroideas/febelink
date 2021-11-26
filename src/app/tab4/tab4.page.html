@@ -88,12 +88,12 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
+              <ion-label position="floating"> {{ labelName }} </ion-label>
               <ion-input
                 clearInput
                 type="text"
-                formControlName="name"
-                [value]="perfil?.name"
+                formControlName="nick"
+                [value]="perfil?.nick"
               ></ion-input>
             </ion-item>
           </ion-col>
@@ -157,13 +157,14 @@
           </ion-col>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelDNI' | translate }} </ion-label>
+              <ion-label position="floating"> {{ labelDoc }} </ion-label>
               <ion-input
                 id='dninie'
                 clearInput
                 type="text"
                 [value]="perfil?.dni"
                 formControlName="dni"
+                [readonly]="perfil.doc_type"
               ></ion-input>
             </ion-item>
           </ion-col>
@@ -274,8 +275,8 @@
           ></ion-textarea>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
-          <ion-input clearInput type="text" formControlName="name"></ion-input>
+          <ion-label position="floating"> {{ labelName }} </ion-label>
+          <ion-input clearInput type="text" formControlName="nick" [value]="perfil?.nick" ></ion-input>
         </ion-item>
         <ion-item class="input" style="margin-bottom: 5px">
           <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
@@ -319,11 +320,13 @@
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelDNI' | translate }} </ion-label>
+          <ion-label position="floating"> {{ labelDoc }} </ion-label>
           <ion-input
             id="dninie"
             clearInput
             formControlName="dni"
+            [value]="perfil?.dni"
+            [readonly]="perfil.doc_type"
           ></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="subscription != null">

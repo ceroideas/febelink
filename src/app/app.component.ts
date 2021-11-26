@@ -183,7 +183,7 @@ export class AppComponent implements OnDestroy {
       .subscribe(
         (match) => {
           let id = match.$args.id;
-          let name = match.$args.name;
+          let name = match.$args.nick || match.$args.name;
           if (match.$route === 'detalle-demanda') {
             id = Number(id);
             setTimeout(() => {

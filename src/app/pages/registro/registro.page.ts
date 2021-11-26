@@ -124,7 +124,7 @@ export class RegistroPage implements OnInit {
         email: this.form.get('email').value,
         password: this.form.get('password').value,
         password_confirmation: this.form.get('confirmPassword').value,
-        name: this.form.get('name').value,
+        nick: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
         lang: lang,

@@ -116,7 +116,7 @@ export class PerfilDemandantePage implements OnInit {
 
   async isCorrectSearch(){
     if(this.urlName){
-      const nameToUrlType:string = this.utilities.textToUrl(this.perfilpublico.name);
+      const nameToUrlType:string = this.utilities.textToUrl(this.perfilpublico.nick);
       if(nameToUrlType !== this.urlName){
         const alert = await this.alertController.create({
             header: this.translateService.instant('pages.perfilDemandante.alertNameDontMatch.header'),
@@ -160,8 +160,8 @@ export class PerfilDemandantePage implements OnInit {
   public async shareProfile(ev: any): Promise<void> {
 
     let subject =
-    'Mira el perfil de ' + this.perfilpublico.name + ' usuario de Febelink:';
-    const nameForUrl = this.utilities.textToUrl(this.perfilpublico.name);
+    'Mira el perfil de ' + this.perfilpublico.nick + ' usuario de Febelink:';
+    const nameForUrl = this.utilities.textToUrl(this.perfilpublico.nick);
     let url = `${environment.WEB_URL}perfil/${this.id_perfil}/${nameForUrl}`;//
     let message = 'Febelink \n' + subject + ' \n';
 

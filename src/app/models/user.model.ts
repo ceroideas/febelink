@@ -9,6 +9,7 @@
  export interface IUser {
     id: number;
     role_id: number;
+    nick: string;
     name: string;
     lastName?: string;
     email: string;
@@ -34,6 +35,7 @@
     telefono: string | null;
     logo: string | null;
     dni: string | null;
+    doc_type?: string;
     link_url?: string;
     card_brand: string | null;
     card_last_four: string | null;
