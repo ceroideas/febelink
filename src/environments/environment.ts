@@ -31,7 +31,9 @@ export const environment = {
   APP_STORE: 'https://febelink.us19.list-manage.com/track/click?u=2c62737fce42bba9ebb2f5d05&id=f9ee5da0af&e=45535eea63',
 
   // KYC Alice Token
-  KYC_SELFIE: false
+  KYC_SELFIE: true,
+  // Just for you to try it || once done, remove from here and header-buttons.components line 31
+  KYC_DELETE_THIS: true
 };
 
 /*

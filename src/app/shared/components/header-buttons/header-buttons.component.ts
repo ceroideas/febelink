@@ -26,9 +26,9 @@ export class HeaderButtonsComponent implements OnInit {
   tabs = Tabs;
   notifCount: number;
   totalUnreadMessages: number;
-
-  // TODO: Added this param for testing purpposes, this will be deleated on KYC implementation
-  showAliceTrial: boolean = false;
+  
+  // TODO: Added this param for testing purpposes, David: delete after testing it!
+  environment = environment;
 
   constructor(
     private modalCtrl: ModalController,
@@ -105,11 +105,6 @@ export class HeaderButtonsComponent implements OnInit {
       translucent: true,
       mode: 'md',
       cssClass: 'pop-yt',
-      componentProps: {
-        // This is for testing purposes, to try with a different email than the user one
-        // In case of needing
-        email: 'abdias.dev8@gmail.com'
-      },
       backdropDismiss: false
     });
 
