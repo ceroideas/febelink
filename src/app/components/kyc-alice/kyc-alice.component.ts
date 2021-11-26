@@ -25,11 +25,6 @@ import { environment } from 'src/environments/environment';
       translucent: true,
       mode: 'md',
       cssClass: 'pop-yt',
-      componentProps: {
-        // This is for testing purposes, to try with a different email than the user one
-        // In case of needing it || else, remove it
-        email: 'abdias.dev8@gmail.com'
-      },
       backdropDismiss: false // To prevent user cancel on touch outside by error
     });
 
@@ -505,7 +500,7 @@ export class KYCAliceComponent implements OnInit {
   }
 
   onError( err ) {
-    console.error("Onboarding error. Error: ", JSON.stringify( err.toString()));
+    console.error("Onboarding error. Error: ", err );
     this.done = false;
 
     this.retryAlert(
