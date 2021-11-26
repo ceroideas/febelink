@@ -20,7 +20,6 @@
         "labelAddressRest": "Resto Dirección",
         "labelPhone": "Teléfono",
         "labelLink": "Link URL",
-        "labelDNI": "Documento de Identidad",
         "labelNewPass": "Contraseña nueva",
         "labelConfirmNewPass": "Confimar contraseña nueva",
         "labelTitle": "Título",
@@ -665,7 +664,7 @@
             "noCountry": "Ningún país encontrado"
         },
         "docTypes": {
-            "idcard": "Carnet de Identidad",
+            "idcard": "Carnet de Identidad Nacional",
             "passport": "Pasaporte",
             "residencepermit": "Permiso de Residencia",
             "driverlicense": "Licencia de Conducir"

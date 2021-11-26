@@ -20,7 +20,6 @@
         "labelAddressRest": "Rest Address",
         "labelPhone": "Phone",
         "labelLink": "URL Link",
-        "labelDNI": "Identity Document",
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
@@ -653,7 +652,7 @@
             "noCountry": "No country found"
         },
         "docTypes": {
-            "idcard": "ID Card",
+            "idcard": "National ID Card",
             "passport": "Passport",
             "residencepermit": "Residence Permit",
             "driverlicense": "Driver's License"
