@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 import { UtilitiesService } from './utilities.service';
 
@@ -33,6 +34,27 @@ export class KYCAliceService {
       this.backendToken = response.backend_token;
   }
   
+  authenticateUser( id , showLoading: boolean = true ) {
+    if( showLoading )
+      this.utilities.showLoading();
+
+    const formData = new FormData();
+    formData.append('id', id );
+    
+    const routes = this.route( KYCRoutes.BACKEND ) + 'authenticateUser';
+    return this.api._createData( routes, formData );
+  }
+  
+  verifyKYC( id, showLoading: boolean = true ) {
+    if( showLoading )
+      this.utilities.showLoading();
+
+    const formData = new FormData();
+    formData.append('id', id );
+    
+    const routes = this.route( KYCRoutes.CHECK ) + 'verifyKYC';
+    return this.api._createData( routes, formData );
+  }
 
   getUserReport( userId, showLoading: boolean = true ) {
     if( showLoading )
@@ -47,8 +69,13 @@ export class KYCAliceService {
     if( showLoading )
       this.utilities.showLoading();
 
-    const routes = this.route( KYCRoutes.CHECK ) + `checkLifeProof/${ userId }/${ doc }`;
-    return this.api._getData( routes );
+      const formData = new FormData();
+      formData.append('id', userId );
+      formData.append('doc', doc );
+      formData.append('check_selfie', environment.KYC_SELFIE ? '1' : '0' );
+
+    const routes = this.route( KYCRoutes.CHECK ) + `verifyLifeProof`;
+    return this.api._createData( routes, formData );
   }
 
 

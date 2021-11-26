@@ -29,7 +29,7 @@
   -->
   <div class="cargando-container" margin-top *ngIf="isLoading">
     <ion-row>
-      <h4>{{ 'kyc.loading' | translate }}</h4>
+      <h4>{{ loadingMsg }}</h4>
     </ion-row>
     <ion-row>
       <ion-spinner></ion-spinner>
@@ -39,10 +39,10 @@
   <!--
     Country and Doc Type
   -->
-  <ion-grid *ngIf="!creating && !done">
+  <ion-grid *ngIf="!creating && !done && !isLoading">
 
     <!-- Search engine -->
-    <div class="content-filter" *ngIf="!creating && !done && !isLoading">
+    <div class="content-filter">
       
       <h4>{{ 'kyc.start.title' | translate }}</h4>
       <h5>{{ 'kyc.start.subtitle' | translate }}</h5>
@@ -97,7 +97,7 @@
         <ion-avatar slot="start" class="avatar">
           <img src="/assets/imgs/alice/idcard.svg">
         </ion-avatar>
-        <ion-label>{{ 'kyc.docTypes.IDCARD' | translate }}</ion-label>
+        <ion-label>{{ 'kyc.docTypes.idcard' | translate }}</ion-label>
       </ion-item>
 
       <!-- PASSPORT -->
@@ -108,7 +108,7 @@
         <ion-avatar slot="start" class="avatar">
           <img src="/assets/imgs/alice/passport.svg">
         </ion-avatar>
-        <ion-label>{{ 'kyc.docTypes.PASSPORT' | translate }}</ion-label>
+        <ion-label>{{ 'kyc.docTypes.passport' | translate }}</ion-label>
       </ion-item>
 
       <!-- RESIDENCE PERMIT -->
@@ -119,7 +119,7 @@
         <ion-avatar slot="start" class="avatar">
           <img src="/assets/imgs/alice/residence.svg">
         </ion-avatar>
-        <ion-label>{{ 'kyc.docTypes.RESIDENCE' | translate }}</ion-label>
+        <ion-label>{{ 'kyc.docTypes.residencepermit' | translate }}</ion-label>
       </ion-item>
 
       <!-- DRIVER LICENSE -->
@@ -130,7 +130,7 @@
         <ion-avatar slot="start" class="avatar">
           <img src="/assets/imgs/alice/driverlicense.svg">
         </ion-avatar>
-        <ion-label>{{ 'kyc.docTypes.DRIVER' | translate }}</ion-label>
+        <ion-label>{{ 'kyc.docTypes.driverlicense' | translate }}</ion-label>
       </ion-item>
       
   </ion-grid>

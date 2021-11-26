@@ -12,6 +12,7 @@ import { Onboarding, OnboardingConfig, DocumentType } from "aliceonboarding";
 import "aliceonboarding/dist/aliceonboarding.css";
 
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -67,8 +68,6 @@ export class KYCAliceComponent implements OnInit {
 
   userToken: string;
 
-  KYC_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpc3N1ZXItc2FuZGJveCIsInR5cCI6IlNBTkRCT1giLCJleHAiOjE2NDE1NjQyNDMsImlhdCI6MTYzNjM4MDI0MywiY2xpIjoiZmViZWxpbmstdHJpYWwifQ.LRnJX4GWcqKy-DWgLte6_4p8loIbpNFPJPf36gZNT5bYZVost3iKzbXH-7-WDiwVlPlVdnQ55pgQf0hFeLLJ3U03XwlqYKiaf1q0iwRetEpeM1V1jm3E1HOZ_-1A2i5MfxRpy0mJ2j6wy_omOPgZRe5FV23xsZW6yba9CKAfntNdaAf0ETJoP-0tfFcEGEfpVdpIsBv_rUCmjh9PADEY1UCgmsGQbnMm7L1wgT-LL9jqUhlwXB2894N8C0ubG7s-EB5ve9dbcQhXVN1xdoBnklMONSmk74NnRvrA7qqKk8jecZT26InIJI8QQyKcY7hd6PrpFKeukfYZSD3t5XG0sA";
-
   lang: string;
   
   //SEARCH COMPONENT
@@ -81,6 +80,8 @@ export class KYCAliceComponent implements OnInit {
   refreshTab: any;
 
   isLoading: boolean = false;
+  loadingMsg: string;
+
   countryLoadingClicked: boolean = false;
   nothingFound: boolean = false;
   subscription = null;
@@ -99,8 +100,38 @@ export class KYCAliceComponent implements OnInit {
     , private androidPermissions : AndroidPermissions
     , private platform: Platform ) { }
 
-  ngOnInit() {
-    this.checkPlatform();
+    async ngOnInit() {
+    this.currentUser = { ...(await this.utilities.getUserData()) };
+    this.isVerified();
+  }
+
+  async isVerified() {
+    this.isLoading = true;
+    this.loadingMsg = this.translateService.instant( 'kyc.verifying' );
+
+    if( !this.currentUser?.id ) {
+      this.dismiss({ isValidated: false });
+      this.utilities.showAlert( 
+        this.translateService.instant( 'kyc.errors.user.title' ),
+        this.translateService.instant( 'kyc.errors.user.message' ) 
+      );
+      return;
+    }
+    
+    (await this.kycAliceService.verifyKYC( this.currentUser?.id, false )).subscribe(
+      ( response ) => {
+        this.isLoading = false;
+
+        // If already verified, dismiss
+        if( response?.hasVerified )
+          this.dismiss({ isValidated: true });
+        
+        this.checkPlatform();
+      },
+      ( err ) => {
+        this.checkPlatform();
+      }
+    );
   }
 
   retryTimes: number = 1;
@@ -123,8 +154,6 @@ export class KYCAliceComponent implements OnInit {
 
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
         result => {
-          console.log( 'Has permission?', result.hasPermission );
-
           if( !result.hasPermission )
             this.retryPermissions();
           else
@@ -174,23 +203,8 @@ export class KYCAliceComponent implements OnInit {
   }
 
   async initialize() {
-    // TODO: Enable KYC Tokens
-    // this.KYC_TOKEN = enironment.KYC_TOKEN;
-
-    this.currentUser = { ...(await this.utilities.getUserData()) };
     this.lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
-  }
-
-  getUserInfo() {
-    const email = this.email || this.currentUser.email;
-    const name = this.name || this.currentUser.name;
-    const lastName = this.lastName || this.currentUser.lastName;
-    
-    return {
-      email: email,        // Mandatory
-      firstName: name,     // Optional
-      lastName: lastName,  // Optional
-    }
+    this.loadingMsg = this.translateService.instant( 'kyc.loading' );
   }
 
   
@@ -284,11 +298,7 @@ export class KYCAliceComponent implements OnInit {
   }
 
   detectKeyPressed(event) {
-    if ((event.key === 'Enter') && ( this.searchText.length > 2 )) {
-      setTimeout(() => {
-        this.keys.length = 0;
-      }, 500);
-    }
+    this.keys.length = 0;
   }
 
   async countrySelected( country: KYC_Country ) {
@@ -309,9 +319,7 @@ export class KYCAliceComponent implements OnInit {
   }
 
   docSelected( docType: KYC_DOCtype ) {
-    this.creating = true;
-
-    this.getUserToken( docType, this.getUserInfo() );
+    this.getUserToken( docType );
   }
 
   restart() {
@@ -322,23 +330,36 @@ export class KYCAliceComponent implements OnInit {
   }
 
 
-  getUserToken( docType: KYC_DOCtype, userInfo ) {
+  async getUserToken( docType: KYC_DOCtype ) {
     this.isLoading = true;
+    this.creating = true;
 
-    let authenticator = new aliceonboarding.SandboxAuthenticator( this.KYC_TOKEN, userInfo );
-    authenticator.execute()
-      .then(userToken => {
-        this.userToken = userToken;
-        this.aliceOnboarding( userToken, docType );
-        
+    if( this.userToken )
+      setTimeout(() => { // To give it time to draw the alice-onboarding html
         this.isLoading = false;
-      })
-      .catch(error => {
-        this.restart();
-        this.isLoading = false;
+        this.aliceOnboarding( this.userToken, docType );
+      }, 500 );
+    else
+      (await this.kycAliceService.authenticateUser( this.currentUser.id, false )).subscribe(
+        ( response ) => {
+          this.isLoading = false;
 
-        alert( /**"Please, add a valid SANDBOX_TOKEN (JavaScript)\n" +*/ error.toString() );
-      })
+          // If already verified, dismiss
+          if( response?.hasVerified )
+            this.dismiss({ isValidated: true });
+
+          this.userToken = response?.user_token;
+
+          if( !this.userToken ) {
+            alert( 'No pude validar el usuario, por favor reintenta nuevamente' );
+            this.restart();
+          } else
+            this.aliceOnboarding( this.userToken, docType );
+        },
+        ( err ) => {
+          this.onError( err );
+        }
+      );
   }
   
   // Out of maintenance, do not use Alice's welcome for now (until enabled)
@@ -357,7 +378,7 @@ export class KYCAliceComponent implements OnInit {
   
     new aliceonboarding.Onboarding( "alice-onboarding-mount", config )
       .run(
-        ( userInfo ) => { this.onFinished( userInfo ); },
+        ( userInfo ) => { this.onFinished(); },
         ( err ) => { this.onError( err ); },
         () => { this.onCancel(  ); }
       );
@@ -395,7 +416,8 @@ export class KYCAliceComponent implements OnInit {
     config.withAddDocumentStage( documentType, this.cntrySelected?.countryISO, documentStageConfig );
     
     // Requieres Selfie validation
-    config.withAddSelfieStage();
+    if( environment.KYC_SELFIE )
+      config.withAddSelfieStage();
 
     // This token identifies each user ( Will create a new one unless already exists )
     config.withUserToken( userToken );
@@ -403,12 +425,12 @@ export class KYCAliceComponent implements OnInit {
     return config;
   }
 
-  async onFinished( res ) {
+  async onFinished() {
     this.isLoading = true;
 
-    (await this.kycAliceService.checkLifeProof( res.user_id, this.docTypeSelected, false )).subscribe(
-      ( response ) => {
-        if( !response.isValid )
+    (await this.kycAliceService.checkLifeProof( this.currentUser.id, this.docTypeSelected, false )).subscribe(
+      ( response: KYC_ERR_Validation ) => {
+        if( !this.isValid( response ))
           this.errOnLifeProof( response );
         else
           this.dismiss({ isValidated: true });
@@ -419,6 +441,13 @@ export class KYCAliceComponent implements OnInit {
         this.onError( err );
       }
     )
+  }
+  
+  isValid( response: KYC_ERR_Validation ) {
+    const isDocOK = response?.document?.isValid;
+    const isSelfieOK = !environment.KYC_SELFIE || response?.selfie?.isValid;
+
+    return isDocOK && isSelfieOK;
   }
 
   errOnLifeProof( response: KYC_ERR_Validation ) {
@@ -460,9 +489,9 @@ export class KYCAliceComponent implements OnInit {
     }
 
     /** Error With Selfie */
-    if( !response.selfie )
+    if( environment.KYC_SELFIE && !response.selfie )
       msg += '<br><br>' + this.translateService.instant( 'kyc.errors.selfie.none' );
-    else if( !response.selfie.isValid ) {
+    else if( environment.KYC_SELFIE && !response.selfie.isValid ) {
       msg += '<br><br>' + this.translateService.instant( 'kyc.errors.selfie.err' ) + '<br><ul>';
       if( !response.selfie.isRealPerson )
         msg += '<li>' + this.translateService.instant( 'kyc.errors.selfie.is_real' ) + '</li>';
