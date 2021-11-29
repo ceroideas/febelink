@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TokensUsersPageRoutingModule } from './tokens-users-routing.module';
 
 import { TokensUsersPage } from './tokens-users.page';
+import { EditTokensComponent } from './edit-tokens/edit-tokens.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { TokensUsersPage } from './tokens-users.page';
     IonicModule,
     TokensUsersPageRoutingModule
   ],
-  declarations: [TokensUsersPage]
+  declarations: [
+    TokensUsersPage,
+    EditTokensComponent
+  ]
 })
 export class TokensUsersPageModule {}
