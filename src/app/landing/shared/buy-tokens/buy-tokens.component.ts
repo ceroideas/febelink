@@ -65,6 +65,7 @@ export class BuyTokensComponent implements OnInit {
         email: profile.email,
         dni: profile.dni,
         doc_type: profile.doc_type,
+        kyc_verified_at: profile.kyc_verified_at,
         link_url: profile.link_url,
         phone: profile.telefono,
         id: profile.id,

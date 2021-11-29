@@ -164,7 +164,7 @@
                 type="text"
                 [value]="perfil?.dni"
                 formControlName="dni"
-                [readonly]="perfil.doc_type"
+                [readonly]="perfil?.kyc_verified_at"
               ></ion-input>
             </ion-item>
           </ion-col>
@@ -222,7 +222,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="perfil?.doc_type">
+        <ion-row *ngIf="perfil?.kyc_verified_at">
           <ion-col size="6">
             <ion-item class="input">
               <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
@@ -354,7 +354,7 @@
             clearInput
             formControlName="dni"
             [value]="perfil?.dni"
-            [readonly]="perfil.doc_type"
+            [readonly]="perfil?.kyc_verified_at"
           ></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="subscription != null">
@@ -400,11 +400,11 @@
           </ion-select>
         </ion-item>
         
-        <ion-item class="input" *ngIf="perfil?.doc_type">
+        <ion-item class="input" *ngIf="perfil?.kyc_verified_at">
           <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
           <ion-input clearInput type="text" formControlName="name" [value]="perfil?.name" readonly></ion-input>
         </ion-item>
-        <ion-item class="input" *ngIf="perfil?.doc_type">
+        <ion-item class="input" *ngIf="perfil?.kyc_verified_at">
           <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
           <ion-input clearInput type="text" formControlName="lastName" [value]="perfil?.lastName" ngDefaultControl ngModel maxlength="200"  readonly></ion-input>
         </ion-item>

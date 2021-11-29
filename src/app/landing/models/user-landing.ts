@@ -6,6 +6,7 @@ export interface UserLanding {
     email?: string;
     dni?: string;
     doc_type?: string;
+    kyc_verified_at?: string;
     link_url?: string;
     phone?: string;
 

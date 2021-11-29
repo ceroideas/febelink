@@ -36,6 +36,7 @@
     logo: string | null;
     dni: string | null;
     doc_type?: string;
+    kyc_verified_at?: string;
     link_url?: string;
     card_brand: string | null;
     card_last_four: string | null;

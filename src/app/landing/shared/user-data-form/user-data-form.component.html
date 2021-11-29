@@ -15,7 +15,7 @@
         <ion-col size="12" size-sm="6">
           <ion-item>
             <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
-            <ion-input type="text" name="lastName" [(ngModel)]="userData.lastName" ngDefaultControl ngModel maxlength="200" required [readonly]="userData?.doc_type"></ion-input>
+            <ion-input type="text" name="lastName" [(ngModel)]="userData.lastName" ngDefaultControl ngModel maxlength="200" required [readonly]="userData?.kyc_verified_at"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>    
@@ -29,7 +29,7 @@
         <ion-col size="12" size-sm="6">
           <ion-item>
             <ion-label position="floating">{{ labelDoc }}</ion-label>
-            <ion-input type="text" name="dni" [(ngModel)]="userData.dni" ngDefaultControl ngModel maxlength="20" required [readonly]="userData?.doc_type"></ion-input>
+            <ion-input type="text" name="dni" [(ngModel)]="userData.dni" ngDefaultControl ngModel maxlength="20" required [readonly]="userData?.kyc_verified_at"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

@@ -88,6 +88,7 @@ describe('Tab3Page', () => {
       logo: "",
       dni: "",
       doc_type: "",
+      kyc_verified_at: "",
       card_brand: "",
       card_last_four: "",
       trial_ends_at: "",
