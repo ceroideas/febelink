@@ -88,7 +88,7 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ labelName }} </ion-label>
+              <ion-label position="floating"> {{ 'common.personal.accountname' | translate }} </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -222,6 +222,34 @@
           </ion-col>
         </ion-row>
 
+        <ion-row *ngIf="perfil?.doc_type">
+          <ion-col size="6">
+            <ion-item class="input">
+              <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
+              <ion-input
+                clearInput
+                type="text"
+                formControlName="name"
+                [value]="perfil?.name"
+                readonly
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item class="input">
+              <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
+              <ion-input
+                clearInput
+                type="text"
+                formControlName="lastName"
+                [value]="perfil?.lastName"
+                ngDefaultControl ngModel maxlength="200"
+                readonly
+              > </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
@@ -275,7 +303,7 @@
           ></ion-textarea>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ labelName }} </ion-label>
+          <ion-label position="floating"> {{ 'common.personal.accountname' | translate }} </ion-label>
           <ion-input clearInput type="text" formControlName="nick" [value]="perfil?.nick" ></ion-input>
         </ion-item>
         <ion-item class="input" style="margin-bottom: 5px">
@@ -370,6 +398,15 @@
               >{{subsector.nombre}}
             </ion-select-option>
           </ion-select>
+        </ion-item>
+        
+        <ion-item class="input" *ngIf="perfil?.doc_type">
+          <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
+          <ion-input clearInput type="text" formControlName="name" [value]="perfil?.name" readonly></ion-input>
+        </ion-item>
+        <ion-item class="input" *ngIf="perfil?.doc_type">
+          <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
+          <ion-input clearInput type="text" formControlName="lastName" [value]="perfil?.lastName" ngDefaultControl ngModel maxlength="200"  readonly></ion-input>
         </ion-item>
 
         <ion-item class="input">

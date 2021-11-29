@@ -14,7 +14,6 @@ import { UserLanding } from '../../models/user-landing';
 })
 export class UserDataFormComponent implements OnInit, AfterViewInit {
 
-  labelName: string;
   labelDoc: string;
 
   constructor(
@@ -31,9 +30,6 @@ export class UserDataFormComponent implements OnInit, AfterViewInit {
 
   // To add verified KYC values ( if already done )
   setKYClabels() {
-    this.labelName = this.translateService.instant( 'common.labelName' )
-      + ( !this.userData?.name ? '' : ' - ' + this.userData.name + ' ' + ( this.userData.lastName || ''));
-
     this.labelDoc = this.translateService.instant( 'common.personal.id' )
       + ( !this.userData?.doc_type ? '' : ' - ' + this.translateService.instant( 'kyc.docTypes.' + this.userData.doc_type ));
   }

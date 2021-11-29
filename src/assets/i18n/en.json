@@ -30,6 +30,7 @@
         "labelSubsribe": "Subscribe",
 
         "personal": {
+            "accountname": "Account Name",
             "surname": "Surnames",
             "pass": "Passwword",
             "passEr": "The password must be at least 8 digits with numbers and letters",

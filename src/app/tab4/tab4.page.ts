@@ -66,7 +66,6 @@ export class Tab4Page {
   emailPrevio;
   emailVerified: boolean = false;
 
-  labelName: string;
   labelDoc: string;
 
   constructor(
@@ -106,9 +105,6 @@ export class Tab4Page {
 
   // To add verified KYC values ( if already done )
   setKYClabels() {
-    this.labelName = this.translateService.instant( 'common.labelName' )
-      + ( !this.perfil?.name ? '' : ' - ' + this.perfil.name + ' ' + ( this.perfil.lastName || ''));
-
     this.labelDoc = this.translateService.instant( 'common.personal.id' )
       + ( !this.perfil?.doc_type ? '' : ' - ' + this.translateService.instant( 'kyc.docTypes.' + this.perfil.doc_type ));
   }
