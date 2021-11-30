@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController, AlertController, LoadingController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class UtilitiesService {
                public loadingCtrl: LoadingController,
                private platform: Platform,
                private storage: Storage,
-               private titleService: Title) { }
+               private titleService: Title,
+               private translateService: TranslateService
+               , private alert: AlertController) { }
   
 
 
@@ -243,6 +246,35 @@ export class UtilitiesService {
   }
   getWebTitle(): string {
     return this.titleService.getTitle() ? this.titleService.getTitle() : 'Febelink';
+  }
+
+  async confirm(text:string, params?:any):Promise<boolean> {
+    const header:string = this.translateService.instant(text+".header");
+    const message:string = this.translateService.instant(text+".body", params);
+    const confirmBtn = this.translateService.instant("common.buttons.confirm");
+    const cancelmBtn = this.translateService.instant('common.buttons.cancel');
+    return new Promise(async resolve => {
+      const alert = await this.alert.create({
+        header, message,
+        buttons: [
+          {
+            text: cancelmBtn,
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              resolve(false);
+            }
+          }, {
+            text: confirmBtn,
+            handler: () => {
+              resolve(true);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    });
   }
 
 }

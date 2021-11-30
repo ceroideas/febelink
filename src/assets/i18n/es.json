@@ -653,5 +653,17 @@
                 }
             ]
         }
+    },
+    "admin":{
+        "tokensUsers":{
+            "editModal":{
+                "header": "Editar tokens de usuario",
+                "body": "¿Seguro que deseas editar los tokens de {{name}}?"
+            },
+            "deleteModal":{
+                "header": "ELIMINAR tokens de usuario",
+                "body": "¿Seguro que deseas eliminar los tokens de {{name}}? ESTA ACCIÓN NO ES REVERSIBLE"
+            }
+        }
     }
 }

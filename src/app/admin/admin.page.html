@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list style="max-width: 600px; margin:auto">
     <ion-item [routerLink]="option.link" *ngFor="let option of options">
       <ion-icon slot="start" [name]="option.icon"></ion-icon>
       <ion-label>{{option.title}}</ion-label>

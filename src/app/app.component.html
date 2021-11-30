@@ -11,6 +11,7 @@
       *ngIf="authenticationService.isAuthenticated()"
       contentId="main-content"
       type="overlay"
+      (ionWillOpen)="onMenuOpen()" 
     >
       <ion-header>
         <ion-toolbar color="primary">
@@ -54,7 +55,7 @@
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-button expand="block" fill="clear" shape="round" (click)="goTo('admin')">
+        <ion-button expand="block" fill="clear" shape="round" (click)="goTo('admin')" *ngIf="currentUser?.role_id === 3">
           Admin panel
         </ion-button>
         <ion-toolbar

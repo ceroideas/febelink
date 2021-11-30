@@ -14,22 +14,22 @@ export class TokensUsersService {
   async getTokensUsers(filter?:string){
     const formData = new FormData();
     if(filter) formData.append('filter', filter);
-    return (await this.api._createData('getTokensUsers',formData)).toPromise();
+    return (await this.api._createData('admin/getTokensUsers',formData)).toPromise();
   }
 
   async deleteTokensUser(id:number){
     const formData = new FormData();
-    formData.append('id', id+'');
-    return (await this.api._createData('deleteTokesUser',formData)).toPromise();
+    formData.append('id', id.toString());
+    return (await this.api._createData('admin/deleteTokesUser',formData)).toPromise();
   }
   
   async editTokesUser(tokensUser:TokensUser){
     const formData = new FormData();
-    formData.append('id', tokensUser.id+'');
-    formData.append('num_tokens', tokensUser.num_tokens);
-    formData.append('phase_tokens', tokensUser.phase_tokens);
-    formData.append('payed_date', tokensUser.payed_date);
-    return (await this.api._createData('editTokesUser',formData)).toPromise();
+    formData.append('id', tokensUser.id.toString());
+    formData.append('num_tokens', tokensUser.num_tokens.toString());
+    formData.append('phase_tokens', tokensUser.phase_tokens.toString());
+    formData.append('payed_date', tokensUser.payed_date || '');
+    return (await this.api._createData('admin/editTokesUser',formData)).toPromise();
   }
 
 }

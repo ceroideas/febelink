@@ -3,8 +3,8 @@ export interface TokensUser {
     lastname:string,
     email:string,
     dni:string,
-    num_tokens:string,
-    phase_tokens:string,
+    num_tokens:number,
+    phase_tokens:number,
     payed_date:string,
-    id:string
+    id:number
 }

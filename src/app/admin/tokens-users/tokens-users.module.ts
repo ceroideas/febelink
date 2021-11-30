@@ -8,13 +8,15 @@ import { TokensUsersPageRoutingModule } from './tokens-users-routing.module';
 
 import { TokensUsersPage } from './tokens-users.page';
 import { EditTokensComponent } from './edit-tokens/edit-tokens.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TokensUsersPageRoutingModule
+    TokensUsersPageRoutingModule,
+    SharedModule
   ],
   declarations: [
     TokensUsersPage,
