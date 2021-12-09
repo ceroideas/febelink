@@ -78,6 +78,7 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "abdias": "git+https://github.com/abdiasdev/cordova-plugin-abdias.git",
     "codelyzer": "^5.1.2",
     "cordova-plugin-badge": "github:katzer/cordova-plugin-badge",
     "cordova-plugin-device": "2.0.2",
