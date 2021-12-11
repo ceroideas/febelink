@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILangDEFAULTS } from 'src/app/models/langs.model';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
@@ -30,13 +30,9 @@ export class BuyTokensComponent implements OnInit {
   numTokens:number;
   numFiat:number;
   phaseToTokenCost:[];
-  langSelected: ILang;
 
   async ngOnInit() {
     this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
-    
-    this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   async justLogged(){
@@ -49,8 +45,8 @@ export class BuyTokensComponent implements OnInit {
 
   async buyTokens(profile?: any){
     
-    const numTokens = this.numTokens || this.landingSvc.getNumTokens();
-    if(!numTokens) {
+    const numFiat = this.numFiat || this.landingSvc.getNumFiat();
+    if(!numFiat) {
       this.utils.showToast("Indica cuantos tokens quieres comprar");  
       return
     }
@@ -94,6 +90,7 @@ export class BuyTokensComponent implements OnInit {
         const userLanding:UserLanding = response.data.userCompleteData;
         // console.log(userLanding);
         this.landingSvc.setUser(userLanding);
+        const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
 
         const formData = new FormData();
         formData.append('name', userLanding.name);
@@ -110,9 +107,9 @@ export class BuyTokensComponent implements OnInit {
         formData.append('place_id', userLanding.place_id);
 
         formData.append('telefono', userLanding.phone);
-        formData.append('num_tokens', numTokens.toString());
+        formData.append('tokens_cost_euros', numFiat.toString());
         formData.append('phase_tokens', phaseTokens.toString());
-        formData.append('lang', this.langSelected.lang);
+        formData.append('lang', lang);
 
         
         try {
@@ -144,7 +141,7 @@ export class BuyTokensComponent implements OnInit {
       modal.present();
     } else{
       this.landingSvc.setJustLogged(true);
-      this.landingSvc.setNumTokens(numTokens);
+      this.landingSvc.setNumFiat(numFiat);
       this.router.navigate(['login', 'token'])
     }
   }
@@ -171,18 +168,26 @@ export class BuyTokensComponent implements OnInit {
     this.landingSvc.setPhaseTokens(+event.detail.value)
     if(this.lastInput === LastInput.Fiat){
       this.fiatToTokens({target:{value: this.numFiat}});
-    } else if(this.lastInput === LastInput.Token){
-      this.tokensToFiat({target:{value: this.numTokens}});
-    }
+    } 
+    // else if(this.lastInput === LastInput.Token){
+    //   this.tokensToFiat({target:{value: this.numTokens}});
+    // }
   }
 
-  tokensToFiat(event){
-    this.numFiat = Math.round(event.target.value * this.tokenCost() * 100) / 100;
-    this.lastInput = LastInput.Token;
-  }
+  // tokensToFiat(event){
+  //   console.log("tokensToFiat");    
+  //   let tokens = event.target.value;
+  //   tokens = Math.round(tokens * 100) / 100
+  //   this.numTokens = tokens;
+  //   this.numFiat = Math.round(tokens * this.tokenCost() * 100) / 100;
+  //   this.lastInput = LastInput.Token;
+  // }
 
-  fiatToTokens(event){
-    this.numTokens = Math.trunc(event.target.value / this.tokenCost());
+  fiatToTokens(event){   
+    let fiat = event.target.value;
+    fiat = Math.round(fiat * 100) / 100
+    this.numFiat = fiat;
+    this.numTokens = Math.trunc(fiat / this.tokenCost() * 100) / 100;
     this.lastInput = LastInput.Fiat;
   }
 
@@ -190,11 +195,6 @@ export class BuyTokensComponent implements OnInit {
     const phaseTokens = this.landingSvc.getPhaseTokens();
     if(!phaseTokens) return 0;
     return this.phaseToTokenCost[phaseTokens];
-  }
-
-  setLang( lang: ILang ): BuyTokensComponent {
-    this.langSelected = lang;
-    return this;
   }
 }
 

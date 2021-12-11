@@ -93,21 +93,12 @@
                   <span class="text-primary" id="hero-strong">{{ 'landing.header.welcome2' | translate }}</span
                   >{{ 'landing.header.welcome3' | translate }}
                 </h1>
-                <app-timer
-                    months="{{ gxTimer.szMs }}"
-                    days="{{ gxTimer.szDs }}"
-                    hours="{{ gxTimer.szHs }}"
-                    mins="{{ gxTimer.szMns }}"
-                    secs="{{ gxTimer.szSgs }}" >
-                </app-timer>
               </div>
 
               <app-social-links></app-social-links>
   
               <app-whitelist lang="{{ langSelected.lang }}"></app-whitelist>
             </div>
-            
-            <app-go-buy-tokens lang="{{ langSelected.lang }}"></app-go-buy-tokens>
             
             <div class="kSlider_show">
               <div class="kSlider">
@@ -182,15 +173,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-9">
-            <div class="hero-wrapper mb-4">   
-              <app-timer
-                  months="{{ gxTimer.szMs }}"
-                  days="{{ gxTimer.szDs }}"
-                  hours="{{ gxTimer.szHs }}"
-                  mins="{{ gxTimer.szMns }}"
-                  secs="{{ gxTimer.szSgs }}" >
-              </app-timer>
-
+            <div class="hero-wrapper mb-4">
               <app-social-links></app-social-links>
 
               <app-whitelist lang="{{ langSelected.lang }}"></app-whitelist>
@@ -204,6 +187,6 @@
     <!-- Hero section End -->
 
     
-    <app-footer lang="{{ langSelected.lang }}" ></app-footer>
+    <app-footer></app-footer>
   </div>
 </ion-content>

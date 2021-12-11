@@ -12,7 +12,7 @@ export class UserService {
   ){}
 
   checkUserDataComplete(user: IUser): boolean { 
-    if (user.dni && user.telefono && user.direccion) return true;
+    if ( user.dni && user.telefono && user.direccion && user.email_verified_at ) return true;
     else {
       const navigationExtras: NavigationExtras = {
         state: {msg: 'tabs.tab4.need-to-complete'}

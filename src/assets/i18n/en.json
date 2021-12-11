@@ -51,7 +51,8 @@
             "confirm": "Confirm",
             "back": "Back",
             "cancel": "Cancel",
-            "send": "Send"
+            "send": "Send",
+            "close": "Close"
         },
 
         "address": {
@@ -75,6 +76,24 @@
             "warning": "Legal Warning",
             "lastUpdate": "Last update",
             "rights": "All rights reserved. FEBELINK DIGITAL S.L."
+        },
+
+        "verif": {
+            "email": {
+                "head": "Data Verification",
+                "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
+                "pompadour": "Check that your email is correct, to receive and verify your account: ",
+                "not-verified": "Email not verified",
+                "sending": "sending verification to the email {{ email }}",
+                "error": "It seems that there was an error when trying to validate the email",
+                "sent": "Verify your email",
+                "message": "Check your mailbox {{email}}"
+            },
+
+            "buttons": {
+                "now": "Verify",
+                "not-now": "Later"
+            }
         }
     },
     "menu": {
@@ -128,6 +147,8 @@
         },
         "tab4": {
             "buttonAskRecommendation": "Ask for a recommendation",
+            "buttonSuscription": "Subscribe and upgrade to PRO",
+            "proUser": "PRO User",
             "buttonSave": "Save changes",
             "labelNoOpinions": "No opinions yet",
             "labelOpinions": "Opinions",
@@ -227,7 +248,15 @@
             "cond4": "general conditions of use",
             "button": "REGISTER",
             "or": "OR",
-            "continueWith": "Continue with "
+            "continueWith": "Continue with ",
+
+            "errors": {
+                "title": "Registration failed",
+                "list": "The following errors occurred when registering:",
+                "server": "There was a server error registering. Try again later",
+                "terms": "You have to accept the privacy policy and the general conditions of use",
+                "fields": "You have to insert the required fields"
+            }
         },
         "login": {
             "title": "Log in",
@@ -250,6 +279,12 @@
                 "data": "The data entered is not correct",
                 "email": "The format of the email entered is not correct"
             }
+        },
+        "email-verification": {
+            "title": "Email Verification",
+            "done": "Great! You've verified your email account",
+            "error": "Oops.. it seems that you have arrived here by mistake",
+            "redirect": "in {{ seconds }} seconds you will be redircted to the Home Page"
         }
     },
     "toast": {
@@ -377,8 +412,7 @@
         "success": {
             "title": "Thank you!",
             "subtitle": "You have completed your registration in the reservation list.",
-            "mssg1": "You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.",
-            "mssg2": "If the email does not reach you in the next 5 minutes, fill in the form again here."
+            "text": "<p>You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.</p><p>If the email does not reach you in the next 5 minutes, fill in the form again here.</p>"
         }
     },
     "legal": {

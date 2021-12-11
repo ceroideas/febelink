@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { FilterPipe } from '../pipes/filter.pipe';
 import { ImgErrorFallbackDirective } from '../directives/img-error-fallback.directive';
 import { HeaderButtonsComponent } from './components/header-buttons/header-buttons.component';
 import { FooterComponent } from '../components/footer/footer.component';
@@ -11,10 +10,11 @@ import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LangPopComponent } from 'src/app/components/langs/popover/pop.component';
 import { YouTubePopComponent } from '../components/youtube/popover/pop.component';
 import { LinkPreviewComponent } from '../components/link-preview/link-preview.component';
+import { VerificationComponent } from '../components/verification/verification.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    FilterPipe,
     ImgErrorFallbackDirective,
     HeaderButtonsComponent,
     LangBtnComponent,
@@ -22,12 +22,14 @@ import { LinkPreviewComponent } from '../components/link-preview/link-preview.co
     FooterComponent,
     YouTubePopComponent,
     LinkPreviewComponent,
+    VerificationComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    PipesModule,
     TranslateModule.forChild(),
   ],
   exports: [
@@ -36,13 +38,14 @@ import { LinkPreviewComponent } from '../components/link-preview/link-preview.co
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    FilterPipe,
+    PipesModule,
     ImgErrorFallbackDirective,
     HeaderButtonsComponent,
     LangBtnComponent,
     LangPopComponent,
     YouTubePopComponent,
     LinkPreviewComponent,
+    VerificationComponent,
   ],
   entryComponents: [],
 })

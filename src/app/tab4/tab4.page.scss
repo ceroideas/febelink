@@ -133,6 +133,12 @@ ion-content {
     margin-top: 10px;
     margin-bottom: 10px;
   }
+  .verif {
+    color: var(--ion-color-danger);
+    font-size: 12px;
+    margin: 18px;
+    cursor: pointer;
+  }
 }
 
 #msgpass1 ,#msgpass2, #msgpass3, #msgpass4 {

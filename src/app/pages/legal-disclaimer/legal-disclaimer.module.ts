@@ -8,24 +8,22 @@ import { LegalDisclaimerPageRoutingModule } from './legal-disclaimer-routing.mod
 
 import { LegalDisclaimerPage } from './legal-disclaimer.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { TypeofPipe } from 'src/app/pipes/typeof.pipe';
 import { LegalPointComponent } from './legal-point/legal-point.component';
-import { SafeHtmlPipe } from 'src/app/pipes/safehtml.pipe';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     LegalDisclaimerPageRoutingModule,
     TranslateModule.forChild(),
   ],
   declarations: [
     LegalDisclaimerPage,
-    TypeofPipe,
-    SafeHtmlPipe,
     LegalPointComponent,
   ],
-  exports: [TypeofPipe, SafeHtmlPipe, LegalPointComponent, TranslateModule],
+  exports: [LegalPointComponent, TranslateModule],
 })
 export class LegalDisclaimerPageModule {}

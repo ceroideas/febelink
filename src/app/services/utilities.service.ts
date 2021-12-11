@@ -110,17 +110,26 @@ export class UtilitiesService {
   saveUserSubscription(subscription): Promise<any> {
     return new Promise((resolve, reject) => {
       this.storage.set('subscription', subscription).then(() => {
-        resolve();
+        resolve(null);
       }).catch(error => {
         reject(error);
       })
     })
   }
+  async removeUserSubscription(): Promise<any> {
+    try{
+      await this.storage.remove('subscription');
+      await this.storage.remove('subscription_details');
+      return true;
+    } catch(ex){
+      return ex;
+    }
+  }
 
   saveUserSubscriptionDetails(subscription_details): Promise<any> {
     return new Promise((resolve, reject) => {
       this.storage.set('subscription_details', subscription_details).then(() => {
-        resolve();
+        resolve(null);
       }).catch(error => {
         reject(error);
       })
@@ -149,7 +158,7 @@ export class UtilitiesService {
     return new Promise((resolve, reject) => {
       this.storage.ready().then(() => {
         this.storage.get('subscription_details').then(subscription_details => {
-          resolve(subscription_details);
+          resolve(JSON.parse(subscription_details));
         }).catch(error => {
           reject(JSON.stringify(error));
         })

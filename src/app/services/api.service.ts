@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, first, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
+import { TranslateConfigService } from './translate/translate-config.service';
+import { ILangDEFAULTS } from '../models/langs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,8 @@ export class ApiService {
     private http: HttpClient,
     private utilities: UtilitiesService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private translateService: TranslateConfigService
   ) {}
 
   login(params, endpoint, firstLogin?: boolean, redirect?:string): Observable<any> {
@@ -44,9 +47,7 @@ export class ApiService {
             await this.utilities.saveAccessTokenInfo(res);
             await this.utilities.saveUserData(res.user);
             await this.utilities.saveUserSubscription(res.subscription);
-            await this.utilities.saveUserSubscriptionDetails(
-              res.subscription_details
-            );
+            await this.utilities.saveUserSubscriptionDetails(res.subscription_details);
             await this.utilities.setGuia('login');
             this.authenticationService.login();
             this.userLogged.emit('user:login');
@@ -323,15 +324,27 @@ export class ApiService {
     return this._createData('notificacion-oferta', formData);
   }
 
+  public async paySubscription(idSelectedSubscription:number) {
+    const formData = new FormData();
+    formData.append('subscriptionId', idSelectedSubscription+'');
+    const responseObs:Observable<any> = await this._createData('paySubscription', formData);
+    return responseObs.pipe(first()).toPromise();
+  }
+
   public swapSubscription(stripe_plan) {
     const formData = new FormData();
-    formData.append('stripe_plan', stripe_plan);
+    formData.append('subscriptionId', stripe_plan);
     return this._createData('swap-subscription', formData);
   }
 
-  public cancelSubscription() {
+  public async cancelSubscription() {
     const formData = new FormData();
-    return this._createData('cancel-subscription', formData);
+    const responseObs:Observable<any> = await this._createData('cancel-subscription', formData);
+    return responseObs.pipe(first()).toPromise();
+  }
+
+  async getUserSusbcription(){
+    return (await this._getData('getUserSusbcription')).pipe(first()).toPromise();
   }
 
   /**
@@ -794,6 +807,23 @@ export class ApiService {
    */
    public existeEmail(email) {
     return this._getData('existe-usuario-email/' + email);
+  }
+
+  /**
+   * To verify Email account and save on user info
+   * @param email
+   */
+  public async verifyEmail( id, email ) {
+    const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    return await this._getData( `verify-email/${ id }/${ lang }/${ email }` );
+  }
+
+  /**
+   * To verify Email account and save on user info
+   * @param email
+   */
+  public async emailVerified( id ) {
+    return await this._getData( 'email-verified/' + id );
   }
 
 }
