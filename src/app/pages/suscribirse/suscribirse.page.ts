@@ -86,7 +86,7 @@ export class SuscribirsePage implements OnInit {
             { title: 'Descripción de 50 caracteres', description: 'Perfecta para una breve descripción sobre tu servicio' },
         ];
         this.subscriptionDetails.set('febe-pro', { description: '9,95€/mes + IVA. Sin compromiso, cancelación en cualquier momento.', advantages: advantagesPro });
-        this.subscriptionDetails.set('febe-prom', { description: 'Promoción Pro + Foto/Logo por 0€/mes.', advantages: advantagesFree });
+        this.subscriptionDetails.set('febe-prom', { description: '', advantages: advantagesFree });
     }
 
     // ionViewDidLoad() {
