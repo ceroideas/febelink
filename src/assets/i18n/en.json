@@ -643,6 +643,18 @@
             ]
         }
     },
+    "admin":{
+        "tokensUsers":{
+            "editModal":{
+                "header": "Edit user tokens",
+                "body": "¿Are you sure you want to edit tokens of {{name}}?"
+            },
+            "deleteModal":{
+                "header": "DELETE user tokens",
+                "body": "¿Are you sure you want to delete tokens of {{name}}? THIS ACTION IS NOT REVERSIBLE"
+            }
+        }
+    },
     "kyc": {
         "start": {
             "header": "Identity Verification and Proof of Life",

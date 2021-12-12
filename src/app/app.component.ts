@@ -122,6 +122,20 @@ export class AppComponent implements OnDestroy {
     // this.loginImplicito();
   }
 
+  /** Update User Data when Menu clicked */
+  async onMenuOpen() {
+    (await this.api.getUserData()).subscribe((userData: IUser) => {
+      // In case of error
+      if( !userData )
+        return;
+
+      this.currentUser = userData;
+      
+      // Update in storage 
+      this.utilities.saveUserData( userData );
+    });
+  }
+
   openCookieBanner() {
     let cc = window as any;
     cc.cookieconsent?.initialise({
@@ -433,12 +447,8 @@ export class AppComponent implements OnDestroy {
     });
   }
 
-  goToProfile() {
-    this.router.navigate(['menu/perfil']).then(() => this.menu.close());
-  }
-
-  goToMyWallet() {
-    this.router.navigate(['wallet']).then(() => this.menu.close());
+  goTo(route:string){
+    this.router.navigate([route]).then(() => this.menu.close());
   }
 
   onImgError(event) {

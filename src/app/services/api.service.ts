@@ -82,6 +82,10 @@ export class ApiService {
     return this.userLogged;
   }
 
+  async getUserData() {
+    return (await this._getData( 'user' )).pipe( first() );
+  }
+
   refreshTabs() {
     this.refreshTab.emit('refreshTab');
   }

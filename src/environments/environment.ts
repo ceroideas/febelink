@@ -8,14 +8,18 @@ export const environment = {
   baseWebUrl: 'https://api.febelink.com/',
   API_URL: 'https://api.febelink.com/api/',
   API_URL_AUTH: 'https://api.febelink.com/api/auth/',
-  SOCKET_URL: 'https://febelink-chat.herokuapp.com/',
- */ 
   
+  baseWebUrl: 'http://apitest.febelink.com/',
+  API_URL: 'http://apitest.febelink.com/api/',
+  API_URL_AUTH: 'http://apitest.febelink.com/api/auth/',
+ */ 
+
   baseWebUrl: "http://localhost/",
   API_URL: "http://localhost/api/",
   API_URL_AUTH: "http://localhost/api/auth/",
+
+
   SOCKET_URL: 'https://febelink-chat.herokuapp.com/',
- 
 
   WEB_CLIENT_ID:
     "939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com",

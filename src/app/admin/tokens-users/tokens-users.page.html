@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-searchbar placeholder="Gestionar tokens de usuarios" inputmode="text" (keyup.enter)="search($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <table id="tokensUsersTable">
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>DNI</th>
+      <th>Num Tokens</th>
+      <th>Fase</th>
+      <th>Payed</th>
+      <th colspan="2">Acciones</th>
+    </tr>
+    <tr *ngFor="let tokensUser of tokensUsers">
+      <td>{{tokensUser.name}}</td>
+      <td>{{tokensUser.lastname}}</td>
+      <td>{{tokensUser.email}}</td>
+      <td>{{tokensUser.dni}}</td>
+      <td>{{tokensUser.num_tokens}}</td>
+      <td>{{tokensUser.phase_tokens}}</td>
+      <td>{{tokensUser.payed_date}}</td>
+      <td class="edit"><ion-icon name="create-outline" (click)="edit(tokensUser)"></ion-icon></td>
+      <td class="delete"><ion-icon name="trash-outline" (click)="delete(tokensUser)"></ion-icon></td>
+    </tr>
+    
+  </table>
+</ion-content>
