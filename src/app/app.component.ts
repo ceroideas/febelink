@@ -1,5 +1,5 @@
 import { WalletService } from './services/wallet/wallet.service';
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Platform,
@@ -26,13 +26,17 @@ import { NotificationService } from './services/notification.service';
 import { CryptoCurrency, CryptoCurrencyType } from './models/currency.model';
 import { Observable } from 'rxjs';
 import { ILangDEFAULTS } from './models/langs.model';
+import { Meta, Title } from '@angular/platform-browser';
 
+const GENERAL_TITLE = 'Febelink | El Boca a Boca Digital';
+const GENERAL_DESC =
+  'En Febelink encontrarás lo que estás buscando - Entra y encuentra rápidamente lo que buscas en el sector o categoría que necesites. Explora todas las ventajas que te ofrece Febelink para ayudarte en tu día a día.';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   currentYear = new Date().getFullYear();
   public userSubscription: any;
   lastTimeBackPress = 0;
@@ -76,10 +80,24 @@ export class AppComponent implements OnDestroy {
     public authenticationService: AuthenticationService,
     private modalCtrl: ModalController,
     private notificationSvc: NotificationService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private titleService: Title,
+    private metaService: Meta
   ) {
     this.initializeApp();
     this.openCookieBanner();
+  }
+
+  ngOnInit() {
+    this.titleService.setTitle(GENERAL_TITLE);
+    this.metaService.addTags([
+      {
+        name: 'keywords',
+        content:
+          'Febelink, FEBELINK, Servicios, Profesionales, Buscador, Encontrar, Contratar, Proveedor',
+      },
+      { name: 'description', content: GENERAL_DESC },
+    ]);
   }
 
   initializeApp() {
@@ -126,13 +144,12 @@ export class AppComponent implements OnDestroy {
   async onMenuOpen() {
     (await this.api.getUserData()).subscribe((userData: IUser) => {
       // In case of error
-      if( !userData )
-        return;
+      if (!userData) return;
 
       this.currentUser = userData;
-      
-      // Update in storage 
-      this.utilities.saveUserData( userData );
+
+      // Update in storage
+      this.utilities.saveUserData(userData);
     });
   }
 
@@ -447,7 +464,7 @@ export class AppComponent implements OnDestroy {
     });
   }
 
-  goTo(route:string){
+  goTo(route: string) {
     this.router.navigate([route]).then(() => this.menu.close());
   }
 
