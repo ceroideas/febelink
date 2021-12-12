@@ -12,6 +12,7 @@ import { YouTubePopComponent } from '../components/youtube/popover/pop.component
 import { LinkPreviewComponent } from '../components/link-preview/link-preview.component';
 import { VerificationComponent } from '../components/verification/verification.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PipesModule } from '../pipes/pipes.module';
     YouTubePopComponent,
     LinkPreviewComponent,
     VerificationComponent,
+    KYCAliceComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,7 @@ import { PipesModule } from '../pipes/pipes.module';
     YouTubePopComponent,
     LinkPreviewComponent,
     VerificationComponent,
+    KYCAliceComponent,
   ],
   entryComponents: [],
 })

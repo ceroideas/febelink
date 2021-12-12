@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar color="primary">
+
+    <ion-buttons slot="start">
+      <ion-button (click)="onCancel()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      <div class="ion-text-wrap">
+        {{ 'kyc.start.header' | translate }}
+      </div>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="restart()">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!--
+    Loading
+  -->
+  <div class="cargando-container" margin-top *ngIf="isLoading">
+    <ion-row>
+      <h4>{{ loadingMsg }}</h4>
+    </ion-row>
+    <ion-row>
+      <ion-spinner></ion-spinner>
+    </ion-row>
+  </div>
+
+  <!--
+    Country and Doc Type
+  -->
+  <ion-grid *ngIf="!creating && !done && !isLoading">
+
+    <!-- Search engine -->
+    <div class="content-filter">
+      
+      <h4>{{ 'kyc.start.title' | translate }}</h4>
+      <h5>{{ 'kyc.start.subtitle' | translate }}</h5>
+      
+      <br>
+      <p>{{ 'kyc.start.toProceed' | translate }}</p>
+
+      <div class="autocomplete">
+        <ion-searchbar
+          class="align-init"
+          placeholder="{{ 'kyc.start.selectCountry' | translate }}"
+          [(ngModel)]="searchText"
+          (ionFocus)="addCountryFocus()"
+          (ionChange)="searchCountry()"
+          (ionBlur)="removeCountryFocus()"
+          (ionClear)="clearBtn()"
+          (keyup.enter)="detectKeyPressed($event)"
+          debounce="500"
+        >
+        </ion-searchbar>
+
+        <span class="error align-init" *ngIf="nothingFound">{{ 'kyc.start.noCountry' | translate }}</span>
+
+        <div class="keys-dropdown">
+          <ion-list
+            mode="ios"
+            *ngIf="keys.length > 0"
+          >            
+            <ion-item
+              (click)="countrySelected(key)"
+              *ngFor="let key of keys"
+              style="font-size: 16px"
+            >
+              <!-- On searching => show loading -->
+              <ion-spinner slot="start" name="dots" *ngIf="key.value == 'loading'"></ion-spinner>
+              <!-- On result => show countries -->
+              <ion-icon slot="start" name="globe" *ngIf="key.value != 'loading'"></ion-icon>
+
+              <span [innerHTML]="key.name"></span>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doc Type -->
+      <!-- ID CARD -->
+      <ion-item
+        (click)="docSelected( docTypes.ID )"
+        *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.ID ) > -1"
+      >
+        <ion-avatar slot="start" class="avatar">
+          <img src="/assets/imgs/alice/idcard.svg">
+        </ion-avatar>
+        <ion-label>{{ 'kyc.docTypes.idcard' | translate }}</ion-label>
+      </ion-item>
+
+      <!-- PASSPORT -->
+      <ion-item
+        (click)="docSelected( docTypes.PASSPORT )"
+        *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.PASSPORT ) > -1"
+      >
+        <ion-avatar slot="start" class="avatar">
+          <img src="/assets/imgs/alice/passport.svg">
+        </ion-avatar>
+        <ion-label>{{ 'kyc.docTypes.passport' | translate }}</ion-label>
+      </ion-item>
+
+      <!-- RESIDENCE PERMIT -->
+      <ion-item
+        (click)="docSelected( docTypes.RESIDENCE )"
+        *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.RESIDENCE ) > -1"
+      >
+        <ion-avatar slot="start" class="avatar">
+          <img src="/assets/imgs/alice/residence.svg">
+        </ion-avatar>
+        <ion-label>{{ 'kyc.docTypes.residencepermit' | translate }}</ion-label>
+      </ion-item>
+
+      <!-- DRIVER LICENSE -->
+      <ion-item
+        (click)="docSelected( docTypes.DRIVER )"
+        *ngIf="cntrySelected && cntrySelected?.docTypes?.indexOf( docTypes.DRIVER ) > -1"
+      >
+        <ion-avatar slot="start" class="avatar">
+          <img src="/assets/imgs/alice/driverlicense.svg">
+        </ion-avatar>
+        <ion-label>{{ 'kyc.docTypes.driverlicense' | translate }}</ion-label>
+      </ion-item>
+      
+  </ion-grid>
+  
+
+  <!--
+    Alice Onboarding
+  -->
+  <div id="demo-onboarding" *ngIf="creating && !done">
+    <div id="alice-onboarding-mount"></div>
+  </div>
+
+
+  <!--
+    Error
+  -->
+  <div *ngIf="errorMsg">
+    <div class="align-init" [innerHTML]="errorMsg"></div>
+
+    <br><br>
+    <ion-button color="primary" (click)="restart()">{{ 'common.buttons.retry' | translate }}</ion-button>
+  </div>
+
+</ion-content>

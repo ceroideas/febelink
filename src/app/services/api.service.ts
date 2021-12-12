@@ -469,7 +469,7 @@ export class ApiService {
 
   /**
    * Editar los datos del ofertante y su contraseña
-   * @param name
+   * @param nick
    * @param email
    * @param descripcion
    * @param telefono
@@ -480,7 +480,7 @@ export class ApiService {
    * @param pass
    */
   public editarOfertanteYContra(
-    name,
+    nick,
     email,
     descripcion,
     telefono,
@@ -501,7 +501,7 @@ export class ApiService {
     pass
   ) {
     const formData = new FormData();
-    formData.append('name', name);
+    formData.append('nick', nick);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
     
@@ -525,7 +525,7 @@ export class ApiService {
 
   /**
    * Editar los datos del ofertante
-   * @param name
+   * @param nick
    * @param email
    * @param descripcion
    * @param telefono
@@ -536,7 +536,7 @@ export class ApiService {
    * @param imagen
    */
   public editarOfertante(
-    name,
+    nick,
     email,
     descripcion,
     telefono,
@@ -556,7 +556,7 @@ export class ApiService {
     imagen
   ) {
     const formData = new FormData();
-    formData.append('name', name);
+    formData.append('nick', nick);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
     
@@ -689,14 +689,14 @@ export class ApiService {
 
   /**
    * Registro del ofertante
-   * @param name
+   * @param nick
    * @param email
    * @param password
    * @param password_confirmation
    */
   public registro(params): any {
     const formData = new FormData();
-    formData.append('name', params.name);
+    formData.append('nick', params.nick);
     formData.append('sector', params.sector);
     formData.append('sub_sector', params.sub_sector);
     formData.append('email', params.email);

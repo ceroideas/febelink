@@ -298,7 +298,7 @@ export class DetalleDemandaPage implements OnInit {
             const navigationExtras: NavigationExtras = {
               queryParams: {
                 user_id: JSON.stringify(user.id),
-                user_name: JSON.stringify(user.name),
+                user_name: JSON.stringify(user.nick),
                 person_name: JSON.stringify('Chat'),
                 person_id: JSON.stringify(this.demanda.id_demandante),
                 room_id: JSON.stringify(roomId),
