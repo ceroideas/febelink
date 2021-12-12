@@ -56,13 +56,16 @@ export class BuyTokensComponent implements OnInit {
       return
     }
     if(!profile) profile = await this.utils.getUserData()
-
+    
     if(profile?.id) {
       const userData:UserLanding = {
+        nick: profile.nick,
         name: profile.name,
         lastName: profile.lastName,
         email: profile.email,
         dni: profile.dni,
+        doc_type: profile.doc_type,
+        kyc_verified_at: profile.kyc_verified_at,
         link_url: profile.link_url,
         phone: profile.telefono,
         id: profile.id,
@@ -93,7 +96,7 @@ export class BuyTokensComponent implements OnInit {
         const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
 
         const formData = new FormData();
-        formData.append('name', userLanding.name);
+        formData.append('nick', userLanding.nick);
         formData.append('lastName', userLanding.lastName);
         formData.append('email', userLanding.email);
         formData.append('dni', userLanding.dni);
@@ -148,7 +151,7 @@ export class BuyTokensComponent implements OnInit {
 
   lastInput:LastInput;
   private saveInSession(profile: any, userLanding: UserLanding) {
-    profile.name = userLanding.name;
+    profile.nick = userLanding.nick;
     profile.lastName = userLanding.lastName;
     profile.dni = userLanding.dni;
     profile.telefono = userLanding.phone;

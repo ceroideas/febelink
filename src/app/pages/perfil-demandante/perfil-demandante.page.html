@@ -50,11 +50,11 @@
     <img [src]="perfilpublico?.logo" *ngIf="perfilpublico?.logo" class="logo" />
     <img src="assets/imgs/4.jpg" *ngIf="!perfilpublico?.logo" class="logo" />
     <div class="apartado">
-      <h1 class="title">{{perfilpublico?.name}}</h1>
+      <h1 class="title">{{perfilpublico?.nick}}</h1>
       <span class="reviews">
         <div class="val" *ngFor="let val of perfilpublico.valoracion">
           <strong id="valoracion" *ngIf="val.length > 0"
-            >{{ val.length }} {{ val[0].name }}</strong
+            >{{ val.length }} {{ val[0].nick || val[0].name }}</strong
           >
         </div>
       </span>
@@ -166,7 +166,7 @@
           />
         </ion-col>
         <ion-col size="8">
-          <h1 class="title">{{perfilpublico?.name}}</h1>
+          <h1 class="title">{{perfilpublico?.nick}}</h1>
           <!-- Botón compartir perfil -->
           <ion-button
             style="float: left"
@@ -234,7 +234,7 @@
           <span class="reviews">
             <div class="val" *ngFor="let val of perfilpublico.valoracion">
               <strong id="valoracion" *ngIf="val.length > 0"
-                >{{ val.length }} {{ val[0].name }}</strong
+                >{{ val.length }} {{ val[0].nick || val[0].name }}</strong
               >
             </div>
           </span>

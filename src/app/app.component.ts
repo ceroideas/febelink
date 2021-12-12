@@ -166,10 +166,10 @@ export class AppComponent implements OnDestroy {
 
   setupLanguage() {
     const currentLanguage = this.translateService.getDefaultLanguage();
-    
+
     // Añadí esta linea porque sino no cargaba el archivo en.json de i18n
     // Y cuando cambiaba al lenguaje 'es' no encontrba los valores
-    this.translateService.addLangs( ILangDEFAULTS.enUK.lang );
+    this.translateService.addLangs(ILangDEFAULTS.enUK.lang);
 
     this.translateService.setLanguage(currentLanguage);
   }
@@ -190,32 +190,47 @@ export class AppComponent implements OnDestroy {
     this.deeplinks
       .route({
         '/busqueda/:id/:name': 'detalle-demanda',
+        '/busqueda/:id': 'detalle-demanda',
         '/perfil/:id/:name': 'perfil-demandante',
+        '/menu/ofertas': 'ofertas',
         '/#/busqueda/:id/:name': 'detalle-demanda',
+        '/#/busqueda/:id': 'detalle-demanda',
         '/#/perfil/:id/:name': 'perfil-demandante',
+        '/#/menu/ofertas': 'ofertas',
       })
       .subscribe(
         (match) => {
           let id = match.$args.id;
-          let name = match.$args.name;
-          if (match.$route === 'detalle-demanda') {
-            id = Number(id);
-            setTimeout(() => {
-              this.router.navigate(['busqueda', id, name], {
-                queryParams: { id_demanda: id },
+          const name = match.$args.nick || match.$args.name;
+          switch (match.$route) {
+            case 'detalle-demanda': {
+              id = Number(id);
+              setTimeout(() => {
+                const route: string[] = ['busqueda', id, name];
+                if (name) route.push(name);
+                this.router.navigate(route, {
+                  queryParams: { id_demanda: id },
+                });
+              }, 500);
+              break;
+            }
+            case 'perfil-demandante': {
+              this.router.navigate(['perfil', id, name], {
+                queryParams: { id_perfil: id },
               });
-            }, 500);
-          } else if (match.$route === 'perfil-demandante') {
-            this.router.navigate(['perfil/', id, name], {
-              queryParams: { id_perfil: id },
-            });
+              break;
+            }
+            case 'ofertas': {
+              this.router.navigate(['menu', 'ofertas']);
+              break;
+            }
           }
         },
         (nomatch) => {
           console.error("Got a deeplink that didn't match", nomatch);
-          let path = nomatch.$link.fragment;
-          let id = path.substring(path.lastIndexOf('/') + 1, path.length);
-          var route = path.substring(
+          const path = nomatch.$link.fragment;
+          const id = path.substring(path.lastIndexOf('/') + 1, path.length);
+          const route = path.substring(
             path.lastIndexOf('#') + 2,
             path.lastIndexOf('/')
           );
@@ -260,7 +275,7 @@ export class AppComponent implements OnDestroy {
         alert: 'true',
         badge: true,
         sound: 'true',
-        //senderID: '41183692404',
+        // senderID: '41183692404',
         // gcmSandbox: true,
       },
       windows: {},
@@ -409,7 +424,8 @@ export class AppComponent implements OnDestroy {
   async getUserSuscriptions() {
     const userSubscription = await this.utilities.getUserSubscription();
     if (userSubscription.length !== 0) {
-      const userSubscriptionDetails = await this.utilities.getUserSubscriptionDetails();
+      const userSubscriptionDetails =
+        await this.utilities.getUserSubscriptionDetails();
       this.userSubscriptionDetails = userSubscriptionDetails?.name;
     }
   }
@@ -439,11 +455,7 @@ export class AppComponent implements OnDestroy {
     event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
 
-
-  
-
-
-  public navegar(ruta: string){
+  public navegar(ruta: string) {
     this.router.navigate([ruta]);
   }
 

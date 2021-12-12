@@ -108,7 +108,7 @@ export class LoginPage implements OnInit {
     this.utilities.getUserData().then(async (userData) => {
       if (userData) {
         let loading = await this.loadingCtrl.create({
-          message: this.translateService.instant( 'pages.login.logging' ),
+          message: this.translateService.instant( 'pages.login.loging' ),
           duration: 1500,
         });
 

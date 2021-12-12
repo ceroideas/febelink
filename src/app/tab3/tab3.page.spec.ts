@@ -63,6 +63,7 @@ describe('Tab3Page', () => {
     component.currentUser = {
       id: 1,
       role_id: 0,
+      nick: "",
       name: "",
       email: "",
       avatar: "",
@@ -86,6 +87,8 @@ describe('Tab3Page', () => {
       telefono: "",
       logo: "",
       dni: "",
+      doc_type: "",
+      kyc_verified_at: "",
       card_brand: "",
       card_last_four: "",
       trial_ends_at: "",

@@ -1,9 +1,12 @@
 export interface UserLanding {
     id?: number;
+    nick?: string;
     name?: string;
     lastName?:string;
     email?: string;
     dni?: string;
+    doc_type?: string;
+    kyc_verified_at?: string;
     link_url?: string;
     phone?: string;
 

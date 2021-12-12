@@ -126,7 +126,7 @@
                   <em class="desc">{{demanda?.descripcion}}</em>
                 </ion-label>
                 <ion-label slot="end">
-                  <em style="padding: 5px">{{demanda?.user?.name}}</em>
+                  <em style="padding: 5px">{{demanda?.user?.nick}}</em>
                 </ion-label>
                 <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"></ion-icon>
               </ion-item>

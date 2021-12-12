@@ -92,8 +92,10 @@ export class Tab1Page {
     */
     const searchbar = this.activatedRoute.snapshot.paramMap.get('searchbar');
 
-    if( searchbar !== null && searchbar !== '' ) {
-      this.showCard = true;
+    if( searchbar ) {
+      this.isLoading = true;
+
+      // this.showCard = true;
       this.searchText = searchbar;
     }
   }
@@ -156,6 +158,10 @@ export class Tab1Page {
     await this.obtenerPerfil();
     this.loadSectors();
     this.loadSubSectors(0);
+
+    // Select sector only if url path had value
+    if( this.isLoading && this.searchText )
+      this.getSectorsByKeys({ name: this.highlight( this.searchText ), value: this.searchText });
   }
 
   async obtenerPerfil() {
@@ -270,17 +276,24 @@ export class Tab1Page {
 
     (await this.api.getSectorsByKeys(key.value)).subscribe((keywords) => {
       console.log('keywords', keywords);
+      
       this.searchText = key.value;
       this.keyText = this.searchText;
       this.keywords = keywords;
       this.selectorEnabled = true;
-      this.publishSearchForm.patchValue({sector: this.keywords.main.sector_id});
 
-      this.subSectors = [];
-      this.loadSubSectors(this.keywords.main.sector_id);
+      // check if found a match
+      if( keywords.main ) {
+        this.publishSearchForm.patchValue({sector: this.keywords.main.sector_id});
+
+        this.subSectors = [];
+        this.loadSubSectors(this.keywords.main.sector_id);
+      }
 
       this.showCard = true;
       this.removeFocus();
+      
+      this.isLoading = false;
     });
   }
 

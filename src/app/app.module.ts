@@ -41,6 +41,7 @@ import {
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginPageModule } from './pages/login/login.module';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -107,6 +108,7 @@ const config: SocketIoConfig = {
         ],
       } as SocialAuthServiceConfig,
     },
+    AndroidPermissions,
   ],
   bootstrap: [AppComponent],
 })

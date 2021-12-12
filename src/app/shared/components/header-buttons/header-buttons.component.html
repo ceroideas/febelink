@@ -116,5 +116,14 @@
       <ion-icon style="font-size: x-large" name="information-circle">
       </ion-icon>
     </ion-button>
+
+    <ion-button *ngIf="environment.KYC_DELETE_THIS"
+      size="large"
+      color="primary"
+      slot="icon-only"
+      (click)="openAlice()"
+    >
+      <img style="width: 50px;" src="assets/imgs/alice/alice.svg"/>
+    </ion-button>
   </ion-buttons>
 </div>

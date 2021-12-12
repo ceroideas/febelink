@@ -66,6 +66,8 @@ export class Tab4Page {
   emailPrevio;
   emailVerified: boolean = false;
 
+  labelDoc: string;
+
   constructor(
     private modalCtrl: ModalController,
     public alertCtrl: AlertController,
@@ -100,6 +102,13 @@ export class Tab4Page {
       }
     });
   }
+
+  // To add verified KYC values ( if already done )
+  setKYClabels() {
+    this.labelDoc = this.translateService.instant( 'common.personal.id' )
+      + ( !this.perfil?.doc_type ? '' : ' - ' + this.translateService.instant( 'kyc.docTypes.' + this.perfil.doc_type ));
+  }
+
   //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
   showHidePassMessages() {
     if (
@@ -175,7 +184,7 @@ export class Tab4Page {
     this.geoPlaces.setUserPlace(this.perfil);
 
     this.form = this.formBuilder.group({
-      name: [this.perfil.name],
+      nick: [this.perfil.nick],
       telefono: [this.perfil.telefono],
       descripcion: [this.perfil.descripcion == null || this.perfil.descripcion == 'null' ? '' : this.perfil.descripcion],
 
@@ -222,6 +231,7 @@ export class Tab4Page {
   async obtenerPerfil() {
     this.utilities.getUserData().then(async (data) => {
       this.perfil = data;
+      this.setKYClabels();
 
       if (this.perfil.logo) {
         if (
@@ -359,7 +369,7 @@ export class Tab4Page {
     const direccion_resto = this.form.get('direccion_resto').value;
 
     p = {
-      name: this.form.get('name').value,
+      nick: this.form.get('nick').value,
       descripcion: descripcion == null || descripcion == 'null' ? '' : descripcion,
       telefono: this.form.get('telefono').value,
 
@@ -394,7 +404,7 @@ export class Tab4Page {
                 this.utilities.showLoading();
                 (
                   await this.api.editarOfertanteYContra(
-                    p.name,
+                    p.nick,
                     p.email,
                     p.descripcion,
                     p.telefono,
@@ -554,7 +564,7 @@ export class Tab4Page {
 
               (
                 await this.api.editarOfertante(
-                  p.name,
+                  p.nick,
                   p.email,
                   p.descripcion,
                   p.telefono,
@@ -1098,7 +1108,7 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
     }
 
     let subject =
-      this.perfil.name +
+      this.perfil.nick +
       this.translateService.instant('tabs.tab4.errors.valorationFrom');
     let url = 'https://febelink.com/perfil/' + this.perfil.reference;
     let message = 'Febelink \n' + subject + ' \n';
@@ -1117,7 +1127,7 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
     }
 
     let subject =
-      this.perfil.name +
+      this.perfil.nick +
       this.translateService.instant('tabs.tab4.valuation.from');
     let url = 'https://febelink.com/perfil/' + this.perfil.reference;
     let message = 'Febelink \n' + subject + ' \n';
@@ -1151,7 +1161,7 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
     (await this.api.existeUsuario(name)).subscribe(async (value) => {
       if (value) {
         let title =
-          this.perfil.name +
+          this.perfil.nick +
           this.translateService.instant('tabs.tab4.valuation.recommendation');
         let desc = this.translateService.instant('tabs.tab4.valuation.panel');
 

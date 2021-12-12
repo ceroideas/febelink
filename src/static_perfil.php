@@ -11,7 +11,7 @@ return makePage($data,$default_img);
 
 function makePage($data,$default_img) {
     $image = $data->user->logo;
-    $name  = $data->user->name;
+    $name  = $data->user->nick;
     $description = $data->user->descripcion;
     if(!isset($data->user->logo)){
 	$image = "https://api.febelink.com/storage/users/default.png";  
