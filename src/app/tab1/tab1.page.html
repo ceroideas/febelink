@@ -18,8 +18,14 @@
 
         <h2>El buscador de servicios profesionales</h2>
 
+        <!-- Loading. -->
+        <div class="cargando-container" margin-top *ngIf="isLoading">
+          <ion-spinner></ion-spinner>
+          <p>{{ 'common.labelLoading' | translate }}</p>
+        </div>
+
         <!-- Search engine. -->
-        <div class="content-filter">
+        <div class="content-filter" *ngIf="!isLoading">
           <div class="autocomplete">
             <ion-searchbar
               placeholder="{{ 'common.searchPlaceholder' | translate }}"
@@ -51,7 +57,7 @@
           </div>
         </div>
 
-        <ion-card *ngIf="showCard">
+        <ion-card *ngIf="!isLoading && showCard">
           <ion-card-content>
             <ion-item lines="none">
               <ion-list-header>

@@ -30,6 +30,10 @@ ion-header {
   }
 }
 ion-content {
+  .cargando-container {
+    text-align: center;
+  }
+
   ion-searchbar {
     --background: #141414;
     --border-radius: 25px;
