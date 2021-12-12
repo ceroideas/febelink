@@ -79,7 +79,7 @@ export class UtilitiesService {
   /**
    * Guarda la información del token de acceso a la API
    */
-  saveAccessTokenInfo(accessTokenInfo: { access_token: string, expires_at: string, token_type: string}): Promise<any> {
+  saveAccessTokenInfo(accessTokenInfo: { access_token: string, expires_at: string, token_type: string}): Promise<void> {
     return new Promise((resolve, reject) => {
       this.storage.set('accessTokenInfo', accessTokenInfo).then(() => {
         resolve();
@@ -190,7 +190,7 @@ export class UtilitiesService {
    * Guarda los datos de la guia en el storage
    */
 
-  setGuia(login): Promise<any> {
+  setGuia(login): Promise<void> {
     return new Promise((resolve, reject) => {
       this.storage.set('login', login).then(() => {
         resolve();
