@@ -1,4 +1,5 @@
 export interface TokensUser {
+    nick?:string,
     name:string,
     lastname:string,
     email:string,
@@ -7,4 +8,16 @@ export interface TokensUser {
     phase_tokens:number,
     payed_date:string,
     id:number
+}
+
+export interface TokenPhase {
+    value: string,
+    label: string
+}
+
+export enum TokenCRUD {
+    Create = 'admin.create',
+    Read = 'admin.read',
+    Update = 'admin.update',
+    Delete = 'admin.delete'
 }
