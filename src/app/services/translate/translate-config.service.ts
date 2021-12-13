@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CookieService } from 'ngx-cookie-service';
-import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { Storage } from '@ionic/storage';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { supportedLanguages } from 'src/utils/utils';
 
 @Injectable({
@@ -10,28 +10,27 @@ import { supportedLanguages } from 'src/utils/utils';
 export class TranslateConfigService {
   constructor(
     private translateService: TranslateService,
-    public cookSvc: CookieService
+    private storage: Storage
   ) {}
 
-  getDefaultLanguage() {
-    let language = this.translateService.getBrowserLang();
+  async getLanguage(): Promise<string> {
+    let language = this.getBrowserLang();
 
-    // Si tiene guardado Lang en Cookies, tomar de la selección
-    let lang = ILangDEFAULTS.getLangCOOKIE(this.cookSvc);
+    // If has a saved Lang, take that selection
+    let lang = <ILang> await ILangDEFAULTS.getLangSaved( this.storage );
     if( lang != null ) language = lang.lang;
 
-    if (!supportedLanguages().includes(language)) {
+    if (!supportedLanguages().includes(language))
       language = ILangDEFAULTS.enUK.lang;
-    }
 
     this.translateService.setDefaultLang(language);
-    return language;
+    return new Promise(resolve => { resolve( language )});
   }
 
-  getCurrentLanguage() {
+  getBrowserLang() {
     return this.translateService.getBrowserLang();
   }
-
+  
   setLanguage(language: string) {
     this.translateService.use(language);
     this.translateService.currentLang = language;
