@@ -10,6 +10,7 @@
         "labelTown": "Town",
         "labelNoElements": "No elements to show",
         "labelLoading": "Loading...",
+        "labelSearching": "Searching...",
         "searchPlaceholder": "Search in Febelink",
         "labelDescription": "Description",
         "cookies1": "We use cookies to provide you with the best possible experience. By continuing, we assume that you agree with our",
@@ -645,15 +646,38 @@
     },
     "admin":{
         "tokensUsers":{
-            "editModal":{
-                "header": "Edit user tokens",
-                "body": "¿Are you sure you want to edit tokens of {{name}}?"
+            "placeholder": "Manage User Tokens",
+            "placeholder_users": "Search User",
+            "num": "Tokens Nbr",
+            "phase": "Phase",
+            "payed": "Payed",
+            "actions": "Actions",
+            "create": "Create New Reservation",
+            "update": "Edit {{ name }} {{ surname }}",
+            "delete": {
+                "done": "Tokens deleted",
+                "error": "Could not delete"
             },
-            "deleteModal":{
-                "header": "DELETE user tokens",
-                "body": "¿Are you sure you want to delete tokens of {{name}}? THIS ACTION IS NOT REVERSIBLE"
+            "irreversible": " THIS ACTION IS NOT REVERSIBLE",
+
+            "purchase-date": "Date of purchase",
+
+            "modal":{
+                "header": "{{ CRUD }} user tokens",
+                "body": "¿Are you sure you want to {{ CRUD }} tokens of {{name}}?{{ extra }}"
+            },
+
+            "error": {
+                "some": "There was an error",
+                "num_tokens": "You must indicate the Tokens Number",
+                "phase_tokens": "You must indicate the Stage"
             }
-        }
+        },
+
+        "create": "Add",
+        "read": "Read",
+        "update": "Edit",
+        "delete": "Delete"
     },
     "kyc": {
         "start": {
