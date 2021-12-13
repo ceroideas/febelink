@@ -5,7 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
@@ -118,7 +118,7 @@ export class RegistroPage implements OnInit {
       await this.utilities.showLoading();
 
       const idRecommender: string = this.cookSvc.get('recommenderId');
-      const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+      const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
 
       const registrationPayload = {
         email: this.form.get('email').value,

@@ -198,7 +198,7 @@ export class KYCAliceComponent implements OnInit {
   }
 
   async initialize() {
-    this.lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    this.lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
     this.loadingMsg = this.translateService.instant( 'kyc.loading' );
   }
 

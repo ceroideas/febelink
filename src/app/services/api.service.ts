@@ -9,7 +9,7 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
 import { TranslateConfigService } from './translate/translate-config.service';
-import { ILangDEFAULTS } from '../models/langs.model';
+import { ILang, ILangDEFAULTS } from '../models/langs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -818,7 +818,7 @@ export class ApiService {
    * @param email
    */
   public async verifyEmail( id, email ) {
-    const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
     return await this._getData( `verify-email/${ id }/${ lang }/${ email }` );
   }
 

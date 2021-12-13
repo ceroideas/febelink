@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
@@ -93,7 +93,7 @@ export class BuyTokensComponent implements OnInit {
         const userLanding:UserLanding = response.data.userCompleteData;
         // console.log(userLanding);
         this.landingSvc.setUser(userLanding);
-        const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+        const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
 
         const formData = new FormData();
         formData.append('nick', userLanding.nick);

@@ -79,7 +79,7 @@ export class GeoPlacesApi {
             return;
 
         // To Search acording to the selected|default language
-        const lang = this.translateService.getDefaultLanguage();
+        const lang = await this.translateService.getLanguage();
 
         this.loader = new Loader({
             apiKey: environment.G_PLACES_API_KEY,
@@ -276,7 +276,7 @@ export class GeoPlacesApi {
         const placeid = `?placeid=${id}`;
         const key = `&key=${ environment.G_PLACES_API_KEY }`;
         const fields = `&fields=${ this.fields.join( ',' ) }`;
-        const lang = `&language=${ this.translateService.getDefaultLanguage() }`;
+        const lang = `&language=${ this.translateService.getLanguage() }`;
         let url = `${ map }${ placeid }${ key }${ fields }${ lang }`;
 
         // Para devolver en caso de haber tenido un error

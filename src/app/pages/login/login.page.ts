@@ -5,7 +5,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
-import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 
 @Component({
@@ -40,10 +40,10 @@ export class LoginPage implements OnInit {
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
   }
 
-  submitForm() {
+  async submitForm() {
     this.utilities.showLoading();
 
-    const lang = ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
+    const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
 
     const formData = new FormData();
     formData.append('email', this.form.get('email').value);

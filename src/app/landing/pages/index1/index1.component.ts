@@ -54,7 +54,7 @@ export class Index1Component implements OnInit {
 
   navExtras: NavigationExtras;
 
-  ngOnInit(): void {
+  async ngOnInit() {
     // https://www.npmjs.com/package/countdown
     this.giTimerId = <number>(
       countdown(this.gdDateTop, (x_Ts: countdown.Timespan) => {
@@ -76,7 +76,7 @@ export class Index1Component implements OnInit {
     })
 
     this.langSelected = this.langSelected ? this.langSelected :
-        ILangDEFAULTS.getCurrentLang( this.translateService );
+      <ILang> await ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   // Destruimos cuando finaliza el contador

@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 
 @Component({
   selector: 'app-olvidar-contrasena',
@@ -47,7 +47,7 @@ export class OlvidarContrasenaPage implements OnInit {
     await this.utilities.showLoading();
     const email = this.form.get('email').value
     try {
-      let resp = await this.api.recuperarContraseña( email, ILangDEFAULTS.getCurrentLang( this.translateService ).lang );
+      let resp = await this.api.recuperarContraseña( email, (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang );
       console.log(resp);
       
       this.utilities.showToast(resp['status']);
