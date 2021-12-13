@@ -115,8 +115,6 @@ export class KYCAliceComponent implements OnInit {
     
     (await this.kycAliceService.verifyKYC( this.currentUser?.id, false )).subscribe(
       ( response ) => {
-        this.isLoading = false;
-
         // If already verified, dismiss
         if( response?.hasVerified )
           this.dismiss({ isValidated: true });
@@ -131,6 +129,7 @@ export class KYCAliceComponent implements OnInit {
 
   retryTimes: number = 1;
   checkPlatform() {
+    this.isLoading = false;
     this.platform.ready().then(() => {
       if ( this.platform.is( 'android' ))
         this.askAndroidPermissions();
@@ -199,7 +198,6 @@ export class KYCAliceComponent implements OnInit {
 
   async initialize() {
     this.lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
-    this.loadingMsg = this.translateService.instant( 'kyc.loading' );
   }
 
   
@@ -422,6 +420,7 @@ export class KYCAliceComponent implements OnInit {
 
   async onFinished() {
     this.isLoading = true;
+    this.loadingMsg = this.translateService.instant( 'kyc.loading' );
 
     (await this.kycAliceService.checkLifeProof( this.currentUser.id, this.docTypeSelected, false )).subscribe(
       ( response: KYC_ERR_Validation ) => {
