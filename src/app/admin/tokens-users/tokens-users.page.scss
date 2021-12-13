@@ -1,3 +1,25 @@
+.cargando-container {
+  text-align: center;
+  margin-top: 10px;
+  
+  ion-row {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+
+    ion-spinner {
+      margin-right: 20px;
+    }
+  }
+}
+
 #tokensUsersTable {
     margin: 10px;
     border-collapse: collapse;
