@@ -181,8 +181,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate(['cookie-policy']);
   }
 
-  setupLanguage() {
-    const currentLanguage = this.translateService.getDefaultLanguage();
+  async setupLanguage() {
+    const currentLanguage = await this.translateService.getLanguage();
 
     // Añadí esta linea porque sino no cargaba el archivo en.json de i18n
     // Y cuando cambiaba al lenguaje 'es' no encontrba los valores

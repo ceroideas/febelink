@@ -1,5 +1,5 @@
-import { CookieService } from "ngx-cookie-service";
 import { TranslateConfigService } from "../services/translate/translate-config.service";
+import { Storage } from '@ionic/storage';
 
 /**
  * Description [Interface to define User Language Selection.]
@@ -24,7 +24,7 @@ export interface ILang {
  export abstract class ILangDEFAULTS {
     static spSP: ILang = { id: 0, language: 'Español', lang: 'es', country: 'es', flag: 'Flag_SP', shortCode: 'ES-ES' };
     static enUK: ILang = { id: 1, language: 'English', lang: 'en', country: 'uk', flag: 'Flag_UK', shortCode: 'EN-UK' };
-    static coookie: string = "lang";
+    static key: string = "lang";
 
     static getLangs() : Array<ILang> {
       let arr: Array<ILang> = [
@@ -33,33 +33,31 @@ export interface ILang {
       ];
       return arr;
     }
-    static getLang( lang?: string, translateService?: TranslateConfigService ) : ILang {
-      let langSelected;
+    static getLang( lang?: string ): ILang {
+      for( let i = 0; lang && i < ILangDEFAULTS.getLangs().length; i++ )
+        if( ILangDEFAULTS.getLangs()[ i ].lang.trim() == lang.trim() )
+          return ILangDEFAULTS.getLangs()[ i ];
+
+      // No lang selected, bring default
+      return ILangDEFAULTS.enUK;
+    }
+    static async getCurrentLang( translateService: TranslateConfigService ): Promise<ILang> {
+      let language = await translateService.getLanguage();
+      return new Promise( resolve => { resolve( this.getLang( language ))});
+    }
+
+    // To save Lang selected
+    static saveLang( storage: Storage, lang: ILang ) {
+      storage.set( ILangDEFAULTS.key, lang ).then(() => {})
+        .catch(error => console.log( 'There was an error on saving Lang:', error ));
+    }
+    
+    // To get the Lang saved
+    static async getLangSaved( storage: Storage ): Promise<ILang> {
+      let lang: ILang = null;
+      await storage.ready();
+      lang = await storage.get( ILangDEFAULTS.key );
       
-      if( lang ) {
-        ILangDEFAULTS.getLangs().forEach( iLang => {
-          if( iLang.lang.trim() === lang.trim() )
-            return langSelected = iLang;
-        });
-      }
-
-      // Si langSelected existe, asignar ese valor || Sino ir a traer el default
-      const language = langSelected || translateService.getCurrentLanguage() || ILangDEFAULTS.enUK;
-      
-      return language;
-    }
-    static getCurrentLang( translateService: TranslateConfigService ) : ILang {
-      return this.getLang( translateService.getCurrentLanguage(), translateService );
-    }
-
-    // Para guardar el Lang en las Cookies
-    static saveLangCOOKIE( cookSvc: CookieService, lang: ILang ) {
-      cookSvc.set( ILangDEFAULTS.coookie, lang.lang );
-    }
-
-    // Para obtener el Lang en las Cookies
-    static getLangCOOKIE( cookSvc: CookieService ) : ILang {
-      let lang = cookSvc.get( ILangDEFAULTS.coookie );
-      return !lang ? null : ILangDEFAULTS.getLang( lang );
+      return new Promise( resolve => { resolve( lang )});
     }
 }

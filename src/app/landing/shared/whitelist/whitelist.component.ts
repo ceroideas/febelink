@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -11,14 +11,17 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   templateUrl: './whitelist.component.html',
   styleUrls: ['./whitelist.component.scss'],
 })
-export class WhitelistComponent {
+export class WhitelistComponent implements OnInit {
   constructor(
     private api: ApiService,
     private utils: UtilitiesService,
-    private translateService: TranslateConfigService ) {
-      this.lang = this.lang ? this.lang :
-        ILangDEFAULTS.getCurrentLang( this.translateService ).lang;
-    }
+    private translateService: TranslateConfigService
+  ) {}
+  
+  async ngOnInit() {
+    this.lang = this.lang ? this.lang :
+      (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
+  }
 
   @Input() lang: string;
   response: any;

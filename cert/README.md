@@ -91,13 +91,13 @@ ___
 * Once web page opened, if it is yet not valid, add certificate to browser: _( this is in chrome web browser )_
 
     1. Go to Settings <br>
-        ![Settings]( ./imgs/google_ssl_1.JPG)
+        ![Settings]( ./imgs/google_ssl_1.jpg)
 
     2. Go to Security tab <br>
-        ![Open Security Tab]( ./imgs/google_ssl_2.JPG)
+        ![Open Security Tab]( ./imgs/google_ssl_2.jpg)
 
     3. Open Manage Certificates <br>
-        ![Manage Certificates]( ./imgs/google_ssl_3.JPG)
+        ![Manage Certificates]( ./imgs/google_ssl_3.jpg)
 
     4. Import Certificates into Trusted Entities <br>
         ![Import Certificates]( ./imgs/google_ssl_4.JPG)
