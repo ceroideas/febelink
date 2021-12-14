@@ -52,7 +52,7 @@ export class UtilitiesService {
   }
 
   dismissLoading() {
-    this.loadingCtrl.dismiss();
+    return this.loadingCtrl.dismiss();
   }
 
   /**
@@ -249,7 +249,7 @@ export class UtilitiesService {
   }
 
   async confirm(text:string, params?:any):Promise<boolean> {
-    const header:string = this.translateService.instant(text+".header");
+    const header:string = this.translateService.instant(text+".header", params);
     const message:string = this.translateService.instant(text+".body", params);
     const confirmBtn = this.translateService.instant("common.buttons.confirm");
     const cancelmBtn = this.translateService.instant('common.buttons.cancel');

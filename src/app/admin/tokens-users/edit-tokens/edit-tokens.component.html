@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>Editar {{tokensUser.name + ' ' + tokensUser.lastname}}</ion-title>
+        <ion-title>{{ title }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="modalCtrl.dismiss()">
             <ion-icon name="close-outline"></ion-icon>
@@ -10,19 +10,81 @@
 </ion-header>
 
 <ion-content>
-    <form #form="ngForm" (ngSubmit)="getUserData()" style="margin: auto;">
+    <!-- Search User to add Reservations -->
+    <ion-searchbar *ngIf="!tokensUser"
+      [placeholder]="'admin.tokensUsers.placeholder_users' | translate"
+      inputmode="text"
+      (keyup.enter)="search($event)"
+      (ionChange)="search($event)"
+      (ionClear)="search($event)"
+      debounce="500"
+    ></ion-searchbar>
+
+    <!-- Loading -->
+    <div class="cargando-container" margin-top *ngIf="isLoading">
+      <ion-row>
+        <ion-spinner></ion-spinner>
+        <h4>{{ loadingMsg }}</h4>
+      </ion-row>
+    </div>
+
+  <ng-container *ngIf="!tokensUser">
+    <!-- Pagination Top -->
+    <app-pagination *ngIf="qPages > 1"
+      [qPages]="qPages"
+      [totalRecords]="totalRecords"
+      [recordsPerPage]="recordsPerPage"
+      [activePage]="activePage"
+      [disabled]="isLoading"
+      (onPageChange)="displayActivePage( $event )">
+    </app-pagination>
+
+    <!-- Users List -->
+    <ion-list *ngIf="!isLoading" class="results-list">
+      <ion-item
+        tappable
+        lines="none"
+        *ngFor="let user of usersList"
+        (click)="userSelected( user )"
+      >
+        <ion-avatar slot="start">
+          <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo" />
+          <ion-img
+            [src]="user?.logo"
+            *ngIf="user?.logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+          ></ion-img>
+        </ion-avatar>
+        <ion-label>
+          {{ user?.nombre || user?.nick}} {{ user?.surname }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <!-- Pagination Bottom -->
+    <app-pagination  *ngIf="!isLoading && qPages > 1"
+      [qPages]="qPages"
+      [totalRecords]="totalRecords"
+      [recordsPerPage]="recordsPerPage"
+      [activePage]="activePage"
+      (onPageChange)="displayActivePage( $event )">
+    </app-pagination>
+  </ng-container>
+
+  
+    <form [formGroup]="tokensForm" style="margin: auto;" *ngIf="tokensUser">
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-sm="6">
             <ion-item>
               <ion-label position="floating">{{ 'common.labelName' | translate }}</ion-label>
-              <ion-input type="text" name="name" [(ngModel)]="tokensUser.name" ngDefaultControl ngModel disabled></ion-input>
+              <ion-input type="text" formControlName="name"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-sm="6">
             <ion-item>
               <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
-              <ion-input type="text" name="lastname" [(ngModel)]="tokensUser.lastname" ngDefaultControl ngModel disabled></ion-input>
+              <ion-input type="text" formControlName="lastname"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>  
@@ -30,13 +92,13 @@
             <ion-col size="12" size-sm="6">
                 <ion-item>
                 <ion-label position="floating">{{ 'common.labelEmail' | translate }}</ion-label>
-                <ion-input type="email" name="email" [(ngModel)]="tokensUser.email" ngDefaultControl ngModel disabled></ion-input>
+                <ion-input type="email" formControlName="email"></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col size="12" size-sm="6">
                 <ion-item>
                 <ion-label position="floating">{{ 'common.personal.id' | translate }}</ion-label>
-                <ion-input type="text" name="dni" [(ngModel)]="tokensUser.dni" ngDefaultControl ngModel disabled></ion-input>
+                <ion-input type="text" formControlName="dni"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>       
@@ -45,22 +107,32 @@
           <ion-col size="12" size-sm="6">
             <ion-item>
               <ion-label position="floating">{{ 'landing.reserveTk.number' | translate }}</ion-label>
-              <ion-input type="number" name="num_tokens" [(ngModel)]="tokensUser.num_tokens" ngDefaultControl ngModel maxlength="100"></ion-input>
+              <ion-input type="number" formControlName="num_tokens" maxlength="100"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-sm="6">
             <ion-item>
               <ion-label position="floating">{{ 'landing.reserveTk.stage' | translate }}</ion-label>
-              <ion-input type="text" name="phase_tokens" [(ngModel)]="tokensUser.phase_tokens" ngDefaultControl ngModel maxlength="20"required></ion-input>
+              <ion-select
+                  interface="popover"
+                  formControlName="phase_tokens"
+                  (ionChange)="phaseChange($event)"
+              >
+                <ion-select-option *ngFor="let tkPhase of tkPhases" [value]="tkPhase.value">
+                  {{ tkPhase.label | translate }}{{ 'landing.reserveTk.stage' | translate }}
+                </ion-select-option>
+              </ion-select>
+
             </ion-item>
           </ion-col>
         </ion-row>
         
+        <!-- Only Show Payed Date on Creation -->
         <ion-row>
           <ion-col size="12" size-sm="12">
             <ion-item>
-              <ion-label position="floating">Fecha de compra</ion-label>
-              <ion-input type="text" name="payed_date" [(ngModel)]="tokensUser.payed_date" ngDefaultControl ngModel maxlength="20" required></ion-input>
+              <ion-label position="floating">{{ 'admin.tokensUsers.purchase-date' | translate }}</ion-label>
+              <ion-input type="date" locale="es-SP" formControlName="payed_date"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>

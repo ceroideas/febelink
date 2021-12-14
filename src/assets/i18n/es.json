@@ -10,6 +10,7 @@
         "labelTown": "Localidad",
         "labelNoElements": "No hay elementos para mostrar",
         "labelLoading": "Cargando...",
+        "labelSearching": "Buscando...",
         "searchPlaceholder": "Buscar en Febelink",
         "labelDescription": "Descripción",
         "cookies1": "Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra",
@@ -28,6 +29,8 @@
         "contactUs": "Contacta con Febelink",
         "contact": "Contacto",
         "labelSubsribe": "Suscribirse",
+        "first": "Primer@",
+        "last": "Ultim@",
 
         "personal": {
             "accountname": "Nombre de Cuenta",
@@ -657,15 +660,39 @@
     },
     "admin":{
         "tokensUsers":{
-            "editModal":{
-                "header": "Editar tokens de usuario",
-                "body": "¿Seguro que deseas editar los tokens de {{name}}?"
+            "placeholder": "Gestionar tokens de usuarios",
+            "placeholder_users": "Buscar Usuario",
+            "num": "Num Tokens",
+            "phase": "Fase",
+            "payed": "Pagado",
+            "actions": "Acciones",
+            "create": "Crear Nueva Reserva",
+            "update": "Editar {{ name }} {{ surname }}",
+            "delete": {
+                "done": "Tokens eliminados",
+                "error": "No se pudo eliminar"
             },
-            "deleteModal":{
-                "header": "ELIMINAR tokens de usuario",
-                "body": "¿Seguro que deseas eliminar los tokens de {{name}}? ESTA ACCIÓN NO ES REVERSIBLE"
+            "irreversible": " ESTA ACCIÓN NO ES REVERSIBLE",
+
+            "purchase-date": "Fecha de Compra",
+
+            "modal":{
+                "header": "{{ CRUD }} tokens de usuario",
+                "body": "¿Seguro que deseas {{ CRUD }} los tokens de {{name}}?{{ extra }}"
+            },
+
+            "loading": "Accion Desbilitada durante Carga",
+            "error": {
+                "some": "Ha habido un error",
+                "num_tokens": "Debe indicar el Número de Tokens",
+                "phase_tokens": "Debe indicar la Fase"
             }
-        }
+        },
+
+        "create": "Añadir",
+        "read": "Leer",
+        "update": "Editar",
+        "delete": "Eliminar"
     },
     "kyc": {
         "start": {

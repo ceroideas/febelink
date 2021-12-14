@@ -1,34 +1,156 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { IUser } from 'src/app/models/user.model';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { TokensUser } from '../../models/tokens-user';
+import { TokenCRUD, TokenPhase, TokensUser } from '../../models/tokens-user';
 import { TokensUsersService } from '../../services/tokens-users.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-tokens',
   templateUrl: './edit-tokens.component.html',
   styleUrls: ['./edit-tokens.component.scss'],
 })
-export class EditTokensComponent {
+export class EditTokensComponent implements OnInit {
+
+  tkCRUD = TokenCRUD;
+  @Input() tokenCRUD: TokenCRUD = TokenCRUD.Update;
+  @Input() tokensUser: TokensUser;
+
+  tkPhases: TokenPhase[] = [
+    { value: '1', label: 'landing.reserveTk.first' },
+    { value: '2', label: 'landing.reserveTk.second' },
+    { value: '3', label: 'landing.reserveTk.third' }
+  ]
+
+  title: string;
+  isLoading: boolean = false;
+  loadingMsg: string;
+  usersList: IUser[];
+  tokensForm: FormGroup;
 
   constructor(
-    private tokenSvc: TokensUsersService
-    , private modalCtrl: ModalController
+      private tokenSvc: TokensUsersService
+    , public modalCtrl: ModalController
     , private utils: UtilitiesService
+    , private translateSvc: TranslateConfigService
+    , private formBuilder: FormBuilder
   ) { }
 
-  @Input() tokensUser:TokensUser
+  ngOnInit() {
+    this.loadingMsg = this.translateSvc.instant( 'common.labelSearching' );
+    switch( this.tokenCRUD ) {
+      case TokenCRUD.Create:
+        this.title = this.translateSvc.instant( 'admin.tokensUsers.create' );
+        break;
+      case TokenCRUD.Update:
+        this.builtForm();
+        this.title = this.translateSvc.instant( 'admin.tokensUsers.update',
+          { name: this.tokensUser?.name || this.tokensUser?.nick, surname: this.tokensUser?.lastname || '' }
+        );
+        break;
+    }
+  }
+
+  ionViewDidLeave() {
+    this.tokensForm.reset();
+  }
+
+  builtForm() {
+    this.tokensForm = this.formBuilder.group({
+      name: new FormControl({ value: this.tokensUser?.name || this.tokensUser?.nick, disabled: true }),
+      lastname: new FormControl({ value: this.tokensUser?.lastname, disabled: true }),
+      email: new FormControl({ value: this.tokensUser?.email, disabled: true }),
+      dni: new FormControl({ value: this.tokensUser?.dni, disabled: true }),
+      num_tokens: new FormControl({ value: this.tokensUser?.num_tokens, disabled: false }, Validators.required ),
+      phase_tokens: new FormControl({ value: this.tokensUser?.phase_tokens?.toString(), disabled: false }, Validators.required ),
+      payed_date: new FormControl({ value: this.tokensUser?.payed_date, disabled: false })
+    });
+  }
+
+  keys:string;
+  async search( event?: any ) {
+    this.isLoading = true;
+    this.keys = event?.target?.value || this.keys || '';
+
+    const response = await this.tokenSvc.getUsersByKey( this.activePage, this.keys );
+    this.usersList = response.items;
+    this.totalRecords = response.totalRecords;
+    this.recordsPerPage = response.limit;
+    this.qPages = response.qPages;
+
+    this.isLoading = false;
+  }
+
+  userSelected( user ) {
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
+    this.tokensUser = <TokensUser> user;
+    this.builtForm();
+  }
+
+  phaseChange( event ){
+    this.tokensUser.phase_tokens = event.detail.value;
+  }
 
   async accept(){
-    console.log(this.tokensUser);
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
+    const { num_tokens, phase_tokens, payed_date } = this.tokensForm.value;
+    this.tokensUser.num_tokens = num_tokens;
+    this.tokensUser.phase_tokens = phase_tokens;
+    this.tokensUser.payed_date = payed_date;
+
+    if( !num_tokens ) {
+      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.num_tokens' ));
+      return;
+    }
+    if( !phase_tokens ) {
+      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.phase_tokens' ));
+      return;
+    }
+
+    const crud = this.translateSvc.instant( this.tokenCRUD );
     try{
-      if(!await this.utils.confirm('admin.tokensUsers.editModal', {name: this.tokensUser.name})) return;
-      await this.tokenSvc.editTokesUser(this.tokensUser)
+      if(!await this.utils.confirm( 'admin.tokensUsers.modal', {
+        CRUD: crud,
+        name: this.tokensUser?.name || this.tokensUser?.nick,
+        extra: ''
+      })) return;
+
+      this.loadingMsg = crud + '...';
+      this.isLoading = true;
+      switch( this.tokenCRUD ) {
+        case TokenCRUD.Create:
+          await this.tokenSvc.createTokenUser( this.tokensUser );
+          break;
+        case TokenCRUD.Update:
+          await this.tokenSvc.editTokenUser( this.tokensUser );
+          break;
+      }
+
+      this.isLoading = false;
       this.modalCtrl.dismiss({updated: true});
     }
     catch(e){
+      this.isLoading = false;
       console.error(e);
-      this.utils.showToast('Ha habido un error');
+      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.some' ));
     }
+  }
+
+  showToastLoading() {
+    this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.loading' ));
+  }
+
+  /* Pagination */
+  totalRecords: number = 0;
+  recordsPerPage: number = 1;
+  qPages: number = 1;
+  activePage: number = 1;
+  displayActivePage( activePage:number ){  
+    this.activePage = activePage;
+    this.search();
   }
 }
