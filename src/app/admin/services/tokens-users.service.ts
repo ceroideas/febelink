@@ -13,14 +13,16 @@ export class TokensUsersService {
     , private utilities: UtilitiesService
   ) { }
 
-  async getTokensUsers(filter?:string){
+  async getTokensUsers( activePage: number, filter?:string ){
     const formData = new FormData();
+    formData.append( 'activePage', activePage + '' );
     if(filter) formData.append('filter', filter);
     return (await this.api._createData('admin/getTokensUsers',formData)).toPromise();
   }
 
-  async getUsersByKey( keys?:string ) {
+  async getUsersByKey( activePage: number, keys?:string ) {
     const formData = new FormData();
+    formData.append( 'activePage', activePage + '' );
     if( keys ) formData.append('keys', keys );
     return ( await this.api._createData( 'admin/getUsersByKey',formData )).toPromise();
   }
