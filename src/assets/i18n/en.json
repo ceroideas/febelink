@@ -29,6 +29,8 @@
         "contactUs": "Contact Febelink",
         "contact": "Contact",
         "labelSubsribe": "Subscribe",
+        "first": "First",
+        "last": "Last",
 
         "personal": {
             "accountname": "Account Name",
@@ -667,6 +669,7 @@
                 "body": "¿Are you sure you want to {{ CRUD }} tokens of {{name}}?{{ extra }}"
             },
 
+            "loading": "Action Disabled during Loading",
             "error": {
                 "some": "There was an error",
                 "num_tokens": "You must indicate the Tokens Number",
