@@ -23,6 +23,17 @@
     </ion-row>
   </div>
 
+  <!-- Pagination Top -->
+  <app-pagination *ngIf="qPages > 1"
+    [qPages]="qPages"
+    [totalRecords]="totalRecords"
+    [recordsPerPage]="recordsPerPage"
+    [activePage]="activePage"
+    [disabled]="isLoading"
+    (onPageChange)="displayActivePage( $event )">
+  </app-pagination>
+
+<div class="scroll-inner">
   <table id="tokensUsersTable">
     <tr>
       <th>{{ 'common.labelName' | translate }}</th>
@@ -45,13 +56,24 @@
       <td class="edit"><ion-icon name="create-outline" (click)="edit(tokensUser)"></ion-icon></td>
       <td class="delete"><ion-icon name="trash-outline" (click)="delete(tokensUser)"></ion-icon></td>
     </tr>
-
-    <!-- Add New Token User -->
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="primary" (click)="create()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button> 
-    </ion-fab>
     
   </table>
+</div>
+
+  <!-- Add New Token User -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="create()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button> 
+  </ion-fab>
+
+  <!-- Pagination Bottom -->
+  <app-pagination  *ngIf="qPages > 1"
+    [qPages]="qPages"
+    [totalRecords]="totalRecords"
+    [recordsPerPage]="recordsPerPage"
+    [activePage]="activePage"
+    [disabled]="isLoading"
+    (onPageChange)="displayActivePage( $event )">
+  </app-pagination>
 </ion-content>

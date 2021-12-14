@@ -31,12 +31,18 @@ export class TokensUsersPage implements OnInit {
   filter:string;
   async search(event?: any) {
     this.isLoading = true;
-    this.filter = event?.target?.value || '';
-    this.tokensUsers = await this.tokensUsersSvc.getTokensUsers(this.filter);
+    this.filter = event?.target?.value || this.filter || '';
+    const response = await this.tokensUsersSvc.getTokensUsers( this.activePage, this.filter );
+    this.tokensUsers = response.items;
+    this.totalRecords = response.totalRecords;
+    this.recordsPerPage = response.limit;
+    this.qPages = response.qPages;
     this.isLoading = false;
   }
 
   async create() {
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
     const suscribirseModal = await this.modalCtrl.create({
       component: EditTokensComponent,
       componentProps:{
@@ -51,6 +57,8 @@ export class TokensUsersPage implements OnInit {
   }
 
   async edit(tokensUser:TokensUser){
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
     const suscribirseModal = await this.modalCtrl.create({
       component: EditTokensComponent,
       componentProps:{
@@ -65,6 +73,8 @@ export class TokensUsersPage implements OnInit {
   }
 
   async delete(tokensUser:TokensUser){
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
     try{
       if(!await this.utils.confirm( 'admin.tokensUsers.modal', {
         CRUD: this.translateSvc.instant( TokenCRUD.Delete ),
@@ -81,6 +91,20 @@ export class TokensUsersPage implements OnInit {
       this.isLoading = false;
       this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.delete.error' ));
     }
+  }
+
+  showToastLoading() {
+    this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.loading' ));
+  }
+
+  /* Pagination */
+  totalRecords: number = 0;
+  recordsPerPage: number = 1;
+  qPages: number = 1;
+  activePage: number = 1;
+  displayActivePage( activePage:number ){  
+    this.activePage = activePage;
+    this.search();
   }
 
 }
