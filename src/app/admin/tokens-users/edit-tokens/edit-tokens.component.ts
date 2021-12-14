@@ -26,6 +26,7 @@ export class EditTokensComponent implements OnInit {
 
   title: string;
   isLoading: boolean = false;
+  loadingMsg: string;
   usersList: IUser[];
   tokensForm: FormGroup;
 
@@ -38,6 +39,7 @@ export class EditTokensComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadingMsg = this.translateSvc.instant( 'common.labelSearching' );
     switch( this.tokenCRUD ) {
       case TokenCRUD.Create:
         this.title = this.translateSvc.instant( 'admin.tokensUsers.create' );
@@ -45,7 +47,7 @@ export class EditTokensComponent implements OnInit {
       case TokenCRUD.Update:
         this.builtForm();
         this.title = this.translateSvc.instant( 'admin.tokensUsers.update',
-          { name: this.tokensUser?.name || this.tokensUser?.nick, surname: this.tokensUser?.lastname }
+          { name: this.tokensUser?.name || this.tokensUser?.nick, surname: this.tokensUser?.lastname || '' }
         );
         break;
     }
@@ -70,12 +72,20 @@ export class EditTokensComponent implements OnInit {
   keys:string;
   async search( event?: any ) {
     this.isLoading = true;
-    this.keys = event?.target?.value || '';
-    this.usersList = await this.tokenSvc.getUsersByKey( this.keys );
+    this.keys = event?.target?.value || this.keys || '';
+
+    const response = await this.tokenSvc.getUsersByKey( this.activePage, this.keys );
+    this.usersList = response.items;
+    this.totalRecords = response.totalRecords;
+    this.recordsPerPage = response.limit;
+    this.qPages = response.qPages;
+
     this.isLoading = false;
   }
 
   userSelected( user ) {
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
     this.tokensUser = <TokensUser> user;
     this.builtForm();
   }
@@ -85,6 +95,8 @@ export class EditTokensComponent implements OnInit {
   }
 
   async accept(){
+    if( this.isLoading ) { this.showToastLoading(); return; }
+
     const { num_tokens, phase_tokens, payed_date } = this.tokensForm.value;
     this.tokensUser.num_tokens = num_tokens;
     this.tokensUser.phase_tokens = phase_tokens;
@@ -99,13 +111,16 @@ export class EditTokensComponent implements OnInit {
       return;
     }
 
+    const crud = this.translateSvc.instant( this.tokenCRUD );
     try{
       if(!await this.utils.confirm( 'admin.tokensUsers.modal', {
-        CRUD: this.translateSvc.instant( this.tokenCRUD ),
+        CRUD: crud,
         name: this.tokensUser?.name || this.tokensUser?.nick,
         extra: ''
       })) return;
 
+      this.loadingMsg = crud + '...';
+      this.isLoading = true;
       switch( this.tokenCRUD ) {
         case TokenCRUD.Create:
           await this.tokenSvc.createTokenUser( this.tokensUser );
@@ -115,11 +130,27 @@ export class EditTokensComponent implements OnInit {
           break;
       }
 
+      this.isLoading = false;
       this.modalCtrl.dismiss({updated: true});
     }
     catch(e){
+      this.isLoading = false;
       console.error(e);
       this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.some' ));
     }
+  }
+
+  showToastLoading() {
+    this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.loading' ));
+  }
+
+  /* Pagination */
+  totalRecords: number = 0;
+  recordsPerPage: number = 1;
+  qPages: number = 1;
+  activePage: number = 1;
+  displayActivePage( activePage:number ){  
+    this.activePage = activePage;
+    this.search();
   }
 }

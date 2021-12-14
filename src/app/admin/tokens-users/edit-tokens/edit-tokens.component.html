@@ -10,9 +10,8 @@
 </ion-header>
 
 <ion-content>
-  <!-- Search User to add Reservations -->
-  <ng-container *ngIf="!tokensUser">
-    <ion-searchbar
+    <!-- Search User to add Reservations -->
+    <ion-searchbar *ngIf="!tokensUser"
       [placeholder]="'admin.tokensUsers.placeholder_users' | translate"
       inputmode="text"
       (keyup.enter)="search($event)"
@@ -25,10 +24,22 @@
     <div class="cargando-container" margin-top *ngIf="isLoading">
       <ion-row>
         <ion-spinner></ion-spinner>
-        <h4>{{ 'common.labelSearching' | translate }}</h4>
+        <h4>{{ loadingMsg }}</h4>
       </ion-row>
     </div>
 
+  <ng-container *ngIf="!tokensUser">
+    <!-- Pagination Top -->
+    <app-pagination *ngIf="qPages > 1"
+      [qPages]="qPages"
+      [totalRecords]="totalRecords"
+      [recordsPerPage]="recordsPerPage"
+      [activePage]="activePage"
+      [disabled]="isLoading"
+      (onPageChange)="displayActivePage( $event )">
+    </app-pagination>
+
+    <!-- Users List -->
     <ion-list *ngIf="!isLoading" class="results-list">
       <ion-item
         tappable
@@ -37,11 +48,11 @@
         (click)="userSelected( user )"
       >
         <ion-avatar slot="start">
-          <img src="assets/imgs/4.jpg" *ngIf="!user?.avatar" />
+          <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo" />
           <ion-img
-            [src]="user?.avatar"
-            *ngIf="user?.avatar"
-            appImgErrorFallback
+            [src]="user?.logo"
+            *ngIf="user?.logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           ></ion-img>
         </ion-avatar>
         <ion-label>
@@ -49,6 +60,15 @@
         </ion-label>
       </ion-item>
     </ion-list>
+
+    <!-- Pagination Bottom -->
+    <app-pagination  *ngIf="!isLoading && qPages > 1"
+      [qPages]="qPages"
+      [totalRecords]="totalRecords"
+      [recordsPerPage]="recordsPerPage"
+      [activePage]="activePage"
+      (onPageChange)="displayActivePage( $event )">
+    </app-pagination>
   </ng-container>
 
   
