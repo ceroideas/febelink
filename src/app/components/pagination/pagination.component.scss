@@ -1,0 +1,21 @@
+.pagination {
+  display: inline-block;
+  margin-top: 5px;
+  
+  button {
+    background-color: transparent;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  button.active {
+    background-color: var(--ion-color-primary);
+    color: white;
+  }
+
+  button:hover:not(.active) {
+    background-color: #ddd;
+  }
+}

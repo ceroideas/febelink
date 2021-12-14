@@ -1,0 +1,25 @@
+<div class="pagination">
+  <!-- First -->
+  <button (click)="onClickPage( 1 )" *ngIf="activePage > 1" [disabled]="disabled">
+    {{ 'common.first' | translate }}
+  </button>
+
+  <!-- Previous -->
+  <button (click)="onClickPage( activePage - 1 )" [disabled]="disabled">&laquo;</button>
+
+  <!-- Page Number -->
+  <button
+    [ngClass]="{'active': activePage === item}"
+    *ngFor="let item of pages"
+    (click)="onClickPage( item )"
+    [disabled]="disabled"
+  >{{item}}</button>
+
+  <!-- Next -->
+  <button (click)="onClickPage( activePage + 1 )" [disabled]="disabled">&raquo;</button>
+
+  <!-- Last -->
+  <button (click)="onClickPage( qPages )" *ngIf="activePage < this.pages[ this.pages.length -1 ]" [disabled]="disabled">
+    {{ 'common.last' | translate }}
+  </button>
+</div>
