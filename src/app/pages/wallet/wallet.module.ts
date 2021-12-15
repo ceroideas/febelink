@@ -8,6 +8,8 @@ import { WalletPageRoutingModule } from './wallet-routing.module';
 
 import { WalletPage } from './wallet.page';
 import { ExchangeComponent } from './exchange/exchange.component';
+import { SelectAssetComponent } from './select-asset/select-asset.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,10 +18,12 @@ import { ExchangeComponent } from './exchange/exchange.component';
     , ReactiveFormsModule 
     , IonicModule
     , WalletPageRoutingModule
+    , SharedModule
   ],
   declarations: [
       WalletPage
     , ExchangeComponent
+    , SelectAssetComponent
 ],
 })
 export class WalletPageModule {}
