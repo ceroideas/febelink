@@ -9,6 +9,25 @@ ion-icon:hover {
 }
 
 ion-title {
-  margin: 2em;
   text-align: center;
+}
+
+ion-card {
+  padding: 10px;
+  cursor: pointer;
+
+  ion-row {
+    margin-bottom: 5px;
+  }
+  img {
+    margin-right: 10px;
+  }
+  ion-card-subtitle {
+    margin-left: 5px;
+    font-weight: 700;
+  }
+}
+
+.margin-top {
+  margin-top: 10px;
 }
