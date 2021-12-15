@@ -7,7 +7,13 @@ import { ApiService } from '../api.service';
   providedIn: 'root',
 })
 export class WalletService {
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService
+  ) {}
+
+  async getPublicKey() {
+    return await this.api._getData( `wallet/getPublicKey` );
+  }
 
   async getBalanceByUserId(userId: string) {
     return await this.api._getData(`wallet/balance/${userId}`);
