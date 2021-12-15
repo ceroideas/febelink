@@ -137,3 +137,10 @@ ionic-selectable-modal {
     background-image: none !important;
     height: 0px;
 }
+
+.line {
+    border: 0;
+    border-top: 3px solid rgba(0, 0, 0, 0.1);
+}
+.align-left{ justify-content: flex-start; }
+.align-right{ justify-content: flex-end; }
