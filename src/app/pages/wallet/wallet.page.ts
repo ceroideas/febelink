@@ -15,6 +15,7 @@ import { ExchangeComponent } from './exchange/exchange.component';
 export class WalletPage implements OnInit {
   userWallets: CryptoCurrency[] = [];
   publicKey: string;
+  minnersFee: string;
 
   constructor(
       private location: Location
@@ -25,21 +26,21 @@ export class WalletPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getPublicKey();
-    this.getCurrencyList();
+    this.getWalletInfo();
   }
 
   public goBack(): void {
     this.location.back();
   }
 
-  async getPublicKey() {
+  async getWalletInfo() {
     const serviceRequest: Observable<any> = await this.walletService
-      .getPublicKey()
+      .getWalletInfo()
       .then();
     serviceRequest.subscribe((response) => {
-      console.log( 'response: ', response );
       this.publicKey = response.publicKey;
+      this.userWallets = response.balance;
+      this.minnersFee = response.minnersFee;
     });
   }
 
@@ -61,13 +62,23 @@ export class WalletPage implements OnInit {
     const exchangeModal = await this.modalCtrl.create({
       component: ExchangeComponent,
       componentProps:{
-        origin: currency
-      }
+        origin: { currency: currency.currency, ammount: 0 },
+        minnersFee: this.minnersFee
+      },
+      cssClass: 'modal-mobile',
     });
     await exchangeModal.present();
 
-    exchangeModal.onDidDismiss().then(async (response) => {
-      console.log( 'response: ', response );
+    exchangeModal.onDidDismiss().then(async ( response ) => {
+      const origin = response?.data?.origin;
+      const destiny = response?.data?.destiny;
+
+      if( origin && destiny ) {
+        this.utilities.showLoading();
+        const response = await this.walletService.exchange( origin, destiny );
+        this.utilities.dismissLoading();
+        this.utilities.showToast( response?.message || 'Desconozco el Resultado del Exchange' );
+      }
     })
   }
 }
