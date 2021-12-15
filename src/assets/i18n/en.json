@@ -290,6 +290,39 @@
             "error": "Oops.. it seems that you have arrived here by mistake",
             "redirect": "in {{ seconds }} seconds you will be redircted to the Home Page"
         }
+        , "success":{
+            "token": {
+                "title": "Thanks!",
+                "subtitle": "You have completed your registration in the reservation list.",
+                "text": "<p>You will receive more information about the Febelink Áureo token in your inbox in the next few minutes. Check your spam or promotions folder.</p><p>If the email does not reach you in the next 5 minutes, fill out the form again here.</p>"
+            }
+            , "subscription-pro": {
+                "title": "Thanks!"
+                , "subtitle": "Subscription done"
+                , "text": "You have successfully subscribed to the Pro plan. From this moment you can start taking advantage of all its benefits"
+            }
+            , "default": {
+                "title": "Thanks!"
+                , "subtitle": "Your purchase has been made successfully"
+                , "text": ""
+            }
+        }
+        , "wallet": {
+            "title": "My Wallet",
+            "public-key": "Public Key",
+            "no-transactions": "No recent transactions.",
+            
+            "select-destiny": "Select Asset Destination",
+            "qOffer": "Qty to Change",
+            "qDemand": "Qty to Receive",
+            "minnersFee": "Minner's fee",
+            "confirm": "Confirm Exchange",
+            "error": {
+                "missing-destiny": "You must select the Asset Destination",
+                "qOffer": "Indicate the quantity of Assets to Change",
+                "qDemand": "Indicate the quantity of Assets to Receive"
+            }
+        }
     },
     "toast": {
         "need-register":"Sign up to have a better experience with Febelink!"

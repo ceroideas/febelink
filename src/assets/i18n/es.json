@@ -303,8 +303,24 @@
             }
             , "default": {
                 "title": "¡Gracias!"
-                , "subtitle": "Tu compra ha sido realizad con éxito"
+                , "subtitle": "Tu compra ha sido realizada con éxito"
                 , "text": ""
+            }
+        }
+        , "wallet": {
+            "title": "Mi Wallet",
+            "public-key": "Clave Pública",
+            "no-transactions": "Sin transacciones recientes.",
+
+            "select-destiny": "Seleccionar Asset Destino",
+            "qOffer": "Cant a Cambiar",
+            "qDemand": "Cant a Recibir",
+            "minnersFee": "Tarifa de Minero",
+            "confirm": "Confirmar Exchange",
+            "error": {
+                "missing-destiny": "Debe seleccionar el Asset Destino",
+                "qOffer": "Indique la cant de Assets a Cambiar",
+                "qDemand": "Indique la cant de Assets a Recibir"
             }
         }
     },
