@@ -22,17 +22,14 @@ a:hover {
 }
 
 .menu-currency-section {
-  display: block;
   margin-left: 2em;
 }
 
-.span-crypto-currency img {
-  display: block;
-  margin: 10px 15px 0 0;
-  float: left;
-}
-.span-crypto-currency span {
-  float: right;
+.span-crypto-currency {
+  margin-right: 10px;
+  ion-label {
+    font-weight: 700;
+  }
 }
 
 #menu-wallet-section {

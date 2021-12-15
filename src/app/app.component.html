@@ -85,20 +85,19 @@
         </ion-item>
         <!-- Section options. -->
         <ng-container *ngIf="showWallets">
-          <ion-label class="ion-text-wrap menu-currency-section">
-            <div
-              *ngFor="let currency of userWallets"
-              class="span-crypto-currency"
-            >
-              <img
-                src="assets/icon/{{ currency.currency.toLowerCase() }}.png"
-              />
-              <p>
-                {{ currency.currency }} <br />
-                {{ currency.ammount }}
-              </p>
-            </div>
-          </ion-label>
+          <ion-grid class="ion-text-wrap menu-currency-section">
+            <ion-row *ngFor="let currency of userWallets" class="span-crypto-currency vertical-content">
+              <ion-col size="3">
+                <img src="assets/icon/{{ currency.currency.toLowerCase() }}.png"/>
+              </ion-col>
+              <ion-col size="4" class="text-left">
+                <ion-label>{{ currency.currency }}</ion-label>
+              </ion-col>
+              <ion-col size="5" class="text-right">
+                <ion-label>{{ currency.ammount }}</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ng-container>
       </ion-toolbar>
       <ion-toolbar color="primary">
