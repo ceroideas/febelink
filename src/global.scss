@@ -143,4 +143,78 @@ ionic-selectable-modal {
     border-top: 3px solid rgba(0, 0, 0, 0.1);
 }
 .align-left{ justify-content: flex-start; }
+.align-center{ justify-content: center; }
 .align-right{ justify-content: flex-end; }
+.text-left{ text-align: left; }
+.text-center{ text-align: center; }
+.text-right{ text-align: right; }
+.hint { opacity: 0.5; }
+.one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+            line-clamp: 1; 
+    -webkit-box-orient: vertical;
+}
+
+.vertical-content {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+.pop-yt {
+  ion-backdrop {
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+  }
+  .popover-content {
+    top: 5vh;
+    left: 5vw;
+    transform-origin: left top;
+    --width: 90vw;
+    --max-width: 90vw;
+    --height: 90vh;
+    --max-height: 90vh;
+    background: transparent;
+
+    app-youtube-pop,
+    app-kyc-alice {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  @media (max-width: 768px){
+    .popover-content {
+      /* top: 10vh;
+      left: 10vw;
+      --width: 80vw;
+      --max-width: 80vw;
+      --height: 80vh;
+      --max-height: 80vh; */
+    }
+  }
+}
+.modal-mobile {
+  ion-backdrop {
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+  }
+  .modal-wrapper {
+    --max-width: 500px;
+    border-radius: 10px 10px 0px 0px;
+    
+    /* Desktop */
+    @media (max-width: 768px) {
+        margin: 20px auto 0px auto;
+    }
+    /* Mobile */
+    @media (min-width: 768px) {
+        margin: 10px 10px 0px 10px;
+    }
+  }
+}
