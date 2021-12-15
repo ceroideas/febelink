@@ -12,8 +12,16 @@
 <ion-content class="ion-padding" *ngIf="userWallets">
   <ion-grid>
     <ion-row>
+      <ion-label>Public Key</ion-label>
+      <ion-spinner *ngIf="!publicKey"></ion-spinner>
+      <ng-container *ngIf="publicKey" tappable>
+        <ion-label (click)="copyPublicKey()" tappable>{{ publicKey }}</ion-label>
+        <ion-icon (click)="copyPublicKey()" name="clipboard"></ion-icon>
+      </ng-container>
+    </ion-row>
+    <ion-row>
       <ion-col *ngFor="let currency of userWallets">
-        <ion-card>
+        <ion-card (click)="exchage( currency )">
           <ion-card-header>
             <img src="assets/icon/{{currency.currency.toLowerCase()}}.png" />
 
