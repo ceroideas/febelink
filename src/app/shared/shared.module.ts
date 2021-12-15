@@ -13,6 +13,7 @@ import { LinkPreviewComponent } from '../components/link-preview/link-preview.co
 import { VerificationComponent } from '../components/verification/verification.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
+import { ClickStopPropagation } from '../components/stop-propagation.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
     LinkPreviewComponent,
     VerificationComponent,
     KYCAliceComponent,
+    ClickStopPropagation,
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
     LinkPreviewComponent,
     VerificationComponent,
     KYCAliceComponent,
+    ClickStopPropagation,
   ],
   entryComponents: [],
 })
