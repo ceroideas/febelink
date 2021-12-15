@@ -7,11 +7,11 @@ export enum CryptoCurrencyType {
 }
 
 export interface CryptoCurrency {
-  currency: CryptoCurrencyType;
-  ammount: number;
+  currency?: CryptoCurrencyType;
+  ammount?: number;
 }
 
-export const CryptoCurrencyTypes: CryptoCurrency[] = [
+export const AssetTypes: CryptoCurrency[] = [
   { currency: CryptoCurrencyType.aureo,  ammount: 0 },
   { currency: CryptoCurrencyType.lumens,  ammount: 0 },
   { currency: CryptoCurrencyType.euro,  ammount: 0 },
