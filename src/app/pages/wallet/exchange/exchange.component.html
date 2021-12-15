@@ -1,0 +1,80 @@
+<div>
+  <ion-header fill="transparent">
+    <ion-toolbar fill="transparent">
+
+      <!-- Back Button -->
+      <ion-buttons slot="start">
+        <ion-button icon-only (click)="onDismiss()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <!-- Title -->
+      <ion-row>
+        <ion-title>{{ origin?.currency }}</ion-title>
+        <ion-icon name="arrow-dropright"></ion-icon>
+        <ion-title>{{ destiny?.currency }}</ion-title>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <form [formGroup]="exchangeForm" style="margin: auto;">
+      <ion-grid>
+        <!-- Asset Origin -->
+        <ion-row>
+          <ion-card>
+            <ion-card-header>
+              <ion-col size="5" class="line"></ion-col>
+              <ion-row>
+                  <ion-card-title class="align-left">{{ origin?.currency }}</ion-card-title>
+                  <ion-input class="align-right" type="number" formControlName="num_origin"></ion-input>
+              </ion-row>
+            </ion-card-header>
+          </ion-card>
+        </ion-row>
+
+        <!-- Icon Exchange -->
+        <ion-row>
+          <ion-button icon-only>
+            <ion-icon name="switch"></ion-icon>
+          </ion-button>
+        </ion-row>
+        
+        <!-- Asset Destiny -->
+        <ion-card>
+          <ion-card-header>
+            <ion-col size="5" class="line"></ion-col>
+            <ion-row>
+                <ion-card-title class="align-left">{{ destiny?.currency || 'Seleccionar' }}</ion-card-title>
+                <ion-input class="align-right" type="number" formControlName="num_origin"></ion-input>
+            </ion-row>
+          </ion-card-header>
+        </ion-card>
+        <!-- Select Asset -->
+        <ion-select
+            interface="popover"
+            formControlName="assetDestiny"
+            (ionChange)="destinyChange( $event )"
+        >
+          <!-- Asset Option -->
+          <ion-select-option *ngFor="let type of currencyTypes" [value]="type.currency">
+            <ion-item tappable lines="none">
+              <!-- Asset Icon -->
+              <ion-avatar slot="start">
+                <img src="assets/icon/{{ type.currency.toLowerCase() }}.png" />
+              </ion-avatar>
+              <!-- Asset Text -->
+              <ion-label>{{ type.currency }}</ion-label>
+            </ion-item>
+          </ion-select-option>
+        </ion-select>
+
+        <!--  -->
+        <ion-row>
+          
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-content>
+</div>
