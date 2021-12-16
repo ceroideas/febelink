@@ -10,24 +10,40 @@
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="userWallets">
-  <ion-grid>
-    <ion-row>
+  <!-- Loading -->
+  <div class="vertical-content align-center margin-top" *ngIf="isLoading">
+    <ion-row class="vertical-content">
+      <ion-spinner class="margin-end"></ion-spinner>
+      <h4 class="margin-start">{{ 'common.labelLoading' | translate }}</h4>
+    </ion-row>
+  </div>
+
+  <ion-grid *ngIf="!isLoading">
+    <!-- Public Key -->
+    <ion-row class="margin-start" >
       <ion-col size="4">
         <ion-label>{{ 'pages.wallet.public-key' | translate }}</ion-label>
       </ion-col>
-      <ion-spinner *ngIf="!publicKey"></ion-spinner>
-      <ng-container *ngIf="publicKey" tappable>
+      <ng-container tappable>
         <ion-col size="6">
-          <ion-label (click)="copyPublicKey()" class="one-line" tappable>{{ publicKey }}</ion-label>
+          <ion-label (click)="copyPublicKey()" class="one-line" tappable><b>{{ publicKey || '--' }}</b></ion-label>
         </ion-col>
         <ion-col size="2">
-          <ion-icon (click)="copyPublicKey()" name="clipboard"></ion-icon>
+          <ion-icon (click)="copyPublicKey()" name="clipboard" *ngIf="publicKey"></ion-icon>
         </ion-col>
       </ng-container>
     </ion-row>
+
+    <!-- Retained Tokens -->
+    <ion-row class="margin-start" *ngIf="retainedTks && retainedTks != '0'">
+      <ion-label class="margin-end">{{ 'pages.wallet.retained' | translate }}</ion-label>
+      <ion-label class="margin-start text-right"><b>{{ retainedTks }}</b></ion-label>
+    </ion-row>
+
+    <!-- Assets -->
     <ion-row>
       <ion-col *ngFor="let currency of userWallets">
-        <ion-card (click)="exchage( currency )">
+        <ion-card (click)="exchange( currency )">
           <ion-row class="vertical-content">
             <img src="assets/icon/{{currency.currency.toLowerCase()}}.png" />
             <ion-card-subtitle> {{currency.currency}}</ion-card-subtitle>
@@ -37,10 +53,13 @@
       </ion-col>
     </ion-row>
 
+    <!-- Divider -->
     <ion-row>
       <ion-item-divider></ion-item-divider>
     </ion-row>
-    <ion-row class="margin-top">
+
+    <!-- Transactions History -->
+    <ion-row class="margin-top" *ngIf="!transactions || transactions?.length == 0">
       <ion-title>{{ 'pages.wallet.no-transactions' | translate }}</ion-title>
     </ion-row>
   </ion-grid>
