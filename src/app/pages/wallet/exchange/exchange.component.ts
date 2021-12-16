@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { TwoFAComponent } from 'src/app/components/two-fa/two-fa.component';
 
 @Component({
   selector: 'app-exchange',
@@ -22,7 +23,7 @@ export class ExchangeComponent implements OnInit {
   constructor(
       private modalController: ModalController
     , private formBuilder: FormBuilder
-    , private popoverController: PopoverController
+    , private popCtrl: PopoverController
     , private translateSvc: TranslateConfigService
     , private utilities: UtilitiesService
   ) {}
@@ -48,7 +49,7 @@ export class ExchangeComponent implements OnInit {
   
   async selectAsset( isOrigin: boolean ) {
     event.stopPropagation();
-    const popover = await this.popoverController.create({
+    const popover = await this.popCtrl.create({
       component: SelectAssetComponent,
       translucent: true,
       mode: 'md',
@@ -72,15 +73,32 @@ export class ExchangeComponent implements OnInit {
       this.destiny.currency = asset.currency;
   }
 
-  exchange() {
+  switchAssets() {
+    const origin: CryptoCurrency = { currency: this.destiny?.currency };
+    const destiny: CryptoCurrency = { currency: this.origin?.currency };
+    
+    this.origin = origin;
+    this.destiny = destiny;
+  }
+
+  async exchange() {
     if( !this.checkErrors() )
       return;
 
-    this.modalController.dismiss({ origin: this.origin, destiny: this.destiny });
+    /* Verify 2FA */
+    const verified = await this.verify2FA();
+    
+    if( verified )
+      this.modalController.dismiss({ origin: this.origin, destiny: this.destiny });
   }
 
   checkErrors(): boolean {
     const { num_origin, num_destiny } = this.exchangeForm.value;
+
+    if( !this.origin?.currency ) {
+      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.missing-origin' ));
+      return false;
+    }
 
     if( !this.destiny?.currency ) {
       this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.missing-destiny' ));
@@ -101,5 +119,17 @@ export class ExchangeComponent implements OnInit {
     this.destiny.ammount = Number( num_destiny );
 
     return true;
+  }
+
+  /* Verify 2FA PopoverControll */
+  async verify2FA(): Promise<any> {
+    const twoFApop = await this.popCtrl.create({
+      component: TwoFAComponent,
+      cssClass: 'pop-mobile-width',
+    });
+    await twoFApop.present();
+
+    const { data } = await twoFApop.onDidDismiss();
+    return new Promise( resolve => { resolve( data?.verified )});
   }
 }

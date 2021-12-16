@@ -12,7 +12,7 @@
       <!-- Title -->
       <ion-row class="vertical-content align-center">
         <ion-label>{{ origin?.currency }}</ion-label>
-        <ion-icon name="play" *ngIf="destiny?.currency"></ion-icon>
+        <ion-icon name="play" *ngIf="origin?.currency && destiny?.currency"></ion-icon>
         <ion-label *ngIf="destiny?.currency">{{ destiny?.currency }}</ion-label>
       </ion-row>
     </ion-toolbar>
@@ -36,10 +36,10 @@
                 <ion-row class="vertical-content">
                   <ion-col size="8">
                     <!-- Asset Text -->
-                    <ion-card-title>{{ origin?.currency || 'Seleccionar' }}</ion-card-title>
+                    <ion-card-title>{{ origin?.currency || ( 'pages.wallet.select-origin' | translate ) }}</ion-card-title>
                   </ion-col>
 
-                  <ion-col size="4">
+                  <ion-col size="4" *ngIf="origin?.currency">
                     <ion-row class="hint">
                       <ion-label>{{'pages.wallet.qOffer' | translate }}</ion-label>
                     </ion-row>
@@ -47,7 +47,7 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation type="number" class="text-center" formControlName="num_origin"></ion-input>
+                      <ion-input click-stop-propagation type="number" class="text-center" formControlName="num_origin" min="0"></ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
@@ -56,9 +56,9 @@
           </ion-row>
         </ion-card>
 
-        <!-- Icon Exchange -->
+        <!-- Icon Switch -->
         <ion-row class="align-center">
-          <ion-button icon-only>
+          <ion-button icon-only (click)="switchAssets()">
             <ion-icon name="wallet"></ion-icon>
           </ion-button>
         </ion-row>
@@ -89,7 +89,7 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation type="number" class="text-center" formControlName="num_destiny"></ion-input>
+                      <ion-input click-stop-propagation type="number" class="text-center" formControlName="num_destiny" min="0"></ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
