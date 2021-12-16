@@ -14,6 +14,7 @@ import { VerificationComponent } from '../components/verification/verification.c
 import { PipesModule } from '../pipes/pipes.module';
 import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
 import { ClickStopPropagation } from '../components/stop-propagation.component';
+import { TwoFAComponent } from '../components/two-fa/two-fa.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ClickStopPropagation } from '../components/stop-propagation.component';
     VerificationComponent,
     KYCAliceComponent,
     ClickStopPropagation,
+    TwoFAComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +54,7 @@ import { ClickStopPropagation } from '../components/stop-propagation.component';
     VerificationComponent,
     KYCAliceComponent,
     ClickStopPropagation,
+    TwoFAComponent,
   ],
   entryComponents: [],
 })
