@@ -21,7 +21,6 @@ export class WalletService {
   }
 
   async exchange( assetOrigin: CryptoCurrency, assetDestiny: CryptoCurrency ) {
-    console.log( 'exchange => assetOrigin:', assetOrigin, ' | assetDestiny:', assetDestiny);
     const formData = new FormData();
     formData.append('assetOrigin_currency', assetOrigin.currency );
     formData.append('assetOrigin_ammount', assetOrigin.ammount + '' );
