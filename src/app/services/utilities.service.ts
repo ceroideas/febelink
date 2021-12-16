@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController, AlertController, LoadingController, Platform } from '@ionic/angular';
+import { ToastController, AlertController, LoadingController, Platform, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,14 +10,15 @@ import { TranslateService } from '@ngx-translate/core';
 export class UtilitiesService {
 
 
-  constructor( public toastCtrl: ToastController,
-               public alertCtrl: AlertController,
-               public loadingCtrl: LoadingController,
-               private platform: Platform,
-               private storage: Storage,
-               private titleService: Title,
-               private translateService: TranslateService
-               , private alert: AlertController) { }
+  constructor(
+      public toastCtrl: ToastController
+    , public alertCtrl: AlertController
+    , public loadingCtrl: LoadingController
+    , private platform: Platform
+    , private storage: Storage
+    , private titleService: Title
+    , private translateService: TranslateService
+  ) { }
   
 
 
@@ -190,6 +191,15 @@ export class UtilitiesService {
   }
 
   /**
+   *  
+   * @returns if user is admin 
+   */
+   async isAdmin(): Promise<any> {
+    const user = await this.getUserData();
+    return new Promise( resolve => { resolve( user.role_id == 3 ) });
+  }
+
+  /**
    * Guarda los datos de la guia en el storage
    */
 
@@ -254,7 +264,7 @@ export class UtilitiesService {
     const confirmBtn = this.translateService.instant("common.buttons.confirm");
     const cancelmBtn = this.translateService.instant('common.buttons.cancel');
     return new Promise(async resolve => {
-      const alert = await this.alert.create({
+      const alert = await this.alertCtrl.create({
         header, message,
         buttons: [
           {
@@ -276,5 +286,4 @@ export class UtilitiesService {
       await alert.present();
     });
   }
-
 }
