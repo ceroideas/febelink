@@ -24,6 +24,7 @@
         "labelNewPass": "New password",
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
+        "clipboard": "Copied to Clipboard",
         "share": "Share",
         "slogan": "The professional services search engine",
         "contactUs": "Contact Febelink",
@@ -31,6 +32,7 @@
         "labelSubsribe": "Subscribe",
         "first": "First",
         "last": "Last",
+        "unavailable": "Function not available yet",
 
         "personal": {
             "accountname": "Account Name",
@@ -98,6 +100,16 @@
                 "now": "Verify",
                 "not-now": "Later"
             }
+        },
+
+        "two-fa": {
+            "title": "Verify Account - 2FA",
+            "message": "To continue with the operation, a {{ length }}-digit code has been sent to your mailbox. Copy and write it below",
+            "type": "******",
+            "expires": "Will expire in {{ min }} minutes",
+
+            "generating": "Generating 2FA Code",
+            "verifying": "Verifying 2FA Code"
         }
     },
     "menu": {
@@ -289,6 +301,45 @@
             "done": "Great! You've verified your email account",
             "error": "Oops.. it seems that you have arrived here by mistake",
             "redirect": "in {{ seconds }} seconds you will be redircted to the Home Page"
+        }
+        , "success":{
+            "token": {
+                "title": "Thanks!",
+                "subtitle": "You have completed your registration in the reservation list.",
+                "text": "<p>You will receive more information about the Febelink Áureo token in your inbox in the next few minutes. Check your spam or promotions folder.</p><p>If the email does not reach you in the next 5 minutes, fill out the form again here.</p>"
+            }
+            , "subscription-pro": {
+                "title": "Thanks!"
+                , "subtitle": "Subscription done"
+                , "text": "You have successfully subscribed to the Pro plan. From this moment you can start taking advantage of all its benefits"
+            }
+            , "default": {
+                "title": "Thanks!"
+                , "subtitle": "Your purchase has been made successfully"
+                , "text": ""
+            }
+        }
+        , "wallet": {
+            "title": "My Wallet",
+            "public-key": "Public Key",
+            "retained": "Retained Tokens:",
+            "no-transactions": "No recent transactions.",
+            
+            "select-origin": "Select Asset Origin",
+            "select-destiny": "Select Asset Destination",
+            "qOffer": "Qty to Change",
+            "qDemand": "Qty to Receive",
+            "minnersFee": "Minner's fee",
+            "confirm": "Confirm Exchange",
+            "error": {
+                "missing-origin": "You must select the Asset Origin",
+                "missing-destiny": "You must select the Asset Destination",
+                "qOffer": "Indicate the quantity of Assets to Change",
+                "qDemand": "Indicate the quantity of Assets to Receive",
+                "unknown": "Do not know the Exchange Result",
+                "expired": "Your code has expired, so a new one has been sent to you",
+                "wrong": "Wrong code, try again"
+            }
         }
     },
     "toast": {

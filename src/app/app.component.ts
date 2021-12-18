@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
 import { ILangDEFAULTS } from './models/langs.model';
 import { Meta, Title } from '@angular/platform-browser';
 
-const GENERAL_TITLE = 'Febelink | El Boca a Boca Digital';
+const GENERAL_TITLE = 'Febelink | El buscador de servicios profesionales';
 const GENERAL_DESC =
   'En Febelink encontrarás lo que estás buscando - Entra y encuentra rápidamente lo que buscas en el sector o categoría que necesites. Explora todas las ventajas que te ofrece Febelink para ayudarte en tu día a día.';
 @Component({

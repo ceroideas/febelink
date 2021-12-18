@@ -24,6 +24,7 @@
         "labelNewPass": "Contraseña nueva",
         "labelConfirmNewPass": "Confimar contraseña nueva",
         "labelTitle": "Título",
+        "clipboard": "Copiado al Portapapeles",
         "share": "Compartir",
         "slogan": "El buscador de servicios profesionales",
         "contactUs": "Contacta con Febelink",
@@ -31,6 +32,7 @@
         "labelSubsribe": "Suscribirse",
         "first": "Primer@",
         "last": "Ultim@",
+        "unavailable": "Función no disponible de momento",
 
         "personal": {
             "accountname": "Nombre de Cuenta",
@@ -98,6 +100,16 @@
                 "now": "Verificar",
                 "not-now": "Mas tarde"
             }
+        },
+
+        "two-fa": {
+            "title": "Verificar Cuenta - 2FA",
+            "message": "Para continuar con la operación, se le ha enviado un código de {{ length }} dígitos a su cassilla de Correo. Cópielo y escríbalo debajo",
+            "type": "******",
+            "expires": "Expirará en {{ min }} minutos",
+
+            "generating": "Generando Código 2FA",
+            "verifying": "Verificando Código 2FA"
         }
     },
     "menu": {
@@ -303,8 +315,30 @@
             }
             , "default": {
                 "title": "¡Gracias!"
-                , "subtitle": "Tu compra ha sido realizad con éxito"
+                , "subtitle": "Tu compra ha sido realizada con éxito"
                 , "text": ""
+            }
+        }
+        , "wallet": {
+            "title": "Mi Wallet",
+            "public-key": "Clave Pública",
+            "retained": "Tokens Retenidos:",
+            "no-transactions": "Sin transacciones recientes.",
+
+            "select-origin": "Seleccionar Asset Origen",
+            "select-destiny": "Seleccionar Asset Destino",
+            "qOffer": "Cant a Cambiar",
+            "qDemand": "Cant a Recibir",
+            "minnersFee": "Tarifa de Minero",
+            "confirm": "Confirmar Exchange",
+            "error": {
+                "missing-origin": "Debe seleccionar el Asset Origin",
+                "missing-destiny": "Debe seleccionar el Asset Destino",
+                "qOffer": "Indique la cant de Assets a Cambiar",
+                "qDemand": "Indique la cant de Assets a Recibir",
+                "unknown": "Desconozco el Resultado del Exchange",
+                "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
+                "wrong": "Código incorrecto, intente nuevamente"
             }
         }
     },

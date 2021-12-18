@@ -21,10 +21,10 @@ export class ApiService {
   constructor(
     public alertController: AlertController,
     private http: HttpClient,
-    private utilities: UtilitiesService,
+    public utilities: UtilitiesService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private translateService: TranslateConfigService
+    public translateSvc: TranslateConfigService
   ) {}
 
   login(params, endpoint, firstLogin?: boolean, redirect?:string): Observable<any> {
@@ -96,9 +96,11 @@ export class ApiService {
       if (tokenInfo !== null) token = tokenInfo.access_token;
     });
 
+    const lang = await this.translateSvc.getLanguage();
+
     return this.http
       .get<any>(environment.API_URL_AUTH + endpoint, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}`, Lang: lang },
       })
       .pipe(
         map((res: any) => {
@@ -110,16 +112,18 @@ export class ApiService {
       );
   }
 
-  async _createData(endpoint: string, data: any) {
+  async _createData(endpoint: string, data: any = new FormData() ) {
     let token;
     await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
       token = tokenInfo ? tokenInfo.access_token : null;
     });
 
+    const lang = await this.translateSvc.getLanguage();
+
     //perform the API call
     return this.http
       .post<any>(environment.API_URL_AUTH + endpoint, data, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}`, Lang: lang },
       })
       .pipe(
         map((res: any) => {
@@ -818,7 +822,7 @@ export class ApiService {
    * @param email
    */
   public async verifyEmail( id, email ) {
-    const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
+    const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateSvc )).lang;
     return await this._getData( `verify-email/${ id }/${ lang }/${ email }` );
   }
 
@@ -828,6 +832,25 @@ export class ApiService {
    */
   public async emailVerified( id ) {
     return await this._getData( 'email-verified/' + id );
+  }
+
+
+  /**
+   * To Generate 2FA code
+   */
+  public async generate2FAcode() {
+    return ( await this._createData( 'generate2FAcode' )).toPromise();
+  }
+
+
+  /**
+   * To Verify 2FA code
+   */
+  public async verify2FAcode( code ) {
+    const data = new FormData();
+    data.append( 'code', code );
+    return ( await this._createData( 'verify2FAcode', data ))
+        .toPromise();
   }
 
 }

@@ -1,0 +1,57 @@
+div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    
+    ion-header {
+        flex: 0 1 auto;
+        background-color: var(--primary);
+
+        ion-label {
+            font-weight: 600;
+        }
+
+        ion-icon {
+            width: 25px;
+            height: 25px;
+        }
+
+        ion-label {
+            margin: 0px 10px;
+        }
+    }
+    ion-footer {
+        padding-bottom: 10px;
+    }
+    ion-header::after,
+    ion-footer::after {
+        background-image: none;
+    }
+
+    ion-content {
+        --padding-start: 10px;
+        --padding-end: 10px;
+    }
+
+    ion-item {
+        width: 100%;
+    }
+
+    ion-input {
+        border-bottom: 2px solid var(--ion-color-febelink);
+        border-radius: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+
+        font-size: 14px;
+    }
+
+    .hint {
+        font-size: 14px;
+    }
+
+    .minners-fee {
+        margin-top: 10px;
+    }
+}
