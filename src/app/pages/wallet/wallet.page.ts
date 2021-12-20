@@ -59,19 +59,7 @@ export class WalletPage implements OnInit {
   }
 
   async copyPublicKey() {
-    if ( this.platform.is( 'cordova' )) // Native Android/iOS
-      this.clipboard.copy( this.publicKey );
-    else // Web
-      if (navigator.clipboard) {
-        try {
-          await navigator.clipboard.writeText( this.publicKey );
-        } catch ( err ) {
-          console.log( 'Error on Clipboard: ', err );
-          return;
-        }
-      }
-
-    this.utilities.showToast( this.translateSvc.instant( 'common.clipboard' ));
+    this.utilities.copyClipboard( this.publicKey );
   }
 
   async getCurrencyList() {
