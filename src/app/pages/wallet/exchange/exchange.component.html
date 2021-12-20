@@ -34,7 +34,7 @@
 
               <ion-grid>
                 <ion-row class="vertical-content">
-                  <ion-col size="8">
+                  <ion-col [size]="origin?.currency ? 8 : 12">
                     <!-- Asset Text -->
                     <ion-card-title>{{ origin?.currency || ( 'pages.wallet.select-origin' | translate ) }}</ion-card-title>
                   </ion-col>
@@ -76,7 +76,7 @@
 
               <ion-grid>
                 <ion-row class="vertical-content">
-                  <ion-col size="8">
+                  <ion-col [size]="destiny?.currency ? 8 : 12">
                     <!-- Asset Text -->
                     <ion-card-title>{{ destiny?.currency || ( 'pages.wallet.select-destiny' | translate ) }}</ion-card-title>
                   </ion-col>
