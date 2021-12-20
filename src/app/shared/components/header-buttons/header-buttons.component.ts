@@ -12,8 +12,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { ApiService } from 'src/app/services/api.service';
 import { filter } from 'rxjs/operators';
 import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
-import { KYCAliceComponent } from 'src/app/components/kyc-alice/kyc-alice.component';
-import { KYCAliceService } from 'src/app/services/kyc.alice.service';
 
 @Component({
   selector: 'app-header-buttons',
@@ -26,9 +24,6 @@ export class HeaderButtonsComponent implements OnInit {
   tabs = Tabs;
   notifCount: number;
   totalUnreadMessages: number;
-  
-  // TODO: Added this param for testing purpposes, David: delete after testing it!
-  environment = environment;
 
   constructor(
     private modalCtrl: ModalController,
@@ -39,8 +34,7 @@ export class HeaderButtonsComponent implements OnInit {
     public popoverController: PopoverController,
     private translateService: TranslateService,
     private utilities: UtilitiesService,
-    private notificationsSvc: NotificationService,
-    private kycAliceService: KYCAliceService
+    private notificationsSvc: NotificationService
   ) {}
 
   async ngOnInit() {
@@ -94,27 +88,6 @@ export class HeaderButtonsComponent implements OnInit {
       cssClass: 'pop-yt',
     });
     return await popover.present();
-  }
-
-  /**
-   * Open Alice
-   */
-  async openAlice() {
-    const popover = await this.popoverController.create({
-      component: KYCAliceComponent,
-      translucent: true,
-      mode: 'md',
-      cssClass: 'pop-yt',
-      backdropDismiss: false
-    });
-
-    await popover.present();
-
-    const { data } = await popover.onDidDismiss();
-
-    this.utilities.showToast(
-      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
-    );
   }
 
   async irA(p: string): Promise<void> {
