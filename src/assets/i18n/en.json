@@ -25,6 +25,7 @@
         "labelConfirmNewPass": "Confirm new password",
         "labelTitle": "Title",
         "clipboard": "Copied to Clipboard",
+        "clipboardErr": "Error on Copy to Clipboard",
         "share": "Share",
         "slogan": "The professional services search engine",
         "contactUs": "Contact Febelink",
@@ -104,12 +105,17 @@
 
         "two-fa": {
             "title": "Verify Account - 2FA",
-            "message": "To continue with the operation, a {{ length }}-digit code has been sent to your mailbox. Copy and write it below",
+            "message": "Write here the {{ length }}-digit code that we have sent to your email",
             "type": "******",
             "expires": "Will expire in {{ min }} minutes",
 
             "generating": "Generating 2FA Code",
-            "verifying": "Verifying 2FA Code"
+            "verifying": "Verifying 2FA Code",
+
+            "error": {
+                "expired": "Your code has expired, so a new one has been sent to you",
+                "wrong": "Wrong code, try again"
+            }
         }
     },
     "menu": {
@@ -325,20 +331,18 @@
             "retained": "Retained Tokens:",
             "no-transactions": "No recent transactions.",
             
-            "select-origin": "Select Asset Origin",
-            "select-destiny": "Select Asset Destination",
-            "qOffer": "Qty to Change",
-            "qDemand": "Qty to Receive",
-            "minnersFee": "Minner's fee",
+            "select-origin": "Select Origin Currency",
+            "select-destiny": "Select Destination Currency",
+            "qOffer": "Qty",
+            "qDemand": "Qty",
+            "minnersFee": "Transaction cost",
             "confirm": "Confirm Exchange",
             "error": {
-                "missing-origin": "You must select the Asset Origin",
-                "missing-destiny": "You must select the Asset Destination",
-                "qOffer": "Indicate the quantity of Assets to Change",
-                "qDemand": "Indicate the quantity of Assets to Receive",
-                "unknown": "Do not know the Exchange Result",
-                "expired": "Your code has expired, so a new one has been sent to you",
-                "wrong": "Wrong code, try again"
+                "missing-origin": "You must select the Origin Currency",
+                "missing-destiny": "You must select the Destination Currency",
+                "qOffer": "Indicate the amount of Currency to Change",
+                "qDemand": "Indicate the amount of Currency to Receive",
+                "unknown": "Unknow the Transaction Result"
             }
         }
     },
