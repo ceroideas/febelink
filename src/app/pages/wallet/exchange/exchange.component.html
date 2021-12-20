@@ -34,7 +34,7 @@
 
               <ion-grid>
                 <ion-row class="vertical-content">
-                  <ion-col size="8">
+                  <ion-col [size]="origin?.currency ? 8 : 12">
                     <!-- Asset Text -->
                     <ion-card-title>{{ origin?.currency || ( 'pages.wallet.select-origin' | translate ) }}</ion-card-title>
                   </ion-col>
@@ -76,14 +76,14 @@
 
               <ion-grid>
                 <ion-row class="vertical-content">
-                  <ion-col size="8">
+                  <ion-col [size]="destiny?.currency ? 8 : 12">
                     <!-- Asset Text -->
                     <ion-card-title>{{ destiny?.currency || ( 'pages.wallet.select-destiny' | translate ) }}</ion-card-title>
                   </ion-col>
                   <ion-col size="4" *ngIf="destiny?.currency">
                     
-                    <ion-row>
-                      <ion-label class="hint">{{'pages.wallet.qDemand' | translate }}</ion-label>
+                    <ion-row class="hint">
+                      <ion-label>{{'pages.wallet.qDemand' | translate }}</ion-label>
                     </ion-row>
                     <ion-row
                       [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
@@ -100,10 +100,10 @@
 
         <!-- Minner's Fee -->
         <ion-row class="minners-fee">
-          <ion-col size="4">
+          <ion-col size="6">
             <ion-label>{{ 'pages.wallet.minnersFee' | translate }}</ion-label>
           </ion-col>
-          <ion-col size="8" class="text-right">
+          <ion-col size="6" class="text-right">
             <ion-label class="hint">{{ minnersFee }}</ion-label>
           </ion-col>
         </ion-row>

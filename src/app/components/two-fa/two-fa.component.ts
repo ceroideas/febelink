@@ -63,7 +63,7 @@ export class TwoFAComponent implements OnInit {
         return;
       }
 
-      this.error = this.apiSvc.translateSvc.instant( `pages.wallet.error.${ response.status }` );
+      this.error = this.apiSvc.translateSvc.instant( `common.two-fa.error.${ response.status }` );
 
       this.codeLength = response.codeLength;
       if( response.minutes ) {

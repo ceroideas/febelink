@@ -219,9 +219,20 @@ ionic-selectable-modal {
   }
 }
 .pop-mobile-width {
-    .popover-content{
-        width: 400px;
-        --width: 400px;
+    // Mobile
+    @media (max-width: 430px){
+        .popover-content{
+            width: 340px;
+            --width: 340px;
+        }
+    }
+
+    // Desktop
+    @media ( min-width: 430px ){
+        .popover-content{
+            width: 400px;
+            --width: 400px;
+        }
     }
 }
 .modal-mobile {

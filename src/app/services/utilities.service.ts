@@ -3,6 +3,7 @@ import { ToastController, AlertController, LoadingController, Platform, PopoverC
 import { Storage } from '@ionic/storage';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class UtilitiesService {
     , private storage: Storage
     , private titleService: Title
     , private translateService: TranslateService
+    , private clipboard: Clipboard
   ) { }
   
 
@@ -285,5 +287,43 @@ export class UtilitiesService {
 
       await alert.present();
     });
+  }
+
+  async copyClipboard( value, showToast = true ) {
+    let success = true;
+
+    if ( this.platform.is( 'cordova' )) // Native Android/iOS
+      this.clipboard.copy( value );
+    else { // Web
+      if ( navigator.clipboard ) {
+        try {
+          await navigator.clipboard.writeText( value );
+        } catch ( err ) {
+          console.log( 'Error on Clipboard: ', err );
+          success = false;
+        }
+      } else {
+        var textArea = document.createElement("textarea");
+        textArea.value = value;
+        textArea.style.position = "fixed";  //avoid scrolling to bottom
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          success = document.execCommand( 'copy' );
+        } catch (err) {
+          console.log( 'Error on Clipboard: ', err );
+          success = false;
+        }
+
+        document.body.removeChild( textArea );
+      }
+    }
+
+    if( showToast )
+      this.showToast( this.translateService.instant( 'common.clipboard' + ( success ? '' : 'Err' )));
+
+    return success;
   }
 }
