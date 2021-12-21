@@ -131,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.getUserInfo();
         this.notificationSvc.getUnreadNotificationsCount();
         const serviceRequest: Observable<any> =
-          await this.walletService.getBalanceByUserId('CUSTOM1');
+          await this.walletService.getBalanceByUserId();
         serviceRequest.subscribe((response) => {
           this.userWallets = response.data;
         });
