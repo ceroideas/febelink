@@ -47,21 +47,29 @@
             accept="image/x-png,image/jpeg,image/gif"
             (change)="attachImage()"
           />
+          <img class="kyc-verified" src="assets/imgs/verified.svg" (click)="verified( 'kyc' )" *ngIf="perfil?.kyc_verified_at"/>
         </div>
 
         <div>
           <ion-button
-            style="max-width: 300px; margin-bottom: 10px"
-            class="guardar-cambios"
-            expand="block"
+          style="max-width: 300px; margin-bottom: 10px"
+          class="guardar-cambios"
+          expand="block"
             (click)="recommend($event)"
             >{{ 'tabs.tab4.buttonAskRecommendation' | translate }} &nbsp;
             <ion-icon name="checkmark"> </ion-icon>
           </ion-button>
 
-    <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
-      {{ ((!subscription)?'tabs.tab4.buttonSuscription':'tabs.tab4.proUser') | translate }}
-    </ion-button>
+          <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
+            {{ ((!subscription)?'tabs.tab4.buttonSuscription':'tabs.tab4.proUser') | translate }}
+          </ion-button>
+          
+          <ion-button
+            style="max-width: 300px; margin-bottom: 10px" class="guardar-cambios" expand="block"
+            (click)="verifyKYC()" *ngIf="perfil && !perfil?.kyc_verified_at"
+          >
+            {{ 'kyc.verify' | translate }}
+          </ion-button>
         </div>
       </div>
 
@@ -109,7 +117,7 @@
                   [value]="perfil?.email"
                   (ionInput)="emailChanged( $event.target.value )"
                 ></ion-input>
-                <img src="assets/imgs/verified.svg" *ngIf="emailVerified"/>
+                <img src="assets/imgs/verified.svg" class="clickable" (click)="verified( 'email' )" *ngIf="emailVerified"/>
               </ion-row>
             </ion-item>
             <ion-label position="floating" class="verif" *ngIf="!emailVerified" (click)="verify( verifWhich.Email )">
@@ -314,7 +322,7 @@
               [value]="perfil?.email"
               (ionInput)="emailChanged( $event.target.value )"
             ></ion-input>
-            <img src="assets/imgs/verified.svg" *ngIf="emailVerified"/>
+            <img src="assets/imgs/verified.svg" class="clickable" (click)="verified( 'email' )" *ngIf="emailVerified"/>
           </ion-row>
         </ion-item>
         <ion-label class="input" class="verif" *ngIf="!emailVerified" (click)="verify( verifWhich.Email )">
