@@ -229,7 +229,6 @@
               <ion-input
                 clearInput
                 type="text"
-                formControlName="name"
                 [value]="perfil?.name"
                 readonly
               ></ion-input>
@@ -241,9 +240,8 @@
               <ion-input
                 clearInput
                 type="text"
-                formControlName="lastName"
                 [value]="perfil?.lastName"
-                ngDefaultControl ngModel maxlength="200"
+                maxlength="200"
                 readonly
               > </ion-input>
             </ion-item>
@@ -402,11 +400,11 @@
         
         <ion-item class="input" *ngIf="perfil?.kyc_verified_at">
           <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
-          <ion-input clearInput type="text" formControlName="name" [value]="perfil?.name" readonly></ion-input>
+          <ion-input clearInput type="text" [value]="perfil?.name" readonly></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="perfil?.kyc_verified_at">
           <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
-          <ion-input clearInput type="text" formControlName="lastName" [value]="perfil?.lastName" ngDefaultControl ngModel maxlength="200"  readonly></ion-input>
+          <ion-input clearInput type="text" [value]="perfil?.lastName" maxlength="200"  readonly></ion-input>
         </ion-item>
 
         <ion-item class="input">
