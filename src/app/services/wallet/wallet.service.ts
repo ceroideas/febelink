@@ -22,10 +22,15 @@ export class WalletService {
 
   async exchange( assetOrigin: CryptoCurrency, assetDestiny: CryptoCurrency ) {
     const formData = new FormData();
-    formData.append('assetOrigin_currency', assetOrigin.currency );
-    formData.append('assetOrigin_ammount', assetOrigin.ammount + '' );
-    formData.append('assetDestiny_currency', assetDestiny.currency );
-    formData.append('assetDestiny_ammount', assetOrigin.ammount + '' );
+    
+    // Selling
+    formData.append('selling', assetOrigin.currency );
+    formData.append('amountSell', assetOrigin.amount + '' );
+
+    // Buying
+    formData.append('buying', assetDestiny.currency );
+    formData.append('amountBuy', assetDestiny.amount + '' );
+    
     return ( await this.api._createData( 'wallet/exchange', formData )).toPromise();
   }
 }
