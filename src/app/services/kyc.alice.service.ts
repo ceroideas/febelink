@@ -79,8 +79,8 @@ export class KYCAliceService {
   }
 
 
-  getCountriesByKey( lang: string, key: string ) {
-    const routes = `${ this.route( KYCRoutes.INFO ) }docsPerCountry/${ key }/${ lang }`;      
+  getCountriesByKey( key: string ) {
+    const routes = `${ this.route( KYCRoutes.INFO ) }docsPerCountry/${ key }`;      
     return this.api._getData( routes );
   }
 }
