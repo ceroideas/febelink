@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
   /**
    * To call this PopOver, here is an example on how to
    */
-  /*  async openAlice() {
+  /*  async openKYC() {
     const popover = await this.popoverController.create({
       component: KYCAliceComponent,
       translucent: true,
