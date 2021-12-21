@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TwoFAComponent } from 'src/app/components/two-fa/two-fa.component';
+import { KYCAliceComponent } from 'src/app/components/kyc-alice/kyc-alice.component';
+import { TokensUser } from 'src/app/admin/models/tokens-user';
 
 @Component({
   selector: 'app-exchange',
@@ -17,6 +19,10 @@ export class ExchangeComponent implements OnInit {
   @Input() origin: CryptoCurrency = {};
   @Input() destiny: CryptoCurrency = {};
   @Input() minnersFee: string = '0.000002 FLAU = $ 0.0447';
+  @Input() kycVerified: boolean = true;
+  
+  @Input() userWallets: CryptoCurrency[] = [];
+  @Input() retainedTks: TokensUser[];
 
   public exchangeForm: FormGroup;
 
@@ -85,7 +91,12 @@ export class ExchangeComponent implements OnInit {
     if( !this.checkErrors() )
       return;
 
-    /* Verify 2FA */
+    if( !this.kycVerified ) {
+      this.openPrevKYC();
+      return;
+    }
+    
+      /* Verify 2FA */
     const verified = await this.verify2FA();
     
     if( verified )
@@ -115,10 +126,75 @@ export class ExchangeComponent implements OnInit {
       return false;
     }
 
-    this.origin.ammount = Number( num_origin );
-    this.destiny.ammount = Number( num_destiny );
+    if( !this.hasThatAmount( num_origin ))
+      return false;
+
+    this.origin.amount = Number( num_origin );
+    this.destiny.amount = Number( num_destiny );
 
     return true;
+  }
+
+  hasThatAmount( amount: number ): boolean {
+    for( let i = 0; i < this.userWallets?.length; i++ ) {
+      const asset = this.userWallets[ i ];
+      if( asset?.currency === this.origin?.currency ) {
+        let retained: number = 0;
+        
+        // Substract the retained assets amount
+        switch( asset?.currency ) {
+          case CryptoCurrencyType.aureo:
+            this.retainedTks?.forEach( tk => retained += Number( tk?.num_tokens || '0' ));
+            break;
+        }
+
+        if( asset.amount - retained >= amount )
+          return true;
+      }
+    }
+
+    this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.exceeded' ));
+    return false;
+  }
+
+  async openPrevKYC() {
+    const lang = 'kyc.alert.complete.';
+    const alert = await this.utilities.alertCtrl.create({
+      header: this.translateSvc.instant( lang + 'head' ),
+      message: this.translateSvc.instant( lang + 'msg' ),
+      buttons: [
+        {
+          text: this.translateSvc.instant( 'common.buttons.got-it' ),
+          handler: () => this.openKYC()
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async openKYC() {
+    const popover = await this.popCtrl.create({
+      component: KYCAliceComponent,
+      translucent: true,
+      mode: 'md',
+      cssClass: 'pop-yt',
+      backdropDismiss: false // To prevent user cancel on touch outside by error
+    });
+
+    await popover.present();
+
+    // The data always returns `data.result`
+    const { data } = await popover.onDidDismiss();
+
+    // According to `isValidated` == true => perform the needed task
+    if( data.result.isValidated ) {
+      this.kycVerified = true;
+      this.exchange();
+    } else
+      this.utilities.showToast(
+        this.translateSvc.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
+      );
   }
 
   /* Verify 2FA PopoverControll */
@@ -126,6 +202,7 @@ export class ExchangeComponent implements OnInit {
     const twoFApop = await this.popCtrl.create({
       component: TwoFAComponent,
       cssClass: 'pop-mobile-width',
+      backdropDismiss: false // To prevent user cancel on touch outside by error
     });
     await twoFApop.present();
 
