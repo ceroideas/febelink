@@ -18,6 +18,7 @@ export class TwoFAComponent implements OnInit {
   minutes: number;
   codeLength: number;
   error: string;
+  retries: number = -1;
 
   constructor(
       private popoverController: PopoverController
@@ -37,8 +38,13 @@ export class TwoFAComponent implements OnInit {
   }
 
   async generate2FAcode() {
+    this.code = '';
+    this.error = '';
     this.isLoading = true;
     this.loadingMsg = this.apiSvc.translateSvc.instant( 'common.two-fa.generating' );
+
+    // Count down retry chances
+    if( this.retries > 0 ) this.retries--;
 
     const response = await this.apiSvc.generate2FAcode();
     this.ok = response.ok;
@@ -72,6 +78,10 @@ export class TwoFAComponent implements OnInit {
       }
 
       this.isVerifying = false;
+
+      // If hasn't retried, set the number of retries availables
+      if( this.retries == -1 )
+        this.retries = 1;
     }
   }
 
