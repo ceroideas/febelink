@@ -51,7 +51,7 @@ export class TwoFAComponent implements OnInit {
 
   async verify2FAcode() {
     this.error = '';
-    if ( this.code?.length === 6 ) {
+    if ( this.code?.length === this.codeLength ) {
       this.isVerifying = true;
       this.loadingMsg = this.apiSvc.translateSvc.instant( 'common.two-fa.verifying' );
 
