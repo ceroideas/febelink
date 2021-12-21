@@ -35,9 +35,18 @@
     </ion-row>
 
     <!-- Retained Tokens -->
-    <ion-row class="margin-start" *ngIf="retainedTks && retainedTks != '0'">
+    <ion-row class="margin-start" *ngIf="retainedTks?.length > 0">
       <ion-label class="margin-end">{{ 'pages.wallet.retained' | translate }}</ion-label>
-      <ion-label class="margin-start text-right"><b>{{ retainedTks }}</b></ion-label>
+      <ion-grid>
+        <ion-row *ngFor="let tks of retainedTks">
+          <ion-label class="margin-start"><b>
+            {{ tks?.type + '° ' + ( 'landing.phases.phase' | translate ) + ': ' }}
+          </b></ion-label>
+          <ion-label class="margin-start"><b>{{ tks?.num_tokens | splitNumber: false }}</b></ion-label>
+          <ion-label class="decimal"><b>{{ tks?.num_tokens | splitNumber: true }}</b></ion-label>
+        </ion-row>
+      </ion-grid>
+      
     </ion-row>
 
     <!-- Assets -->

@@ -9,6 +9,7 @@ import { ModalController, Platform } from '@ionic/angular';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { IUser } from 'src/app/models/user.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { TokensUser } from 'src/app/admin/models/tokens-user';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -21,13 +22,16 @@ export class WalletPage implements OnInit {
 
   userWallets: CryptoCurrency[] = [];
   publicKey: string;
-  retainedTks: string;
+  retainedTks: TokensUser[];
+  kycVerified: boolean;
   transactions: any[];
   minnersFee: string;
 
+  math = Math;
+
   constructor(
       private location: Location
-    , private walletService: WalletService
+    , private walletSvc: WalletService
     , private clipboard: Clipboard
     , private utilities: UtilitiesService
     , private modalCtrl: ModalController
@@ -45,30 +49,24 @@ export class WalletPage implements OnInit {
 
   async getWalletInfo() {
     this.isLoading = true;
-    const serviceRequest: Observable<any> = await this.walletService
+    const serviceRequest: Observable<any> = await this.walletSvc
       .getWalletInfo()
       .then();
-    serviceRequest.subscribe((response) => {
-      this.publicKey = response.publicKey;
-      this.userWallets = response.balance;
-      this.retainedTks = response.retainedTks;
-      this.transactions = response.transactions;
-      this.minnersFee = response.minnersFee;
-      this.isLoading = false;
-    });
+    serviceRequest.subscribe((response) => this.setVars( response ));
+  }
+
+  setVars( response ) {
+    this.publicKey = response.publicKey;
+    this.userWallets = response.data;
+    this.retainedTks = response.retainedTks;
+    this.kycVerified = response[ 'kyc-verified' ];
+    this.transactions = response.transactions;
+    this.minnersFee = response.minnersFee;
+    this.isLoading = false;
   }
 
   async copyPublicKey() {
     this.utilities.copyClipboard( this.publicKey );
-  }
-
-  async getCurrencyList() {
-    const serviceRequest: Observable<any> = await this.walletService
-      .getBalanceByUserId('CUSTOM1')
-      .then();
-    serviceRequest.subscribe((response) => {
-      this.userWallets = response.data;
-    });
   }
 
   async exchange( currency: CryptoCurrency ) {
@@ -81,7 +79,8 @@ export class WalletPage implements OnInit {
       component: ExchangeComponent,
       componentProps:{
         origin: { currency: currency.currency, ammount: 0 },
-        minnersFee: this.minnersFee
+        minnersFee: this.minnersFee,
+        kycVerified: this.kycVerified
       },
       cssClass: 'modal-mobile',
     });
@@ -94,9 +93,13 @@ export class WalletPage implements OnInit {
 
     if( origin && destiny ) {
       this.utilities.showLoading();
-      const response = await this.walletService.exchange( origin, destiny );
+      const response = await this.walletSvc.exchange( origin, destiny );
+      this.setVars( response );
+
       this.utilities.dismissLoading();
       this.utilities.showToast( response?.message || this.translateSvc.instant( 'pages.wallet.error.unknown' ));
+
+      this.kycVerified = true; // Since the only way to get till here is if verified
     }
   }
 }
