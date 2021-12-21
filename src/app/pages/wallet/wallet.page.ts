@@ -78,9 +78,12 @@ export class WalletPage implements OnInit {
     const exchangeModal = await this.modalCtrl.create({
       component: ExchangeComponent,
       componentProps:{
-        origin: { currency: currency.currency, ammount: 0 },
+        origin: { currency: currency.currency, amount: 0 },
         minnersFee: this.minnersFee,
-        kycVerified: this.kycVerified
+        kycVerified: this.kycVerified,
+        
+        userWallets: this.userWallets,
+        retainedTks: this.retainedTks
       },
       cssClass: 'modal-mobile',
     });
