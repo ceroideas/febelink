@@ -27,8 +27,6 @@ export class WalletPage implements OnInit {
   transactions: any[];
   minnersFee: string;
 
-  math = Math;
-
   constructor(
       private location: Location
     , private walletSvc: WalletService
