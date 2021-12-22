@@ -123,7 +123,22 @@
                 "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
                 "wrong": "Código incorrecto, intente nuevamente"
             }
-        }
+        },
+
+        "months": [
+            { "short": "Ene", "long": "Enero" },
+            { "short": "Feb", "long": "Febrero" },
+            { "short": "Mar", "long": "Marzo" },
+            { "short": "Abr", "long": "Abril" },
+            { "short": "May", "long": "Mayo" },
+            { "short": "Jun", "long": "Juni" },
+            { "short": "Jul", "long": "Julio" },
+            { "short": "Ago", "long": "Agosto" },
+            { "short": "Sep", "long": "Septiembre" },
+            { "short": "Oct", "long": "Octubre" },
+            { "short": "Nov", "long": "Noviembre" },
+            { "short": "Dic", "long": "Diciembre" }
+        ]
     },
     "menu": {
         "tabs": {
@@ -335,8 +350,11 @@
         , "wallet": {
             "title": "Mi Wallet",
             "public-key": "Clave Pública",
-            "retained": "Tokens Retenidos:",
-            "no-transactions": "Sin transacciones recientes.",
+            "retained": "Tokens Retenidos",
+            "release": "Liberación:",
+
+            "transactions": "Transacciones recientes",
+            "no-transactions": "Sin transacciones recientes",
 
             "select-origin": "Seleccionar Moneda Origen",
             "select-destiny": "Seleccionar Moneda Destino",
@@ -353,7 +371,23 @@
                 "exceeded": "No posee la cantidad que desea transaccionar",
                 "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
                 "wrong": "Código incorrecto, intente nuevamente"
-            }
+            },
+
+            "operations": [
+                "Creación de Cuenta",
+                "Envío de Pago a Cuenta",
+                "Creación de Path de Pago entre cuentas",
+                "Administración de Oferta ( CRUD )",
+                "Creación de oferta que no consumirá una contraoferta que coincide exactamente con esta oferta",
+                "Seteo de Opciones de Cuenta (destino de inflación, agregado de firmantes, etc)",
+                "CRUD de Trustline",
+                "Actualización del indicador \"autorizado\" de una línea fiduciaria existente",
+                "Eliminación de cuenta y transferencia de saldo a cuenta destino.",
+                "Ejecución de inflación",
+                "Establecido, modificado o eliminado de una entrada de datos",
+                "Avanzado de Número de secuencia de cuenta",
+                "Gestión de oferta de compra (bid) de un activo por otro"
+            ]
         }
     },
     "toast": {

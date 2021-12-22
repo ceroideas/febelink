@@ -123,7 +123,22 @@
                 "expired": "Your code has expired, so a new one has been sent to you",
                 "wrong": "Wrong code, try again"
             }
-        }
+        },
+
+        "months": [
+            { "short": "Jan", "long": "January" },
+            { "short": "Feb", "long": "February" },
+            { "short": "Mar", "long": "March" },
+            { "short": "Apr", "long": "April" },
+            { "short": "May", "long": "May" },
+            { "short": "Jun", "long": "June" },
+            { "short": "Jul", "long": "July" },
+            { "short": "Ago", "long": "August" },
+            { "short": "Sep", "long": "September" },
+            { "short": "Oct", "long": "October" },
+            { "short": "Nov", "long": "November" },
+            { "short": "Dec", "long": "December" }
+        ]
     },
     "menu": {
         "tabs": {
@@ -335,8 +350,11 @@
         , "wallet": {
             "title": "My Wallet",
             "public-key": "Public Key",
-            "retained": "Retained Tokens:",
-            "no-transactions": "No recent transactions.",
+            "retained": "Retained Tokens",
+            "release": "Release:",
+
+            "transactions": "Recent transactions",
+            "no-transactions": "No recent transactions",
             
             "select-origin": "Select Origin Currency",
             "select-destiny": "Select Destination Currency",
@@ -353,7 +371,23 @@
                 "exceeded": "You do not possess the amount you want to trade",
                 "expired": "Your code has expired, a new one has been sent to you",
                 "wrong": "Wrong code, try again"
-            }
+            },
+
+            "operations": [
+                "Account Creation",
+                "Sending Payment to Account",
+                "Creation of Payment Path between accounts",
+                "Offer Administration (CRUD)",
+                "Offer creation that will not consume a counter offer that exactly matches this offer",
+                "Setting of Account Options (inflation destination, added signers, etc)",
+                "Trustline CRUD",
+                "Update of the \"authorized\" indicator of an existing trust line",
+                "Account deletion and balance transfer to destination account.",
+                "Running inflation",
+                "Established, modified, or removed of a data entry",
+                "Advanced Account Sequence Number",
+                "Management of offer to buy (bid) one asset for another"
+            ]
         }
     },
     "toast": {
