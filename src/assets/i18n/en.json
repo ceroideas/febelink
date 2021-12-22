@@ -59,7 +59,9 @@
             "cancel": "Cancel",
             "send": "Send",
             "close": "Close",
-            "retry": "Retry"
+            "retry": "Retry",
+            "got-it": "Entendido",
+            "re-send": "Re-Send"
         },
 
         "address": {
@@ -86,6 +88,11 @@
         },
 
         "verif": {
+            "which": {
+                "email": "Email Verificado",
+                "kyc": "Identidad Verificada"
+            },
+
             "email": {
                 "head": "Data Verification",
                 "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
@@ -333,8 +340,8 @@
             
             "select-origin": "Select Origin Currency",
             "select-destiny": "Select Destination Currency",
-            "qOffer": "Qty",
-            "qDemand": "Qty",
+            "qOffer": "Quantity",
+            "qDemand": "Quantity",
             "minnersFee": "Transaction cost",
             "confirm": "Confirm Exchange",
             "error": {
@@ -342,7 +349,10 @@
                 "missing-destiny": "You must select the Destination Currency",
                 "qOffer": "Indicate the amount of Currency to Change",
                 "qDemand": "Indicate the amount of Currency to Receive",
-                "unknown": "Unknow the Transaction Result"
+                "unknown": "Unknow the Transaction Result",
+                "exceeded": "You do not possess the amount you want to trade",
+                "expired": "Your code has expired, a new one has been sent to you",
+                "wrong": "Wrong code, try again"
             }
         }
     },
@@ -728,7 +738,7 @@
             "error": {
                 "some": "There was an error",
                 "num_tokens": "You must indicate the Tokens Number",
-                "phase_tokens": "You must indicate the Stage"
+                "type": "You must indicate the Stage"
             }
         },
 
@@ -738,6 +748,7 @@
         "delete": "Delete"
     },
     "kyc": {
+        "verify": "Verify Identity",
         "start": {
             "header": "Identity Verification and Proof of Life",
             "title": "To continue, we will need to verify your identity.",
@@ -793,6 +804,11 @@
             }
         },
         "alert": {
+            "complete": {
+                "head": "Complete the KYC",
+                "msg": "This step will only take a moment and you have to do it only once. Thus we have a safer environment for the entire community"
+            },
+
             "ios": {
                 "tile": "KYC Validation in Beta Phase",
                 "message": "Being in Development for iOS, it may have bugs. If you cannot finish the process, continue it from the browser at www.febelink.com"

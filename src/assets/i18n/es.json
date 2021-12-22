@@ -59,7 +59,9 @@
             "cancel": "Cancelar",
             "send": "Enviar",
             "close": "Cerrar",
-            "retry": "Reintentar"
+            "retry": "Reintentar",
+            "got-it": "Entendido",
+            "re-send": "Reenviar"
         },
 
         "address": {
@@ -86,6 +88,11 @@
         },
 
         "verif": {
+            "which": {
+                "email": "Email Verificado",
+                "kyc": "Identidad Verificada"
+            },
+
             "email": {
                 "head": "Verificacion de Datos",
                 "title": "Deberá validar su cuenta de email para poder disfrutar de funciones como: <ul><li>interactuar</li><li>publicar búsquedas</li><li>chatear</li> <li>valorar</li><li>entre otras..</li></ul>",
@@ -342,7 +349,10 @@
                 "missing-destiny": "Debe seleccionar la Moneda Destino",
                 "qOffer": "Indique la cant de Moneda a Cambiar",
                 "qDemand": "Indique la cant de Moneda a Recibir",
-                "unknown": "Desconozco el Resultado de la Transacción"
+                "unknown": "Desconozco el Resultado de la Transacción",
+                "exceeded": "No posee la cantidad que desea transaccionar",
+                "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
+                "wrong": "Código incorrecto, intente nuevamente"
             }
         }
     },
@@ -723,7 +733,7 @@
             "error": {
                 "some": "Ha habido un error",
                 "num_tokens": "Debe indicar el Número de Tokens",
-                "phase_tokens": "Debe indicar la Fase"
+                "type": "Debe indicar la Fase"
             }
         },
 
@@ -733,6 +743,7 @@
         "delete": "Eliminar"
     },
     "kyc": {
+        "verify": "Verificar Identidad",
         "start": {
             "header": "Verificación de Identidad y Prueba de Vida",
             "title": "Para continuar, necesitaremos Verificar tu identidad.",
@@ -788,6 +799,11 @@
             }
         },
         "alert": {
+            "complete": {
+                "head": "Completa el KYC",
+                "msg": "Este paso sólo te llevará un momento y lo tienes que realizar una sola vez. Así tenemos un entorno más seguro para toda la comunidad"    
+            },
+
             "ios": {
                 "tile": "Validacion de KYC en Fase Beta",
                 "message": "Al encontrarse en Desarrollo para iOS, puede tener fallas. Si no puede terminar el proceso, continuelo desde el navegador en www.febelink.com"
