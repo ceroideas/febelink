@@ -7,6 +7,8 @@ export interface TokensUser {
     num_tokens:number,
     phase_tokens:number,
     payed_date:string,
+    retained: boolean,
+    date:string,
     id:number
 }
 
