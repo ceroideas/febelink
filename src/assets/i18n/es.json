@@ -340,8 +340,8 @@
 
             "select-origin": "Seleccionar Moneda Origen",
             "select-destiny": "Seleccionar Moneda Destino",
-            "qOffer": "Cant",
-            "qDemand": "Cant",
+            "qOffer": "Cantidad",
+            "qDemand": "Cantidad",
             "minnersFee": "Coste de transacción",
             "confirm": "Confirmar Exchange",
             "error": {
