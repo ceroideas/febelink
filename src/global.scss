@@ -159,6 +159,11 @@ ionic-selectable-modal {
             line-clamp: 1; 
     -webkit-box-orient: vertical;
 }
+.decimal {
+  font-size: 10px;
+  opacity: 0.7;
+  vertical-align: super;
+}
 
 .margin { margin: 10px; }
 .margin-top { margin-top: 10px; }
@@ -273,3 +278,5 @@ ionic-selectable-modal {
     }
   }
 }
+
+.alertSmallTitle { .alert-title { font-size: 18px; } }
