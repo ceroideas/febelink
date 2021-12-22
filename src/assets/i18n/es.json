@@ -118,7 +118,12 @@
 
             "generating": "Generando Código 2FA",
             "verifying": "Verificando Código 2FA",
-            "re-send": "Reenviar código de verificación"
+            "re-send": "Reenviar código de verificación",
+
+            "error": {
+                "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
+                "wrong": "Código incorrecto, intente nuevamente"
+            }
         },
 
         "months": [
@@ -371,8 +376,6 @@
                 "qDemand": "Indique la cant de Moneda a Recibir",
                 "unknown": "Desconozco el Resultado de la Transacción",
                 "exceeded": "No posee la cantidad que desea transaccionar",
-                "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
-                "wrong": "Código incorrecto, intente nuevamente",
                 "asset-not-available": "De momento esta moneda no está disponible para transacciones"
             },
 

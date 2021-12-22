@@ -118,7 +118,12 @@
 
             "generating": "Generating 2FA Code",
             "verifying": "Verifying 2FA Code",
-            "re-send": "Resend verification code"
+            "re-send": "Resend verification code",
+
+            "error": {
+                "expired": "Your code has expired, a new one has been sent to you",
+                "wrong": "Wrong code, try again"
+            }
         },
 
         "months": [
@@ -371,8 +376,6 @@
                 "qDemand": "Indicate the amount of Currency to Receive",
                 "unknown": "Unknow the Transaction Result",
                 "exceeded": "You do not possess the amount you want to trade",
-                "expired": "Your code has expired, a new one has been sent to you",
-                "wrong": "Wrong code, try again",
                 "asset-not-available": "At the moment this Currency is not available for Transactions"
             },
 
