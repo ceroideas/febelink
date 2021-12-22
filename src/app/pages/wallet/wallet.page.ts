@@ -8,7 +8,6 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ModalController, Platform } from '@ionic/angular';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { IUser } from 'src/app/models/user.model';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
 import { DateFormatType } from 'src/app/pipes/date-format';
 @Component({
@@ -33,18 +32,20 @@ export class WalletPage implements OnInit {
 
   dateFormatType = DateFormatType;
 
+  isAdmin: boolean = false;
+
   constructor(
       private location: Location
     , private walletSvc: WalletService
     , private clipboard: Clipboard
     , private utilities: UtilitiesService
     , private modalCtrl: ModalController
-    , private translateSvc: TranslateConfigService
     , private platform: Platform
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getWalletInfo();
+    this.isAdmin = await this.utilities.isAdmin();
   }
 
   public goBack(): void {
@@ -74,8 +75,8 @@ export class WalletPage implements OnInit {
   }
 
   async exchange( currency: CryptoCurrency ) {
-    if( !await this.utilities.isAdmin() ) {
-      this.utilities.showToast( this.translateSvc.instant( 'common.unavailable' ));
+    if( !this.isAdmin ) {
+      this.utilities.showToast( this.utilities.translateService.instant( 'common.unavailable' ));
       return;
     }
 
@@ -104,9 +105,17 @@ export class WalletPage implements OnInit {
       this.setVars( response );
 
       this.utilities.dismissLoading();
-      this.utilities.showToast( response?.message || this.translateSvc.instant( 'pages.wallet.error.unknown' ));
+      this.utilities.showToast( response?.message || this.utilities.translateService.instant( 'pages.wallet.error.unknown' ));
 
       this.kycVerified = true; // Since the only way to get till here is if verified
     }
+  }
+
+  showHelp() {
+    this.utilities.showAlert(
+      this.utilities.translateService.instant( 'pages.wallet.help.title' ),
+      this.utilities.translateService.instant( 'pages.wallet.help.message' ),
+      'alertSmallTitle'
+    );
   }
 }

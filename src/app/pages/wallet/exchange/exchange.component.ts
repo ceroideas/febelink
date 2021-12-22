@@ -59,7 +59,10 @@ export class ExchangeComponent implements OnInit {
       component: SelectAssetComponent,
       translucent: true,
       mode: 'md',
-      componentProps: { except: !isOrigin ? this.origin.currency : this.destiny.currency }
+      componentProps: {
+        except: !isOrigin ? this.origin.currency : this.destiny.currency,
+        assetTypes: this.userWallets
+      }
     });
 
     await popover.present();
