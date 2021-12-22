@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
 
 export enum DateFormatType {
-  Date
+    Date
+  , TimeDate
 }
 export enum MonthFormatType {
     Number
@@ -40,6 +41,11 @@ export class DateFormatPipe implements PipeTransform {
       switch( type ) {
         case DateFormatType.Date:
           value = day + month + year + '';
+          break;
+        case DateFormatType.TimeDate:
+          const hour =  date.getHours();
+          const minutes = date.getMinutes();
+          value = hour + ':' + minutes + ' hs - ' + day + month + year + '';
           break;
       }
 
