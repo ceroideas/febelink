@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as Currency from 'src/app/models/currency.model';
 import { PopoverController } from '@ionic/angular';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-select-asset',
@@ -9,16 +10,22 @@ import { PopoverController } from '@ionic/angular';
 })
 export class SelectAssetComponent implements OnInit {
 
-  assetTypes = Currency.AssetTypes;
   @Input() except: Currency.CryptoCurrencyType;
+  @Input() assetTypes: Currency.CryptoCurrency[] = Currency.AssetTypes;
 
   constructor(
       private popoverController: PopoverController
+    , private utilities: UtilitiesService
   ) {}
 
   ngOnInit() {}
 
   onAssetSelected( asset: Currency.CryptoCurrency ) {
+    if( !asset.assetId ) {
+      this.utilities.showToast( this.utilities.translateService.instant( 'pages.wallet.error.asset-not-available' ));
+      return;
+    }
+
     this.popoverController.dismiss({ asset });
   }
 }
