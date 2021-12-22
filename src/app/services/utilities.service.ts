@@ -291,6 +291,11 @@ export class UtilitiesService {
   }
 
   async copyClipboard( value, showToast = true ) {
+    if( !value ) {
+      this.showToast( this.translateService.instant( 'common.clipboardNone' ));
+      return false;
+    }
+
     let success = true;
 
     if ( this.platform.is( 'cordova' )) // Native Android/iOS

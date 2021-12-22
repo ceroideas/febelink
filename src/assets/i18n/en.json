@@ -26,6 +26,7 @@
         "labelTitle": "Title",
         "clipboard": "Copied to Clipboard",
         "clipboardErr": "Error on Copy to Clipboard",
+        "clipboardNone": "No Valies to Copy to Clipboard",
         "share": "Share",
         "slogan": "The professional services search engine",
         "contactUs": "Contact Febelink",

@@ -26,6 +26,7 @@
         "labelTitle": "Título",
         "clipboard": "Copiado al Portapapeles",
         "clipboardErr": "Error al copiar al Portapapeles",
+        "clipboardNone": "Sin Valores para copiar al Portapapeles",
         "share": "Compartir",
         "slogan": "El buscador de servicios profesionales",
         "contactUs": "Contacta con Febelink",
@@ -364,7 +365,7 @@
             },
 
             "error": {
-                "missing-origin": "Debe seleccionar la Moneda Origin",
+                "missing-origin": "Debe seleccionar la Moneda Origen",
                 "missing-destiny": "Debe seleccionar la Moneda Destino",
                 "qOffer": "Indique la cant de Moneda a Cambiar",
                 "qDemand": "Indique la cant de Moneda a Recibir",
