@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency, CryptoTransactions } from 'src/app/models/currency.model';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ModalController, Platform } from '@ionic/angular';
@@ -10,6 +10,7 @@ import { ExchangeComponent } from './exchange/exchange.component';
 import { IUser } from 'src/app/models/user.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
+import { DateFormatType } from 'src/app/pipes/date-format';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -24,8 +25,13 @@ export class WalletPage implements OnInit {
   publicKey: string;
   retainedTks: TokensUser[];
   kycVerified: boolean;
-  transactions: any[];
+  transactions: CryptoTransactions;
   minnersFee: string;
+
+  hideRetained: boolean = true;
+  hideTransactions: boolean = false;
+
+  dateFormatType = DateFormatType;
 
   constructor(
       private location: Location
@@ -58,7 +64,7 @@ export class WalletPage implements OnInit {
     this.userWallets = response.data;
     this.retainedTks = response.retainedTks;
     this.kycVerified = response[ 'kyc-verified' ];
-    this.transactions = response.transactions;
+    this.transactions = response.transacciones;
     this.minnersFee = response.minnersFee;
     this.isLoading = false;
   }
