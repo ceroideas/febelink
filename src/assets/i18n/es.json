@@ -60,8 +60,7 @@
             "send": "Enviar",
             "close": "Cerrar",
             "retry": "Reintentar",
-            "got-it": "Entendido",
-            "re-send": "Reenviar"
+            "got-it": "Entendido"
         },
 
         "address": {
@@ -118,11 +117,7 @@
 
             "generating": "Generando Código 2FA",
             "verifying": "Verificando Código 2FA",
-
-            "error": {
-                "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
-                "wrong": "Código incorrecto, intente nuevamente"
-            }
+            "re-send": "Reenviar código de verificación"
         },
 
         "months": [
@@ -361,7 +356,13 @@
             "qOffer": "Cantidad",
             "qDemand": "Cantidad",
             "minnersFee": "Coste de transacción",
-            "confirm": "Confirmar Exchange",
+            "confirm": "Confirmar Transacción",
+
+            "help": {
+                "title": "¿Por qué veo solo el saldo de algunas Monedas?",
+                "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
+            },
+
             "error": {
                 "missing-origin": "Debe seleccionar la Moneda Origin",
                 "missing-destiny": "Debe seleccionar la Moneda Destino",
@@ -370,7 +371,8 @@
                 "unknown": "Desconozco el Resultado de la Transacción",
                 "exceeded": "No posee la cantidad que desea transaccionar",
                 "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
-                "wrong": "Código incorrecto, intente nuevamente"
+                "wrong": "Código incorrecto, intente nuevamente",
+                "asset-not-available": "De momento esta moneda no está disponible para transacciones"
             },
 
             "operations": [
