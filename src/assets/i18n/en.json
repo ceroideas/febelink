@@ -26,6 +26,7 @@
         "labelTitle": "Title",
         "clipboard": "Copied to Clipboard",
         "clipboardErr": "Error on Copy to Clipboard",
+        "clipboardNone": "No Valies to Copy to Clipboard",
         "share": "Share",
         "slogan": "The professional services search engine",
         "contactUs": "Contact Febelink",
@@ -59,7 +60,8 @@
             "cancel": "Cancel",
             "send": "Send",
             "close": "Close",
-            "retry": "Retry"
+            "retry": "Retry",
+            "got-it": "Entendido"
         },
 
         "address": {
@@ -86,6 +88,11 @@
         },
 
         "verif": {
+            "which": {
+                "email": "Email Verificado",
+                "kyc": "Identidad Verificada"
+            },
+
             "email": {
                 "head": "Data Verification",
                 "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
@@ -111,12 +118,28 @@
 
             "generating": "Generating 2FA Code",
             "verifying": "Verifying 2FA Code",
+            "re-send": "Resend verification code",
 
             "error": {
-                "expired": "Your code has expired, so a new one has been sent to you",
+                "expired": "Your code has expired, a new one has been sent to you",
                 "wrong": "Wrong code, try again"
             }
-        }
+        },
+
+        "months": [
+            { "short": "Jan", "long": "January" },
+            { "short": "Feb", "long": "February" },
+            { "short": "Mar", "long": "March" },
+            { "short": "Apr", "long": "April" },
+            { "short": "May", "long": "May" },
+            { "short": "Jun", "long": "June" },
+            { "short": "Jul", "long": "July" },
+            { "short": "Ago", "long": "August" },
+            { "short": "Sep", "long": "September" },
+            { "short": "Oct", "long": "October" },
+            { "short": "Nov", "long": "November" },
+            { "short": "Dec", "long": "December" }
+        ]
     },
     "menu": {
         "tabs": {
@@ -328,22 +351,49 @@
         , "wallet": {
             "title": "My Wallet",
             "public-key": "Public Key",
-            "retained": "Retained Tokens:",
-            "no-transactions": "No recent transactions.",
+            "retained": "Retained Tokens",
+            "release": "Release:",
+
+            "transactions": "Recent transactions",
+            "no-transactions": "No recent transactions",
             
             "select-origin": "Select Origin Currency",
             "select-destiny": "Select Destination Currency",
-            "qOffer": "Qty",
-            "qDemand": "Qty",
+            "qOffer": "Quantity",
+            "qDemand": "Quantity",
             "minnersFee": "Transaction cost",
-            "confirm": "Confirm Exchange",
+            "confirm": "Confirm Transaction",
+
+            "help": {
+                "title": "Why do I see only the balance of some Currencies?",
+                "message": "Balances are shown in FLAU, BTC, XLM, EUR, USD. If you have other balances in your Wallet they will not be shown in this window"
+            },
+            
             "error": {
                 "missing-origin": "You must select the Origin Currency",
                 "missing-destiny": "You must select the Destination Currency",
                 "qOffer": "Indicate the amount of Currency to Change",
                 "qDemand": "Indicate the amount of Currency to Receive",
-                "unknown": "Unknow the Transaction Result"
-            }
+                "unknown": "Unknow the Transaction Result",
+                "exceeded": "You do not possess the amount you want to trade",
+                "asset-not-available": "At the moment this Currency is not available for Transactions"
+            },
+
+            "operations": [
+                "Account Creation",
+                "Sending Payment to Account",
+                "Creation of Payment Path between accounts",
+                "Offer Administration (CRUD)",
+                "Offer creation that will not consume a counter offer that exactly matches this offer",
+                "Setting of Account Options (inflation destination, added signers, etc)",
+                "Trustline CRUD",
+                "Update of the \"authorized\" indicator of an existing trust line",
+                "Account deletion and balance transfer to destination account.",
+                "Running inflation",
+                "Established, modified, or removed of a data entry",
+                "Advanced Account Sequence Number",
+                "Management of offer to buy (bid) one asset for another"
+            ]
         }
     },
     "toast": {
@@ -728,7 +778,7 @@
             "error": {
                 "some": "There was an error",
                 "num_tokens": "You must indicate the Tokens Number",
-                "phase_tokens": "You must indicate the Stage"
+                "type": "You must indicate the Stage"
             }
         },
 
@@ -738,6 +788,7 @@
         "delete": "Delete"
     },
     "kyc": {
+        "verify": "Verify Identity",
         "start": {
             "header": "Identity Verification and Proof of Life",
             "title": "To continue, we will need to verify your identity.",
@@ -793,6 +844,11 @@
             }
         },
         "alert": {
+            "complete": {
+                "head": "Complete the KYC",
+                "msg": "This step will only take a moment and you have to do it only once. Thus we have a safer environment for the entire community"
+            },
+
             "ios": {
                 "tile": "KYC Validation in Beta Phase",
                 "message": "Being in Development for iOS, it may have bugs. If you cannot finish the process, continue it from the browser at www.febelink.com"

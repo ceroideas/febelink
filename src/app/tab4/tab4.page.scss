@@ -90,6 +90,12 @@ ion-content {
     object-fit: cover;
     cursor: pointer;
   }
+  .kyc-verified {
+    margin-top: -30px;
+    cursor: pointer;
+    @media (max-width: 500px ) { margin-left: 60%; }
+    @media (min-width: 500px ) { margin-left: 55%; }
+  }
   .editar {
     color: var(--ion-color-primary);
   }

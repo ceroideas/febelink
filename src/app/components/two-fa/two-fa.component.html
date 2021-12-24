@@ -38,6 +38,11 @@
           <ion-icon name="trash" class="margin-start" color="febelink" *ngIf="!isVerifying" (click)="clearCode()"></ion-icon>
           <ion-spinner class="margin-start" color="febelink" *ngIf="isVerifying"></ion-spinner>
         </ion-row>
+        <ion-row class="align-center" *ngIf="retries > 0">
+          <ion-button fill="clear" class="resend ion-no-padding" (click)="generate2FAcode()">
+            <em>{{ 'common.two-fa.re-send' | translate }}</em>
+          </ion-button>
+        </ion-row>
   
         <!-- Expires in -->
         <ion-row class="margin-top" *ngIf="minutes">

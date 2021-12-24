@@ -18,6 +18,12 @@ ion-content {
         max-width: 80px;
     }
 
+    .resend {
+        font-size: 13px;
+        color: var( --ion-color-febelink );
+        text-transform: initial;
+    }
+
     .error {
         font-size: 13px; 
     }

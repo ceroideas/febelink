@@ -22,6 +22,7 @@ import { TranslateConfigService } from '../services/translate/translate-config.s
 import { GeoPlacesApi } from '../services/geoplaces.service';
 import { GeoPlacesModel } from '../models/geoplaces.model';
 import { VerificationComponent, VerifWhich } from '../components/verification/verification.component';
+import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
 
 @Component({
   selector: 'app-tab4',
@@ -1259,5 +1260,40 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
     });
 
     await verif.present();
+  }
+
+  
+
+  async verifyKYC() {
+    const popover = await this.popoverController.create({
+      component: KYCAliceComponent,
+      translucent: true,
+      mode: 'md',
+      cssClass: 'pop-yt',
+      backdropDismiss: false // To prevent user cancel on touch outside by error
+    });
+
+    await popover.present();
+
+    // The data always returns `data.result`
+    const { data } = await popover.onDidDismiss();
+
+    // According to `isValidated` == true => perform the needed task
+    if( data.result.isValidated )
+      this.perfil.kyc_verified_at = new Date().toLocaleString();
+    
+    this.utilities.showToast(
+      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
+    );
+  }
+
+  verified( which: string ) {
+    let msg: string = '';
+    switch( which ) {
+      case 'email': msg = 'common.verif.which.email'; break;
+      case 'kyc': msg = 'common.verif.which.kyc'; break;
+    }
+
+    this.utilities.showToast( this.translateService.instant( msg ));
   }
 }

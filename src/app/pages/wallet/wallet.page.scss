@@ -13,6 +13,7 @@ ion-title {
 
 ion-card {
   padding: 10px;
+  margin: 0px; margin-bottom: 10px;
   cursor: pointer;
 
   ion-row {
@@ -25,4 +26,9 @@ ion-card {
     margin-left: 5px;
     font-weight: 700;
   }
+}
+
+.transactions {
+  width: 100%;
+  --width: 100%;
 }

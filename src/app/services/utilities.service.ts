@@ -18,7 +18,7 @@ export class UtilitiesService {
     , private platform: Platform
     , private storage: Storage
     , private titleService: Title
-    , private translateService: TranslateService
+    , public translateService: TranslateService
     , private clipboard: Clipboard
   ) { }
   
@@ -32,11 +32,12 @@ export class UtilitiesService {
     toast.present();
   }
 
-  async showAlert(title: string, message: string) {
+  async showAlert(title: string, message: string, css?: string) {
     const alert = await this.alertCtrl.create({
       header: title,
       message: message,
-      buttons: ['OK']
+      buttons: ['OK'],
+      cssClass: css
     });
 
     await alert.present();
@@ -290,6 +291,11 @@ export class UtilitiesService {
   }
 
   async copyClipboard( value, showToast = true ) {
+    if( !value ) {
+      this.showToast( this.translateService.instant( 'common.clipboardNone' ));
+      return false;
+    }
+
     let success = true;
 
     if ( this.platform.is( 'cordova' )) // Native Android/iOS

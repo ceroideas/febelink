@@ -26,6 +26,7 @@
         "labelTitle": "Título",
         "clipboard": "Copiado al Portapapeles",
         "clipboardErr": "Error al copiar al Portapapeles",
+        "clipboardNone": "Sin Valores para copiar al Portapapeles",
         "share": "Compartir",
         "slogan": "El buscador de servicios profesionales",
         "contactUs": "Contacta con Febelink",
@@ -59,7 +60,8 @@
             "cancel": "Cancelar",
             "send": "Enviar",
             "close": "Cerrar",
-            "retry": "Reintentar"
+            "retry": "Reintentar",
+            "got-it": "Entendido"
         },
 
         "address": {
@@ -86,6 +88,11 @@
         },
 
         "verif": {
+            "which": {
+                "email": "Email Verificado",
+                "kyc": "Identidad Verificada"
+            },
+
             "email": {
                 "head": "Verificacion de Datos",
                 "title": "Deberá validar su cuenta de email para poder disfrutar de funciones como: <ul><li>interactuar</li><li>publicar búsquedas</li><li>chatear</li> <li>valorar</li><li>entre otras..</li></ul>",
@@ -111,12 +118,28 @@
 
             "generating": "Generando Código 2FA",
             "verifying": "Verificando Código 2FA",
+            "re-send": "Reenviar código de verificación",
 
             "error": {
                 "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
                 "wrong": "Código incorrecto, intente nuevamente"
             }
-        }
+        },
+
+        "months": [
+            { "short": "Ene", "long": "Enero" },
+            { "short": "Feb", "long": "Febrero" },
+            { "short": "Mar", "long": "Marzo" },
+            { "short": "Abr", "long": "Abril" },
+            { "short": "May", "long": "Mayo" },
+            { "short": "Jun", "long": "Juni" },
+            { "short": "Jul", "long": "Julio" },
+            { "short": "Ago", "long": "Agosto" },
+            { "short": "Sep", "long": "Septiembre" },
+            { "short": "Oct", "long": "Octubre" },
+            { "short": "Nov", "long": "Noviembre" },
+            { "short": "Dic", "long": "Diciembre" }
+        ]
     },
     "menu": {
         "tabs": {
@@ -328,22 +351,49 @@
         , "wallet": {
             "title": "Mi Wallet",
             "public-key": "Clave Pública",
-            "retained": "Tokens Retenidos:",
-            "no-transactions": "Sin transacciones recientes.",
+            "retained": "Tokens Retenidos",
+            "release": "Liberación:",
+
+            "transactions": "Transacciones recientes",
+            "no-transactions": "Sin transacciones recientes",
 
             "select-origin": "Seleccionar Moneda Origen",
             "select-destiny": "Seleccionar Moneda Destino",
-            "qOffer": "Cant",
-            "qDemand": "Cant",
+            "qOffer": "Cantidad",
+            "qDemand": "Cantidad",
             "minnersFee": "Coste de transacción",
-            "confirm": "Confirmar Exchange",
+            "confirm": "Confirmar Transacción",
+
+            "help": {
+                "title": "¿Por qué veo solo el saldo de algunas Monedas?",
+                "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
+            },
+
             "error": {
-                "missing-origin": "Debe seleccionar la Moneda Origin",
+                "missing-origin": "Debe seleccionar la Moneda Origen",
                 "missing-destiny": "Debe seleccionar la Moneda Destino",
                 "qOffer": "Indique la cant de Moneda a Cambiar",
                 "qDemand": "Indique la cant de Moneda a Recibir",
-                "unknown": "Desconozco el Resultado de la Transacción"
-            }
+                "unknown": "Desconozco el Resultado de la Transacción",
+                "exceeded": "No posee la cantidad que desea transaccionar",
+                "asset-not-available": "De momento esta moneda no está disponible para transacciones"
+            },
+
+            "operations": [
+                "Creación de Cuenta",
+                "Envío de Pago a Cuenta",
+                "Creación de Path de Pago entre cuentas",
+                "Administración de Oferta ( CRUD )",
+                "Creación de oferta que no consumirá una contraoferta que coincide exactamente con esta oferta",
+                "Seteo de Opciones de Cuenta (destino de inflación, agregado de firmantes, etc)",
+                "CRUD de Trustline",
+                "Actualización del indicador \"autorizado\" de una línea fiduciaria existente",
+                "Eliminación de cuenta y transferencia de saldo a cuenta destino.",
+                "Ejecución de inflación",
+                "Establecido, modificado o eliminado de una entrada de datos",
+                "Avanzado de Número de secuencia de cuenta",
+                "Gestión de oferta de compra (bid) de un activo por otro"
+            ]
         }
     },
     "toast": {
@@ -723,7 +773,7 @@
             "error": {
                 "some": "Ha habido un error",
                 "num_tokens": "Debe indicar el Número de Tokens",
-                "phase_tokens": "Debe indicar la Fase"
+                "type": "Debe indicar la Fase"
             }
         },
 
@@ -733,6 +783,7 @@
         "delete": "Eliminar"
     },
     "kyc": {
+        "verify": "Verificar Identidad",
         "start": {
             "header": "Verificación de Identidad y Prueba de Vida",
             "title": "Para continuar, necesitaremos Verificar tu identidad.",
@@ -788,6 +839,11 @@
             }
         },
         "alert": {
+            "complete": {
+                "head": "Completa el KYC",
+                "msg": "Este paso sólo te llevará un momento y lo tienes que realizar una sola vez. Así tenemos un entorno más seguro para toda la comunidad"    
+            },
+
             "ios": {
                 "tile": "Validacion de KYC en Fase Beta",
                 "message": "Al encontrarse en Desarrollo para iOS, puede tener fallas. Si no puede terminar el proceso, continuelo desde el navegador en www.febelink.com"

@@ -44,6 +44,7 @@ import { LoginPageModule } from './pages/login/login.module';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { PipesModule } from './pipes/pipes.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -80,6 +81,10 @@ const config: SocketIoConfig = {
         deps: [HttpClient],
       },
     }),
+    PipesModule,
+  ],
+  exports: [
+    PipesModule
   ],
   providers: [
     StatusBar,

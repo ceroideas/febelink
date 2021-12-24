@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
   /**
    * To call this PopOver, here is an example on how to
    */
-  /*  async openAlice() {
+  /*  async openKYC() {
     const popover = await this.popoverController.create({
       component: KYCAliceComponent,
       translucent: true,
@@ -224,7 +224,7 @@ export class KYCAliceComponent implements OnInit {
       // To show on list the loading spinner
       this.keys.push({ name: 'Cargando...', value: 'loading' });
 
-      this.subscription = ( await this.kycAliceService.getCountriesByKey( this.lang, this.searchText )).subscribe(
+      this.subscription = ( await this.kycAliceService.getCountriesByKey( this.searchText )).subscribe(
         ( response ) => {
           this.kycAliceService.handleBackendToken( response );
 
@@ -427,7 +427,7 @@ export class KYCAliceComponent implements OnInit {
         if( !this.isValid( response ))
           this.errOnLifeProof( response );
         else
-          this.dismiss({ isValidated: true });
+          this.dismiss({ ...response, isValidated: true });
 
         this.isLoading = false;
       },
