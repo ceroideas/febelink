@@ -43,8 +43,8 @@ export class DateFormatPipe implements PipeTransform {
           value = day + month + year + '';
           break;
         case DateFormatType.TimeDate:
-          const hour =  date.getHours();
-          const minutes = date.getMinutes();
+          const hour =  ("00" + date.getHours() ).slice(-2);
+          const minutes = ("00" + date.getMinutes()).slice(-2);
           value = hour + ':' + minutes + ' hs - ' + day + month + year + '';
           break;
       }

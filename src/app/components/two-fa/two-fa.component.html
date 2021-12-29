@@ -46,7 +46,7 @@
   
         <!-- Expires in -->
         <ion-row class="margin-top" *ngIf="minutes">
-          <ion-label ng-controller="countDown">{{ 'common.two-fa.expires' | translate: { min: ( counter.min +':'+ counter.sec )} }}</ion-label>
+          <ion-label ng-controller="countDown">{{ 'common.two-fa.expires' | translate: { min: ( counter.min +':'+ ( counter.sec | number: '2.0' ) )} }}</ion-label>
         </ion-row>
         
         <!-- Error msg -->
