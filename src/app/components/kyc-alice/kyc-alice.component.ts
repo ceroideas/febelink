@@ -8,8 +8,6 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { KYC_Country, KYC_DOCtype, KYC_ERR_Validation } from 'src/app/models/kyc.alice.model';
 
 import * as aliceonboarding from 'aliceonboarding';
-import { Onboarding, OnboardingConfig, DocumentType } from "aliceonboarding";
-import "aliceonboarding/dist/aliceonboarding.css";
 
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { environment } from 'src/environments/environment';
@@ -80,6 +78,7 @@ export class KYCAliceComponent implements OnInit {
   countryLoadingClicked: boolean = false;
   nothingFound: boolean = false;
   subscription = null;
+  hasSelected: boolean = false;
   cntrySelected: KYC_Country;
   docTypes = KYC_DOCtype;
   docTypeSelected: KYC_DOCtype
@@ -210,8 +209,14 @@ export class KYCAliceComponent implements OnInit {
   }
 
   async searchCountry() {
+    if( this.hasSelected ) {
+      this.hasSelected = false;
+      return;
+    }
+
     this.nothingFound = false;
     this.keys = [];
+    this.cntrySelected = null;
 
     if ( this.searchText === '' )
       this.selectorEnabled = true;
@@ -267,7 +272,9 @@ export class KYCAliceComponent implements OnInit {
       });
   }
 
-  removeCountryFocus() {
+  removeCountryFocus() { // ToDo: analyze if should delete this method, it is annoying
+    return;
+
     setTimeout(() => {
       // To prevent cancel country search when Loading Countries Clicked
       if( this.countryLoadingClicked ) {
@@ -305,6 +312,7 @@ export class KYCAliceComponent implements OnInit {
 
     this.keys = [];
 
+    this.hasSelected = true;
     this.searchText = country.value;
     this.keyText = this.searchText;
     this.selectorEnabled = true;
@@ -385,7 +393,7 @@ export class KYCAliceComponent implements OnInit {
       // Language
       .withCustomLocalization( this.lang );
 
-    let documentType: DocumentType;
+    let documentType: aliceonboarding.DocumentType;
     // Type of Documents
     switch( docType ) {
       case KYC_DOCtype.ID:
