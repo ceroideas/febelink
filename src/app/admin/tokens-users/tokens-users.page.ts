@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TokensUsersService } from 'src/app/admin/services/tokens-users.service';
+import { DateFormatType } from 'src/app/pipes/date-format';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { TokenCRUD, TokensUser } from '../models/tokens-user';
+import { TokenCRUD, TokenPhase, TokensUser } from '../models/tokens-user';
 import { EditTokensComponent } from './edit-tokens/edit-tokens.component';
 
 @Component({
@@ -14,6 +15,7 @@ import { EditTokensComponent } from './edit-tokens/edit-tokens.component';
 export class TokensUsersPage implements OnInit {
 
   isLoading: boolean = false;
+  dateFormatType = DateFormatType;
 
   constructor(
       private tokensUsersSvc:TokensUsersService
@@ -23,6 +25,7 @@ export class TokensUsersPage implements OnInit {
     ) { }
 
   tokensUsers:TokensUser[]
+  tkPhases: TokenPhase[]
 
   async ngOnInit() {
     this.search();
@@ -34,6 +37,7 @@ export class TokensUsersPage implements OnInit {
     this.filter = event?.target?.value || this.filter || '';
     const response = await this.tokensUsersSvc.getTokensUsers( this.activePage, this.filter );
     this.tokensUsers = response.items;
+    this.tkPhases = response.tkPhases;
     this.totalRecords = response.totalRecords;
     this.recordsPerPage = response.limit;
     this.qPages = response.qPages;
@@ -46,7 +50,8 @@ export class TokensUsersPage implements OnInit {
     const suscribirseModal = await this.modalCtrl.create({
       component: EditTokensComponent,
       componentProps:{
-        tokenCRUD: TokenCRUD.Create
+        tokenCRUD: TokenCRUD.Create,
+        tkPhases: this.tkPhases
       }
     });
     await suscribirseModal.present();
@@ -62,7 +67,8 @@ export class TokensUsersPage implements OnInit {
     const suscribirseModal = await this.modalCtrl.create({
       component: EditTokensComponent,
       componentProps:{
-        tokensUser: {...tokensUser}
+        tokensUser: {...tokensUser},
+        tkPhases: this.tkPhases
       }
     });
     await suscribirseModal.present();

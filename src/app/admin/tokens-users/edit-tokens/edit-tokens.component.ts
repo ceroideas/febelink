@@ -18,11 +18,7 @@ export class EditTokensComponent implements OnInit {
   @Input() tokenCRUD: TokenCRUD = TokenCRUD.Update;
   @Input() tokensUser: TokensUser;
 
-  tkPhases: TokenPhase[] = [
-    { value: '1', label: 'landing.reserveTk.first' },
-    { value: '2', label: 'landing.reserveTk.second' },
-    { value: '3', label: 'landing.reserveTk.third' }
-  ]
+  @Input() tkPhases: TokenPhase[];
 
   title: string;
   isLoading: boolean = false;
@@ -54,7 +50,7 @@ export class EditTokensComponent implements OnInit {
   }
 
   ionViewDidLeave() {
-    this.tokensForm.reset();
+    this.tokensForm?.reset();
   }
 
   builtForm() {
@@ -64,7 +60,9 @@ export class EditTokensComponent implements OnInit {
       email: new FormControl({ value: this.tokensUser?.email, disabled: true }),
       dni: new FormControl({ value: this.tokensUser?.dni, disabled: true }),
       num_tokens: new FormControl({ value: this.tokensUser?.num_tokens, disabled: false }, Validators.required ),
-      phase_tokens: new FormControl({ value: this.tokensUser?.phase_tokens?.toString(), disabled: false }, Validators.required ),
+      id_phase_tokens: new FormControl({ value: this.tokensUser?.id_phase_tokens, disabled: false }, Validators.required ),
+      retained: new FormControl({ value: this.tokenCRUD == TokenCRUD.Create ? true : this.tokensUser?.retained, disabled: true }),
+      date: new FormControl({ value: this.tokensUser?.date, disabled: false }),
       payed_date: new FormControl({ value: this.tokensUser?.payed_date, disabled: false })
     });
   }
@@ -91,22 +89,40 @@ export class EditTokensComponent implements OnInit {
   }
 
   phaseChange( event ){
-    this.tokensUser.phase_tokens = event.detail.value;
+    this.tokensUser.id_phase_tokens = event.detail.value;
+    const phaseTk = this.getPhase( this.tokensUser.id_phase_tokens );
+    this.tokensUser.phase_tokens = phaseTk?.phase_tokens;
+    this.tokensForm.controls.date.setValue( phaseTk?.date || '' );
+  }
+
+  getPhase( id_phase_tokens ): TokenPhase {
+    for( let i = 0; id_phase_tokens && i < this.tkPhases.length; i++ ) {
+      const tkPhase = this.tkPhases[ i ];
+      if( tkPhase.id == id_phase_tokens )
+        return tkPhase;
+    }
+
+    return null;
   }
 
   async accept(){
     if( this.isLoading ) { this.showToastLoading(); return; }
+    if( !this.tokensUser?.retained ) {
+      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.retained' ));
+      return;
+    }
 
-    const { num_tokens, phase_tokens, payed_date } = this.tokensForm.value;
+    const { num_tokens, id_phase_tokens, date, payed_date } = this.tokensForm.value;
     this.tokensUser.num_tokens = num_tokens;
-    this.tokensUser.phase_tokens = phase_tokens;
+    this.tokensUser.id_phase_tokens = id_phase_tokens;
+    this.tokensUser.date = date;
     this.tokensUser.payed_date = payed_date;
 
     if( !num_tokens ) {
       this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.num_tokens' ));
       return;
     }
-    if( !phase_tokens ) {
+    if( !id_phase_tokens ) {
       this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.phase_tokens' ));
       return;
     }

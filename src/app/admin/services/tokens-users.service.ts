@@ -31,8 +31,9 @@ export class TokensUsersService {
     const formData = new FormData();
     formData.append( 'uid', tokenUser.id.toString() );
     formData.append( 'num_tokens', tokenUser.num_tokens.toString() );
-    formData.append( 'phase_tokens', tokenUser.phase_tokens.toString() );
-    formData.append( 'payed_date', tokenUser?.payed_date?.toString() || '' );
+    formData.append( 'phase_tokens', tokenUser.id_phase_tokens.toString() );
+    formData.append( 'date', tokenUser?.date || '' );
+    formData.append( 'payed_date', tokenUser?.payed_date || '' );
     return ( await this.api._createData( 'admin/createTokenUser',formData )).toPromise();
   }
 
@@ -46,7 +47,8 @@ export class TokensUsersService {
     const formData = new FormData();
     formData.append('id', tokensUser.id.toString());
     formData.append('num_tokens', tokensUser.num_tokens.toString());
-    formData.append('phase_tokens', tokensUser.phase_tokens.toString());
+    formData.append('phase_tokens', tokensUser.id_phase_tokens.toString());
+    formData.append('date', tokensUser.date || '');
     formData.append('payed_date', tokensUser.payed_date || '');
     return (await this.api._createData('admin/editTokenUser',formData)).toPromise();
   }
