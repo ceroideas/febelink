@@ -43,6 +43,7 @@
             "passEr": "The password must be at least 8 digits with numbers and letters",
             "tel": "Phone",
             "id": "Identity Document",
+            "id_short": "Doc",
 
             "errors": {
                 "name": "Fill in the name",
@@ -755,9 +756,11 @@
         "tokensUsers":{
             "placeholder": "Manage User Tokens",
             "placeholder_users": "Search User",
-            "num": "Tokens Nbr",
+            "num": "Tokens N°",
             "phase": "Phase",
             "payed": "Payed",
+            "retained": "Pnd. Send",
+            "date": "Release Date",
             "actions": "Actions",
             "create": "Create New Reservation",
             "update": "Edit {{ name }} {{ surname }}",
@@ -778,7 +781,7 @@
             "error": {
                 "some": "There was an error",
                 "num_tokens": "You must indicate the Tokens Number",
-                "type": "You must indicate the Stage"
+                "phase_tokens": "You must indicate the Stage"
             }
         },
 

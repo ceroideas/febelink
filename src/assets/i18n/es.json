@@ -43,6 +43,7 @@
             "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
             "tel": "Teléfono",
             "id": "Documento de Identidad",
+            "id_short": "Doc",
 
             "errors": {
                 "name": "Rellena el nombre",
@@ -517,6 +518,11 @@
         },
         "footer": {
             "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
+        },
+        "success": {
+            "title": "Gracias!",
+            "subtitle": "Ha completado su registro en la lista de reservas.",
+            "text": "<p>Recibirá más información sobre el Aureo Token de Febelink en su bandeja de entrada en los próximos minutos. Revise su carpeta de correo no deseado o promociones.</p><p>Si el correo electrónico no le llega en los próximos 5 minutos, complete el formulario nuevamente aquí.</p>"
         }
     },
     "legal": {
@@ -750,9 +756,11 @@
         "tokensUsers":{
             "placeholder": "Gestionar tokens de usuarios",
             "placeholder_users": "Buscar Usuario",
-            "num": "Num Tokens",
+            "num": "N° Tokens",
             "phase": "Fase",
             "payed": "Pagado",
+            "retained": "Pte. Envío",
+            "date": "Fecha de Liberación",
             "actions": "Acciones",
             "create": "Crear Nueva Reserva",
             "update": "Editar {{ name }} {{ surname }}",
@@ -773,7 +781,7 @@
             "error": {
                 "some": "Ha habido un error",
                 "num_tokens": "Debe indicar el Número de Tokens",
-                "type": "Debe indicar la Fase"
+                "phase_tokens": "Debe indicar la Fase"
             }
         },
 
