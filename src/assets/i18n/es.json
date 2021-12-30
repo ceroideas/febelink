@@ -781,7 +781,8 @@
             "error": {
                 "some": "Ha habido un error",
                 "num_tokens": "Debe indicar el Número de Tokens",
-                "phase_tokens": "Debe indicar la Fase"
+                "phase_tokens": "Debe indicar la Fase",
+                "retained": "No puedes modificar Tokens no retenidos"
             }
         },
 

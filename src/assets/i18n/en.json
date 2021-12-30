@@ -781,7 +781,8 @@
             "error": {
                 "some": "There was an error",
                 "num_tokens": "You must indicate the Tokens Number",
-                "phase_tokens": "You must indicate the Stage"
+                "phase_tokens": "You must indicate the Stage",
+                "retained": "You can't modify not retained Tokens"
             }
         },
 
