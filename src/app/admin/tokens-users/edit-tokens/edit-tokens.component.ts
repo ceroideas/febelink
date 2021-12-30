@@ -90,7 +90,9 @@ export class EditTokensComponent implements OnInit {
 
   phaseChange( event ){
     this.tokensUser.id_phase_tokens = event.detail.value;
-    this.tokensUser.phase_tokens = this.getPhase( this.tokensUser.id_phase_tokens )?.phase_tokens;
+    const phaseTk = this.getPhase( this.tokensUser.id_phase_tokens );
+    this.tokensUser.phase_tokens = phaseTk?.phase_tokens;
+    this.tokensForm.controls.date.setValue( phaseTk?.date || '' );
   }
 
   getPhase( id_phase_tokens ): TokenPhase {
@@ -105,6 +107,10 @@ export class EditTokensComponent implements OnInit {
 
   async accept(){
     if( this.isLoading ) { this.showToastLoading(); return; }
+    if( !this.tokensUser?.retained ) {
+      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.retained' ));
+      return;
+    }
 
     const { num_tokens, id_phase_tokens, date, payed_date } = this.tokensForm.value;
     this.tokensUser.num_tokens = num_tokens;

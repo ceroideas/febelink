@@ -15,6 +15,7 @@ export interface TokensUser {
 
 export interface TokenPhase {
     id: string,
+    date: string
     phase_tokens: string
 }
 
