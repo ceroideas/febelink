@@ -21,6 +21,9 @@ export class DateFormatPipe implements PipeTransform {
   ) {}
   
   transform( value: string, type: DateFormatType, monthFormat: MonthFormatType = MonthFormatType.Short ) {
+    if( !value )
+      return '';
+    
     try {
       const date = new Date( value );
       const day = date.getDate();
