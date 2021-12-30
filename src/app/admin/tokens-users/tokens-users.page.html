@@ -39,10 +39,12 @@
       <th>{{ 'common.labelName' | translate }}</th>
       <th>{{ 'common.personal.surname' | translate }}</th>
       <th>{{ 'common.labelEmail' | translate }}</th>
-      <th>{{ 'common.personal.id' | translate }}</th>
+      <th>{{ 'common.personal.id_short' | translate }}</th>
       <th>{{ 'admin.tokensUsers.num' | translate }}</th>
       <th>{{ 'admin.tokensUsers.phase' | translate }}</th>
+      <th>{{ 'admin.tokensUsers.date' | translate }}</th>
       <th>{{ 'admin.tokensUsers.payed' | translate }}</th>
+      <th>{{ 'admin.tokensUsers.retained' | translate }}</th>
       <th colspan="2">{{ 'admin.tokensUsers.actions' | translate }}</th>
     </tr>
     <tr *ngFor="let tokensUser of tokensUsers">
@@ -50,9 +52,14 @@
       <td>{{tokensUser.lastname}}</td>
       <td>{{tokensUser.email}}</td>
       <td>{{tokensUser.dni}}</td>
-      <td>{{tokensUser.num_tokens}}</td>
+      <td>
+        <ion-label>{{ tokensUser.num_tokens | splitNumber: false }}</ion-label>
+        <ion-label class="decimal">{{ tokensUser.num_tokens | splitNumber: true }}</ion-label>
+      </td>
       <td>{{tokensUser.phase_tokens}}</td>
-      <td>{{tokensUser.payed_date}}</td>
+      <td>{{tokensUser.date | dateFormat: dateFormatType.Date}}</td>
+      <td>{{tokensUser.payed_date | dateFormat: dateFormatType.Date}}</td>
+      <td class="text-center"><ion-checkbox [checked]="tokensUser.retained" disabled="true"></ion-checkbox></td>
       <td class="edit"><ion-icon name="create-outline" (click)="edit(tokensUser)"></ion-icon></td>
       <td class="delete"><ion-icon name="trash-outline" (click)="delete(tokensUser)"></ion-icon></td>
     </tr>
