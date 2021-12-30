@@ -105,10 +105,15 @@ export class EditTokensComponent implements OnInit {
     return null;
   }
 
-  async accept(){
-    if( this.isLoading ) { this.showToastLoading(); return; }
-    if( !this.tokensUser?.retained ) {
-      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.retained' ));
+  async accept() {
+    if (this.isLoading) {
+      this.showToastLoading();
+      return;
+    }
+    if (!this.tokensUser?.retained && this.tokenCRUD !== TokenCRUD.Create) {
+      this.utils.showToast(
+        this.translateSvc.instant('admin.tokensUsers.error.retained')
+      );
       return;
     }
 
