@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { IUser } from 'src/app/models/user.model';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -12,10 +14,12 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   styleUrls: ['./whitelist.component.scss'],
 })
 export class WhitelistComponent implements OnInit {
+
   constructor(
-    private api: ApiService,
-    private utils: UtilitiesService,
-    private translateService: TranslateConfigService
+      private api: ApiService
+    , private utils: UtilitiesService
+    , private translateService: TranslateConfigService
+    , private router: Router
   ) {}
   
   async ngOnInit() {
@@ -50,5 +54,10 @@ export class WhitelistComponent implements OnInit {
       this.utils.dismissLoading();
     }
     console.log(this.response);
+  }
+
+  async login() {
+    const user: IUser = await this.utils.getUserData();
+    this.router.navigate([ user ? 'menu/todas' : 'login']);
   }
 }

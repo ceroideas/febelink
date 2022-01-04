@@ -140,7 +140,11 @@
             { "short": "Oct", "long": "Octubre" },
             { "short": "Nov", "long": "Noviembre" },
             { "short": "Dic", "long": "Diciembre" }
-        ]
+        ],
+
+        "social": {
+            "telegram": "Únete a la conversación del Chat de Telegram"
+        }
     },
     "menu": {
         "tabs": {
@@ -402,20 +406,29 @@
     },
     "landing": {
         "header": {
-            "welcome1": "Bienvenido a la ICO de ",
-            "welcome2": "Febelink",
-            "welcome3": ": Token Áureo"
+            "welcome1": "Lanzamiento del Token FLAU",
+            "welcome2": "Febelink Áureo"
         },
         "whitelist": {
-            "signUp": "Apúntate a la WhiteList y recibe toda la información actualizada.",
+            "signUp": "Regístrate ahora y recibe toda la información actualizada.",
             "mail": "Introduce tu dirección de E-mail",
             "action": {
-                "toDo": "Suscribirme",
+                "toDo": "Registrarme",
                 "done": "Suscrito ✔"
             },
             "download": "Descargar Whitepaper",
             "success": "Gracias por suscribirte a nuestra WhiteList"
         },
+        "airdrop": [
+            "Participa en el lanzamiento del Token FLAU (Febelink Áureo) y con el Airdrop llévate fantásticos Premios <i class=\"margin-end abicon-gift\"></i>",
+
+            "<br>Vamos a repartir 1 MILLÓN de tokens FLAU entre todos los participantes que:",
+            "<i class=\"margin-end abicon-check\"></i>Hagáis una compra de tokens FLAU entre el 12 de y el 30 de enero de 2022 (ambos días incluidos).",
+            "<i class=\"margin-end abicon-check\"></i>Mantengáis esos tokens durante al menos 2 meses desde el día de la compra.",
+            "<i class=\"margin-end abicon-sackdollar\"></i>GANA 1 token FLAU de REGALO <i class=\"margin-end abicon-gift\"></i>por cada 2 tokens FLAU comprados en este Airdrop.",
+            
+            "<br>¡Regístrate ahora y no te lo pierdas!"
+        ],
         "tokens": {
             "title": "Reserva tus tokens",
             "button": "Reservar tokens"
@@ -497,7 +510,7 @@
         "aboutUs": {
             "title": "SOBRE NOSOTROS",
             "story": "Nuestra Historia",
-            "description": "Febelink es un buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar de forma más eficiente a los profesionales y empresas que necesitan, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
+            "description": "Febelink es el buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar a los profesionales y empresas que necesitan de forma más eficiente, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
             "press": "PRENSA",
             "blog": "BLOG",
             "blogFebelink": "BLOG DE FEBELINK",

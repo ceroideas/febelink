@@ -213,4 +213,8 @@ export class RegistroPage implements OnInit {
   async openUseConditions() {
     this.navegar('use-conditions');
   }
+
+  login() {
+    this.navegar('login');
+  }
 }

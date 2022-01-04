@@ -116,6 +116,11 @@
       <ion-button expand="full" type="submit" ion-button color="febelink">
         {{ 'pages.registro.button' | translate }}
       </ion-button>
+      
+      <ion-button expand="full" color="febelink" (click)="login()">
+        {{ 'pages.login.button' | translate }}
+      </ion-button>
+      
       <social-login firstLogin="true" [redirect]="redirect"></social-login>
     </form>
   </div>

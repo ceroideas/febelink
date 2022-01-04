@@ -1,7 +1,7 @@
 <ion-content>
   <!--Navbar Start-->
   <nav
-    class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark"
+    class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark navbar-scr"
     (window:scroll)="windowScroll()"
     id="navbar"
   >
@@ -86,12 +86,12 @@
         <div class="row justify-content-center">
           <div class="col-lg-9">
             <div class="hero-wrapper mb-4">
-              <div>
-                <!-- OJO OMG COUNTDOWN -->
-                <h1 class="hero-title mb-4">
+              <div class="hero-title mb-4 align-center">
+                <ion-img src="assets/icon/febicon.png" class="center-v margin-end"></ion-img>
+                <h1>
                   {{ 'landing.header.welcome1' | translate }}
-                  <span class="text-primary" id="hero-strong">{{ 'landing.header.welcome2' | translate }}</span
-                  >{{ 'landing.header.welcome3' | translate }}
+                  <br>
+                  (<span class="text-primary" id="hero-strong">{{ 'landing.header.welcome2' | translate }}</span>)
                 </h1>
               </div>
 
@@ -99,6 +99,12 @@
   
               <app-whitelist lang="{{ langSelected?.lang }}"></app-whitelist>
             </div>
+
+            <p
+              class="text-left  margin-start margin-end no-margin-b"
+              *ngFor="let airdrop of 'landing.airdrop' | translate"
+              [innerHTML]="airdrop | safeHtml"
+            ></p>
             
             <div class="kSlider_show">
               <div class="kSlider">

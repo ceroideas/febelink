@@ -145,6 +145,7 @@ ionic-selectable-modal {
 .align-left{ justify-content: flex-start; }
 .align-center{ justify-content: center; }
 .align-right{ justify-content: flex-end; }
+.center-v { margin-top: auto; margin-bottom: auto; }
 .text-left{ text-align: left; }
 .text-center{ text-align: center; }
 .text-right{ text-align: right; }
@@ -171,6 +172,7 @@ ionic-selectable-modal {
 .margin-bottom { margin-bottom: 10px; }
 .margin-start { margin-left: 10px; }
 .no-margin { margin: 0px; }
+.no-margin-b { margin-bottom: 0px !important; }
 
 .padding {
     padding: 10px;
