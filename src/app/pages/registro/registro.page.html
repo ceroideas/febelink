@@ -117,6 +117,11 @@
         {{ 'pages.registro.button' | translate }}
       </ion-button>
       <social-login firstLogin="true" [redirect]="redirect"></social-login>
+      
+      <ion-label class="ion-text-center title-social margin-top or">{{ 'pages.registro.or' | translate }}</ion-label>
+      <ion-button expand="full" color="febelink" (click)="login()">
+        {{ 'pages.login.button' | translate }}
+      </ion-button>
     </form>
   </div>
   <div class="cover-overlay">
