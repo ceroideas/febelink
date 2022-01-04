@@ -1,12 +1,13 @@
 <ion-grid>
-  <ion-row class="flexed-row" id="row-beneficios-ico">
-    <!-- Telegram -->
-    <ion-col id="col-telegram" *ngIf="telegram">
-      <a class="icon-circle telegram" href="{{telegram}}" target=”_blank”>
-        <ion-icon name="paper-plane"></ion-icon>
-      </a>
-    </ion-col>
+  <!-- Telegram -->
+  <ion-row id="col-telegram" class="align-center" *ngIf="telegram">
+    <p class="center-v margin-end text-p">{{ 'common.social.telegram' | translate }}</p>
+    <a class="icon-circle telegram center-v" href="{{telegram}}" target=”_blank”>
+      <ion-icon name="paper-plane"></ion-icon>
+    </a>
+  </ion-row>
 
+  <ion-row [class]="'flexed-row' + ( !telegram ? '' : ' margin-top' )" id="row-beneficios-ico">
     <!-- Twitter -->
     <ion-col id="col-twitter" *ngIf="twitter">
       <a class="icon-circle twitter" href="{{twitter}}" target=”_blank”>
