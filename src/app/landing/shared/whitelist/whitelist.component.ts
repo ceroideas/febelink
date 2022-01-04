@@ -56,7 +56,7 @@ export class WhitelistComponent implements OnInit {
     console.log(this.response);
   }
 
-  async register() {
+  async login() {
     const user: IUser = await this.utils.getUserData();
     this.router.navigate([ user ? 'menu/todas' : 'login']);
   }
