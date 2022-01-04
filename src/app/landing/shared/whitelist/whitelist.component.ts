@@ -15,8 +15,6 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class WhitelistComponent implements OnInit {
 
-  user: IUser;
-
   constructor(
       private api: ApiService
     , private utils: UtilitiesService
@@ -27,9 +25,6 @@ export class WhitelistComponent implements OnInit {
   async ngOnInit() {
     this.lang = this.lang ? this.lang :
       (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
-
-    // ToDO: uncomment this line if should not show register button when logged
-    // this.user = await this.utils.getUserData();
   }
 
   @Input() lang: string;
@@ -61,7 +56,8 @@ export class WhitelistComponent implements OnInit {
     console.log(this.response);
   }
 
-  register() {
-    this.router.navigate(['registro']);
+  async register() {
+    const user: IUser = await this.utils.getUserData();
+    this.router.navigate([ user ? 'menu/todas' : 'login']);
   }
 }
