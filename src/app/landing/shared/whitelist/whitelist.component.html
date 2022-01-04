@@ -4,23 +4,13 @@
   </p>
 
   <form>
-    <div class="row" id="input-newsletter">
-      <div class="col-md-5">
-        <div>
-          <input
-            type="email"
-            class="form-control"
-            placeholder="{{ 'landing.whitelist.mail' | translate }}"
-            #email
-          />
-        </div>
-      </div>
+    <div class="row align-center" id="input-newsletter">
       <div class="col-md-3">
         <div class="mt-3 mt-md-0">
           <button
             type="button"
             class="btn btn-primary btn-block"
-            (click)="addEmailToWhitelist(email)"
+            (click)="login()"
             [disabled]="response?.id"
           >
             {{

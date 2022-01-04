@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Services } from './services.model';
 import { serviceData } from './data';
 import { Scraping } from 'src/app/components/link-preview/link-preview.component';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-services',
@@ -13,6 +14,10 @@ import { Scraping } from 'src/app/components/link-preview/link-preview.component
  * Services component
  */
 export class ServicesComponent implements OnInit {
+
+  trustedVideoUrl: SafeResourceUrl;
+  url: string = 'Eyui67T07No'; // https://www.youtube.com/watch?v=Eyui67T07No
+
   serviceData: Services[];
   url_prensa: Array<Scraping> = [
     {
@@ -88,11 +93,20 @@ export class ServicesComponent implements OnInit {
     this.url_podcast
   );
 
-  constructor() {}
+  constructor(
+      private domSanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
+    this.embedVideo();
+
     // fetches the data
     this._fetchData();
+  }
+
+  embedVideo() {
+    let video: string = `https://www.youtube.com/embed/${ this.url }?rel=0&autoplay=1`;
+    this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl( video );
   }
 
   /**

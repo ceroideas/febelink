@@ -1,6 +1,14 @@
 /*----font awesome -------*/
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+.text-p {
+    max-width: 80%;
+    font-size: 1.3em !important;
+    line-height: 1.3em !important;
+    color: #a0a9b1;
+    font-family: "Rubik", sans-serif;
+}
+
 .flexed-row {
     display: flex;
     align-items: baseline;
@@ -16,7 +24,6 @@
 .icon-circle {
     position: relative;
     display: inline-block;
-    margin: -1px;
     padding: 10px;
     line-height: 1;
   

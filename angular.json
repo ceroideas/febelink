@@ -42,6 +42,9 @@
               },
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "src/global/icons.scss"
               }
             ],
             "scripts": []

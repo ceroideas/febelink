@@ -41,6 +41,9 @@ export class LangBtnComponent implements OnInit {
 
     const { data } = await popover.onDidDismiss();
 
+    if( !data )
+      return;
+    
     // Una vez que obtengo el Lang lo asigno
     this.langSelected = data.lang as ILang;
     this.translateService.setLanguage( this.langSelected.lang );
