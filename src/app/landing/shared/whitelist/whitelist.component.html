@@ -1,26 +1,16 @@
 <div class="subscribe">
-  <p id="hero-texto">
+  <p id="hero-texto" *ngIf="!user?.id">
     {{ 'landing.whitelist.signUp' | translate }}
   </p>
 
   <form>
-    <div class="row" id="input-newsletter">
-      <div class="col-md-5">
-        <div>
-          <input
-            type="email"
-            class="form-control"
-            placeholder="{{ 'landing.whitelist.mail' | translate }}"
-            #email
-          />
-        </div>
-      </div>
-      <div class="col-md-3">
+    <div class="row align-center" id="input-newsletter">
+      <div class="col-md-3" *ngIf="!user?.id">
         <div class="mt-3 mt-md-0">
           <button
             type="button"
             class="btn btn-primary btn-block"
-            (click)="addEmailToWhitelist(email)"
+            (click)="register()"
             [disabled]="response?.id"
           >
             {{
