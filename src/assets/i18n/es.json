@@ -1,864 +1,947 @@
 {
-    "common": {
-        "labelSectors": "Sectores",
-        "labelSubsectors": "Subsectores",
-        "labelSectors2": "Sector/es",
-        "labelSubsectors2": "Subsector/es",
-        "labelSector": "Sector",
-        "labelSubsector": "Subsector",
-        "labelProvince": "Provincia",
-        "labelTown": "Localidad",
-        "labelNoElements": "No hay elementos para mostrar",
-        "labelLoading": "Cargando...",
-        "labelSearching": "Buscando...",
-        "searchPlaceholder": "Buscar en Febelink",
-        "labelDescription": "Descripción",
-        "cookies1": "Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra",
-        "cookies2": "política de cookies",
-        "labelName": "Nombre",
-        "labelEmail": "Email",
-        "labelAddress": "Dirección",
-        "labelAddressRest": "Resto Dirección",
-        "labelPhone": "Teléfono",
-        "labelLink": "Link URL",
-        "labelNewPass": "Contraseña nueva",
-        "labelConfirmNewPass": "Confimar contraseña nueva",
-        "labelTitle": "Título",
-        "clipboard": "Copiado al Portapapeles",
-        "clipboardErr": "Error al copiar al Portapapeles",
-        "clipboardNone": "Sin Valores para copiar al Portapapeles",
-        "share": "Compartir",
-        "slogan": "El buscador de servicios profesionales",
-        "contactUs": "Contacta con Febelink",
-        "contact": "Contacto",
-        "labelSubsribe": "Suscribirse",
-        "first": "Primer@",
-        "last": "Ultim@",
-        "unavailable": "Función no disponible de momento",
+  "common": {
+    "labelSectors": "Sectores",
+    "labelSubsectors": "Subsectores",
+    "labelSectors2": "Sector/es",
+    "labelSubsectors2": "Subsector/es",
+    "labelSector": "Sector",
+    "labelSubsector": "Subsector",
+    "labelProvince": "Provincia",
+    "labelTown": "Localidad",
+    "labelNoElements": "No hay elementos para mostrar",
+    "labelLoading": "Cargando...",
+    "labelSearching": "Buscando...",
+    "searchPlaceholder": "Buscar en Febelink",
+    "labelDescription": "Descripción",
+    "cookies1": "Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra",
+    "cookies2": "política de cookies",
+    "labelName": "Nombre",
+    "labelEmail": "Email",
+    "labelAddress": "Dirección",
+    "labelAddressRest": "Resto Dirección",
+    "labelPhone": "Teléfono",
+    "labelLink": "Link URL",
+    "labelNewPass": "Contraseña nueva",
+    "labelConfirmNewPass": "Confimar contraseña nueva",
+    "labelTitle": "Título",
+    "clipboard": "Copiado al Portapapeles",
+    "clipboardErr": "Error al copiar al Portapapeles",
+    "clipboardNone": "Sin Valores para copiar al Portapapeles",
+    "share": "Compartir",
+    "slogan": "El buscador de servicios profesionales",
+    "contactUs": "Contacta con Febelink",
+    "contact": "Contacto",
+    "labelSubsribe": "Suscribirse",
+    "first": "Primer@",
+    "last": "Ultim@",
+    "unavailable": "Función no disponible de momento",
 
-        "personal": {
-            "accountname": "Nombre de Cuenta",
-            "surname": "Apellidos",
-            "pass": "Contraseña",
-            "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
-            "tel": "Teléfono",
-            "id": "Documento de Identidad",
-            "id_short": "Doc",
+    "personal": {
+      "accountname": "Nombre de Cuenta",
+      "surname": "Apellidos",
+      "pass": "Contraseña",
+      "passEr": "La contraseña debe tener al menos 8 dígitos con números y letras",
+      "tel": "Teléfono",
+      "id": "Documento de Identidad",
+      "id_short": "Doc",
 
-            "errors": {
-                "name": "Rellena el nombre",
-                "surname": "Rellena el apellido",
-                "email": "Rellena el email",
-                "id": "Rellena el Documento de Identidad",
-                "address": "Escribe y selecciona tu dirección completa",
-                "phone": "Introduce tu número de teléfono"
-            }
-        },
-
-        "buttons": {
-            "confirm": "Confirmar",
-            "back": "Volver",
-            "cancel": "Cancelar",
-            "send": "Enviar",
-            "close": "Cerrar",
-            "retry": "Reintentar",
-            "got-it": "Entendido"
-        },
-
-        "address": {
-            "state": "Provincia",
-            "locality": "Localidad",
-            "address": "Dirección"
-        },
-
-        "timer": {
-            "months": "MESS",
-            "days": "DÍAS",
-            "hours": "HORS",
-            "mins": "MINS",
-            "secs": "SEGS"
-        },
-
-        "legal": {
-            "privacyPolicy": "Política de Privacidad",
-            "termsNconds": "Condiciones y Términos",
-            "condsNterms": "Términos y Condiciones",
-            "warning": "Aviso Legal",
-            "lastUpdate": "Última actualización",
-            "rights": "Todos los derechos reservados. FEBELINK DIGITAL S.L."
-        },
-
-        "verif": {
-            "which": {
-                "email": "Email Verificado",
-                "kyc": "Identidad Verificada"
-            },
-
-            "email": {
-                "head": "Verificacion de Datos",
-                "title": "Deberá validar su cuenta de email para poder disfrutar de funciones como: <ul><li>interactuar</li><li>publicar búsquedas</li><li>chatear</li> <li>valorar</li><li>entre otras..</li></ul>",
-                "pompadour": "Controla que tu email es correcto, para recibir y verificar tu cuenta: ",
-                "not-verified": "Email no verificado",
-                "sending": "enviando verificacion al email {{ email }}",
-                "error": "Parece que hubo un error al intentar validar el email",
-                "sent": "Verifica tu email",
-                "message": "Checkea tu correo {{ email }}"
-            },
-
-            "buttons": {
-                "now": "Verificar",
-                "not-now": "Mas tarde"
-            }
-        },
-
-        "two-fa": {
-            "title": "Verificar Cuenta - 2FA",
-            "message": "Escribe aquí el código de {{ length }} dígitos que hemos enviado a tu email",
-            "type": "******",
-            "expires": "Expirará en {{ min }} minutos",
-
-            "generating": "Generando Código 2FA",
-            "verifying": "Verificando Código 2FA",
-            "re-send": "Reenviar código de verificación",
-
-            "error": {
-                "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
-                "wrong": "Código incorrecto, intente nuevamente"
-            }
-        },
-
-        "months": [
-            { "short": "Ene", "long": "Enero" },
-            { "short": "Feb", "long": "Febrero" },
-            { "short": "Mar", "long": "Marzo" },
-            { "short": "Abr", "long": "Abril" },
-            { "short": "May", "long": "Mayo" },
-            { "short": "Jun", "long": "Juni" },
-            { "short": "Jul", "long": "Julio" },
-            { "short": "Ago", "long": "Agosto" },
-            { "short": "Sep", "long": "Septiembre" },
-            { "short": "Oct", "long": "Octubre" },
-            { "short": "Nov", "long": "Noviembre" },
-            { "short": "Dic", "long": "Diciembre" }
-        ]
+      "errors": {
+        "name": "Rellena el nombre",
+        "surname": "Rellena el apellido",
+        "email": "Rellena el email",
+        "id": "Rellena el Documento de Identidad",
+        "address": "Escribe y selecciona tu dirección completa",
+        "phone": "Introduce tu número de teléfono"
+      }
     },
-    "menu": {
-        "tabs": {
-            "landingICO": "Token FLAU",
-            "token": "Token",
-            "searchEngine": "Buscador",
-            "recommend": "Recomendar",
-            "chat": "Chat",
-            "profile": "Perfil",
-            "login": "Iniciar sesión",
-            "share-febelink": "Comparte Febelink",
-            "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales.",
-            "register": "Regístrate"
-        },
-        "pages": {
-            "opinions": "Opiniones",
-            "wallet": "Mi Wallet",
-            "subscriptions": "Suscripciones"
-        },
-        "labels": {
-            "currentPlan": "Plan actual"
-        }
+
+    "buttons": {
+      "confirm": "Confirmar",
+      "back": "Volver",
+      "cancel": "Cancelar",
+      "send": "Enviar",
+      "close": "Cerrar",
+      "retry": "Reintentar",
+      "got-it": "Entendido"
     },
+
+    "address": {
+      "state": "Provincia",
+      "locality": "Localidad",
+      "address": "Dirección"
+    },
+
+    "timer": {
+      "months": "MESS",
+      "days": "DÍAS",
+      "hours": "HORS",
+      "mins": "MINS",
+      "secs": "SEGS"
+    },
+
+    "legal": {
+      "privacyPolicy": "Política de Privacidad",
+      "termsNconds": "Condiciones y Términos",
+      "condsNterms": "Términos y Condiciones",
+      "warning": "Aviso Legal",
+      "lastUpdate": "Última actualización",
+      "rights": "Todos los derechos reservados. FEBELINK DIGITAL S.L."
+    },
+
+    "verif": {
+      "which": {
+        "email": "Email Verificado",
+        "kyc": "Identidad Verificada"
+      },
+
+      "email": {
+        "head": "Verificacion de Datos",
+        "title": "Deberá validar su cuenta de email para poder disfrutar de funciones como: <ul><li>interactuar</li><li>publicar búsquedas</li><li>chatear</li> <li>valorar</li><li>entre otras..</li></ul>",
+        "pompadour": "Controla que tu email es correcto, para recibir y verificar tu cuenta: ",
+        "not-verified": "Email no verificado",
+        "sending": "enviando verificacion al email {{ email }}",
+        "error": "Parece que hubo un error al intentar validar el email",
+        "sent": "Verifica tu email",
+        "message": "Checkea tu correo {{ email }}"
+      },
+
+      "buttons": {
+        "now": "Verificar",
+        "not-now": "Mas tarde"
+      }
+    },
+
+    "two-fa": {
+      "title": "Verificar Cuenta - 2FA",
+      "message": "Escribe aquí el código de {{ length }} dígitos que hemos enviado a tu email",
+      "type": "******",
+      "expires": "Expirará en {{ min }} minutos",
+
+      "generating": "Generando Código 2FA",
+      "verifying": "Verificando Código 2FA",
+      "re-send": "Reenviar código de verificación",
+
+      "error": {
+        "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
+        "wrong": "Código incorrecto, intente nuevamente"
+      }
+    },
+
+    "months": [
+      { "short": "Ene", "long": "Enero" },
+      { "short": "Feb", "long": "Febrero" },
+      { "short": "Mar", "long": "Marzo" },
+      { "short": "Abr", "long": "Abril" },
+      { "short": "May", "long": "Mayo" },
+      { "short": "Jun", "long": "Juni" },
+      { "short": "Jul", "long": "Julio" },
+      { "short": "Ago", "long": "Agosto" },
+      { "short": "Sep", "long": "Septiembre" },
+      { "short": "Oct", "long": "Octubre" },
+      { "short": "Nov", "long": "Noviembre" },
+      { "short": "Dic", "long": "Diciembre" }
+    ]
+  },
+  "menu": {
     "tabs": {
-        "tab1": {
-            "labelPhoto": "¿Quieres añadir una foto?",
-            "labelAnswers": "¿Cuántas respuestas quieres recibir?",
-            "buttonSend": "Enviar búsqueda",
-            "messageSearchDone": "Se ha realizado una búsqueda, mira en tu panel!",
-            "messageSearchSent": "Búsqueda enviada. En breve recibirás tus respuestas. ¡Suerte!",
-            "errorPublishSearch": "Hubo un error al publicar la búsqueda.",
-            "errorMissingProfileInfo": "Debes rellenar los campos de tu perfil para realizar las búsquedas."
-        },
-        "tab2": {
-            "filters": "Filtros",
-            "messageAddedFavorite": "Se ha añadido a favoritos correctamente.",
-            "messageRemovedFavorite": "Se ha eliminado de favoritos correctamente.",
-            "errorAddFavorite": "Error al añadir a favoritos.",
-            "errorRemoveFavorite": "Error al eliminar de favoritos.",
-            "update-research": "Guardar cambios"
-        },
-        "tab3": {
-            "alertDelete": {
-                "message": "¿Estás seguro de que deseas eliminar esta búsqueda?",
-                "btnCancel": "Cancelar",
-                "btnDelete": "Eliminar"
-            },
-            "errorRemoveOffer": "No se ha podido borrar la oferta.",
-            "errorRemoveSearch": "No se ha podido borrar la búsqueda."
-        },
-        "tab4": {
-            "buttonAskRecommendation": "Pedir recomendación",
-            "buttonSuscription": "Suscríbete y sube a nivel PRO",
-            "proUser": "Usuario PRO",
-            "buttonSave": "Guardar cambios",
-            "labelNoOpinions": "Sin opiniones aún",
-            "labelOpinions": "Opiniones",
-            "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil",
-            "labelDisable": "Deshabilitar cuenta",
-            "labelDisableConfirm": "¿Estás seguro de que deseas deshabilitar tu cuenta?",
-            "buttonDisable": "Deshabilitar",
-            "labelDisableConfirmed": "Cuenta deshabilitada con éxito",
-            "done": "Se han producido los cambios correctamente",
-            "valuation": {
-                "from": ", de Febelink quiere que le des una valoración de su perfil!",
-                "recommendation": " de Febelink quiere que recomiendes su perfil!",
-                "panel": "Ve a su panel para ver sus valoraciones!",
-                "notif": "Se ha enviado una notificación al usuario",
-                "noMailuser": "No existe un usuario con ese email"
-            },
-            "errors": {
-                "title": "Error al editar los datos",
-                "message": "Ocurrieron los siguientes errores: ",
-                "messageChk": "Comprueba que todos los campos están introducidos.",
-
-                "name": "El nombre tiene que tener al menos 3 caracteres",
-
-                "passMatch": "Introduce correctamente la confirmación de contraseña",
-
-                "mail": "El correo no es válido",
-                "mailExists": "El email que has introducido ya existe",
-                "mailEmpty": "El campo email no puede estar vacío",
-
-                "phone": "El formato del teléfono no es correcto",
-
-                "id": "El Documento de Identidad que has introducido no es válido",
-                "idFormat": "El formato del Documento de Identidad no es correcto",
-
-                "image": "Error al obtener imagen",
-                "imageMaxSize": "Imágen demasiado grande, max. 300KB",
-
-                "noFileSelected": "No has seleccionado archivo.",
-                "noFileProvided": "No has provisto archivo",
-
-                "limitSelectSectors_1": "Solo puedes seleccionar ",
-                "limitSelectSectors_2": " sectores con tu suscripción actual"
-            },
-            "alerts": {
-                "improve": "Mejora tu perfil",
-
-                "chooseShare": "Elige donde quieres compartir",
-                "shareInside": "Dentro de la aplicación",
-                "shareOutside": "Fuera de la aplicación",
-
-                "recommendation": "Pedir Recomendación",
-                "mail": "Escribe el email de un usuario"
-            },
-            "search": {
-                "of": " de ",
-                "title": "Los 10 mejores {{ subsector }}{{ provincia }}",
-                "descript": "En Febelink tienes los mejores profesionales de tu zona para que hables directamente con ellos de forma gratuita, rápida y sencilla."
-            }
-        }
+      "landingICO": "Token FLAU",
+      "token": "Token",
+      "searchEngine": "Buscador",
+      "recommend": "Recomendar",
+      "chat": "Chat",
+      "profile": "Perfil",
+      "login": "Iniciar sesión",
+      "share-febelink": "Comparte Febelink",
+      "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales.",
+      "register": "Regístrate"
     },
     "pages": {
-        "offerDetails": {
-            "alertShowData": {
-                "header": "Mostrar datos usuario",
-                "message": "Vas a ver el email y el teléfono del usuario y tus datos (email y teléfono) serán visibles. ¿Estás seguro?",
-                "buttonAccept": "Aceptar",
-                "buttonCancel": "Cancelar"
-            }
-        },
-        "demandDetails": {
-            "messageFillProfileData": "Debes rellenar los campos de tu perfil para poder chatear.",
-            "alertChat": {
-                "message": "No puedes chatear contigo mismo."
-            },
-            "alertNameDontMatch": {
-                "header": "Cuidado",
-                "message": "Asegúrate de que la búsqueda es la deseada."
-            }
-        },
-        "editDemand": {
-            "messageSuccessEditDemand": "Se ha editado la búsqueda correctamente.",
-            "messageErrorEditDemand": "Error al editar la búsqueda."
-        },
-        "perfilDemandante": {
-            "alertNameDontMatch": {
-                "header": "Cuidado",
-                "message": "Asegúrate de que el perfil es el deseado."
-            }
-        },
-        "registro": {
-            "title": "Crea tu cuenta gratuita",
-            "userName": "Nombre de Usuario",
-            "confirmPass": "Confirmar contraseña",
-            "cond1": "He leído, y acepto la",
-            "cond2": "política de privacidad",
-            "cond3": "y las",
-            "cond4": "condiciones generales de uso",
-            "button": "REGISTRARSE",
-            "or": "Ó",
-            "continueWith": "Continuar con ",
-
-            "errors": {
-                "title": "Error al registrarse",
-                "list": "Ocurrieron los siguientes errores al registrarse: ",
-                "server": "Hubo un error en el servidor al registrarse. Inténtalo de nuevo más tarde",
-                "terms": "Tienes que aceptar la política de privacidad y las condiciones generales de uso",
-                "fields": "Tienes que insertar los campos obligatorios"
-            }
-        },
-        "login": {
-            "title": "Iniciar sesión",
-            "forgotPass": "¿Olvidaste tu contraseña?",
-            "rememberPass": "Recordar ahora",
-            "button": "INICIAR SESIÓN",
-            "newUser": "¿Nuevo usuario?",
-            "register": "Crear cuenta",
-            "loging": "Iniciando sesión...",
-
-            "recover": {
-                "title": "Recuperar contraseña",
-                "subtitle": "Introduce el email para recuperar la contraseña"
-            },
-
-            "errors": {
-                "title": "Error al iniciar sesión",
-                "message": "Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde",
-
-                "data": "Los datos introducidos no son correctos",
-                "email": "El formato del email introducido no es correcto"
-            }
-        },
-        "email-verification": {
-            "title": "Verificación de email",
-            "done": "Genial! Has verificado tu cuenta de email",
-            "error": "Oops.. parece que has llegado aqui por error",
-            "redirect": "en {{ seconds }} segundos seras redirigido a la Página Principal"
-        }
-        , "success":{
-            "token": {
-                "title": "¡Gracias!",
-                "subtitle": "Has completado tu inscripción en el listado de reservas.",
-                "text": "<p>Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.</p><p>Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí.</p>"
-            }
-            , "subscription-pro": {
-                "title": "¡Gracias!"
-                , "subtitle": "Suscriptión realizada"
-                , "text": "Te has suscrito con éxito al plan Pro. Desde este momento puedes empezar a aprovechar todas sus ventajas"
-            }
-            , "default": {
-                "title": "¡Gracias!"
-                , "subtitle": "Tu compra ha sido realizada con éxito"
-                , "text": ""
-            }
-        }
-        , "wallet": {
-            "title": "Mi Wallet",
-            "public-key": "Clave Pública",
-            "retained": "Tokens Retenidos",
-            "release": "Liberación:",
-
-            "transactions": "Transacciones recientes",
-            "no-transactions": "Sin transacciones recientes",
-
-            "select-origin": "Seleccionar Moneda Origen",
-            "select-destiny": "Seleccionar Moneda Destino",
-            "qOffer": "Cantidad",
-            "qDemand": "Cantidad",
-            "minnersFee": "Coste de transacción",
-            "confirm": "Confirmar Transacción",
-
-            "help": {
-                "title": "¿Por qué veo solo el saldo de algunas Monedas?",
-                "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
-            },
-
-            "error": {
-                "missing-origin": "Debe seleccionar la Moneda Origen",
-                "missing-destiny": "Debe seleccionar la Moneda Destino",
-                "qOffer": "Indique la cant de Moneda a Cambiar",
-                "qDemand": "Indique la cant de Moneda a Recibir",
-                "unknown": "Desconozco el Resultado de la Transacción",
-                "exceeded": "No posee la cantidad que desea transaccionar",
-                "asset-not-available": "De momento esta moneda no está disponible para transacciones"
-            },
-
-            "operations": [
-                "Creación de Cuenta",
-                "Envío de Pago a Cuenta",
-                "Creación de Path de Pago entre cuentas",
-                "Administración de Oferta ( CRUD )",
-                "Creación de oferta que no consumirá una contraoferta que coincide exactamente con esta oferta",
-                "Seteo de Opciones de Cuenta (destino de inflación, agregado de firmantes, etc)",
-                "CRUD de Trustline",
-                "Actualización del indicador \"autorizado\" de una línea fiduciaria existente",
-                "Eliminación de cuenta y transferencia de saldo a cuenta destino.",
-                "Ejecución de inflación",
-                "Establecido, modificado o eliminado de una entrada de datos",
-                "Avanzado de Número de secuencia de cuenta",
-                "Gestión de oferta de compra (bid) de un activo por otro"
-            ]
-        }
+      "opinions": "Opiniones",
+      "wallet": "Mi Wallet",
+      "subscriptions": "Suscripciones"
     },
-    "toast": {
-        "need-register":"¡Regístrate para disfrutar aún más de Febelink!"
-    },
-    "landing": {
-        "header": {
-            "welcome1": "Bienvenido a la ICO de ",
-            "welcome2": "Febelink",
-            "welcome3": ": Token Áureo"
-        },
-        "whitelist": {
-            "signUp": "Apúntate a la WhiteList y recibe toda la información actualizada.",
-            "mail": "Introduce tu dirección de E-mail",
-            "action": {
-                "toDo": "Suscribirme",
-                "done": "Suscrito ✔"
-            },
-            "download": "Descargar Whitepaper",
-            "success": "Gracias por suscribirte a nuestra WhiteList"
-        },
-        "tokens": {
-            "title": "Reserva tus tokens",
-            "button": "Reservar tokens"
-        },
-        "aboutTk": {
-            "initial": "INITIAL COIN OFFERING",
-            "title": "Información General\nSobre el Token",
-            "detail": "El Token Áureo forma parte del ecosistema de la plataforma Febelink, ayudando a los usuarios a realizar sus transacciones de una forma más segura, sencilla, rápida y eficiente, contando además con muchos beneficios por uso, descuentos, y servicios exclusivos.",
-            "subtitle": "Probablemente el token más usable del mundo",
-            
-            "discounts": "DESCUENTOS",
-            "discountsDetail": "Con el token Áureo de Febelink obtienes automáticamente grandes descuentos en la plataforma, como en suscripciones Profesionales y Premium, y servicios gratuitos.",
-            "exclusive": "PRODUCTOS EXCLUSIVOS",
-            "exclusiveDetail": "Gracias al token Áureo de Febelink tienes el acceso a productos específicos para la comunidad.",
-            "governance": "GOBERNANZA",
-            "governanceDetail": "Tener el token Áureo de Febelink te da derecho a participar de muchas decisiones en la plataforma, como nuevos productos o proyectos de ayuda.",
-            "economy": "ECONOMIA REAL",
-            "economyDetail": "Con el token Áureo de Febelink puedes intercambiar productos y servicios con otros usuarios, directamente desde el token o cambiando a cualquier moneda FIAT o Cripto."
-        },
-        "reserveTk": {
-            "title": "Reserva ahora tus tokens para la fase pública de la ICO del token Áureo de Febelink.",
-            "info": [
-                "Las compras se ejecutan por orden de inscripción.",
-                "La reserva no garantiza la participación, ya que no hay límites de reservas.",
-                "La disponibilidad es limitada.",
-                "La cantidad tiene que estar depositada en la wallet de Febelink.",
-                "Elige las fases en las que quieres participar y haz tu reserva ahora."
-            ],
-            "select": "SELECCIONA TU RESERVA",
-            "stage": "Fase",
-            "first": "Primera ",
-            "second": "Segunda ",
-            "third": "Tercera ",
-            "coin": "Euros",
-            "number": "Número de Tokens",
-            "button": "Reservar",
-            "modal": {
-                "title": "Completa tus datos"
-            }
-        },
-        "phases": {
-            "phase": "Fase",
-            "title": "INICIO VENTA PÚBLICA (ICO)",
-            "price": "Precio por token:",
-            "blocking": "Bloqueo:",
-            "release": "Liberación:",
-            "limit": "Límites de compra:",
-            "number": "Nº de tokens:",
-            "card": [
-                {
-                    "phase": 1,
-                    "date": "Desde las 00:00 del 5 de noviembre de 2021 a las 23:59 del 11 de noviembre de 2021 (hora de Madrid UTC+2)",
-                    "price": "€ 0,10 (-66,6% de descuento)",
-                    "blocking": "6 meses posteriores al cierre de la venta pública, liberación 01/Jun/2022",
-                    "release": "5 meses de forma progresiva a razón del 20% por mes",
-                    "limit": "mínimo € 1.000, máximo € 60.000\n% del total: 10%",
-                    "number": "10 MM"
-                },
-                {
-                    "phase": 2,
-                    "date": "Desde las 00:00 del 12 de noviembre de 2021 a las 23:59 del 18 de noviembre de 2021 (hora de Madrid UTC+2)",
-                    "price": "€ 0,20 (-33,3% de descuento)",
-                    "blocking": "3 meses posteriores al cierre de la venta pública, liberación 01/Mar/2022",
-                    "release": "5 meses de forma progresiva a razón del 20% por mes",
-                    "limit": "mínimo € 500, máximo € 30.000\n% del total: 10%",
-                    "number": "10 MM"
-                },
-                {
-                    "phase": 3,
-                    "date": "Desde las 00:00 del 19 de noviembre de 2021 a las 23:59 del 30 de noviembre de 2021 (hora de Madrid UTC+2)",
-                    "price": "€ 0,30\n",
-                    "blocking": "1 mes después del cierre de la venta pública, liberación el 01/Ene/2022",
-                    "release": "inmediata tras el bloqueo\n",
-                    "limit": "mínimo € 100, máximo € 10.000\n% del total: 5%",
-                    "number": "5 MM"
-                }
-            ]
-        },
-        "aboutUs": {
-            "title": "SOBRE NOSOTROS",
-            "story": "Nuestra Historia",
-            "description": "Febelink es un buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar de forma más eficiente a los profesionales y empresas que necesitan, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
-            "press": "PRENSA",
-            "blog": "BLOG",
-            "blogFebelink": "BLOG DE FEBELINK",
-            "blogMedia": "LOS MEDIOS HABLAN",
-            "blogSearchEng": "¿QUÉ SON LOS BUSCADORES?",
-            "blogICO": "¿QUÉ ES UNA ICO?",
-            "podcast": "PODCAST",
-            "podcastBlockchain": "TERRITORIO BLOCKCHAIN",
-            "podcastInterview": "ENTREVISTA a CEO DE FEBELINK"
-        },
-        "aboutTeam": {
-            "title": "NUESTRO EQUIPO",
-            "description": "La experiencia y el conocimiento son señas de identidad de las personas que conforman nuestro grupo de trabajo. Únete a nuestro equipo en expansión.",
-            "juan": "Founder & CEO. Empresario con 27 años de experiencia, desarrollando su carrera principalmente en la consultoría financiera y en el sector de la automoción.",
-            "david": "Founder & CTO. Desarrollador con gran experiencia en sistemas en Cloud. Ha trabajo en grandes instituciones públicas y casas de subastas online como: Christie's, Hilco StremBank o LeasePlan.",
-            "miguel": "Profesional de marketing con amplia experiencia en tecnología y FMCG. responsable de marketing de diversas multinacionales como Hewlett-Packard o WD-40 Company.",
-            "miguelAngel": "(Minery Report) Especialista en Digitalización, Ciberseguridad y tecnología Blockchain. Cofundador de la dirección de Ciberseguridad del Ejercito del Aire, Ministerio de Defensa de España."
-        },
-        "footer": {
-            "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
-        },
-        "success": {
-            "title": "Gracias!",
-            "subtitle": "Ha completado su registro en la lista de reservas.",
-            "text": "<p>Recibirá más información sobre el Aureo Token de Febelink en su bandeja de entrada en los próximos minutos. Revise su carpeta de correo no deseado o promociones.</p><p>Si el correo electrónico no le llega en los próximos 5 minutos, complete el formulario nuevamente aquí.</p>"
-        }
-    },
-    "legal": {
-        "terms": {
-            "title": "PROTECCION DE DATOS",
-            "pompadour": "En cumplimiento con lo establecido en la Ley 3/2018, los datos personales facilitados serán incorporados a nuestros ficheros automatizados y serán tratados con la máxima confidencialidad. Informándoles de sus derechos de acceso, rectificación, cancelación u oposición, que podrá ejercitarlos poniéndose en contacto por escrito en nuestro domicilio social, al objeto de garantizar que el tratamiento de los datos personales se desarrolle respetando los derechos y las libertades fundamentales, con especial atención a la confidencialidad, a la identidad personal y al derecho a la protección de los datos personales.",
-            "subtitle": "TÉRMINOS Y CONDICIONES DE USO DE FEBELINK",
-            "li": [
-                "Estos Términos y Condiciones de Uso regulan las reglas a que se sujeta la utilización de la APP Febelink (en adelante, la APP), que puede descargarse. La descarga o utilización de la APP atribuye la condición de Usuario a quien lo haga e implica la aceptación de todas las condiciones incluidas en este documento y en la Política de Privacidad y el Aviso Legal de dicha página Web. El Usuario debería leer estas condiciones cada vez que utilice la APP, ya que podrían ser modificadas en lo sucesivo.",
-                "Únicamente los Usuarios expresamente autorizados por Febelink podrán acceder a la descarga y uso de la APP. Los Usuarios que no dispongan de autorización, no podrán acceder a dicho contenido.",
-                "Cargos: eres responsable del pago de todos los costes o gastos en los que incurras como resultado de descargar y usar la Aplicación de Febelink, incluido cualquier cargo de red de operador o itinerancia. Consulta con tu proveedor de servicios los detalles al respecto.",
-                "Estadísticas anónimas: Febelink se reserva el derecho a realizar un seguimiento de tu actividad en la Aplicación de y a informar de ello a nuestros proveedores de servicios estadísticos de terceros. Todo ello de forma anónima.",
-                "Protección de tu información personal: queremos ayudarte a llevar a cabo todos los pasos necesarios para proteger tu privacidad e información. Consulta la Política de privacidad de Febelink y los avisos sobre privacidad de la Aplicación para conocer qué tipo de información recopilamos y las medidas que tomamos para proteger tu información personal.",
-                "Queda prohibido alterar o modificar ninguna parte de la APP a de los contenidas de la misma, eludir, desactivar o manipular de cualquier otra forma (o tratar de eludir, desactivar o manipular) las funciones de seguridad u otras funciones del programa y utilizar la APP o sus contenidos para un fin comercial o publicitario. Queda prohibido el uso de la APP con la finalidad de lesionar bienes, derechos o intereses de Febelink o de terceros. Queda igualmente prohibido realizar cualquier otro uso que altere, dañe o inutilice las redes, servidores, equipos, productos y programas informáticos de Febelink o de terceros.",
-                "La APP y sus contenidos (textos, fotografías, gráficos, imágenes, tecnología, software, links, contenidos, diseño gráfico, código fuente, etc.), así como las marcas y demás signos distintivos son propiedad de Febelink o de terceros, no adquiriendo el Usuario ningún derecho sobre ellos por el mero uso de la APP. El Usuario, deberá abstenerse de: a) Reproducir, copiar, distribuir, poner a disposición de terceros, comunicar públicamente, transformar o modificar la APP o sus contenidos, salvo en los casos contemplados en la ley o expresamente autorizados por Febelink o por el titular de dichos derechos. b) Reproducir o copiar para uso privado la APP o sus contenidos, así como comunicarlos públicamente o ponerlos a disposición de terceros cuando ello conlleve su reproducción. c) Extraer o reutilizar todo o parte sustancial de los contenidos integrantes de la APP.",
-                "Con sujeción a las condiciones establecidas en el apartado anterior, Febelink concede al Usuario una licencia de uso de la APP, no exclusiva, gratuita, para uso personal, y con carácter indefinido. Dicha licencia se concede también en los mismos términos con respecto a las actualizaciones y mejoras que se realizasen en la aplicación. Dichas licencias de uso podrán ser revocadas por Febelink unilateralmente en cualquier momento.",
-                "Corresponde al Usuario, en todo caso, disponer de herramientas adecuadas para la detección y desinfección de programas maliciosos o cualquier otro elemento informático dañino. Febelink no se responsabiliza de los daños producidos a equipos informáticos durante el uso de la APP. Igualmente, Febelink no será responsable de los daños producidos a los Usuarios cuando dichos daños tengan su origen en fallos o desconexiones en las redes de telecomunicaciones que interrumpan el servicio.",
-                "IMPORTANTE: Podemos, sin que esto suponga ninguna obligación contigo, modificar estas Condiciones de uso sin avisar en cualquier momento. Si continúas utilizando la aplicación una vez realizada cualquier modificación en estas Condiciones de uso, esa utilización continuada constituirá la aceptación por tu parte de tales modificaciones. Si no aceptas estas condiciones de uso ni aceptas quedar sujeto a ellas, no debes utilizar la aplicación ni descargar o utilizar cualquier software relacionado. El uso que hagas de la aplicación queda bajo tu única responsabilidad. No tenemos responsabilidad alguna por la eliminación o la incapacidad de almacenar o trasmitir cualquier contenido u otra información mantenida o trasmitida por la aplicación. No somos responsables de la precisión o la fiabilidad de cualquier información o consejo trasmitidos a través de la aplicación. Podemos, en cualquier momento, limitar o interrumpir tu uso a nuestra única discreción. Hasta el máximo que permite la ley, en ningún caso seremos responsables por cualquier pérdida o daño relacionados.",
-                "El Usuario se compromete a hacer un uso correcto de la APP, de conformidad con la Ley, con los presentes Términos y Condiciones de Uso y con las demás reglamentos e instrucciones que, en su caso, pudieran ser de aplicación El Usuario responderá frente a Febelink y frente a terceros de cualesquiera daños o perjuicios que pudieran causarse por incumplimiento de estas obligaciones.",
-                "Estos Términos y Condiciones de Uso se rigen íntegramente por la legislación española. Para la resolución de cualquier conflicto relativo a su interpretación o aplicación, el Usuario se somete expresamente a la jurisdicción de los tribunales de Málaga (España)."
-            ]
-        },
-        "warning": {
-            "title": "AVISO LEGAL DE FEBELINK",
-            "descript": [
-                "Para dar cumplimiento a la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico se pone a disposición del usuario el siguiente Aviso Legal.",
-                "Su observancia y cumplimiento serán exigibles respecto de cualquier persona que acceda, navegue o utilice el Sitio Web <a href=\"https://www.febelink.com\">https://www.febelink.com</a> y/o la aplicación móvil (en adelante, el “<strong>Sitio Web</strong>” y la “<strong>Aplicación</strong>” descargable a través de Google Play) de FEBELINK DIGITAL S.L. Si usted no está de acuerdo con las condiciones expuestas, no acceda, navegue o utilice los mismos."
-            ],
-            "points": [
-                {
-                    "title": "1.  IDENTIFICACIÓN",
-                    "items": [
-                        { "descript": "<strong>Titular: </strong>FEBELINK DIGITAL S.L. (en adelante, “<strong>FEBELINK</strong>”)" },
-                        { "descript": "<strong>Domicilio social: </strong>Calle La Gitanilla, 17, Oficina 19, Pol. Ind. Santa Cruz, 29004, Málaga" },
-                        { "descript": "<strong>Información registral: </strong>Registro Mercantil de Málaga, Boletín 86, Referencia 216576, Tomo 6031, Libro 4938, Folio 74, Sección 8, Hoja 160744, Inscripción 1." },
-                        { "descript": "<strong>Teléfono de contacto: </strong>+34 952633297" },
-                        { "descript": "<strong>CIF: </strong>B05367511" },
-                        { "descript": "<strong>E-mail: </strong> <a href=\"mailto:info@febelink.com\">info@febelink.com</a>" }
-                    ]
-                },
-                {
-                    "title": "2.  OBJETO",
-                    "items": [
-                        { "descript": "El presente Aviso Legal establece las normas de acceso, navegación y utilización del Sitio Web y/o la Aplicación. No obstante, el acceso a determinados contenidos y la utilización de determinados servicios puede encontrarse sometido a determinadas condiciones particulares, que serán en todo caso claramente mostradas y deberán ser aceptadas expresamente por parte de los usuarios (en adelante, “<strong>Usuario</strong>” o “<strong>Usuarios</strong>”). Estas condiciones particulares podrán sustituir, completar o, en su caso, modificar las establecidas en el presente Aviso Legal." }
-                    ]
-                },
-                {
-                    "title": "3.  SITIO WEB",
-                    "items": [
-                        {
-                            "descript": "A través del Sitio Web y/o la Aplicación el Usuario podrá llevar a cabo las siguientes acciones:",
-                            "items": [
-                                "Registrarse como usuario de FEBELINK;",
-                                "Conocer las especificaciones de los servicios ofrecidos;",
-                                "Contratar los servicios ofrecidos;",
-                                "Acceder a la comunidad de FEBELINK;",
-                                "Obtener información acerca de las redes sociales;",
-                                "Visualizar el contenido ofrecido en el Sitio Web y/o la Aplicación y la;",
-                                "Contactar con FEBELINK a través del formulario de contacto;",
-                                "Acceder a las diferentes ofertas de terceros ubicadas en el Sitio Web y/o la Aplicación;",
-                                "Acceder a los textos legales que regulan la navegación del Sitio Web y/o la Aplicación."
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "title": "4.  ACCESO Y REGISTRO",
-                    "items": [
-                        { "descript": "El acceso a los contenidos del Sitio Web y/o la Aplicación es completamente gratuito." },
-                    { "descript": "Cuando un Usuario facilite datos de carácter personal a través de alguno de los formularios habilitados al efecto en el Sitio Web y/o la Aplicación, será necesario que previamente acepte la  <a id=\"openprivacypolicy1\" style=\"cursor:pointer;\">Política de Privacidad." },
-                        { "descript": " En todo caso, queda prohibido el acceso y navegación en el Sitio Web y/o la Aplicación por parte de los menores de dieciocho (18) años. Se presumirá que el acceso realizado por un menor al Sitio Web se ha realizado con autorización previa y expresa de sus padres, tutores o representantes legales." },
-                        { "descript": " Bajo ningún concepto FEBELINK se responsabilizará de la veracidad de los datos facilitados por los Usuarios, por lo que cada uno de éstos será el único responsable de las posibles consecuencias, errores y fallos que pudieran derivarse de la falta de exactitud de los datos facilitados." }
-                    ]
-                },
-                {
-                    "title": "5.  DERECHOS DE PROPIEDAD INTELECTUAL E INDUSTRIA",
-                    "items": [
-                        {
-                            "title": "5.1.  Derechos sobre el contenido",
-                            "items": [
-                                { "descript": "FEBELINK es propietario o, en su caso, cuenta con las licencias correspondientes sobre los derechos de explotación de propiedad intelectual e industrial necesarios para operar en el Sitio Web y/o la Aplicación, así como de todos los contenidos ofrecidos en el mismo, incluyendo el propio Sitio Web, textos, fotografías o ilustraciones, logos, marcas, grafismos, diseños, interfaces, o cualquier otra información o contenido, y los servicios disponibles a través del mismo." }
-                            ]
-                        },
-                        {
-                            "title": "5.2.  Derechos sobre el Sitio Web y/o la Aplicación",
-                            "items": [
-                                { "descript": " En ningún caso se entenderá que el acceso, navegación y utilización del Sitio Web y/o de la Aplicación por parte del Usuario implica una renuncia, transmisión, licencia o cesión total o parcial de dichos derechos por parte de FEBELINK. El Usuario dispone de un derecho de uso de los contenidos y/o servicios del Sitio Web y/o de la Aplicación dentro de un ámbito estrictamente doméstico y únicamente con la finalidad de disfrutar de las prestaciones del servicio de acuerdo con el presente Aviso Legal." },
-                                { "descript": "Las referencias a marcas o nombres comerciales registrados, u otros signos distintivos, ya sean propiedad de FEBELINK o de terceros, llevan implícita la prohibición sobre su uso sin el consentimiento de FEBELINK o de sus legítimos propietarios. En ningún momento el acceso, navegación o utilización del Sitio Web y/o de la Aplicación y/o de sus contenidos confiere al Usuario derecho alguno sobre signos distintivos en él incluidos, salvo que se disponga lo contrario en el presente Aviso Legal." },
-                                { "descript": "Quedan reservados todos los derechos de propiedad intelectual e industrial sobre los contenidos y/o servicios del Sitio Web y/o de la Aplicación y, en particular, queda prohibido modificar, copiar, reproducir, comunicar públicamente, transformar o distribuir, por cualquier medio y bajo cualquier forma, la totalidad o parte de los contenidos incluidos en el Sitio Web y/o en la Aplicación, para cualquier fin, si no se cuenta con la autorización previa, expresa y por escrito de FEBELINK o, en su caso, de FEBELINK  de los derechos correspondientes." },
-                                { "descript": "Asimismo, queda prohibido suprimir o manipular las indicaciones de copyright u otros créditos que identifiquen a los titulares de derechos de los contenidos que el Usuario encuentre en el Sitio Web y/o en la Aplicación, así como los dispositivos técnicos de protección, las huellas digitales, o cualquier mecanismo de protección o información incorporada a los contenidos ofrecidos en el Sitio Web y/o en la Aplicación." },
-                                { "descript": "Los servicios ofrecidos, o cualquier información dispuesta a través del Sitio Web y/o de la Aplicación no podrán ser utilizados para fines comerciales o publicitarios sin autorización previa de FEBELINK." },
-                                { "descript": "En todo caso, el Usuario se compromete a no usar el Sitio Web y/o la Aplicación para fines ilegales o prohibidos." }
-                            ]
-                        },
-                        {
-                            "title": "5.3.  Derechos sobre los contenidos e informaciones difundidas por el Usuario",
-                            "items": [
-                                { "descript": "En el caso de que el Usuario envíe información o contenidos de cualquier tipo a FEBELINK a través de cualquiera de los canales habilitados al efecto, el Usuario declara, garantiza y acepta que tiene derecho a hacerlo libremente, que dicha información no infringe ningún derecho de propiedad intelectual, industrial, secreto comercial o cualesquiera otros derechos de terceros, y que dicha información no tiene carácter confidencial ni es perjudicial para terceros." },
-                                { "descript": "El Usuario reconoce asumir la responsabilidad, dejando indemne a FEBELINK, por cualquier comunicación o contenidos que envíe personalmente o a su nombre." },
-                                { "descript": "Si el Usuario tuviera conocimiento de la existencia de algún contenido ilícito, ilegal, contrario a las leyes o que pudiera suponer una infracción de derechos de propiedad intelectual, industrial, o de cualquier otra índole, deberá notificarlo inmediatamente a FEBELINK a través de la dirección de correo electrónico <a href=\"mailto:info@febelink.com\">info@febelink.com</a> para que éste pueda proceder a la adopción de las medidas oportunas." },
-                                {
-                                    "descript": "De igual modo, en el caso de que cualquier Usuario o un tercero consideren que alguno de los contenidos del Sitio Web y/o de la Aplicación, propiedad de FEBELINK, vulnera sus derechos de propiedad intelectual, industrial, o de cualquier otra índole, deberá remitir una comunicación a <a href=\"mailto:info@febelink.com\">info@febelink.com</a> con la siguiente información:",
-                                    "items": [
-                                        "Datos identificativos y medio de contacto del reclamante o de su representante legal;",
-                                        "Documentación que acredite su condición de titular de los derechos supuestamente infringidos;",
-                                        "Relato detallado de los derechos supuestamente infringidos por FEBELINK, así como su localización exacta dentro del Sitio Web y/o de la Aplicación;",
-                                        "Declaración expresa por parte del reclamante de que la utilización de los contenidos se ha realizado sin el consentimiento del titular de los derechos supuestamente infringidos."
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "title": "6.  ENLACES",
-                    "items": [
-                        {
-                            "title": "6.1.  Enlaces a otras páginas web",
-                            "items": [
-                                { "descript": "En caso de que en el Sitio Web y/o la Aplicación se mostraran enlaces a otras páginas web mediante diferentes botones, links, banners o contenidos embebidos, FEBELINK informa de que éstos se encuentran gestionados por terceros, no teniendo FEBELINK ni medios humanos ni técnicos para conocer de forma previa y/o controlar y/o aprobar toda la información, contenidos, productos o servicios facilitados por otras plataformas a las que se puedan establecer enlaces desde el Sitio Web y/o la Aplicación." },
-                                { "descript": "En consecuencia, FEBELINK no podrá asumir ningún tipo de responsabilidad por cualquier aspecto relativo al Sitio Web o a la Aplicación o página web a la que se pudiera establecer un enlace desde el Sitio Web y/o la Aplicación, en concreto, a título enunciativo, pero no limitativo, sobre su funcionamiento, acceso, datos, información, archivos, calidad y fiabilidad de sus productos y servicios, sus propios enlaces y/o cualquiera de sus contenidos, en general." },
-                                { "descript": "En este sentido, si los Usuarios tuvieran conocimiento efectivo de que las actividades desarrolladas a través de estas páginas web de terceros son ilegales o contravienen la moral y/o el orden público, deberán comunicarlo inmediatamente a FEBELINK a los efectos de que se proceda a deshabilitar el enlace de acceso a las mismas, acción que se llevará a cabo en el menor tiempo posible." },
-                                { "descript": "En cualquier caso, el establecimiento de cualquier tipo de enlace desde el Sitio Web y/o la Aplicación a otra página web ajena no implicará que exista algún tipo de relación, colaboración o dependencia entre FEBELINK y el responsable de dicha página web ajena."}
-                            ]
-                        },
-                        {
-                            "title": "6.2.  Enlaces al canal de FEBELINK en otras plataformas y redes sociales",
-                            "items": [
-                                { "descript": "FEBELINK pone a disposición de los Usuarios, a través de diferentes herramientas y aplicaciones, medios de enlace que permiten a los Usuarios acceder a los canales y páginas del Sitio Web y/o de la Aplicación que mantiene en diferentes plataformas y redes sociales pertenecientes y/o gestionadas por terceros (p.ej. Facebook, etc.). La inclusión de estos enlaces en el Sitio Web y/o la Aplicación tiene por único objeto facilitar a los Usuarios el acceso a dichos canales en las diferentes plataformas y redes sociales." },
-                                { "descript": "El establecimiento de estas aplicaciones no implica la existencia de relación alguna entre FEBELINK y el propietario, fabricante o distribuidor del Sitio Web y/o de la Aplicación enlazado, como tampoco la aceptación y aprobación por parte de FEBELINK de sus contenidos y/o servicios, siendo su propietario, fabricante o distribuidor el único responsable de los mismos." },
-                                { "descript": "La activación y uso de estas aplicaciones puede conllevar la identificación y autenticación del Usuario (login/contraseña) en las plataformas correspondientes, completamente externas al Sitio Web y fuera del control de FEBELINK. Al acceder a dichas redes externas, el Usuario ingresa en un entorno no controlado por FEBELINK, por lo que FEBELINK no asumirá ninguna responsabilidad sobre la configuración de seguridad de dichos entornos." },
-                                { "descript": "Dado que FEBELINK puede tener un control limitado sobre el contenido alojado en dichos canales, el Usuario reconoce y acepta que FEBELINK no asume responsabilidad alguna por el contenido ni por los servicios a los que el Usuario pueda acceder en dichas páginas, ni por cualquier contenido, productos, servicios, publicidad, ni cualquier otro material disponible en los mismos." }
-                            ]
-                        },
-                        {
-                            "title": "6.3.  Enlaces en otras páginas web con destino a el Sitio Web y/o la Aplicación",
-                            "items": [
-                                { "descript": "FEBELINK no autoriza el establecimiento de un enlace al Sitio Web desde aquellas páginas que contengan materiales, información o contenidos ilícitos, ilegales, degradantes, obscenos y, en general, que contravengan las leyes, la moral o el orden público, o las normas sociales generalmente aceptadas." },
-                                {
-                                    "descript": "En todo caso, los Usuarios podrán establecer enlaces que dirijan al Sitio Web, siempre y cuando cumplan con las siguientes condiciones:",
-                                    "items": [
-                                        "El enlace no podrá reproducir el contenido del Sitio Web y/o de la Aplicación o partes del mismo de ninguna forma;",
-                                        "No está permitido crear un browser ni un border environment sobre las secciones del Sitio Web y/o la Aplicación y/o de la Aplicación, ni de ninguna otra forma podrá modificarse el Sitio Web y/o la Aplicación;",
-                                        "No está permitido realizar manifestaciones o indicaciones falsas o inexactas o incorrectas sobre el Sitio Web y/o la Aplicación y/o, en particular, declarar o dar a entender que FEBELINK ha autorizado el enlace o que ha supervisado o asumido de cualquier forma los contenidos o servicios ofrecidos o puestos a disposición en la página web en la que se establece dicho enlace;",
-                                        "La página web en la que se establezca el enlace al Sitio Web o a la Aplicación no contendrá informaciones o contenidos ilícitos, contrarios a la moral y buenas costumbres generalmente aceptadas y al orden público, así como tampoco contendrá contenidos contrarios a cualesquiera derechos de terceros, incluidos los derechos de propiedad intelectual o industrial y/o el derecho al honor, a la intimidad personal o familiar o a la propia imagen o de cualquier otro derecho, o contenidos contrarios a las normas reguladoras de la protección de datos de carácter personal."
-                                    ]
-                                },
-                                { "descript": "FEBELINK no tiene facultad ni medios humanos ni técnicos para conocer, controlar ni aprobar toda la información, contenidos, productos o servicios facilitados por otras páginas web que tengan establecidos enlaces con destino al Sitio Web o a la Aplicación. Por lo tanto, FEBELINK no asume ningún tipo de responsabilidad por cualquier aspecto relativo a la página web que establece ese enlace con destino al Sitio Web o a la Aplicación; en concreto, a título enunciativo y no limitativo, sobre su funcionamiento, acceso, datos, información, archivos, calidad y fiabilidad de sus productos y servicios, sus propios enlaces y/o cualquiera de sus contenidos, en general." }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "title": "7.  REGLAS DE USO DEL SITIO WEB Y DE LA APLICACIÓN",
-                    "items": [
-                        {
-                            "descript": "No está permitido y, por tanto, sus consecuencias serán de la exclusiva responsabilidad del Usuario, el acceso o la utilización del Sitio Web y/o de la Aplicación con fines ilegales o no autorizados, con o sin ánimo de lucro. En particular, y sin que el siguiente listado tenga carácter limitativo, queda prohibido:",
-                            "items":[
-                                "Usar el Sitio Web y/o la Aplicación en forma alguna que pueda provocar daños, interrupciones, ineficiencias o defectos en su funcionamiento o en los equipos informáticos de un tercero;",
-                                "Usar el Sitio Web y/o la Aplicación para la transmisión, instalación o publicación de cualquier virus, código malicioso u otros programas o archivos perjudiciales o con intenciones ilícitas;",
-                                "Usar el Sitio Web y/o la Aplicación para transmitir con fines publicitarios o de promoción, incluidos spam, correos electrónicos en cadena o similares, sin la previa autorización expresa y por escrito de FEBELINK;",
-                                "Usar el Sitio Web y/o la Aplicación para recoger datos de carácter personal de otros Usuarios;",
-                                "Usar el Sitio Web y/o la Aplicación de forma ilegal, en contra de la buena fe, la moral y el orden público;",
-                                "Registrarse a través del Sitio Web y/o de la Aplicación con una identidad falsa, suplantando a terceros o utilizando un perfil o realizando cualquier otra acción que pueda confundir a otros Usuarios sobre la identidad del Usuario;",
-                                "Acceder sin autorización a cualquier sección del Sitio Web y/o de la Aplicación, a otros sistemas o redes conectados al Sitio Web, a los servidores de FEBELINK, o a los servicios ofrecidos a través del Sitio Web y/o de la Aplicación, por medio de pirateo o falsificación, extracción de contraseñas o cualquier otro medio ilegítimo;",
-                                "Llevar a cabo alguna acción que provoque una saturación desproporcionada o innecesaria en la infraestructura del Sitio Web y/o de la Aplicación o en los sistemas o redes de FEBELINK, así como en los sistemas y redes conectados al Sitio Web;",
-                                "acceder sin autorización a cualquier sección del Sitio Web y/o de la Aplicación, a otros sistemas o redes conectados a los mismos, a cualquier servidor de FEBELINK o a los servicios ofrecidos a través del Sitio Web y/o de la Aplicación por medio de pirateo o falsificación, extracción de contraseñas o cualquier otro medio ilegítimo o establecido en el presente Aviso Legal;",
-                                "usar el Sitio Web y/o la Aplicación para transmitir o publicar cualquier material de carácter difamatorio, ofensivo, racista, vulgar, denigrante, pornográfico, o de naturaleza obscena o amenazadora o que pueda molestar, perjudicar o meramente afectar a cualquier persona bajo el criterio de FEBELINK;",
-                                "Impedir el normal desarrollo de un evento, concurso, promoción o cualquier otra actividad disponible a través del Sitio Web y/o de la Aplicación o cualesquiera de sus funcionalidades, ya sea alterando o tratando de alterar, ilegalmente o de cualquier otra forma, el acceso, participación o funcionamiento de aquéllos, o falseando el resultado de los mismos y/o utilizando métodos de participación fraudulentos, mediante cualquier procedimiento, y/o a través de cualquier práctica que atente o vulnere el presente aviso legal."
-                            ]
-                        },
-                        {
-                            "descript": "El incumplimiento de cualquiera de las anteriores obligaciones por el Usuario podrá llevar aparejada la adopción por FEBELINK de las medidas oportunas amparadas en Derecho y en el ejercicio de sus derechos u obligaciones, pudiendo llegar a la eliminación o bloqueo de la cuenta del Usuario infractor, sin que medie posibilidad de indemnización alguna por los daños y perjuicios causados."
-                        }
-                    ]
-                    
-                },
-                {
-                    "title": "8.  RESPONSABILIDADES Y GARANTÍAS",
-                    "items": [
-                        {
-                            "descript": "En consecuencia, FEBELINK no garantiza ni se hace responsable de:",
-                            "items": [
-                                "La continuidad de los contenidos, servicios y/o las funcionalidades del Sitio Web y/o la Aplicación y/o de la Aplicación;",
-                                "La ausencia de virus o demás componentes dañinos en el Sitio Web y/o la Aplicación o en el servidor que lo suministra;",
-                                "La invulnerabilidad del Sitio Web y/o de la Aplicación o la imposibilidad de vulnerar las medidas de seguridad que se adopten para el mismo;",
-                                "La falta de utilidad o rendimiento de los contenidos del Sitio Web y/o la Aplicación y/o de la Aplicación, y;",
-                                "los fallos del Sitio Web y/o de la Aplicación ocasionados por cualquier tipo de ataque a sus servidores o a los de terceros proveedores de servicios de FEBELINK, así como los fallos técnicos o de seguridad del sistema de cualquier de dichos proveedores que impidan el correcto funcionamiento del Sitio Web y/o la Aplicación y/o de la Aplicación;",
-                                "cualquier fallo técnico, de cualquier tipo, que dificulte, retrase o impida el correcto funcionamiento del Sitio Web y/o la Aplicación y/o de la Aplicación;",
-                                "Los daños o perjuicios que cause, a sí mismo o a un tercero, cualquier persona que infringiera las condiciones, normas e instrucciones que FEBELINK establece, o a través de la vulneración de sistemas de seguridad."
-                            ]
-                        },
-                        { "descript": "No obstante, FEBELINK declara que ha adoptado todas las medidas necesarias, dentro de sus posibilidades y del estado de la técnica, para garantizar el funcionamiento del Sitio Web y/o de la Aplicación y reducir al mínimo los errores del sistema, tanto desde el punto de vista técnico como de los contenidos publicados en el Sitio Web y/o la Aplicación." },
-                        { "descript": "FEBELINK no será responsable de la veracidad, integridad o actualización de las informaciones contenidas en otras plataformas a las que se enlace desde el Sitio Web y/o la Aplicación. FEBELINK no asumirá responsabilidad en cuanto a hipotéticos perjuicios que pudieran originarse por el uso de las citadas informaciones." },
-                        { "descript": "FEBELINK no responderá por causas ajenas a su control, entre las que pueden enumerarse de manera no limitativa: fuerza mayor, problemas de acceso a internet, problemas tecnológicos más allá de la gestión diligente y razonable de FEBELINK, acciones u omisiones de terceros, etc. En todos los casos referidos, ajenos al control y la diligencia debida por FEBELINK, no habrá lugar a indemnización de FEBELINK al Usuario por daños o perjuicios, en la medida en que así lo permita la legislación vigente." }
-                    ]
-                },
-                {
-                    "title": "9.  SUSPENSIÓN DEL SITIO WEB Y/O DE LA APLICACIÓN",
-                    "items": [
-                        { "descript": "FEBELINK se reserva el derecho a suspender, modificar, restringir o interrumpir, ya sea temporal o permanentemente, el acceso, navegación, uso, alojamiento y/o descarga del contenido y/o uso de servicios del Sitio Web y/o la Aplicación y/o de la Aplicación, con o sin previa notificación, a los Usuarios que contravengan cualquiera de las disposiciones detalladas en el presente aviso legal, sin que medie la posibilidad del Usuario de exigir indemnización alguna por esta causa." }
-                    ]
-                },
-                {
-                    "title": "10.  PROTECCIÓN DE DATOS",
-                    "items": [
-                        {  "descript": "De conformidad con lo dispuesto por la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, todos los datos de carácter personal recabados durante la utilización del Sitio Web y/o de la Aplicación serán tratados de conformidad con lo dispuesto en la <a id=\"openprivacypolicy2\" style=\"cursor:pointer;\">Política de Privacidad</a>, que todo Usuario debe aceptar expresamente en caso de facilitar datos de carácter personal a través del Sitio Web y/o la Aplicación y/o de la Aplicación." }
-                    ]
-                },
-                {
-                    "title": "11.  GENERALES",
-                    "items": [
-                        {  "descript": "Los encabezamientos de las distintas cláusulas son sólo informativos, y no afectarán, calificarán o ampliarán la interpretación del presente Aviso Legal. Asimismo, FEBELINK podrá modificar las condiciones aquí estipuladas, total o parcialmente, publicando cualquier cambio en la misma forma en que aparece este aviso legal o a través de cualquier tipo de comunicación dirigida a los Usuarios." },
-                        {  "descript": "La vigencia temporal del presente Aviso Legal coincide, por tanto, con el tiempo de su exposición, hasta que sea modificado total o parcialmente, momento en el cual pasará a tener vigencia el aviso legal modificado." },
-                        {  "descript": "FEBELINK podrá dar por terminado, suspender o interrumpir, en cualquier momento y sin necesidad de preaviso, el acceso a los contenidos del Sitio Web y/o la Aplicación y/o de la Aplicación, sin posibilidad por parte del Usuario de exigir indemnización alguna. Tras dicha extinción, seguirán vigentes las prohibiciones de uso de los contenidos expuestas anteriormente en el presente aviso legal." },
-                        {  "descript": "En el caso de que cualquier disposición del presente aviso legal fuese declarada nula o inaplicable, en su totalidad o en parte, por cualquier Juzgado, Tribunal u órgano administrativo competente, dicha nulidad o inaplicación no afectará a las restantes disposiciones del presente aviso legal." },
-                        {  "descript": "El no ejercicio o ejecución por parte de FEBELINK de cualquier derecho o condición contenido en el presente aviso legal no constituirá una renuncia al mismo, salvo reconocimiento y acuerdo por escrito por su parte." }
-                    ]
-                },
-                {
-                    "title": "12.  LEGISLACIÓN APLICABLE Y JURISDICCIÓN COMPETENTE",
-                    "items": [
-                        { "descript": "La normativa vigente determinará las leyes que deban regir y la jurisdicción que deba conocer de las relaciones entre FEBELINK y los Usuarios del Sitio Web y/o de la Aplicación. No obstante, siempre que dicha normativa prevea la posibilidad para los sujetos intervinientes de someterse a un fuero determinado, para toda cuestión litigiosa derivada o relacionada con este Sitio Web y/o con la Aplicación será de aplicación la legislación española vigente en el momento del litigio. Asimismo, FEBELINK y los usuarios, con renuncia expresa a cualquier otro fuero que pudiera corresponderles, se someten a los Juzgados y Tribunales de Málaga." },
-                        { "descript": "Resolución de litigios en línea en materia de consumo conforme al Art. 14.1 del Reglamento (UE) 524/2013: La Comisión Europea facilita una plataforma de resolución de litigios en línea que se encuentra disponible en el siguiente enlace: <a href=\"http://ec.europa.eu/consumers/odr/\">http://ec.europa.eu/consumers/odr/</a>." }
-                    ]
-                }
-            ]
-        }
-    },
-    "admin":{
-        "tokensUsers":{
-            "placeholder": "Gestionar tokens de usuarios",
-            "placeholder_users": "Buscar Usuario",
-            "num": "N° Tokens",
-            "phase": "Fase",
-            "payed": "Pagado",
-            "retained": "Pte. Envío",
-            "date": "Fecha de Liberación",
-            "actions": "Acciones",
-            "create": "Crear Nueva Reserva",
-            "update": "Editar {{ name }} {{ surname }}",
-            "delete": {
-                "done": "Tokens eliminados",
-                "error": "No se pudo eliminar"
-            },
-            "irreversible": " ESTA ACCIÓN NO ES REVERSIBLE",
-
-            "purchase-date": "Fecha de Compra",
-
-            "modal":{
-                "header": "{{ CRUD }} tokens de usuario",
-                "body": "¿Seguro que deseas {{ CRUD }} los tokens de {{name}}?{{ extra }}"
-            },
-
-            "loading": "Accion Desbilitada durante Carga",
-            "error": {
-                "some": "Ha habido un error",
-                "num_tokens": "Debe indicar el Número de Tokens",
-                "phase_tokens": "Debe indicar la Fase",
-                "retained": "No puedes modificar Tokens no retenidos"
-            }
-        },
-
-        "create": "Añadir",
-        "read": "Leer",
-        "update": "Editar",
-        "delete": "Eliminar"
-    },
-    "kyc": {
-        "verify": "Verificar Identidad",
-        "start": {
-            "header": "Verificación de Identidad y Prueba de Vida",
-            "title": "Para continuar, necesitaremos Verificar tu identidad.",
-            "subtitle": "Solo tomará un minuto",
-            "toProceed": "Para proceder con la captura del documento, selecciona el país emisor",
-            "selectCountry": "Selecciona el país emisor del Documento",
-            "noCountry": "Ningún país encontrado"
-        },
-        "docTypes": {
-            "idcard": "Carnet de Identidad Nacional",
-            "passport": "Pasaporte",
-            "residencepermit": "Permiso de Residencia",
-            "driverlicense": "Licencia de Conducir"
-        },
-        "verifying": "Verificando Usuario",
-        "loading": "Procesando los datos",
-        "cancel": {
-            "title": "Para continuar debe completar la prueba de vida",
-            "message": "¿Desea reintentar para poder seguir con el proceso?"
-        },
-        "errors": {
-            "user": {
-                "title": "Usuario no encontrado",
-                "message": "Primero debe crear una cuenta para validar su identidad"
-            },
-            "alice": {
-                "title": "Parece que hubo un error",
-                "message": "Desea reintentar para poder seguir con el proceso?"
-            },
-            "title": "Tienes errores en la validación de Prueba de Vida",
-            "document": {
-                "none": "No ha cargado un documento para validar",
-                "frontFields": "No he podido corroborar ningun campo de la parte Frontal del documento",
-                "backFields": "No he podido corroborar ningun campo de la parte Trasera del documento",
-                
-                "err": "Checkea que los siguientes campos del <b>Documento</b> no tengan problemas",
-                "name": "Nombre",
-                "surname": "Apellido",
-                "birthdate": "Fecha de Nacimiento",
-                "legal_age": "Mayoria de Edad",
-                "expire": "Fecha de Caducidad",
-                "number": "Numero de Documento",
-
-                "consistent": "Hay al menos 2 campos inconsistentes entre ambos lados del documento",
-                "expected": "El tipo de Documento seleccionado y/o el país emisor no concuerdan con el Documento cargado"
-            },
-            "selfie": {
-                "none": "No ha realizado la prueba de Selfie",
-                
-                "err": "Los errores con respecto a la <b>Selfie</b> son:",
-                "is_real": "No ha pasado la prueba de suplantación ( imagenes impresas, videos en pantallas, mascaras, entre otras )",
-                "face_match": "No se ha encontrado relacion entre la Selfie y la foto del documento"
-            }
-        },
-        "alert": {
-            "complete": {
-                "head": "Completa el KYC",
-                "msg": "Este paso sólo te llevará un momento y lo tienes que realizar una sola vez. Así tenemos un entorno más seguro para toda la comunidad"    
-            },
-
-            "ios": {
-                "tile": "Validacion de KYC en Fase Beta",
-                "message": "Al encontrarse en Desarrollo para iOS, puede tener fallas. Si no puede terminar el proceso, continuelo desde el navegador en www.febelink.com"
-            }
-        },
-        "verified": "Verificacion de Vida Exitosa",
-        "unverified": "Verificacion de Vida Fallida"
+    "labels": {
+      "currentPlan": "Plan actual"
     }
+  },
+  "tabs": {
+    "tab1": {
+      "labelPhoto": "¿Quieres añadir una foto?",
+      "labelAnswers": "¿Cuántas respuestas quieres recibir?",
+      "buttonSend": "Enviar búsqueda",
+      "messageSearchDone": "Se ha realizado una búsqueda, mira en tu panel!",
+      "messageSearchSent": "Búsqueda enviada. En breve recibirás tus respuestas. ¡Suerte!",
+      "errorPublishSearch": "Hubo un error al publicar la búsqueda.",
+      "errorMissingProfileInfo": "Debes rellenar los campos de tu perfil para realizar las búsquedas."
+    },
+    "tab2": {
+      "filters": "Filtros",
+      "messageAddedFavorite": "Se ha añadido a favoritos correctamente.",
+      "messageRemovedFavorite": "Se ha eliminado de favoritos correctamente.",
+      "errorAddFavorite": "Error al añadir a favoritos.",
+      "errorRemoveFavorite": "Error al eliminar de favoritos.",
+      "update-research": "Guardar cambios"
+    },
+    "tab3": {
+      "alertDelete": {
+        "message": "¿Estás seguro de que deseas eliminar esta búsqueda?",
+        "btnCancel": "Cancelar",
+        "btnDelete": "Eliminar"
+      },
+      "errorRemoveOffer": "No se ha podido borrar la oferta.",
+      "errorRemoveSearch": "No se ha podido borrar la búsqueda."
+    },
+    "tab4": {
+      "buttonAskRecommendation": "Pedir recomendación",
+      "buttonSuscription": "Suscríbete y sube a nivel PRO",
+      "proUser": "Usuario PRO",
+      "buttonSave": "Guardar cambios",
+      "labelNoOpinions": "Sin opiniones aún",
+      "labelOpinions": "Opiniones",
+      "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil",
+      "labelDisable": "Deshabilitar cuenta",
+      "labelDisableConfirm": "¿Estás seguro de que deseas deshabilitar tu cuenta?",
+      "buttonDisable": "Deshabilitar",
+      "labelDisableConfirmed": "Cuenta deshabilitada con éxito",
+      "done": "Se han producido los cambios correctamente",
+      "valuation": {
+        "from": ", de Febelink quiere que le des una valoración de su perfil!",
+        "recommendation": " de Febelink quiere que recomiendes su perfil!",
+        "panel": "Ve a su panel para ver sus valoraciones!",
+        "notif": "Se ha enviado una notificación al usuario",
+        "noMailuser": "No existe un usuario con ese email"
+      },
+      "errors": {
+        "title": "Error al editar los datos",
+        "message": "Ocurrieron los siguientes errores: ",
+        "messageChk": "Comprueba que todos los campos están introducidos.",
+
+        "name": "El nombre tiene que tener al menos 3 caracteres",
+
+        "passMatch": "Introduce correctamente la confirmación de contraseña",
+
+        "mail": "El correo no es válido",
+        "mailExists": "El email que has introducido ya existe",
+        "mailEmpty": "El campo email no puede estar vacío",
+
+        "phone": "El formato del teléfono no es correcto",
+
+        "id": "El Documento de Identidad que has introducido no es válido",
+        "idFormat": "El formato del Documento de Identidad no es correcto",
+
+        "image": "Error al obtener imagen",
+        "imageMaxSize": "Imágen demasiado grande, max. 300KB",
+
+        "noFileSelected": "No has seleccionado archivo.",
+        "noFileProvided": "No has provisto archivo",
+
+        "limitSelectSectors_1": "Solo puedes seleccionar ",
+        "limitSelectSectors_2": " sectores con tu suscripción actual"
+      },
+      "alerts": {
+        "improve": "Mejora tu perfil",
+
+        "chooseShare": "Elige donde quieres compartir",
+        "shareInside": "Dentro de la aplicación",
+        "shareOutside": "Fuera de la aplicación",
+
+        "recommendation": "Pedir Recomendación",
+        "mail": "Escribe el email de un usuario"
+      },
+      "search": {
+        "of": " de ",
+        "title": "Los 10 mejores {{ subsector }}{{ provincia }}",
+        "descript": "En Febelink tienes los mejores profesionales de tu zona para que hables directamente con ellos de forma gratuita, rápida y sencilla."
+      }
+    }
+  },
+  "pages": {
+    "offerDetails": {
+      "alertShowData": {
+        "header": "Mostrar datos usuario",
+        "message": "Vas a ver el email y el teléfono del usuario y tus datos (email y teléfono) serán visibles. ¿Estás seguro?",
+        "buttonAccept": "Aceptar",
+        "buttonCancel": "Cancelar"
+      }
+    },
+    "demandDetails": {
+      "messageFillProfileData": "Debes rellenar los campos de tu perfil para poder chatear.",
+      "alertChat": {
+        "message": "No puedes chatear contigo mismo."
+      },
+      "alertNameDontMatch": {
+        "header": "Cuidado",
+        "message": "Asegúrate de que la búsqueda es la deseada."
+      }
+    },
+    "editDemand": {
+      "messageSuccessEditDemand": "Se ha editado la búsqueda correctamente.",
+      "messageErrorEditDemand": "Error al editar la búsqueda."
+    },
+    "perfilDemandante": {
+      "alertNameDontMatch": {
+        "header": "Cuidado",
+        "message": "Asegúrate de que el perfil es el deseado."
+      }
+    },
+    "registro": {
+      "title": "Crea tu cuenta gratuita",
+      "userName": "Nombre de Usuario",
+      "confirmPass": "Confirmar contraseña",
+      "cond1": "He leído, y acepto la",
+      "cond2": "política de privacidad",
+      "cond3": "y las",
+      "cond4": "condiciones generales de uso",
+      "button": "REGISTRARSE",
+      "or": "Ó",
+      "continueWith": "Continuar con ",
+
+      "errors": {
+        "title": "Error al registrarse",
+        "list": "Ocurrieron los siguientes errores al registrarse: ",
+        "server": "Hubo un error en el servidor al registrarse. Inténtalo de nuevo más tarde",
+        "terms": "Tienes que aceptar la política de privacidad y las condiciones generales de uso",
+        "fields": "Tienes que insertar los campos obligatorios"
+      }
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "forgotPass": "¿Olvidaste tu contraseña?",
+      "rememberPass": "Recordar ahora",
+      "button": "INICIAR SESIÓN",
+      "newUser": "¿Nuevo usuario?",
+      "register": "Crear cuenta",
+      "loging": "Iniciando sesión...",
+
+      "recover": {
+        "title": "Recuperar contraseña",
+        "subtitle": "Introduce el email para recuperar la contraseña"
+      },
+
+      "errors": {
+        "title": "Error al iniciar sesión",
+        "message": "Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde",
+
+        "data": "Los datos introducidos no son correctos",
+        "email": "El formato del email introducido no es correcto"
+      }
+    },
+    "email-verification": {
+      "title": "Verificación de email",
+      "done": "Genial! Has verificado tu cuenta de email",
+      "error": "Oops.. parece que has llegado aqui por error",
+      "redirect": "en {{ seconds }} segundos seras redirigido a la Página Principal"
+    },
+    "success": {
+      "token": {
+        "title": "¡Gracias!",
+        "subtitle": "Has completado tu inscripción en el listado de reservas.",
+        "text": "<p>Recibirás más información sobre el token de Áureo de Febelink en tu bandeja de entrada en los próximos minutos. Revisa tu carpeta de spam o promociones.</p><p>Si el correo no te llega en los próximos 5 minutos rellena el formulario nuevamente aquí.</p>"
+      },
+      "subscription-pro": {
+        "title": "¡Gracias!",
+        "subtitle": "Suscriptión realizada",
+        "text": "Te has suscrito con éxito al plan Pro. Desde este momento puedes empezar a aprovechar todas sus ventajas"
+      },
+      "default": {
+        "title": "¡Gracias!",
+        "subtitle": "Tu compra ha sido realizada con éxito",
+        "text": ""
+      }
+    },
+    "wallet": {
+      "title": "Mi Wallet",
+      "public-key": "Clave Pública",
+      "retained": "Tokens Retenidos",
+      "release": "Fecha de Desbloqueo:",
+
+      "transactions": "Transacciones recientes",
+      "no-transactions": "Sin transacciones recientes",
+
+      "select-origin": "Seleccionar Moneda Origen",
+      "select-destiny": "Seleccionar Moneda Destino",
+      "qOffer": "Cantidad",
+      "qDemand": "Cantidad",
+      "minnersFee": "Coste de transacción",
+      "confirm": "Confirmar Transacción",
+
+      "help": {
+        "title": "¿Por qué veo solo el saldo de algunas Monedas?",
+        "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
+      },
+
+      "error": {
+        "missing-origin": "Debe seleccionar la Moneda Origen",
+        "missing-destiny": "Debe seleccionar la Moneda Destino",
+        "qOffer": "Indique la cant de Moneda a Cambiar",
+        "qDemand": "Indique la cant de Moneda a Recibir",
+        "unknown": "Desconozco el Resultado de la Transacción",
+        "exceeded": "No posee la cantidad que desea transaccionar",
+        "asset-not-available": "De momento esta moneda no está disponible para transacciones"
+      },
+
+      "operations": [
+        "Creación de Cuenta",
+        "Envío de Pago a Cuenta",
+        "Creación de Path de Pago entre cuentas",
+        "Administración de Oferta ( CRUD )",
+        "Creación de oferta que no consumirá una contraoferta que coincide exactamente con esta oferta",
+        "Seteo de Opciones de Cuenta (destino de inflación, agregado de firmantes, etc)",
+        "CRUD de Trustline",
+        "Actualización del indicador \"autorizado\" de una línea fiduciaria existente",
+        "Eliminación de cuenta y transferencia de saldo a cuenta destino.",
+        "Ejecución de inflación",
+        "Establecido, modificado o eliminado de una entrada de datos",
+        "Avanzado de Número de secuencia de cuenta",
+        "Gestión de oferta de compra (bid) de un activo por otro"
+      ]
+    }
+  },
+  "toast": {
+    "need-register": "¡Regístrate para disfrutar aún más de Febelink!"
+  },
+  "landing": {
+    "header": {
+      "welcome1": "Bienvenido a la ICO de ",
+      "welcome2": "Febelink",
+      "welcome3": ": Token Áureo"
+    },
+    "whitelist": {
+      "signUp": "Apúntate a la WhiteList y recibe toda la información actualizada.",
+      "mail": "Introduce tu dirección de E-mail",
+      "action": {
+        "toDo": "Suscribirme",
+        "done": "Suscrito ✔"
+      },
+      "download": "Descargar Whitepaper",
+      "success": "Gracias por suscribirte a nuestra WhiteList"
+    },
+    "tokens": {
+      "title": "Reserva tus tokens",
+      "button": "Reservar tokens"
+    },
+    "aboutTk": {
+      "initial": "INITIAL COIN OFFERING",
+      "title": "Información General\nSobre el Token",
+      "detail": "El Token Áureo forma parte del ecosistema de la plataforma Febelink, ayudando a los usuarios a realizar sus transacciones de una forma más segura, sencilla, rápida y eficiente, contando además con muchos beneficios por uso, descuentos, y servicios exclusivos.",
+      "subtitle": "Probablemente el token más usable del mundo",
+
+      "discounts": "DESCUENTOS",
+      "discountsDetail": "Con el token Áureo de Febelink obtienes automáticamente grandes descuentos en la plataforma, como en suscripciones Profesionales y Premium, y servicios gratuitos.",
+      "exclusive": "PRODUCTOS EXCLUSIVOS",
+      "exclusiveDetail": "Gracias al token Áureo de Febelink tienes el acceso a productos específicos para la comunidad.",
+      "governance": "GOBERNANZA",
+      "governanceDetail": "Tener el token Áureo de Febelink te da derecho a participar de muchas decisiones en la plataforma, como nuevos productos o proyectos de ayuda.",
+      "economy": "ECONOMIA REAL",
+      "economyDetail": "Con el token Áureo de Febelink puedes intercambiar productos y servicios con otros usuarios, directamente desde el token o cambiando a cualquier moneda FIAT o Cripto."
+    },
+    "reserveTk": {
+      "title": "Reserva ahora tus tokens para la fase pública de la ICO del token Áureo de Febelink.",
+      "info": [
+        "Las compras se ejecutan por orden de inscripción.",
+        "La reserva no garantiza la participación, ya que no hay límites de reservas.",
+        "La disponibilidad es limitada.",
+        "La cantidad tiene que estar depositada en la wallet de Febelink.",
+        "Elige las fases en las que quieres participar y haz tu reserva ahora."
+      ],
+      "select": "SELECCIONA TU RESERVA",
+      "stage": "Fase",
+      "first": "Primera ",
+      "second": "Segunda ",
+      "third": "Tercera ",
+      "coin": "Euros",
+      "number": "Número de Tokens",
+      "button": "Reservar",
+      "modal": {
+        "title": "Completa tus datos"
+      }
+    },
+    "phases": {
+      "phase": "Fase",
+      "title": "INICIO VENTA PÚBLICA (ICO)",
+      "price": "Precio por token:",
+      "blocking": "Bloqueo:",
+      "release": "Liberación:",
+      "limit": "Límites de compra:",
+      "number": "Nº de tokens:",
+      "card": [
+        {
+          "phase": 1,
+          "date": "Desde las 00:00 del 5 de noviembre de 2021 a las 23:59 del 11 de noviembre de 2021 (hora de Madrid UTC+2)",
+          "price": "€ 0,10 (-66,6% de descuento)",
+          "blocking": "6 meses posteriores al cierre de la venta pública, liberación 01/Jun/2022",
+          "release": "5 meses de forma progresiva a razón del 20% por mes",
+          "limit": "mínimo € 1.000, máximo € 60.000\n% del total: 10%",
+          "number": "10 MM"
+        },
+        {
+          "phase": 2,
+          "date": "Desde las 00:00 del 12 de noviembre de 2021 a las 23:59 del 18 de noviembre de 2021 (hora de Madrid UTC+2)",
+          "price": "€ 0,20 (-33,3% de descuento)",
+          "blocking": "3 meses posteriores al cierre de la venta pública, liberación 01/Mar/2022",
+          "release": "5 meses de forma progresiva a razón del 20% por mes",
+          "limit": "mínimo € 500, máximo € 30.000\n% del total: 10%",
+          "number": "10 MM"
+        },
+        {
+          "phase": 3,
+          "date": "Desde las 00:00 del 19 de noviembre de 2021 a las 23:59 del 30 de noviembre de 2021 (hora de Madrid UTC+2)",
+          "price": "€ 0,30\n",
+          "blocking": "1 mes después del cierre de la venta pública, liberación el 01/Ene/2022",
+          "release": "inmediata tras el bloqueo\n",
+          "limit": "mínimo € 100, máximo € 10.000\n% del total: 5%",
+          "number": "5 MM"
+        }
+      ]
+    },
+    "aboutUs": {
+      "title": "SOBRE NOSOTROS",
+      "story": "Nuestra Historia",
+      "description": "Febelink es un buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar de forma más eficiente a los profesionales y empresas que necesitan, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
+      "press": "PRENSA",
+      "blog": "BLOG",
+      "blogFebelink": "BLOG DE FEBELINK",
+      "blogMedia": "LOS MEDIOS HABLAN",
+      "blogSearchEng": "¿QUÉ SON LOS BUSCADORES?",
+      "blogICO": "¿QUÉ ES UNA ICO?",
+      "podcast": "PODCAST",
+      "podcastBlockchain": "TERRITORIO BLOCKCHAIN",
+      "podcastInterview": "ENTREVISTA a CEO DE FEBELINK"
+    },
+    "aboutTeam": {
+      "title": "NUESTRO EQUIPO",
+      "description": "La experiencia y el conocimiento son señas de identidad de las personas que conforman nuestro grupo de trabajo. Únete a nuestro equipo en expansión.",
+      "juan": "Founder & CEO. Empresario con 27 años de experiencia, desarrollando su carrera principalmente en la consultoría financiera y en el sector de la automoción.",
+      "david": "Founder & CTO. Desarrollador con gran experiencia en sistemas en Cloud. Ha trabajo en grandes instituciones públicas y casas de subastas online como: Christie's, Hilco StremBank o LeasePlan.",
+      "miguel": "Profesional de marketing con amplia experiencia en tecnología y FMCG. responsable de marketing de diversas multinacionales como Hewlett-Packard o WD-40 Company.",
+      "miguelAngel": "(Minery Report) Especialista en Digitalización, Ciberseguridad y tecnología Blockchain. Cofundador de la dirección de Ciberseguridad del Ejercito del Aire, Ministerio de Defensa de España."
+    },
+    "footer": {
+      "doubts": "¿Tienes Alguna Duda? Contacta con Nosotros"
+    },
+    "success": {
+      "title": "Gracias!",
+      "subtitle": "Ha completado su registro en la lista de reservas.",
+      "text": "<p>Recibirá más información sobre el Aureo Token de Febelink en su bandeja de entrada en los próximos minutos. Revise su carpeta de correo no deseado o promociones.</p><p>Si el correo electrónico no le llega en los próximos 5 minutos, complete el formulario nuevamente aquí.</p>"
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "PROTECCION DE DATOS",
+      "pompadour": "En cumplimiento con lo establecido en la Ley 3/2018, los datos personales facilitados serán incorporados a nuestros ficheros automatizados y serán tratados con la máxima confidencialidad. Informándoles de sus derechos de acceso, rectificación, cancelación u oposición, que podrá ejercitarlos poniéndose en contacto por escrito en nuestro domicilio social, al objeto de garantizar que el tratamiento de los datos personales se desarrolle respetando los derechos y las libertades fundamentales, con especial atención a la confidencialidad, a la identidad personal y al derecho a la protección de los datos personales.",
+      "subtitle": "TÉRMINOS Y CONDICIONES DE USO DE FEBELINK",
+      "li": [
+        "Estos Términos y Condiciones de Uso regulan las reglas a que se sujeta la utilización de la APP Febelink (en adelante, la APP), que puede descargarse. La descarga o utilización de la APP atribuye la condición de Usuario a quien lo haga e implica la aceptación de todas las condiciones incluidas en este documento y en la Política de Privacidad y el Aviso Legal de dicha página Web. El Usuario debería leer estas condiciones cada vez que utilice la APP, ya que podrían ser modificadas en lo sucesivo.",
+        "Únicamente los Usuarios expresamente autorizados por Febelink podrán acceder a la descarga y uso de la APP. Los Usuarios que no dispongan de autorización, no podrán acceder a dicho contenido.",
+        "Cargos: eres responsable del pago de todos los costes o gastos en los que incurras como resultado de descargar y usar la Aplicación de Febelink, incluido cualquier cargo de red de operador o itinerancia. Consulta con tu proveedor de servicios los detalles al respecto.",
+        "Estadísticas anónimas: Febelink se reserva el derecho a realizar un seguimiento de tu actividad en la Aplicación de y a informar de ello a nuestros proveedores de servicios estadísticos de terceros. Todo ello de forma anónima.",
+        "Protección de tu información personal: queremos ayudarte a llevar a cabo todos los pasos necesarios para proteger tu privacidad e información. Consulta la Política de privacidad de Febelink y los avisos sobre privacidad de la Aplicación para conocer qué tipo de información recopilamos y las medidas que tomamos para proteger tu información personal.",
+        "Queda prohibido alterar o modificar ninguna parte de la APP a de los contenidas de la misma, eludir, desactivar o manipular de cualquier otra forma (o tratar de eludir, desactivar o manipular) las funciones de seguridad u otras funciones del programa y utilizar la APP o sus contenidos para un fin comercial o publicitario. Queda prohibido el uso de la APP con la finalidad de lesionar bienes, derechos o intereses de Febelink o de terceros. Queda igualmente prohibido realizar cualquier otro uso que altere, dañe o inutilice las redes, servidores, equipos, productos y programas informáticos de Febelink o de terceros.",
+        "La APP y sus contenidos (textos, fotografías, gráficos, imágenes, tecnología, software, links, contenidos, diseño gráfico, código fuente, etc.), así como las marcas y demás signos distintivos son propiedad de Febelink o de terceros, no adquiriendo el Usuario ningún derecho sobre ellos por el mero uso de la APP. El Usuario, deberá abstenerse de: a) Reproducir, copiar, distribuir, poner a disposición de terceros, comunicar públicamente, transformar o modificar la APP o sus contenidos, salvo en los casos contemplados en la ley o expresamente autorizados por Febelink o por el titular de dichos derechos. b) Reproducir o copiar para uso privado la APP o sus contenidos, así como comunicarlos públicamente o ponerlos a disposición de terceros cuando ello conlleve su reproducción. c) Extraer o reutilizar todo o parte sustancial de los contenidos integrantes de la APP.",
+        "Con sujeción a las condiciones establecidas en el apartado anterior, Febelink concede al Usuario una licencia de uso de la APP, no exclusiva, gratuita, para uso personal, y con carácter indefinido. Dicha licencia se concede también en los mismos términos con respecto a las actualizaciones y mejoras que se realizasen en la aplicación. Dichas licencias de uso podrán ser revocadas por Febelink unilateralmente en cualquier momento.",
+        "Corresponde al Usuario, en todo caso, disponer de herramientas adecuadas para la detección y desinfección de programas maliciosos o cualquier otro elemento informático dañino. Febelink no se responsabiliza de los daños producidos a equipos informáticos durante el uso de la APP. Igualmente, Febelink no será responsable de los daños producidos a los Usuarios cuando dichos daños tengan su origen en fallos o desconexiones en las redes de telecomunicaciones que interrumpan el servicio.",
+        "IMPORTANTE: Podemos, sin que esto suponga ninguna obligación contigo, modificar estas Condiciones de uso sin avisar en cualquier momento. Si continúas utilizando la aplicación una vez realizada cualquier modificación en estas Condiciones de uso, esa utilización continuada constituirá la aceptación por tu parte de tales modificaciones. Si no aceptas estas condiciones de uso ni aceptas quedar sujeto a ellas, no debes utilizar la aplicación ni descargar o utilizar cualquier software relacionado. El uso que hagas de la aplicación queda bajo tu única responsabilidad. No tenemos responsabilidad alguna por la eliminación o la incapacidad de almacenar o trasmitir cualquier contenido u otra información mantenida o trasmitida por la aplicación. No somos responsables de la precisión o la fiabilidad de cualquier información o consejo trasmitidos a través de la aplicación. Podemos, en cualquier momento, limitar o interrumpir tu uso a nuestra única discreción. Hasta el máximo que permite la ley, en ningún caso seremos responsables por cualquier pérdida o daño relacionados.",
+        "El Usuario se compromete a hacer un uso correcto de la APP, de conformidad con la Ley, con los presentes Términos y Condiciones de Uso y con las demás reglamentos e instrucciones que, en su caso, pudieran ser de aplicación El Usuario responderá frente a Febelink y frente a terceros de cualesquiera daños o perjuicios que pudieran causarse por incumplimiento de estas obligaciones.",
+        "Estos Términos y Condiciones de Uso se rigen íntegramente por la legislación española. Para la resolución de cualquier conflicto relativo a su interpretación o aplicación, el Usuario se somete expresamente a la jurisdicción de los tribunales de Málaga (España)."
+      ]
+    },
+    "warning": {
+      "title": "AVISO LEGAL DE FEBELINK",
+      "descript": [
+        "Para dar cumplimiento a la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico se pone a disposición del usuario el siguiente Aviso Legal.",
+        "Su observancia y cumplimiento serán exigibles respecto de cualquier persona que acceda, navegue o utilice el Sitio Web <a href=\"https://www.febelink.com\">https://www.febelink.com</a> y/o la aplicación móvil (en adelante, el “<strong>Sitio Web</strong>” y la “<strong>Aplicación</strong>” descargable a través de Google Play) de FEBELINK DIGITAL S.L. Si usted no está de acuerdo con las condiciones expuestas, no acceda, navegue o utilice los mismos."
+      ],
+      "points": [
+        {
+          "title": "1.  IDENTIFICACIÓN",
+          "items": [
+            {
+              "descript": "<strong>Titular: </strong>FEBELINK DIGITAL S.L. (en adelante, “<strong>FEBELINK</strong>”)"
+            },
+            {
+              "descript": "<strong>Domicilio social: </strong>Calle La Gitanilla, 17, Oficina 19, Pol. Ind. Santa Cruz, 29004, Málaga"
+            },
+            {
+              "descript": "<strong>Información registral: </strong>Registro Mercantil de Málaga, Boletín 86, Referencia 216576, Tomo 6031, Libro 4938, Folio 74, Sección 8, Hoja 160744, Inscripción 1."
+            },
+            {
+              "descript": "<strong>Teléfono de contacto: </strong>+34 952633297"
+            },
+            { "descript": "<strong>CIF: </strong>B05367511" },
+            {
+              "descript": "<strong>E-mail: </strong> <a href=\"mailto:info@febelink.com\">info@febelink.com</a>"
+            }
+          ]
+        },
+        {
+          "title": "2.  OBJETO",
+          "items": [
+            {
+              "descript": "El presente Aviso Legal establece las normas de acceso, navegación y utilización del Sitio Web y/o la Aplicación. No obstante, el acceso a determinados contenidos y la utilización de determinados servicios puede encontrarse sometido a determinadas condiciones particulares, que serán en todo caso claramente mostradas y deberán ser aceptadas expresamente por parte de los usuarios (en adelante, “<strong>Usuario</strong>” o “<strong>Usuarios</strong>”). Estas condiciones particulares podrán sustituir, completar o, en su caso, modificar las establecidas en el presente Aviso Legal."
+            }
+          ]
+        },
+        {
+          "title": "3.  SITIO WEB",
+          "items": [
+            {
+              "descript": "A través del Sitio Web y/o la Aplicación el Usuario podrá llevar a cabo las siguientes acciones:",
+              "items": [
+                "Registrarse como usuario de FEBELINK;",
+                "Conocer las especificaciones de los servicios ofrecidos;",
+                "Contratar los servicios ofrecidos;",
+                "Acceder a la comunidad de FEBELINK;",
+                "Obtener información acerca de las redes sociales;",
+                "Visualizar el contenido ofrecido en el Sitio Web y/o la Aplicación y la;",
+                "Contactar con FEBELINK a través del formulario de contacto;",
+                "Acceder a las diferentes ofertas de terceros ubicadas en el Sitio Web y/o la Aplicación;",
+                "Acceder a los textos legales que regulan la navegación del Sitio Web y/o la Aplicación."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "4.  ACCESO Y REGISTRO",
+          "items": [
+            {
+              "descript": "El acceso a los contenidos del Sitio Web y/o la Aplicación es completamente gratuito."
+            },
+            {
+              "descript": "Cuando un Usuario facilite datos de carácter personal a través de alguno de los formularios habilitados al efecto en el Sitio Web y/o la Aplicación, será necesario que previamente acepte la  <a id=\"openprivacypolicy1\" style=\"cursor:pointer;\">Política de Privacidad."
+            },
+            {
+              "descript": " En todo caso, queda prohibido el acceso y navegación en el Sitio Web y/o la Aplicación por parte de los menores de dieciocho (18) años. Se presumirá que el acceso realizado por un menor al Sitio Web se ha realizado con autorización previa y expresa de sus padres, tutores o representantes legales."
+            },
+            {
+              "descript": " Bajo ningún concepto FEBELINK se responsabilizará de la veracidad de los datos facilitados por los Usuarios, por lo que cada uno de éstos será el único responsable de las posibles consecuencias, errores y fallos que pudieran derivarse de la falta de exactitud de los datos facilitados."
+            }
+          ]
+        },
+        {
+          "title": "5.  DERECHOS DE PROPIEDAD INTELECTUAL E INDUSTRIA",
+          "items": [
+            {
+              "title": "5.1.  Derechos sobre el contenido",
+              "items": [
+                {
+                  "descript": "FEBELINK es propietario o, en su caso, cuenta con las licencias correspondientes sobre los derechos de explotación de propiedad intelectual e industrial necesarios para operar en el Sitio Web y/o la Aplicación, así como de todos los contenidos ofrecidos en el mismo, incluyendo el propio Sitio Web, textos, fotografías o ilustraciones, logos, marcas, grafismos, diseños, interfaces, o cualquier otra información o contenido, y los servicios disponibles a través del mismo."
+                }
+              ]
+            },
+            {
+              "title": "5.2.  Derechos sobre el Sitio Web y/o la Aplicación",
+              "items": [
+                {
+                  "descript": " En ningún caso se entenderá que el acceso, navegación y utilización del Sitio Web y/o de la Aplicación por parte del Usuario implica una renuncia, transmisión, licencia o cesión total o parcial de dichos derechos por parte de FEBELINK. El Usuario dispone de un derecho de uso de los contenidos y/o servicios del Sitio Web y/o de la Aplicación dentro de un ámbito estrictamente doméstico y únicamente con la finalidad de disfrutar de las prestaciones del servicio de acuerdo con el presente Aviso Legal."
+                },
+                {
+                  "descript": "Las referencias a marcas o nombres comerciales registrados, u otros signos distintivos, ya sean propiedad de FEBELINK o de terceros, llevan implícita la prohibición sobre su uso sin el consentimiento de FEBELINK o de sus legítimos propietarios. En ningún momento el acceso, navegación o utilización del Sitio Web y/o de la Aplicación y/o de sus contenidos confiere al Usuario derecho alguno sobre signos distintivos en él incluidos, salvo que se disponga lo contrario en el presente Aviso Legal."
+                },
+                {
+                  "descript": "Quedan reservados todos los derechos de propiedad intelectual e industrial sobre los contenidos y/o servicios del Sitio Web y/o de la Aplicación y, en particular, queda prohibido modificar, copiar, reproducir, comunicar públicamente, transformar o distribuir, por cualquier medio y bajo cualquier forma, la totalidad o parte de los contenidos incluidos en el Sitio Web y/o en la Aplicación, para cualquier fin, si no se cuenta con la autorización previa, expresa y por escrito de FEBELINK o, en su caso, de FEBELINK  de los derechos correspondientes."
+                },
+                {
+                  "descript": "Asimismo, queda prohibido suprimir o manipular las indicaciones de copyright u otros créditos que identifiquen a los titulares de derechos de los contenidos que el Usuario encuentre en el Sitio Web y/o en la Aplicación, así como los dispositivos técnicos de protección, las huellas digitales, o cualquier mecanismo de protección o información incorporada a los contenidos ofrecidos en el Sitio Web y/o en la Aplicación."
+                },
+                {
+                  "descript": "Los servicios ofrecidos, o cualquier información dispuesta a través del Sitio Web y/o de la Aplicación no podrán ser utilizados para fines comerciales o publicitarios sin autorización previa de FEBELINK."
+                },
+                {
+                  "descript": "En todo caso, el Usuario se compromete a no usar el Sitio Web y/o la Aplicación para fines ilegales o prohibidos."
+                }
+              ]
+            },
+            {
+              "title": "5.3.  Derechos sobre los contenidos e informaciones difundidas por el Usuario",
+              "items": [
+                {
+                  "descript": "En el caso de que el Usuario envíe información o contenidos de cualquier tipo a FEBELINK a través de cualquiera de los canales habilitados al efecto, el Usuario declara, garantiza y acepta que tiene derecho a hacerlo libremente, que dicha información no infringe ningún derecho de propiedad intelectual, industrial, secreto comercial o cualesquiera otros derechos de terceros, y que dicha información no tiene carácter confidencial ni es perjudicial para terceros."
+                },
+                {
+                  "descript": "El Usuario reconoce asumir la responsabilidad, dejando indemne a FEBELINK, por cualquier comunicación o contenidos que envíe personalmente o a su nombre."
+                },
+                {
+                  "descript": "Si el Usuario tuviera conocimiento de la existencia de algún contenido ilícito, ilegal, contrario a las leyes o que pudiera suponer una infracción de derechos de propiedad intelectual, industrial, o de cualquier otra índole, deberá notificarlo inmediatamente a FEBELINK a través de la dirección de correo electrónico <a href=\"mailto:info@febelink.com\">info@febelink.com</a> para que éste pueda proceder a la adopción de las medidas oportunas."
+                },
+                {
+                  "descript": "De igual modo, en el caso de que cualquier Usuario o un tercero consideren que alguno de los contenidos del Sitio Web y/o de la Aplicación, propiedad de FEBELINK, vulnera sus derechos de propiedad intelectual, industrial, o de cualquier otra índole, deberá remitir una comunicación a <a href=\"mailto:info@febelink.com\">info@febelink.com</a> con la siguiente información:",
+                  "items": [
+                    "Datos identificativos y medio de contacto del reclamante o de su representante legal;",
+                    "Documentación que acredite su condición de titular de los derechos supuestamente infringidos;",
+                    "Relato detallado de los derechos supuestamente infringidos por FEBELINK, así como su localización exacta dentro del Sitio Web y/o de la Aplicación;",
+                    "Declaración expresa por parte del reclamante de que la utilización de los contenidos se ha realizado sin el consentimiento del titular de los derechos supuestamente infringidos."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6.  ENLACES",
+          "items": [
+            {
+              "title": "6.1.  Enlaces a otras páginas web",
+              "items": [
+                {
+                  "descript": "En caso de que en el Sitio Web y/o la Aplicación se mostraran enlaces a otras páginas web mediante diferentes botones, links, banners o contenidos embebidos, FEBELINK informa de que éstos se encuentran gestionados por terceros, no teniendo FEBELINK ni medios humanos ni técnicos para conocer de forma previa y/o controlar y/o aprobar toda la información, contenidos, productos o servicios facilitados por otras plataformas a las que se puedan establecer enlaces desde el Sitio Web y/o la Aplicación."
+                },
+                {
+                  "descript": "En consecuencia, FEBELINK no podrá asumir ningún tipo de responsabilidad por cualquier aspecto relativo al Sitio Web o a la Aplicación o página web a la que se pudiera establecer un enlace desde el Sitio Web y/o la Aplicación, en concreto, a título enunciativo, pero no limitativo, sobre su funcionamiento, acceso, datos, información, archivos, calidad y fiabilidad de sus productos y servicios, sus propios enlaces y/o cualquiera de sus contenidos, en general."
+                },
+                {
+                  "descript": "En este sentido, si los Usuarios tuvieran conocimiento efectivo de que las actividades desarrolladas a través de estas páginas web de terceros son ilegales o contravienen la moral y/o el orden público, deberán comunicarlo inmediatamente a FEBELINK a los efectos de que se proceda a deshabilitar el enlace de acceso a las mismas, acción que se llevará a cabo en el menor tiempo posible."
+                },
+                {
+                  "descript": "En cualquier caso, el establecimiento de cualquier tipo de enlace desde el Sitio Web y/o la Aplicación a otra página web ajena no implicará que exista algún tipo de relación, colaboración o dependencia entre FEBELINK y el responsable de dicha página web ajena."
+                }
+              ]
+            },
+            {
+              "title": "6.2.  Enlaces al canal de FEBELINK en otras plataformas y redes sociales",
+              "items": [
+                {
+                  "descript": "FEBELINK pone a disposición de los Usuarios, a través de diferentes herramientas y aplicaciones, medios de enlace que permiten a los Usuarios acceder a los canales y páginas del Sitio Web y/o de la Aplicación que mantiene en diferentes plataformas y redes sociales pertenecientes y/o gestionadas por terceros (p.ej. Facebook, etc.). La inclusión de estos enlaces en el Sitio Web y/o la Aplicación tiene por único objeto facilitar a los Usuarios el acceso a dichos canales en las diferentes plataformas y redes sociales."
+                },
+                {
+                  "descript": "El establecimiento de estas aplicaciones no implica la existencia de relación alguna entre FEBELINK y el propietario, fabricante o distribuidor del Sitio Web y/o de la Aplicación enlazado, como tampoco la aceptación y aprobación por parte de FEBELINK de sus contenidos y/o servicios, siendo su propietario, fabricante o distribuidor el único responsable de los mismos."
+                },
+                {
+                  "descript": "La activación y uso de estas aplicaciones puede conllevar la identificación y autenticación del Usuario (login/contraseña) en las plataformas correspondientes, completamente externas al Sitio Web y fuera del control de FEBELINK. Al acceder a dichas redes externas, el Usuario ingresa en un entorno no controlado por FEBELINK, por lo que FEBELINK no asumirá ninguna responsabilidad sobre la configuración de seguridad de dichos entornos."
+                },
+                {
+                  "descript": "Dado que FEBELINK puede tener un control limitado sobre el contenido alojado en dichos canales, el Usuario reconoce y acepta que FEBELINK no asume responsabilidad alguna por el contenido ni por los servicios a los que el Usuario pueda acceder en dichas páginas, ni por cualquier contenido, productos, servicios, publicidad, ni cualquier otro material disponible en los mismos."
+                }
+              ]
+            },
+            {
+              "title": "6.3.  Enlaces en otras páginas web con destino a el Sitio Web y/o la Aplicación",
+              "items": [
+                {
+                  "descript": "FEBELINK no autoriza el establecimiento de un enlace al Sitio Web desde aquellas páginas que contengan materiales, información o contenidos ilícitos, ilegales, degradantes, obscenos y, en general, que contravengan las leyes, la moral o el orden público, o las normas sociales generalmente aceptadas."
+                },
+                {
+                  "descript": "En todo caso, los Usuarios podrán establecer enlaces que dirijan al Sitio Web, siempre y cuando cumplan con las siguientes condiciones:",
+                  "items": [
+                    "El enlace no podrá reproducir el contenido del Sitio Web y/o de la Aplicación o partes del mismo de ninguna forma;",
+                    "No está permitido crear un browser ni un border environment sobre las secciones del Sitio Web y/o la Aplicación y/o de la Aplicación, ni de ninguna otra forma podrá modificarse el Sitio Web y/o la Aplicación;",
+                    "No está permitido realizar manifestaciones o indicaciones falsas o inexactas o incorrectas sobre el Sitio Web y/o la Aplicación y/o, en particular, declarar o dar a entender que FEBELINK ha autorizado el enlace o que ha supervisado o asumido de cualquier forma los contenidos o servicios ofrecidos o puestos a disposición en la página web en la que se establece dicho enlace;",
+                    "La página web en la que se establezca el enlace al Sitio Web o a la Aplicación no contendrá informaciones o contenidos ilícitos, contrarios a la moral y buenas costumbres generalmente aceptadas y al orden público, así como tampoco contendrá contenidos contrarios a cualesquiera derechos de terceros, incluidos los derechos de propiedad intelectual o industrial y/o el derecho al honor, a la intimidad personal o familiar o a la propia imagen o de cualquier otro derecho, o contenidos contrarios a las normas reguladoras de la protección de datos de carácter personal."
+                  ]
+                },
+                {
+                  "descript": "FEBELINK no tiene facultad ni medios humanos ni técnicos para conocer, controlar ni aprobar toda la información, contenidos, productos o servicios facilitados por otras páginas web que tengan establecidos enlaces con destino al Sitio Web o a la Aplicación. Por lo tanto, FEBELINK no asume ningún tipo de responsabilidad por cualquier aspecto relativo a la página web que establece ese enlace con destino al Sitio Web o a la Aplicación; en concreto, a título enunciativo y no limitativo, sobre su funcionamiento, acceso, datos, información, archivos, calidad y fiabilidad de sus productos y servicios, sus propios enlaces y/o cualquiera de sus contenidos, en general."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "7.  REGLAS DE USO DEL SITIO WEB Y DE LA APLICACIÓN",
+          "items": [
+            {
+              "descript": "No está permitido y, por tanto, sus consecuencias serán de la exclusiva responsabilidad del Usuario, el acceso o la utilización del Sitio Web y/o de la Aplicación con fines ilegales o no autorizados, con o sin ánimo de lucro. En particular, y sin que el siguiente listado tenga carácter limitativo, queda prohibido:",
+              "items": [
+                "Usar el Sitio Web y/o la Aplicación en forma alguna que pueda provocar daños, interrupciones, ineficiencias o defectos en su funcionamiento o en los equipos informáticos de un tercero;",
+                "Usar el Sitio Web y/o la Aplicación para la transmisión, instalación o publicación de cualquier virus, código malicioso u otros programas o archivos perjudiciales o con intenciones ilícitas;",
+                "Usar el Sitio Web y/o la Aplicación para transmitir con fines publicitarios o de promoción, incluidos spam, correos electrónicos en cadena o similares, sin la previa autorización expresa y por escrito de FEBELINK;",
+                "Usar el Sitio Web y/o la Aplicación para recoger datos de carácter personal de otros Usuarios;",
+                "Usar el Sitio Web y/o la Aplicación de forma ilegal, en contra de la buena fe, la moral y el orden público;",
+                "Registrarse a través del Sitio Web y/o de la Aplicación con una identidad falsa, suplantando a terceros o utilizando un perfil o realizando cualquier otra acción que pueda confundir a otros Usuarios sobre la identidad del Usuario;",
+                "Acceder sin autorización a cualquier sección del Sitio Web y/o de la Aplicación, a otros sistemas o redes conectados al Sitio Web, a los servidores de FEBELINK, o a los servicios ofrecidos a través del Sitio Web y/o de la Aplicación, por medio de pirateo o falsificación, extracción de contraseñas o cualquier otro medio ilegítimo;",
+                "Llevar a cabo alguna acción que provoque una saturación desproporcionada o innecesaria en la infraestructura del Sitio Web y/o de la Aplicación o en los sistemas o redes de FEBELINK, así como en los sistemas y redes conectados al Sitio Web;",
+                "acceder sin autorización a cualquier sección del Sitio Web y/o de la Aplicación, a otros sistemas o redes conectados a los mismos, a cualquier servidor de FEBELINK o a los servicios ofrecidos a través del Sitio Web y/o de la Aplicación por medio de pirateo o falsificación, extracción de contraseñas o cualquier otro medio ilegítimo o establecido en el presente Aviso Legal;",
+                "usar el Sitio Web y/o la Aplicación para transmitir o publicar cualquier material de carácter difamatorio, ofensivo, racista, vulgar, denigrante, pornográfico, o de naturaleza obscena o amenazadora o que pueda molestar, perjudicar o meramente afectar a cualquier persona bajo el criterio de FEBELINK;",
+                "Impedir el normal desarrollo de un evento, concurso, promoción o cualquier otra actividad disponible a través del Sitio Web y/o de la Aplicación o cualesquiera de sus funcionalidades, ya sea alterando o tratando de alterar, ilegalmente o de cualquier otra forma, el acceso, participación o funcionamiento de aquéllos, o falseando el resultado de los mismos y/o utilizando métodos de participación fraudulentos, mediante cualquier procedimiento, y/o a través de cualquier práctica que atente o vulnere el presente aviso legal."
+              ]
+            },
+            {
+              "descript": "El incumplimiento de cualquiera de las anteriores obligaciones por el Usuario podrá llevar aparejada la adopción por FEBELINK de las medidas oportunas amparadas en Derecho y en el ejercicio de sus derechos u obligaciones, pudiendo llegar a la eliminación o bloqueo de la cuenta del Usuario infractor, sin que medie posibilidad de indemnización alguna por los daños y perjuicios causados."
+            }
+          ]
+        },
+        {
+          "title": "8.  RESPONSABILIDADES Y GARANTÍAS",
+          "items": [
+            {
+              "descript": "En consecuencia, FEBELINK no garantiza ni se hace responsable de:",
+              "items": [
+                "La continuidad de los contenidos, servicios y/o las funcionalidades del Sitio Web y/o la Aplicación y/o de la Aplicación;",
+                "La ausencia de virus o demás componentes dañinos en el Sitio Web y/o la Aplicación o en el servidor que lo suministra;",
+                "La invulnerabilidad del Sitio Web y/o de la Aplicación o la imposibilidad de vulnerar las medidas de seguridad que se adopten para el mismo;",
+                "La falta de utilidad o rendimiento de los contenidos del Sitio Web y/o la Aplicación y/o de la Aplicación, y;",
+                "los fallos del Sitio Web y/o de la Aplicación ocasionados por cualquier tipo de ataque a sus servidores o a los de terceros proveedores de servicios de FEBELINK, así como los fallos técnicos o de seguridad del sistema de cualquier de dichos proveedores que impidan el correcto funcionamiento del Sitio Web y/o la Aplicación y/o de la Aplicación;",
+                "cualquier fallo técnico, de cualquier tipo, que dificulte, retrase o impida el correcto funcionamiento del Sitio Web y/o la Aplicación y/o de la Aplicación;",
+                "Los daños o perjuicios que cause, a sí mismo o a un tercero, cualquier persona que infringiera las condiciones, normas e instrucciones que FEBELINK establece, o a través de la vulneración de sistemas de seguridad."
+              ]
+            },
+            {
+              "descript": "No obstante, FEBELINK declara que ha adoptado todas las medidas necesarias, dentro de sus posibilidades y del estado de la técnica, para garantizar el funcionamiento del Sitio Web y/o de la Aplicación y reducir al mínimo los errores del sistema, tanto desde el punto de vista técnico como de los contenidos publicados en el Sitio Web y/o la Aplicación."
+            },
+            {
+              "descript": "FEBELINK no será responsable de la veracidad, integridad o actualización de las informaciones contenidas en otras plataformas a las que se enlace desde el Sitio Web y/o la Aplicación. FEBELINK no asumirá responsabilidad en cuanto a hipotéticos perjuicios que pudieran originarse por el uso de las citadas informaciones."
+            },
+            {
+              "descript": "FEBELINK no responderá por causas ajenas a su control, entre las que pueden enumerarse de manera no limitativa: fuerza mayor, problemas de acceso a internet, problemas tecnológicos más allá de la gestión diligente y razonable de FEBELINK, acciones u omisiones de terceros, etc. En todos los casos referidos, ajenos al control y la diligencia debida por FEBELINK, no habrá lugar a indemnización de FEBELINK al Usuario por daños o perjuicios, en la medida en que así lo permita la legislación vigente."
+            }
+          ]
+        },
+        {
+          "title": "9.  SUSPENSIÓN DEL SITIO WEB Y/O DE LA APLICACIÓN",
+          "items": [
+            {
+              "descript": "FEBELINK se reserva el derecho a suspender, modificar, restringir o interrumpir, ya sea temporal o permanentemente, el acceso, navegación, uso, alojamiento y/o descarga del contenido y/o uso de servicios del Sitio Web y/o la Aplicación y/o de la Aplicación, con o sin previa notificación, a los Usuarios que contravengan cualquiera de las disposiciones detalladas en el presente aviso legal, sin que medie la posibilidad del Usuario de exigir indemnización alguna por esta causa."
+            }
+          ]
+        },
+        {
+          "title": "10.  PROTECCIÓN DE DATOS",
+          "items": [
+            {
+              "descript": "De conformidad con lo dispuesto por la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, todos los datos de carácter personal recabados durante la utilización del Sitio Web y/o de la Aplicación serán tratados de conformidad con lo dispuesto en la <a id=\"openprivacypolicy2\" style=\"cursor:pointer;\">Política de Privacidad</a>, que todo Usuario debe aceptar expresamente en caso de facilitar datos de carácter personal a través del Sitio Web y/o la Aplicación y/o de la Aplicación."
+            }
+          ]
+        },
+        {
+          "title": "11.  GENERALES",
+          "items": [
+            {
+              "descript": "Los encabezamientos de las distintas cláusulas son sólo informativos, y no afectarán, calificarán o ampliarán la interpretación del presente Aviso Legal. Asimismo, FEBELINK podrá modificar las condiciones aquí estipuladas, total o parcialmente, publicando cualquier cambio en la misma forma en que aparece este aviso legal o a través de cualquier tipo de comunicación dirigida a los Usuarios."
+            },
+            {
+              "descript": "La vigencia temporal del presente Aviso Legal coincide, por tanto, con el tiempo de su exposición, hasta que sea modificado total o parcialmente, momento en el cual pasará a tener vigencia el aviso legal modificado."
+            },
+            {
+              "descript": "FEBELINK podrá dar por terminado, suspender o interrumpir, en cualquier momento y sin necesidad de preaviso, el acceso a los contenidos del Sitio Web y/o la Aplicación y/o de la Aplicación, sin posibilidad por parte del Usuario de exigir indemnización alguna. Tras dicha extinción, seguirán vigentes las prohibiciones de uso de los contenidos expuestas anteriormente en el presente aviso legal."
+            },
+            {
+              "descript": "En el caso de que cualquier disposición del presente aviso legal fuese declarada nula o inaplicable, en su totalidad o en parte, por cualquier Juzgado, Tribunal u órgano administrativo competente, dicha nulidad o inaplicación no afectará a las restantes disposiciones del presente aviso legal."
+            },
+            {
+              "descript": "El no ejercicio o ejecución por parte de FEBELINK de cualquier derecho o condición contenido en el presente aviso legal no constituirá una renuncia al mismo, salvo reconocimiento y acuerdo por escrito por su parte."
+            }
+          ]
+        },
+        {
+          "title": "12.  LEGISLACIÓN APLICABLE Y JURISDICCIÓN COMPETENTE",
+          "items": [
+            {
+              "descript": "La normativa vigente determinará las leyes que deban regir y la jurisdicción que deba conocer de las relaciones entre FEBELINK y los Usuarios del Sitio Web y/o de la Aplicación. No obstante, siempre que dicha normativa prevea la posibilidad para los sujetos intervinientes de someterse a un fuero determinado, para toda cuestión litigiosa derivada o relacionada con este Sitio Web y/o con la Aplicación será de aplicación la legislación española vigente en el momento del litigio. Asimismo, FEBELINK y los usuarios, con renuncia expresa a cualquier otro fuero que pudiera corresponderles, se someten a los Juzgados y Tribunales de Málaga."
+            },
+            {
+              "descript": "Resolución de litigios en línea en materia de consumo conforme al Art. 14.1 del Reglamento (UE) 524/2013: La Comisión Europea facilita una plataforma de resolución de litigios en línea que se encuentra disponible en el siguiente enlace: <a href=\"http://ec.europa.eu/consumers/odr/\">http://ec.europa.eu/consumers/odr/</a>."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "admin": {
+    "tokensUsers": {
+      "placeholder": "Gestionar tokens de usuarios",
+      "placeholder_users": "Buscar Usuario",
+      "num": "N° Tokens",
+      "phase": "Fase",
+      "payed": "Pagado",
+      "retained": "Pte. Envío",
+      "date": "Fecha de Liberación",
+      "actions": "Acciones",
+      "create": "Crear Nueva Reserva",
+      "update": "Editar {{ name }} {{ surname }}",
+      "delete": {
+        "done": "Tokens eliminados",
+        "error": "No se pudo eliminar"
+      },
+      "irreversible": " ESTA ACCIÓN NO ES REVERSIBLE",
+
+      "purchase-date": "Fecha de Pago",
+
+      "modal": {
+        "header": "{{ CRUD }} tokens de usuario",
+        "body": "¿Seguro que deseas {{ CRUD }} los tokens de {{name}}?{{ extra }}"
+      },
+
+      "loading": "Accion Desbilitada durante Carga",
+      "error": {
+        "some": "Ha habido un error",
+        "num_tokens": "Debe indicar el Número de Tokens",
+        "phase_tokens": "Debe indicar la Fase",
+        "retained": "No puedes modificar Tokens no retenidos"
+      }
+    },
+
+    "create": "Añadir",
+    "read": "Leer",
+    "update": "Editar",
+    "delete": "Eliminar"
+  },
+  "kyc": {
+    "verify": "Verificar Identidad",
+    "start": {
+      "header": "Verificación de Identidad y Prueba de Vida",
+      "title": "Para continuar, necesitaremos Verificar tu identidad.",
+      "subtitle": "Solo tomará un minuto",
+      "toProceed": "Para proceder con la captura del documento, selecciona el país emisor",
+      "selectCountry": "Selecciona el país emisor del Documento",
+      "noCountry": "Ningún país encontrado"
+    },
+    "docTypes": {
+      "idcard": "Carnet de Identidad Nacional",
+      "passport": "Pasaporte",
+      "residencepermit": "Permiso de Residencia",
+      "driverlicense": "Licencia de Conducir"
+    },
+    "verifying": "Verificando Usuario",
+    "loading": "Procesando los datos",
+    "cancel": {
+      "title": "Para continuar debe completar la prueba de vida",
+      "message": "¿Desea reintentar para poder seguir con el proceso?"
+    },
+    "errors": {
+      "user": {
+        "title": "Usuario no encontrado",
+        "message": "Primero debe crear una cuenta para validar su identidad"
+      },
+      "alice": {
+        "title": "Parece que hubo un error",
+        "message": "Desea reintentar para poder seguir con el proceso?"
+      },
+      "title": "Tienes errores en la validación de Prueba de Vida",
+      "document": {
+        "none": "No ha cargado un documento para validar",
+        "frontFields": "No he podido corroborar ningun campo de la parte Frontal del documento",
+        "backFields": "No he podido corroborar ningun campo de la parte Trasera del documento",
+
+        "err": "Checkea que los siguientes campos del <b>Documento</b> no tengan problemas",
+        "name": "Nombre",
+        "surname": "Apellido",
+        "birthdate": "Fecha de Nacimiento",
+        "legal_age": "Mayoria de Edad",
+        "expire": "Fecha de Caducidad",
+        "number": "Numero de Documento",
+
+        "consistent": "Hay al menos 2 campos inconsistentes entre ambos lados del documento",
+        "expected": "El tipo de Documento seleccionado y/o el país emisor no concuerdan con el Documento cargado"
+      },
+      "selfie": {
+        "none": "No ha realizado la prueba de Selfie",
+
+        "err": "Los errores con respecto a la <b>Selfie</b> son:",
+        "is_real": "No ha pasado la prueba de suplantación ( imagenes impresas, videos en pantallas, mascaras, entre otras )",
+        "face_match": "No se ha encontrado relacion entre la Selfie y la foto del documento"
+      }
+    },
+    "alert": {
+      "complete": {
+        "head": "Completa el KYC",
+        "msg": "Este paso sólo te llevará un momento y lo tienes que realizar una sola vez. Así tenemos un entorno más seguro para toda la comunidad"
+      },
+
+      "ios": {
+        "tile": "Validacion de KYC en Fase Beta",
+        "message": "Al encontrarse en Desarrollo para iOS, puede tener fallas. Si no puede terminar el proceso, continuelo desde el navegador en www.febelink.com"
+      }
+    },
+    "verified": "Verificacion de Vida Exitosa",
+    "unverified": "Verificacion de Vida Fallida"
+  }
 }
