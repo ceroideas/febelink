@@ -140,7 +140,11 @@
             { "short": "Oct", "long": "October" },
             { "short": "Nov", "long": "November" },
             { "short": "Dec", "long": "December" }
-        ]
+        ],
+
+        "social": {
+            "telegram": "Join the Chat conversation in Telegram"
+        }
     },
     "menu": {
         "tabs": {
@@ -402,20 +406,32 @@
     },
     "landing": {
         "header": {
-            "welcome1": "Welcome to ",
-            "welcome2": "Febelink",
-            "welcome3": "'s ICO: Token Aureo"
+            "welcome1": "Launch of the FLAU Token",
+            "welcome2": "Febelink Áureo"
         },
         "whitelist": {
-            "signUp": "Sign up to the WhiteList and receive all the updated information.",
+            "signUp": "Sign up now and receive all the updated information.",
             "mail": "Enter your email address",
             "action": {
-                "toDo": "Subscribe me",
+                "toDo": "Register",
                 "done": "Subscribed ✔"
             },
             "download": "Download Whitepaper",
             "success": "Thank you for subscribing to our WhiteList"
         },
+        "airdrop": [
+            "Participate in the launching of the FLAU Token (Febelink Áureo) and with the Airdrop get fantastic Prizes <i class =\"margin-end abicon-gift\"></i>",
+
+            "<br>We are going to distribute 1 MILLION FLAU tokens among all participants that:",
+            "<i class=\"margin-end abicon-check\"></i>Make a purchase of FLAU tokens between January 12 and 30, 2022 (both days included).",
+            "<i class=\"margin-end abicon-check\"></i>Keep those tokens for at least 2 months from the day of purchase.",
+            "<i class=\"margin-end abicon-sackdollar\"></i>WIN 1 GIFT of FLAU token <i class=\"margin-end abicon-gift\"></i>for every 2 FLAU tokens purchased in this Airdrop.",
+            
+            "<br>Did you participate in the Febelink ICO? We have another surprise for you.",
+            "<i class=\"margin-end abicon-sackdollar\"></i>WIN 2x1 on FLAU tokens purchased in this Airdrop.",
+            
+            "<br>¡Sign up now and don't miss it!"
+        ],
         "tokens": {
             "title": "Save your tokens",
             "button": "Save tokens"
@@ -497,7 +513,7 @@
         "aboutUs": {
             "title": "ABOUT US",
             "story": "Our story",
-            "description": "Febelink is a search engine for professional services, a social network where users publish their searches and the system sends notifications to professionals related to the activity. Our goal is to help people more efficiently find the professionals and companies they need, and to help companies and professionals find new clients.",
+            "description": "Febelink is the search engine for professional services, a social network where users publish their searches and the system sends notifications to professionals related to the activity. Our goal is to help people find the professionals and companies they need more efficiently, and to help companies and professionals find new clients.",
             "press": "PRESS",
             "blog": "BLOG",
             "blogFebelink": "FEBELINK's BLOG",
