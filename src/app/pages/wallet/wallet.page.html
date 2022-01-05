@@ -76,6 +76,37 @@
               <ion-label class="decimal"><b>{{ currency.amount| splitNumber: true }}</b></ion-label>
             </ion-col>
           </ion-row>
+          
+          <!-- Buy Assets -->
+          <ion-card *ngIf="currency?.priceBuy > 0" color="febelink" click-stop-propagation>
+            <ion-row class="vertical-content padding-end no-margin">
+              <ion-col size="6" size-sm="12" class="no-padding">
+                <ion-row class="vertical-content ion-no-padding">
+                  <i class="margin-end abicon-shopping-cart" (click)="buy( amount?.value, currency )"></i>
+                </ion-row>
+              </ion-col>
+              <ion-col size="6" size-sm="12" class="text-right no-padding">
+                <ion-row>
+                  <ion-input #amount
+                    clearInput
+                    name="code" class="text-center margin-end"
+                    [placeholder]="'pages.wallet.qDemand' | translate"
+                    [debounce]="300"
+                    type="number" min="0.00" step="0.01"
+                  ></ion-input>
+                </ion-row>
+
+                <ng-container *ngIf="( amount.value | str2num ) > 0">
+                  <ion-row>
+                    <ion-label>{{ 'Stripe Fee ' + 5 + '%: ' + (( amount.value | str2num ) * 5 / 100 ) }}</ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-label>{{ 'Total: ' + (( amount.value | str2num ) * (100 - 5) / 100 ) }}</ion-label>
+                  </ion-row>
+                </ng-container>
+              </ion-col>
+            </ion-row>
+          </ion-card>
         </ion-card>
       </ion-col>
     </ion-row>

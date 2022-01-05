@@ -26,6 +26,7 @@ export class WalletPage implements OnInit {
   kycVerified: boolean;
   transactions: CryptoTransactions;
   minnersFee: string;
+  stripeFee: number;
 
   hideRetained: boolean = true;
   hideTransactions: boolean = false;
@@ -68,6 +69,8 @@ export class WalletPage implements OnInit {
     this.transactions = response.transacciones;
     this.minnersFee = response.minnersFee;
     this.isLoading = false;
+    this.stripeFee = response.stripe_fee;
+    console.log( 'response: ', response );
   }
 
   async copyPublicKey() {
@@ -117,5 +120,9 @@ export class WalletPage implements OnInit {
       this.utilities.translateService.instant( 'pages.wallet.help.message' ),
       'alertSmallTitle'
     );
+  }
+
+  buy( amount, currency ) {
+    console.log( 'value: ', amount, ' || currency: ', currency );
   }
 }
