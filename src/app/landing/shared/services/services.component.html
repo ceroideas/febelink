@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="text-center">
+    <div class="text-center" *ngIf="trustedVideoUrl">
       <iframe width="255px" height="300px" [src]="trustedVideoUrl" frameborder="0"></iframe>
     </div>
 
