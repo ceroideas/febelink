@@ -32,11 +32,11 @@ export class UtilitiesService {
     toast.present();
   }
 
-  async showAlert(title: string, message: string, css?: string) {
+  async showAlert(title: string, message: string, css?: string, buttons: (string | any)[] = ['OK']) {
     const alert = await this.alertCtrl.create({
       header: title,
       message: message,
-      buttons: ['OK'],
+      buttons: buttons,
       cssClass: css
     });
 
