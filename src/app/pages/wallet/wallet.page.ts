@@ -3,13 +3,15 @@ import { Location } from '@angular/common';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { CryptoCurrency, CryptoTransactions } from 'src/app/models/currency.model';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ExchangeComponent } from './exchange/exchange.component';
 import { IUser } from 'src/app/models/user.model';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
 import { DateFormatType } from 'src/app/pipes/date-format';
+import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
+import { ActivatedRoute } from '@angular/router';
+import { InformComponent } from 'src/app/components/inform/inform.component';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -26,7 +28,7 @@ export class WalletPage implements OnInit {
   kycVerified: boolean;
   transactions: CryptoTransactions;
   minnersFee: string;
-  stripeFee: number;
+  stripeFee: string;
 
   hideRetained: boolean = true;
   hideTransactions: boolean = false;
@@ -38,15 +40,41 @@ export class WalletPage implements OnInit {
   constructor(
       private location: Location
     , private walletSvc: WalletService
-    , private clipboard: Clipboard
     , private utilities: UtilitiesService
     , private modalCtrl: ModalController
-    , private platform: Platform
+    , private route: ActivatedRoute,
   ) {}
 
   async ngOnInit() {
     this.getWalletInfo();
+    this.haveYouPurchased();
     this.isAdmin = await this.utilities.isAdmin();
+  }
+
+  async haveYouPurchased() {
+    const params = ( <any> this.route.snapshot.queryParamMap ).params;
+    console.log( 'what are the params: ', params );
+
+    if( params[ 'bought' ] != 'false' && params[ 'bought' ] != 'true' )
+      return;
+    
+    const bought = params[ 'bought' ] == 'true';
+    const assetId = params[ 'assetId' ];
+    const numTokens = params[ 'numTokens' ];
+    const totalTokensCost = params[ 'totalTokensCost' ];
+    const priceBuy = params[ 'priceBuy' ]
+    
+    const exchangeModal = await this.modalCtrl.create({
+      component: InformComponent,
+      componentProps:{
+        pompadour: this.utilities.translateService.instant( 'pages.wallet.purchase.title-' + ( bought ? 'success' : 'error' )),
+        description: this.utilities.translateService.instant( 'pages.wallet.purchase.msg-' + ( bought ? 'success' : 'error' ),
+          { tokens: numTokens, price: totalTokensCost }),
+        showCheckmark: bought,
+      },
+      cssClass: 'pop-w-300 pop-h-400 pop-opacity pop-br-10',
+    });
+    await exchangeModal.present();
   }
 
   public goBack(): void {
@@ -69,7 +97,7 @@ export class WalletPage implements OnInit {
     this.transactions = response.transacciones;
     this.minnersFee = response.minnersFee;
     this.isLoading = false;
-    this.stripeFee = response.stripe_fee;
+    this.stripeFee = response.stripeFee;
     console.log( 'response: ', response );
   }
 
@@ -122,7 +150,21 @@ export class WalletPage implements OnInit {
     );
   }
 
-  buy( amount, currency ) {
-    console.log( 'value: ', amount, ' || currency: ', currency );
+  async buy(  currency ) {
+    const exchangeModal = await this.modalCtrl.create({
+      component: BuyAssetsComponent,
+      componentProps:{
+        asset: currency,
+        minnersFee: parseFloat( this.minnersFee || '0' ),
+        stripeFee: parseFloat( this.stripeFee || '0' ),
+      },
+      cssClass: 'pop-mobile-width',
+    });
+    await exchangeModal.present();
+
+    const { data } = await exchangeModal.onDidDismiss();
+
+    const origin = data?.origin;
+    const destiny = data?.destiny;
   }
 }
