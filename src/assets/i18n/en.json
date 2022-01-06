@@ -369,6 +369,25 @@
             "minnersFee": "Transaction cost",
             "confirm": "Confirm Transaction",
 
+            "buy": {
+                "title": "Buy assets",
+                "buy": "Quantity to Buy:",
+                "price": "Individual Price:",
+                "cost": "Cost:",
+                "fee": "Transaction Cost:",
+                "stripe": "Fee Stripe:",
+                "subtotal": "Subtotal:",
+                "total": "Total:",
+                "button": "Purchase"
+            },
+
+            "purchase": {
+                "title-success": "Congratulations!",
+                "title-error": "Purchase Error",
+                "msg-success": "Your purchase of {{tokens}} Tokens at {{price}} € has been done successful",
+                "msg-error": "It seems that there was an error in your purchase, so they have not been deducted from your card. Please try again and if the error persists contact info@febelink.com"
+            },
+
             "help": {
                 "title": "Why do I see only the balance of some Currencies?",
                 "message": "Balances are shown in FLAU, BTC, XLM, EUR, USD. If you have other balances in your Wallet they will not be shown in this window"
@@ -474,7 +493,7 @@
             "title": "PUBLIC SALE's START (ICO)",
             "price": "Price per token:",
             "blocking": "Blocking:",
-            "release": "Release:",
+            "release": "Unlocking:",
             "limit": "Purchase limits:",
             "number": "No. of tokens:",
             "card": [

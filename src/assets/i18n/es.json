@@ -369,6 +369,25 @@
             "minnersFee": "Coste de transacción",
             "confirm": "Confirmar Transacción",
 
+            "buy": {
+                "title": "Comprar assets",
+                "buy": "Cantidad a Comprar:",
+                "price": "Precio Individual:",
+                "cost": "Costo:",
+                "fee": "Costo de Transacción:",
+                "stripe": "Fee Stripe:",
+                "subtotal": "Subtotal:",
+                "total": "Total:",
+                "button": "Comprar"
+            },
+
+            "purchase": {
+                "title-success": "¡Felicitaciones!",
+                "title-error": "Error en Compra",
+                "msg-success": "Tu compra de {{ tokens }} Tokens a {{ price }} € se ha realizado con éxito",
+                "msg-error": "Parece que hubo un error en tu compra, por lo que no se han descontado de tu tarjeta. Vuelva a intenar y si el error persiste contacta a info@febelink.com"
+            },
+
             "help": {
                 "title": "¿Por qué veo solo el saldo de algunas Monedas?",
                 "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
@@ -474,7 +493,7 @@
             "title": "INICIO VENTA PÚBLICA (ICO)",
             "price": "Precio por token:",
             "blocking": "Bloqueo:",
-            "release": "Liberación:",
+            "release": "Desbloqueo:",
             "limit": "Límites de compra:",
             "number": "Nº de tokens:",
             "card": [
