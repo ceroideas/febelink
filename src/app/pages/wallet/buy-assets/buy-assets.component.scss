@@ -18,6 +18,10 @@ div {
         }
     }
 
+    ion-card {
+        --color: black; color: black;
+    }
+
     ion-footer {
         padding-bottom: 10px;
     }
@@ -53,12 +57,8 @@ div {
             --padding-start: 20px;
         }
 
-        .number {
-          font-size: 20px;
-        }
-        .decimal {
-          font-size: 12px;
-        }
+        .number { font-size: 20px; }
+        .decimal { font-size: 12px; }
         .total {
             font-size: 1.3em;
         }

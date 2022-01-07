@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CryptoCurrency } from 'src/app/models/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { IUser } from 'src/app/models/user.model';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -19,14 +17,15 @@ export class BuyAssetsComponent implements OnInit {
   @Input() asset: CryptoCurrency = {};
   @Input() minnersFee: number;
   @Input() stripeFee: number;
+  @Input() assetsMaxDecimals: number;
 
   public buyForm: FormGroup;
 
-  qant: number = 0;
-  calCost: number = 0;
+  cash: number = 0;
   calcStripe: number = 0;
   calcSubtotal: number = 0;
   calcTotal: number = 0;
+  calcAssets: number = 0;
   round: number = 2;
 
   // In case there is a difference between the values
@@ -38,7 +37,6 @@ export class BuyAssetsComponent implements OnInit {
   constructor(
       private formBuilder: FormBuilder
     , private modalCtrl: ModalController
-    , private translateSvc: TranslateConfigService
     , private api: ApiService
   ) {}
 
@@ -59,12 +57,14 @@ export class BuyAssetsComponent implements OnInit {
 
   calc( amount: string ) {
     const cancelCalc = !amount || !this.asset;
-    this.qant = cancelCalc ? 0 : parseFloat( amount );
+    this.cash = cancelCalc ? 0 : parseFloat( amount );
 
-    this.calCost = cancelCalc ? 0 : parseFloat(( this.qant * this.asset?.priceBuy ).toFixed( this.round ));
-    this.calcSubtotal = cancelCalc ? 0 : this.calCost + this.minnersFee;
-    this.calcStripe = cancelCalc ? 0 : parseFloat(( this.calcSubtotal * this.stripeFee / 100 ).toFixed( this.round ));
-    this.calcTotal = cancelCalc ? 0 : this.calcSubtotal + this.calcStripe;
+    this.calcStripe = this.cash == 0 ? 0 : parseFloat(( this.cash - this.cash / ( 1 + this.stripeFee / 100 )).toFixed( this.round ));
+    this.calcSubtotal = this.cash == 0 ? 0 : this.cash - this.calcStripe - this.minnersFee;
+    
+    this.calcTotal = parseFloat(( this.cash == 0 ? 0 : this.calcSubtotal / this.asset?.priceBuy ).toFixed( this.assetsMaxDecimals ));
+
+    this.calcAssets = parseFloat(( Number( this.asset?.amount ) + this.calcTotal ).toFixed( this.assetsMaxDecimals ));
   }
 
   onDismiss( ) {
@@ -80,12 +80,11 @@ export class BuyAssetsComponent implements OnInit {
       for ( var key in user )
         formData.append( key, user[ key ]);
 
-      formData.append( 'qant', this.qant + '' );
+      formData.append( 'cash', this.cash + '' );
       formData.append( 'priceBuy', this.asset?.priceBuy + '' );
-      formData.append( 'cost', this.calCost + '' );
       formData.append( 'subtotal', this.calcSubtotal + '' );
       formData.append( 'stripe', this.calcStripe + '' );
-      formData.append( 'total', this.calcTotal + '' );
+      formData.append( 'qTokens', this.calcTotal + '' );
 
       formData.append( 'stripeFee', this.stripeFee + '' );
       formData.append( 'minnersFee', this.minnersFee + '' );
