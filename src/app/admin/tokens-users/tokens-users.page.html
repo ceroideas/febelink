@@ -53,8 +53,8 @@
       <td>{{tokensUser.email}}</td>
       <td>{{tokensUser.dni}}</td>
       <td>
-        <ion-label>{{ tokensUser.num_tokens | splitNumber: false }}</ion-label>
-        <ion-label class="decimal">{{ tokensUser.num_tokens | splitNumber: true }}</ion-label>
+        <ion-label>{{{ value: tokensUser.num_tokens } | splitNumber }}</ion-label>
+        <ion-label class="decimal">{{{ value: tokensUser.num_tokens, returnDecimal: true } | splitNumber }}</ion-label>
       </td>
       <td>{{tokensUser.phase_tokens}}</td>
       <td>{{tokensUser.date | dateFormat: dateFormatType.Date}}</td>

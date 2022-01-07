@@ -94,8 +94,8 @@
                 <ion-label>{{ currency.currency }}</ion-label>
               </ion-col>
               <ion-col size="5" class="tx-end">
-                <ion-label>{{ currency.amount | splitNumber: false }}</ion-label>
-                <ion-label class="decimal">{{ currency.amount| splitNumber: true }}</ion-label>
+                <ion-label>{{{ value: currency.amount } | splitNumber }}</ion-label>
+                <ion-label class="decimal">{{{ value: currency.amount, returnDecimal: true } | splitNumber }}</ion-label>
               </ion-col>
             </ion-row>
           </ion-grid>
