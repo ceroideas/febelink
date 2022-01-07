@@ -17,8 +17,13 @@
       </div>
     </div>
 
-    <div class="tx-center">
-      <iframe width="255px" height="300px" [src]="trustedVideoUrl" frameborder="0"></iframe>
+    <div class="text-center" *ngIf="trustedVideoUrl">
+      <iframe
+        width="255px"
+        height="300px"
+        [src]="trustedVideoUrl"
+        frameborder="0"
+      ></iframe>
     </div>
 
     <!--
@@ -55,29 +60,20 @@
             <h5 class="font-24">{{ 'landing.aboutUs.press' | translate }}</h5>
             <!-- <p class="mb-0 font-16">NOTICIAS</p>-->
             <div id="icons-row-links">
-              <a
-                href="{{url_prensa[ 0 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_prensa[0].u }}" class="mb-0" target="_blank"
                 >CADENA SER</a
               ><br />
-              <a
-                href="{{url_prensa[ 1 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_prensa[1].u }}" class="mb-0" target="_blank"
                 >EL ESPAÑOL</a
               ><br />
-              <a
-                href="{{url_prensa[ 2 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_prensa[2].u }}" class="mb-0" target="_blank"
                 >CONFIDENCIAL DIGITAL</a
               ><br />
               <a
-                href="{{url_prensa[ 3 ].u}}"
+                href="{{ url_prensa[3].u }}"
                 class="mb-0"
                 target="_blank"
-                style="font-size: 14px;"
+                style="font-size: 14px"
                 >COINTELEGRAPH</a
               ><br />
             </div>
@@ -97,26 +93,21 @@
             <h5 class="font-24">{{ 'landing.aboutUs.blog' | translate }}</h5>
             <!--<p class="mb-0 font-16">INFORMACIÓN</p>-->
             <div id="icons-row-links">
-              <a href="{{url_blog[ 0 ].u}}" class="mb-0" target="_blank"
-                >{{ 'landing.aboutUs.blogFebelink' | translate }}</a
+              <a href="{{ url_blog[0].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogFebelink' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_blog[ 1 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.blogMedia' | translate }}</a
+              <a href="{{ url_blog[1].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogMedia' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_blog[ 2 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.blogSearchEng' | translate }}</a
+              <a href="{{ url_blog[2].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogSearchEng' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_blog[ 3 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.blogICO' | translate }}</a
+              <a href="{{ url_blog[3].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogICO' | translate
+              }}</a
               ><br />
             </div>
           </div>
@@ -153,29 +144,19 @@
                 target="_blank"
                 >FINANZAS INVERSIÓN</a
               ><br /> -->
-              <a
-                href="{{url_podcast[ 0 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_podcast[0].u }}" class="mb-0" target="_blank"
                 >SPOTIFY</a
               ><br />
-              <a
-                href="{{url_podcast[ 1 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_podcast[1].u }}" class="mb-0" target="_blank"
                 >IVOOX</a
               ><br />
-              <a
-                href="{{url_podcast[ 2 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.podcastBlockchain' | translate }}</a
+              <a href="{{ url_podcast[2].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.podcastBlockchain' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_podcast[ 3 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.podcastInterview' | translate }}</a
+              <a href="{{ url_podcast[3].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.podcastInterview' | translate
+              }}</a
               ><br />
               <!-- <a
                 href="https://bitcoindaily.es/un-empresario-malagueno-crea-el-google-de-los-negocios-ser-malaga-hora-14-malaga"
