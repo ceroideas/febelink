@@ -373,18 +373,18 @@
                 "title": "Comprar assets",
                 "buy": "Cantidad a Comprar:",
                 "price": "Precio Individual:",
-                "cost": "Costo:",
-                "fee": "Costo de Transacción:",
-                "stripe": "Fee Stripe:",
-                "subtotal": "Subtotal:",
-                "total": "Total:",
+                "cost1": "Recibidos: ",
+                "cost2": " / Tokens",
+                "fee": "Coste de Transacción:",
+                "stripe": "Coste de Gestión:",
+                "total": "<b>Total de Tokens</b> ( Actual + Compra )",
                 "button": "Comprar"
             },
 
             "purchase": {
                 "title-success": "¡Felicitaciones!",
                 "title-error": "Error en Compra",
-                "msg-success": "Tu compra de {{ tokens }} Tokens a {{ price }} € se ha realizado con éxito",
+                "msg-success": "Tu compra se ha realizado con éxito",
                 "msg-error": "Parece que hubo un error en tu compra, por lo que no se han descontado de tu tarjeta. Vuelva a intenar y si el error persiste contacta a info@febelink.com"
             },
 
