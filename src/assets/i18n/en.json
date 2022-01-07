@@ -400,7 +400,8 @@
                 "qDemand": "Indicate the amount of Currency to Receive",
                 "unknown": "Unknow the Transaction Result",
                 "exceeded": "You do not possess the amount you want to trade",
-                "asset-not-available": "At the moment this Currency is not available for Transactions"
+                "asset-not-available": "At the moment this Currency is not available for Transactions",
+                "no-public": "Until you have the Wallet Created (assigned Public Key) you will not be able to purchase Tokens. Fill in your profile information to continue"
             },
 
             "operations": [

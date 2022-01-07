@@ -400,7 +400,8 @@
                 "qDemand": "Indique la cant de Moneda a Recibir",
                 "unknown": "Desconozco el Resultado de la Transacción",
                 "exceeded": "No posee la cantidad que desea transaccionar",
-                "asset-not-available": "De momento esta moneda no está disponible para transacciones"
+                "asset-not-available": "De momento esta moneda no está disponible para transacciones",
+                "no-public": "Hasta que no tenga la Wallet Creada (Clave Publica asignada) no podrá realizar Compra de Tokens. Complete la información de su perfil para continuar"
             },
 
             "operations": [

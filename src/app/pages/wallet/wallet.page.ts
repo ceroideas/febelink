@@ -153,23 +153,29 @@ export class WalletPage implements OnInit {
 
   async buy(  currency ) {
     this.user = await this.utilities.getUserData();
-    if( this.userSvc.checkUserDataComplete( this.user )){
-      const exchangeModal = await this.modalCtrl.create({
-        component: BuyAssetsComponent,
-        componentProps:{
-          asset: currency,
-          minnersFee: parseFloat( this.minnersFee || '0' ),
-          stripeFee: parseFloat( this.stripeFee || '0' ),
-          assetsMaxDecimals: this.assetsMaxDecimals,
-        },
-        cssClass: 'pop-mobile-width',
-      });
-      await exchangeModal.present();
+    if( !this.userSvc.checkUserDataComplete( this.user ))
+      return;
 
-      const { data } = await exchangeModal.onDidDismiss();
-
-      const origin = data?.origin;
-      const destiny = data?.destiny;
+    if( !this.publicKey ) {
+      this.utilities.showAlert( '', this.utilities.translateService.instant( 'pages.wallet.error.no-public' ));
+      return;
     }
+
+    const exchangeModal = await this.modalCtrl.create({
+      component: BuyAssetsComponent,
+      componentProps:{
+        asset: currency,
+        minnersFee: parseFloat( this.minnersFee || '0' ),
+        stripeFee: parseFloat( this.stripeFee || '0' ),
+        assetsMaxDecimals: this.assetsMaxDecimals,
+      },
+      cssClass: 'pop-mobile-width',
+    });
+    await exchangeModal.present();
+
+    const { data } = await exchangeModal.onDidDismiss();
+
+    const origin = data?.origin;
+    const destiny = data?.destiny;
   }
 }
