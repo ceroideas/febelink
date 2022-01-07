@@ -12,6 +12,7 @@ import { DateFormatType } from 'src/app/pipes/date-format';
 import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
 import { ActivatedRoute } from '@angular/router';
 import { InformComponent } from 'src/app/components/inform/inform.component';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -29,6 +30,7 @@ export class WalletPage implements OnInit {
   transactions: CryptoTransactions;
   minnersFee: string;
   stripeFee: string;
+  assetsMaxDecimals: number;
 
   hideRetained: boolean = true;
   hideTransactions: boolean = false;
@@ -42,7 +44,8 @@ export class WalletPage implements OnInit {
     , private walletSvc: WalletService
     , private utilities: UtilitiesService
     , private modalCtrl: ModalController
-    , private route: ActivatedRoute,
+    , private route: ActivatedRoute
+    , private userSvc: UserService
   ) {}
 
   async ngOnInit() {
@@ -53,7 +56,6 @@ export class WalletPage implements OnInit {
 
   async haveYouPurchased() {
     const params = ( <any> this.route.snapshot.queryParamMap ).params;
-    console.log( 'what are the params: ', params );
 
     if( params[ 'bought' ] != 'false' && params[ 'bought' ] != 'true' )
       return;
@@ -61,15 +63,14 @@ export class WalletPage implements OnInit {
     const bought = params[ 'bought' ] == 'true';
     const assetId = params[ 'assetId' ];
     const numTokens = params[ 'numTokens' ];
-    const totalTokensCost = params[ 'totalTokensCost' ];
+    const cash = params[ 'cash' ];
     const priceBuy = params[ 'priceBuy' ]
     
     const exchangeModal = await this.modalCtrl.create({
       component: InformComponent,
       componentProps:{
         pompadour: this.utilities.translateService.instant( 'pages.wallet.purchase.title-' + ( bought ? 'success' : 'error' )),
-        description: this.utilities.translateService.instant( 'pages.wallet.purchase.msg-' + ( bought ? 'success' : 'error' ),
-          { tokens: numTokens, price: totalTokensCost }),
+        description: this.utilities.translateService.instant( 'pages.wallet.purchase.msg-' + ( bought ? 'success' : 'error' )),
         showCheckmark: bought,
       },
       cssClass: 'pop-w-300 pop-h-400 pop-opacity pop-br-10',
@@ -98,7 +99,7 @@ export class WalletPage implements OnInit {
     this.minnersFee = response.minnersFee;
     this.isLoading = false;
     this.stripeFee = response.stripeFee;
-    console.log( 'response: ', response );
+    this.assetsMaxDecimals = Number( response.assetsMaxDecimals || '0' );
   }
 
   async copyPublicKey() {
@@ -151,20 +152,24 @@ export class WalletPage implements OnInit {
   }
 
   async buy(  currency ) {
-    const exchangeModal = await this.modalCtrl.create({
-      component: BuyAssetsComponent,
-      componentProps:{
-        asset: currency,
-        minnersFee: parseFloat( this.minnersFee || '0' ),
-        stripeFee: parseFloat( this.stripeFee || '0' ),
-      },
-      cssClass: 'pop-mobile-width',
-    });
-    await exchangeModal.present();
+    this.user = await this.utilities.getUserData();
+    if( this.userSvc.checkUserDataComplete( this.user )){
+      const exchangeModal = await this.modalCtrl.create({
+        component: BuyAssetsComponent,
+        componentProps:{
+          asset: currency,
+          minnersFee: parseFloat( this.minnersFee || '0' ),
+          stripeFee: parseFloat( this.stripeFee || '0' ),
+          assetsMaxDecimals: this.assetsMaxDecimals,
+        },
+        cssClass: 'pop-mobile-width',
+      });
+      await exchangeModal.present();
 
-    const { data } = await exchangeModal.onDidDismiss();
+      const { data } = await exchangeModal.onDidDismiss();
 
-    const origin = data?.origin;
-    const destiny = data?.destiny;
+      const origin = data?.origin;
+      const destiny = data?.destiny;
+    }
   }
 }
