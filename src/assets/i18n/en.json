@@ -357,7 +357,7 @@
             "title": "My Wallet",
             "public-key": "Public Key",
             "retained": "Retained Tokens",
-            "release": "Release:",
+            "release": "Unlocking:",
 
             "transactions": "Recent transactions",
             "no-transactions": "No recent transactions",
@@ -493,7 +493,7 @@
             "title": "PUBLIC SALE's START (ICO)",
             "price": "Price per token:",
             "blocking": "Blocking:",
-            "release": "Unlocking:",
+            "release": "Release:",
             "limit": "Purchase limits:",
             "number": "No. of tokens:",
             "card": [

@@ -357,7 +357,7 @@
             "title": "Mi Wallet",
             "public-key": "Clave Pública",
             "retained": "Tokens Retenidos",
-            "release": "Liberación:",
+            "release": "Desbloqueo:",
 
             "transactions": "Transacciones recientes",
             "no-transactions": "Sin transacciones recientes",
@@ -493,7 +493,7 @@
             "title": "INICIO VENTA PÚBLICA (ICO)",
             "price": "Precio por token:",
             "blocking": "Bloqueo:",
-            "release": "Desbloqueo:",
+            "release": "Liberación:",
             "limit": "Límites de compra:",
             "number": "Nº de tokens:",
             "card": [
