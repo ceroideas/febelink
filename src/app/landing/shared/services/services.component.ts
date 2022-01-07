@@ -105,7 +105,7 @@ export class ServicesComponent implements OnInit {
   }
 
   embedVideo() {
-    let video: string = `https://www.youtube.com/embed/${ this.url }?rel=0&autoplay=1`;
+    let video: string = `https://www.youtube-nocookie.com/embed/${ this.url }?rel=0&autoplay=1`;
     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl( video );
   }
 
