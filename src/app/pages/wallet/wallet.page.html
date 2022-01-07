@@ -69,13 +69,6 @@
               <ion-row class="vertical-content ion-no-padding">
                 <img src="assets/icon/{{currency.currency.toLowerCase()}}.png" />
                 <ion-label class="bold-6"> {{currency.currency}}</ion-label>
-
-                <!-- Buy Assets | only those allowed to buy -->
-                <i class="abicon-shopping-cart"
-                    (click)="buy( currency )"
-                    *ngIf="currency?.priceBuy > 0"
-                    click-stop-propagation
-                ></i>
               </ion-row>
             </ion-col>
             <ion-col size="12" size-sm="12" class="tx-center no-padding">
@@ -84,6 +77,13 @@
             </ion-col>
           </ion-row>
         </ion-card>
+
+        <!-- Buy Assets | only those allowed to buy -->
+        <ion-row (click)="buy( currency )" click-stop-propagation *ngIf="currency?.priceBuy > 0">
+          <ion-button expand="block" color="febelink">
+            {{( 'pages.wallet.buy.button' | translate ) + ' ' + currency?.currency }}
+          </ion-button>
+        </ion-row>
       </ion-col>
     </ion-row>
 
