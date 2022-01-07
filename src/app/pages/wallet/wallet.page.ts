@@ -10,7 +10,7 @@ import { IUser } from 'src/app/models/user.model';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
 import { DateFormatType } from 'src/app/pipes/date-format';
 import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InformComponent } from 'src/app/components/inform/inform.component';
 import { UserService } from 'src/app/services/user.service';
 @Component({
@@ -46,6 +46,7 @@ export class WalletPage implements OnInit {
     , private modalCtrl: ModalController
     , private route: ActivatedRoute
     , private userSvc: UserService
+    , private router: Router
   ) {}
 
   async ngOnInit() {
@@ -79,7 +80,7 @@ export class WalletPage implements OnInit {
   }
 
   public goBack(): void {
-    this.location.back();
+    this.router.navigate(['/menu/todas']);
   }
 
   async getWalletInfo() {
