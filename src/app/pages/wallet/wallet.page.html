@@ -78,8 +78,8 @@
           </ion-row>
         </ion-card>
 
-        <!-- Buy Assets | only those allowed to buy -->
-        <ion-row (click)="buy( currency )" click-stop-propagation *ngIf="currency?.priceBuy > 0">
+        <!-- Buy Assets | only those allowed to buy | only if account verified -->
+        <ion-row (click)="buy( currency )" click-stop-propagation *ngIf="currency?.priceBuy > 0 && verified.account">
           <ion-button expand="block" color="febelink">
             {{( 'pages.wallet.buy.button' | translate ) + ' ' + currency?.currency }}
           </ion-button>
