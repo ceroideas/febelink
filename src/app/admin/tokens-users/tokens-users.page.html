@@ -53,13 +53,13 @@
       <td>{{tokensUser.email}}</td>
       <td>{{tokensUser.dni}}</td>
       <td>
-        <ion-label>{{ tokensUser.num_tokens | splitNumber: false }}</ion-label>
-        <ion-label class="decimal">{{ tokensUser.num_tokens | splitNumber: true }}</ion-label>
+        <ion-label>{{{ value: tokensUser.num_tokens } | splitNumber }}</ion-label>
+        <ion-label class="decimal">{{{ value: tokensUser.num_tokens, returnDecimal: true } | splitNumber }}</ion-label>
       </td>
       <td>{{tokensUser.phase_tokens}}</td>
       <td>{{tokensUser.date | dateFormat: dateFormatType.Date}}</td>
       <td>{{tokensUser.payed_date | dateFormat: dateFormatType.Date}}</td>
-      <td class="text-center"><ion-checkbox [checked]="tokensUser.retained" disabled="true"></ion-checkbox></td>
+      <td class="tx-center"><ion-checkbox [checked]="tokensUser.retained" disabled="true"></ion-checkbox></td>
       <td class="edit"><ion-icon name="create-outline" (click)="edit(tokensUser)"></ion-icon></td>
       <td class="delete"><ion-icon name="trash-outline" (click)="delete(tokensUser)"></ion-icon></td>
     </tr>

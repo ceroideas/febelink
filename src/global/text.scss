@@ -1,0 +1,28 @@
+.upper { text-transform: uppercase; }
+.capper { text-transform: capitalize; }
+.lower { text-transform: lowercase; }
+
+.tx-start{ text-align: left; }
+.tx-center{ text-align: center; }
+.tx-end{ text-align: right; }
+.tx-top{ vertical-align: text-top; }
+.tx-bottom{ vertical-align: text-bottom; }
+.hint { opacity: 0.5; }
+.one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+            line-clamp: 1; 
+    -webkit-box-orient: vertical;
+}
+
+.bold-6 { font-weight: 600; }
+.bold-7 { font-weight: 700; }
+.bold-8 { font-weight: 800; }
+
+.decimal {
+    font-size: 10px;
+    opacity: 0.7;
+    vertical-align: super;
+  }

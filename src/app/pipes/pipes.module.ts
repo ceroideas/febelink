@@ -3,6 +3,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
 import { SafeHtmlPipe } from '../pipes/safehtml.pipe';
 import { DateFormatPipe } from './date-format';
 import { SplitNumberPipe } from './split-number.pipe';
+import { StringToNumberPipe } from './str-to-num';
 import { TypeofPipe } from './typeof.pipe';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { TypeofPipe } from './typeof.pipe';
     , TypeofPipe
     , SplitNumberPipe
     , DateFormatPipe
+    , StringToNumberPipe
   ],
   imports: [],
   exports: [
@@ -20,6 +22,7 @@ import { TypeofPipe } from './typeof.pipe';
     , TypeofPipe
     , SplitNumberPipe
     , DateFormatPipe
+    , StringToNumberPipe
   ],
   entryComponents: [],
 })

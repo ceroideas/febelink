@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <div class="text-center mb-5" id="content-sobre-nosotros">
+        <div class="tx-center mb-5" id="content-sobre-nosotros">
           <h5 class="text-primary text-uppercase small-title" id="mini-titular">
             {{ 'landing.aboutUs.title' | translate }}
           </h5>
@@ -18,13 +18,18 @@
     </div>
 
     <div class="text-center" *ngIf="trustedVideoUrl">
-      <iframe width="255px" height="300px" [src]="trustedVideoUrl" frameborder="0"></iframe>
+      <iframe
+        width="255px"
+        height="300px"
+        [src]="trustedVideoUrl"
+        frameborder="0"
+      ></iframe>
     </div>
 
     <!--
      <div class="row">
        <div class="col-xl-4 col-sm-6" *ngFor="let item of serviceData">
-         <div class="text-center p-4 mt-3">
+         <div class="tx-center p-4 mt-3">
            <div class="avatar-md mx-auto mb-4">
              <span class="avatar-title rounded-circle bg-soft-primary">
                <i-feather name="{{item.icon}}" class="icon-dual-primary"></i-feather>
@@ -43,7 +48,7 @@
     <div id="clients">
       <div class="row">
         <div class="col-xl-4 col-sm-6">
-          <div class="text-center p-4 mt-3">
+          <div class="tx-center p-4 mt-3">
             <div class="avatar-md mx-auto mb-4">
               <span class="avatar-title rounded-circle bg-soft-primary">
                 <img
@@ -55,29 +60,20 @@
             <h5 class="font-24">{{ 'landing.aboutUs.press' | translate }}</h5>
             <!-- <p class="mb-0 font-16">NOTICIAS</p>-->
             <div id="icons-row-links">
-              <a
-                href="{{url_prensa[ 0 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_prensa[0].u }}" class="mb-0" target="_blank"
                 >CADENA SER</a
               ><br />
-              <a
-                href="{{url_prensa[ 1 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_prensa[1].u }}" class="mb-0" target="_blank"
                 >EL ESPAÑOL</a
               ><br />
-              <a
-                href="{{url_prensa[ 2 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_prensa[2].u }}" class="mb-0" target="_blank"
                 >CONFIDENCIAL DIGITAL</a
               ><br />
               <a
-                href="{{url_prensa[ 3 ].u}}"
+                href="{{ url_prensa[3].u }}"
                 class="mb-0"
                 target="_blank"
-                style="font-size: 14px;"
+                style="font-size: 14px"
                 >COINTELEGRAPH</a
               ><br />
             </div>
@@ -85,7 +81,7 @@
         </div>
 
         <div class="col-xl-4 col-sm-6">
-          <div class="text-center p-4 mt-3">
+          <div class="tx-center p-4 mt-3">
             <div class="avatar-md mx-auto mb-4">
               <span class="avatar-title rounded-circle bg-soft-primary">
                 <img
@@ -97,33 +93,28 @@
             <h5 class="font-24">{{ 'landing.aboutUs.blog' | translate }}</h5>
             <!--<p class="mb-0 font-16">INFORMACIÓN</p>-->
             <div id="icons-row-links">
-              <a href="{{url_blog[ 0 ].u}}" class="mb-0" target="_blank"
-                >{{ 'landing.aboutUs.blogFebelink' | translate }}</a
+              <a href="{{ url_blog[0].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogFebelink' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_blog[ 1 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.blogMedia' | translate }}</a
+              <a href="{{ url_blog[1].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogMedia' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_blog[ 2 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.blogSearchEng' | translate }}</a
+              <a href="{{ url_blog[2].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogSearchEng' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_blog[ 3 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.blogICO' | translate }}</a
+              <a href="{{ url_blog[3].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogICO' | translate
+              }}</a
               ><br />
             </div>
           </div>
         </div>
 
         <div class="col-xl-4 col-sm-6">
-          <div class="text-center p-4 mt-3">
+          <div class="tx-center p-4 mt-3">
             <div class="avatar-md mx-auto mb-4">
               <span class="avatar-title rounded-circle bg-soft-primary">
                 <img
@@ -153,29 +144,19 @@
                 target="_blank"
                 >FINANZAS INVERSIÓN</a
               ><br /> -->
-              <a
-                href="{{url_podcast[ 0 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_podcast[0].u }}" class="mb-0" target="_blank"
                 >SPOTIFY</a
               ><br />
-              <a
-                href="{{url_podcast[ 1 ].u}}"
-                class="mb-0"
-                target="_blank"
+              <a href="{{ url_podcast[1].u }}" class="mb-0" target="_blank"
                 >IVOOX</a
               ><br />
-              <a
-                href="{{url_podcast[ 2 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.podcastBlockchain' | translate }}</a
+              <a href="{{ url_podcast[2].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.podcastBlockchain' | translate
+              }}</a
               ><br />
-              <a
-                href="{{url_podcast[ 3 ].u}}"
-                class="mb-0"
-                target="_blank"
-                >{{ 'landing.aboutUs.podcastInterview' | translate }}</a
+              <a href="{{ url_podcast[3].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.podcastInterview' | translate
+              }}</a
               ><br />
               <!-- <a
                 href="https://bitcoindaily.es/un-empresario-malagueno-crea-el-google-de-los-negocios-ser-malaga-hora-14-malaga"
