@@ -24,73 +24,107 @@
   </div>
 
   <!-- Pagination Top -->
-  <app-pagination *ngIf="qPages > 1"
+  <app-pagination
+    *ngIf="qPages > 1"
     [qPages]="qPages"
     [totalRecords]="totalRecords"
     [recordsPerPage]="recordsPerPage"
     [activePage]="activePage"
     [disabled]="isLoading"
-    (onPageChange)="displayActivePage( $event )">
+    (onPageChange)="displayActivePage( $event )"
+  >
   </app-pagination>
 
-<div class="scroll-inner">
-  <table id="tokensUsersTable">
-    <tr>
-      <th>{{ 'common.labelName' | translate }}</th>
-      <th>{{ 'common.personal.surname' | translate }}</th>
-      <th>{{ 'common.labelEmail' | translate }}</th>
-      <th>{{ 'common.personal.id_short' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.public' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.num' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.phase' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.date' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.payed' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.obs' | translate }}</th>
-      <th>{{ 'admin.tokensUsers.retained' | translate }}</th>
-      <th colspan="3">{{ 'admin.tokensUsers.actions' | translate }}</th>
-    </tr>
-    <tr *ngFor="let tokensUser of tokensUsers">
-      <td>{{tokensUser.name || tokensUser.nick}}</td>
-      <td>{{tokensUser.lastname}}</td>
-      <td>{{tokensUser.email}}</td>
-      <td>{{tokensUser.dni}}</td>
-      <td class="reduct pointer" (click)="utils.copyClipboard( tokensUser.public )"><ion-item class="no-padding" lines="none" color="transparent">
-        <ion-icon name="clipboard" class="clipboard"></ion-icon>
-        <ion-label class="one-line public">{{ tokensUser.public || '--' }}</ion-label>
-      </ion-item></td>
-      <td>
-        <ion-label>{{ tokensUser.num_tokens | splitNumber: false }}</ion-label>
-        <ion-label class="decimal">{{ tokensUser.num_tokens | splitNumber: true }}</ion-label>
-      </td>
-      <td>{{tokensUser.phase_tokens}}</td>
-      <td>{{tokensUser.date | dateFormat: dateFormatType.Date}}</td>
-      <td>{{tokensUser.payed_date | dateFormat: dateFormatType.Date}}</td>
-      <td class="reduct pointer" (click)="showObs( tokensUser )">
-        <div class="obs" *ngIf="tokensUser.observations">{{tokensUser.observations || ''}}</div>
-      </td>
-      <td class="text-center"><ion-checkbox [checked]="tokensUser.retained" disabled="true"></ion-checkbox></td>
-      <td class="balance"><ion-icon name="wallet-outline" (click)="showBalance(tokensUser)"></ion-icon></td>
-      <td class="edit"><ion-icon name="create-outline" (click)="edit(tokensUser)"></ion-icon></td>
-      <td class="delete"><ion-icon name="trash-outline" (click)="delete(tokensUser)"></ion-icon></td>
-    </tr>
-    
-  </table>
-</div>
+  <div class="scroll-inner">
+    <table id="tokensUsersTable">
+      <tr>
+        <th>{{ 'common.labelName' | translate }}</th>
+        <th>{{ 'common.personal.surname' | translate }}</th>
+        <th>{{ 'common.labelEmail' | translate }}</th>
+        <th>{{ 'common.personal.id_short' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.public' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.num' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.phase' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.date' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.payed' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.obs' | translate }}</th>
+        <th>{{ 'admin.tokensUsers.retained' | translate }}</th>
+        <th colspan="3">{{ 'admin.tokensUsers.actions' | translate }}</th>
+      </tr>
+      <tr *ngFor="let tokensUser of tokensUsers">
+        <td>{{tokensUser.name || tokensUser.nick}}</td>
+        <td>{{tokensUser.lastname}}</td>
+        <td>{{tokensUser.email}}</td>
+        <td>{{tokensUser.dni}}</td>
+        <td
+          class="reduct pointer"
+          (click)="utils.copyClipboard( tokensUser.public )"
+        >
+          <ion-item class="no-padding" lines="none" color="transparent">
+            <ion-icon name="clipboard" class="clipboard"></ion-icon>
+            <ion-label class="one-line public"
+              >{{ tokensUser.public || '--' }}</ion-label
+            >
+          </ion-item>
+        </td>
+        <td>
+          <ion-label
+            >{{{ value: tokensUser.num_tokens } | splitNumber }}</ion-label
+          >
+          <ion-label class="decimal"
+            >{{{ value: tokensUser.num_tokens, returnDecimal: true } |
+            splitNumber }}</ion-label
+          >
+        </td>
+        <td>{{tokensUser.phase_tokens}}</td>
+        <td>{{tokensUser.date | dateFormat: dateFormatType.Date}}</td>
+        <td>{{tokensUser.payed_date | dateFormat: dateFormatType.Date}}</td>
+        <td class="reduct pointer" (click)="showObs( tokensUser )">
+          <div class="obs" *ngIf="tokensUser.observations">
+            {{tokensUser.observations || ''}}
+          </div>
+        </td>
+        <td class="text-center">
+          <ion-checkbox
+            [checked]="tokensUser.retained"
+            disabled="true"
+          ></ion-checkbox>
+        </td>
+        <td class="balance">
+          <ion-icon
+            name="wallet-outline"
+            (click)="showBalance(tokensUser)"
+          ></ion-icon>
+        </td>
+        <td class="edit">
+          <ion-icon name="create-outline" (click)="edit(tokensUser)"></ion-icon>
+        </td>
+        <td class="delete">
+          <ion-icon
+            name="trash-outline"
+            (click)="delete(tokensUser)"
+          ></ion-icon>
+        </td>
+      </tr>
+    </table>
+  </div>
 
   <!-- Add New Token User -->
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button color="primary" (click)="create()">
       <ion-icon name="add"></ion-icon>
-    </ion-fab-button> 
+    </ion-fab-button>
   </ion-fab>
 
   <!-- Pagination Bottom -->
-  <app-pagination  *ngIf="qPages > 1"
+  <app-pagination
+    *ngIf="qPages > 1"
     [qPages]="qPages"
     [totalRecords]="totalRecords"
     [recordsPerPage]="recordsPerPage"
     [activePage]="activePage"
     [disabled]="isLoading"
-    (onPageChange)="displayActivePage( $event )">
+    (onPageChange)="displayActivePage( $event )"
+  >
   </app-pagination>
 </ion-content>

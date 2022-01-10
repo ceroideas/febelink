@@ -10,276 +10,251 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
 @import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
 
 ionic-selectable-modal {
-    ion-header {
-        ion-toolbar {
-            --background:var(--ion-color-febelink);
-            color: white;
-        }
+  ion-header {
+    ion-toolbar {
+      --background: var(--ion-color-febelink);
+      color: white;
     }
-}
-
-@media only screen and (min-height: 768px) and (min-width: 768px){
-
-    .guide-modal .modal-wrapper {
-      left: calc(50% - (600px/2));
-      top: calc(35% - (600px/2));
-      position: absolute;
-      width: 600px;
-      height: 800px;
   }
 }
 
-  @media only screen and (max-height: 700px) and (min-width: 768px){
-
-    .guide-modal .modal-wrapper {
-      left: calc(50% - (600px/2));
-      top: calc(48% - (600px/2));
-      position: absolute;
-      width: 600px;
-      height: 610px;
+@media only screen and (min-height: 768px) and (min-width: 768px) {
+  .guide-modal .modal-wrapper {
+    left: calc(50% - (600px / 2));
+    top: calc(35% - (600px / 2));
+    position: absolute;
+    width: 600px;
+    height: 800px;
   }
- }
+}
 
- .results-list {
-    @media (min-width: 768px){
-        padding: 0;
-        margin: 0;
-    
-        ion-item{
-            box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
-            0 2px 2px rgba(0,0,0,0.11), 
-            0 4px 4px rgba(0,0,0,0.11), 
-            0 6px 8px rgba(0,0,0,0.11);
+@media only screen and (max-height: 700px) and (min-width: 768px) {
+  .guide-modal .modal-wrapper {
+    left: calc(50% - (600px / 2));
+    top: calc(48% - (600px / 2));
+    position: absolute;
+    width: 600px;
+    height: 610px;
+  }
+}
 
-            margin: 15px 10px;
-            border-radius: 7px;
-        }
+.results-list {
+  @media (min-width: 768px) {
+    padding: 0;
+    margin: 0;
+
+    ion-item {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
+        0 4px 4px rgba(0, 0, 0, 0.11), 0 6px 8px rgba(0, 0, 0, 0.11);
+
+      margin: 15px 10px;
+      border-radius: 7px;
     }
- }
+  }
+}
 
 .desktop {
-    @media (max-width: 768px){
-        display: none;
-    }
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 .mobile {
-    @media (min-width: 768px){
-        display: none;
-    }
+  @media (min-width: 768px) {
+    display: none;
+  }
 }
 .responsive-max {
-    @media (max-width: 1165px ){
-        display: none;
-    }
+  @media (max-width: 1165px) {
+    display: none;
+  }
 }
 .responsive-min {
-    @media (min-width: 1165px ){
-        display: none;
-    }
+  @media (min-width: 1165px) {
+    display: none;
+  }
 }
 
-.flex{
-    display: flex;
+.flex {
+  display: flex;
 }
 
-.limit-size{
-    max-width: 768px; 
-    margin: auto;
+.limit-size {
+  max-width: 768px;
+  margin: auto;
 }
 
-.clickable{
-    cursor: pointer;
+.clickable {
+  cursor: pointer;
 }
 
-@media only screen and (min-width:768px) {
+@media only screen and (min-width: 768px) {
+  .alert-radio-group::-webkit-scrollbar,
+  .alert-checkbox-group::-webkit-scrollbar {
+    width: 1em;
+    display: block !important;
+  }
 
-    .alert-radio-group::-webkit-scrollbar,
-    .alert-checkbox-group::-webkit-scrollbar {
-        width: 1em;
-        display: block !important;
-    }
+  .alert-radio-group::-webkit-scrollbar-track,
+  .alert-checkbox-group::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
 
-    .alert-radio-group::-webkit-scrollbar-track,
-    .alert-checkbox-group::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    }
+  .alert-radio-group::-webkit-scrollbar-thumb,
+  .alert-checkbox-group::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
 
-    .alert-radio-group::-webkit-scrollbar-thumb,
-    .alert-checkbox-group::-webkit-scrollbar-thumb {
-        background-color: darkgrey;
-        outline: 1px solid slategrey;
-    }
-
-    .landing-modal .modal-wrapper {
-        --border-radius: 7px;
-        --height: 460px;
-    }
+  .landing-modal .modal-wrapper {
+    --border-radius: 7px;
+    --height: 460px;
+  }
 }
 
 // Para eliminar el **Powered By Google** en el Autocomplete de Google Places API
 .pac-container:after {
-    background-image: none !important;
-    height: 0px;
+  background-image: none !important;
+  height: 0px;
 }
 
 .line {
-    border: 0;
-    border-top: 3px solid rgba(0, 0, 0, 0.1);
+  border: 0;
+  border-top: 3px solid rgba(0, 0, 0, 0.1);
 }
-.align-left{ justify-content: flex-start; }
-.align-center{ justify-content: center; }
-.align-right{ justify-content: flex-end; }
-.center-v { margin-top: auto; margin-bottom: auto; }
-.text-left{ text-align: left; }
-.text-center{ text-align: center; }
-.text-right{ text-align: right; }
-.text-top{ vertical-align: text-top; }
-.text-bottom{ vertical-align: text-bottom; }
-.hint { opacity: 0.5; }
+.align-left {
+  justify-content: flex-start;
+}
+.align-center {
+  justify-content: center;
+}
+.align-right {
+  justify-content: flex-end;
+}
+.center-v {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-top {
+  vertical-align: text-top;
+}
+.text-bottom {
+  vertical-align: text-bottom;
+}
+.hint {
+  opacity: 0.5;
+}
 .one-line {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1; /* number of lines to show */
-            line-clamp: 1; 
-    -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .decimal {
   font-size: 10px;
   opacity: 0.7;
   vertical-align: super;
 }
-.pointer { cursor: pointer; }
+.pointer {
+  cursor: pointer;
+}
 
-.margin { margin: 10px; }
-.margin-top { margin-top: 10px; }
-.margin-end { margin-right: 10px; }
-.margin-bottom { margin-bottom: 10px; }
-.margin-start { margin-left: 10px; }
-.no-margin { margin: 0px; }
-.no-margin-b { margin-bottom: 0px !important; }
+.margin {
+  margin: 10px;
+}
+.margin-top {
+  margin-top: 10px;
+}
+.margin-end {
+  margin-right: 10px;
+}
+.margin-bottom {
+  margin-bottom: 10px;
+}
+.margin-start {
+  margin-left: 10px;
+}
+.no-margin {
+  margin: 0px;
+}
+.no-margin-b {
+  margin-bottom: 0px !important;
+}
 
 .padding {
-    padding: 10px;
-    --padding-top: 10px;
-    --padding-end: 10px;
-    --padding-bottom: 10px;
-    --padding-start: 10px;
+  padding: 10px;
+  --padding-top: 10px;
+  --padding-end: 10px;
+  --padding-bottom: 10px;
+  --padding-start: 10px;
 }
-.padding-top { padding-top: 10px; --padding-top: 10px; }
-.padding-end { padding-right: 10px;--padding-end: 10px; }
-.padding-bottom { padding-bottom: 10px; --padding-bottom: 10px; }
-.padding-start { padding-left: 10px;--padding-start: 10px; }
+.padding-top {
+  padding-top: 10px;
+  --padding-top: 10px;
+}
+.padding-end {
+  padding-right: 10px;
+  --padding-end: 10px;
+}
+.padding-bottom {
+  padding-bottom: 10px;
+  --padding-bottom: 10px;
+}
+.padding-start {
+  padding-left: 10px;
+  --padding-start: 10px;
+}
 .no-padding {
-    padding: 0px;
-    --padding-top: 0px;
-    --padding-end: 0px;
-    --padding-bottom: 0px;
-    --padding-start: 0px;
+  padding: 0px;
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
 }
 
 .vertical-content {
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    -webkit-align-items: center;
-    flex-direction: row;
-    -webkit-flex-direction: row;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  -webkit-align-items: center;
+  flex-direction: row;
+  -webkit-flex-direction: row;
 }
 .vertical-top {
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: initial;
-    -webkit-align-items: initial;
-    flex-direction: row;
-    -webkit-flex-direction: row;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: initial;
+  -webkit-align-items: initial;
+  flex-direction: row;
+  -webkit-flex-direction: row;
 }
-
-.pop-yt {
-  ion-backdrop {
-    --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
-  }
-  .popover-content {
-    top: 5vh;
-    left: 5vw;
-    transform-origin: left top;
-    --width: 90vw;
-    --max-width: 90vw;
-    --height: 90vh;
-    --max-height: 90vh;
-    background: transparent;
-
-    app-youtube-pop,
-    app-kyc-alice {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  @media (max-width: 768px){
-    .popover-content {
-      /* top: 10vh;
-      left: 10vw;
-      --width: 80vw;
-      --max-width: 80vw;
-      --height: 80vh;
-      --max-height: 80vh; */
-    }
-  }
-}
-.pop-mobile-width {
-    // Mobile
-    @media (max-width: 430px){
-        .popover-content{
-            width: 340px;
-            --width: 340px;
-        }
-    }
-
-    // Desktop
-    @media ( min-width: 430px ){
-        .popover-content{
-            width: 400px;
-            --width: 400px;
-        }
-    }
-}
-.modal-mobile {
-  ion-backdrop {
-    --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
-  }
-  .modal-wrapper {
-    --max-width: 500px;
-    border-radius: 10px 10px 0px 0px;
-    
-    /* Desktop */
-    @media (max-width: 768px) {
-        margin: 20px auto 0px auto;
-    }
-    /* Mobile */
-    @media (min-width: 768px) {
-        margin: 10px 10px 0px 10px;
-    }
-  }
-}
-
-.alertSmallTitle { .alert-title { font-size: 18px; } }

@@ -47,7 +47,7 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation type="number" class="text-center" formControlName="num_origin" min="0"></ion-input>
+                      <ion-input click-stop-propagation type="number" class="tx-center" formControlName="num_origin" min="0"></ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
@@ -89,7 +89,7 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation type="number" class="text-center" formControlName="num_destiny" min="0"></ion-input>
+                      <ion-input click-stop-propagation type="number" class="tx-center" formControlName="num_destiny" min="0"></ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
@@ -103,8 +103,8 @@
           <ion-col size="6">
             <ion-label>{{ 'pages.wallet.minnersFee' | translate }}</ion-label>
           </ion-col>
-          <ion-col size="6" class="text-right">
-            <ion-label class="hint">{{ minnersFee }}</ion-label>
+          <ion-col size="6" class="tx-end">
+            <ion-label class="hint">{{ '€ ' + minnersFee }}</ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -113,7 +113,7 @@
 
   <!-- Button Exchange -->
   <ion-footer no-border>
-    <ion-toolbar class="text-center">
+    <ion-toolbar class="tx-center">
       <ion-button (click)="exchange()">{{ 'pages.wallet.confirm' | translate }}</ion-button>
     </ion-toolbar>
   </ion-footer>

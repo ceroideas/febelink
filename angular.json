@@ -43,9 +43,10 @@
               {
                 "input": "src/global.scss"
               },
-              {
-                "input": "src/global/icons.scss"
-              }
+              "src/global/colors.scss",
+              "src/global/icons.scss",
+              "src/global/pops.scss",
+              "src/global/text.scss"
             ],
             "scripts": []
           },

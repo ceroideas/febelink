@@ -10,6 +10,7 @@ export interface CryptoCurrency {
   currency?: CryptoCurrencyType;
   amount?: number;
   assetId?: string;
+  priceBuy?: number;
 }
 
 export const AssetTypes: CryptoCurrency[] = [

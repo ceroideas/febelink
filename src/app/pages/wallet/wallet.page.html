@@ -45,9 +45,9 @@
           <ion-card *ngFor="let tks of retainedTks">
             <ion-row>
               <ion-col size="12" size-sm="6">
-                <ion-label><b>{{ tks?.phase_tokens + '° ' + ( 'landing.phases.phase' | translate ) + ': ' }}</b></ion-label>
-                <ion-label class="margin-start"><b>{{ tks?.num_tokens | splitNumber: false }}</b></ion-label>
-                <ion-label class="decimal"><b>{{ tks?.num_tokens | splitNumber: true }}</b></ion-label>
+                <ion-label><b>{{ tks?.phase_tokens + ': ' }}</b></ion-label>
+                <ion-label class="margin-start"><b>{{{ value: tks?.num_tokens } | splitNumber }}</b></ion-label>
+                <ion-label class="decimal"><b>{{{ value: tks?.num_tokens, returnDecimal: true } | splitNumber }}</b></ion-label>
               </ion-col>
 
               <ion-col size="12" size-sm="6">
@@ -62,21 +62,28 @@
 
     <!-- Assets -->
     <ion-row>
-      <ion-col size="12" size-sm="2.4" *ngFor="let currency of userWallets">
+      <ion-col size="6" size-sm="2.4" *ngFor="let currency of userWallets">
         <ion-card (click)="exchange( currency )">
-          <ion-row class="vertical-content padding-end no-margin">
-            <ion-col size="6" size-sm="12" class="no-padding">
+          <ion-row class="vertical-content no-margin">
+            <ion-col size="12" size-sm="12" class="no-padding">
               <ion-row class="vertical-content ion-no-padding">
                 <img src="assets/icon/{{currency.currency.toLowerCase()}}.png" />
-                <ion-card-subtitle> {{currency.currency}}</ion-card-subtitle>
+                <ion-label class="bold-6"> {{currency.currency}}</ion-label>
               </ion-row>
             </ion-col>
-            <ion-col size="6" size-sm="12" class="text-right no-padding">
-              <ion-label><b>{{ currency.amount | splitNumber: false }}</b></ion-label>
-              <ion-label class="decimal"><b>{{ currency.amount| splitNumber: true }}</b></ion-label>
+            <ion-col size="12" size-sm="12" class="tx-center no-padding">
+              <ion-label class="bold-6 number">{{{ value: currency.amount } | splitNumber }}</ion-label>
+              <ion-label class="bold-6 decimal">{{{ value: currency.amount, returnDecimal: true } | splitNumber }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-card>
+
+        <!-- Buy Assets | only those allowed to buy | only if account verified -->
+        <ion-row (click)="buy( currency )" click-stop-propagation *ngIf="currency?.priceBuy > 0">
+          <ion-button expand="block" color="febelink">
+            {{( 'pages.wallet.buy.button' | translate ) + ' ' + currency?.currency }}
+          </ion-button>
+        </ion-row>
       </ion-col>
     </ion-row>
 
