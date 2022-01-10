@@ -792,9 +792,11 @@
         "tokensUsers":{
             "placeholder": "Gestionar tokens de usuarios",
             "placeholder_users": "Buscar Usuario",
+            "public": "Public Key",
             "num": "N° Tokens",
             "phase": "Fase",
             "payed": "Pagado",
+            "obs": "Observaciones",
             "retained": "Pte. Envío",
             "date": "Fecha de Liberación",
             "actions": "Acciones",
