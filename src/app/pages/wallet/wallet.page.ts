@@ -26,7 +26,7 @@ export class WalletPage implements OnInit {
   userWallets: CryptoCurrency[] = [];
   publicKey: string;
   retainedTks: TokensUser[];
-  kycVerified: boolean;
+  verified: { account: boolean, mandatory: boolean, kyc: boolean }
   transactions: CryptoTransactions;
   minnersFee: string;
   stripeFee: string;
@@ -95,7 +95,7 @@ export class WalletPage implements OnInit {
     this.publicKey = response.publicKey;
     this.userWallets = response.data;
     this.retainedTks = response.retainedTks;
-    this.kycVerified = response[ 'kyc-verified' ];
+    this.verified = response.verified;
     this.transactions = response.transacciones;
     this.minnersFee = response.minnersFee;
     this.isLoading = false;
@@ -108,8 +108,15 @@ export class WalletPage implements OnInit {
   }
 
   async exchange( currency: CryptoCurrency ) {
+    // ToDo: Remove This after Exchange Done
     if( !this.isAdmin ) {
       this.utilities.showToast( this.utilities.translateService.instant( 'common.unavailable' ));
+      return;
+    }
+
+    // If user has not verified Data and Email, redirect to profile
+    if( !this.verified.mandatory ) {
+      await this.userSvc.showAlertToRedir();
       return;
     }
 
@@ -118,7 +125,7 @@ export class WalletPage implements OnInit {
       componentProps:{
         origin: { currency: currency.currency, amount: 0 },
         minnersFee: this.minnersFee,
-        kycVerified: this.kycVerified,
+        kycVerified: this.verified.kyc,
         
         userWallets: this.userWallets,
         retainedTks: this.retainedTks
@@ -140,7 +147,7 @@ export class WalletPage implements OnInit {
       this.utilities.dismissLoading();
       this.utilities.showToast( response?.message || this.utilities.translateService.instant( 'pages.wallet.error.unknown' ));
 
-      this.kycVerified = true; // Since the only way to get till here is if verified
+      this.verified.kyc = true; // Since the only way to get till here is if verified
     }
   }
 
@@ -152,13 +159,10 @@ export class WalletPage implements OnInit {
     );
   }
 
-  async buy(  currency ) {
-    this.user = await this.utilities.getUserData();
-    if( !this.userSvc.checkUserDataComplete( this.user ))
-      return;
-
-    if( !this.publicKey ) {
-      this.utilities.showAlert( '', this.utilities.translateService.instant( 'pages.wallet.error.no-public' ));
+  async buy( currency ) {
+    // If user has no Public Key or has not verified account
+    if( !this.publicKey || !this.verified.account ) {
+      await this.userSvc.showAlertToRedir();
       return;
     }
 
