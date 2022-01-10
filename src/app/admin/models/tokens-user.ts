@@ -1,9 +1,11 @@
 export interface TokensUser {
+    uid:number,
     nick?:string,
     name:string,
     lastname:string,
     email:string,
     dni:string,
+    public:string,
     num_tokens:number,
     id_phase_tokens:number,
     phase_tokens:string,
@@ -11,6 +13,7 @@ export interface TokensUser {
     retained: boolean,
     date:string,
     id:number
+    observations:string,
 }
 
 export interface TokenPhase {
