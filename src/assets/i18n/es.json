@@ -35,6 +35,8 @@
         "first": "Primer@",
         "last": "Ultim@",
         "unavailable": "Función no disponible de momento",
+        "yes": "Si",
+        "no": "No",
 
         "personal": {
             "accountname": "Nombre de Cuenta",
@@ -202,6 +204,7 @@
             "buttonSave": "Guardar cambios",
             "labelNoOpinions": "Sin opiniones aún",
             "labelOpinions": "Opiniones",
+            "alert-need-to-complete": "Para utilizar esta función deberá <br> • Completar su perfil <br> • Verificar Email <br> • Verificar Identidad. <br> ¿Desea hacerlo ahora?",
             "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil",
             "labelDisable": "Deshabilitar cuenta",
             "labelDisableConfirm": "¿Estás seguro de que deseas deshabilitar tu cuenta?",

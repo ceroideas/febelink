@@ -35,6 +35,8 @@
         "first": "First",
         "last": "Last",
         "unavailable": "Function not available yet",
+        "yes": "Yes",
+        "no": "No",
 
         "personal": {
             "accountname": "Account Name",
@@ -202,6 +204,7 @@
             "buttonSave": "Save changes",
             "labelNoOpinions": "No opinions yet",
             "labelOpinions": "Opinions",
+            "alert-need-to-complete": "To use this feature you will need to • Complete your profile <br> • Verify your Email <br> • Verify your Identity. <br> Do you want to do it now?",
             "need-to-complete": "To enjoy more of Febelink, complete your profile",
             "labelDisable": "Disable account",
             "labelDisableConfirm": "Are you sure you want to disable your account?",
