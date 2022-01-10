@@ -1,0 +1,131 @@
+<div>
+  <ion-header fill="transparent">
+    <ion-toolbar fill="transparent">
+
+      <!-- Back Button -->
+      <ion-buttons slot="start">
+        <ion-button icon-only (click)="onDismiss()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <!-- Title -->
+      <ion-label class="margin-start">{{ 'pages.wallet.buy.title' | translate }}</ion-label>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <form [formGroup]="buyForm" style="margin: auto;">
+      <ion-grid>
+        <!-- Asset to buy -->  
+        <ion-row>
+          <ion-col size="6" class="vertical-content">
+            <img class="margin-end" src="assets/icon/{{ asset?.currency.toLowerCase() }}.png" />
+            <ion-label class="margin-start"> {{ asset?.currency }}</ion-label>
+          </ion-col>
+          <ion-col size="5" class="tx-end">
+            <ion-label class="bold-6 number">{{{ value: asset?.amount } | splitNumber }}</ion-label>
+            <ion-label class="bold-6 decimal">{{{ value: asset?.amount, returnDecimal: true } | splitNumber }}</ion-label>
+          </ion-col>
+        </ion-row>
+
+        <ion-card class="padding margin-top">
+          <!-- Input Buy -->
+          <ion-row>
+            <ion-col size="8" class="center-v">
+              <ion-label class="bold-6">{{ 'pages.wallet.buy.buy' | translate }}</ion-label>
+            </ion-col>
+            <ion-col size="3" class="center-v">
+              <ion-input #amount
+                name="code" class="tx-center bold-6"
+                (ionChange)="calc( amount?.value )"
+                [placeholder]="0"
+                [debounce]="300"
+                type="number" min="0.00" step="0.01"
+              ></ion-input>
+            </ion-col>
+            <ion-col size="1" class="center-v">
+              <ion-label class="tx-start">€</ion-label>
+            </ion-col>
+          </ion-row>
+  
+          <!-- Qant -->
+          <ion-row>
+            <ion-col size="6" class="padding-start">
+              <ion-label>{{ 'pages.wallet.buy.cost1' | translate }}</ion-label>
+              <ion-label class="bold-6 number">{{{ value: asset?.priceBuy } | splitNumber }}</ion-label>
+              <ion-label class="bold-6 decimal">{{{ value: asset?.priceBuy, returnDecimal: true, round: round } | splitNumber }}</ion-label>
+              <ion-label class="coin">€</ion-label>
+              <ion-label>{{ 'pages.wallet.buy.cost2' | translate }}</ion-label>
+            </ion-col>
+            <ion-col size="5" class="tx-end">
+              <ion-label class="number">{{{ value: calcTotal } | splitNumber }}</ion-label>
+              <ion-label class="decimal margin-end">{{{ value: calcTotal, returnDecimal: true } | splitNumber }}</ion-label>
+            </ion-col>
+          </ion-row>
+  
+          <!-- Fee Transaction -->
+          <ion-row>
+            <ion-col size="6" class="padding-start">
+              <ion-label>{{ 'pages.wallet.buy.fee' | translate }}</ion-label>
+            </ion-col>
+            <ion-col size="5" class="tx-end">
+              <ion-label class="number">{{{ value: minnersFee } | splitNumber }}</ion-label>
+              <ion-label class="decimal">{{{ value: minnersFee, returnDecimal: true, round: round } | splitNumber }}</ion-label>
+              <ion-label class="coin">€</ion-label>
+            </ion-col>
+          </ion-row>
+  
+          <!-- Fee Stripe -->
+          <ion-row>
+            <ion-col size="6" class="padding-start">
+              <ion-label>{{ 'pages.wallet.buy.stripe' | translate }}</ion-label>
+              <ion-label class="margin-start bold-6">{{ stripeFee }}%</ion-label>
+            </ion-col>
+            <ion-col size="5" class="tx-end">
+              <ion-label class="number">{{{ value: calcStripe } | splitNumber }}</ion-label>
+              <ion-label class="decimal">{{{ value: calcStripe, returnDecimal: true, round: round } | splitNumber }}</ion-label>
+              <ion-label class="coin">€</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+  
+        <!-- Total Tokens -->
+        <ion-card class="padding" *ngIf="calcTotal > 0">
+          <ion-row>
+            <ion-label [innerHTML]="'pages.wallet.buy.total' | translate"></ion-label>
+          </ion-row>
+          <ion-row class="margin-top margin-start align-center">
+            <!-- Current Tokens -->
+            <ion-label class="number">{{{ value: asset?.amount } | splitNumber }}</ion-label>
+            <ion-label class="decimal">{{{ value: asset?.amount, returnDecimal: true } | splitNumber }}</ion-label>
+            
+            <ion-label class="margin-start margin-end">+</ion-label>
+  
+            <!-- Buy Tokens -->
+            <ion-label class="number">{{{ value: calcTotal } | splitNumber }}</ion-label>
+            <ion-label class="decimal">{{{ value: calcTotal, returnDecimal: true } | splitNumber }}</ion-label>
+          </ion-row>
+
+            <!-- Total -->
+          <ion-row class="align-center">
+            <ion-card class="padding">
+              <ion-label class="number">{{{ value: calcAssets } | splitNumber }}</ion-label>
+              <ion-label class="decimal">{{{ value: calcAssets, returnDecimal: true } | splitNumber }}</ion-label>
+            </ion-card>
+          </ion-row>
+        </ion-card>
+      </ion-grid>
+    </form>
+  </ion-content>
+
+  <ion-footer no-border>
+    <ion-toolbar class="tx-center">
+      <!-- Button Cancel -->
+      <ion-button (click)="onDismiss()" fill="transparent" class="margin-end">{{ 'common.buttons.cancel' | translate }}</ion-button>
+      
+      <!-- Button Buy -->
+      <ion-button (click)="buy()" class="margin-start">{{ 'pages.wallet.buy.button' | translate }}</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</div>

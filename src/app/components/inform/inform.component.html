@@ -1,0 +1,33 @@
+<ion-header fill="transparent">
+  <ion-toolbar fill="transparent">
+
+    <!-- Back Button -->
+    <ion-buttons slot="start">
+      <ion-button icon-only (click)="onDismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <ion-label class="margin-start" *ngIf="title">{{ title | translate }}</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- Image Top | Usually the logo -->
+    <img class="image" [src]="image" *ngIf="image && showImage">
+
+    <h2 *ngIf="pompadour && showPompadour" [innerHTML]="pompadour | translate"></h2>
+    <h4 *ngIf="subtitle && showSubtitle" [innerHTML]="subtitle | translate"></h4>
+
+    <ion-label class="text" [innerHTML]="description | translate"></ion-label><br>
+    <ion-icon *ngIf="showCheckmark" [name]="checkmark" [color]="showCheckmark ? 'success' : 'danger'" class="margin-top"></ion-icon>
+  </div>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar *ngIf="buttons?.length > 0" class="tx-center">
+    <ion-button  *ngFor="let button of buttons" (click)="onButtonClick( button )" [innerHTML]="button?.text | translate"></ion-button>
+  </ion-toolbar>
+</ion-footer>

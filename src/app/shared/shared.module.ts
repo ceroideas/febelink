@@ -15,6 +15,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
 import { ClickStopPropagation } from '../components/stop-propagation.component';
 import { TwoFAComponent } from '../components/two-fa/two-fa.component';
+import { InformComponent } from '../components/inform/inform.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TwoFAComponent } from '../components/two-fa/two-fa.component';
     KYCAliceComponent,
     ClickStopPropagation,
     TwoFAComponent,
+    InformComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { TwoFAComponent } from '../components/two-fa/two-fa.component';
     KYCAliceComponent,
     ClickStopPropagation,
     TwoFAComponent,
+    InformComponent,
   ],
   entryComponents: [],
 })

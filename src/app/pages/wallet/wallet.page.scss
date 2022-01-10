@@ -23,8 +23,19 @@ ion-card {
     margin-right: 10px;
   }
   ion-card-subtitle {
-    margin-left: 5px;
     font-weight: 700;
+  }
+
+  .abicon-shopping-cart {
+    position: absolute;
+    right: 0;
+  }
+
+  .number {
+    font-size: 20px
+  }
+  .decimal {
+    font-size: 12px
   }
 }
 

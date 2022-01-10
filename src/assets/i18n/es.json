@@ -35,6 +35,8 @@
     "first": "Primer@",
     "last": "Ultim@",
     "unavailable": "Función no disponible de momento",
+    "yes": "Si",
+    "no": "No",
 
     "personal": {
       "accountname": "Nombre de Cuenta",
@@ -201,6 +203,7 @@
       "buttonSave": "Guardar cambios",
       "labelNoOpinions": "Sin opiniones aún",
       "labelOpinions": "Opiniones",
+      "alert-need-to-complete": "Para utilizar esta función deberá <br> • Completar su perfil <br> • Verificar Email <br> • Verificar Identidad. <br> ¿Desea hacerlo ahora?",
       "need-to-complete": "Para disfrutar más de Febelink, completa tu perfil",
       "labelDisable": "Deshabilitar cuenta",
       "labelDisableConfirm": "¿Estás seguro de que deseas deshabilitar tu cuenta?",
@@ -367,7 +370,23 @@
       "qDemand": "Cantidad",
       "minnersFee": "Coste de transacción",
       "confirm": "Confirmar Transacción",
-
+      "buy": {
+        "title": "Comprar assets",
+        "buy": "Cantidad a Comprar:",
+        "price": "Precio Individual:",
+        "cost1": "Recibidos: ",
+        "cost2": " / Tokens",
+        "fee": "Coste de Transacción:",
+        "stripe": "Coste de Gestión:",
+        "total": "<b>Total de Tokens</b> ( Actual + Compra )",
+        "button": "Comprar"
+      },
+      "purchase": {
+        "title-success": "¡Felicitaciones!",
+        "title-error": "Error en Compra",
+        "msg-success": "Tu compra se ha realizado con éxito",
+        "msg-error": "Parece que hubo un error en tu compra, por lo que no se han descontado de tu tarjeta. Vuelva a intenar y si el error persiste contacta a info@febelink.com"
+      },
       "help": {
         "title": "¿Por qué veo solo el saldo de algunas Monedas?",
         "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
@@ -380,7 +399,8 @@
         "qDemand": "Indique la cant de Moneda a Recibir",
         "unknown": "Desconozco el Resultado de la Transacción",
         "exceeded": "No posee la cantidad que desea transaccionar",
-        "asset-not-available": "De momento esta moneda no está disponible para transacciones"
+        "asset-not-available": "De momento esta moneda no está disponible para transacciones",
+        "no-public": "Hasta que no tenga la Wallet Creada (Clave Publica asignada) no podrá realizar Compra de Tokens. Complete la información de su perfil para continuar"
       },
 
       "operations": [

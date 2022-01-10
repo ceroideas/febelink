@@ -95,12 +95,12 @@
       </div>
     </ng-container>
 
-    <div class="cargando-container text-center" margin-top *ngIf="isLoading">
+    <div class="cargando-container tx-center" margin-top *ngIf="isLoading">
       <ion-spinner></ion-spinner>
       <p>{{ 'common.labelLoading' | translate }}</p>
     </div>
     <p
-      class="vacio text-center"
+      class="vacio tx-center"
       *ngIf="!(searchResults.length>0) && !isLoading"
     >
       {{ 'common.labelNoElements' | translate }}

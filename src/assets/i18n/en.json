@@ -35,6 +35,8 @@
     "first": "First",
     "last": "Last",
     "unavailable": "Function not available yet",
+    "yes": "Yes",
+    "no": "No",
 
     "personal": {
       "accountname": "Account Name",
@@ -201,6 +203,7 @@
       "buttonSave": "Save changes",
       "labelNoOpinions": "No opinions yet",
       "labelOpinions": "Opinions",
+      "alert-need-to-complete": "To use this feature you will need to • Complete your profile <br> • Verify your Email <br> • Verify your Identity. <br> Do you want to do it now?",
       "need-to-complete": "To enjoy more of Febelink, complete your profile",
       "labelDisable": "Disable account",
       "labelDisableConfirm": "Are you sure you want to disable your account?",
@@ -357,6 +360,7 @@
       "public-key": "Public Key",
       "retained": "Retained Tokens",
       "release": "Release Date:",
+      "release": "Unlocking:",
 
       "transactions": "Recent transactions",
       "no-transactions": "No recent transactions",
@@ -367,7 +371,24 @@
       "qDemand": "Quantity",
       "minnersFee": "Transaction cost",
       "confirm": "Confirm Transaction",
+      "buy": {
+        "title": "Buy assets",
+        "buy": "Quantity to Buy:",
+        "price": "Individual Price:",
+        "cost1": "Received: ",
+        "cost2": " / Tokens",
+        "fee": "Transaction Cost:",
+        "stripe": "Management Cost:",
+        "total": "<b>Tokens Total</b> ( Current + Buy )",
+        "button": "Purchase"
+      },
 
+      "purchase": {
+        "title-success": "Congratulations!",
+        "title-error": "Purchase Error",
+        "msg-success": "Your purchase has been done successful",
+        "msg-error": "It seems that there was an error in your purchase, so they have not been deducted from your card. Please try again and if the error persists contact info@febelink.com"
+      },
       "help": {
         "title": "Why do I see only the balance of some Currencies?",
         "message": "Balances are shown in FLAU, BTC, XLM, EUR, USD. If you have other balances in your Wallet they will not be shown in this window"
@@ -380,7 +401,8 @@
         "qDemand": "Indicate the amount of Currency to Receive",
         "unknown": "Unknow the Transaction Result",
         "exceeded": "You do not possess the amount you want to trade",
-        "asset-not-available": "At the moment this Currency is not available for Transactions"
+        "asset-not-available": "At the moment this Currency is not available for Transactions",
+        "no-public": "Until you have the Wallet Created (assigned Public Key) you will not be able to purchase Tokens. Fill in your profile information to continue"
       },
 
       "operations": [
@@ -849,9 +871,11 @@
     "tokensUsers": {
       "placeholder": "Manage User Tokens",
       "placeholder_users": "Search User",
+      "public": "Public Key",
       "num": "Tokens N°",
       "phase": "Phase",
       "payed": "Payed",
+      "obs": "Observations",
       "retained": "Pnd. Send",
       "date": "Release Date",
       "actions": "Actions",

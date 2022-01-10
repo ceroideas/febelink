@@ -16,8 +16,8 @@ export class WalletService {
     return await this.api._getData( `wallet/getWalletInfo` );
   }
 
-  async getBalanceByUserId() {
-    return await this.api._getData(`wallet/balance`);
+  async getBalanceByUserId( id?: string | number ) {
+    return await this.api._getData( 'wallet/balance' + ( id ? '/' + id : ''));
   }
 
   async exchange( assetOrigin: CryptoCurrency, assetDestiny: CryptoCurrency ) {

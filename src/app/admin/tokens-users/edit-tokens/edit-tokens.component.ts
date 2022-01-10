@@ -63,7 +63,8 @@ export class EditTokensComponent implements OnInit {
       id_phase_tokens: new FormControl({ value: this.tokensUser?.id_phase_tokens, disabled: false }, Validators.required ),
       retained: new FormControl({ value: this.tokenCRUD == TokenCRUD.Create ? true : this.tokensUser?.retained, disabled: true }),
       date: new FormControl({ value: this.tokensUser?.date, disabled: false }),
-      payed_date: new FormControl({ value: this.tokensUser?.payed_date, disabled: false })
+      payed_date: new FormControl({ value: this.tokensUser?.payed_date, disabled: false }),
+      obs: new FormControl({ value: this.tokensUser?.observations, disabled: false })
     });
   }
 
@@ -117,11 +118,12 @@ export class EditTokensComponent implements OnInit {
       return;
     }
 
-    const { num_tokens, id_phase_tokens, date, payed_date } = this.tokensForm.value;
+    const { num_tokens, id_phase_tokens, date, payed_date, obs } = this.tokensForm.value;
     this.tokensUser.num_tokens = num_tokens;
     this.tokensUser.id_phase_tokens = id_phase_tokens;
     this.tokensUser.date = date;
     this.tokensUser.payed_date = payed_date;
+    this.tokensUser.observations = obs;
 
     if( !num_tokens ) {
       this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.num_tokens' ));

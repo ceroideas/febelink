@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TokensUsersService } from 'src/app/admin/services/tokens-users.service';
+import { CryptoCurrency } from 'src/app/models/currency.model';
 import { DateFormatType } from 'src/app/pipes/date-format';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { TokenCRUD, TokenPhase, TokensUser } from '../models/tokens-user';
 import { EditTokensComponent } from './edit-tokens/edit-tokens.component';
 
@@ -22,6 +24,7 @@ export class TokensUsersPage implements OnInit {
     , public modalCtrl:ModalController
     , public utils:UtilitiesService
     , private translateSvc: TranslateConfigService
+    , private walletSvc: WalletService
     ) { }
 
   tokensUsers:TokensUser[]
@@ -59,6 +62,36 @@ export class TokensUsersPage implements OnInit {
     suscribirseModal.onDidDismiss().then(async (response) => {
       if(response?.data?.updated) this.search();
     })
+  }
+
+  async showObs( tokensUser: TokensUser ) {
+    // Show Observations on click (if they exist)
+    if( tokensUser?.observations )
+      this.utils.showAlert(
+        this.translateSvc.instant( 'admin.tokensUsers.obs' ),
+        tokensUser.observations
+      );
+  }
+
+  async showBalance( tokensUser: TokensUser ) {
+    if( tokensUser.public == null ) {
+      this.utils.showToast( 'El usuario no tiene clave publica para ver el balance' );
+      return;
+    }
+
+    // ToDo: Extract to Component
+    await this.utils.showLoading();
+    const balance: { data: CryptoCurrency[] } =
+        await ( await this.walletSvc.getBalanceByUserId( tokensUser.uid )).toPromise();
+    await this.utils.dismissLoading();
+
+    let assets: string = '';
+    balance.data.forEach(( crypto, index ) => {
+      assets += ( assets === '' ? '' : '<br><br>' ) +
+        'Asset: ' + crypto.currency + '<br>' +
+        'Cant: ' +crypto.amount ;
+    });
+    this.utils.showAlert( 'Balance de ' + tokensUser.name, assets );
   }
 
   async edit(tokensUser:TokensUser){
