@@ -108,7 +108,7 @@
     </ion-row>
 
     <ng-container *ngIf="!hideTransactions">
-      <ion-row *ngFor="let operation of transactions?.operations?.records?.slice().reverse()">
+      <ion-row *ngFor="let operation of transactions?.operations?.records" (click)="transaction( operation )">
         <ion-card class="transactions">
           <ion-card-content>
             {{ operation?.created_at | dateFormat: dateFormatType.TimeDate }} - 

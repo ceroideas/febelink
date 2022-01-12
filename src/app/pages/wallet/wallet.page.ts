@@ -212,4 +212,8 @@ export class WalletPage implements OnInit {
     const origin = data?.origin;
     const destiny = data?.destiny;
   }
+
+  transaction( operation ) {
+    console.log( 'operation:', operation );
+  }
 }
