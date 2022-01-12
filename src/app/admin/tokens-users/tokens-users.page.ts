@@ -91,7 +91,7 @@ export class TokensUsersPage implements OnInit {
         'Asset: ' + crypto.currency + '<br>' +
         'Cant: ' +crypto.amount ;
     });
-    this.utils.showAlert( 'Balance de ' + tokensUser.name, assets );
+    this.utils.showAlert( 'Balance de ' + ( tokensUser.name || tokensUser.nick ), assets );
   }
 
   async edit(tokensUser:TokensUser){
