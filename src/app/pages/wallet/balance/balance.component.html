@@ -1,0 +1,62 @@
+<ion-grid *ngIf="retainedTks?.length > 0">
+  <div *ngIf="isDetailsShowing && retainedTks.length > 0" class="line-b">
+    <!-- Balance Tks -->
+    <ion-row class="pointer bold-6" (click)="isDetailsShowing = false">
+      <ion-col size="6">
+        <ion-label color="febelink">{{ 'pages.wallet.balance.balance' | translate }}</ion-label>
+        <ion-icon class="margin-start" [name]="'chevron-' + ( isDetailsShowing ? 'up' : 'down' ) + '-outline'"></ion-icon>
+      </ion-col>
+      <ion-col size="6" class="tx-end padding-end bold-6">
+        <ion-label color="febelink">{{{ value: asset?.amount } | splitNumber }}</ion-label>
+        <ion-label color="febelink" class="decimal">{{
+          { value: asset?.amount, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
+        }}</ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Total Retained Tks -->
+    <ion-row class="pointer padding-start" (click)="isRetainedShowing = !isRetainedShowing">
+      <ion-col size="6">
+        <ion-label>{{ 'pages.wallet.balance.retained' | translate }}</ion-label>
+        <ion-icon class="margin-start" [name]="'chevron-' + ( isRetainedShowing ? 'up' : 'down' ) + '-outline'"></ion-icon>
+      </ion-col>
+      <ion-col size="6" class="tx-end padding-end bold-6">
+        <ion-label class="margin-end">-</ion-label>
+        <ion-label>{{{ value: sumRetainedTks } | splitNumber }}</ion-label>
+        <ion-label class="decimal">{{
+          { value: sumRetainedTks, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
+        }}</ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Sum Retained Tks -->
+    <ng-container *ngIf="isRetainedShowing">
+      <ion-row *ngFor="let retainedTk of retainedTks" class="box">
+        <ion-col size="6">
+          <ion-row><ion-label>{{ retainedTk?.phase_tokens }}</ion-label></ion-row>
+          <ion-row><ion-label>{{ retainedTk?.date }}</ion-label></ion-row>
+        </ion-col>
+        <ion-col size="6" class="center-v tx-end">
+          <ion-label>{{{ value: retainedTk.num_tokens } | splitNumber }}</ion-label>
+          <ion-label class="decimal">{{
+            { value: retainedTk.num_tokens, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
+          }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </div>
+
+  <!-- Available Balance Tks => Show details only if has retainedTks -->
+  <ion-row class="pointer bold-6" (click)="isDetailsShowing = retainedTks.length > 0"> 
+    <ion-col size="6">
+      <ion-label color="febelink">{{ 'pages.wallet.balance.balance-av' | translate }}</ion-label>
+      <ion-icon class="margin-start" [name]="'chevron-down-outline'" *ngIf="!isDetailsShowing && retainedTks.length > 0"></ion-icon>
+    </ion-col>
+    <ion-col size="6" class="tx-end padding-end bold-6">
+      <ion-label color="febelink">{{{ value: asset?.amount - sumRetainedTks } | splitNumber }}</ion-label>
+      <ion-label color="febelink" class="decimal">{{
+        { value: asset?.amount - sumRetainedTks, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
+      }}</ion-label>
+    </ion-col>
+  </ion-row>
+</ion-grid>
