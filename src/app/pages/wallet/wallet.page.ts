@@ -13,6 +13,7 @@ import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InformComponent } from 'src/app/components/inform/inform.component';
 import { UserService } from 'src/app/services/user.service';
+import { SendComponent } from './send/send.component';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -81,6 +82,32 @@ export class WalletPage implements OnInit {
 
   public goBack(): void {
     this.router.navigate(['/menu/todas']);
+  }
+
+  public async send() {
+    // If user has not verified Data and Email, redirect to profile
+    if( !this.verified.mandatory ) {
+      await this.userSvc.showAlertToRedir();
+      return;
+    }
+
+    const sendTksModal = await this.modalCtrl.create({
+      component: SendComponent,
+      componentProps: {
+        asset: this.userWallets[ 0 ],
+        retainedTks: this.retainedTks,
+        assetsMaxDecimals: this.assetsMaxDecimals,
+
+        returnBalance: true
+      },
+      cssClass: 'modal-mobile',
+    });
+    await sendTksModal.present();
+
+    const { data } = await sendTksModal.onDidDismiss();
+
+    if( data?.response )
+      this.setVars( data.response );
   }
 
   async getWalletInfo() {
