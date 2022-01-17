@@ -33,4 +33,18 @@ export class WalletService {
     
     return ( await this.api._createData( 'wallet/exchange', formData )).toPromise();
   }
+
+  async send(publicKey: string, currency: string, amount: number, returnBalance: boolean = true ) {
+    const formData = new FormData();
+
+      formData.append( 'destinationPublicKey', publicKey );
+      formData.append( 'asset', currency );
+      formData.append( 'amount', ( amount || '' ) + '' );
+      formData.append( 'returnBalance', returnBalance ? '1' : '0' );
+
+      await this.api.utilities.showLoading();
+      const response = ( await this.api._createData('wallet/send', formData)).toPromise();
+
+      return response;
+  }
 }
