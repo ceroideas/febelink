@@ -47,4 +47,6 @@
     google_id: string | null;
     facebook_id: string | null;
     suspended: number;
+
+    public?: string
 }
