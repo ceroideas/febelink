@@ -416,11 +416,28 @@
         "message": "Balances are shown in FLAU, BTC, XLM, EUR, USD. If you have other balances in your Wallet they will not be shown in this window"
       },
 
+      "send": {
+        "title": "Send Tokens to",
+        "addressee": "Addressee",
+        "total": "Total Remaining Balance",
+        "button": "Send"
+      },
+
+      "balance": {
+        "balance": "Balance",
+        "retained": "Total Retained",
+        "balance-av": "Available Balance"
+      },
+
       "error": {
         "missing-origin": "You must select the Origin Currency",
         "missing-destiny": "You must select the Destination Currency",
         "qOffer": "Indicate the amount of Currency to Change",
         "qDemand": "Indicate the amount of Currency to Receive",
+        "qSend": "Indicate the amount of Currency to Send",
+        "minSend": "You cannot send more Tokens than you have",
+        "public-key": "You must indicate the Public Key of the Wallet to send",
+        "cant-send": "You do not have enough balance to send",
         "unknown": "Unknow the Transaction Result",
         "exceeded": "You do not possess the amount you want to trade",
         "asset-not-available": "At the moment this Currency is not available for Transactions",
