@@ -9,8 +9,6 @@ import {
   ModalController,
 } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Socket } from 'ngx-socket-io';
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
@@ -23,7 +21,7 @@ import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
 import { NotificationService } from './services/notification.service';
-import { CryptoCurrency, CryptoCurrencyType } from './models/currency.model';
+import { CryptoCurrency } from './models/currency.model';
 import { Observable } from 'rxjs';
 import { ILangDEFAULTS } from './models/langs.model';
 import { Meta, Title } from '@angular/platform-browser';
@@ -65,12 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private push: Push,
     private api: ApiService,
     private utilities: UtilitiesService,
     public alertCtrl: AlertController,
-    private socket: Socket,
     private router: Router,
     private deeplinks: Deeplinks,
     private navCtrl: NavController,
@@ -84,11 +80,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private metaService: Meta
   ) {
-    this.initializeApp();
-    this.openCookieBanner();
   }
 
   ngOnInit() {
+    this.initializeApp();
+    this.openCookieBanner();
+
     this.titleService.setTitle(GENERAL_TITLE);
     this.metaService.addTags([
       {
