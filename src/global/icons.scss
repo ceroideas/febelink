@@ -1,29 +1,7 @@
-[class*="abicon-"] {
+[class*="abicon"] {
     display: inline-table;
-    padding: 5px;
     font-size: 10px;
-}
-[class*="abicon-"]:before {
-    content: '';
-    display: block;
-    width: 1em;
-    height: 1em;
-    font-size: 1em;
-    background-repeat: no-repeat;
-    background-size: contain;
-    -webkit-background-size: contain;
-}
 
-/* SVG to CSS => https://yoksel.github.io/url-encoder/ */
-.abicon-sackdollar {
-    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fad' data-icon='sack-dollar' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-sack-dollar fa-w-16 fa-7x'%3E%3Cg class='fa-group'%3E%3Cpath fill='%23DADEE2' d='M192 96h128l47.4-71.12A16 16 0 0 0 354.09 0H157.94a16 16 0 0 0-13.31 24.88zm128 32H192C-10.38 243.4.09 396.64.09 416c0 53 49.11 96 109.68 96h292.48c60.58 0 109.68-43 109.68-96 0-19 9.35-173.24-191.93-288zm-46.58 278v17.34a8.68 8.68 0 0 1-8.7 8.62h-17.41a8.69 8.69 0 0 1-8.71-8.62v-17.51a63.14 63.14 0 0 1-34.16-12.17 8.52 8.52 0 0 1-.67-13l12.84-12.06a8.93 8.93 0 0 1 11-.76 26.71 26.71 0 0 0 13.93 4h30.58c7.07 0 12.84-6.35 12.84-14.22 0-6.46-3.92-12.06-9.58-13.67l-49-14.54c-20.24-6-34.39-25.2-34.39-46.74 0-26.38 20.68-47.82 46.46-48.57v-17.48a8.69 8.69 0 0 1 8.75-8.62h17.41a8.68 8.68 0 0 1 8.7 8.62v17.55a63.15 63.15 0 0 1 34.17 12.17 8.54 8.54 0 0 1 1.58 12 8.72 8.72 0 0 1-.92 1l-12.73 12.2a8.91 8.91 0 0 1-11 .75 26.8 26.8 0 0 0-13.93-4h-30.57c-7.07 0-12.84 6.35-12.84 14.21 0 6.46 3.92 12.06 9.57 13.68l49 14.54c20.24 6 34.38 25.2 34.38 46.74-.14 26.4-20.92 47.94-46.6 48.54z' class='fa-secondary'%3E%3C/path%3E%3Cpath fill='%23ADB5BD' d='M285.64 310.72l-49-14.54c-5.65-1.62-9.57-7.22-9.57-13.68 0-7.86 5.77-14.21 12.84-14.21h30.56a26.8 26.8 0 0 1 13.93 4 8.91 8.91 0 0 0 11-.75l12.73-12.2a8.72 8.72 0 0 0 .92-1 8.54 8.54 0 0 0-1.56-12 63.15 63.15 0 0 0-34.17-12.17v-17.55a8.68 8.68 0 0 0-8.7-8.62H247.2a8.69 8.69 0 0 0-8.74 8.62v17.48c-25.78.75-46.46 22.19-46.46 48.57 0 21.54 14.15 40.74 34.39 46.74l49 14.54c5.66 1.61 9.58 7.21 9.58 13.67 0 7.87-5.77 14.22-12.84 14.22h-30.58a26.71 26.71 0 0 1-13.93-4 8.93 8.93 0 0 0-11 .76l-12.84 12.06a8.52 8.52 0 0 0 .67 13 63.14 63.14 0 0 0 34.16 12.17v17.51a8.69 8.69 0 0 0 8.71 8.62h17.41a8.68 8.68 0 0 0 8.7-8.62V406c25.68-.6 46.46-22.14 46.6-48.54-.03-21.54-14.15-40.74-34.39-46.74zM329 96H183a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h146a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8z' class='fa-primary'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
-}
-.abicon-gift {
-    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fad' data-icon='gift' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-gift fa-w-16 fa-7x'%3E%3Cg class='fa-group'%3E%3Cpath fill='%23dadee2' d='M224 320v160H64a32 32 0 0 1-32-32V320zm0-160H32a32 32 0 0 0-32 32v80a16 16 0 0 0 16 16h208zm256 0H288v128h208a16 16 0 0 0 16-16v-80a32 32 0 0 0-32-32zM288 480h160a32 32 0 0 0 32-32V320H288z' class='fa-secondary'%3E%3C/path%3E%3Cpath fill='%23ADB5BD' d='M224 480h64V320h-64zM359.54 32c-41.82 0-68.86 21.3-103.54 68.3-34.68-47-61.72-68.3-103.54-68.3C103.71 32 64 71.5 64 120a85.65 85.65 0 0 0 10.15 40h78.21a40 40 0 1 1 0-80c20 0 34.78 3.3 86.55 80H224v128h64V160h-15c51.67-76.5 66-80 86.55-80a40 40 0 1 1 0 80h78.31A86.86 86.86 0 0 0 448 120c0-48.5-39.71-88-88.46-88z' class='fa-primary'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
-}
-.abicon-check {
-    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='check' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-check fa-w-16 fa-7x'%3E%3Cpath fill='%23DADEE2' d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z' class=''%3E%3C/path%3E%3C/svg%3E");
-}
-.abicon-shopping-cart {
-    background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fad' data-icon='shopping-cart' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' class='svg-inline--fa fa-shopping-cart fa-w-18 fa-7x'%3E%3Cg class='fa-group'%3E%3Cpath fill='%2355ABDD' d='M552 64H159.21l52.36 256h293.15a24 24 0 0 0 23.4-18.68l47.27-208a24 24 0 0 0-18.08-28.72A23.69 23.69 0 0 0 552 64z' class='fa-secondary'%3E%3C/path%3E%3Cpath fill='%23ADB5BD' d='M218.12 352h268.42a24 24 0 0 1 23.4 29.32l-5.52 24.28a56 56 0 1 1-63.6 10.4H231.18a56 56 0 1 1-67.05-8.57L93.88 64H24A24 24 0 0 1 0 40V24A24 24 0 0 1 24 0h102.53A24 24 0 0 1 150 19.19z' class='fa-primary'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    width: 20px;
+    height: 20px;
 }
