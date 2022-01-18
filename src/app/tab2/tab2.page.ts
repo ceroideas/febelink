@@ -49,11 +49,9 @@ export class Tab2Page {
     private utilities: UtilitiesService,
     private router: Router,
     private route: ActivatedRoute,
-    private modalCtrl: ModalController,
     private translateService: TranslateConfigService,
     private demanadaSvc: DemandaService,
     private seoSvc: SeoService,
-    private cookSvc: CookieService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.getUserProfile();
