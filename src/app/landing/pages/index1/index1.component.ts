@@ -1,10 +1,7 @@
 // https://stackblitz.com/edit/countdown-timer?file=app%2Fhello.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-// OJO OMG es necesario instalar:
-// npm install @types/countdown
-import * as countdown from 'countdown';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SeoService } from 'src/app/services/seo.service';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { PopoverController } from '@ionic/angular';
@@ -30,18 +27,6 @@ export interface xTimer {
 export class Index1Component implements OnInit {
   currentSection = 'home';
 
-  //public emailAddres = '';
-  // FECHA DE REFERENCIA
-  gdDateTop: countdown.DateTime = new Date(2021, 10, 5);
-
-  giTimerId: number = null;
-  gxTimer: xTimer = {
-    szMs: '00',
-    szDs: '00',
-    szHs: '00',
-    szMns: '00',
-    szSgs: '00',
-  };
   langSelected: ILang;
 
   constructor(
@@ -52,39 +37,21 @@ export class Index1Component implements OnInit {
     private translateService: TranslateConfigService,
   ) { }
 
-  navExtras: NavigationExtras;
-
-  async ngOnInit() {
-    // https://www.npmjs.com/package/countdown
-    this.giTimerId = <number>(
-      countdown(this.gdDateTop, (x_Ts: countdown.Timespan) => {
-        //console.log(x_Ts);
-        this.gxTimer.szMs = this.szDigits2(x_Ts.months);
-        this.gxTimer.szDs = this.szDigits2(x_Ts.days);
-        this.gxTimer.szHs = this.szDigits2(x_Ts.hours);
-        this.gxTimer.szMns = this.szDigits2(x_Ts.minutes);
-        this.gxTimer.szSgs = this.szDigits2(x_Ts.seconds);
-      })
-    );
-
-    this.navExtras = this.router.getCurrentNavigation().extras;
-
+  ngOnInit() {
     this.seoSvc.generateTags({
           title: 'Febelink Token'
         , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
         , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
     })
+  }
 
+  async ngAfterViewInit() {
     this.langSelected = this.langSelected ? this.langSelected :
       <ILang> await ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
   // Destruimos cuando finaliza el contador
-  ngOnDestroy() {
-    if (this.giTimerId) {
-      clearInterval(this.giTimerId as number);
-    }
-  }
+  ngOnDestroy() {}
 
   /**
    * Window scroll method
