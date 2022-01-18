@@ -63,14 +63,6 @@
             >
           </li>
         </ul>
-        <!-- LOGIN
-        <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
-          <li class="nav-item" [ngClass]="{'active':currentSection === 'clients'}">
-            <a [ngxScrollTo]="'#clients'" href="javascript: void(0);" class="nav-link">Login</a>
-          </li>
-        </ul>
-        <button class="btn btn-success btn-rounded navbar-btn">Sign Up</button>
-        -->
       </div>
     </div>
   </nav>
@@ -100,11 +92,31 @@
               <app-whitelist lang="{{ langSelected?.lang }}"></app-whitelist>
             </div>
 
-            <p
-              class="tx-start  margin-start margin-end no-margin-b"
-              *ngFor="let airdrop of 'landing.airdrop' | translate"
-              [innerHTML]="airdrop | safeHtml"
-            ></p>
+            <!-- Airdrop Message -->
+            <p class="tx-start  margin-start margin-end no-margin-b">
+              <ion-label>{{ 'landing.airdrop.0' | translate }}</ion-label>
+              <ion-img class="margin-start abicon" src="assets/icon/svg/gift.svg"></ion-img>
+              
+              <br><br>
+              <ion-label>{{ 'landing.airdrop.1' | translate }}</ion-label>
+              
+              <br>
+              <img class="margin-end abicon" src="assets/icon/svg/check.svg"/>
+              <ion-label>{{ 'landing.airdrop.2' | translate }}</ion-label>
+              
+              <br>
+              <img class="margin-end abicon" src="assets/icon/svg/check.svg"/>
+              <ion-label>{{ 'landing.airdrop.3' | translate }}</ion-label>
+              
+              <br>
+              <img class="margin-end abicon" src="assets/icon/svg/sackdollar.svg"/>
+              <ion-label>{{ 'landing.airdrop.4' | translate }}</ion-label>
+              <img class="margin-start margin-end abicon" src="assets/icon/svg/gift.svg"/>
+              <ion-label>{{ 'landing.airdrop.5' | translate }}</ion-label>
+
+              <br><br>
+              <ion-label>{{ 'landing.airdrop.6' | translate }}</ion-label>
+            </p>
             
             <div class="kSlider_show">
               <div class="kSlider">
@@ -128,46 +140,6 @@
       <!-- end container -->
     </section>
     <!-- Hero section End -->
-  
-    <!-- Cta start -->
-
-    <!--
-    <section class="section" id="section-newsletter">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="tx-center mb-5">
-              <h5 class="text-primary text-uppercase small-title" id="mini-titular">NEWSLETTER</h5>
-              <h1 class="mb-3" class="titular-seccion">Mantente al día de <br> todas las novedades</h1>
-              <p id="text-newsletter">Suscríbete a nuestra newsletter.</p>
-            </div>
-          </div>
-  
-          <div class="col-xl-8 col-lg-10">
-            <div class="tx-center">
-              <div class="subscribe">
-                <form>
-                  <div class="row" id="input-newsletter">
-                    <div class="col-md-9">
-                      <div>
-                        <input type="text" class="form-control" placeholder="Enter your E-mail address">
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div class="mt-3 mt-md-0">
-                        <button type="button" class="btn btn-primary btn-block">Subscribirme</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  -->
-    <!-- Cta end -->
   
     <app-features></app-features>
     <app-services></app-services>
