@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { DemandaService } from 'src/app/services/demanda.service';
 import { UserService } from 'src/app/services/user.service';
+import { MailService } from 'src/app/services/mail.service';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -61,7 +62,8 @@ export class DetalleDemandaPage implements OnInit {
     private translateService: TranslateService,
     private authSvc:AuthenticationService,
     private demanadaSvc:DemandaService,
-    private userSvc:UserService
+    private userSvc:UserService,
+    public mailSvc: MailService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -335,5 +337,10 @@ export class DetalleDemandaPage implements OnInit {
 
   async onClickAddToFavorites(demand) {
     this.demanadaSvc.addToFavorites(demand);
+  }
+
+  reportUser() {
+    const extra: string = "\n\Id Demanda: " + this.demanda.id + "\n";
+    this.mailSvc.reportUser( this.demanda.user, extra );
   }
 }

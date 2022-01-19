@@ -64,6 +64,7 @@ ion-content {
     }
     .btn-info{
         width: 100%;
+        margin-bottom: 15px;
     }
     .apartado{
         margin-bottom: 15px;
@@ -71,6 +72,10 @@ ion-content {
     }
     ion-slides{
         height: 300px;
+        
+        .swiper-slide-active {
+            width: 100% !important;
+        }
     }
     ion-slide{
         img{

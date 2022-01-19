@@ -64,7 +64,9 @@
       "send": "Enviar",
       "close": "Cerrar",
       "retry": "Reintentar",
-      "got-it": "Entendido"
+      "got-it": "Entendido",
+      "report": "Denunciar",
+      "block": "Bloquear"
     },
 
     "address": {
@@ -145,6 +147,27 @@
     ],
     "social": {
       "telegram": "Únete a la conversación del Chat de Telegram"
+    },
+
+    "mailTo": {
+      "support": "soporte@febelink.com",
+      "from": "De: ",
+      "to": "A: ",
+      "msg": "Mensaje: ",
+
+      "report": {
+        "title": "Denunciar",
+        "msg": "Comentanos en detalle lo que está sucediendo"
+      },
+
+      "block": {
+        "title": "Bloquear",
+        "msg": "Comentanos en detalle lo que está sucediendo"
+      },
+
+      "error": {
+        "minLength": "Debe detallar con un mínimo de 5 palabras"
+      }
     }
   },
   "menu": {
