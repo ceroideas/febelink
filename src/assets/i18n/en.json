@@ -64,7 +64,9 @@
       "send": "Send",
       "close": "Close",
       "retry": "Retry",
-      "got-it": "Entendido"
+      "got-it": "Got It",
+      "report": "Report",
+      "block": "Block"
     },
 
     "address": {
@@ -145,6 +147,27 @@
     ],
     "social": {
       "telegram": "Join the Chat conversation in Telegram"
+    },
+
+    "mailTo": {
+      "support": "soporte@febelink.com",
+      "from": "From: ",
+      "to": "To: ",
+      "msg": "Message: ",
+
+      "report": {
+        "title": "Report",
+        "msg": "Tell us in detail what is happening"
+      },
+
+      "block": {
+        "title": "Block",
+        "msg": "Tell us in detail what is happening"
+      },
+
+      "error": {
+        "minLength": "You must detail with a minimum of 5 words"
+      }
     }
   },
   "menu": {
@@ -360,7 +383,6 @@
       "public-key": "Public Key",
       "retained": "Retained Tokens",
       "release": "Release Date:",
-      "release": "Unlocking:",
 
       "transactions": "Recent transactions",
       "no-transactions": "No recent transactions",
