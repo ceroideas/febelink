@@ -45,22 +45,18 @@
     <p>Cargando...</p>
   </div>
 
-  <div
-    *ngIf="!isLoading"
-    class="desktop"
-    style="margin: 0 auto; max-width: 1000px"
-  >
-    <ion-grid fixed>
+  <div *ngIf="!isLoading" style="margin: 0 auto; max-width: 1000px">
+    <ion-grid fixed class="no-padding">
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="12" size-sm="6" class="no-padding">
           <ion-slides>
             <ion-slide>
               <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" (error)="handleImgError( $event )" />
-              <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+              <ion-img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" appImgErrorFallback></ion-img>
             </ion-slide>
           </ion-slides>
         </ion-col>
-        <ion-col size="6" class="ion-padding">
+        <ion-col size="12" size-sm="6" class="ion-padding">
           <div class="apartado">
             <h2 class="title">{{demanda?.nombre}}</h2>
             <span class="ofertante" (click)="irAPerfil()"
@@ -70,22 +66,24 @@
 
           <hr />
 
-          <ion-button class="apartado btn-info" (click)="irAPerfil()">
+          <ion-button class="btn-info" expand="full" color="febelink" (click)="irAPerfil()">
             <ion-icon name="checkmark-circle" item-left></ion-icon>
             &nbsp;VER PERFIL
           </ion-button>
 
-          <ion-button class="apartado btn-info" (click)="viewChat()">
+          <ion-button class="btn-info" expand="full" color="febelink" (click)="viewChat()">
             <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
             &nbsp;CHAT
           </ion-button>
 
-          <ion-button
-            class="apartado btn-info"
-            (click)="share(demanda?.id,$event)"
-          >
+          <ion-button class="btn-info" expand="full" color="febelink" (click)="share(demanda?.id,$event)">
             <ion-icon name="share-social" item-left></ion-icon>
             &nbsp;COMPARTIR
+          </ion-button>
+
+          <ion-button class="btn-info" expand="full" color="febelink" (click)="reportUser()">
+            <ion-icon name="alert-outline"></ion-icon>
+            &nbsp;{{ 'common.buttons.report' | translate }}
           </ion-button>
         </ion-col>
       </ion-row>
@@ -113,7 +111,7 @@
               <em class="desc"
                 >Búsquedas relacionadas que te pueden interesar</em
               >
-              <ion-list  class="results-list desktop">
+              <ion-list  class="results-list">
                 <ion-item lines="none" (click)="detalleDemanda(demanda)"
                 *ngFor="let demanda of demandasRelacionadas"
               >
@@ -124,6 +122,19 @@
                 <ion-label>
                   <h2><strong>{{demanda?.nombre}}</strong></h2>
                   <em class="desc">{{demanda?.descripcion}}</em>
+                
+                  <div class="social">
+                    <span class="share" *ngIf="demanda?.valoracion==null">
+                      <ion-icon name="star"></ion-icon> 0 / 5
+                    </span>
+                    <span class="share" *ngIf="demanda?.valoracion!=null">
+                      <ion-icon name="star"></ion-icon> {{demanda?.valoracion}} / 5
+                    </span>
+                    <span class="share">
+                      <ion-icon class="share" name="share-social"></ion-icon>
+                      <ion-icon class="share" name="eye"></ion-icon>
+                    </span>
+                  </div>
                 </ion-label>
                 <ion-label slot="end">
                   <em style="padding: 5px">{{demanda?.user?.nick}}</em>
@@ -135,147 +146,7 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
-      <!-- DESKTOP -->
-      <!-- <ion-grid class="grid-card desktop" style="padding-left: 0px">
-        <ion-row>
-          <ion-col
-            size="12"
-            size-lg="3"
-            side-md="4"
-            size-sm="6"
-            size-xs="12"
-            *ngFor="let demanda of demandasRelacionadas"
-          >
-            <ion-card (click)="detalleDemanda(demanda)">
-              <div>
-                <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-                <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
-              </div>
-              <ion-card-header>
-                <strong style="color: #222"> {{demanda?.nombre}}</strong>
-              </ion-card-header>
-              <ion-card-content>
-                <p class="card-desc">{{demanda?.descripcion}}</p>
-
-                <ion-row>
-                  <ion-col size="3">
-                    <ion-icon name="chatbubbles"></ion-icon>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-icon name="infinite"></ion-icon>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-icon name="share-social"></ion-icon>
-                  </ion-col>
-                  <ion-col size="3">
-                    <ion-icon name="eye"></ion-icon>
-                  </ion-col>
-                </ion-row>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
       
-    </div>
-  </div>
-
-  <div *ngIf="!isLoading" class="mobile">
-    <ion-slides>
-      <ion-slide>
-        <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" />
-        <ion-img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" appImgErrorFallback></ion-img>
-      </ion-slide>
-    </ion-slides>
-
-    <div class="apartado">
-      <h2 class="title">{{demanda?.nombre}}</h2>
-      <span class="ofertante" (click)="irAPerfil()"
-        ><em>{{demanda?.demandante}}</em></span
-      >
-    </div>
-    <hr />
-
-    <ion-button expand="full" color="febelink" (click)="irAPerfil()">
-      <ion-icon name="checkmark-circle"></ion-icon>
-      &nbsp;VER PERFIL
-    </ion-button>
-
-    <ion-button
-    expand="full"
-    color="febelink"
-    class="apartado"
-    (click)="viewChat()"
-    >
-      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-      &nbsp;CHAT
-    </ion-button>
-
-    <ion-button
-      expand="full"
-      color="febelink"
-      class="apartado"
-      (click)="share(demanda?.id,$event)"
-    >
-      <ion-icon name="share-social"></ion-icon>
-      &nbsp;COMPARTIR
-    </ion-button>
-    <hr />
-
-    <div class="apartado">
-      <h2 class="title">Descripción</h2>
-      <p class="desc">{{demanda?.descripcion}}</p>
-    </div>
-
-    <hr />
-    <div *ngIf="demandasRelacionadas?.length>0">
-      <div class="apartado">
-        <h2 class="title">Otras Búsquedas</h2>
-        <em class="desc">Búsquedas relacionadas que te pueden interesar</em>
-      </div>
-      <hr />
-
-      <ion-list>
-        <ion-item
-          lines="none"
-          (click)="detalleDemanda(demandaR)"
-          *ngFor="let demandaR of demandasRelacionadas"
-        >
-          <ion-thumbnail slot="start">
-            <ion-img
-              [src]="demandaR?.imagen"
-              width="75"
-              height="75"
-              *ngIf="demandaR?.imagen"
-              appImgErrorFallback
-            ></ion-img>
-            <img
-              src="assets/imgs/4.jpg"
-              width="75"
-              height="75"
-              *ngIf="!demandaR?.imagen"
-            />
-          </ion-thumbnail>
-          <ion-label>
-            <h2><strong>{{demandaR?.nombre}}</strong></h2>
-            <em class="desc">{{demandaR?.descripcion}}</em>
-
-            <div class="social">
-              <span class="share" *ngIf="demandaR?.valoracion==null">
-                <ion-icon name="star"></ion-icon> 0 / 5
-              </span>
-              <span class="share" *ngIf="demandaR?.valoracion!=null">
-                <ion-icon name="star"></ion-icon> {{demandaR?.valoracion}} / 5
-              </span>
-              <span class="share">
-                <ion-icon class="share" name="share-social"></ion-icon>
-                <ion-icon class="share" name="eye"></ion-icon>
-              </span>
-            </div>
-          </ion-label>
-        </ion-item>
-      </ion-list>
     </div>
   </div>
 </ion-content>
