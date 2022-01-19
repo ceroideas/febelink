@@ -62,10 +62,13 @@ ion-content {
     }
     .logo{
         object-fit: cover;
-        height:150px;
+        height:200px;
         display: block;
         margin:0 auto;
-        max-width: 150px;
+        max-width: 100%;
+    }
+    .max-width {
+        max-width: 200px;
     }
     .editar{
         color:var(--ion-color-primary);
@@ -119,7 +122,6 @@ ion-content {
     }
     .boton{
         display: block;
-        margin:20px auto;
     }
     .contact-info {
         @media (min-width: 768px){

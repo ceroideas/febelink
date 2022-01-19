@@ -38,111 +38,8 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- MOBILE -->
-<ion-content class="mobile ion-padding">
-  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
-    <ion-spinner></ion-spinner>
-    <p>Cargando...</p>
-  </div>
-
-  <div *ngIf="perfilpublico!=null && !isLoading">
-    <!-- Logo nombre y valoracion -->
-    <img [src]="perfilpublico?.logo" *ngIf="perfilpublico?.logo" class="logo" />
-    <img src="assets/imgs/4.jpg" *ngIf="!perfilpublico?.logo" class="logo" />
-    <div class="apartado">
-      <h1 class="title">{{perfilpublico?.nick}}</h1>
-      <span class="reviews">
-        <div class="val" *ngFor="let val of perfilpublico.valoracion">
-          <strong id="valoracion" *ngIf="val.length > 0"
-            >{{ val.length }} {{ val[0].nick || val[0].name }}</strong
-          >
-        </div>
-      </span>
-    </div>
-    <!-- Apartados -->
-    <div class="apartado" *ngIf="perfilpublico?.descripcion">
-      <h2 class="title">Descripción</h2>
-      <p class="desc">{{perfilpublico?.descripcion}}</p>
-    </div>
-    
-    <!-- Link URL -->
-    <div class="apartado" *ngIf="hasSubscription && perfilpublico?.link_url">
-      <h2 class="title">Link URL</h2>
-      <!-- Link Preview -->
-      <app-link-preview
-        columns="1"
-        [urls]="[{ u: perfilpublico?.link_url, d: null, showLink: true }]" >
-      </app-link-preview>
-    </div>
-
-    <div class="apartado" *ngIf="contacto ==='true'">
-      <h2 class="title">Datos de contacto</h2>
-      <p>
-        <ion-icon name="mail"></ion-icon> Email:
-        <a [href]="'mailto:' + perfilpublico?.email" target="_top"
-          ><em>{{perfilpublico?.email}}</em></a
-        >
-      </p>
-      <p>
-        <ion-icon name="call"></ion-icon> Telefono:
-        <a [href]="'tel:' + perfilpublico?.telefono" target="_top"
-          ><em>{{perfilpublico?.telefono}}</em></a
-        >
-      </p>
-    </div>
-    <!-- Botón compartir perfil -->
-    <ion-button
-      color="febelink"
-      expand="block"
-      class="boton"
-      (click)="shareProfile($event)"
-      >Compartir perfil</ion-button
-    >
-    <div *ngIf="sinOpiniones == true">
-      <span class="reviews">
-        <a href="#">Sin valoraciones</a>
-      </span>
-    </div>
-    <div *ngIf="opiniones?.length>0">
-      <span class="reviews">
-        <a href="#">{{opiniones?.length}} Valoraciones del perfil</a>
-      </span>
-      <!-- Lista de opiniones -->
-      <ion-list>
-        <ion-item *ngFor="let opinion of opiniones">
-          <div>
-            <span><strong>{{opinion?.usuario}}</strong></span>
-            <span class="valoracion">
-              <ion-icon
-                name="star-outline"
-                *ngFor="let vacias of opinion?.vacias"
-              ></ion-icon>
-              <ion-icon
-                name="star"
-                *ngFor="let star of opinion?.valoracion"
-              ></ion-icon>
-            </span>
-          </div>
-          <div class="valoracion-text">
-            <p>{{opinion?.texto}}</p>
-          </div>
-        </ion-item>
-      </ion-list>
-    </div>
-    <!-- Botón publicar opinión -->
-    <ion-button
-      color="febelink"
-      class="boton"
-      *ngIf="sinOpiniones"
-      (click)="opinionModal()"
-    >
-      Publicar opinion
-    </ion-button>
-  </div>
-</ion-content>
-
 <!-- DESKTOP -->
-<ion-content class="desktop ion-padding">
+<ion-content class="ion-padding">
   <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
     <ion-spinner></ion-spinner>
     <p>Cargando...</p>
@@ -151,26 +48,27 @@
   <div *ngIf="perfilpublico!=null && !isLoading" class="content">
     <ion-grid fixed *ngIf="perfilpublico!=null">
       <ion-row>
-        <ion-col size="4">
+        <ion-col size="12" size-sm="4">
           <img
-            style="float: left"
             [src]="perfilpublico?.logo"
             *ngIf="perfilpublico?.logo"
             class="logo"
+            (error)="perfilpublico.logo = null"
           />
           <img
-            style="float: left"
             src="assets/imgs/4.jpg"
             *ngIf="!perfilpublico?.logo"
             class="logo"
+            appImgErrorFallback
           />
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="12" size-sm="8">
           <h1 class="title">{{perfilpublico?.nick}}</h1>
           <!-- Botón compartir perfil -->
           <ion-button
-            style="float: left"
             class="boton"
+            color="febelink"
+            expand="block"
             (click)="shareProfile($event)"
             >Compartir perfil</ion-button
           >
@@ -220,9 +118,6 @@
                 ><em>{{perfilpublico?.telefono}}</em></a
               >
             </p>
-            <!--<p class="contact-info">
-              <ion-icon name="map"></ion-icon> Dirección: <em>{{perfil?.direccion}}</em>
-            </p>-->
           </div>
         </ion-col>
       </ion-row>
@@ -241,7 +136,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
+        <ion-col class="ion-no-padding">
           <div *ngIf="sinOpiniones == true">
             <span class="reviews">
               <!--<a href="#">Sin valoraciones</a>-->
@@ -276,12 +171,31 @@
           </div>
           <!-- Botón publicar opinión -->
           <ion-button
+            class="boton max-width"
+            color="febelink"
             class="boton"
             *ngIf="sinOpiniones"
             (click)="opinionModal()"
-            style="max-width: 200px"
           >
             Publicar opinion
+          </ion-button>
+        </ion-col>
+      </ion-row>
+          
+      <ion-row class="margin-top">
+        <!-- Report -->
+        <ion-col size="6" class="ion-no-padding">
+          <ion-button class="boton" color="febelink" (click)="mailSvc.reportUser( perfilpublico )">
+            <ion-icon name="alert-outline"></ion-icon>
+            &nbsp;{{ 'common.buttons.report' | translate }}
+          </ion-button>
+        </ion-col>
+
+        <!-- Block -->
+        <ion-col size="6" class="ion-no-padding">
+          <ion-button class="boton" color="febelink" (click)="userSvc.blockUser( perfilpublico )">
+            <ion-icon name="close-outline" item-left></ion-icon>
+            &nbsp;{{ 'common.buttons.block' | translate }}
           </ion-button>
         </ion-col>
       </ion-row>

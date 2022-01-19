@@ -12,6 +12,7 @@ import { IUser } from 'src/app/models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { MailService } from 'src/app/services/mail.service';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -44,7 +45,8 @@ export class PerfilDemandantePage implements OnInit {
     private utilities: UtilitiesService,
     private translateService: TranslateService,
     private authSvc:AuthenticationService,
-    private userSvc:UserService
+    public userSvc: UserService,
+    public mailSvc: MailService
   ) {
     var data: any = route.snapshot.queryParamMap;
     // this.id_perfil = data.params.id_perfil;

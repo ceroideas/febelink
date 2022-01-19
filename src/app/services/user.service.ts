@@ -2,16 +2,25 @@ import { Injectable } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { IUser } from '../models/user.model';
 import { ApiService } from './api.service';
+import { MailFnct, MailService } from './mail.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  userInfo: IUser;
+
   constructor(
       private router: Router
     , private api: ApiService
+    , private mailSvc: MailService
   ){}
+
+  async getUser() {
+    if( !this.userInfo )
+      this.userInfo = await this.api.utilities.getUserData();
+  }
 
   checkUserDataComplete(user: IUser) {
     // ToDo: control and replace with hasVerifiedMandatory()
@@ -78,5 +87,63 @@ export class UserService {
         handler: () => this.redir(),
       },
     ]);
+  }
+
+  async blockUser( user: IUser ) {
+    await this.getUser();
+    
+    this.api.utilities.showAlert(
+      this.api.translateSvc.instant( 'common.mailTo.block.title' ),
+      this.api.translateSvc.instant( 'common.mailTo.block.msg' ), '',
+      [
+        {
+          text: this.api.translateSvc.instant( 'common.buttons.cancel' ),
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: this.api.translateSvc.instant( 'common.buttons.block' ),
+          handler: ( data ) => {
+            if( (data?.report || '').trim().split( ' ' ).length < 5 ) {
+              this.api.utilities.showToast( this.api.translateSvc.instant( 'common.mailTo.error.minLength' ));
+              return false;
+            }
+
+            const bO: string = "<b>",
+                bC: string = "</b>",
+                br: string = "\n",
+                brTab: string = br + "\t";
+
+            const from: string = brTab + bO + "Id: " + bC + this.userInfo?.id
+            + brTab + bO + "Nombre: " + bC + ( this.userInfo?.name || this.userInfo?.nick)
+                + " " + ( this.userInfo?.lastName || '' )
+            + brTab + bO + 'Email: ' + bC + this.userInfo?.email;
+            
+            const to: string = brTab + bO + "Id: " + bC + user?.id
+                + brTab + bO + "Nombre: " + bC + ( user?.name || user?.nick) + " " + ( user?.lastName || '' )
+                + brTab + bO + 'Email: ' + bC + ( user?.email || '--' );
+
+            this.mailSvc.mailTo({
+                  email: this.api.translateSvc.instant( 'common.mailTo.support' ),
+                  subject: this.api.translateSvc.instant( 'common.mailTo.block.title' ),
+
+                  msg: this.api.translateSvc.instant( 'common.mailTo.from' ) + bC + from
+                  + br + br + bO + this.api.translateSvc.instant( 'common.mailTo.to' ) + bC + to
+                  + br + br + bO + this.api.translateSvc.instant( 'common.mailTo.msg' ) + bC
+                  + br + data.report,
+
+              }, MailFnct.Block
+            );
+          }
+        }
+      ],
+      [
+        {
+          name: 'report',
+          id: 'report',
+          type: 'textarea',
+          placeholder: ''
+        }
+      ]
+    );
   }
 }
