@@ -108,7 +108,6 @@ export class SendComponent implements OnInit {
                 this.utils.showToast( res.message );
                 this.modalCtrl.dismiss({ asset: this.asset, response: res });
             } catch( ex ) {
-                console.log( 'ex', ex );
               await this.utils.dismissLoading();
               // ToDo: Handle Stellar error Statuses
               alert( ex.error.message );
