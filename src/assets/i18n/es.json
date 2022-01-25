@@ -418,7 +418,7 @@
       "send": {
         "title": "Enviar Tokens a",
         "addressee": "Destinatario",
-        "total": "Saldo Remanente Total",
+        "total": "Saldo Total Restante",
         "button": "Enviar"
       },
       "balance": {
@@ -458,7 +458,7 @@
         "Gestión de oferta de compra (bid) de un activo por otro"
       ],
 
-      "trustline": "*Recuerda que la wallet que reciba este envio tiene que haber establecido una vez una linea de confianza con este asset para poder recibirlo"
+      "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
     }
   },
   "toast": {

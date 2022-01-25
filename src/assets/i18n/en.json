@@ -460,7 +460,7 @@
         "Management of offer to buy (bid) one asset for another"
       ],
 
-      "trustline": "*Remember that the wallet that receives this sending must have established a trustline with this asset once in order to receive it."
+      "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located."
     }
   },
   "toast": {
