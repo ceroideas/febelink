@@ -108,9 +108,10 @@ export class SendComponent implements OnInit {
                 this.utils.showToast( res.message );
                 this.modalCtrl.dismiss({ asset: this.asset, response: res });
             } catch( ex ) {
+                console.log( 'ex', ex );
               await this.utils.dismissLoading();
               // ToDo: Handle Stellar error Statuses
-              alert("No se pudo realizar la transaccion, muy probablemente porque no posee los fondos necesarios. Si considera que esto es incorrecto, contacte con soporte@febelink.com");
+              alert( ex.error.message );
             }
         }
     }
