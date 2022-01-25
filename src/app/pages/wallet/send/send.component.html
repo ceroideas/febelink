@@ -46,8 +46,10 @@
         <!-- Balance -->
         <app-wallet-balance class="margin-start"
             [asset]="asset"
-            [retainedTks]="retainedTks"
             [assetsMaxDecimals]="assetsMaxDecimals"
+            [isDetailsShowing]="true"
+            [retainedTks]="retainedTks"
+            [isRetainedShowing]="true"
         ></app-wallet-balance>
   
         <!-- Asset to Send -->  
@@ -82,7 +84,7 @@
 
         <!-- TrustLine -->
         <ion-row class="margin-top">
-            <ion-label class="trustline">{{ 'pages.wallet.trustline' | translate }}</ion-label>
+            <ion-label color="danger">{{ 'pages.wallet.trustline' | translate }}</ion-label>
         </ion-row>
       </ion-grid>
     </form>
