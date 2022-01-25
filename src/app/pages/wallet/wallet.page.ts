@@ -50,7 +50,9 @@ export class WalletPage implements OnInit {
     , private router: Router
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {}
+  
+  async ionViewWillEnter() {
     this.getWalletInfo();
     this.haveYouPurchased();
     this.isAdmin = await this.utilities.isAdmin();
