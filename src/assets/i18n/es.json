@@ -456,7 +456,9 @@
         "Establecido, modificado o eliminado de una entrada de datos",
         "Avanzado de Número de secuencia de cuenta",
         "Gestión de oferta de compra (bid) de un activo por otro"
-      ]
+      ],
+
+      "trustline": "*Recuerda que la wallet que reciba este envio tiene que haber establecido una vez una linea de confianza con este asset para poder recibirlo"
     }
   },
   "toast": {

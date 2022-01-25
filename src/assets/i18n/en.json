@@ -458,7 +458,9 @@
         "Established, modified, or removed of a data entry",
         "Advanced Account Sequence Number",
         "Management of offer to buy (bid) one asset for another"
-      ]
+      ],
+
+      "trustline": "*Remember that the wallet that receives this sending must have established a trustline with this asset once in order to receive it."
     }
   },
   "toast": {
