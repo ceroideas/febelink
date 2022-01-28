@@ -415,11 +415,27 @@
         "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
       },
 
+      "send": {
+        "title": "Enviar Tokens a",
+        "addressee": "Destinatario",
+        "total": "Saldo Total Restante",
+        "button": "Enviar"
+      },
+      "balance": {
+        "balance": "Saldo",
+        "retained": "Total Retenidos",
+        "balance-av": "Saldo Disponible"
+      },
+
       "error": {
         "missing-origin": "Debe seleccionar la Moneda Origen",
         "missing-destiny": "Debe seleccionar la Moneda Destino",
         "qOffer": "Indique la cant de Moneda a Cambiar",
         "qDemand": "Indique la cant de Moneda a Recibir",
+        "qSend": "Indique la cant de Moneda a Enviar",
+        "minSend": "No puede enviar mas Tokens de los que posee",
+        "public-key": "Debe indicar la Clave Pública de la Wallet a enviar",
+        "cant-send": "No tienes suficiente saldo para hacer un envío",
         "unknown": "Desconozco el Resultado de la Transacción",
         "exceeded": "No posee la cantidad que desea transaccionar",
         "asset-not-available": "De momento esta moneda no está disponible para transacciones",
@@ -440,7 +456,9 @@
         "Establecido, modificado o eliminado de una entrada de datos",
         "Avanzado de Número de secuencia de cuenta",
         "Gestión de oferta de compra (bid) de un activo por otro"
-      ]
+      ],
+
+      "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
     }
   },
   "toast": {

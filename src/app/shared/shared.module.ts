@@ -16,6 +16,8 @@ import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
 import { ClickStopPropagation } from '../components/stop-propagation.component';
 import { TwoFAComponent } from '../components/two-fa/two-fa.component';
 import { InformComponent } from '../components/inform/inform.component';
+import { LoadingBLComponent } from '../components/loading/loading.component';
+import { UserItemComponent } from '../components/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { InformComponent } from '../components/inform/inform.component';
     ClickStopPropagation,
     TwoFAComponent,
     InformComponent,
+    LoadingBLComponent,
+    UserItemComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +62,8 @@ import { InformComponent } from '../components/inform/inform.component';
     ClickStopPropagation,
     TwoFAComponent,
     InformComponent,
+    LoadingBLComponent,
+    UserItemComponent,
   ],
   entryComponents: [],
 })
