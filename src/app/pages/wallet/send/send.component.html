@@ -1,0 +1,101 @@
+<ion-header fill="transparent">
+    <ion-toolbar fill="transparent">
+  
+        <!-- Back Button -->
+        <ion-buttons slot="start">
+        <ion-button icon-only (click)="onDismiss()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+        </ion-buttons>
+
+        <!-- Title -->
+        <ion-label class="margin-start">{{ 'pages.wallet.send.title' | translate }}</ion-label>
+    </ion-toolbar>
+</ion-header>
+  
+<ion-content class="padding">
+    <app-loading [isLoading]="isLoading"></app-loading>
+
+    <form [formGroup]="form" style="margin: auto;" *ngIf="!isLoading">
+      <ion-grid>
+        <!-- Addressee -->
+        <ion-row><ion-label>{{ 'pages.wallet.send.addressee' | translate }}</ion-label></ion-row>
+
+        <!-- User -->
+        <ion-row class="margin-start" *ngIf="user"><app-user-item [user]="user"></app-user-item></ion-row>
+  
+        <!-- Public Key - Only if there is no user -->
+        <ng-container *ngIf="!user">
+            <ion-row class="margin-top margin-start">{{ 'pages.wallet.public-key' | translate }}</ion-row>
+            <ion-row>
+                <ion-col size="11">
+                    <ion-input #publicKey
+                        formControlName="publicKey"
+                        name="publicKey" class="tx-start box no-padding padding-start padding-end"
+                        [placeholder]=" 'pages.wallet.public-key' | translate "
+                        type="text"
+                        clearInput
+                    ></ion-input>
+                </ion-col>
+                <ion-col size="1" (click)="utils.copyClipboard( publicKey?.value )">
+                    <ion-icon name="clipboard" *ngIf="publicKey"></ion-icon>
+                </ion-col>
+            </ion-row>
+        </ng-container>
+  
+        <!-- Balance -->
+        <app-wallet-balance class="margin-start"
+            [asset]="asset"
+            [assetsMaxDecimals]="assetsMaxDecimals"
+            [isDetailsShowing]="true"
+            [retainedTks]="retainedTks"
+            [isRetainedShowing]="true"
+        ></app-wallet-balance>
+  
+        <!-- Asset to Send -->  
+        <ion-row class="margin-start">
+          <ion-col size="6" class="vertical-content">
+            <img class="margin-end" src="assets/icon/{{ asset?.currency.toLowerCase() }}.png" />
+            <ion-label class="margin-start"> {{ asset?.currency }}</ion-label>
+          </ion-col>
+          <ion-col size="6" class="tx-end">
+            <ion-input #amount
+              name="amount"  class="tx-end box no-padding padding-start padding-end"
+              (ionChange)="calc( amount?.value )"
+              [placeholder]="0"
+              [debounce]="300"
+              type="number" min="0.00" [max]="calcs.max" step="0.0000001"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+  
+        <!-- Remaining Balance Tokens -->
+        <ion-row class="line margin-top bold-6" *ngIf="calcs?.diff">
+            <ion-col size="6">
+                <ion-label [innerHTML]="'pages.wallet.send.total' | translate"></ion-label>
+            </ion-col>
+            <ion-col size="6" class="tx-end">
+                <ion-label class="number">{{{ value: calcs.diff } | splitNumber }}</ion-label>
+                <ion-label class="decimal">{{
+                    { value: calcs.diff, returnDecimal: true, round: assetsMaxDecimals }
+                | splitNumber }}</ion-label>
+            </ion-col>
+        </ion-row>
+
+        <!-- TrustLine -->
+        <ion-row class="margin-top">
+            <ion-label color="danger">{{ 'pages.wallet.trustline' | translate }}</ion-label>
+        </ion-row>
+      </ion-grid>
+    </form>
+</ion-content>
+  
+<ion-footer no-border>
+    <ion-toolbar class="tx-center">
+        <!-- Button Cancel -->
+        <ion-button (click)="onDismiss()" fill="transparent" class="margin-end">{{ 'common.buttons.cancel' | translate }}</ion-button>
+        
+        <!-- Button Buy -->
+        <ion-button (click)="send()" class="margin-start">{{ 'pages.wallet.send.button' | translate }}</ion-button>
+    </ion-toolbar>
+</ion-footer>

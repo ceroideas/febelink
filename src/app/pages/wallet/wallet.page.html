@@ -2,7 +2,14 @@
   <ion-toolbar color="febelink">
     <ion-icon slot="start"name="arrow-back-outline" (click)="goBack()"></ion-icon>
     <ion-title class="ion-text-center">{{ 'pages.wallet.title' | translate }}</ion-title>
-    <ion-icon slot="end" name="help-circle-outline" class="margin-end" (click)="showHelp()"></ion-icon>
+
+    <ion-buttons slot="end" class="margin-end">
+      <!-- Send Payment -->
+      <ion-icon name="send-outline" class="margin-end" (click)="send()" *ngIf="userWallets"></ion-icon>
+
+      <!-- Help -->
+      <ion-icon name="help-circle-outline" (click)="showHelp()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
