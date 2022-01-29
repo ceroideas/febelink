@@ -22,3 +22,37 @@ export interface Offer {
     last_modified_ledger: number
     last_modified_time: string
 }
+
+export enum OffersType {
+  MARKET = "market",
+  OWN = "own"
+}
+
+export interface OffersList {
+    offers: Offer[]
+    type: OffersType
+
+    // This array is to store the last id per page to go back on prev_page (pagination)
+    lastIdsPerPage: string[]
+
+    isLoading: boolean
+}
+
+export interface OffersFilter {
+    order?: 'asc' | 'desc'
+    limit?: number
+
+    last_item?: string
+
+    /* Asset Selling */
+    selling?: string
+    sellingIssuerId?: string
+
+    /* Asset Buying */
+    buying?: string
+    buyingIssuerId?: string
+
+    offerId?: string
+
+    account?: string
+}
