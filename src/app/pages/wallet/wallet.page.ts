@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { CryptoCurrency, CryptoTransactions } from 'src/app/models/currency.model';
+import { CryptoCurrency, CryptoTransactions } from 'src/app/models/wallet/currency.model';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ModalController } from '@ionic/angular';
 import { ExchangeComponent } from './exchange/exchange.component';

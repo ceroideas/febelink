@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as Currency from 'src/app/models/currency.model';
+import * as Currency from 'src/app/models/wallet/currency.model';
 import { PopoverController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 

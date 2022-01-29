@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/currency.model';
+import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
