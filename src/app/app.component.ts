@@ -21,7 +21,7 @@ import { IUser } from './models/user.model';
 import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
 import { ISector, ISubSector } from './models/sector.model';
 import { NotificationService } from './services/notification.service';
-import { CryptoCurrency } from './models/currency.model';
+import { CryptoCurrency } from './models/wallet/currency.model';
 import { Observable } from 'rxjs';
 import { ILangDEFAULTS } from './models/langs.model';
 import { Meta, Title } from '@angular/platform-browser';

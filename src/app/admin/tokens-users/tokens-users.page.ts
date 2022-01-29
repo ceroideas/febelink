@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TokensUsersService } from 'src/app/admin/services/tokens-users.service';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { DateFormatType } from 'src/app/pipes/date-format';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
