@@ -1,0 +1,37 @@
+<ion-card>
+  <ion-grid>
+    <ion-row>
+      <h2 class="line-str"></h2>
+      <ion-col size="7">
+        <!-- Asset Buying -->
+        <ion-row>
+          <img src="assets/icon/{{assetSvc.getImg( offer?.selling.asset_code )}}.png" />
+          <ion-label class="margin-start bold-6"><b>{{{ value: offer?.price_r?.n } | splitNumber }}</b></ion-label>
+          <ion-label class="decimal bold-6"><b>{{{ value: offer?.price_r.n, returnDecimal: true } | splitNumber }}</b></ion-label>
+        </ion-row>
+
+        <!-- Asset Selling -->
+        <ion-row>
+          <img src="assets/icon/{{assetSvc.getImg( offer?.buying.asset_code )}}.png" />
+          <ion-label class="margin-start"><b>{{{ value: offer?.price_r?.d } | splitNumber }}</b></ion-label>
+          <ion-label class="decimal"><b>{{{ value: offer?.price_r?.d, returnDecimal: true } | splitNumber }}</b></ion-label>
+        </ion-row>
+      </ion-col>
+      
+      <h2 class="line"></h2>
+      <ion-col size="5">
+        <!-- Date -->
+        <ion-row><ion-label></ion-label></ion-row>
+
+        <!-- Button Buy -->
+        <ion-row>
+          <ng-container>
+            <ion-col size="6"><ion-icon name="pencil-outline" (click)="edit()"></ion-icon></ion-col>
+            <ion-col size="6"><ion-icon name="trash-outline" (click)="delete()"></ion-icon></ion-col>
+          </ng-container>
+          <ion-button class="btn-fblink-rnd" (click)="buy()">{{ 'pages.wallet.buy.button' | translate }}</ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>
