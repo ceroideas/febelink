@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 
 @Component({
   selector: 'app-wallet-balance',

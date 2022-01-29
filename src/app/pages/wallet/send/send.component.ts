@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IUser } from 'src/app/models/user.model';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
