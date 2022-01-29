@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8">
+          <ion-segment 
+            value="market" 
+            color="transparent" 
+            mode="ios"
+            [(ngModel)]="segment"
+          >
+            <!-- Market Offers -->
+            <ion-segment-button [value]="offersType.MARKET">
+              <ion-label [class]="segment != 'market' ? '' : 'bold-6'">
+                {{ 'pages.wallet.offers.market' | translate }}
+              </ion-label>
+            </ion-segment-button>
+      
+            <!-- Own Offers -->
+            <ion-segment-button [value]="offersType.OWN">
+              <ion-label [class]="segment != 'market' ? '' : 'bold-6'">
+                {{ 'pages.wallet.offers.own' | translate }}
+              </ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+
+        <ion-col size="4" class="">
+          <ion-img src="assets/icon/febicon.png" class="margin-end"></ion-img>
+          <ion-img src="assets/icon/febicon.png" class="margin-end"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>    
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <!-- Market Offers -->
+  <ion-grid *ngIf="type == offersType.MARKET">
+    <ion-col size="6" size-sm="12">
+      <app-offers
+        class="pad-5"
+        *ngFor="let offer of offersMarket"
+        [offer]="offer"
+        [isSelling]="false"
+      ></app-offers>
+    </ion-col>
+  </ion-grid>
+
+  <!-- Own Offers -->
+  <ion-grid *ngIf="type == offersType.OWN">
+    <ion-col size="6" size-sm="12">
+      <app-offers
+        class="pad-5"
+        *ngFor="let offer of offersMarket"
+        [offer]="offer"
+        [isSelling]="true"
+      ></app-offers>
+    </ion-col>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-border>
+  <!-- <app-pagination
+    *ngIf="qPages > 1"
+    [qPages]="qPages"
+    [totalRecords]="totalRecords"
+    [recordsPerPage]="recordsPerPage"
+    [activePage]="activePage"
+    [disabled]="isLoading"
+    (onPageChange)="displayActivePage( $event )"
+  >
+  </app-pagination> -->
+</ion-footer>
