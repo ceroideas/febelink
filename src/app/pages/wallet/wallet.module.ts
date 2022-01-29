@@ -13,6 +13,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
 import { SendComponent } from './send/send.component';
 import { BalanceComponent } from './balance/balance.component';
+import { OffersComponent } from './offers/offers.component';
+import { OffersListComponent } from './offers-list/offers-list.component';
+import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 
 @NgModule({
   imports: [
@@ -30,6 +33,9 @@ import { BalanceComponent } from './balance/balance.component';
     , BuyAssetsComponent
     , SendComponent
     , BalanceComponent
+    , OffersComponent
+    , OffersListComponent
+    , PaginationComponent
 ],
 })
 export class WalletPageModule {}
