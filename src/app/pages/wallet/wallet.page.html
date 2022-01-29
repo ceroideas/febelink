@@ -15,12 +15,7 @@
 
 <ion-content class="ion-padding" *ngIf="userWallets">
   <!-- Loading -->
-  <div class="vertical-content align-center margin-top" *ngIf="isLoading">
-    <ion-row class="vertical-content">
-      <ion-spinner class="margin-end"></ion-spinner>
-      <h4 class="margin-start">{{ 'common.labelLoading' | translate }}</h4>
-    </ion-row>
-  </div>
+  <app-loading [isLoading]="isLoading" message="common.labelLoading"></app-loading>
 
   <ion-grid *ngIf="!isLoading">
     <!-- Public Key -->      
@@ -93,6 +88,14 @@
         </ion-row>
       </ion-col>
     </ion-row>
+
+    <!-- Divider -->
+    <ion-row class="margin-bottom">
+      <ion-item-divider></ion-item-divider>
+    </ion-row>
+
+    <!-- Offers List -->
+    <app-offers-list [public]="publicKey" [assetTypes]="userWallets"></app-offers-list>
 
     <!-- Divider -->
     <ion-row class="margin-bottom">
