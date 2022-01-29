@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { Offer } from 'src/app/models/wallet/offers.models';
+import { Offer, OffersFilter } from 'src/app/models/wallet/offers.models';
 import { ApiService } from '../api.service';
 
 @Injectable({
@@ -40,14 +40,33 @@ export class OfferService {
 
     // Buying
     formData.append('buying', offer?.selling?.asset_code );
-    formData.append('sellingIssuerId', offer?.selling?.asset_issuer );
+    formData.append('buyingIssuerId', offer?.selling?.asset_issuer );
     formData.append('amountBuy', offer.amount + '' );
     
     return ( await this.api._createData( 'wallet/buy', formData )).toPromise();
   }
 
-  async list( offer: Offer ) {
+  async list( filter: OffersFilter )
+  {
     const formData = new FormData();
+
+    if( filter?.order )
+      formData.append( 'order', filter?.order );
+
+      if( filter?.last_item )
+      formData.append( 'last_item', filter?.last_item );
+    
+    formData.append('selling', filter?.selling );
+    formData.append('sellingIssuerId', filter?.sellingIssuerId );
+
+    formData.append('buying', filter?.buying );
+    formData.append('buyingIssuerId', filter?.buyingIssuerId );
+
+    if( filter?.offerId )
+      formData.append( 'offerId', filter?.offerId );
+
+    if( filter?.account )
+      formData.append( 'account', filter?.account );
     
     return ( await this.api._createData( 'wallet/list', formData )).toPromise();
   }
