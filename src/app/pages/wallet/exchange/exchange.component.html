@@ -22,7 +22,7 @@
     <form [formGroup]="exchangeForm" style="margin: auto;">
       <ion-grid>
         <!-- Asset Origin -->
-        <ion-card class="line" (click)="selectAsset( true )"
+        <ion-card class="line" (click)="selectAsset( $event, true )"
           [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
         >
           <ion-row>
@@ -36,12 +36,12 @@
                 <ion-row class="vertical-content">
                   <ion-col [size]="origin?.currency ? 8 : 12">
                     <!-- Asset Text -->
-                    <ion-card-title>{{ origin?.currency || ( 'pages.wallet.select-origin' | translate ) }}</ion-card-title>
+                    <ion-card-title>{{ origin?.currency || ( 'pages.wallet.exchange.select-origin' | translate ) }}</ion-card-title>
                   </ion-col>
 
                   <ion-col size="4" *ngIf="origin?.currency">
                     <ion-row class="hint">
-                      <ion-label>{{'pages.wallet.qOffer' | translate }}</ion-label>
+                      <ion-label>{{'pages.wallet.exchange.qOffer' | translate }}</ion-label>
                     </ion-row>
                     <ion-row
                       [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
@@ -64,7 +64,7 @@
         </ion-row>
         
         <!-- Asset Destiny -->
-        <ion-card class="line" (click)="selectAsset( false )"
+        <ion-card class="line" (click)="selectAsset( $event, false )"
           [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
         >
           <ion-row>
@@ -78,12 +78,12 @@
                 <ion-row class="vertical-content">
                   <ion-col [size]="destiny?.currency ? 8 : 12">
                     <!-- Asset Text -->
-                    <ion-card-title>{{ destiny?.currency || ( 'pages.wallet.select-destiny' | translate ) }}</ion-card-title>
+                    <ion-card-title>{{ destiny?.currency || ( 'pages.wallet.exchange.select-destiny' | translate ) }}</ion-card-title>
                   </ion-col>
                   <ion-col size="4" *ngIf="destiny?.currency">
                     
                     <ion-row class="hint">
-                      <ion-label>{{'pages.wallet.qDemand' | translate }}</ion-label>
+                      <ion-label>{{'pages.wallet.exchange.qDemand' | translate }}</ion-label>
                     </ion-row>
                     <ion-row
                       [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
@@ -101,10 +101,10 @@
         <!-- Minner's Fee -->
         <ion-row class="minners-fee">
           <ion-col size="6">
-            <ion-label>{{ 'pages.wallet.minnersFee' | translate }}</ion-label>
+            <ion-label>{{ 'pages.wallet.exchange.minnersFee' | translate }}</ion-label>
           </ion-col>
           <ion-col size="6" class="tx-end">
-            <ion-label class="hint">{{ '€ ' + minnersFee }}</ion-label>
+            <ion-label class="hint">{{ minnersFee + ' Lumens' }}</ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -114,7 +114,7 @@
   <!-- Button Exchange -->
   <ion-footer no-border>
     <ion-toolbar class="tx-center">
-      <ion-button (click)="exchange()">{{ 'pages.wallet.confirm' | translate }}</ion-button>
+      <ion-button (click)="exchange()">{{ 'pages.wallet.exchange.' + exchangeType | translate }}</ion-button>
     </ion-toolbar>
   </ion-footer>
 </div>
