@@ -1,0 +1,15 @@
+.card {
+    background-color: var( --gray );
+    border: 2px solid white;
+}
+
+[class*="line"] {
+    width: 2px;
+    height: 100%;
+    background-color: var( --color_line );
+    border-radius: 30px;
+}
+.line-str {
+    width: 4px;
+    background-color: black;
+}
