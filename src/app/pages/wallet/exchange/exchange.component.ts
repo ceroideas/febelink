@@ -2,12 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { TwoFAComponent } from 'src/app/components/two-fa/two-fa.component';
 import { KYCAliceComponent } from 'src/app/components/kyc-alice/kyc-alice.component';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
+import { ExchangeType } from 'src/app/services/wallet/exchange.service';
+import { AssetService } from 'src/app/services/wallet/asset.service';
+import { TwoFAService } from 'src/app/services/two_fa.service';
 
 @Component({
   selector: 'app-exchange',
@@ -18,8 +19,9 @@ export class ExchangeComponent implements OnInit {
 
   @Input() origin: CryptoCurrency = {};
   @Input() destiny: CryptoCurrency = {};
-  @Input() minnersFee: string = '0.000002 FLAU = $ 0.0447';
+  @Input() minnersFee: string = '0.000002';
   @Input() kycVerified: boolean = true;
+  @Input() exchangeType: ExchangeType = ExchangeType.CREATE;
   
   @Input() userWallets: CryptoCurrency[] = [];
   @Input() retainedTks: TokensUser[];
@@ -32,6 +34,8 @@ export class ExchangeComponent implements OnInit {
     , private popCtrl: PopoverController
     , private translateSvc: TranslateConfigService
     , private utilities: UtilitiesService
+    , private assetSvc: AssetService
+    , private twoFASvc: TwoFAService
   ) {}
 
   ngOnInit() {
@@ -44,8 +48,8 @@ export class ExchangeComponent implements OnInit {
 
   buildForm() {
     this.exchangeForm = this.formBuilder.group({
-      num_origin: new FormControl(( '' ), [ Validators.required ]),
-      num_destiny: new FormControl(( '' ), [ Validators.required ])
+      num_origin: new FormControl(( this.origin?.amount ), [ Validators.required ]),
+      num_destiny: new FormControl(( this.destiny?.amount ), [ Validators.required ])
     });
   }
 
@@ -53,28 +57,16 @@ export class ExchangeComponent implements OnInit {
     this.modalController.dismiss({ });
   }
   
-  async selectAsset( isOrigin: boolean ) {
-    event.stopPropagation();
-    const popover = await this.popCtrl.create({
-      component: SelectAssetComponent,
-      translucent: true,
-      mode: 'md',
-      componentProps: {
-        except: !isOrigin ? this.origin.currency : this.destiny.currency,
-        assetTypes: this.userWallets
-      }
-    });
-
-    await popover.present();
-
-    const { data } = await popover.onDidDismiss();
+  async selectAsset( event, isOrigin: boolean ) {
+    const asset = await this.assetSvc.select(
+          event
+        , this.userWallets
+        , !isOrigin ? this.origin : this.destiny
+    );
 
     // Only do if asset selected
-    if( !data?.asset )
+    if( !asset )
       return;
-
-    // Assign asset to corresponding card
-    const asset = data.asset as CryptoCurrency;
 
     if( isOrigin )
       this.origin.currency = asset.currency;
@@ -99,10 +91,7 @@ export class ExchangeComponent implements OnInit {
       return;
     }
     
-      /* Verify 2FA */
-    const verified = await this.verify2FA();
-    
-    if( verified )
+    if( await this.twoFASvc.verify() )
       this.modalController.dismiss({ origin: this.origin, destiny: this.destiny });
   }
 
@@ -198,18 +187,5 @@ export class ExchangeComponent implements OnInit {
       this.utilities.showToast(
         this.translateSvc.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
       );
-  }
-
-  /* Verify 2FA PopoverControll */
-  async verify2FA(): Promise<any> {
-    const twoFApop = await this.popCtrl.create({
-      component: TwoFAComponent,
-      cssClass: 'pop-mobile-width',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
-    await twoFApop.present();
-
-    const { data } = await twoFApop.onDidDismiss();
-    return new Promise( resolve => { resolve( data?.verified )});
   }
 }
