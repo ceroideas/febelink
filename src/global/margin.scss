@@ -21,6 +21,18 @@
   margin-bottom: 0px !important;
 }
 
+.margin-5 {
+    margin: 5px;
+    --margin-top: 5px;
+    --margin-end: 5px;
+    --margin-bottom: 5px;
+    --margin-left: 5px;
+}
+.marg-t5 { margin-top: 5px; --margin-top: 5px; }
+.marg-e5 { margin-right: 5px; --margin-end: 5px; }
+.marg-b5 { margin-bottom: 5px; --margin-bottom: 5px; }
+.marg-s5 { margin-left: 5px; --margin-left: 5px; }
+
 .margin-20 {
     margin: 20px;
     --margin-top: 20px;
