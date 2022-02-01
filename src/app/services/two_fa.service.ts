@@ -1,20 +1,18 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { TwoFAComponent } from '../components/two-fa/two-fa.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ChatService {
-
-    public events: EventEmitter<any> = new EventEmitter();
+export class TwoFAService {
 
     constructor(
         private popCtrl: PopoverController
     ) { }
 
     /* Verify 2FA PopoverControll */
-    async verify2FA(): Promise<any> {
+    async verify(): Promise<boolean> {
         const twoFApop = await this.popCtrl.create({
             component: TwoFAComponent,
             cssClass: 'pop-mobile-width',
