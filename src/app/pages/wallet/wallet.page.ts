@@ -5,15 +5,15 @@ import { Observable } from 'rxjs';
 import { CryptoCurrency, CryptoTransactions } from 'src/app/models/wallet/currency.model';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ModalController } from '@ionic/angular';
-import { ExchangeComponent } from './exchange/exchange.component';
 import { IUser } from 'src/app/models/user.model';
-import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { DateFormatType } from 'src/app/pipes/date-format';
+import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InformComponent } from 'src/app/components/inform/inform.component';
 import { UserService } from 'src/app/services/user.service';
 import { SendComponent } from './send/send.component';
+import { WalletParams } from 'src/app/models/wallet/params.model';
+import { ExchangeService, ExchangeType } from 'src/app/services/wallet/exchange.service';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -24,17 +24,11 @@ export class WalletPage implements OnInit {
   isLoading: boolean = false;
   user: IUser;
 
-  userWallets: CryptoCurrency[] = [];
-  publicKey: string;
-  retainedTks: TokensUser[];
-  verified: { account: boolean, mandatory: boolean, kyc: boolean }
+  walletParams: WalletParams = { userWallets: [] };
   transactions: CryptoTransactions;
-  minnersFee: string;
-  stripeFee: string;
-  assetsMaxDecimals: number;
 
   hideRetained: boolean = true;
-  hideTransactions: boolean = false;
+  hideTransactions: boolean = true;
 
   dateFormatType = DateFormatType;
 
@@ -47,6 +41,7 @@ export class WalletPage implements OnInit {
     , private modalCtrl: ModalController
     , private route: ActivatedRoute
     , private userSvc: UserService
+    , private exchangeSvc: ExchangeService
     , private router: Router
   ) {}
 
@@ -88,7 +83,7 @@ export class WalletPage implements OnInit {
 
   public async send() {
     // If user has not verified Data and Email, redirect to profile
-    if( !this.verified.mandatory ) {
+    if( !this.walletParams.verified.mandatory ) {
       await this.userSvc.showAlertToRedir();
       return;
     }
@@ -96,9 +91,9 @@ export class WalletPage implements OnInit {
     const sendTksModal = await this.modalCtrl.create({
       component: SendComponent,
       componentProps: {
-        asset: this.userWallets[ 0 ],
-        retainedTks: this.retainedTks,
-        assetsMaxDecimals: this.assetsMaxDecimals,
+        asset: this.walletParams.userWallets[ 0 ],
+        retainedTks: this.walletParams.retainedTks,
+        assetsMaxDecimals: this.walletParams.assetsMaxDecimals,
 
         returnBalance: true
       },
@@ -121,63 +116,32 @@ export class WalletPage implements OnInit {
   }
 
   setVars( response ) {
-    this.publicKey = response.publicKey;
-    this.userWallets = response.data;
-    this.retainedTks = response.retainedTks;
-    this.verified = response.verified;
+    this.walletParams.publicKey = response.publicKey;
+    this.walletParams.userWallets = response.data;
+    this.walletParams.retainedTks = response.retainedTks;
+    this.walletParams.verified = response.verified;
     this.transactions = response.transacciones;
-    this.minnersFee = response.minnersFee;
+    this.walletParams.minnersFee = response.minnersFee;
     this.isLoading = false;
-    this.stripeFee = response.stripeFee;
-    this.assetsMaxDecimals = Number( response.assetsMaxDecimals || '0' );
+    this.walletParams.stripeFee = response.stripeFee;
+    this.walletParams.assetsMaxDecimals = Number( response.assetsMaxDecimals || '0' );
   }
 
   async copyPublicKey() {
-    this.utilities.copyClipboard( this.publicKey );
+    this.utilities.copyClipboard( this.walletParams.publicKey );
   }
 
   async exchange( currency: CryptoCurrency ) {
-    // ToDo: Remove This after Exchange Done
-    if( !this.isAdmin ) {
-      this.utilities.showToast( this.utilities.translateService.instant( 'common.unavailable' ));
-      return;
-    }
-
-    // If user has not verified Data and Email, redirect to profile
-    if( !this.verified.mandatory ) {
-      await this.userSvc.showAlertToRedir();
-      return;
-    }
-
-    const exchangeModal = await this.modalCtrl.create({
-      component: ExchangeComponent,
-      componentProps:{
-        origin: { currency: currency.currency, amount: 0 },
-        minnersFee: this.minnersFee,
-        kycVerified: this.verified.kyc,
-        
-        userWallets: this.userWallets,
-        retainedTks: this.retainedTks
-      },
-      cssClass: 'modal-mobile',
-    });
-    await exchangeModal.present();
-
-    const { data } = await exchangeModal.onDidDismiss();
-
-    const origin = data?.origin;
-    const destiny = data?.destiny;
-
-    if( origin && destiny ) {
-      this.utilities.showLoading();
-      const response = await this.walletSvc.exchange( origin, destiny );
-      this.setVars( response );
-
-      this.utilities.dismissLoading();
-      this.utilities.showToast( response?.message || this.utilities.translateService.instant( 'pages.wallet.error.unknown' ));
-
-      this.verified.kyc = true; // Since the only way to get till here is if verified
-    }
+    const response = await this.exchangeSvc.show(
+      ExchangeType.CREATE,
+      this.walletParams,
+      { origin: {
+        currency: currency?.currency,
+        assetId: currency?.assetId,
+        priceBuy: currency?.priceBuy,
+        issuerId: currency?.issuerId
+      }}
+    );
   }
 
   showHelp() {
@@ -190,7 +154,7 @@ export class WalletPage implements OnInit {
 
   async buy( currency ) {
     // If user has no Public Key or has not verified account
-    if( !this.publicKey || !this.verified.account ) {
+    if( !this.walletParams.publicKey || !this.walletParams.verified.account ) {
       await this.userSvc.showAlertToRedir();
       return;
     }
@@ -199,9 +163,9 @@ export class WalletPage implements OnInit {
       component: BuyAssetsComponent,
       componentProps:{
         asset: currency,
-        minnersFee: parseFloat( this.minnersFee || '0' ),
-        stripeFee: parseFloat( this.stripeFee || '0' ),
-        assetsMaxDecimals: this.assetsMaxDecimals,
+        minnersFee: parseFloat( this.walletParams.minnersFee || '0' ),
+        stripeFee: parseFloat( this.walletParams.stripeFee || '0' ),
+        assetsMaxDecimals: this.walletParams.assetsMaxDecimals,
       },
       cssClass: 'pop-mobile-width',
     });
