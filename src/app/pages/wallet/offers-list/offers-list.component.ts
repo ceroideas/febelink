@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
 import { OffersFilter, OffersList, OffersType } from 'src/app/models/wallet/offers.models';
+import { WalletParams } from 'src/app/models/wallet/params.model';
 import { AssetService } from 'src/app/services/wallet/asset.service';
 import { OfferService } from 'src/app/services/wallet/offer.service';
 
@@ -11,11 +12,7 @@ import { OfferService } from 'src/app/services/wallet/offer.service';
 })
 export class OffersListComponent implements OnInit {
   
-  // Assets Available for the user to use
-  @Input() assetTypes: CryptoCurrency[] = [];
-
-  // User Public Key
-  @Input() public: string;
+  @Input() walletParams: WalletParams;
 
   offersList: OffersList[] = [
     { type: OffersType.MARKET, offers: [], lastIdsPerPage: [], isLoading: true },
@@ -28,8 +25,9 @@ export class OffersListComponent implements OnInit {
 
   // Sort Options
   orderAsc: boolean = false;
-  assetSelling: CryptoCurrency = { currency: CryptoCurrencyType.aureo };
+  assetSelling: CryptoCurrency;
   assetBuying: CryptoCurrency;
+  currencyType = CryptoCurrencyType;
 
   constructor(
       private offerSvc: OfferService
@@ -41,21 +39,38 @@ export class OffersListComponent implements OnInit {
     this.segmentChanged();
   }
 
-  async segmentChanged( event? )
+  async segmentChanged( hasChanged: boolean = false )
   {
     const list = this.getList();
 
-    if( !list?.offers || list?.offers?.length == 0 )
+    if( hasChanged || !list?.offers || list?.offers?.length == 0 )
       this.refresh( list );
   }
 
-  async selectAsset()
+  async selectAsset( event, isAssetSelling: boolean )
   {
-    const asset = await this.assetSvc.select( this.assetTypes );
-    if( !asset || asset == this.assetSelling )
+    const asset = await this.assetSvc.select( event, this.walletParams.userWallets );
+    if( !asset )
       return
 
-    this.assetSelling = asset;
+      /* Asset Selling */
+    if( isAssetSelling ) {
+      this.assetSelling = asset;
+
+      if( this.assetSelling?.currency == this.assetBuying?.currency )
+        this.assetBuying == null;
+        console.log( 'this.assetSelling?.currency == this.assetBuying?.currency ', this.assetSelling?.currency == this.assetBuying?.currency );
+    }
+
+    /* Asset Buying */
+    if( !isAssetSelling ) {
+      this.assetBuying = asset;
+
+      if( this.assetBuying?.currency == this.assetSelling?.currency )
+        this.assetSelling == null;
+    }
+    
+    console.log( 'assetBuying: ', this.assetBuying, ' || assetSelling: ', this.assetSelling );
     this.refresh();
   }
 
@@ -70,9 +85,8 @@ export class OffersListComponent implements OnInit {
     if( !list )
       list = this.getList();
     
-      console.log( 'list: ', list );
     list.isLoading = true;
-    list.offers = await this.offerSvc.list({
+    const response = await this.offerSvc.list({
         last_item: list?.lastIdsPerPage?.length > 0 ?
           list.lastIdsPerPage[ list?.lastIdsPerPage?.length -1 ] : null,
 
@@ -80,10 +94,13 @@ export class OffersListComponent implements OnInit {
 
         buying: this.assetBuying?.assetId,
 
-        account: list.type != OffersType.OWN ? null : this.public
+        public: list.type != OffersType.OWN ? null : this.walletParams.publicKey,
+        
+        order: this.orderAsc ? 'asc' : 'desc'
       } as OffersFilter,
     );
-    console.log( 'answer: ', list.offers );
+    list.offers = response.offers
+    console.log( 'response: ', list.offers );
     list.isLoading = false;
   }
 
