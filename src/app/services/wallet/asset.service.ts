@@ -33,11 +33,13 @@ export class AssetService {
     }
 
     async select(
+        event,
         assetTpes: CryptoCurrency[],
         exceptCrypto?: CryptoCurrency
     ): Promise<CryptoCurrency>
     {
         const popover = await this.popCtrl.create({
+            event: event,
             component: SelectAssetComponent,
             translucent: true,
             mode: 'md',
