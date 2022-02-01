@@ -1,35 +1,51 @@
-<ion-card>
+<ion-card class="card ion-no-margin">
   <ion-grid>
     <ion-row>
-      <h2 class="line-str"></h2>
-      <ion-col size="7">
+      <ion-col size="0.2"><h2 class="line-str no-margin"></h2></ion-col>
+      <ion-col size="5.2" class="center-v">
         <!-- Asset Buying -->
-        <ion-row>
-          <img src="assets/icon/{{assetSvc.getImg( offer?.selling.asset_code )}}.png" />
-          <ion-label class="margin-start bold-6"><b>{{{ value: offer?.price_r?.n } | splitNumber }}</b></ion-label>
-          <ion-label class="decimal bold-6"><b>{{{ value: offer?.price_r.n, returnDecimal: true } | splitNumber }}</b></ion-label>
+        <ion-row class="vertical-content">
+          <img class="abicon-25" src="assets/icon/{{assetSvc.getImg( offer?.selling.asset_code )}}.png" />
+          <b><ion-label class="margin-start bold-6">{{{ value: offer?.price_r?.d } | splitNumber }}</ion-label>
+          <ion-label class="decimal bold-6">
+            {{{ value: offer?.price_r.d, returnDecimal: true, round: walletParams.assetsMaxDecimals } | splitNumber }}
+          </ion-label></b>
         </ion-row>
 
         <!-- Asset Selling -->
-        <ion-row>
-          <img src="assets/icon/{{assetSvc.getImg( offer?.buying.asset_code )}}.png" />
-          <ion-label class="margin-start"><b>{{{ value: offer?.price_r?.d } | splitNumber }}</b></ion-label>
-          <ion-label class="decimal"><b>{{{ value: offer?.price_r?.d, returnDecimal: true } | splitNumber }}</b></ion-label>
+        <ion-row class="vertical-content">
+          <img class="abicon-25" src="assets/icon/{{assetSvc.getImg( offer?.buying.asset_code )}}.png" />
+          <ion-label class="margin-start"><b>{{{ value: offer?.price_r?.n } | splitNumber }}</b></ion-label>
+          <ion-label class="decimal"><b>
+            {{{ value: offer?.price_r?.n, returnDecimal: true, round: walletParams.assetsMaxDecimals } | splitNumber }}
+          </b></ion-label>
         </ion-row>
       </ion-col>
       
-      <h2 class="line"></h2>
-      <ion-col size="5">
+      <ion-col size="0.2"><h2 class="line no-margin"></h2></ion-col>
+      <ion-col size="5.6" class="center-v">
         <!-- Date -->
-        <ion-row><ion-label></ion-label></ion-row>
+        <ion-row class="vertical-content align-center marg-b"><ion-label>
+          {{ offer?.last_modified_time | dateFormat: dateFormatType.DateTime: monthFormatType.Number }}
+        </ion-label></ion-row>
 
-        <!-- Button Buy -->
-        <ion-row>
-          <ng-container>
-            <ion-col size="6"><ion-icon name="pencil-outline" (click)="edit()"></ion-icon></ion-col>
-            <ion-col size="6"><ion-icon name="trash-outline" (click)="delete()"></ion-icon></ion-col>
+        <!-- Buttons -->
+        <ion-row class="vertical-content align-center">
+          <ng-container *ngIf="isSelling || offer?.seller == walletParams?.publicKey">
+            <!-- Edit -->
+            <ion-col size="6" class="tx-center">
+              <ion-icon class="abicon" name="pencil-outline" (click)="edit()" color="febelink"></ion-icon>
+            </ion-col>
+            <!-- Delete -->
+            <ion-col size="6" class="tx-center">
+              <ion-icon class="abicon" name="trash-outline" (click)="delete()" color="febelink"></ion-icon>
+            </ion-col>
           </ng-container>
-          <ion-button class="btn-fblink-rnd" (click)="buy()">{{ 'pages.wallet.buy.button' | translate }}</ion-button>
+
+          <!-- Button Buy -->
+          <ion-button class="btn-fblink-rnd" (click)="buy()" *ngIf="!isSelling && offer?.seller != walletParams?.publicKey">
+            {{ 'pages.wallet.buy.button' | translate }}
+          </ion-button>
         </ion-row>
       </ion-col>
     </ion-row>
