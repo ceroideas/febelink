@@ -4,6 +4,7 @@ import { TranslateConfigService } from '../services/translate/translate-config.s
 export enum DateFormatType {
     Date
   , TimeDate
+  , DateTime
 }
 export enum MonthFormatType {
     Number
@@ -31,7 +32,7 @@ export class DateFormatPipe implements PipeTransform {
       let month;
       switch( monthFormat ) {
         case MonthFormatType.Number:
-          month = '-' + ( date.getMonth() + 1 ) + '-';
+          month = '-' + ("00" + ( date.getMonth() + 1 )).slice(-2) + '-';
           break;
         case MonthFormatType.Short:
           month = ' ' + this.translateSvc.instant( 'common.months.' + date.getMonth() + '.short' ) + ' ';
@@ -43,12 +44,15 @@ export class DateFormatPipe implements PipeTransform {
 
       switch( type ) {
         case DateFormatType.Date:
-          value = day + month + year + '';
+          value = ("00" + day ).slice(-2) + month + year + '';
           break;
         case DateFormatType.TimeDate:
+        case DateFormatType.DateTime:
           const hour =  ("00" + date.getHours() ).slice(-2);
           const minutes = ("00" + date.getMinutes()).slice(-2);
-          value = hour + ':' + minutes + ' hs - ' + day + month + year + '';
+          value = type == DateFormatType.TimeDate
+            ? hour + ':' + minutes + ' hs - ' + day + month + year + ''
+            : day + month + year + ' - ' + hour + ':' + minutes + ' hs';
           break;
       }
 
