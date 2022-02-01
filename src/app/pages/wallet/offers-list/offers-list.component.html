@@ -93,7 +93,7 @@
       </div>
 
       <ion-label *ngIf="!list?.offers || list?.offers?.length == 0">
-        No hay Items con ese listado
+        {{ 'pages.wallet.offers.nothing' | translate }}
       </ion-label>
     </ng-container>
   </ng-container>

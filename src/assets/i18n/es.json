@@ -67,7 +67,8 @@
       "retry": "Reintentar",
       "got-it": "Entendido",
       "report": "Denunciar",
-      "block": "Bloquear"
+      "block": "Bloquear",
+      "continue": "Continuar"
     },
 
     "address": {
@@ -389,12 +390,6 @@
       "transactions": "Transacciones recientes",
       "no-transactions": "Sin transacciones recientes",
 
-      "select-origin": "Seleccionar Moneda Origen",
-      "select-destiny": "Seleccionar Moneda Destino",
-      "qOffer": "Cantidad",
-      "qDemand": "Cantidad",
-      "minnersFee": "Coste de transacción",
-      "confirm": "Confirmar Transacción",
       "buy": {
         "title": "Comprar assets",
         "buy": "Cantidad a Comprar:",
@@ -427,6 +422,30 @@
         "balance": "Saldo",
         "retained": "Total Retenidos",
         "balance-av": "Saldo Disponible"
+      },
+      "offers": {
+        "market": "Mercado",
+        "own": "Mis Ofertas",
+        "nothing": "No hay Items en la lista",
+        "delete": {
+          "title": "Eliminar Oferta",
+          "message": "¿Confirma que quiere eliminar esta oferta?",
+          "success": "Oferta eliminada exitosamente",
+          "error": "Hubo un error al eliminar la oferta:\n\n"
+        }
+      },
+      "exchange": {
+        "minnersFee": "Coste de transacción",
+
+        "select-origin": "Seleccionar Moneda Origen",
+        "select-destiny": "Seleccionar Moneda Destino",
+
+        "qOffer": "Cantidad",
+        "qDemand": "Cantidad",
+
+        "create": "Crear Transacción",
+        "edit": "Editar Transacción",
+        "buy": "Confirmar Transacción"
       },
 
       "error": {
