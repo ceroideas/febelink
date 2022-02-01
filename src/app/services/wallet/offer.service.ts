@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { Offer, OffersFilter } from 'src/app/models/wallet/offers.models';
-import { ApiService } from '../api.service';
+import { HttpService } from '../http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,65 +8,50 @@ import { ApiService } from '../api.service';
 export class OfferService {
 
   constructor(
-      private api: ApiService
+      private http: HttpService
   ) {}
 
-  async getOffers() {
-    return await this.api._getData( `wallet/offers` );
+  async sell( offer: Offer )
+  {
+    return ( await this.http.post( 'wallet/offers/sell', this.offerToParam( offer ))).toPromise();
   }
 
-  async sell( assetOrigin: CryptoCurrency, assetDestiny: CryptoCurrency ) {
-    const formData = new FormData();
-    
-    // Selling
-    formData.append('selling', assetOrigin.currency );
-    formData.append('amountSell', assetOrigin.amount + '' );
-
-    // Buying
-    formData.append('buying', assetDestiny.currency );
-    formData.append('amountBuy', assetDestiny.amount + '' );
-    
-    return ( await this.api._createData( 'wallet/sell', formData )).toPromise();
+  async buy( offer: Offer )
+  {
+    return ( await this.http.post( 'wallet/offers/buy', this.offerToParam( offer ))).toPromise();
   }
 
-  async buy( offer: Offer ) {
-    const formData = new FormData();
-    
-    // Selling
-    formData.append('selling', offer?.buying?.asset_code );
-    formData.append('sellingIssuerId', offer?.buying?.asset_issuer );
-    formData.append('amountSell', offer.amount + '' );
+  async update( offer: Offer )
+  {
+    return ( await this.http.put( 'wallet/offers/' + offer?.id, this.offerToParam( offer ))).toPromise();
+  }
 
-    // Buying
-    formData.append('buying', offer?.selling?.asset_code );
-    formData.append('buyingIssuerId', offer?.selling?.asset_issuer );
-    formData.append('amountBuy', offer.amount + '' );
-    
-    return ( await this.api._createData( 'wallet/buy', formData )).toPromise();
+  async delete( offer: Offer )
+  {
+    return ( await this.http.delete( 'wallet/offers/' + offer?.id, this.offerToParam( offer ))).toPromise();
   }
 
   async list( filter: OffersFilter )
   {
-    const formData = new FormData();
+    return ( await this.http.get( 'wallet/offers/list', filter )).toPromise();
+  }
 
-    if( filter?.order )
-      formData.append( 'order', filter?.order );
+  private offerToParam( offer: Offer ) {
+      const offers = {
+      selling: offer.selling.asset_code,
+      sellingIssuerId: offer.selling.asset_issuer,
+      sellingAmount: offer.price_r.d,
 
-      if( filter?.last_item )
-      formData.append( 'last_item', filter?.last_item );
+      buying: offer.buying.asset_code,
+      buyingIssuerId: offer.buying.asset_issuer,
+      buyingAmount: offer.price_r.n,
+
+      amount: offer.amount,
+
+      offerId: offer.id
+    };
     
-    formData.append('selling', filter?.selling );
-    formData.append('sellingIssuerId', filter?.sellingIssuerId );
-
-    formData.append('buying', filter?.buying );
-    formData.append('buyingIssuerId', filter?.buyingIssuerId );
-
-    if( filter?.offerId )
-      formData.append( 'offerId', filter?.offerId );
-
-    if( filter?.account )
-      formData.append( 'account', filter?.account );
-    
-    return ( await this.api._createData( 'wallet/list', formData )).toPromise();
+    console.log( 'offer: ', offers );
+    return offers;
   }
 }
