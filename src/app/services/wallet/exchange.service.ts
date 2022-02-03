@@ -11,7 +11,7 @@ import { OfferService } from './offer.service';
 export enum ExchangeType {
     CREATE = 'create',
     EDIT = 'edit',
-    BUY = 'buy',
+    BUY = 'purchase',
     DELETE = 'delete'
 }
 
@@ -68,15 +68,18 @@ export class ExchangeService {
         const exchangeModal = await this.modalCtrl.create({
             component: ExchangeComponent,
             componentProps:{
-            origin: this.cloneCurrency( params.origin, params.offer, true ),
-            destiny: this.cloneCurrency( params.destiny, params.offer, false ),
-            minnersFee: this.walletParams.minnersFee,
-            kycVerified: this.walletParams.verified.kyc,
-            
-            userWallets: this.walletParams.userWallets,
-            retainedTks: this.walletParams.retainedTks,
+                offer: params?.offer,
+                origin: this.cloneCurrency( params.origin, params.offer, true ),
+                destiny: this.cloneCurrency( params.destiny, params.offer, false ),
+                minnersFee: this.walletParams.minnersFee,
+                kycVerified: this.walletParams.verified.kyc,
+                
+                userWallets: this.walletParams.userWallets,
+                retainedTks: this.walletParams.retainedTks,
 
-            exchangeType: this.exchangeType
+                assetsMaxDecimals: this.walletParams.assetsMaxDecimals,
+
+                exchangeType: this.exchangeType
             },
             cssClass: 'modal-mobile',
         });
@@ -85,13 +88,22 @@ export class ExchangeService {
         return await exchangeModal.onDidDismiss();
     }
 
-    private cloneCurrency( currency: CryptoCurrency, offer: Offer, isSelling: boolean ): CryptoCurrency
+    private cloneCurrency( currency: CryptoCurrency, offer: Offer, isSelling: boolean
+    ): CryptoCurrency
     {
-        const ofAsset: Asset = isSelling ? offer?.selling : offer?.buying;
-        const price_r: Price = offer?.price_r;
+        // If exchangeType == ExchangeType.BUY => flip the values, since you will bid an offer
+        const ofAsset: Asset = this.exchangeType == ExchangeType.BUY
+            ? ( !isSelling ? offer?.selling : offer?.buying )
+            : ( isSelling ? offer?.selling : offer?.buying );
+
+        const price: number = this.exchangeType == ExchangeType.BUY
+            ? ( !isSelling ? offer?.price_r?.n : offer?.price_r?.d )
+            : ( isSelling ? offer?.price_r?.d : offer?.price_r?.n )
+        console.log( 'price: ', price );
+            
         return {
             currency: currency?.currency || this.assetCode( ofAsset ),
-            amount: currency?.amount || ( isSelling ? price_r?.d : price_r?.n ) || 0,
+            amount: currency?.amount || price || 0,
             assetId: currency?.assetId || ofAsset?.asset_code,
             issuerId: currency?.issuerId || ofAsset?.asset_issuer,
         }
@@ -100,8 +112,6 @@ export class ExchangeService {
     private async OnDone( data, offer: Offer ) {
         const origin: CryptoCurrency = data?.origin;
         const destiny: CryptoCurrency = data?.destiny;
-        console.log( 'origin', origin );
-        console.log( 'destiny', destiny );
 
         if( origin && destiny ) {
             this.utilities.showLoading();
@@ -123,10 +133,10 @@ export class ExchangeService {
 
             this.walletParams.verified.kyc = true; // Since the only way to get till here is if verified
 
-            return new Promise( resolve => { resolve( response )});
+            return new Promise( resolve => { resolve({ saved: true, response: response })});
         }
 
-        return new Promise( resolve => { resolve( null )});
+        return new Promise( resolve => { resolve({ saved: false })});
     }
 
     private async do( origin: CryptoCurrency, destiny: CryptoCurrency, offer: Offer ) {
@@ -157,7 +167,7 @@ export class ExchangeService {
                 n: destiny.amount
             },
 
-            amount: offer?.amount,
+            amount: destiny.amount + '',
 
             id: offer?.id
         }
