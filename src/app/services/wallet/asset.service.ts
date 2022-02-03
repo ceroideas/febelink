@@ -16,10 +16,15 @@ export class AssetService {
         switch( ( asset || '' ).toUpperCase() ) {
             case 'FLAU':
             case 'FBLINKCOINV3':
-                return 'flau';
-            default:
-                return 'xlm';
+                asset = 'flau';
+                break;
+            case 'XLM':
+            case 'LUMENS':
+            case '':
+                asset = 'xlm';
+                break;
         }
+        return 'assets/icon/' + asset?.toLowerCase() + '.png';
     }
 
     getColor( asset: string ) {
