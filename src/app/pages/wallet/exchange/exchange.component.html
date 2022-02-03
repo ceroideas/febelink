@@ -21,7 +21,23 @@
   <ion-content>
     <form [formGroup]="exchangeForm" style="margin: auto;">
       <ion-grid>
+        <!-- Conversion -->
+        <ion-row *ngIf="offer" class="align-center vertical-content">
+          <!-- Offers Sell - Asset Selling -->
+          <img class="margin-end" [src]="assetSvc.getImg( offer?.selling?.asset_code )" />
+          <app-num-float [number]="1" round="7" [bold]="true"></app-num-float>
+
+          <ion-label class="margin-start margin-end">=</ion-label>
+
+          <!-- Offers Sell - Asset Buying -->
+          <app-num-float [number]="offer?.price" round="7" [bold]="true"></app-num-float>
+          <img class="margin-start" [src]="assetSvc.getImg( offer?.buying?.asset_code )" />
+        </ion-row>
+
         <!-- Asset Origin -->
+        <ion-label class="bold-6 tx-upper margin-start margin-bottom">
+          {{ 'pages.wallet.exchange.sell' | translate }}
+        </ion-label>
         <ion-card class="line" (click)="selectAsset( $event, true )"
           [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
         >
@@ -29,7 +45,7 @@
             <ion-item tappable lines="none">
               <!-- Asset Icon -->
               <ion-avatar slot="start" *ngIf="origin?.currency">
-                <img src="assets/icon/{{ origin?.currency?.toLowerCase() }}.png" />
+                <img [src]="assetSvc.getImg( origin?.currency )" />
               </ion-avatar>
 
               <ion-grid>
@@ -47,7 +63,14 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation type="number" class="tx-center" formControlName="num_origin" min="0"></ion-input>
+                      <ion-input click-stop-propagation #numOrigin
+                        type="number"
+                        class="tx-center"
+                        formControlName="num_origin"
+                        min="0"
+                        [debounce]="300"
+                        (ionChange)="qantChange( numOrigin, true )"
+                      ></ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
@@ -64,6 +87,9 @@
         </ion-row>
         
         <!-- Asset Destiny -->
+        <ion-label class="bold-6 tx-upper margin-start margin-bottom">
+          {{ 'pages.wallet.exchange.buy' | translate }}
+        </ion-label>
         <ion-card class="line" (click)="selectAsset( $event, false )"
           [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
         >
@@ -71,7 +97,7 @@
             <ion-item tappable lines="none">
               <!-- Asset Icon -->
               <ion-avatar slot="start" *ngIf="destiny?.currency">
-                <img src="assets/icon/{{ destiny?.currency?.toLowerCase() }}.png" />
+                <img [src]="assetSvc.getImg( destiny?.currency )" />
               </ion-avatar>
 
               <ion-grid>
@@ -89,7 +115,14 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation type="number" class="tx-center" formControlName="num_destiny" min="0"></ion-input>
+                      <ion-input click-stop-propagation #numDestiny
+                        type="number"
+                        class="tx-center"
+                        formControlName="num_destiny"
+                        min="0"
+                        [debounce]="300"
+                        (ionChange)="qantChange( numDestiny, false )"  
+                      ></ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
@@ -99,7 +132,7 @@
         </ion-card>
 
         <!-- Minner's Fee -->
-        <ion-row class="minners-fee">
+        <ion-row class="minners-fee" *ngIf="minnersFee">
           <ion-col size="6">
             <ion-label>{{ 'pages.wallet.exchange.minnersFee' | translate }}</ion-label>
           </ion-col>
