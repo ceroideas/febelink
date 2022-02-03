@@ -470,7 +470,7 @@
       "welcome2": "Febelink Áureo"
     },
     "whitelist": {
-      "signUp": "Regístrate ahora y recibe toda la información actualizada.",
+      "signUp": "Regístrate ahora y llévate 10 tokens FLAU de Regalo",
       "mail": "Introduce tu dirección de E-mail",
       "action": {
         "toDo": "Registrarme",
@@ -479,23 +479,11 @@
       "download": "Descargar Whitepaper",
       "success": "Gracias por suscribirte a nuestra WhiteList"
     },
-    "airdrop": [
-      "Participa en el lanzamiento del Token FLAU (Febelink Áureo) y con el Airdrop llévate fantásticos Premios ",
-
-      "Vamos a repartir 1 MILLÓN de tokens FLAU entre todos los participantes que:",
-      "Hagáis una compra de tokens FLAU entre el 12 de y el 30 de enero de 2022 (ambos días incluidos).",
-      "Mantengáis esos tokens durante al menos 2 meses desde el día de la compra.",
-      "GANA 1 token FLAU de REGALO",
-      "por cada 2 tokens FLAU comprados en este Airdrop.",
-
-      "¡Regístrate ahora y no te lo pierdas!"
-    ],
     "tokens": {
       "title": "Reserva tus tokens",
       "button": "Reservar tokens"
     },
     "aboutTk": {
-      "initial": "INITIAL COIN OFFERING",
       "title": "Información General\nSobre el Token",
       "detail": "El Token Áureo forma parte del ecosistema de la plataforma Febelink, ayudando a los usuarios a realizar sus transacciones de una forma más segura, sencilla, rápida y eficiente, contando además con muchos beneficios por uso, descuentos, y servicios exclusivos.",
       "subtitle": "Probablemente el token más usable del mundo",
