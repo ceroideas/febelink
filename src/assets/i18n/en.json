@@ -447,7 +447,14 @@
 
         "create": "Create Transaction",
         "edit": "Edit Transaction",
-        "buy": "Confirm Transaction"
+        "purchase": "Confirm Transaction",
+
+        "sell": "Sell",
+        "buy": "Receive",
+
+        "cant-switch": "Having selected an offer you cannot switch with the assets",
+        "exceeds-sell": "The Offer cannot exceed the sale amount",
+        "exceeds-buy": "The Offer cannot exceed the buy amount"
       },
 
       "error": {
