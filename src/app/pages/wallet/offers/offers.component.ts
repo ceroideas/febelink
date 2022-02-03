@@ -38,7 +38,7 @@ export class OffersComponent implements OnInit {
       ExchangeType.BUY, this.walletParams, { offer: this.offer }
     );
     console.log( 'response: ', response );
-    this.OnChange.emit( ExchangeType.EDIT );
+    this.OnChange.emit( ExchangeType.BUY );
   }
 
   async edit() {
