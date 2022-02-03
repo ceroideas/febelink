@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { CryptoCurrency, CryptoTransactions } from 'src/app/models/wallet/currency.model';
@@ -14,12 +13,15 @@ import { UserService } from 'src/app/services/user.service';
 import { SendComponent } from './send/send.component';
 import { WalletParams } from 'src/app/models/wallet/params.model';
 import { ExchangeService, ExchangeType } from 'src/app/services/wallet/exchange.service';
+import { OffersListComponent } from './offers-list/offers-list.component';
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
   styleUrls: ['./wallet.page.scss'],
 })
 export class WalletPage implements OnInit {
+
+  @ViewChild("offersList") offersList: OffersListComponent;
 
   isLoading: boolean = false;
   user: IUser;
@@ -32,11 +34,8 @@ export class WalletPage implements OnInit {
 
   dateFormatType = DateFormatType;
 
-  isAdmin: boolean = false;
-
   constructor(
-      private location: Location
-    , private walletSvc: WalletService
+      private walletSvc: WalletService
     , private utilities: UtilitiesService
     , private modalCtrl: ModalController
     , private route: ActivatedRoute
@@ -50,7 +49,6 @@ export class WalletPage implements OnInit {
   async ionViewWillEnter() {
     this.getWalletInfo();
     this.haveYouPurchased();
-    this.isAdmin = await this.utilities.isAdmin();
   }
 
   async haveYouPurchased() {
@@ -132,7 +130,7 @@ export class WalletPage implements OnInit {
   }
 
   async exchange( currency: CryptoCurrency ) {
-    const response = await this.exchangeSvc.show(
+    const { saved, response } = await this.exchangeSvc.show(
       ExchangeType.CREATE,
       this.walletParams,
       { origin: {
@@ -142,6 +140,8 @@ export class WalletPage implements OnInit {
         issuerId: currency?.issuerId
       }}
     );
+
+    if( saved ) this.offersList.refresh();
   }
 
   showHelp() {
