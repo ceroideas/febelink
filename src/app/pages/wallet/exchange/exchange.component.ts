@@ -9,6 +9,7 @@ import { TokensUser } from 'src/app/admin/models/tokens-user';
 import { ExchangeType } from 'src/app/services/wallet/exchange.service';
 import { AssetService } from 'src/app/services/wallet/asset.service';
 import { TwoFAService } from 'src/app/services/two_fa.service';
+import { Offer } from 'src/app/models/wallet/offers.models';
 
 @Component({
   selector: 'app-exchange',
@@ -17,14 +18,16 @@ import { TwoFAService } from 'src/app/services/two_fa.service';
 })
 export class ExchangeComponent implements OnInit {
 
+  @Input() offer: Offer;
   @Input() origin: CryptoCurrency = {};
   @Input() destiny: CryptoCurrency = {};
-  @Input() minnersFee: string = '0.000002';
+  @Input() minnersFee: string;
   @Input() kycVerified: boolean = true;
   @Input() exchangeType: ExchangeType = ExchangeType.CREATE;
   
   @Input() userWallets: CryptoCurrency[] = [];
   @Input() retainedTks: TokensUser[];
+  @Input() assetsMaxDecimals: number;
 
   public exchangeForm: FormGroup;
 
@@ -34,7 +37,7 @@ export class ExchangeComponent implements OnInit {
     , private popCtrl: PopoverController
     , private translateSvc: TranslateConfigService
     , private utilities: UtilitiesService
-    , private assetSvc: AssetService
+    , public assetSvc: AssetService
     , private twoFASvc: TwoFAService
   ) {}
 
@@ -75,6 +78,10 @@ export class ExchangeComponent implements OnInit {
   }
 
   switchAssets() {
+    if( this.offer ) {
+      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.exchange.cant-switch' ));
+    }
+
     const origin: CryptoCurrency = { currency: this.destiny?.currency };
     const destiny: CryptoCurrency = { currency: this.origin?.currency };
     
@@ -187,5 +194,36 @@ export class ExchangeComponent implements OnInit {
       this.utilities.showToast(
         this.translateSvc.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
       );
+  }
+
+
+  inputs
+      : { triggered: boolean, origin: number | string, destiny: number | string }
+      = { triggered: false, origin: '', destiny: '' }
+  qantChange( input, isOrigin: boolean ) {
+    if( this.inputs.triggered || this.exchangeType != ExchangeType.BUY ) {
+      this.inputs.triggered = false;
+      return;
+    }
+
+    this.inputs.triggered = true;
+    const origin = this.offer.price_r.d;
+    const destiny = this.offer.price_r.n;
+
+    if( this.qantExceeded( input.value, isOrigin ? origin : destiny )) {
+      input.value = isOrigin ? destiny : origin;
+      this.utilities.showToast( this.translateSvc.instant(
+        'pages.wallet.exchange.exceeds-' + ( isOrigin ? 'sell' : 'buy' )
+      ));
+      return;
+    }
+
+    const key = (  isOrigin ? 'num_destiny' : 'num_origin' );
+    const value = ( isOrigin ? destiny / origin : origin / destiny ) * ( input?.value || 1 );
+    this.exchangeForm.patchValue({ [key] : value?.toFixed( this.assetsMaxDecimals ) });
+  }
+
+  qantExceeded( input, qant ): boolean {
+    return input < qant;
   }
 }
