@@ -5,20 +5,24 @@
       <ion-col size="5.2" class="center-v">
         <!-- Asset Buying -->
         <ion-row class="vertical-content">
-          <img class="abicon-25" src="assets/icon/{{assetSvc.getImg( offer?.selling.asset_code )}}.png" />
-          <b><ion-label class="margin-start bold-6">{{{ value: offer?.price_r?.d } | splitNumber }}</ion-label>
-          <ion-label class="decimal bold-6">
-            {{{ value: offer?.price_r.d, returnDecimal: true, round: walletParams.assetsMaxDecimals } | splitNumber }}
-          </ion-label></b>
+          <img class="abicon-25" [src]="assetSvc.getImg( offer?.selling.asset_code )" />
+          <app-num-float
+            [number]="offer?.price_r?.d"
+            [round]="walletParams.assetsMaxDecimals"
+            classNbr="margin-start"
+            [bold]="true"
+          ></app-num-float>
         </ion-row>
 
         <!-- Asset Selling -->
         <ion-row class="vertical-content">
-          <img class="abicon-25" src="assets/icon/{{assetSvc.getImg( offer?.buying.asset_code )}}.png" />
-          <ion-label class="margin-start"><b>{{{ value: offer?.price_r?.n } | splitNumber }}</b></ion-label>
-          <ion-label class="decimal"><b>
-            {{{ value: offer?.price_r?.n, returnDecimal: true, round: walletParams.assetsMaxDecimals } | splitNumber }}
-          </b></ion-label>
+          <img class="abicon-25" [src]="assetSvc.getImg( offer?.buying.asset_code )" />
+          <app-num-float
+            [number]="offer?.price_r?.n"
+            [round]="walletParams.assetsMaxDecimals"
+            classNbr="margin-start"
+            [bold]="true"
+          ></app-num-float>
         </ion-row>
       </ion-col>
       

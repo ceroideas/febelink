@@ -68,13 +68,7 @@
           </ion-item>
         </td>
         <td>
-          <ion-label
-            >{{{ value: tokensUser.num_tokens } | splitNumber }}</ion-label
-          >
-          <ion-label class="decimal"
-            >{{{ value: tokensUser.num_tokens, returnDecimal: true } |
-            splitNumber }}</ion-label
-          >
+          <app-num-float [number]="tokensUser.num_tokens" round="7"></app-num-float>
         </td>
         <td>{{tokensUser.phase_tokens}}</td>
         <td>{{tokensUser.date | dateFormat: dateFormatType.Date}}</td>

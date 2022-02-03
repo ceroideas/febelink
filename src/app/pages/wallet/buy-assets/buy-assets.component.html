@@ -24,8 +24,11 @@
             <ion-label class="margin-start"> {{ asset?.currency }}</ion-label>
           </ion-col>
           <ion-col size="5" class="tx-end">
-            <ion-label class="bold-6 number">{{{ value: asset?.amount } | splitNumber }}</ion-label>
-            <ion-label class="bold-6 decimal">{{{ value: asset?.amount, returnDecimal: true } | splitNumber }}</ion-label>
+            <app-num-float
+              [number]="asset?.amount"
+              [round]="assetsMaxDecimals"
+              [bold]="true"
+            ></app-num-float>
           </ion-col>
         </ion-row>
 
@@ -53,14 +56,20 @@
           <ion-row>
             <ion-col size="6" class="padding-start">
               <ion-label>{{ 'pages.wallet.buy.cost1' | translate }}</ion-label>
-              <ion-label class="bold-6 number">{{{ value: asset?.priceBuy } | splitNumber }}</ion-label>
-              <ion-label class="bold-6 decimal">{{{ value: asset?.priceBuy, returnDecimal: true, round: round } | splitNumber }}</ion-label>
+              <app-num-float
+                [number]="asset?.priceBuy"
+                [round]="round"
+                [bold]="true"
+              ></app-num-float>
               <ion-label class="coin">€</ion-label>
               <ion-label>{{ 'pages.wallet.buy.cost2' | translate }}</ion-label>
             </ion-col>
             <ion-col size="5" class="tx-end">
-              <ion-label class="number">{{{ value: calcTotal } | splitNumber }}</ion-label>
-              <ion-label class="decimal margin-end">{{{ value: calcTotal, returnDecimal: true } | splitNumber }}</ion-label>
+              <app-num-float
+                [number]="calcTotal"
+                [bold]="true"
+                classFloat="margin-end"
+              ></app-num-float>
             </ion-col>
           </ion-row>
   
@@ -70,8 +79,7 @@
               <ion-label>{{ 'pages.wallet.buy.fee' | translate }}</ion-label>
             </ion-col>
             <ion-col size="5" class="tx-end">
-              <ion-label class="number">{{{ value: minnersFee } | splitNumber }}</ion-label>
-              <ion-label class="decimal">{{{ value: minnersFee, returnDecimal: true, round: round } | splitNumber }}</ion-label>
+              <app-num-float [number]="minnersFee" [round]="round"></app-num-float>
               <ion-label class="coin">€</ion-label>
             </ion-col>
           </ion-row>
@@ -83,8 +91,7 @@
               <ion-label class="margin-start bold-6">{{ stripeFee }}%</ion-label>
             </ion-col>
             <ion-col size="5" class="tx-end">
-              <ion-label class="number">{{{ value: calcStripe } | splitNumber }}</ion-label>
-              <ion-label class="decimal">{{{ value: calcStripe, returnDecimal: true, round: round } | splitNumber }}</ion-label>
+              <app-num-float [number]="calcStripe" [round]="round"></app-num-float>
               <ion-label class="coin">€</ion-label>
             </ion-col>
           </ion-row>
@@ -97,21 +104,18 @@
           </ion-row>
           <ion-row class="margin-top margin-start align-center">
             <!-- Current Tokens -->
-            <ion-label class="number">{{{ value: asset?.amount } | splitNumber }}</ion-label>
-            <ion-label class="decimal">{{{ value: asset?.amount, returnDecimal: true } | splitNumber }}</ion-label>
+            <app-num-float [number]="asset?.amount" [round]="assetsMaxDecimals"></app-num-float>
             
             <ion-label class="margin-start margin-end">+</ion-label>
   
             <!-- Buy Tokens -->
-            <ion-label class="number">{{{ value: calcTotal } | splitNumber }}</ion-label>
-            <ion-label class="decimal">{{{ value: calcTotal, returnDecimal: true } | splitNumber }}</ion-label>
+            <app-num-float [number]="calcTotal" [round]="assetsMaxDecimals"></app-num-float>
           </ion-row>
 
             <!-- Total -->
           <ion-row class="align-center">
             <ion-card class="padding">
-              <ion-label class="number">{{{ value: calcAssets } | splitNumber }}</ion-label>
-              <ion-label class="decimal">{{{ value: calcAssets, returnDecimal: true } | splitNumber }}</ion-label>
+              <app-num-float [number]="calcAssets" [round]="assetsMaxDecimals"></app-num-float>
             </ion-card>
           </ion-row>
         </ion-card>

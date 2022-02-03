@@ -48,8 +48,11 @@
             <ion-row>
               <ion-col size="12" size-sm="6">
                 <ion-label><b>{{ tks?.phase_tokens + ': ' }}</b></ion-label>
-                <ion-label class="margin-start"><b>{{{ value: tks?.num_tokens } | splitNumber }}</b></ion-label>
-                <ion-label class="decimal"><b>{{{ value: tks?.num_tokens, returnDecimal: true } | splitNumber }}</b></ion-label>
+                <app-num-float
+                  [number]="tks?.num_tokens"
+                  [round]="walletParams?.assetsMaxDecimals"
+                  classNbr="margin-start"
+                ></app-num-float>
               </ion-col>
 
               <ion-col size="12" size-sm="6">
@@ -74,8 +77,13 @@
               </ion-row>
             </ion-col>
             <ion-col size="12" size-sm="12" class="tx-center no-padding">
-              <ion-label class="bold-6 number">{{{ value: currency.amount } | splitNumber }}</ion-label>
-              <ion-label class="bold-6 decimal">{{{ value: currency.amount, returnDecimal: true } | splitNumber }}</ion-label>
+              <app-num-float
+                [number]="currency.amount"
+                [round]="walletParams?.assetsMaxDecimals"
+                [bold]="true"
+                classNbr="font-20"
+                classFloat="font-12"
+              ></app-num-float>
             </ion-col>
           </ion-row>
         </ion-card>
@@ -96,7 +104,7 @@
 
     <!-- Offers List -->
     <ion-card class="ion-no-margin">
-      <app-offers-list [walletParams]="walletParams"></app-offers-list>
+      <app-offers-list #offersList [walletParams]="walletParams"></app-offers-list>
     </ion-card>
 
     <!-- Divider -->
