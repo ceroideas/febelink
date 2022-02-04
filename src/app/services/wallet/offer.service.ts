@@ -36,17 +36,24 @@ export class OfferService {
     return ( await this.http.get( 'wallet/offers/list', filter )).toPromise();
   }
 
+  calcBuy( amount: string | number, price: string | number, maxDecimals: number ): number {
+    const nbr: number = Number.parseFloat(( amount || '1' ) + '' ) * Number.parseFloat(( price || '1' ) + '' );
+    // To truncate without rounding || otherwise will not match sell with buy
+    return Number.parseFloat( nbr.toString().slice(0, ( nbr.toString().indexOf( '.' )) + maxDecimals ));
+  }
+
   private offerToParam( offer: Offer ) {
       const offers = {
       selling: offer.selling.asset_code,
       sellingIssuerId: offer.selling.asset_issuer,
-      sellingAmount: offer.price_r.d,
 
       buying: offer.buying.asset_code,
       buyingIssuerId: offer.buying.asset_issuer,
-      buyingAmount: offer.price_r.n,
 
       amount: offer.amount,
+
+      price_selling: offer?.price_r?.d,
+      price_buying: offer?.price_r?.n,
 
       offerId: offer.id
     };
