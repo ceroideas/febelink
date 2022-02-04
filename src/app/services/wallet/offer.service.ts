@@ -58,7 +58,6 @@ export class OfferService {
       offerId: offer.id
     };
     
-    console.log( 'offer: ', offers );
     return offers;
   }
 }
