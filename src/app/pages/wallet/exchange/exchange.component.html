@@ -19,19 +19,19 @@
   </ion-header>
 
   <ion-content>
-    <form [formGroup]="exchangeForm" style="margin: auto;">
+    <form [formGroup]="form" style="margin: auto;">
       <ion-grid>
         <!-- Conversion -->
-        <ion-row *ngIf="offer" class="align-center vertical-content">
-          <!-- Offers Sell - Asset Selling -->
-          <img class="margin-end" [src]="assetSvc.getImg( offer?.selling?.asset_code )" />
-          <app-num-float [number]="1" round="7" [bold]="true"></app-num-float>
+        <ion-row *ngIf="exchangeType == exchangesType.BUY" class="align-center vertical-content">
+          <!-- Offers Sell - Asset Buying -->
+          <img class="margin-end" [src]="assetSvc.getImg( offer?.buying?.asset_code )" />
+          <app-num-float [number]="offer?.price" [round]="assetsMaxDecimals" [bold]="true"></app-num-float>
 
           <ion-label class="margin-start margin-end">=</ion-label>
 
-          <!-- Offers Sell - Asset Buying -->
-          <app-num-float [number]="offer?.price" round="7" [bold]="true"></app-num-float>
-          <img class="margin-start" [src]="assetSvc.getImg( offer?.buying?.asset_code )" />
+          <!-- Offers Buy - Asset Selling -->
+          <app-num-float [number]="1" [round]="assetsMaxDecimals" [bold]="true"></app-num-float>
+          <img class="margin-start" [src]="assetSvc.getImg( offer?.selling?.asset_code )" />
         </ion-row>
 
         <!-- Asset Origin -->
@@ -63,13 +63,13 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation #numOrigin
+                      <ion-input click-stop-propagation #numSell
                         type="number"
                         class="tx-center"
-                        formControlName="num_origin"
+                        formControlName="num_sell"
                         min="0"
-                        [debounce]="300"
-                        (ionChange)="qantChange( numOrigin, true )"
+                        [debounce]="500"
+                        (ionChange)="qantChange( numSell, true )"
                       ></ion-input>
                     </ion-row>
                   </ion-col>
@@ -82,7 +82,7 @@
         <!-- Icon Switch -->
         <ion-row class="align-center">
           <ion-button icon-only (click)="switchAssets()">
-            <ion-icon name="wallet"></ion-icon>
+            <ion-icon class="font-17" src="assets/icon/svg/switch.svg"></ion-icon>
           </ion-button>
         </ion-row>
         
@@ -115,13 +115,13 @@
                       [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
                     >
                       <!-- Asset Input -->
-                      <ion-input click-stop-propagation #numDestiny
+                      <ion-input click-stop-propagation #numBuy
                         type="number"
                         class="tx-center"
-                        formControlName="num_destiny"
+                        formControlName="num_buy"
                         min="0"
-                        [debounce]="300"
-                        (ionChange)="qantChange( numDestiny, false )"  
+                        [debounce]="500"
+                        (ionChange)="qantChange( numBuy, false )"  
                       ></ion-input>
                     </ion-row>
                   </ion-col>
