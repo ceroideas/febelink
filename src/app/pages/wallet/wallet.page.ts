@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import { CryptoCurrency, CryptoTransactions } from 'src/app/models/wallet/currency.model';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ModalController } from '@ionic/angular';
 import { IUser } from 'src/app/models/user.model';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
@@ -12,8 +11,13 @@ import { InformComponent } from 'src/app/components/inform/inform.component';
 import { UserService } from 'src/app/services/user.service';
 import { SendComponent } from './send/send.component';
 import { WalletParams } from 'src/app/models/wallet/params.model';
-import { ExchangeService, ExchangeType } from 'src/app/services/wallet/exchange.service';
+import { ExchangeService } from 'src/app/services/wallet/exchange.service';
 import { OffersListComponent } from './offers-list/offers-list.component';
+import { ExchangeType } from 'src/app/models/wallet/exchange.model';
+import { ClipboardSvc } from 'src/app/services/clipboard.service';
+import { AlertSvc } from 'src/app/services/alert.service';
+import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
@@ -36,12 +40,14 @@ export class WalletPage implements OnInit {
 
   constructor(
       private walletSvc: WalletService
-    , private utilities: UtilitiesService
     , private modalCtrl: ModalController
     , private route: ActivatedRoute
     , private userSvc: UserService
     , private exchangeSvc: ExchangeService
     , private router: Router
+    , private alertSvc: AlertSvc
+    , private clipboardSvc: ClipboardSvc
+    , private translateSvc: TranslateConfigService
   ) {}
 
   ngOnInit() {}
@@ -66,8 +72,8 @@ export class WalletPage implements OnInit {
     const exchangeModal = await this.modalCtrl.create({
       component: InformComponent,
       componentProps:{
-        pompadour: this.utilities.translateService.instant( 'pages.wallet.purchase.title-' + ( bought ? 'success' : 'error' )),
-        description: this.utilities.translateService.instant( 'pages.wallet.purchase.msg-' + ( bought ? 'success' : 'error' )),
+        pompadour: this.translateSvc.instant( 'pages.wallet.purchase.title-' + ( bought ? 'success' : 'error' )),
+        description: this.translateSvc.instant( 'pages.wallet.purchase.msg-' + ( bought ? 'success' : 'error' )),
         showCheckmark: bought,
       },
       cssClass: 'pop-w-300 pop-h-400 pop-opacity pop-br-10',
@@ -126,11 +132,11 @@ export class WalletPage implements OnInit {
   }
 
   async copyPublicKey() {
-    this.utilities.copyClipboard( this.walletParams.publicKey );
+    this.clipboardSvc.copy( this.walletParams.publicKey );
   }
 
   async exchange( currency: CryptoCurrency ) {
-    const { saved, response } = await this.exchangeSvc.show(
+    const { saved, response, error } = await this.exchangeSvc.show(
       ExchangeType.CREATE,
       this.walletParams,
       { origin: {
@@ -141,15 +147,15 @@ export class WalletPage implements OnInit {
       }}
     );
 
-    if( saved ) this.offersList.refresh();
+    if( saved && !error ) this.offersList.refresh();
   }
 
   showHelp() {
-    this.utilities.showAlert(
-      this.utilities.translateService.instant( 'pages.wallet.help.title' ),
-      this.utilities.translateService.instant( 'pages.wallet.help.message' ),
-      'alertSmallTitle'
-    );
+    this.alertSvc.show({
+      title: 'pages.wallet.help.title',
+      msg: 'pages.wallet.help.message',
+      css: 'alertSmallTitle'
+    }, true );
   }
 
   async buy( currency ) {
