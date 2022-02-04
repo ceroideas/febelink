@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { KYCAliceComponent } from 'src/app/components/kyc-alice/kyc-alice.component';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
 import { AssetService } from 'src/app/services/wallet/asset.service';
 import { TwoFAService } from 'src/app/services/two_fa.service';
@@ -10,7 +9,6 @@ import { Offer } from 'src/app/models/wallet/offers.models';
 import { ExchangeType } from 'src/app/models/wallet/exchange.model';
 import { OfferService } from 'src/app/services/wallet/offer.service';
 import { ToastSvc } from 'src/app/services/toast.service';
-import { AlertSvc } from 'src/app/services/alert.service';
 import { KycPopSvc } from 'src/app/services/kyc/kyc.pop.service';
 
 @Component({
@@ -37,8 +35,6 @@ export class ExchangeComponent implements OnInit {
   constructor(
       private modalController: ModalController
     , private formBuilder: FormBuilder
-    , private popCtrl: PopoverController
-    , private alertSvc: AlertSvc
     , private toastSvc: ToastSvc
     , public assetSvc: AssetService
     , private twoFASvc: TwoFAService
@@ -102,8 +98,10 @@ export class ExchangeComponent implements OnInit {
       return;
 
     if( !this.kycVerified ) {
-      this.openPrevKYC();
-      return;
+      if( !await this.kycPopSvc.preVerify() )
+        return;
+
+      this.kycVerified = true;
     }
     
     if( await this.twoFASvc.verify() )
@@ -163,43 +161,6 @@ export class ExchangeComponent implements OnInit {
     this.toastSvc.show( 'pages.wallet.error.exceeded', true );
     return false;
   }
-
-  openPrevKYC() {
-    const lang = 'kyc.alert.complete.';
-    this.alertSvc.show({
-      title: lang + 'head',
-      msg: lang + 'msg',
-      btns: [
-        {
-          text: 'common.buttons.got-it',
-          handler: () => this.openKYC()
-        }
-      ]
-    }, true);
-  }
-
-  async openKYC() {
-    const popover = await this.popCtrl.create({
-      component: KYCAliceComponent,
-      translucent: true,
-      mode: 'md',
-      cssClass: 'pop-yt',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
-
-    await popover.present();
-
-    // The data always returns `data.result`
-    const { data } = await popover.onDidDismiss();
-
-    // According to `isValidated` == true => perform the needed task
-    if( data.result.isValidated ) {
-      this.kycVerified = true;
-      this.exchange();
-    } else
-      this.toastSvc.show(`kyc.${ data.result.isValidated ? '' : 'un' }verified`, true );
-  }
-
 
   qantChange( input, isSell: boolean ) {
     const value = Number.parseFloat( input.value || '1' );
