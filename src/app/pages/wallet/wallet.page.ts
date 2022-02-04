@@ -17,6 +17,7 @@ import { ExchangeType } from 'src/app/models/wallet/exchange.model';
 import { ClipboardSvc } from 'src/app/services/clipboard.service';
 import { AlertSvc } from 'src/app/services/alert.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { AccountSvc } from 'src/app/services/wallet/account.service';
 
 @Component({
   selector: 'wallet-page',
@@ -48,6 +49,7 @@ export class WalletPage implements OnInit {
     , private alertSvc: AlertSvc
     , private clipboardSvc: ClipboardSvc
     , private translateSvc: TranslateConfigService
+    , private accountSvc: AccountSvc
   ) {}
 
   ngOnInit() {}
@@ -185,5 +187,11 @@ export class WalletPage implements OnInit {
 
   transaction( operation ) {
     console.log( 'operation:', operation );
+  }
+
+  async balance() {
+    const { response, error } = await this.accountSvc.balance();
+    if( !error )
+      this.walletParams.userWallets = response;
   }
 }
