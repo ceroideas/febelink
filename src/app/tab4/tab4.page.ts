@@ -22,7 +22,7 @@ import { TranslateConfigService } from '../services/translate/translate-config.s
 import { GeoPlacesApi } from '../services/geoplaces.service';
 import { GeoPlacesModel } from '../models/geoplaces.model';
 import { VerificationComponent, VerifWhich } from '../components/verification/verification.component';
-import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
+import { KycPopSvc } from '../services/kyc/kyc.pop.service';
 
 @Component({
   selector: 'app-tab4',
@@ -85,7 +85,8 @@ export class Tab4Page {
     private actionSheet: ActionSheetController,
     private route: ActivatedRoute,
     private translateService: TranslateConfigService,
-    private geoPlaces: GeoPlacesApi
+    private geoPlaces: GeoPlacesApi,
+    private kycPopSvc: KycPopSvc
   ) {
     if (this.platform.is('cordova')) {
       this.isNative = true;
@@ -1265,26 +1266,10 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
   
 
   async verifyKYC() {
-    const popover = await this.popoverController.create({
-      component: KYCAliceComponent,
-      translucent: true,
-      mode: 'md',
-      cssClass: 'pop-yt',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
-
-    await popover.present();
-
-    // The data always returns `data.result`
-    const { data } = await popover.onDidDismiss();
-
-    // According to `isValidated` == true => perform the needed task
-    if( data.result.isValidated )
+    if( await this.kycPopSvc.verify() ) {
       this.perfil.kyc_verified_at = new Date().toLocaleString();
-    
-    this.utilities.showToast(
-      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
-    );
+      this.utilities.saveUserData(this.perfil);
+    }
   }
 
   verified( which: string ) {
