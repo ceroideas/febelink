@@ -7,7 +7,7 @@
         <ion-row class="vertical-content">
           <img class="abicon-25" [src]="assetSvc.getImg( offer?.selling.asset_code )" />
           <app-num-float
-            [number]="offer?.price_r?.d"
+            [number]="offer?.amount"
             [round]="walletParams.assetsMaxDecimals"
             classNbr="margin-start"
             [bold]="true"
@@ -18,7 +18,7 @@
         <ion-row class="vertical-content">
           <img class="abicon-25" [src]="assetSvc.getImg( offer?.buying.asset_code )" />
           <app-num-float
-            [number]="offer?.price_r?.n"
+            [number]="offerSvc.calcBuy( offer?.amount, offer?.price, this.walletParams?.assetsMaxDecimals )"
             [round]="walletParams.assetsMaxDecimals"
             classNbr="margin-start"
             [bold]="true"
@@ -37,11 +37,11 @@
         <ion-row class="vertical-content align-center">
           <ng-container *ngIf="isSelling || offer?.seller == walletParams?.publicKey">
             <!-- Edit -->
-            <ion-col size="6" class="tx-center">
+            <ion-col size="6" class="tx-center margin-top">
               <ion-icon class="abicon" name="pencil-outline" (click)="edit()" color="febelink"></ion-icon>
             </ion-col>
             <!-- Delete -->
-            <ion-col size="6" class="tx-center">
+            <ion-col size="6" class="tx-center margin-top">
               <ion-icon class="abicon" name="trash-outline" (click)="delete()" color="febelink"></ion-icon>
             </ion-col>
           </ng-container>
