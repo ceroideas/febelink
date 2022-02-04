@@ -43,7 +43,6 @@ export class OffersComponent implements OnInit {
       ExchangeType.BUY, this.walletParams, { offer: this.offer }
     );
 
-    console.log( 'response: ', response, ' || error: ', error );
     if( saved && !error ) this.OnChange.emit( ExchangeType.BUY );
   }
 
@@ -52,7 +51,6 @@ export class OffersComponent implements OnInit {
       ExchangeType.EDIT, this.walletParams, { offer: this.offer }
     );
     
-    console.log( 'response: ', response, ' || error: ', error );
     if( saved && !error ) this.OnChange.emit( ExchangeType.EDIT );
   }
 
@@ -75,7 +73,6 @@ export class OffersComponent implements OnInit {
     const { response, error } = await this.offerSvc.delete( this.offer );
 
     if( error ) {
-      console.log( 'error: ', error );
       this.loadingSvc.dismiss();
       this.alertSvc.show({
         title: 'pages.wallet.offers.delete.title',
@@ -84,7 +81,6 @@ export class OffersComponent implements OnInit {
       return
     }
     
-    console.log( 'response: ', response );
     this.toastSvc.show( 'pages.wallet.offers.delete.success', true );
     this.loadingSvc.dismiss();
     this.OnChange.emit( ExchangeType.DELETE );
