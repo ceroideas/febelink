@@ -104,7 +104,7 @@
 
     <!-- Offers List -->
     <ion-card class="ion-no-margin">
-      <app-offers-list #offersList [walletParams]="walletParams"></app-offers-list>
+      <app-offers-list #offersList [walletParams]="walletParams" (OnChange)="balance()"></app-offers-list>
     </ion-card>
 
     <!-- Divider -->
