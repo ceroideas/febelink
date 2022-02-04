@@ -472,7 +472,7 @@
       "welcome2": "Febelink Áureo"
     },
     "whitelist": {
-      "signUp": "Sign up now and receive all the updated information.",
+      "signUp": "Register now and get 10 FLAU tokens as a Gift",
       "mail": "Enter your email address",
       "action": {
         "toDo": "Register",
@@ -481,23 +481,11 @@
       "download": "Download Whitepaper",
       "success": "Thank you for subscribing to our WhiteList"
     },
-    "airdrop": [
-      "Participate in the launching of the FLAU Token (Febelink Áureo) and with the Airdrop get fantastic Prizes",
-
-      "We are going to distribute 1 MILLION FLAU tokens among all participants that:",
-      "Make a purchase of FLAU tokens between January 12 and 30, 2022 (both days included).",
-      "Keep those tokens for at least 2 months from the day of purchase.",
-      "WIN 1 GIFT of FLAU token",
-      "for every 2 FLAU tokens purchased in this Airdrop.",
-
-      "¡Sign up now and don't miss it!"
-    ],
     "tokens": {
       "title": "Save your tokens",
       "button": "Save tokens"
     },
     "aboutTk": {
-      "initial": "INITIAL COIN OFFERING",
       "title": "General information\nAbout the Token",
       "detail": "The Aureo Token is part of Febelink's platform ecosystem, helping users to carry out their transactions in a safer, simpler, faster and more efficient way, also having many benefits for use, discounts, and exclusive services.",
       "subtitle": "Probably the most usable token in the world",
