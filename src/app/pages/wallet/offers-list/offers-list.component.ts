@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
+import { ExchangeType } from 'src/app/models/wallet/exchange.model';
 import { OffersFilter, OffersList, OffersType } from 'src/app/models/wallet/offers.models';
 import { WalletParams } from 'src/app/models/wallet/params.model';
 import { ToastSvc } from 'src/app/services/toast.service';
@@ -14,6 +15,7 @@ import { OfferService } from 'src/app/services/wallet/offer.service';
 export class OffersListComponent implements OnInit, OnChanges {
   
   @Input() walletParams: WalletParams;
+  @Output() OnChange: EventEmitter<ExchangeType> = new EventEmitter()
 
   offersList: OffersList[] = [
     { type: OffersType.MARKET, offers: [], lastIdsPerPage: [], isLoading: true },
@@ -88,6 +90,9 @@ export class OffersListComponent implements OnInit, OnChanges {
 
   async refresh( list?: OffersList )
   {
+    // Inform Wallet that offers changed
+    this.OnChange.emit();
+
     if( !list )
       list = this.getList();
     
@@ -111,7 +116,6 @@ export class OffersListComponent implements OnInit, OnChanges {
     }
 
     list.offers = response.offers
-    console.log( 'response: ', list.offers, ' || error: ', error );
     list.isLoading = false;
   }
 
