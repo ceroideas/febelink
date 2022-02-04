@@ -37,16 +37,14 @@
           <!-- Filter By Selling ASSET -->
           <ion-img
             class="btn-ic margin-end"
-            [src]="'assets/icon/' + ( assetSelling == null ? 'svg/filter.svg' :
-                ( assetSelling?.currency || currencyType.lumens ).toLowerCase() + '.png' )"
+            [src]="assetSvc.getImg( assetSelling?.currency, 'svg/filter.svg' )"
             (click)="selectAsset( $event, true )"
           ></ion-img>
 
           <!-- Filter By Buying ASSET -->
           <ion-img
             class="btn-ic margin-end"
-            [src]="'assets/icon/' + ( assetBuying == null ? 'svg/filter.svg' :
-                ( assetBuying?.currency || currencyType.aureo ).toLowerCase() + '.png' )"
+            [src]="assetSvc.getImg( assetBuying?.currency, 'svg/filter.svg' )"
             (click)="selectAsset( $event, false )"
           ></ion-img>
         </ion-col>
