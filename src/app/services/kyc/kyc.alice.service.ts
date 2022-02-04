@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ApiService } from './api.service';
-import { UtilitiesService } from './utilities.service';
+import { ApiService } from '../api.service';
+import { UtilitiesService } from '../utilities.service';
 
 enum KYCRoutes {
       AUTH = 'auth'

@@ -3,7 +3,7 @@ import { AlertController, Platform, PopoverController } from '@ionic/angular';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { IUser } from 'src/app/models/user.model';
-import { KYCAliceService } from 'src/app/services/kyc.alice.service';
+import { KYCAliceService } from 'src/app/services/kyc/kyc.alice.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { KYC_Country, KYC_DOCtype, KYC_ERR_Validation } from 'src/app/models/kyc.alice.model';
 
