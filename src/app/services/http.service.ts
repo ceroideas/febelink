@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -21,7 +21,8 @@ export class HttpService {
         , private translateSvc: TranslateConfigService
     ) {}
 
-    private async getToken() {
+    private async getToken()
+    {
         if( this.token )
             return this.token;
 
@@ -32,7 +33,8 @@ export class HttpService {
         return this.token;
     }
 
-    async get(endpoint: string, params?: {} ) {
+    async get(endpoint: string, params?: {} )
+    {
         return this.http
             .get<any>(environment.API_URL_AUTH + endpoint, {
                 headers: await this.headers(),
@@ -40,15 +42,16 @@ export class HttpService {
             })
             .pipe(
                 map((res: any) => {
-                    return res;
+                    return { response: res };
                 }),
                 catchError((err: any, caught: Observable<any>) => {
-                    return this.handleError(err, caught, endpoint);
+                    return this.handleError( err, caught, endpoint )
                 })
             );
     }
 
-    async post(endpoint: string, data: {} | FormData = new FormData() ) {
+    async post(endpoint: string, data: {} | FormData = new FormData() )
+    {
         return this.http
             .post<any>(environment.API_URL_AUTH + endpoint
                 , this.objToFromData( data )
@@ -56,15 +59,16 @@ export class HttpService {
             )
             .pipe(
                 map((res: any) => {
-                    return res;
+                    return { response: res };
                 }),
                 catchError((err: any, caught: Observable<any>) => {
-                    return this.handleError(err, caught, endpoint);
+                    return this.handleError( err, caught, endpoint )
                 })
             );
     }
 
-    async put(endpoint: string, data: {} | FormData = new FormData ) {
+    async put(endpoint: string, data: {} | FormData = new FormData )
+    {
         return this.http
             .put<any>(environment.API_URL_AUTH + endpoint
                 , this.objToFromData( data )
@@ -72,15 +76,16 @@ export class HttpService {
             )
             .pipe(
                 map((res: any) => {
-                    return res;
+                    return { response: res };
                 }),
                 catchError((err: any, caught: Observable<any>) => {
-                    return this.handleError(err, caught, endpoint);
+                    return this.handleError( err, caught, endpoint )
                 })
             );
     }
 
-    async delete(endpoint: string, params: any = new FormData() ) {
+    async delete(endpoint: string, params: any = new FormData() )
+    {
         return this.http
             .delete<any>(environment.API_URL_AUTH + endpoint, {
                 headers: await this.headers(),
@@ -88,24 +93,26 @@ export class HttpService {
             })
             .pipe(
                 map((res: any) => {
-                    return res;
+                    return { response: res };
                 }),
                 catchError((err: any, caught: Observable<any>) => {
-                    return this.handleError(err, caught, endpoint);
+                    return this.handleError( err, caught, endpoint );
                 })
             );
     }
 
     
 
-    private async headers() {
+    private async headers()
+    {
         return {
             Authorization: `Bearer ${ await this.getToken()}`
             , Lang: await this.translateSvc.getLanguage()
         }
     }
 
-    private objToFromData( obj: {} | FormData ): FormData {
+    private objToFromData( obj: {} | FormData ): FormData
+    {
         if( obj instanceof FormData )
             return obj;
 
@@ -121,7 +128,8 @@ export class HttpService {
         return formData;
     }
 
-    private formDataToObj( formData: {} | FormData ): {} {
+    private formDataToObj( formData: {} | FormData ): {}
+    {
         if( formData instanceof Object )
             return formData;
 
@@ -133,15 +141,16 @@ export class HttpService {
         return obj;
     }
 
-    private handleError(error: any, caught: Observable<any>, endpoint: string) {
+    private handleError(error: any, caught: Observable<any>, endpoint: string)
+    {
         switch (error.status) {
             case 401: {
                 this.router.navigate(['login']);
                 this.utilities.showToast('Sesión expirada');
-                return throwError(error);
+                return throwError( error );
             }
             default: {
-                return throwError(error);
+                return of({ error: error });
             }
         }
     }
