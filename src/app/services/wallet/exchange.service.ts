@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { Asset, AssetTypes, Offer, Price } from 'src/app/models/wallet/offers.models';
+import { ExchangeType } from 'src/app/models/wallet/exchange.model';
+import { Asset, AssetTypes, Offer } from 'src/app/models/wallet/offers.models';
 import { WalletParams } from 'src/app/models/wallet/params.model';
 import { ExchangeComponent } from 'src/app/pages/wallet/exchange/exchange.component';
+import { LoadingSvc } from '../loading.service';
+import { ToastSvc } from '../toast.service';
+import { TranslateConfigService } from '../translate/translate-config.service';
 import { UserService } from '../user.service';
-import { UtilitiesService } from '../utilities.service';
 import { OfferService } from './offer.service';
-
-export enum ExchangeType {
-    CREATE = 'create',
-    EDIT = 'edit',
-    BUY = 'purchase',
-    DELETE = 'delete'
-}
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +21,11 @@ export class ExchangeService {
 
     constructor(
         private userSvc: UserService
-        , private utilities: UtilitiesService
         , private modalCtrl: ModalController
         , private offerSvc: OfferService
+        , private loadingSvc: LoadingSvc
+        , private toastSvc: ToastSvc
+        , private translateSvc: TranslateConfigService
     ) {}
 
     setParams( walletParams: WalletParams ) {
@@ -96,11 +94,11 @@ export class ExchangeService {
             ? ( !isSelling ? offer?.selling : offer?.buying )
             : ( isSelling ? offer?.selling : offer?.buying );
 
-        const price: number = this.exchangeType == ExchangeType.BUY
-            ? ( !isSelling ? offer?.price_r?.n : offer?.price_r?.d )
-            : ( isSelling ? offer?.price_r?.d : offer?.price_r?.n )
-        console.log( 'price: ', price );
-            
+        const amount: number = Number.parseFloat( offer?.amount );
+        const price: number = this.exchangeType == ExchangeType.CREATE
+            ? 0
+            : ( isSelling ? this.offerSvc.calcBuy( amount, offer?.price, this.walletParams?.assetsMaxDecimals ) : amount )
+
         return {
             currency: currency?.currency || this.assetCode( ofAsset ),
             amount: currency?.amount || price || 0,
@@ -114,26 +112,22 @@ export class ExchangeService {
         const destiny: CryptoCurrency = data?.destiny;
 
         if( origin && destiny ) {
-            this.utilities.showLoading();
-            let response;
-            try {
-                response = await this.do( origin, destiny, offer );
-                this.utilities.showToast(
-                    response?.message ||
-                    this.utilities.translateService.instant( 'pages.wallet.error.unknown' )
-                );
-            } catch(err) {
-                console.log( 'error:', err );
-                response = err;
-                
-                this.utilities.showToast( err?.error?.message || err?.message || 'There`s been an error'  );
-            }
+            await this.loadingSvc.show();
+            const { response, error } = await this.do( origin, destiny, offer );
 
-            this.utilities.dismissLoading();
+            if( error )
+                console.log( 'error:', error );
 
+            const msg = ( error
+                    ? error?.error?.message || error?.message
+                    : response?.message
+                ) || this.translateSvc.instant( 'pages.wallet.error.unknown' );
+            this.toastSvc.show( msg );
+
+            await this.loadingSvc.dismiss();
             this.walletParams.verified.kyc = true; // Since the only way to get till here is if verified
 
-            return new Promise( resolve => { resolve({ saved: true, response: response })});
+            return new Promise( resolve => { resolve({ saved: true, response: response, error: error })});
         }
 
         return new Promise( resolve => { resolve({ saved: false })});
@@ -146,30 +140,30 @@ export class ExchangeService {
             case ExchangeType.EDIT:
                 return await this.offerSvc.update( this.toOffer( origin, destiny, offer ));
             case ExchangeType.BUY:
-                return await this.offerSvc.buy( this.toOffer( destiny, origin, offer ));
+                return await this.offerSvc.buy( this.toOffer( origin, destiny, offer ));
         }
     }
 
-    private toOffer( origin: CryptoCurrency, destiny: CryptoCurrency, offer: Offer ): Offer {
+    private toOffer( selling: CryptoCurrency, buying: CryptoCurrency, offer: Offer ): Offer {
         return {
             selling: {
-                asset_code: origin.assetId,
-                asset_issuer: origin.issuerId
+                asset_code: selling.assetId,
+                asset_issuer: selling.issuerId
             },
 
             buying: {
-                asset_code: destiny.assetId,
-                asset_issuer: destiny.issuerId
+                asset_code: buying.assetId,
+                asset_issuer: buying.issuerId
             },
 
             price_r: {
-                d: origin.amount,
-                n: destiny.amount
+                d: this.exchangeType == ExchangeType.BUY ? offer?.price_r?.d : selling.amount,
+                n: this.exchangeType == ExchangeType.BUY ? offer?.price_r?.n : buying.amount
             },
 
-            amount: destiny.amount + '',
+            amount: ( this.exchangeType == ExchangeType.BUY ? buying.amount : selling.amount ) + '',
 
-            id: offer?.id
+            id: this.exchangeType == ExchangeType.EDIT ? offer?.id : null,
         }
     }
 
