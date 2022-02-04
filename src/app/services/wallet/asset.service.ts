@@ -12,19 +12,24 @@ export class AssetService {
         private popCtrl: PopoverController
     ) {}
 
-    getImg( asset: string ) {
+    getImg( asset: string, alternative?: string ) {
         switch( ( asset || '' ).toUpperCase() ) {
             case 'FLAU':
             case 'FBLINKCOINV3':
-                asset = 'flau';
+                asset = 'flau.png';
                 break;
             case 'XLM':
             case 'LUMENS':
+                asset = 'xlm.png';
+                break;
             case '':
-                asset = 'xlm';
+                asset = alternative || 'xlm.png';
+                break;
+            default:
+                asset += '.png';
                 break;
         }
-        return 'assets/icon/' + asset?.toLowerCase() + '.png';
+        return 'assets/icon/' + asset?.toLowerCase();
     }
 
     getColor( asset: string ) {
