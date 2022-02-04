@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { IUser } from 'src/app/models/user.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TokenCRUD, TokenPhase, TokensUser } from '../../models/tokens-user';
 import { TokensUsersService } from '../../services/tokens-users.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertSvc } from 'src/app/services/alert.service';
+import { ToastSvc } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-edit-tokens',
@@ -29,7 +30,8 @@ export class EditTokensComponent implements OnInit {
   constructor(
       private tokenSvc: TokensUsersService
     , public modalCtrl: ModalController
-    , private utils: UtilitiesService
+    , private alertSvc: AlertSvc
+    , private toastSvc: ToastSvc
     , private translateSvc: TranslateConfigService
     , private formBuilder: FormBuilder
   ) { }
@@ -112,9 +114,7 @@ export class EditTokensComponent implements OnInit {
       return;
     }
     if (!this.tokensUser?.retained && this.tokenCRUD !== TokenCRUD.Create) {
-      this.utils.showToast(
-        this.translateSvc.instant('admin.tokensUsers.error.retained')
-      );
+      this.toastSvc.show( 'admin.tokensUsers.error.retained', true );
       return;
     }
 
@@ -126,21 +126,26 @@ export class EditTokensComponent implements OnInit {
     this.tokensUser.observations = obs;
 
     if( !num_tokens ) {
-      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.num_tokens' ));
+      this.toastSvc.show( 'admin.tokensUsers.error.num_tokens', true );
       return;
     }
     if( !id_phase_tokens ) {
-      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.phase_tokens' ));
+      this.toastSvc.show( 'admin.tokensUsers.error.phase_tokens', true );
       return;
     }
 
     const crud = this.translateSvc.instant( this.tokenCRUD );
     try{
-      if(!await this.utils.confirm( 'admin.tokensUsers.modal', {
-        CRUD: crud,
-        name: this.tokensUser?.name || this.tokensUser?.nick,
-        extra: ''
-      })) return;
+      if( !await this.alertSvc.confirm({
+          title: 'admin.tokensUsers.modal.header',
+          titleParams: { CRUD: crud },
+          msg: 'admin.tokensUsers.modal.body',
+          msgParams: {
+            CRUD: crud,
+            name: this.tokensUser?.name || this.tokensUser?.nick,
+            extra: ''
+          }
+        })) return;
 
       this.loadingMsg = crud + '...';
       this.isLoading = true;
@@ -159,12 +164,12 @@ export class EditTokensComponent implements OnInit {
     catch(e){
       this.isLoading = false;
       console.error(e);
-      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.error.some' ));
+      this.toastSvc.show( 'admin.tokensUsers.error.some', true );
     }
   }
 
   showToastLoading() {
-    this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.loading' ));
+    this.toastSvc.show( 'admin.tokensUsers.loading', true );
   }
 
   /* Pagination */
