@@ -416,7 +416,12 @@
         "title": "Enviar Tokens a",
         "addressee": "Destinatario",
         "total": "Saldo Total Restante",
-        "button": "Enviar"
+        "button": "Enviar",
+
+        "alert": {
+          "title": "Aviso importante",
+          "message": "Por tu seguridad, asegurate de revisar la información de la wallet a donde envias tus saldos, asi como el funcionamiento de la plataforma donde los envías.<br><br>Febelink no se hace responsable de aquellos saldos una vez esten fuera de su plataforma.<br><br>Estamos a tu disposicion para cualquier consulta en <a href=\"mailto:soporte@febelink.com\">soporte@febelink.com</a>"
+        }
       },
       "balance": {
         "balance": "Saldo",

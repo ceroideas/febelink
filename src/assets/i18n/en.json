@@ -417,7 +417,12 @@
         "title": "Send Tokens to",
         "addressee": "Addressee",
         "total": "Total Remaining Balance",
-        "button": "Send"
+        "button": "Send",
+
+        "alert": {
+          "title": "Important announcement",
+          "message": "For your safety, make sure to review the information of the wallet where you send your balances, as well as the functioning of the platform where you send them.<br><br>Febelink is not responsible for those balances once they are outside its platform.<br><br>We are at your disposal for any questions at <a href=\"mailto:soporte@febelink.com\">support@febelink.com</a>"
+        }
       },
 
       "balance": {
