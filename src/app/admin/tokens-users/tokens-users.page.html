@@ -58,7 +58,7 @@
         <td>{{tokensUser.dni}}</td>
         <td
           class="reduct pointer"
-          (click)="utils.copyClipboard( tokensUser.public )"
+          (click)="clipboardSvc.copy( tokensUser.public )"
         >
           <ion-item class="no-padding" lines="none" color="transparent">
             <ion-icon name="clipboard" class="clipboard"></ion-icon>
