@@ -2,14 +2,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { KYCAliceComponent } from 'src/app/components/kyc-alice/kyc-alice.component';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { ExchangeType } from 'src/app/services/wallet/exchange.service';
 import { AssetService } from 'src/app/services/wallet/asset.service';
 import { TwoFAService } from 'src/app/services/two_fa.service';
 import { Offer } from 'src/app/models/wallet/offers.models';
+import { ExchangeType } from 'src/app/models/wallet/exchange.model';
+import { OfferService } from 'src/app/services/wallet/offer.service';
+import { ToastSvc } from 'src/app/services/toast.service';
+import { AlertSvc } from 'src/app/services/alert.service';
+import { KycPopSvc } from 'src/app/services/kyc/kyc.pop.service';
 
 @Component({
   selector: 'app-exchange',
@@ -28,17 +30,20 @@ export class ExchangeComponent implements OnInit {
   @Input() userWallets: CryptoCurrency[] = [];
   @Input() retainedTks: TokensUser[];
   @Input() assetsMaxDecimals: number;
-
-  public exchangeForm: FormGroup;
+  
+  public form: FormGroup;
+  exchangesType = ExchangeType;
 
   constructor(
       private modalController: ModalController
     , private formBuilder: FormBuilder
     , private popCtrl: PopoverController
-    , private translateSvc: TranslateConfigService
-    , private utilities: UtilitiesService
+    , private alertSvc: AlertSvc
+    , private toastSvc: ToastSvc
     , public assetSvc: AssetService
     , private twoFASvc: TwoFAService
+    , private offerSvc: OfferService
+    , private kycPopSvc: KycPopSvc
   ) {}
 
   ngOnInit() {
@@ -46,13 +51,13 @@ export class ExchangeComponent implements OnInit {
   }
 
   ionViewDidLeave() {
-    this.exchangeForm.reset();
+    this.form.reset();
   }
 
   buildForm() {
-    this.exchangeForm = this.formBuilder.group({
-      num_origin: new FormControl(( this.origin?.amount ), [ Validators.required ]),
-      num_destiny: new FormControl(( this.destiny?.amount ), [ Validators.required ])
+    this.form = this.formBuilder.group({
+      num_sell: new FormControl(( this.origin?.amount > 0 ? this.origin?.amount : '' ), [ Validators.required ]),
+      num_buy: new FormControl(( this.destiny?.amount > 0 ? this.destiny?.amount : '' ), [ Validators.required ])
     });
   }
 
@@ -78,15 +83,18 @@ export class ExchangeComponent implements OnInit {
   }
 
   switchAssets() {
-    if( this.offer ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.exchange.cant-switch' ));
+    if( this.exchangeType == ExchangeType.BUY ) {
+      this.toastSvc.show( 'pages.wallet.exchange.cant-switch', true );
+      return;
     }
 
-    const origin: CryptoCurrency = { currency: this.destiny?.currency };
-    const destiny: CryptoCurrency = { currency: this.origin?.currency };
+    const selling: CryptoCurrency =
+      { currency: this.destiny?.currency, assetId: this.destiny?.assetId, issuerId: this.destiny?.issuerId };
+    const buying: CryptoCurrency =
+      { currency: this.origin?.currency, assetId: this.origin?.assetId, issuerId: this.origin?.issuerId };
     
-    this.origin = origin;
-    this.destiny = destiny;
+    this.origin = selling;
+    this.destiny = buying;
   }
 
   async exchange() {
@@ -103,33 +111,33 @@ export class ExchangeComponent implements OnInit {
   }
 
   checkErrors(): boolean {
-    const { num_origin, num_destiny } = this.exchangeForm.value;
+    const { num_sell, num_buy } = this.form.value;
 
     if( !this.origin?.currency ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.missing-origin' ));
+      this.toastSvc.show( 'pages.wallet.error.missing-origin', true );
       return false;
     }
 
     if( !this.destiny?.currency ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.missing-destiny' ));
+      this.toastSvc.show( 'pages.wallet.error.missing-destiny', true );
       return false;
     }
 
-    if( !num_origin || Number( num_origin ) <= 0 ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.qOffer' ));
+    if( !num_sell || Number( num_sell ) <= 0 ) {
+      this.toastSvc.show( 'pages.wallet.error.qOffer', true );
       return false;
     }
     
-    if( !num_destiny || Number( num_destiny ) <= 0 ) {
-       this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.qDemand' ));
+    if( !num_buy || Number( num_buy ) <= 0 ) {
+       this.toastSvc.show( 'pages.wallet.error.qDemand', true );
       return false;
     }
 
-    if( !this.hasThatAmount( num_origin ))
+    if( !this.hasThatAmount( num_sell ))
       return false;
 
-    this.origin.amount = Number( num_origin );
-    this.destiny.amount = Number( num_destiny );
+    this.origin.amount = Number( num_sell );
+    this.destiny.amount = Number( num_buy );
 
     return true;
   }
@@ -152,24 +160,22 @@ export class ExchangeComponent implements OnInit {
       }
     }
 
-    this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.exceeded' ));
+    this.toastSvc.show( 'pages.wallet.error.exceeded', true );
     return false;
   }
 
-  async openPrevKYC() {
+  openPrevKYC() {
     const lang = 'kyc.alert.complete.';
-    const alert = await this.utilities.alertCtrl.create({
-      header: this.translateSvc.instant( lang + 'head' ),
-      message: this.translateSvc.instant( lang + 'msg' ),
-      buttons: [
+    this.alertSvc.show({
+      title: lang + 'head',
+      msg: lang + 'msg',
+      btns: [
         {
-          text: this.translateSvc.instant( 'common.buttons.got-it' ),
+          text: 'common.buttons.got-it',
           handler: () => this.openKYC()
         }
       ]
-    });
-
-    await alert.present();
+    }, true);
   }
 
   async openKYC() {
@@ -191,39 +197,30 @@ export class ExchangeComponent implements OnInit {
       this.kycVerified = true;
       this.exchange();
     } else
-      this.utilities.showToast(
-        this.translateSvc.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
-      );
+      this.toastSvc.show(`kyc.${ data.result.isValidated ? '' : 'un' }verified`, true );
   }
 
 
-  inputs
-      : { triggered: boolean, origin: number | string, destiny: number | string }
-      = { triggered: false, origin: '', destiny: '' }
-  qantChange( input, isOrigin: boolean ) {
-    if( this.inputs.triggered || this.exchangeType != ExchangeType.BUY ) {
-      this.inputs.triggered = false;
+  qantChange( input, isSell: boolean ) {
+    const value = Number.parseFloat( input.value || '1' );
+    if( this.exchangeType != ExchangeType.BUY )
       return;
-    }
 
-    this.inputs.triggered = true;
-    const origin = this.offer.price_r.d;
-    const destiny = this.offer.price_r.n;
+    const priceSell = Number.parseFloat( this.offer?.amount );
+    const priceBuy = this.offerSvc.calcBuy( this.offer?.amount, this.offer?.price, this.assetsMaxDecimals );
 
-    if( this.qantExceeded( input.value, isOrigin ? origin : destiny )) {
-      input.value = isOrigin ? destiny : origin;
-      this.utilities.showToast( this.translateSvc.instant(
-        'pages.wallet.exchange.exceeds-' + ( isOrigin ? 'sell' : 'buy' )
-      ));
-      return;
-    }
+    this.checkQantExceeded( input, isSell ? priceBuy : priceSell, isSell )
 
-    const key = (  isOrigin ? 'num_destiny' : 'num_origin' );
-    const value = ( isOrigin ? destiny / origin : origin / destiny ) * ( input?.value || 1 );
-    this.exchangeForm.patchValue({ [key] : value?.toFixed( this.assetsMaxDecimals ) });
+    // Update opposite input
+    const key = isSell ? 'num_buy' : 'num_sell';
+    const opposite = ( isSell ? priceSell / priceBuy : priceBuy / priceSell ) * ( input?.value || 1 );
+    this.form.patchValue({ [key] : opposite?.toFixed( this.assetsMaxDecimals ) });
   }
 
-  qantExceeded( input, qant ): boolean {
-    return input < qant;
+  checkQantExceeded( input, qant: number, isSell: boolean ) {
+    if( Number.parseFloat( input.value || '0' ) > qant ) {
+      input.value = qant;
+      this.toastSvc.show( 'pages.wallet.exchange.exceeds-' + ( isSell ? 'sell' : 'buy' ), true );
+    }
   }
 }
