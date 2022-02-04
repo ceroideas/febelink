@@ -28,15 +28,12 @@ export interface iInform {
 })
 export class InformSvc {
 
-    exchangeModal
-
     constructor(
         private modalCtrl: ModalController
     ) {}
 
     async show( params: iInform ) {
-        if( !this.exchangeModal )
-            this.exchangeModal = await this.modalCtrl.create({
+        const exchangeModal = await this.modalCtrl.create({
                 component: InformComponent,
                 componentProps:{
                     title: params?.title
@@ -62,6 +59,6 @@ export class InformSvc {
                 , cssClass: 'pop-w-300 pop-h-400 pop-opacity pop-br-10'
             });
 
-        await this.exchangeModal.present();
+        await exchangeModal.present();
     }
 }
