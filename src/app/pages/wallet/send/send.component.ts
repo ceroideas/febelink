@@ -10,6 +10,7 @@ import { ClipboardSvc } from 'src/app/services/clipboard.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { AlertSvc } from 'src/app/services/alert.service';
+import { InformSvc } from 'src/app/services/inform.service';
 
 @Component({
     selector: 'app-send',
@@ -48,6 +49,7 @@ export class SendComponent implements OnInit {
         , public toastSvc: ToastSvc
         , public loadingSvc: LoadingSvc
         , public alertSvc: AlertSvc
+        , public informSvc: InformSvc
     ) {}
 
     ngOnInit() {
@@ -86,13 +88,9 @@ export class SendComponent implements OnInit {
         this.calcs.diff = this.calcs.max - amount;
     }
 
-    async send() {
-        if( !this.checkErrors() ) return;
-    
+    private async doSend() {
         /* Verify 2FA */
-        const verified = await this.verify2FA();
-        
-        if( verified ) {
+        if( await this.verify2FA() )
             try {
                 const res = await this.wallet.send(
                     this.publicKey,
@@ -112,11 +110,33 @@ export class SendComponent implements OnInit {
                 this.toastSvc.show( res.message );
                 this.modalCtrl.dismiss({ asset: this.asset, response: res });
             } catch( ex ) {
-              await this.loadingSvc.dismiss();
-              // ToDo: Handle Stellar error Statuses
-              alert( ex.error.message );
+            await this.loadingSvc.dismiss();
+            // ToDo: Handle Stellar error Statuses
+            alert( ex.error.message );
             }
-        }
+    }
+
+    async send() {
+        if( !this.checkErrors() ) return;
+    
+        this.informSvc.show({
+            title: 'pages.wallet.send.alert.title'
+            , description: 'pages.wallet.send.alert.message'
+            , buttons: [
+                {
+                    text: 'common.buttons.cancel',
+                    dismiss: true,
+                }, {
+                    text: 'common.buttons.confirm',
+                    name: 'Confirm',
+                    dismiss: true
+                }
+            ]
+            , OnClick: button => {
+                if( button.name == 'Confirm' )
+                    this.doSend()
+            }
+        });
     }
 
     checkErrors(): boolean {
