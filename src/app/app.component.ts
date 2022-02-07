@@ -80,6 +80,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private metaService: Meta
   ) {
+    this.router.events.subscribe(( e ) => {
+      /* To Know in SCSS which url is currently opened */
+      document.body.dataset.url = location.href;
+    });
   }
 
   ngOnInit() {
