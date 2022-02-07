@@ -63,9 +63,13 @@ export class NotificationService {
     const count: number = notifCount + totalUnreadMessages;
     this.badge.set(count).catch((err) => {
       if (count) {
-        this.utils.updateWebFavicon('favicon-notif');
+        this.utils.updateWebFavicon('favicon-notif')
+          .updateWebFavicon('favicon-notif', 192 )
+          .updateWebFavicon('favicon-notif', 'apple');
       } else {
-        this.utils.updateWebFavicon('favicon');
+        this.utils.updateWebFavicon('fav/icon-32x32' )
+          .updateWebFavicon('fav/icon-192x192', 192 )
+          .updateWebFavicon('fav/icon-180X180', 'apple' )
       }
     });
   }
