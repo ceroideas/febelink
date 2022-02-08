@@ -25,6 +25,7 @@ import { CryptoCurrency } from './models/currency.model';
 import { Observable } from 'rxjs';
 import { ILangDEFAULTS } from './models/langs.model';
 import { Meta, Title } from '@angular/platform-browser';
+import { FrogedService } from './services/froged.service';
 
 const GENERAL_TITLE = 'Febelink | El buscador de servicios profesionales';
 const GENERAL_DESC =
@@ -78,7 +79,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private notificationSvc: NotificationService,
     private walletService: WalletService,
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    private frogedSvc: FrogedService
   ) {
     this.router.events.subscribe(( e ) => {
       /* To Know in SCSS which url is currently opened */
@@ -99,6 +101,8 @@ export class AppComponent implements OnInit, OnDestroy {
       },
       { name: 'description', content: GENERAL_DESC },
     ]);
+
+    this.frogedSvc.track( 'public_key' );
   }
 
   initializeApp() {
@@ -417,6 +421,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async getUserData() {
     this.currentUser = { ...(await this.utilities.getUserData()) };
+    if(  this.currentUser )
+      this.frogedSvc.set( this.currentUser );
   }
 
   async getUserSectorsAndSubsectors() {
