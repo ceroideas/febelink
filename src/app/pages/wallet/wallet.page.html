@@ -68,7 +68,7 @@
     <!-- Assets -->
     <ion-row>
       <ion-col size="6" size-sm="2.4" *ngFor="let currency of walletParams.userWallets">
-        <ion-card (click)="exchange( currency )">
+        <ion-card>
           <ion-row class="vertical-content no-margin">
             <ion-col size="12" size-sm="12" class="no-padding">
               <ion-row class="vertical-content ion-no-padding">
@@ -98,13 +98,27 @@
     </ion-row>
 
     <!-- Divider -->
+    <!-- <ion-row class="margin-bottom">
+      <ion-item-divider></ion-item-divider>
+    </ion-row> -->
+
+    <!-- Offers List -->
+    <!-- <ion-card class="ion-no-margin">
+      <app-offers-list #offersList [walletParams]="walletParams" (OnChange)="balance()"></app-offers-list>
+    </ion-card> -->
+
+    <!-- Divider -->
     <ion-row class="margin-bottom">
       <ion-item-divider></ion-item-divider>
     </ion-row>
 
-    <!-- Offers List -->
+    <!-- Exchange -->
     <ion-card class="ion-no-margin">
-      <app-offers-list #offersList [walletParams]="walletParams" (OnChange)="balance()"></app-offers-list>
+      <app-exchange #xchng
+        [walletParams]="walletParams"
+        [exchangeType]="exchangeTypes.CREATE"
+        (OnDone)="refresh()"
+      ></app-exchange>
     </ion-card>
 
     <!-- Divider -->
