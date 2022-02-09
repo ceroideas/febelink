@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { Offer, OffersFilter } from 'src/app/models/wallet/offers.models';
 import { HttpService } from '../http.service';
 
@@ -36,6 +37,11 @@ export class OfferService {
     return ( await this.http.get( 'wallet/offers/list', filter )).toPromise();
   }
 
+  async marketPrice( sell: CryptoCurrency, buy: CryptoCurrency )
+  {
+    return ( await this.http.get( 'wallet/offers/marketPrice', this.sellNbuyToParm( sell, buy ))).toPromise();
+  }
+
   calcBuy( amount: string | number, price: string | number, maxDecimals: number ): number {
     const nbr: number = Number.parseFloat(( amount || '1' ) + '' ) * Number.parseFloat(( price || '1' ) + '' );
     // To truncate without rounding || otherwise will not match sell with buy
@@ -59,5 +65,15 @@ export class OfferService {
     };
     
     return offers;
+  }
+
+  private sellNbuyToParm( sell: CryptoCurrency, buy: CryptoCurrency ): Object {
+    return {
+      selling: sell.assetId,
+      sellingIssuerId: sell.issuerId,
+
+      buying: buy.assetId,
+      buyingIssuerId: buy.issuerId
+    }
   }
 }
