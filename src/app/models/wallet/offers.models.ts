@@ -63,3 +63,15 @@ export interface OffersFilter {
 
     public?: string
 }
+
+export interface MarketPrice {
+    isLoading?: boolean
+
+    selling?: string
+    sellingIssuerId?: string
+    price_selling?: number
+
+    buying?: string
+    buyingIssuerId?: string
+    price_buying?: number
+}
