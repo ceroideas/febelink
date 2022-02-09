@@ -1,10 +1,10 @@
+import { ExchangePop } from 'src/app/services/wallet/exchange.pop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Offer } from 'src/app/models/wallet/offers.models';
 import { WalletParams } from 'src/app/models/wallet/params.model';
 import { DateFormatType, MonthFormatType } from 'src/app/pipes/date-format.pipe';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { AssetService } from 'src/app/services/wallet/asset.service';
-import { ExchangeService } from 'src/app/services/wallet/exchange.service';
 import { OfferService } from 'src/app/services/wallet/offer.service';
 import { ExchangeType } from 'src/app/models/wallet/exchange.model';
 import { AlertSvc } from 'src/app/services/alert.service';
@@ -30,7 +30,7 @@ export class OffersComponent implements OnInit {
       private translateSvc: TranslateConfigService
     , public offerSvc: OfferService
     , public assetSvc: AssetService
-    , private exchangeSvc: ExchangeService
+    , private exchangePop: ExchangePop
     , private alertSvc: AlertSvc
     , private toastSvc: ToastSvc
     , private loadingSvc: LoadingSvc
@@ -39,7 +39,7 @@ export class OffersComponent implements OnInit {
   ngOnInit() {}
   
   async buy() {
-    const { saved, response, error } = await this.exchangeSvc.show(
+    const { saved, response, error } = await this.exchangePop.show(
       ExchangeType.BUY, this.walletParams, { offer: this.offer }
     );
 
@@ -47,7 +47,7 @@ export class OffersComponent implements OnInit {
   }
 
   async edit() {
-    const { saved, response, error } = await this.exchangeSvc.show(
+    const { saved, response, error } = await this.exchangePop.show(
       ExchangeType.EDIT, this.walletParams, { offer: this.offer }
     );
     
