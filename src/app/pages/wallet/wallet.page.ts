@@ -11,13 +11,13 @@ import { InformComponent } from 'src/app/components/inform/inform.component';
 import { UserService } from 'src/app/services/user.service';
 import { SendComponent } from './send/send.component';
 import { WalletParams } from 'src/app/models/wallet/params.model';
-import { ExchangeService } from 'src/app/services/wallet/exchange.service';
 import { OffersListComponent } from './offers-list/offers-list.component';
 import { ExchangeType } from 'src/app/models/wallet/exchange.model';
 import { ClipboardSvc } from 'src/app/services/clipboard.service';
 import { AlertSvc } from 'src/app/services/alert.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { AccountSvc } from 'src/app/services/wallet/account.service';
+import { ExchangePop } from 'src/app/services/wallet/exchange.pop';
 
 @Component({
   selector: 'wallet-page',
@@ -38,13 +38,14 @@ export class WalletPage implements OnInit {
   hideTransactions: boolean = true;
 
   dateFormatType = DateFormatType;
+  exchangeTypes = ExchangeType
 
   constructor(
       private walletSvc: WalletService
     , private modalCtrl: ModalController
     , private route: ActivatedRoute
     , private userSvc: UserService
-    , private exchangeSvc: ExchangeService
+    , private exchangePop: ExchangePop
     , private router: Router
     , private alertSvc: AlertSvc
     , private clipboardSvc: ClipboardSvc
@@ -138,10 +139,10 @@ export class WalletPage implements OnInit {
   }
 
   async exchange( currency: CryptoCurrency ) {
-    const { saved, response, error } = await this.exchangeSvc.show(
+    const { saved, response, error } = await this.exchangePop.show(
       ExchangeType.CREATE,
       this.walletParams,
-      { origin: {
+      { sell: {
         currency: currency?.currency,
         assetId: currency?.assetId,
         priceBuy: currency?.priceBuy,
@@ -151,6 +152,7 @@ export class WalletPage implements OnInit {
 
     if( saved && !error ) this.offersList.refresh();
   }
+  refresh() { this.offersList.refresh() }
 
   showHelp() {
     this.alertSvc.show({
@@ -181,8 +183,8 @@ export class WalletPage implements OnInit {
 
     const { data } = await exchangeModal.onDidDismiss();
 
-    const origin = data?.origin;
-    const destiny = data?.destiny;
+    const sell = data?.sell;
+    const buy = data?.buy;
   }
 
   transaction( operation ) {
