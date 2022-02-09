@@ -1,153 +1,234 @@
-<div>
-  <ion-header fill="transparent">
-    <ion-toolbar fill="transparent">
-
-      <!-- Back Button -->
-      <ion-buttons slot="start">
-        <ion-button icon-only (click)="onDismiss()">
-          <ion-icon name="arrow-back"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-
-      <!-- Title -->
-      <ion-row class="vertical-content align-center">
-        <ion-label>{{ origin?.currency }}</ion-label>
-        <ion-icon name="play" *ngIf="origin?.currency && destiny?.currency"></ion-icon>
-        <ion-label *ngIf="destiny?.currency">{{ destiny?.currency }}</ion-label>
-      </ion-row>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content>
-    <form [formGroup]="form" style="margin: auto;">
-      <ion-grid>
-        <!-- Conversion -->
-        <ion-row *ngIf="exchangeType == exchangesType.BUY" class="align-center vertical-content">
-          <!-- Offers Sell - Asset Buying -->
-          <img class="margin-end" [src]="assetSvc.getImg( offer?.buying?.asset_code )" />
-          <app-num-float [number]="offer?.price" [round]="assetsMaxDecimals" [bold]="true"></app-num-float>
-
-          <ion-label class="margin-start margin-end">=</ion-label>
-
-          <!-- Offers Buy - Asset Selling -->
-          <app-num-float [number]="1" [round]="assetsMaxDecimals" [bold]="true"></app-num-float>
-          <img class="margin-start" [src]="assetSvc.getImg( offer?.selling?.asset_code )" />
-        </ion-row>
-
-        <!-- Asset Origin -->
-        <ion-label class="bold-6 tx-upper margin-start margin-bottom">
-          {{ 'pages.wallet.exchange.sell' | translate }}
-        </ion-label>
-        <ion-card class="line" (click)="selectAsset( $event, true )"
-          [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
-        >
-          <ion-row>
-            <ion-item tappable lines="none">
-              <!-- Asset Icon -->
-              <ion-avatar slot="start" *ngIf="origin?.currency">
-                <img [src]="assetSvc.getImg( origin?.currency )" />
-              </ion-avatar>
-
-              <ion-grid>
-                <ion-row class="vertical-content">
-                  <ion-col [size]="origin?.currency ? 8 : 12">
-                    <!-- Asset Text -->
-                    <ion-card-title>{{ origin?.currency || ( 'pages.wallet.exchange.select-origin' | translate ) }}</ion-card-title>
-                  </ion-col>
-
-                  <ion-col size="4" *ngIf="origin?.currency">
-                    <ion-row class="hint">
-                      <ion-label>{{'pages.wallet.exchange.qOffer' | translate }}</ion-label>
-                    </ion-row>
-                    <ion-row
-                      [style]="'border-color: var(--ion-color-currency-' + ( origin?.currency?.toLowerCase() || 'flau' )+ ');'"
-                    >
-                      <!-- Asset Input -->
-                      <ion-input click-stop-propagation #numSell
-                        type="number"
-                        class="tx-center"
-                        formControlName="num_sell"
-                        min="0"
-                        [debounce]="500"
-                        (ionChange)="qantChange( numSell, true )"
-                      ></ion-input>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>              
-            </ion-item>
+  <div class="content">
+    <!-- Header -->
+    <ion-grid class="header marg-b10">
+      <ion-row>
+        <ion-col size="10" class="center-v">
+          <!-- Title -->
+          <ion-row class="vertical-content tx-start">
+            <ion-label class="marg-s">
+              {{ 'pages.wallet.exchange.title.' + ( offer ? 'offer' : 'exchange' ) | translate }}
+            </ion-label>
+            <ion-label class="marg-s" *ngIf="offer?.last_modified_time">
+              {{ offer?.last_modified_time | dateFormat: dateFormatType.DateTime }}
+            </ion-label>
           </ion-row>
-        </ion-card>
-
-        <!-- Icon Switch -->
-        <ion-row class="align-center">
-          <ion-button icon-only (click)="switchAssets()">
-            <ion-icon class="font-17" src="assets/icon/svg/switch.svg"></ion-icon>
-          </ion-button>
-        </ion-row>
+        </ion-col>
         
-        <!-- Asset Destiny -->
-        <ion-label class="bold-6 tx-upper margin-start margin-bottom">
-          {{ 'pages.wallet.exchange.buy' | translate }}
-        </ion-label>
-        <ion-card class="line" (click)="selectAsset( $event, false )"
-          [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
-        >
-          <ion-row>
-            <ion-item tappable lines="none">
+        <ion-col size="2" class="tx-end center-v">
+          <!-- Delete Button -->
+          <ion-button icon-only
+            fill="transparent"
+            class="abicon"
+            (click)="delete()"
+            *ngIf="exchangeType == exchangeTypes.EDIT"
+          >
+            <ion-icon class="abicon" name="trash-outline" color="black"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <!-- Form -->
+    <form [formGroup]="form" style="margin: auto;">
+      <ion-card class="back-gray no-margin">
+        <ion-grid>
+          <ion-row>            
+            <!-- Asset Selling -->
+            <ion-col size="12" size-sm="4.5" class="center-v">
               <!-- Asset Icon -->
-              <ion-avatar slot="start" *ngIf="destiny?.currency">
-                <img [src]="assetSvc.getImg( destiny?.currency )" />
-              </ion-avatar>
+              <ion-row class="align-center">
+                <ion-avatar class="abicon-40 pointer" (click)="selectAsset( $event, true )">
+                  <ion-img [src]="assetSvc.getImg( sell?.currency )"></ion-img>
+                </ion-avatar>
+              </ion-row>
 
-              <ion-grid>
-                <ion-row class="vertical-content">
-                  <ion-col [size]="destiny?.currency ? 8 : 12">
-                    <!-- Asset Text -->
-                    <ion-card-title>{{ destiny?.currency || ( 'pages.wallet.exchange.select-destiny' | translate ) }}</ion-card-title>
-                  </ion-col>
-                  <ion-col size="4" *ngIf="destiny?.currency">
-                    
-                    <ion-row class="hint">
-                      <ion-label>{{'pages.wallet.exchange.qDemand' | translate }}</ion-label>
-                    </ion-row>
-                    <ion-row
-                      [style]="'border-color: var(--ion-color-currency-' + ( destiny?.currency?.toLowerCase() || 'flau' )+ ');'"
-                    >
-                      <!-- Asset Input -->
-                      <ion-input click-stop-propagation #numBuy
-                        type="number"
-                        class="tx-center"
-                        formControlName="num_buy"
-                        min="0"
-                        [debounce]="500"
-                        (ionChange)="qantChange( numBuy, false )"  
-                      ></ion-input>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>              
-            </ion-item>
+              <!-- Label -->
+              <ion-row class="marg-t10 align-center">
+                <ion-label class="bold-6 tx-upper margin-start">
+                  {{ 'pages.wallet.exchange.sell' | translate }}
+                </ion-label>
+              </ion-row>
+
+              <!-- Available -->
+              <ion-row class="align-center" *ngIf="sell">
+                <ion-col size="5">
+                  <ion-label>
+                    {{ 'pages.wallet.exchange.available' | translate }}
+                  </ion-label>
+                </ion-col>
+                <ion-col size="7">
+                  <app-num-float
+                    [number]="limitSell"
+                    [round]="walletParams.assetsMaxDecimals"
+                    classNbr="margin-start"
+                    [bold]="true"
+                  ></app-num-float>
+                </ion-col>
+              </ion-row>
+
+              <!-- Qantity -->
+              <ion-row>
+                <ion-col size="5" class="center-v">
+                  <ion-label>
+                    {{'pages.wallet.exchange.sell_qant' | translate }}
+                  </ion-label>
+                </ion-col>
+
+                <!-- Input -->
+                <ion-col size="7">
+                  <ion-input click-stop-propagation
+                    type="number"
+                    class="tx-start box-bw-r3-lln pad-5"
+                    formControlName="num_sell_qant"
+                    min="0"
+                    [debounce]="500"
+                    (ionChange)="qantChange( exchangesInput.SELL_QANT )"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+
+              <!-- Conversion -->
+              <ion-row>
+                <ion-col size="5" class="center-v">
+                  <ion-label>
+                    {{'pages.wallet.exchange.sell_conv' | translate }}
+                  </ion-label>
+                </ion-col>
+
+                <!-- Input -->
+                <ion-col size="7">
+                  <ion-input
+                    type="number"
+                    [class]="'tx-start pad-5 ' + ( conversionDisabled ? 'bold-6 transparent' : 'box-bw-r3-lln' )"
+                    formControlName="num_sell_conv"
+                    min="0"
+                    [debounce]="500"
+                    (ionChange)="qantChange( exchangesInput.SELL_CONV )"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="12" size-sm="3" class="center-v">
+              <ion-row class="align-center" *ngIf="exchangeType != exchangeTypes.BUY">
+                <!-- Loading Market Price of Selected Assets -->
+                <app-loading [isLoading]="mktPrice.isLoading" message="common.labelLoading"></app-loading>
+
+                <ng-container *ngIf="!mktPrice.isLoading && mktPrice.price_selling && mktPrice.price_buying">
+                  <!-- Option to Take Price From Market -->
+                  <ion-checkbox #chkPrice class="center-v"
+                    [(ngModel)]="useMarketPrice"
+                    (ionChange)="OnMarketPriceChecked()"
+                    [ngModelOptions]="{standalone: true}"
+                  ></ion-checkbox>
+                  <ion-label class="center-v pointer marg-s" (click)="chkPrice.checked = !chkPrice.checked">
+                    {{ 'pages.wallet.exchange.market-price' | translate }}
+                  </ion-label>
+                </ng-container>
+
+                <!-- Switch Assets -->
+                <ion-button icon-only class="no-padding marg-s marg-e" (click)="switchAssets()">
+                  <ion-icon class="font-40" src="assets/icon/svg/switch.svg"></ion-icon>
+                </ion-button>
+              </ion-row>
+            </ion-col>
+
+            <!-- Asset Buying -->
+            <ion-col size="12" size-sm="4.5" class="center-v">
+              <!-- Asset Icon -->
+              <ion-row class="align-center">
+                <ion-avatar class="abicon-40 pointer" (click)="selectAsset( $event, false )">
+                  <ion-img [src]="assetSvc.getImg( buy?.currency )"></ion-img>
+                </ion-avatar>
+              </ion-row>
+
+              <!-- Label -->
+              <ion-row class="align-center marg-t10">
+                <ion-label class="bold-6 tx-upper margin-start margin-bottom">
+                  {{ 'pages.wallet.exchange.buy' | translate }}
+                </ion-label>
+              </ion-row>
+
+              <!-- Available -->
+              <ion-row class="align-center">
+                <ion-col size="5">
+                  <ion-label class="tx-transp">
+                    {{ 'pages.wallet.exchange.available' | translate }}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <!-- Qantity -->
+              <ion-row>
+                <ion-col size="5" class="center-v">
+                  <ion-label>
+                    {{'pages.wallet.exchange.buy_qant' | translate }}
+                  </ion-label>
+                </ion-col>
+
+                <!-- Input -->
+                <ion-col size="7">
+                  <ion-input click-stop-propagation
+                    type="number"
+                    class="tx-start box-bw-r3-lln pad-5"
+                    formControlName="num_buy_qant"
+                    min="0"
+                    [debounce]="500"
+                    (ionChange)="qantChange( exchangesInput.BUY_QANT )"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+
+              <!-- Conversion -->
+              <ion-row>
+                <ion-col size="5" class="center-v">
+                  <ion-label>
+                    {{'pages.wallet.exchange.buy_conv' | translate }}
+                  </ion-label>
+                </ion-col>
+
+                <!-- Input -->
+                <ion-col size="7">
+                  <ion-input click-stop-propagation
+                    type="number"
+                    [class]="'tx-start pad-5 ' + ( conversionDisabled ? 'bold-6 transparent' : 'box-bw-r3-lln' )"
+                    formControlName="num_buy_conv"
+                    min="0"
+                    [debounce]="500"
+                    (ionChange)="qantChange( exchangesInput.BUY_CONV )"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-col>
           </ion-row>
-        </ion-card>
-
-        <!-- Minner's Fee -->
-        <ion-row class="minners-fee" *ngIf="minnersFee">
-          <ion-col size="6">
-            <ion-label>{{ 'pages.wallet.exchange.minnersFee' | translate }}</ion-label>
-          </ion-col>
-          <ion-col size="6" class="tx-end">
-            <ion-label class="hint">{{ minnersFee + ' Lumens' }}</ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+          
+          <!-- Minner's Fee -->
+          <ion-row class="minners-fee" *ngIf="walletParams.minnersFee">
+            <ion-col size="6">
+              <ion-label>{{ 'pages.wallet.exchange.minnersFee' | translate }}</ion-label>
+            </ion-col>
+            <ion-col size="6" class="tx-end">
+              <ion-label class="hint">{{ walletParams.minnersFee + ' Lumens' }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
     </form>
-  </ion-content>
+  </div>
 
   <!-- Button Exchange -->
   <ion-footer no-border>
     <ion-toolbar class="tx-center">
-      <ion-button (click)="exchange()">{{ 'pages.wallet.exchange.' + exchangeType | translate }}</ion-button>
+      <ion-button
+        fill="transparent"
+        class="br-rad-30 br-ln-2 marg-e20"
+        (click)="dismiss()"
+        *ngIf="OnDismiss"
+      >
+        {{ 'common.buttons.cancel' | translate }}
+      </ion-button>
+      <ion-button class="br-rad-30" (click)="exchange()">
+        {{ 'pages.wallet.exchange.' + exchangeType | translate }}
+      </ion-button>
     </ion-toolbar>
   </ion-footer>
-</div>
