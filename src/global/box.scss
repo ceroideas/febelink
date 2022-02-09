@@ -1,0 +1,11 @@
+.transparent {
+    background: transparent;
+    border: solid 0px;
+}
+
+/* box-background-radius-line */
+.box-bw-r3-lln {
+    background: white;
+    border: var(--color_line) solid;
+    border-radius: 3px;
+}
