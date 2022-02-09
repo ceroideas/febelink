@@ -445,12 +445,14 @@
         "select-origin": "Seleccionar Moneda Origen",
         "select-destiny": "Seleccionar Moneda Destino",
 
-        "qOffer": "Cantidad",
-        "qDemand": "Cantidad",
+        "sell_qant": "Cantidad",
+        "sell_conv": "Conversion",
+        "buy_qant": "Cantidad",
+        "buy_conv": "Conversion",
 
-        "create": "Crear Transacción",
-        "edit": "Editar Transacción",
-        "purchase": "Confirmar Transacción",
+        "create": "Ofertar",
+        "edit": "Editar",
+        "purchase": "Confirmar",
 
         "sell": "Vendes",
         "buy": "Recibes",
@@ -458,13 +460,21 @@
         "cant-switch": "Al haber seleccionado una oferta no puede hacer switch con los assets",
         "exceeds-sell": "La oferta no puede exceder la cantidad de venta",
         "exceeds-buy": "La oferta no puede exceder la cantidad de compra"
+
+        , "market-price": "Usar Precio de Mercado"
+        , "available": "Dispones: "
+
+        , "title": {
+            "exchange": "Exchange"
+          , "offer": "Oferta Edita - "
+        }
       },
 
       "error": {
-        "missing-origin": "Debe seleccionar la Moneda Origen",
-        "missing-destiny": "Debe seleccionar la Moneda Destino",
-        "qOffer": "Indique la cant de Moneda a Cambiar",
-        "qDemand": "Indique la cant de Moneda a Recibir",
+        "missing-sell": "Debe seleccionar la Moneda a Vender",
+        "missing-buy": "Debe seleccionar la Moneda a Comprar",
+        "sell_qant": "Indique la cant de Moneda a Cambiar",
+        "buy_qant": "Indique la cant de Moneda a Recibir",
         "qSend": "Indique la cant de Moneda a Enviar",
         "minSend": "No puede enviar mas Tokens de los que posee",
         "public-key": "Debe indicar la Clave Pública de la Wallet a enviar",
