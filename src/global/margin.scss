@@ -1,14 +1,14 @@
-.margin {
+.margin, .marg, .marg-10 {
     margin: 10px;
     --margin-top: 10px;
     --margin-end: 10px;
     --margin-bottom: 10px;
     --margin-left: 10px;
 }
-.margin-top { margin-top: 10px; --margin-top: 10px; }
-.margin-end { margin-right: 10px; --margin-end: 10px; }
-.margin-bottom { margin-bottom: 10px; --margin-bottom: 10px; }
-.margin-start { margin-left: 10px; --margin-left: 10px; }
+.margin-top, .marg-t, .marg-t10 { margin-top: 10px; --margin-top: 10px; }
+.margin-end, .marg-e, .marg-e10 { margin-right: 10px; --margin-end: 10px; }
+.margin-bottom, .marg-b, .marg-b10 { margin-bottom: 10px; --margin-bottom: 10px; }
+.margin-start, .marg-s, .marg-s10 { margin-left: 10px; --margin-left: 10px; }
 
 .no-margin {
     margin: 0px;
