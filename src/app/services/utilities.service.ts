@@ -250,9 +250,10 @@ export class UtilitiesService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  updateWebFavicon(icon:string){
-    const favIcon: HTMLLinkElement = document.querySelector('#favicon');
+  updateWebFavicon(icon:string, el: string | number = '32'){
+    const favIcon: HTMLLinkElement = document.querySelector('#favicon' + el );
     favIcon.href = `assets/icon/${icon}.png`;
+    return this;
   }
 
   updateWebTitle(title:string){

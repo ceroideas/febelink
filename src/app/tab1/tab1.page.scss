@@ -42,7 +42,7 @@ ion-content {
     --placeholder-color: white;
   }
 
-  h2 {
+  h1 {
     text-align: center;
   }
 
@@ -173,4 +173,8 @@ ion-icon {
 
 #registro ion-icon {
   color: white;
+}
+
+.pad-s5 {
+  padding-left: 5px; --padding-start: 5px;
 }
