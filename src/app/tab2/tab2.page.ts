@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, Platform } from '@ionic/angular';
-import { GuidePage } from '../pages/guide/guide.page';
+import { Platform } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
@@ -12,8 +11,6 @@ import { environment } from 'src/environments/environment';
 import { DemandaService } from '../services/demanda.service';
 import { SeoService } from '../services/seo.service';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
-import { ILangDEFAULTS } from '../models/langs.model';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tab2',
@@ -237,7 +234,8 @@ export class Tab2Page {
           // }
           this.utilities.setGuia('other');
         }
-      }
+      } else
+        this.redirLogin();
     });
   }
 
@@ -407,5 +405,17 @@ export class Tab2Page {
 
   async onClickAddToFavorites(demand) {
     this.demanadaSvc.addToFavorites(demand);
+  }
+
+  async redirLogin() {
+    const alert = await this.utilities.showAlert(
+      this.translateService.instant( 'pages.login.title' ),
+      this.translateService.instant( 'pages.login.must' ),
+      '',
+      [{ text: this.translateService.instant( 'common.buttons.got-it' )}]
+    );
+
+    await alert.onDidDismiss();
+    this.irA( 'login' );
   }
 }

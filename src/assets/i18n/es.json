@@ -341,7 +341,8 @@
       "button": "INICIAR SESIÓN",
       "newUser": "¿Nuevo usuario?",
       "register": "Crear cuenta",
-      "loging": "Iniciando sesión...",
+      "logging": "Iniciando sesión...",
+      "must": "Para poder disfrutar de esta sección primero tienes que haber Iniciado Sesión.<br><br>Para continuar, Logueate",
 
       "recover": {
         "title": "Recuperar contraseña",

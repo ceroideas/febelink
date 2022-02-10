@@ -42,6 +42,8 @@ export class UtilitiesService {
     });
 
     await alert.present();
+
+    return alert;
   }
 
    async showLoading(message?: string, duration?: number) {

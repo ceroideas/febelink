@@ -342,6 +342,7 @@
       "newUser": "New user?",
       "register": "Create Account",
       "logging": "Logging in...",
+      "must": "To be able to enjoy this section you must first be logged in.<br><br>To continue, Log in",
 
       "recover": {
         "title": "Recover password",
