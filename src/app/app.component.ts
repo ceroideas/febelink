@@ -285,7 +285,10 @@ export class AppComponent implements OnInit, OnDestroy {
     const options: PushOptions = {
       android: {
         senderID: '41183692404',
-        icon: 'notification',
+        // By default the icon selected is app's icon:
+        // https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/PAYLOAD.md#images
+        // else you can specify by name, refering an icon inside res/drawable folder 
+        // icon: 'notification', // this icon does not exist in drawable folder
       },
       ios: {
         alert: 'true',
