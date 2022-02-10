@@ -1,0 +1,15 @@
+/* Add margin bottom when on page '/menu/' && media <= 768 */
+[data-url*="/menu/"] {
+    #fg_bubble {
+        @media (max-width: 768px) {
+            margin-bottom: 45px !important;
+        }
+    }
+}
+
+/* Add margin bottom when on page '/chat?' */
+[data-url*="/chat?"] {
+    #fg_bubble {
+        margin-bottom: 45px !important;
+    }
+}
