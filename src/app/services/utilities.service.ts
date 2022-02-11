@@ -253,7 +253,7 @@ export class UtilitiesService {
   }
 
   updateWebFavicon(icon:string, el: string | number = '32'){
-    const favIcon: HTMLLinkElement = document.querySelector('#favicon' + el );
+    const favIcon: HTMLLinkElement = document.querySelector('#favicon-' + el );
     favIcon.href = `assets/icon/${icon}.png`;
     return this;
   }
