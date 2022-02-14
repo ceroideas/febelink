@@ -76,34 +76,13 @@
 
                 <!-- Input -->
                 <ion-col size="7">
-                  <ion-input click-stop-propagation
+                  <ion-input click-stop-propagation #numSellQant
                     type="number"
                     class="tx-start box-bw-r3-lln pad-5"
                     formControlName="num_sell_qant"
                     min="0"
                     [debounce]="500"
                     (ionChange)="qantChange( exchangesInput.SELL_QANT )"
-                  ></ion-input>
-                </ion-col>
-              </ion-row>
-
-              <!-- Conversion -->
-              <ion-row>
-                <ion-col size="5" class="center-v">
-                  <ion-label>
-                    {{'pages.wallet.exchange.sell_conv' | translate }}
-                  </ion-label>
-                </ion-col>
-
-                <!-- Input -->
-                <ion-col size="7">
-                  <ion-input
-                    type="number"
-                    [class]="'tx-start pad-5 ' + ( conversionDisabled ? 'bold-6 transparent' : 'box-bw-r3-lln' )"
-                    formControlName="num_sell_conv"
-                    min="0"
-                    [debounce]="500"
-                    (ionChange)="qantChange( exchangesInput.SELL_CONV )"
                   ></ion-input>
                 </ion-col>
               </ion-row>
@@ -131,6 +110,38 @@
                   <ion-icon class="font-40" src="assets/icon/svg/switch.svg"></ion-icon>
                 </ion-button>
               </ion-row>
+
+              <!-- Conversion -->
+              <ng-container *ngIf="numSellQant?.value > 0 && numBuyQant?.value > 0">
+                <!-- Title -->
+                <ion-row class="marg-t10">
+                  <ion-label class="bold-6">
+                    {{'pages.wallet.exchange.buy_conv' | translate }}
+                  </ion-label>
+                </ion-row>
+
+                <ion-row>
+                  <!-- Selling Conversion -->
+                  <ion-col class="tx-center no-padding pad-e-5" size-sm="12" size-md="6" size="6">
+                    <app-num-float
+                      [number]="getConversion( true, +numBuyQant.value, +numSellQant.value )"
+                      [round]="walletParams.assetsMaxDecimals"
+                      classNbr="margin-start"
+                      [bold]="true"
+                    ></app-num-float>
+                  </ion-col>
+  
+                  <!-- Buying Conversion -->
+                  <ion-col class="tx-center no-padding" size-sm="12" size-md="6" size="6">
+                    <app-num-float
+                    [number]="getConversion( false, +numBuyQant.value, +numSellQant.value )"
+                      [round]="walletParams.assetsMaxDecimals"
+                      classNbr="margin-start"
+                      [bold]="true"
+                    ></app-num-float>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
             </ion-col>
 
             <!-- Asset Buying -->
@@ -168,34 +179,13 @@
 
                 <!-- Input -->
                 <ion-col size="7">
-                  <ion-input click-stop-propagation
+                  <ion-input click-stop-propagation #numBuyQant
                     type="number"
                     class="tx-start box-bw-r3-lln pad-5"
                     formControlName="num_buy_qant"
                     min="0"
                     [debounce]="500"
                     (ionChange)="qantChange( exchangesInput.BUY_QANT )"
-                  ></ion-input>
-                </ion-col>
-              </ion-row>
-
-              <!-- Conversion -->
-              <ion-row>
-                <ion-col size="5" class="center-v">
-                  <ion-label>
-                    {{'pages.wallet.exchange.buy_conv' | translate }}
-                  </ion-label>
-                </ion-col>
-
-                <!-- Input -->
-                <ion-col size="7">
-                  <ion-input click-stop-propagation
-                    type="number"
-                    [class]="'tx-start pad-5 ' + ( conversionDisabled ? 'bold-6 transparent' : 'box-bw-r3-lln' )"
-                    formControlName="num_buy_conv"
-                    min="0"
-                    [debounce]="500"
-                    (ionChange)="qantChange( exchangesInput.BUY_CONV )"
                   ></ion-input>
                 </ion-col>
               </ion-row>
