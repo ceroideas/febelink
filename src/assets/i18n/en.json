@@ -467,7 +467,7 @@
         , "available": "Available: "
 
         , "title": {
-            "exchange": "Exchange"
+            "exchange": "Publish Order"
           , "offer": "Offer Edited - "
         }
       },
