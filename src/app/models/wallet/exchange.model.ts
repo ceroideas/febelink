@@ -15,9 +15,9 @@ export enum ExchangeInput {
 
 export interface iExchangeInput {
     sell_qant: string
-  , sell_conv: string
+  , sell_conv: number
   , buy_qant: string
-  , buy_conv: string
+  , buy_conv: number
   
   , is: ExchangeInput
   , maxDecimals: number
