@@ -34,7 +34,6 @@ export class ExchangeComponent implements OnInit, OnChanges {
   
   @Input() useMarketPrice: boolean = false;
   mktPrice: MarketPrice = { isLoading: true };
-  conversionDisabled: boolean;
 
   @Output() OnDismiss: any
   @Output() OnDone: EventEmitter<Object> = new EventEmitter()
@@ -74,7 +73,6 @@ export class ExchangeComponent implements OnInit, OnChanges {
   }
 
   buildForm() {
-    this.conversionDisabled = this.exchangeType == ExchangeType.BUY || this.useMarketPrice;
     const isBuy = this.exchangeType == ExchangeType.BUY;
 
     this.form = this.formBuilder.group({
@@ -82,18 +80,10 @@ export class ExchangeComponent implements OnInit, OnChanges {
           ( this.sell?.amount == 0 ? '' : this.sell?.amount )
           , [ Validators.required ]
         )
-        , num_sell_conv: new FormControl({
-          value: this.sell?.amount == 0 ? '' : ( !isBuy ? 1 : this.offer?.price )
-          , disabled: this.conversionDisabled
-        })
         , num_buy_qant: new FormControl(
           ( this.buy?.amount == 0 ? '' : this.buy?.amount )
           , [ Validators.required ]
         )
-        , num_buy_conv: new FormControl({
-          value: this.buy?.amount == 0 ? '' : ( isBuy ? 1 : this.offer?.price )
-          , disabled: this.conversionDisabled
-        })
     });
   }
 
@@ -243,40 +233,32 @@ export class ExchangeComponent implements OnInit, OnChanges {
 
   OnMarketPriceChecked()
   {
-    this.conversionDisabled = this.useMarketPrice;
-
-    if( this.useMarketPrice ) {
-      this.form.patchValue({ num_sell_conv: this.mktPrice?.price_selling })
-      this.form.patchValue({ num_buy_conv: this.mktPrice?.price_buying })
-      
+    if( this.useMarketPrice )   
       this.qantChange()
-
-      this.form.controls['num_sell_conv'].disable()
-      this.form.controls['num_buy_conv'].disable()
-    } else {
-      this.form.controls['num_sell_conv'].enable()
-      this.form.controls['num_buy_conv'].enable()
-    }
   }
   calcBuy(): number {
     return this.offerSvc.calcBuy( this.offer?.amount, this.offer?.price, this.walletParams.assetsMaxDecimals )
   }
   qantChange( exchangeInput: ExchangeInput = ExchangeInput.SELL_CONV ) {
-    const { num_sell_qant, num_sell_conv, num_buy_qant, num_buy_conv } = this.form.getRawValue();
+    const isBuy = this.exchangeType == ExchangeType.BUY;
+    // Do calculations only if can't alter conversion => using Market Price or isBuy
+    if( !this.useMarketPrice && !isBuy ) return
+
+    const { num_sell_qant, num_buy_qant } = this.form.getRawValue();
     
-    const maxSell = this.exchangeType != ExchangeType.BUY
-      ? undefined
-      : Number.parseFloat( this.offer?.amount )
-    
-    const maxBuy = this.exchangeType != ExchangeType.BUY
+    const maxSell = !isBuy
       ? undefined
       : this.offerSvc.calcBuy( this.offer?.amount, this.offer?.price, this.walletParams.assetsMaxDecimals )
+    
+    const maxBuy = !isBuy
+      ? undefined
+      : Number.parseFloat( this.offer?.amount )
 
     this.exchangeInputSvc.calc({
         sell_qant: num_sell_qant
-      , sell_conv: num_sell_conv
+      , sell_conv: this.getConversion()
       , buy_qant: num_buy_qant
-      , buy_conv: num_buy_conv
+      , buy_conv: this.getConversion( false )
 
       , is: exchangeInput
       , maxDecimals: this.walletParams.assetsMaxDecimals
@@ -284,6 +266,15 @@ export class ExchangeComponent implements OnInit, OnChanges {
       , maxSell: maxSell
       , maxBuy: maxBuy
     }, this.form );
+  }
+
+  getConversion( isSelling: boolean = true, sell?: number, buy?: number ): number {
+    const isBuy = this.exchangeType == ExchangeType.BUY
+    if( !this.useMarketPrice && !isBuy ) return isSelling ? 1 : sell / buy
+
+    return isSelling ?
+      ( !isBuy ? this.mktPrice?.price_selling : +this.offer?.price )
+      :( isBuy ? 1 : this.mktPrice?.price_buying )
   }
 
   async delete() {
