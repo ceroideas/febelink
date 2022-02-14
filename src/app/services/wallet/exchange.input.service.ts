@@ -74,11 +74,11 @@ export class ExchangeInputSvc
         }
         return 0;
     }
-    private math( opposite: string, multiplier: string, divider: string, self: string ): number
+    private math( opposite: string, multiplier: number, divider: number, self: string ): number
     {
         return !opposite || !multiplier || !divider ? Number.parseFloat( self || '0' )
             : Number.parseFloat( opposite )
-            * Number.parseFloat( multiplier )
-            / Number.parseFloat( divider )
+            * multiplier
+            / divider
     }
 }
