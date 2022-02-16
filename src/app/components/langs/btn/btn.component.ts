@@ -13,6 +13,8 @@ import { Storage } from '@ionic/storage';
 export class LangBtnComponent implements OnInit {
   
   @Input() langSelected: ILang;
+  @Input() changeAppLang: boolean = true;
+  @Input() disabled: boolean = true;
   @Output() onLangSelected: EventEmitter<ILang> = new EventEmitter()
 
   constructor(
@@ -30,6 +32,8 @@ export class LangBtnComponent implements OnInit {
    * Select Language
    */
    async selectLang( ev: any ) {
+    if( this.disabled ) return
+    
     const popover = await this.popoverController.create({
       component: LangPopComponent,
       event: ev,
@@ -46,10 +50,12 @@ export class LangBtnComponent implements OnInit {
     
     // Una vez que obtengo el Lang lo asigno
     this.langSelected = data.lang as ILang;
-    this.translateService.setLanguage( this.langSelected.lang );
+    if( this.changeAppLang ) {
+      this.translateService.setLanguage( this.langSelected.lang );
 
-    // Now I save the selection 
-    ILangDEFAULTS.saveLang( this.storage, this.langSelected );
+      // Now I save the selection 
+      ILangDEFAULTS.saveLang( this.storage, this.langSelected );
+    }
 
     // En caso de necesitar en algun momento un callback para saber que lenguaje ha escogido
     this.onLangSelected.emit( this.langSelected );
