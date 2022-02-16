@@ -25,6 +25,9 @@
     "labelNewPass": "Contraseña nueva",
     "labelConfirmNewPass": "Confimar contraseña nueva",
     "labelTitle": "Título",
+    "labelEdited": "Editado",
+    "labelLang": "Idioma",
+    "labelUser": "Usuario",
     "clipboard": "Copiado al Portapapeles",
     "clipboardErr": "Error al copiar al Portapapeles",
     "clipboardNone": "Sin Valores para copiar al Portapapeles",
@@ -169,6 +172,13 @@
 
       "error": {
         "minLength": "Debe detallar con un mínimo de 5 palabras"
+      }
+    }
+
+    , "users": {
+      "no-items": "No hay usuarios con esos datos"
+      , "error": {
+        "list": "Parece que hubo un error al mostrar el listado. Vuelve a intentar"
       }
     }
   },
@@ -502,6 +512,23 @@
       ],
 
       "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
+    }
+    , "posts": {
+      "advises": {
+        "create": {
+          "title": "Titulo"
+          , "subtitle": "Subtitulo"
+          , "summary": "Resumen"
+          , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"
+        }
+        , "share": "Compartir Consejo"
+        , "no-items": "Aun no hay Consejos<br>¿Quieres publicar uno?<br>Clickea aqui"
+        , "no-items-filter": "Aun no hay Consejos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+
+        , "error": {
+          "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
+        }
+      }
     }
   },
   "toast": {

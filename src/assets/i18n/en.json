@@ -25,6 +25,9 @@
     "labelNewPass": "New password",
     "labelConfirmNewPass": "Confirm new password",
     "labelTitle": "Title",
+    "labelEdited": "Edited",
+    "labelLang": "Language",
+    "labelUser": "User",
     "clipboard": "Copied to Clipboard",
     "clipboardErr": "Error on Copy to Clipboard",
     "clipboardNone": "No Valies to Copy to Clipboard",
@@ -169,6 +172,13 @@
 
       "error": {
         "minLength": "You must detail with a minimum of 5 words"
+      }
+    }
+
+    , "users": {
+      "no-items": "There are no users with that data"
+      , "error": {
+        "list": "It looks like there was an error displaying the list. Try again"
       }
     }
   },
@@ -504,6 +514,23 @@
       ],
 
       "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located."
+    }
+    , "posts": {
+      "advises": {
+        "create": {
+          "title": "Title"
+          , "subtitle": "Subtitle"
+          , "summary": "Summary"
+          , "wysiwyg": "Description text text text text text text text text"
+        }
+        , "share": "Share Advise"
+        , "no-items": "There are no Advises yet<br>Would you like to post one?<br>Click here"
+        , "no-items-filter": "There are no Advises yet with these filters<br>Do you want to publish one?<br>Click here"
+
+        , "error": {
+          "search": "There was an error in the search, please try again"
+        }
+      }
     }
   },
   "toast": {
