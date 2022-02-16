@@ -1,12 +1,8 @@
-import { HttpService } from './../../../../services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
 import { ILang } from 'src/app/models/langs.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { ISector, ISubSector } from 'src/app/models/sector.model';
-import { SectorService } from 'src/app/components/sectors/services/sectores.service';
-import { SubsectorService } from 'src/app/services/subsectores.service';
 import { IAdvise } from '../models/advises.model';
 import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../../../../components/file-picker/services/file.service';
