@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{ 'pages.posts.advises.create.title' | translate }}</ion-title>
+
+    <!-- Lang -->
+    <ion-buttons slot="end">
+      <app-lang-btn
+        [langSelected]="langSelected"
+        [changeAppLang]="false"
+        (onLangSelected)="onLangSelected($event)"
+      ></app-lang-btn>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" style="margin: auto;" *ngIf="form">
+    <ion-grid>
+      <!-- Sector | Subsector -->
+      <app-sectors #sectors></app-sectors>
+
+      <!-- Title -->
+      <ion-row>
+        <ion-input 
+          type="text"
+          formControlName="title"
+          [placeholder]="'pages.posts.advises.create.title' | translate"
+          maxlength="50"
+        ></ion-input>
+      </ion-row>
+
+      <!-- Subtitle -->
+      <ion-row>
+        <ion-input
+          type="text"
+          formControlName="subtitle"
+          [placeholder]="'pages.posts.advises.create.subtitle' | translate"
+          maxlength="70"
+        ></ion-input>
+      </ion-row>
+
+      <!-- Summary -->
+      <ion-row>
+        <ion-textarea
+          type="text"
+          formControlName="summary"
+          [placeholder]="'pages.posts.advises.create.summary' | translate"
+          maxlength="100"
+        ></ion-textarea>
+      </ion-row>
+
+      <!-- Image -->
+      <ion-row>
+        <app-file-picker [src]="image" (OnFile)="imgSelected( $event )"></app-file-picker>
+      </ion-row>
+
+      <!-- WYSIWYG -->
+      <ion-row>
+        <app-wysiwyg
+          [placeholder]="'pages.posts.advises.create.wysiwyg' | translate"
+          (OnChange)="wysiwygChange( $event )"
+        ></app-wysiwyg>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar class="tx-center">
+    <!-- Cancel Button -->
+    <ion-button  (click)="cancel()">{{ 'common.buttons.cancel' | translate}}</ion-button>
+
+    <!-- Share Advise Button -->
+    <ion-button  (click)="shareAdvise()">{{ 'pages.posts.advises.share' | translate}}</ion-button>
+  </ion-toolbar>
+</ion-footer>
