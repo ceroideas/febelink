@@ -43,6 +43,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginPageModule } from './pages/login/login.module';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
+// Quill WYSIWYG ( What You See Is What You Get )
+import { QuillModule } from 'ngx-quill'
+
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { PipesModule } from './pipes/pipes.module';
 
@@ -81,6 +84,7 @@ const config: SocketIoConfig = {
         deps: [HttpClient],
       },
     }),
+    QuillModule.forRoot(),
     PipesModule,
   ],
   exports: [
