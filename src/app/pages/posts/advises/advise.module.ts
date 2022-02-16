@@ -10,6 +10,7 @@ import { AdviseCRUDPage } from './advise-crud/advise-crud.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdvisePage } from './advise/advise.page';
 import { AdvisesPage } from './advises/advises.page';
+import { AdviseComponent } from './components/advise/advise.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AdvisesPage } from './advises/advises.page';
       AdvisesPage
     , AdvisePage
     , AdviseCRUDPage
+    , AdviseComponent
   ]
 })
 export class AdvisePageModule {}
