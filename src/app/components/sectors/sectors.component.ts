@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ISector, ISubSector } from 'src/app/models/sector.model';
-import { SubsectorService } from 'src/app/services/subsectores.service';
+import { SubsectorService } from 'src/app/components/sectors/services/subsectores.service';
 import { SectorService } from './services/sectores.service';
 
 @Component({

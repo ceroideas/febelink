@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ISubSector } from '../models/sector.model';
-import { HttpService } from './http.service';
+import { ISubSector } from '../../../models/sector.model';
+import { HttpService } from '../../../services/http.service';
 
 @Injectable({
   providedIn: 'root'
