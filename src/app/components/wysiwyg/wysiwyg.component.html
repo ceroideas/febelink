@@ -1,0 +1,17 @@
+<ion-card>
+  <quill-editor
+    trackChanges="all"
+    [modules]="modules"
+    [placeholder]="placeholder"
+    (onEditorCreated)="created($event)"
+    
+    [styles]="styles" 
+    [readOnly]="readOnly"
+     
+    (onFocus)="focus($event)" 
+    (onEditorChanged)="changedEditor($event)"
+    (onBlur)="blur($event)" 
+  ></quill-editor>
+  <!-- <pre><code>{{ content?.html }}</code></pre>
+  <ion-label [innerHTML]="content?.html"></ion-label> -->
+</ion-card>
