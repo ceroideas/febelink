@@ -1,0 +1,33 @@
+<ion-item
+    tappable
+    lines="none"
+    (click)="userClick()"
+>
+    <ion-avatar slot="start">
+        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo" />
+        <ion-img
+            [src]="user?.logo"
+            *ngIf="user?.logo"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+        ></ion-img>
+    </ion-avatar>
+    <ion-grid>
+        <ion-row>
+            <!-- UserName -->
+            <ion-col [size]="txEnd ? 8 : 12">
+                <ion-label>
+                    {{ user?.name || user?.nick || ( 'common.labelUser' | translate )}} {{ user?.lastName }}
+                    <em class="font-13 hint" *ngIf="subtitle">{{ subtitle }}</em>
+                </ion-label>
+            </ion-col>
+
+            <!-- Text End -->
+            <ion-col [size]="user?.txEnd ? 4 : 0">
+                <ion-label *ngIf="user?.txEnd">
+                    {{ txEnd | translate }}
+                    <em class="font-13 hint" *ngIf="user?.txSubend">{{ txSubEnd }}</em>
+                </ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-item>
