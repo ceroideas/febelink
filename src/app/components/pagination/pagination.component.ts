@@ -46,5 +46,11 @@ export class PaginationComponent implements OnInit, OnChanges {
           this.activePage = pageNumber;  
           this.onPageChange.emit(this.activePage);  
       }  
-  }  
+  }
+
+  update( response ) {
+    this.totalRecords = response?.totalRecords;
+    this.recordsPerPage = response?.limit;
+    this.qPages = response?.qPages;
+  }
 }
