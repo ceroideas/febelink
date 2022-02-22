@@ -9,7 +9,7 @@
   <!-- Ion Img -->
   <ion-img
     [style]="styles || ''"
-    [src]="src"
+    [src]="src || fallback"
     *ngIf="elType == elTypes.ION_IMG"
     [appImgErrorFallback]="fallback"
     [class]="'pointer ' + ( classes || '' )"
