@@ -9,6 +9,7 @@ export class LoadingBLComponent implements OnInit {
 
   @Input() isLoading: boolean;
   @Input() message: string = 'common.searching';
+  @Input() clase: string;
 
   constructor() { }
 
