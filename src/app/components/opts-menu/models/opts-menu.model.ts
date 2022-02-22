@@ -5,4 +5,5 @@ export interface IOptsMenuButton {
     img?: string
 
     click: ( iOptsMenuButton: IOptsMenuButton ) => any
+    preventDismissOnClick?: boolean
 }

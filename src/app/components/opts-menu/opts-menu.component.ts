@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { IOptsMenuButton } from './models/opts-menu.model';
 
 @Component({
@@ -11,8 +12,19 @@ export class OptsMenuComponent implements OnInit {
   @Input() buttons: IOptsMenuButton[]
   @Input() title: string
 
-  constructor() { }
+  constructor(
+    private popCtrl: PopoverController
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log({ buttons: this.buttons })
+  }
 
+  OnClick( btn: IOptsMenuButton )
+  {
+    if( !btn?.preventDismissOnClick )
+      this.popCtrl.dismiss()
+    
+    btn?.click( btn )
+  }
 }
