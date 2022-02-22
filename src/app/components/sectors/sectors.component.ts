@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ISector, ISubSector } from 'src/app/models/sector.model';
 import { SubsectorService } from 'src/app/components/sectors/services/subsectores.service';
 import { SectorService } from './services/sectores.service';
@@ -10,17 +10,23 @@ import { SectorService } from './services/sectores.service';
 })
 export class SectorsComponent implements OnInit
 {
+  @Output() OnSectorChange: EventEmitter<number> = new EventEmitter()
+  @Output() OnSubsectorChange: EventEmitter<number> = new EventEmitter()
+
   sectors: ISector[] = []
   subsectors: ISubSector[] = []
-  sector: ISector
-  subsector: ISubSector
+  sector: number = null
+  subsector: number = null
 
   constructor(
       private sectorSvc: SectorService
     , private subsectorSvc: SubsectorService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.load()
+  }
 
   ionViewDidLeave()
   {
@@ -33,21 +39,42 @@ export class SectorsComponent implements OnInit
       .then( subsectors => this.subsectors = subsectors )
   }
 
-  async onChangeSector( event )
+  set( sector?: number , subsector?: number )
   {
-    this.subsector = null;
-    this.subsectors = [];
-    this.subsectors = await this.subsectorSvc.get(event.detail.value);
-    console.log({ sectors: this.sectors, subsectors: this.subsectors });
+    this.sector = sector || 0
+    this.subsector = subsector || 0
   }
 
-  reset()
+  async onChangeSector( id )
   {
-    this.sectors = []
-    this.sector = null
-    
+    console.log( 'sector changed:' + id )
+    this.sector = id
+    if( this.OnSectorChange ) this.OnSectorChange.emit( id )
+    this.subsector = null
     this.subsectors = []
+    this.subsectors = await this.subsectorSvc.get( id )
+  }
+
+  async onChangeSubsector( id )
+  {
+    console.log( 'subsector changed:' + id )
+    this.subsector = id
+    if( this.OnSubsectorChange ) this.OnSubsectorChange.emit( id )
+  }
+
+  // Remove Selection
+  clear()
+  {
+    this.sector = null
     this.subsector = null
   }
 
+  // Get Lists Again
+  reset()
+  {
+    this.clear()
+    this.sectors = []
+    this.subsectors = []
+    this.load()
+  }
 }
