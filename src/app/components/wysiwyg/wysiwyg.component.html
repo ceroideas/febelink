@@ -1,7 +1,8 @@
-<ion-card>
+<ion-card class="no-margin">
   <quill-editor
     trackChanges="all"
     [modules]="modules"
+    [ngModel]="content?.html || ''"
     [placeholder]="placeholder"
     (onEditorCreated)="created($event)"
     
@@ -10,7 +11,8 @@
      
     (onFocus)="focus($event)" 
     (onEditorChanged)="changedEditor($event)"
-    (onBlur)="blur($event)" 
+    (onBlur)="blur($event)"
+    ngDefaultControl
   ></quill-editor>
   <!-- <pre><code>{{ content?.html }}</code></pre>
   <ion-label [innerHTML]="content?.html"></ion-label> -->
