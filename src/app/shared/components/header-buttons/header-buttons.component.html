@@ -8,73 +8,95 @@
     class="logo"
   />
 
+  <!-- Lang -->
   <app-lang-btn></app-lang-btn>
 
   <ion-buttons>
+    <!-- Token FLAU -->
     <ion-button
-      class="btn-header"
+      class="btn-header bt-br"
       [class]="currentTab == tabs.ICO ? 'active' : ''"
       (click)="irA('/token')"
-    >
-      <img
+    ><div class="grid-rows">
+      <img class="marg-se"
         slot="start"
         density="ldpi"
         src="assets/icon/febicon.png"
         width="20px"
         height="20px"
       />
-      <ion-label class="responsive-max" style="margin-left: 10px">{{
-        'menu.tabs.landingICO' | translate
-      }}</ion-label>
+      <ion-label class="responsive-max tx-cap" style="margin-left: 10px">
+        {{ 'menu.tabs.landingICO' | translate }}
+      </ion-label>
       <ion-label
-        class="responsive-min"
+        class="responsive-min tx-cap"
         style="margin-left: 10px"
         *ngIf="currentTab == tabs.Search"
       >
         {{ 'menu.tabs.token' | translate }}
       </ion-label>
-    </ion-button>
+    </div></ion-button>
 
     <div class="desktop">
+      <!-- Search -->
       <ion-button
         class="btn-header"
         [class]="currentTab == tabs.Search ? 'active' : ''"
         (click)="irA('/menu/todas')"
-      >
-        <ion-icon slot="start" name="search"></ion-icon>
-        <ion-label class="responsive-max">
+      ><div class="grid-rows">
+        <ion-icon class="marg-se" slot="start" name="search"></ion-icon>
+        <ion-label class="responsive-max tx-cap">
           {{ 'menu.tabs.searchEngine' | translate }}
         </ion-label>
-      </ion-button>
+      </div></ion-button>
+
+      <!-- Recommend -->
       <ion-button
         class="btn-header"
         [class]="currentTab == tabs.Recommend ? 'active' : ''"
         (click)="irA('/menu/busquedas')"
-      >
-        <ion-icon slot="start" name="heart"></ion-icon>
-        <ion-label class="responsive-max">
+      ><div class="grid-rows">
+        <ion-icon class="marg-se" slot="start" name="heart"></ion-icon>
+        <ion-label class="responsive-max tx-cap">
           {{ 'menu.tabs.recommend' | translate }}
         </ion-label>
         <!-- <ion-badge color="danger" slot="end">1</ion-badge> -->
-      </ion-button>
+      </div></ion-button>
+
+      <!-- Advises -->
+      <ion-button
+        class="btn-header"
+        [class]="currentTab == tabs.Advises ? 'active' : ''"
+        (click)="irA('/posts/advises')"
+      ><div class="grid-rows">
+        <ion-icon class="marg-se font-30" src="assets/icon/svg/advise.svg" style="margin-top: -5px;"></ion-icon>
+        <ion-label class="responsive-max tx-cap" style="margin-top: -5px;">
+          {{ 'menu.tabs.advises' | translate }}
+        </ion-label>
+      </div></ion-button>
+
+      <!-- Offers -->
       <ion-button
         class="btn-header"
         [class]="currentTab == tabs.Chat ? 'active' : ''"
         (click)="irA('/menu/ofertas')"
-      >
-        <ion-icon slot="start" name="chatbubbles"></ion-icon>
-        <ion-label class="responsive-max">
+      ><div class="grid-rows">
+        <ion-icon class="marg-se" slot="start" name="chatbubbles"></ion-icon>
+        <ion-label class="responsive-max tx-cap">
           {{ 'menu.tabs.chat' | translate }}
         </ion-label>
         <ion-badge color="danger" slot="end" *ngIf="totalUnreadMessages">{{
           totalUnreadMessages
         }}</ion-badge>
-      </ion-button>
+      </div></ion-button>
 
-      <ion-button class="btn-header" (click)="irA('/login')" *ngIf="!perfil">
-        <ion-icon slot="start" name="person"></ion-icon>
-        {{ 'menu.tabs.login' | translate }}
-      </ion-button>
+      <!-- Login -->
+      <ion-button class="btn-header" (click)="irA('/login')" *ngIf="!perfil"><div class="grid-rows">
+        <ion-icon class="marg-se" slot="start" name="person"></ion-icon>
+        <ion-label class="tx-cap">{{ 'menu.tabs.login' | translate }}</ion-label>
+      </div></ion-button>
+
+      <!-- Register -->
       <ion-button
         class="btn-header"
         (click)="irA('/registro')"
@@ -82,20 +104,22 @@
         *ngIf="!perfil"
         fill="solid"
         style="--border-radius: 4px"
-      >
-        <ion-icon slot="start" name="person"></ion-icon>
-        {{ 'menu.tabs.register' | translate }}
-      </ion-button>
+      ><div class="grid-rows">
+        <ion-icon class="marg-se" slot="start" name="person"></ion-icon>
+        <ion-label class="tx-cap">{{ 'menu.tabs.register' | translate }}</ion-label>
+      </div></ion-button>
     </div>
 
-    <ion-button class="btn-header" (click)="shareFebelink($event)">
-      <ion-icon slot="start" name="share-social"></ion-icon>
-      <span class="responsive-max" translate>common.share</span>
-      <span class="responsive-min" translate *ngIf="currentTab == tabs.Search"
+    <!-- Share -->
+    <ion-button class="btn-header" (click)="shareFebelink($event)"><div class="grid-rows">
+      <ion-icon class="marg-se" slot="start" name="share-social"></ion-icon>
+      <span class="responsive-max tx-cap" translate>common.share</span>
+      <span class="responsive-min tx-cap" translate *ngIf="currentTab == tabs.Search"
         >common.share</span
       >
-    </ion-button>
+    </div></ion-button>
 
+    <!-- Notifications -->
     <ion-button class="btn-header" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
       <ion-badge
@@ -107,6 +131,7 @@
       >
     </ion-button>
 
+    <!-- Guide -->
     <ion-button
       size="large"
       color="primary"
