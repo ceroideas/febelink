@@ -82,7 +82,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [class]="'padding-top ' + (!isLoading && iAdvises?.length <= 0 ? 'tx-center' : '' )">
   <!-- Loading -->
   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
@@ -99,9 +99,12 @@
   </ng-container>
 
   <!-- No Items -->
-  <ion-label *ngIf="!isLoading && iAdvises?.length <= 0">
-    {{ 'pages.post.advises.no-items' + ( hasFilters() ? '' : '-filters' ) | translate }}
-  </ion-label>
+  <ion-label
+    class="hint pointer"
+    *ngIf="!isLoading && iAdvises?.length <= 0"
+    (click)="createPost()"
+    [innerHTML]="'pages.posts.advises.error.no-items' + ( !hasFilters() ? '' : '-filters' ) | translate"
+  ></ion-label>
 </ion-content>
 
 <ion-footer

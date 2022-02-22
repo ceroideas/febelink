@@ -1,7 +1,7 @@
 <!-- Title -->
 <ion-item *ngIf="title"><ion-title>{{ title | translate }}</ion-title></ion-item>
 
-<ion-item *ngFor="let btn of buttons" (click)="OnClick( btn )">
+<ion-item class="pointer" *ngFor="let btn of buttons" (click)="OnClick( btn )">
   <ion-icon [name]="btn?.icon" *ngIf="btn.icon"></ion-icon>
   <ion-img *ngIf="btn?.img" [src]="btn?.img"
     appImgErrorFallback="https://api.febelink.com/storage/users/default.png"

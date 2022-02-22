@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [class]="'padding-top ' + (!isLoading && !iAdvise ? 'tx-center' : '' )">
   <!-- Loading -->
   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
@@ -21,9 +21,12 @@
     [showOpts]="true"
     [showContent]="true"
   ></app-post-component>
-
+  
   <!-- No Items -->
-  <ion-label *ngIf="!isLoading && !iAdvise" (click)="newOne()">
-    {{ 'pages.post.advises.no-item' | translate }}
-  </ion-label>
+  <ion-label
+    class="hint pointer"
+    *ngIf="!isLoading && !iAdvise"
+    (click)="newOne()"
+    [innerHTML]="'pages.posts.advises.error.no-item' | translate"
+  ></ion-label>
 </ion-content>

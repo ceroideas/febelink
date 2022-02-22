@@ -3,44 +3,44 @@
     <!-- Ract -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="react()">
       <ion-row class="align-center vertical-content">
-        <ion-icon class="font-30"
+        <ion-icon class="font-30 pointer"
           [src]="'assets/icon/svg/react' + ( !this.post?.reacted ? '' : 'ed' ) + '.svg'"
         ></ion-icon>
-        <ion-label class="marg-s5" *ngIf="post?.react_qant > 0">{{ post?.react_qant }}</ion-label>
+        <ion-label class="marg-s5 pointer" *ngIf="post?.react_qant > 0">{{ post?.react_qant }}</ion-label>
       </ion-row>
       <ion-row class="align-center">
-        <ion-label class="font-14">{{ 'pages.posts.react' | translate }}</ion-label>
+        <ion-label class="font-14 pointer">{{ 'pages.posts.react' | translate }}</ion-label>
       </ion-row>
     </ion-col>
 
     <!-- Share -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="share( $event )">
       <ion-row class="align-center vertical-content">
-        <ion-icon name="share-social" class="marg-t5 marg-b5 font-20"></ion-icon>
-        <ion-label class="marg-s5" *ngIf="post?.shared > 0">{{ post?.shared }}</ion-label>
+        <ion-icon name="share-social" class="marg-t5 marg-b5 font-20 pointer"></ion-icon>
+        <ion-label class="marg-s5 pointer" *ngIf="post?.shared > 0">{{ post?.shared }}</ion-label>
       </ion-row>
       <ion-row class="align-center">
-        <ion-label class="font-14">{{ 'common.share' | translate }}</ion-label>
+        <ion-label class="font-14 pointer">{{ 'common.share' | translate }}</ion-label>
       </ion-row>
     </ion-col>
 
     <!-- Chat -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="chat()" *ngIf="showChat">
       <ion-row class="align-center">
-        <ion-icon name="chatbubbles" class="marg-t5 marg-b5 font-20"></ion-icon>
+        <ion-icon name="chatbubbles" class="marg-t5 marg-b5 font-20 pointer"></ion-icon>
       </ion-row>
       <ion-row class="align-center">
-        <ion-label class="font-14">{{ 'menu.tabs.chat' | translate }}</ion-label>
+        <ion-label class="font-14 pointer">{{ 'menu.tabs.chat' | translate }}</ion-label>
       </ion-row>
     </ion-col>
 
     <!-- See Post -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="watch()" *ngIf="showSeePost">
       <ion-row class="align-center">
-        <ion-icon class="font-30" src="assets/icon/svg/see_post.svg"></ion-icon>
+        <ion-icon class="font-30 pointer" src="assets/icon/svg/see_post.svg"></ion-icon>
       </ion-row>
       <ion-row class="align-center">
-        <ion-label class="font-14">{{ 'pages.posts.see' | translate }}</ion-label>
+        <ion-label class="font-14 pointer">{{ 'pages.posts.see' | translate }}</ion-label>
       </ion-row>
     </ion-col>
   </ion-row>
