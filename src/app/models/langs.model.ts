@@ -18,12 +18,22 @@ export interface ILang {
   shortCode: string;
 }
 
+export function getLangParam( id: number | string ) {
+  switch( +id ) {
+    case 2:
+      return ILangDEFAULTS.enUK
+    case 1:
+    default:
+      return ILangDEFAULTS.spSP
+  }
+}
+
 /**
  * Default Languages
  */
  export abstract class ILangDEFAULTS {
-    static spSP: ILang = { id: 0, language: 'Español', lang: 'es', country: 'es', flag: 'Flag_SP', shortCode: 'ES-ES' };
-    static enUK: ILang = { id: 1, language: 'English', lang: 'en', country: 'uk', flag: 'Flag_UK', shortCode: 'EN-UK' };
+    static spSP: ILang = { id: 1, language: 'Español', lang: 'es', country: 'es', flag: 'Flag_SP', shortCode: 'ES-ES' };
+    static enUK: ILang = { id: 2, language: 'English', lang: 'en', country: 'uk', flag: 'Flag_UK', shortCode: 'EN-UK' };
     static key: string = "lang";
 
     static getLangs() : Array<ILang> {
