@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IUserItem } from '../models/user-item.model';
 
 @Component({
@@ -13,11 +14,13 @@ export class UserItemComponent implements OnInit {
   @Input() subtitle: string;
   @Input() txEnd: string;
   @Input() txSubEnd: string;
+  @Input() clase: string;
   @Input() OnClickShowProfile: boolean = false;
   @Output() onUserClick: EventEmitter<IUserItem> = new EventEmitter()
 
   constructor(
-    private router: Router
+      private router: Router
+    , private sessionSvc: UserSessionSvc
   ) {}
 
   async ngOnInit() {}
@@ -27,13 +30,14 @@ export class UserItemComponent implements OnInit {
     this.onUserClick.emit( this.user );
   }
   
-  public goToProfile(): void {
-    this.router.navigate([ 'perfil/' + this.user.id ], {
-      queryParams: {
-        id_perfil: this.user.id
-        , contacto: false
-      },
-    });
+  public async goToProfile() {
+    if( await this.sessionSvc.checkLogged() )
+      this.router.navigate([ 'perfil/' + this.user.id ], {
+        queryParams: {
+          id_perfil: this.user.id
+          , contacto: false
+        },
+      });
   }
 
   filterUsers() {
