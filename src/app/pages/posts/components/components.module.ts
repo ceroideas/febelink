@@ -1,0 +1,38 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AdvisePageRoutingModule } from '../advises/advise-routing.module';
+
+import { PostBottomBarComponent } from './bottom-bar.component/bottom-bar.component';
+import { PostComponent } from './post/post.component';
+
+@NgModule({
+    imports: [
+        CommonModule
+      , IonicModule
+      , TranslateModule.forChild()
+      , FormsModule
+      , ReactiveFormsModule
+      , AdvisePageRoutingModule
+      , SharedModule
+    ],
+    exports: [
+        CommonModule
+      , IonicModule
+      , FormsModule
+      , ReactiveFormsModule
+      , AdvisePageRoutingModule
+      , SharedModule
+
+      , PostBottomBarComponent
+      , PostComponent
+    ],
+    declarations: [
+        PostBottomBarComponent
+      , PostComponent
+    ],
+  })
+  export class PostComponentsModule { }
