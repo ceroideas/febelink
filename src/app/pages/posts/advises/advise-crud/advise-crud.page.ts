@@ -187,8 +187,8 @@ export class AdviseCRUDPage implements OnInit {
 
     if( error )
       this.toastSvc.show( error.msg || error.message || 'An error ocurred on creating post' )
-    /* else
-      this.askNew() */
+    else
+      this.askNew()
   }
 
   askNew()
