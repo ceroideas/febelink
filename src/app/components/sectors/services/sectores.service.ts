@@ -27,7 +27,7 @@ export class SectorService
                     id: 0,
                     nombre: 'Todas',
                 }
-                , ...( await this.httpSvc.get( 'sectores' )).response
+                , ...( await ( await this.httpSvc.get( 'sectores' )).toPromise()).response
             ];
 
         return this.list;
