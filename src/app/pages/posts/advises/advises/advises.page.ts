@@ -95,7 +95,7 @@ export class AdvisesPage implements OnInit
     return filters;
   }
   hasFilters(): boolean {
-    return !( this.sectors.sector && !this.sectors.subsector && !this.user?.user )
+    return !( !this.filter && !this.sectors.sector && !this.sectors.subsector && !this.user?.user )
   }
 
   async createPost()
