@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { getLangParam, ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { LangPopComponent } from '../popover/pop.component';
 import { Storage } from '@ionic/storage';
@@ -13,8 +13,9 @@ import { Storage } from '@ionic/storage';
 export class LangBtnComponent implements OnInit {
   
   @Input() langSelected: ILang;
+  @Input() langIdSelected: number
   @Input() changeAppLang: boolean = true;
-  @Input() disabled: boolean = true;
+  @Input() disabled: boolean = false;
   @Output() onLangSelected: EventEmitter<ILang> = new EventEmitter()
 
   constructor(
@@ -23,8 +24,20 @@ export class LangBtnComponent implements OnInit {
     private translateService: TranslateConfigService ) { }
 
   async ngOnInit() {
-    this.langSelected = /* this.langSelected ? this.langSelected : */
-        <ILang> await ILangDEFAULTS.getCurrentLang( this.translateService );
+    this.langSelected = await this.getLang();
+  }
+
+  ngOnChanges( changes: SimpleChanges ): void {
+    if ( 'langIdSelected' in changes) {
+      this.langIdSelected = changes.langIdSelected.currentValue
+      this.langSelected = getLangParam( this.langIdSelected ) || this.langSelected
+    }
+  }
+
+  async getLang(): Promise<ILang>
+  {
+    return this.langSelected ? this.langSelected :
+      <ILang> await ILangDEFAULTS.getCurrentLang( this.translateService );
   }
 
 
@@ -59,5 +72,10 @@ export class LangBtnComponent implements OnInit {
 
     // En caso de necesitar en algun momento un callback para saber que lenguaje ha escogido
     this.onLangSelected.emit( this.langSelected );
+  }
+
+  async id(): Promise<number>
+  {
+    return (await this.getLang() )?.id || 1
   }
 }
