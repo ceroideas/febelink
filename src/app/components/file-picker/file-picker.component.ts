@@ -10,8 +10,8 @@ import { FileService } from './services/file.service';
 })
 export class FilePickerComponent implements OnInit {
 
-  @Input() src: string | ArrayBuffer = ''
-  @Input() fallback: string = 'assets/imgs/photo.png'
+  @Input() src: string | ArrayBuffer
+  @Input() fallback: string = 'assets/icon/svg/nopic.svg'
   @Input() height: string = '100%'
   @Input() width: string = '100%'
   @Input() maxSize: number = 307200
