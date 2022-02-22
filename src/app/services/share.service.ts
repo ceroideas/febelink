@@ -56,7 +56,6 @@ export class ShareService
         await popover.present();
 
         const { data } = await popover.onDidDismiss();
-        console.log({ data })
         return data?.shared;
     }
 

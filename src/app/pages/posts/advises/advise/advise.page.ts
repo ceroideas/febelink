@@ -46,7 +46,6 @@ export class AdvisePage implements OnInit {
       return
     }
 
-    console.log({ response })
     this.iAdvise = response
 
     this.isLoading = false;

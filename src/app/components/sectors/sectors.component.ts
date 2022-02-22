@@ -47,7 +47,6 @@ export class SectorsComponent implements OnInit
 
   async onChangeSector( id )
   {
-    console.log( 'sector changed:' + id )
     this.sector = id
     if( this.OnSectorChange ) this.OnSectorChange.emit( id )
     this.subsector = null
@@ -57,7 +56,6 @@ export class SectorsComponent implements OnInit
 
   async onChangeSubsector( id )
   {
-    console.log( 'subsector changed:' + id )
     this.subsector = id
     if( this.OnSubsectorChange ) this.OnSubsectorChange.emit( id )
   }

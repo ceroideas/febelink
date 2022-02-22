@@ -62,7 +62,6 @@ export class AdviseCRUDPage implements OnInit {
     this.id = id
     const { response, error } = await this.adviseSvc.get( id )
     this.iAdvise = response
-    console.log({ id: id, advise: this.iAdvise, response })
     if( error || !this.iAdvise ) {
       this.kickOff()
       return

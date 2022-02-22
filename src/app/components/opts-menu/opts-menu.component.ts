@@ -16,9 +16,7 @@ export class OptsMenuComponent implements OnInit {
     private popCtrl: PopoverController
   ) { }
 
-  ngOnInit() {
-    console.log({ buttons: this.buttons })
-  }
+  ngOnInit() {}
 
   OnClick( btn: IOptsMenuButton )
   {
