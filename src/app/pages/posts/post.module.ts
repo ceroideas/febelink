@@ -8,6 +8,7 @@ import { PostPageRoutingModule } from './post-routing.module';
 
 import { PostPage } from './post.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PostComponentsModule } from './components/components.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     , IonicModule
     , PostPageRoutingModule
     , SharedModule
+    , PostComponentsModule
   ],
   declarations: [
       PostPage
