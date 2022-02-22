@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PostPage } from './post.page';
-
 const routes: Routes = [
-  { path: '', redirectTo: 'menu/todas', pathMatch: 'full' },
+  { path: '', redirectTo: 'advises', pathMatch: 'full' },
 
   /* Advises List */
   {
