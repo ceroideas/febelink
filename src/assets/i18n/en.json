@@ -555,13 +555,13 @@
           , "msg": "Are you sure you want to delete this advise?"
         }
         , "share": "Share Advise"
-        , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
-        , "no-items": "There are no Advises yet<br>Would you like to post one?<br>Click here"
-        , "no-items-filter": "There are no Advises yet with these filters<br>Do you want to publish one?<br>Click here"
 
         , "error": {
           "search": "There was an error in the search, please try again"
           , "unauthorized": "You do not have permission to edit this Advise"
+          , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
+          , "no-items": "There are no Advises yet<br>Would you like to post one?<br>Click here"
+          , "no-items-filters": "There are no Advises yet with these filters<br>Do you want to publish one?<br>Click here"  
         }
       }
     }

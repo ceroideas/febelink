@@ -553,13 +553,13 @@
           , "msg": "¿Estás seguro de querer eliminar este consejo?"
         }
         , "share": "Compartir Consejo"
-        , "no-item": "Ups, parece que este consejo no exists<br>¿Quieres publicar uno?<br>Clickea aqui"
-        , "no-items": "Aun no hay Consejos<br>¿Quieres publicar uno?<br>Clickea aqui"
-        , "no-items-filter": "Aun no hay Consejos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
 
         , "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
           , "unauthorized": "No tienes permiso para editar este Consejo"
+          , "no-item": "Ups, parece que este consejo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items": "Aun no hay Consejos<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items-filters": "Aun no hay Consejos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
         }
       }
     }
