@@ -1,53 +1,29 @@
-<ion-grid class="box-bw-r1-lln pad-5">
-  <ion-row>
-    <ion-col size="10">
-      <!-- Post Owner User -->
-      <app-user-item
-        [user]="iAdvise"
-        [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.Date"
-        [OnClickShowProfile]="true"
-      ></app-user-item>
-    </ion-col>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/posts/advises"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'pages.posts.advises.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <app-lang-btn [langIdSelected]="iAdvise?.lang" [disabled]="true"></app-lang-btn>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-    <ion-col size="2">
-      <!-- Post Language -->
-      <ion-row>
-        <app-lang-btn [langSelected]="iAdvise" [disabled]="true"></app-lang-btn>
-      </ion-row>
+<ion-content>
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
-      <!-- Options Menu -->
-      <ion-row>
-        <ion-button icon-only class="no-padding marg-s marg-e">
-          <ion-icon class="font-40" src="assets/icon/svg/options.svg"></ion-icon>
-        </ion-button>
-      </ion-row>
+  <app-post-component
+    *ngIf="!isLoading && iAdvise"
+    [id]="id"
+    [iAdvise]="iAdvise"
+    [showOpts]="true"
+    [showContent]="true"
+  ></app-post-component>
 
-      <!-- If has Edited The Post -->
-      <ion-row>
-        <ion-label class="hint" *ngIf="iAdvise.updated_at">
-          {{ 'common.labelEdited' | translate }}
-        </ion-label>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-
-  <!-- Sector > Subsector -->
-  <ion-row class="marg-t5">
-    <ion-label>{{ iAdvise.sector }}</ion-label>
-    <ion-label *ngIf="iAdvise.subsector">{{ ' > ' + iAdvise.subsector }}</ion-label>
-  </ion-row>
-
-  <!-- Title -->
-  <ion-row class="marg-t5 one-line"><h2>{{ iAdvise.title }}</h2></ion-row>
-
-  <!-- Subitle -->
-  <ion-row class="marg-t5 one-line"><h3>{{ iAdvise.subtitle }}</h3></ion-row>
-
-  <!-- Summary -->
-  <ion-row class="marg-t5 lines-2"><ion-label>{{ iAdvise.summary }}</ion-label></ion-row>
-
-  <!-- Image -->
-  <ion-row class="marg-t5 lines-2" *ngIf="iAdvise.photo">
-    <ion-img [src]="iAdvise.photo"></ion-img>
-  </ion-row>
-</ion-grid>
+  <!-- No Items -->
+  <ion-label *ngIf="!isLoading && !iAdvise" (click)="newOne()">
+    {{ 'pages.post.advises.no-item' | translate }}
+  </ion-label>
+</ion-content>

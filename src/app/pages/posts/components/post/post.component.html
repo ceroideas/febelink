@@ -1,0 +1,78 @@
+<div class="marg-se max-w600">
+  <ion-grid class="box-bw-r1-lln margin-5 no-padding">
+    <ion-row class="marg-s10 marg-e10">
+      <ion-col size="10" class="no-padding">
+        <!-- Post Owner User -->
+        <app-user-item
+          class="no-padding"
+          [user]="iAdvise"
+          [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.TimeDate"
+          [OnClickShowProfile]="true"
+        ></app-user-item>
+      </ion-col>
+  
+      <ion-col size="2" class="no-padding">
+        <!-- Post Language -->
+        <ion-row class="align-end" *ngIf="showLang">
+          <app-lang-btn [langIdSelected]="iAdvise?.lang" [disabled]="true"></app-lang-btn>
+        </ion-row>
+        
+        <!-- Options Menu -->
+        <ion-row class="align-end" *ngIf="showOpts">
+          <ion-button icon-only color="transparent"
+            class="no-padding no-shadow no-margin"
+            (click)="options( $event )"
+          >
+            <ion-icon class="font-30" src="assets/icon/svg/options.svg"></ion-icon>
+          </ion-button>
+        </ion-row>
+  
+        <ion-row class="align-end">
+          <!-- If has Edited The Post -->
+          <ion-label class="hint font-13" *ngIf="iAdvise.created_at != iAdvise.updated_at">
+            {{ 'common.labelEdited' | translate }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Sector > Subsector -->
+    <ion-row class="marg-s10 marg-e10">
+      <ion-label color="febelink" class="font-14">{{ iAdvise.sector }}</ion-label>
+      <ion-label color="febelink" class="font-14 marg-s10 marg-e10" *ngIf="iAdvise.subsector" >></ion-label>
+      <ion-label color="febelink" class="font-14" *ngIf="iAdvise.subsector">{{ iAdvise.subsector }}</ion-label>
+    </ion-row>
+  
+    <!-- Title -->
+    <ion-row class="one-line marg-t5 marg-s10 marg-e10">
+      <h2 class="no-margin bold-6 font-18">{{ iAdvise.title }}</h2>
+    </ion-row>
+  
+    <!-- Subitle -->
+    <ion-row class="one-line marg-t5 marg-s10 marg-e10">
+      <h3 class="no-margin font-16" [innerHTML]="iAdvise.subtitle"></h3>
+    </ion-row>
+  
+    <!-- Summary -->
+    <ion-row class="lines-2 marg-t5 marg-s10 marg-e10">
+      <ion-label class="hint" [innerHTML]="iAdvise.summary"></ion-label>
+    </ion-row>
+  
+    <!-- Image -->
+    <ion-row class="marg-t10" *ngIf="iAdvise.photo">
+      <ion-img [src]="iAdvise.photo"></ion-img>
+    </ion-row>
+  
+    <!-- Content -->
+    <ion-row class="marg-10" *ngIf="showContent">
+      <ion-label [innerHTML]="iAdvise.content"></ion-label>
+    </ion-row>
+    
+    <app-post-bottom-bar-component
+      [id]="id"
+      [post]="iAdvise"
+      [showSeePost]="showSeePost"
+    ></app-post-bottom-bar-component>
+  </ion-grid>
+</div>
+  
