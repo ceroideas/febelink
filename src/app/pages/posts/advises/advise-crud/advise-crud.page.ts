@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
-import { ILang } from 'src/app/models/langs.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
-import { IAdvise } from '../models/advises.model';
-import { ActivatedRoute } from '@angular/router';
+import { IAdviseFull } from '../models/advises.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../../components/file-picker/services/file.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { AdviseService } from '../services/advises.service';
 import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
+import { AlertSvc } from 'src/app/services/alert.service';
+import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
+import { LoadingSvc } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -18,16 +19,16 @@ import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
 export class AdviseCRUDPage implements OnInit {
 
   @ViewChild( "sectors" ) sectors: SectorsComponent
+  @ViewChild( "lang" ) lang: LangBtnComponent
   
   isLoading: boolean = false
-  
-  langSelected: ILang
 
   form: FormGroup
   image: string | ArrayBuffer
-  content: iWYSIWYG
+  content: iWYSIWYG = {}
 
-  iAdvise: IAdvise
+  id: number
+  iAdvise: IAdviseFull
 
   paramsQuery: any
   paramsUrl: any
@@ -35,11 +36,13 @@ export class AdviseCRUDPage implements OnInit {
   constructor(
       private formBuilder: FormBuilder
     , public mediaSvc: FileService
-    , private location: Location
     , private actRoute: ActivatedRoute
+    , private router: Router
     , private adviseSvc: AdviseService
     , private toastSvc: ToastSvc
-  ) { }
+    , private alertSvc: AlertSvc
+    , private loadingSvc: LoadingSvc
+  ) {}
 
   async ngOnInit()
   {
@@ -56,21 +59,16 @@ export class AdviseCRUDPage implements OnInit {
   async getPost( id: number ) {
     this.isLoading = true;
 
+    this.id = id
     const { response, error } = await this.adviseSvc.get( id )
-    if( error ) {
-      this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' )
+    this.iAdvise = response
+    console.log({ id: id, advise: this.iAdvise, response })
+    if( error || !this.iAdvise ) {
+      this.kickOff()
       return
     }
 
-    console.log({ id: id, advise: this.iAdvise, response })
-    this.iAdvise = response
-    if( !this.iAdvise ) return
-
-    // If is editing Post, update form with current values
-    this.buildForm()
-    this.image = this.iAdvise.photo
-    this.content.html = this.iAdvise.content
-
+    this.updateForm()
     this.isLoading = false;
   }
 
@@ -84,17 +82,32 @@ export class AdviseCRUDPage implements OnInit {
     const disabled = this.paramsUrl?.id && this.isLoading;
 
     this.form = this.formBuilder.group({
-      sector: new FormControl({ value: this.iAdvise?.id_sector || 0, disabled: disabled }, Validators.required ),
-      subsector: new FormControl({ value: this.iAdvise?.id_subsector || 0, disabled: disabled }, Validators.required ),
       title: new FormControl({ value: this.iAdvise?.title || '', disabled: disabled }, Validators.required ),
       subtitle: new FormControl({ value: this.iAdvise?.subtitle || '', disabled: disabled }, Validators.required ),
       summary: new FormControl({ value: this.iAdvise?.summary || '', disabled: disabled }, Validators.required ),
     });
   }
 
-  onLangSelected( langSelected: ILang )
+  updateForm()
   {
-    this.langSelected = langSelected
+    this.form.patchValue({
+      title: this.iAdvise?.title || '',
+      subtitle: this.iAdvise?.subtitle || '',
+      summary: this.iAdvise?.summary || '',
+    });
+
+    this.sectors?.set( this.iAdvise?.id_sector, this.iAdvise?.id_subsector )
+    this.content.html = this.iAdvise?.content;
+    this.image = this.iAdvise?.photo;
+  }
+
+  clear()
+  {
+    this.iAdvise = null
+    this.sectors.clear()
+    this.content.html = ''
+    this.image = null
+    this.updateForm()
   }
 
   imgSelected( src )
@@ -107,13 +120,94 @@ export class AdviseCRUDPage implements OnInit {
     this.content = content;
   }
 
+  /* User is not allowed to edit this post */
+  kickOff() {
+    this.toastSvc.show( 'pages.posts.advises.error.unauthorized', true )
+    this.cancel()
+  }
+
   /* On Cancel */
   cancel() {
-    this.location.back();
+    this.router.navigate([ 'posts/advises' ])
+  }
+
+  async check(): Promise<boolean>
+  {
+    const { title } = this.form.value
+
+    if( title.length < 4 ) {
+      this.toastSvc.show( 'pages.posts.advises.create.error.title', true )
+      return false
+    }
+    if( !this.sectors?.sector ) {
+      this.toastSvc.show( 'pages.posts.advises.create.error.sector', true )
+      return false
+    }
+
+    return true
   }
 
   /* On Share Advise */
-  shareAdvise() {
-    const { title, subtitle, summary } = this.form.value;
+  async shareAlert() {
+    if( !( await this.check() ))
+      return
+    
+    if( await this.alertSvc.confirm({
+        title: 'pages.posts.advises.title'
+      , msg: 'pages.posts.advises.confirm.' + ( this.id ? 'edit' : 'new' )
+      , backdropDismiss: false }))
+    {
+      this.shareAdvise()
+    }
+  }
+
+  async shareAdvise()
+  {
+    await this.loadingSvc.show()
+
+    const { title, subtitle, summary } = this.form.value
+
+    const opts: IAdviseFull = {
+        lang: this.lang?.langSelected?.id || 1
+      , sector: this.sectors?.sector
+      , subsector: this.sectors?.subsector
+      
+      , title: title
+      , subtitle: subtitle
+      , summary: summary
+      , content: this.content.html
+      
+      , photo: this.image
+    }
+
+    const { response, error } = !this.id
+      ? await this.adviseSvc.create( opts )
+      : await this.adviseSvc.update( this.id, opts )
+
+    await this.loadingSvc.dismiss()
+
+    if( error )
+      this.toastSvc.show( error.msg || error.message || 'An error ocurred on creating post' )
+    /* else
+      this.askNew() */
+  }
+
+  askNew()
+  {
+    this.alertSvc.show({
+        title: 'pages.posts.advises.new.title'    
+      , msg: 'pages.posts.advises.new.msg'
+      , btns: [
+        {
+          text: 'common.buttons.back',
+          handler: () => this.cancel()
+        },
+        {
+          text: 'common.buttons.create',
+          handler: () => this.clear()
+        }
+      ]
+      , backdropDismiss: false
+    }, true)
   }
 }
