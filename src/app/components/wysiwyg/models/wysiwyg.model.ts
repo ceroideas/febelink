@@ -1,4 +1,4 @@
 export interface iWYSIWYG {
-    html: string    
-    , text: string    
+    html?: string    
+    , text?: string    
 }
