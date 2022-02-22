@@ -29,9 +29,9 @@
     vertical-align: super;
 }
 
-.tx-upper { text-transform: uppercase; }
-.tx-lower { text-transform: lowercase; }
-.tx-capitalize { text-transform: capitalize; }
+.tx-upper, .tx-cap-1st::first-letter { text-transform: uppercase; }
+.tx-lower, .tx-cap-1st { text-transform: lowercase; }
+.tx-cap, .tx-capitalize { text-transform: capitalize; }
 
 .tx-transp { color: transparent; }
 

@@ -14,3 +14,23 @@
     border: var(--color_line) solid;
     border-radius: 3px;
 }
+
+.no-shadow { box-shadow: none; --box-shadow: none; }
+
+
+.line, .line-t1, .line-t2, .line-t3 {
+    border: 0;
+    border-top: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.line-b, .line-b1, .line-b2, .line-b3 {
+    border: 0;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.line-t1, .line-b1 { border-width: 1px; }
+.line-t2, .line-b2 { border-width: 2px; }
+
+.grid-rows { display: grid; }
+
+.max-w600 { max-width: 600px; }

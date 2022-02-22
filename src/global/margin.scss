@@ -3,12 +3,12 @@
     --margin-top: 10px;
     --margin-end: 10px;
     --margin-bottom: 10px;
-    --margin-left: 10px;
+    --margin-start: 10px;
 }
 .margin-top, .marg-t, .marg-t10 { margin-top: 10px; --margin-top: 10px; }
 .margin-end, .marg-e, .marg-e10 { margin-right: 10px; --margin-end: 10px; }
 .margin-bottom, .marg-b, .marg-b10 { margin-bottom: 10px; --margin-bottom: 10px; }
-.margin-start, .marg-s, .marg-s10 { margin-left: 10px; --margin-left: 10px; }
+.margin-start, .marg-s, .marg-s10 { margin-left: 10px; --margin-start: 10px; }
 
 .no-margin {
     margin: 0px;
@@ -31,19 +31,19 @@
 .marg-t5 { margin-top: 5px; --margin-top: 5px; }
 .marg-e5 { margin-right: 5px; --margin-end: 5px; }
 .marg-b5 { margin-bottom: 5px; --margin-bottom: 5px; }
-.marg-s5 { margin-left: 5px; --margin-left: 5px; }
+.marg-s5 { margin-left: 5px; --margin-start: 5px; }
 
 .margin-20 {
     margin: 20px;
     --margin-top: 20px;
     --margin-end: 20px;
     --margin-bottom: 20px;
-    --margin-left: 20px;
+    --margin-start: 20px;
 }
 .marg-t20 { margin-top: 20px; --margin-top: 20px; }
 .marg-e20 { margin-right: 20px; --margin-end: 20px; }
 .marg-b20 { margin-bottom: 20px; --margin-bottom: 20px; }
-.marg-s20 { margin-left: 20px; --margin-left: 20px; }
+.marg-s20 { margin-left: 20px; --margin-start: 20px; }
 
 .margin-30 {
     margin: 30px;
@@ -55,4 +55,9 @@
 .marg-t30 { margin-top: 30px; --margin-top: 30px; }
 .marg-e30 { margin-right: 30px; --margin-end: 30px; }
 .marg-b30 { margin-bottom: 30px; --margin-bottom: 30px; }
-.marg-s30 { margin-left: 30px; --margin-left: 30px; }
+.marg-s30 { margin-left: 30px; --margin-start: 30px; }
+
+.marg-se {
+    margin-left: auto !important; --margin-left: auto !important;
+    margin-right: auto !important; --margin-end: auto !important;
+}
