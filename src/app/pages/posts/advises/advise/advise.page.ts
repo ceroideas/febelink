@@ -1,6 +1,8 @@
+import { AdviseService } from './../services/advises.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { DateFormatType } from 'src/app/pipes/date-format';
-import { IAdvise } from '../models/advises.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastSvc } from 'src/app/services/toast.service';
+import { IAdviseFull } from '../models/advises.model';
 
 @Component({
   selector: 'app-post-advise',
@@ -10,13 +12,48 @@ import { IAdvise } from '../models/advises.model';
 export class AdvisePage implements OnInit {
 
   @Input() id: number
-  @Input() iAdvise: IAdvise
+  @Input() iAdvise: IAdviseFull
+  
+  isLoading: boolean = false
 
-  dateFormatType = DateFormatType
+  paramsQuery: any
+  paramsUrl: any
 
-  constructor() { }
+  constructor(
+    private actRoute: ActivatedRoute
+    , private router: Router
+    , private adviseSvc: AdviseService
+    , private toastSvc: ToastSvc
+  ) {}
 
-  ngOnInit() {
+  ngOnInit()
+  {
+    this.paramsQuery = this.actRoute.snapshot.queryParamMap;
+    this.paramsUrl = this.actRoute.snapshot.params
+
+    if( this.paramsUrl?.id )
+      this.getPost( this.paramsUrl?.id )
+  }
+
+  /* If has id -> editing post */
+  async getPost( id: number ) {
+    this.id = id;
+    this.isLoading = true;
+
+    const { response, error } = await this.adviseSvc.get( id )
+    if( error ) {
+      this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' )
+      return
+    }
+
+    console.log({ response })
+    this.iAdvise = response
+
+    this.isLoading = false;
+  }
+
+  newOne() {
+    this.router.navigate(['posts/advise/create']);
   }
 
 }
