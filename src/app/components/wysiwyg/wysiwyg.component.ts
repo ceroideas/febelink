@@ -18,16 +18,15 @@ export class WYSIWYGComponent implements OnInit {
   @Input() readOnly: boolean = false
 
   @Input() styles: {} = {height: '200px'}
+  @Input() content: iWYSIWYG = {}
   @Output() OnFocus: EventEmitter<any> = new EventEmitter()
   @Output() OnChange: EventEmitter<iWYSIWYG> = new EventEmitter()
   @Output() OnBlur: EventEmitter<any> = new EventEmitter()
-
 
   blured = false
   focused = false
   
   modules: {}
-  content: iWYSIWYG
 
   constructor() {
     this.modules = {
