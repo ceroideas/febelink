@@ -1,9 +1,10 @@
 <ion-item
     tappable
+    [class]="'no-padding ' + ( clase || '' )"
     lines="none"
     (click)="userClick()"
 >
-    <ion-avatar slot="start">
+    <ion-avatar slot="start" class="no-margin">
         <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo" />
         <ion-img
             [src]="user?.logo"
@@ -17,12 +18,12 @@
             <ion-col [size]="txEnd ? 8 : 12">
                 <ion-label>
                     {{ user?.name || user?.nick || ( 'common.labelUser' | translate )}} {{ user?.lastName }}
-                    <em class="font-13 hint" *ngIf="subtitle">{{ subtitle }}</em>
+                    <br><em class="font-13 hint" *ngIf="subtitle">{{ subtitle }}</em>
                 </ion-label>
             </ion-col>
 
             <!-- Text End -->
-            <ion-col [size]="user?.txEnd ? 4 : 0">
+            <ion-col [size]="4" *ngIf="user?.txEnd">
                 <ion-label *ngIf="user?.txEnd">
                     {{ txEnd | translate }}
                     <em class="font-13 hint" *ngIf="user?.txSubend">{{ txSubEnd }}</em>
