@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
 import { UserItemComponent } from 'src/app/components/user/item/item.component';
 import { UserFilterPopSvc } from 'src/app/components/user/services/user-filter.pop.service';
 import { ILang } from 'src/app/models/langs.model';
-import { ISector, ISubSector } from 'src/app/models/sector.model';
+import { IUser } from 'src/app/models/user.model';
 import { ToastSvc } from 'src/app/services/toast.service';
-import { IAdvise, IAdviseFilter } from '../models/advises.model';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
+import { IAdviseFull, IAdviseFilter } from '../models/advises.model';
 import { AdviseService } from '../services/advises.service';
 
 @Component({
@@ -27,24 +29,43 @@ export class AdvisesPage implements OnInit
   showFilters: boolean
   isLoading: boolean = true
 
-  iAdvises: IAdvise[]
-  filter: string
+  iAdvises: IAdviseFull[]
+  filter: string | number
+  langSelected: ILang
   
+  curUser: IUser
 
   constructor(
       private router: Router
     , private adviseSvc: AdviseService
     , private toastSvc: ToastSvc
     , private userFilterPop: UserFilterPopSvc
+    , public sessionSvc: UserSessionSvc
   ) {}
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    // To refresh list on routing to this page
+    this.router.events.pipe(
+      filter((events: RouterEvent) => events instanceof NavigationEnd),
+    ).subscribe((val) => {
+      if ([ 'posts', '/posts/advises', 'posts/consejos' ].includes( val.url ))
+        this.search();
+    });
+  }
 
-  async search( text?: string ) {
+  async ngAfterViewInit()
+  {
+    this.search()
+    this.curUser = await this.sessionSvc.get()
+  }
+
+  async search( text: string | number = null )
+  {
     this.isLoading = true
-    this.filter = text || this.filter
+    this.filter = text != null ? text : this.filter
 
-    const { response, error } = await this.adviseSvc.list( this.getFilters() )
+    const { response, error } = await this.adviseSvc.list( await this.getFilters() )
 
     if( error ) {
       this.toastSvc.show( 'pages.posts.advises.error.search', true )
@@ -52,38 +73,40 @@ export class AdvisesPage implements OnInit
     }
     
     /* List Items */
-    this.iAdvises = response.items
+    this.iAdvises = response
 
     /* Pagination Values */
-    this.pagination.update( response )
+    this.pagination?.update( response )
 
     this.isLoading = false
   }
 
-  getFilters(): IAdviseFilter
+  async getFilters(): Promise<IAdviseFilter>
   {
-    return {
-        activePage: this.pagination.activePage
-      , keys: this.filter
+    const filters = {
+        activePage: this.pagination?.activePage || 0
+      , keys: this.filter || null
       
-      , sector: this.sectors?.sector?.id
-      , subsector: this.sectors?.subsector?.id
-      , lang: this.lang?.langSelected?.id || 1
-      , user: this.user?.user?.id
+      , sector: this.sectors?.sector || null
+      , subsector: this.sectors?.subsector || null
+      , lang: await this.lang?.id()
+      , user: this.user?.user?.id || null
     }
+    return filters;
   }
   hasFilters(): boolean {
     return !( this.sectors.sector && !this.sectors.subsector && !this.user?.user )
   }
 
-  createPost()
+  async createPost()
   {
-    this.router.navigate(['posts/advise/create' ]);
+    if( await this.sessionSvc.checkLogged() )
+      this.router.navigate([ 'posts/advise/create' ]);
   }
 
-  userClicked()
+  async userClicked()
   {
-    this.userFilterPop.show( 'posts/advises/users', this.getFilters())
+    this.userFilterPop.show( 'posts/advises/users', await this.getFilters())
   }
 
   
