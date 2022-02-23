@@ -1,7 +1,7 @@
 <ion-grid class="no-padding">
   <ion-row>
     <!-- Sector -->
-    <ion-col class="ion-no-padding pad-e5" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+    <ion-col class="ion-no-padding pad-e5" size="6">
       <app-loading [isLoading]="sectors?.length <= 0" message="common.labelSector"></app-loading>
       <ion-item class="input" color="transparent" lines="none" *ngIf="sectors?.length > 0">
         <!-- Label -->
@@ -22,7 +22,7 @@
     </ion-col>
 
     <!-- Subsector -->
-    <ion-col class="ion-no-padding pad-s5" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+    <ion-col class="ion-no-padding pad-s5" size="6">
       <app-loading [isLoading]="subsectors?.length <= 0" message="common.labelSubsector"></app-loading>
       <ion-item class="input" color="transparent" lines="none" *ngIf="subsectors?.length>0">
         <!-- Label -->
