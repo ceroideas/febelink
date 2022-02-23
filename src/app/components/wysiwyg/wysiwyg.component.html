@@ -1,8 +1,7 @@
 <ion-card class="no-margin">
-  <quill-editor
+  <quill-editor #quill
     trackChanges="all"
     [modules]="modules"
-    [ngModel]="content?.html || ''"
     [placeholder]="placeholder"
     (onEditorCreated)="created($event)"
     
