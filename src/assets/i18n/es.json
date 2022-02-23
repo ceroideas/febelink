@@ -193,7 +193,7 @@
       "token": "Token",
       "searchEngine": "Buscador",
       "recommend": "Recomendar",
-      "advises": "Consejos",
+      "advises": "Oráculos",
       "chat": "Chat",
       "profile": "Perfil",
       "login": "Iniciar sesión",
@@ -524,7 +524,7 @@
       , "react": "Reaccionar"
       
       , "advises": {
-        "title": "Consejo"
+        "title": "Oráculo"
         
         , "create": {
           "title": "Titulo"
@@ -532,34 +532,35 @@
           , "summary": "Resumen"
           , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"
 
-          , "done": "Consejo creado exitosamente"
+          , "done": "Oráculo creado exitosamente"
 
           , "error": {
             "title": "El titulo no puede ser menor a 4 digitos"
+            , "content": "Debes indicar el contenido a publicar"
             , "sector": "Debes indicar el sector al que referencias"
           }
         }
 
         , "new": {
           "title": "Gran trabajo!"
-          , "msg": "Ahora, ¿te gustaria crear otro Consejo?"
+          , "msg": "Ahora, ¿te gustaria crear otro Oráculo?"
         }
         , "confirm": {
-          "edit": "¿Confirmas que quieres editra este Consejo?"
-          , "new": "¿Confirmas que quieres crear este Consejo?"
+          "edit": "¿Confirmas que quieres editra este Oráculo?"
+          , "new": "¿Confirmas que quieres crear este Oráculo?"
         }
         , "delete": {
-          "title": "Eliminar Consejo"
-          , "msg": "¿Estás seguro de querer eliminar este consejo?"
+          "title": "Eliminar Oráculo"
+          , "msg": "¿Estás seguro de querer eliminar este Oráculo?"
         }
-        , "share": "Compartir Consejo"
+        , "share": "Compartir Oráculo"
 
         , "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
-          , "unauthorized": "No tienes permiso para editar este Consejo"
-          , "no-item": "Ups, parece que este consejo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items": "Aun no hay Consejos<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items-filters": "Aun no hay Consejos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "unauthorized": "No tienes permiso para editar este Oráculo"
+          , "no-item": "Ups, parece que este Oráculo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items": "Aun no hay Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items-filters": "Aun no hay Oráculos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
         }
       }
     }
