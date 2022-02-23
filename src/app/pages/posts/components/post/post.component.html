@@ -45,17 +45,20 @@
   
     <!-- Title -->
     <ion-row class="one-line marg-t5 marg-s10 marg-e10">
-      <h2 class="no-margin bold-6 font-18">{{ iAdvise.title }}</h2>
+      <h1 class="no-margin bold-6 font-18 title" [innerHTML]="extractTitle()"></h1>
     </ion-row>
   
     <!-- Subitle -->
-    <ion-row class="one-line marg-t5 marg-s10 marg-e10">
-      <h3 class="no-margin font-16" [innerHTML]="iAdvise.subtitle"></h3>
+    <ion-row class="one-line marg-t5 marg-s10 marg-e10" *ngIf="iAdvise.subtitle">
+      <h3 class="no-margin font-16 subtitle" [innerHTML]="iAdvise.subtitle"></h3>
     </ion-row>
   
     <!-- Summary -->
-    <ion-row class="lines-2 marg-t5 marg-s10 marg-e10">
-      <ion-label class="hint" [innerHTML]="iAdvise.summary"></ion-label>
+    <ion-row class="lines-2 marg-t5 marg-s10 marg-e10 inline" *ngIf="iAdvise.summary || !showContent">
+      <ion-label
+        [class]="'summary ' + ( !iAdvise?.subtitle ? '' : 'hint' )"
+        [innerHTML]="extractSummary()"
+      ></ion-label>
     </ion-row>
   
     <!-- Image -->
