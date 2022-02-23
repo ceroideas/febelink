@@ -553,7 +553,7 @@
           "title": "Eliminar Oráculo"
           , "msg": "¿Estás seguro de querer eliminar este Oráculo?"
         }
-        , "share": "Compartir Oráculo"
+        , "share": "Compartir"
 
         , "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"

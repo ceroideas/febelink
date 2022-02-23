@@ -555,7 +555,7 @@
           "title": "Delete Oracle"
           , "msg": "Are you sure you want to delete this Oracle?"
         }
-        , "share": "Share Oracle"
+        , "share": "Share"
 
         , "error": {
           "search": "There was an error in the search, please try again"
