@@ -68,6 +68,16 @@
 
       <!-- Image -->
       <ion-row class="marg-t10" [style]="'display: ' + ( !image ? 'none' : 'block' )">
+        <!-- Remove Image -->
+        <ion-button icon-only
+          shape="round"
+          class="no-padding wh-40 marg-t10 relativism"
+          (click)="imgSelected( null )"
+        >
+          <ion-icon name="trash-outline" color="primary"></ion-icon>
+        </ion-button>
+
+        <!-- File Picker -->
         <app-file-picker #pick [src]="image" (OnFile)="imgSelected( $event )"></app-file-picker>
       </ion-row>
     </ion-grid>

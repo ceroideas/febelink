@@ -3,3 +3,11 @@ app-file-picker {
     height: 25vh; --height: 25vh; max-height: 25vh;
 }
 app-wysiwyg { width: 100%; --width: 100%; }
+
+.relativism {
+    position: absolute;
+    right: 25px;
+    --background: white;
+    background: white;
+    border-radius: 100%;
+}
