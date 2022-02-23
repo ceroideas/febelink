@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { EditorChangeContent, EditorChangeSelection, QuillEditorComponent } from 'ngx-quill';
 import { iWYSIWYG } from './models/wysiwyg.model';
 import 'quill-emoji/dist/quill-emoji.js';
 
@@ -18,27 +18,31 @@ export class WYSIWYGComponent implements OnInit {
   @Input() readOnly: boolean = false
 
   @Input() styles: {} = {height: '200px'}
-  @Input() content: iWYSIWYG = {}
+  @Input() html: string
   @Output() OnFocus: EventEmitter<any> = new EventEmitter()
   @Output() OnChange: EventEmitter<iWYSIWYG> = new EventEmitter()
   @Output() OnBlur: EventEmitter<any> = new EventEmitter()
+  @Output() OnImgClick: EventEmitter<any> = new EventEmitter()
+
+  @ViewChild( "quill" ) quill: QuillEditorComponent
 
   blured = false
   focused = false
   
   modules: {}
+  content: iWYSIWYG = {}
 
   constructor() {
     this.modules = {
       'emoji-shortname': true,
       'emoji-textarea': false,
       'emoji-toolbar': true,
-      'toolbar': [
-        [{ 'font': [] }],
+      'toolbar': { 'container': [
+        /* [{ 'font': [] }],
         [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'align': [] }],
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'align': [] }], */
+        ['bold'/* , 'italic', 'underline', 'strike' */],        // toggled buttons
+        /* [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
 
         [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
 
@@ -48,18 +52,32 @@ export class WYSIWYGComponent implements OnInit {
         [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
         [{ 'direction': 'rtl' }],                         // text direction
 
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], */
 
-        ['clean'],                                         // remove formatting button
+        ['link'/* , 'image', 'video' */],                         // link and image, video
+        ['image'],
 
-        // ['link', 'image', 'video'],                         // link and image, video
-        ['emoji']
+        /* ['emoji'] */
 
-      ]
+        /* ['clean'], */                                         // remove formatting button
+      ],
+        handlers: {
+         'image': () => { if( this.OnImgClick ) this.OnImgClick.emit() }
+        }
+      }
     }
   }
 
   ngOnInit() {}
+
+  ngAfterViewInit()
+  {
+    if( this.html ) this.quill.content = this.html
+  }
+
+  ngOnChanges( changes: SimpleChanges ): void {
+    if ( 'html' in changes && this.quill ) this.quill.content = changes.html.currentValue || ''
+  }
 
   changedEditor(event: EditorChangeContent | EditorChangeSelection) {
     // console.log('editor-change', event)
