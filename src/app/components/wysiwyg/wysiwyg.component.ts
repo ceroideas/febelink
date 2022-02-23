@@ -31,6 +31,7 @@ export class WYSIWYGComponent implements OnInit {
   
   modules: {}
   content: iWYSIWYG = {}
+  contenido: string = ''
 
   constructor() {
     this.modules = {
@@ -77,6 +78,17 @@ export class WYSIWYGComponent implements OnInit {
 
   ngOnChanges( changes: SimpleChanges ): void {
     if ( 'html' in changes && this.quill ) this.quill.content = changes.html.currentValue || ''
+  }
+
+  ionViewDidLeave()
+  {
+    this.clear()
+  }
+
+  clear()
+  {
+    this.html = ''
+    this.contenido = ''
   }
 
   changedEditor(event: EditorChangeContent | EditorChangeSelection) {

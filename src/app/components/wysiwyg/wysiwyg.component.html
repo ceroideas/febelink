@@ -2,6 +2,7 @@
   <quill-editor #quill
     trackChanges="all"
     [modules]="modules"
+    [ngModel]="contenido"
     [placeholder]="placeholder"
     (onEditorCreated)="created($event)"
     
