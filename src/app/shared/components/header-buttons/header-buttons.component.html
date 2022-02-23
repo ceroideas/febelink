@@ -28,13 +28,6 @@
       <ion-label class="responsive-max tx-cap" style="margin-left: 10px">
         {{ 'menu.tabs.landingICO' | translate }}
       </ion-label>
-      <ion-label
-        class="responsive-min tx-cap"
-        style="margin-left: 10px"
-        *ngIf="currentTab == tabs.Search"
-      >
-        {{ 'menu.tabs.token' | translate }}
-      </ion-label>
     </div></ion-button>
 
     <div class="desktop">
@@ -114,9 +107,6 @@
     <ion-button class="btn-header" (click)="shareFebelink($event)"><div class="grid-rows">
       <ion-icon class="marg-se" slot="start" name="share-social"></ion-icon>
       <span class="responsive-max tx-cap" translate>common.share</span>
-      <span class="responsive-min tx-cap" translate *ngIf="currentTab == tabs.Search"
-        >common.share</span
-      >
     </div></ion-button>
 
     <!-- Notifications -->
