@@ -106,7 +106,8 @@ export class AdviseCRUDPage implements OnInit {
   {
     this.iAdvise = null
     this.content.html = ''
-    this.image = null
+    this.sectors.clear()
+    this.imgSelected( null )
     this.form.reset()
   }
 
