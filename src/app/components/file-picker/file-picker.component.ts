@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { FilePickType, FileElementType } from './models/file.model';
 import { FileService } from './services/file.service';
@@ -28,6 +28,7 @@ export class FilePickerComponent implements OnInit {
   
   isNative: boolean = false
 
+  @ViewChild( "filePicker" ) filePicker: ElementRef
 
   constructor(
       public mediaSvc: FileService
@@ -36,6 +37,11 @@ export class FilePickerComponent implements OnInit {
 
   ngOnInit() {
     this.platform.ready().then(() => this.isNative = this.platform.is( 'cordova' ))
+  }
+
+  clicks()
+  {
+    this.filePicker.nativeElement.click()
   }
 
   async pickMedia( filePicker ) {
