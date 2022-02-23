@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService, IHttpService } from 'src/app/services/http.service';
-import { IAdviseFull, IAdviseFilter } from '../models/advises.model';
+import { IAdviseFull, IAdviseFilter, IAdvise } from '../models/advises.model';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +51,21 @@ export class AdviseService {
   async list( filter: IAdviseFilter ): Promise<IHttpService>
   {
     return ( await this.http.get( 'posts/advises', filter )).toPromise()
+  }
+
+  extractTitle( iAdvise: IAdvise ): string
+  {
+    return iAdvise.title ? iAdvise.title
+      : !iAdvise?.content
+          ? null
+          : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
+  }
+
+  extractSummary( iAdvise: IAdvise ): string
+  {
+    return iAdvise.summary ? iAdvise.summary
+      : !iAdvise?.content ? null
+        : iAdvise?.title ? iAdvise.content
+          : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
   }
 }
