@@ -1,3 +1,4 @@
+import { FileService } from './../../../../components/file-picker/services/file.service';
 import { AdviseService } from './../../advises/services/advises.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,6 +28,7 @@ export class PostBottomBarComponent implements OnInit
     , private adviseSvc: AdviseService
     , private shareSvc: ShareService
     , private sessionSvc: UserSessionSvc
+    , private fileSvc: FileService
   ) {}
 
   ngOnInit() {}
@@ -49,9 +51,9 @@ export class PostBottomBarComponent implements OnInit
     if( await this.shareSvc.exec(
         ev
       , `posts/advise/${this.id}`
-      , this.post?.title
-      , this.post?.summary
-      , this.post.photo
+      , ( this.adviseSvc.extractTitle( this.post ) || '' ).replace(/<[^>]*>/g, '')
+      , ( this.adviseSvc.extractSummary( this.post ) || '' ).replace(/<[^>]*>/g, '')
+      , this.fileSvc.img2str( this.post.photo )
     )) {
       this.post.shared = ( this.post?.shared || 0 ) + 1
       this.adviseSvc.shared( this.id )
