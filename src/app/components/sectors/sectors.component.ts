@@ -48,9 +48,9 @@ export class SectorsComponent implements OnInit
   async onChangeSector( id )
   {
     this.sector = id
-    if( this.OnSectorChange ) this.OnSectorChange.emit( id )
     this.subsector = null
     this.subsectors = []
+    if( this.OnSectorChange ) this.OnSectorChange.emit( id )
     this.subsectors = await this.subsectorSvc.get( id )
   }
 
