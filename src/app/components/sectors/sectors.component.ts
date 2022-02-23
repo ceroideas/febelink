@@ -34,7 +34,7 @@ export class SectorsComponent implements OnInit
   }
 
   load( idSector?: number ) {
-    this.sectorSvc.get().then( sectors => this.sectors = sectors )
+    this.sectorSvc.get( false ).then( sectors => this.sectors = sectors )
     this.subsectorSvc.get( idSector || 0 )
       .then( subsectors => this.subsectors = subsectors )
   }

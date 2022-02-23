@@ -19,14 +19,14 @@ export class SectorService
       this.list = [];
     }
 
-    async get()
+    async get( addAll: boolean = true )
     {
         if( this.list.length == 0 )
             this.list = [
-                {
+                ...( !addAll ? [] : [{
                     id: 0,
                     nombre: 'Todas',
-                }
+                }])
                 , ...(( await ( await this.httpSvc.get( 'sectores' )).toPromise()).response || [])
             ];
 
