@@ -527,7 +527,7 @@
         "title": "Oráculo"
         
         , "create": {
-          "title": "Titulo"
+          "title": "Crear publicación"
           , "subtitle": "Subtitulo"
           , "summary": "Resumen"
           , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"

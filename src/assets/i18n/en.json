@@ -529,7 +529,7 @@
         "title": "Oracle"
         
         , "create": {
-          "title": "Title"
+          "title": "Create Post"
           , "subtitle": "Subtitle"
           , "summary": "Summary"
           , "wysiwyg": "Description text text text text text text text text"
