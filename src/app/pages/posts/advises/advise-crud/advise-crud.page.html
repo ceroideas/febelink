@@ -24,7 +24,7 @@
       <app-sectors #sectors></app-sectors>
 
       <!-- Title -->
-      <ion-row>
+      <ion-row *ngIf="false">
         <ion-input
           class="box-bw-r1-lln font-20"
           type="text"
@@ -35,7 +35,7 @@
       </ion-row>
 
       <!-- Subtitle -->
-      <ion-row class="marg-t10">
+      <ion-row class="marg-t10" *ngIf="false">
         <ion-input
           class="box-bw-r1-lln font-16"
           type="text"
@@ -46,7 +46,7 @@
       </ion-row>
 
       <!-- Summary -->
-      <ion-row class="marg-t10">
+      <ion-row class="marg-t10" *ngIf="false">
         <ion-textarea
           class="hint box-bw-r1-lln"
           type="text"
@@ -56,27 +56,34 @@
         ></ion-textarea>
       </ion-row>
 
-      <!-- Image -->
-      <ion-row class="marg-t10">
-        <app-file-picker [src]="image" (OnFile)="imgSelected( $event )"></app-file-picker>
-      </ion-row>
-
       <!-- WYSIWYG -->
       <ion-row class="marg-t10">
         <app-wysiwyg
-          [content]="content"
+          [html]="iAdvise?.content"
           [placeholder]="'pages.posts.advises.create.wysiwyg' | translate"
           (OnChange)="wysiwygChange( $event )"
+          (OnImgClick)="pick.clicks()"
         ></app-wysiwyg>
       </ion-row>
 
-      <ion-row class="align-center marg-t10">
-        <!-- Cancel Button -->
-        <ion-button class="marg-e10" (click)="cancel()">{{ 'common.buttons.cancel' | translate}}</ion-button>
-    
-        <!-- Share Advise | Post Button -->
-        <ion-button (click)="shareAlert()">{{ 'pages.posts.advises.share' | translate}}</ion-button>
+      <!-- Image -->
+      <ion-row class="marg-t10" [style]="'display: ' + ( !image ? 'none' : 'block' )">
+        <app-file-picker #pick [src]="image" (OnFile)="imgSelected( $event )"></app-file-picker>
       </ion-row>
     </ion-grid>
   </form>
 </ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar class="tx-center">
+    <!-- Cancel Button -->
+    <ion-button class="marg-e10" (click)="cancel()">
+      {{ 'common.buttons.cancel' | translate}}
+    </ion-button>
+
+    <!-- Share Advise | Post Button -->
+    <ion-button class="marg-s10" (click)="shareAlert()">
+      {{ 'pages.posts.advises.share' | translate}}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
