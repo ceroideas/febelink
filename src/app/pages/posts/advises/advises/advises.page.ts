@@ -49,7 +49,7 @@ export class AdvisesPage implements OnInit
     this.router.events.pipe(
       filter((events: RouterEvent) => events instanceof NavigationEnd),
     ).subscribe((val) => {
-      if ([ 'posts', '/posts/advises', 'posts/consejos' ].includes( val.url ))
+      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( val.url ))
         this.search();
     });
   }
@@ -101,12 +101,12 @@ export class AdvisesPage implements OnInit
   async createPost()
   {
     if( await this.sessionSvc.checkLogged() )
-      this.router.navigate([ 'posts/advise/create' ]);
+      this.router.navigate([ 'posts/oracle/create' ]);
   }
 
   async userClicked()
   {
-    this.userFilterPop.show( 'posts/advises/users', await this.getFilters())
+    this.userFilterPop.show( 'posts/oracles/users', await this.getFilters())
   }
 
   

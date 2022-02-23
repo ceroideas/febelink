@@ -93,7 +93,7 @@ export class PostComponent implements OnInit {
 
   async edit()
   {
-    this.router.navigate([ `posts/advise/${this.id}/edit` ])
+    this.router.navigate([ `posts/oracle/${this.id}/edit` ])
   }
 
   async delete()
@@ -112,7 +112,7 @@ export class PostComponent implements OnInit {
       }
 
       this.toastSvc.show( response.message, true )
-      this.router.navigate([ `posts/advises` ])
+      this.router.navigate([ `posts/oracles` ])
     }
   }
 

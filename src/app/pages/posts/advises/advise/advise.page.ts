@@ -41,10 +41,8 @@ export class AdvisePage implements OnInit {
     this.isLoading = true;
 
     const { response, error } = await this.adviseSvc.get( id )
-    if( error ) {
-      this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' )
-      return
-    }
+    /* if( error )
+      this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' ) */
 
     this.iAdvise = !response?.id ? null : response
 
@@ -52,7 +50,7 @@ export class AdvisePage implements OnInit {
   }
 
   newOne() {
-    this.router.navigate(['posts/advise/create']);
+    this.router.navigate(['posts/oracle/create']);
   }
 
 }

@@ -128,7 +128,7 @@ export class AdviseCRUDPage implements OnInit {
 
   /* On Cancel */
   cancel() {
-    this.router.navigate([ 'posts/advises' ])
+    this.router.navigate([ 'posts/oracles' ])
   }
 
   async check(): Promise<boolean>

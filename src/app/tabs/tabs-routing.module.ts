@@ -30,7 +30,7 @@ const routes: Routes = [
       },
       {
         path: 'advises',
-        redirectTo: '/posts/advises',
+        redirectTo: '/posts/oracles',
         pathMatch: 'prefix',
         loadChildren: () =>
           import( '../pages/posts/advises/advise.module' ).then(( m ) => m.AdvisePageModule ),

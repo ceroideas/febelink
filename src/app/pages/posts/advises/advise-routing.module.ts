@@ -8,8 +8,8 @@ import { AdviseCRUDPage } from './advise-crud/advise-crud.page';
 const routes: Routes = [
   /* Lists */
     { path: '', component: AdvisesPage }
-  , { path: 'consejos', component: AdvisesPage }
-  , { path: 'advises', component: AdvisesPage }
+  , { path: 'oraculos', component: AdvisesPage }
+  , { path: 'oracles', component: AdvisesPage }
 
   /* Create */
   , { path: 'create', component: AdviseCRUDPage }

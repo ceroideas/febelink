@@ -50,7 +50,7 @@ export class PostBottomBarComponent implements OnInit
   {
     if( await this.shareSvc.exec(
         ev
-      , `posts/advise/${this.id}`
+      , `posts/oracle/${this.id}`
       , ( this.adviseSvc.extractTitle( this.post ) || '' ).replace(/<[^>]*>/g, '')
       , ( this.adviseSvc.extractSummary( this.post ) || '' ).replace(/<[^>]*>/g, '')
       , this.fileSvc.img2str( this.post.photo )
@@ -67,6 +67,6 @@ export class PostBottomBarComponent implements OnInit
 
   watch()
   {
-    this.router.navigate([ `posts/advise/${this.id}` ]);
+    this.router.navigate([ `posts/oracle/${this.id}` ]);
   }
 }

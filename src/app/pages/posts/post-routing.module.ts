@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'advises', pathMatch: 'full' },
+  { path: '', redirectTo: 'oracles', pathMatch: 'full' },
 
   /* Advises List */
   {
-    path: 'consejo',
+    path: 'oraculo',
     loadChildren: () => import('./advises/advise.module').then( m => m.AdvisePageModule )
   },
   {
-    path: 'consejos',
+    path: 'oraculos',
     loadChildren: () => import('./advises/advise.module').then( m => m.AdvisePageModule )
   },
   {
-    path: 'advise',
+    path: 'oracle',
     loadChildren: () => import('./advises/advise.module').then( m => m.AdvisePageModule )
   },
   {
-    path: 'advises',
+    path: 'oracles',
     loadChildren: () => import('./advises/advise.module').then( m => m.AdvisePageModule )
   },
 ];
