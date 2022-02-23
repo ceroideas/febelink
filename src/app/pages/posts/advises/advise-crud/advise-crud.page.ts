@@ -10,6 +10,7 @@ import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
 import { AlertSvc } from 'src/app/services/alert.service';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LoadingSvc } from 'src/app/services/loading.service';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -42,6 +43,7 @@ export class AdviseCRUDPage implements OnInit {
     , private toastSvc: ToastSvc
     , private alertSvc: AlertSvc
     , private loadingSvc: LoadingSvc
+    , private sessionSvc: UserSessionSvc
   ) {}
 
   async ngOnInit()
@@ -62,7 +64,7 @@ export class AdviseCRUDPage implements OnInit {
     this.id = id
     const { response, error } = await this.adviseSvc.get( id )
     this.iAdvise = response
-    if( error || !this.iAdvise ) {
+    if( error || !( await this.sessionSvc.isUser( this.iAdvise?.uid )) ) {
       this.kickOff()
       return
     }
@@ -73,7 +75,7 @@ export class AdviseCRUDPage implements OnInit {
 
   ionViewDidLeave()
   {
-    this.form.reset()
+    this.clear()
   }
 
   buildForm()
@@ -103,10 +105,9 @@ export class AdviseCRUDPage implements OnInit {
   clear()
   {
     this.iAdvise = null
-    this.sectors.clear()
     this.content.html = ''
     this.image = null
-    this.updateForm()
+    this.form.reset()
   }
 
   imgSelected( src )
@@ -134,8 +135,12 @@ export class AdviseCRUDPage implements OnInit {
   {
     const { title } = this.form.value
 
-    if( title.length < 4 ) {
+    /* if( title.length < 4 ) {
       this.toastSvc.show( 'pages.posts.advises.create.error.title', true )
+      return false
+    } */
+    if(( this.content?.html || '' ).length < 4 ) {
+      this.toastSvc.show( 'pages.posts.advises.create.error.content', true )
       return false
     }
     if( !this.sectors?.sector ) {
@@ -185,10 +190,14 @@ export class AdviseCRUDPage implements OnInit {
 
     await this.loadingSvc.dismiss()
 
+    this.toastSvc.show( error
+      ? error.msg || error.message || 'An error ocurred on creating post'
+      : response.message, true )
     if( error )
-      this.toastSvc.show( error.msg || error.message || 'An error ocurred on creating post' )
-    else
-      this.askNew()
+      return
+    
+    // this.askNew()
+    this.cancel()
   }
 
   askNew()
