@@ -97,4 +97,19 @@ export class FileService
             this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true );
         });
     }
+
+    ab2st( ab: ArrayBuffer )
+    {
+        return !ab ? null : String.fromCharCode.apply(null, new Uint8Array( ab ));
+    }
+
+    str2ab( str: string )
+    {
+        return !str ? null : Uint8Array.from( str, x => x.charCodeAt(0));
+    }
+
+    img2str( img: ArrayBuffer | String )
+    {
+        return img instanceof ArrayBuffer ? this.ab2st( img ) : this.str2ab( img as string )
+    }
 }
