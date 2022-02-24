@@ -552,6 +552,7 @@
         , "delete": {
           "title": "Eliminar Oráculo"
           , "msg": "¿Estás seguro de querer eliminar este Oráculo?"
+          , "done": "Oráculo eliminado"
         }
         , "share": "Compartir"
 
