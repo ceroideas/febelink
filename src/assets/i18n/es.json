@@ -277,7 +277,7 @@
         "idFormat": "El formato del Documento de Identidad no es correcto",
 
         "image": "Error al obtener imagen",
-        "imageMaxSize": "Imágen demasiado grande, max. 300KB",
+        "imageMaxSize": "Imágen demasiado grande, max. {{ max }}",
 
         "noFileSelected": "No has seleccionado archivo.",
         "noFileProvided": "No has provisto archivo",

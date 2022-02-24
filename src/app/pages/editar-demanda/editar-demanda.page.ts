@@ -153,7 +153,7 @@ export class EditarDemandaPage implements OnInit {
 
           if (myFile.size > 307200) {
               this.utilities.showToast(
-                  this.translateService.instant("tabs.tab4.errors.imageMaxSize"));
+                  this.translateService.instant("tabs.tab4.errors.imageMaxSize", { max: '300mb' }));
               //reject('Image is too big (max. 300KB)');
               return;
           }
