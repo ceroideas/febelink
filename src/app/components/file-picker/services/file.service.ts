@@ -1,7 +1,8 @@
+import { TranslateConfigService } from './../../../services/translate/translate-config.service';
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Platform } from '@ionic/angular';
-import { TranslateConfigService } from '../../../services/translate/translate-config.service';
+import { FileMaxSize, IFile } from '../models/file.model';
 import { ToastSvc } from './../../../services/toast.service';
 
 @Injectable({
@@ -11,20 +12,23 @@ export class FileService
 {
 
     base64img: string
-    maxSize: number = 307200
+    maxSize: FileMaxSize = FileMaxSize.MAX_ALLOWED_PACKET
 
     constructor(
         private camera: Camera
         , private platform: Platform
-        , private translateSvc: TranslateConfigService
         , private toastSvc: ToastSvc
+        , private translateSvc: TranslateConfigService
     ){}
 
     
 
     public pickImg(
-        filePicker?: HTMLInputElement, targetWidth: number = 1920, targetHeight: number = 1080
-    ): Promise<string | ArrayBuffer> {
+        filePicker?: HTMLInputElement
+        , maxSize?: FileMaxSize
+        , targetWidth: number = 1920, targetHeight: number = 1080
+    ): Promise<any> {
+        this.maxSize = maxSize|| this.maxSize
         if (this.platform.is('cordova'))
             return this.pickImgNative( targetWidth, targetHeight );
         
@@ -33,7 +37,7 @@ export class FileService
   
     private pickImgNative(
         targetWidth: number = 1920, targetHeight: number = 1080
-    ): Promise<string> {
+    ): Promise<IFile> {
         return new Promise( async resolve => {
             const options: CameraOptions =
             {
@@ -50,7 +54,8 @@ export class FileService
                 .getPicture( options )
                 .then((urlFoto) =>
                 {
-                    resolve( 'data:image/jpeg;base64,' + urlFoto );
+                    const src = 'data:image/jpeg;base64,' + urlFoto
+                    resolve({ src, file: src });
                 })
                 .catch((error) =>
                 {
@@ -60,21 +65,20 @@ export class FileService
         })
     }
 
-    private pickImgWeb( filePicker: HTMLInputElement ): Promise<string | ArrayBuffer> {
+    private pickImgWeb( filePicker: HTMLInputElement ): Promise<IFile> {
         return new Promise(async resolve => {
             if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
                 this.toastSvc.show( 'tabs.tab4.errors.noFileSelected', true );
                 return;
             }
 
-            const file = filePicker.files[ 0 ];
-            if ( file.size > this.maxSize ) {
-                this.toastSvc.show( 'tabs.tab4.errors.imageMaxSize', true );
-                return;
-            }
+            const file = filePicker.files[ 0 ]
+            const src = await this.convert( file )
+
+            if( this.exceedsSize( src )) return
     
             // base64img
-            resolve( await this.convert( file ));
+            resolve({ src, file });
         });
     }
 
@@ -96,6 +100,18 @@ export class FileService
             } else
             this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true );
         });
+    }
+
+    public exceedsSize( file: File | string | ArrayBuffer ): boolean
+    {
+        const size = file instanceof File ? file.size : JSON.stringify( file ).length
+        if ( size <= this.maxSize )
+            return false
+        
+        this.toastSvc.show( this.translateSvc.instant(
+            'tabs.tab4.errors.imageMaxSize', { max: ( this.maxSize / 1024 / 1024 ) + 'mb' }
+        ));
+        return true
     }
 
     ab2st( ab: ArrayBuffer )
