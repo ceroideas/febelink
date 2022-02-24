@@ -1,0 +1,124 @@
+<!-- <ion-header class="ion-no-border"> -->
+<ion-header>
+  <ion-toolbar color="light">
+      <!-- Hamburger Button -->
+      <ion-buttons buttons-start slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+  
+      <!-- Header Buttoms -->
+      <app-header-buttons [perfil]="curUser" currentTab="6"></app-header-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <ion-grid class="no-padding">
+      <ion-row>
+        <ion-col size="9">
+          <ion-row class="box-bw-r1-lln vertical-content padding-start padding-end">
+            <ion-icon class="font-30" src="assets/icon/svg/search.svg"></ion-icon>
+            <ion-input #searchBar
+              placeholder="{{ 'common.searchPlaceholder' | translate }}"
+              inputmode="text"
+              (keyup.enter)="search( searchBar.value + '' )"
+              (ionChange)="search( searchBar.value + '' )"
+              (ionClear)="search( searchBar.value + '' )"
+              debounce="500"
+              [value]="searchTx"
+            ></ion-input>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="3">
+          <!-- Icon - Filter -->
+          <ion-button icon-only color="transparent"
+            class="no-padding no-shadow"
+            (click)="showFilters = !showFilters"
+          >
+            <ion-icon class="font-30" src="assets/icon/svg/filter.svg"></ion-icon>
+          </ion-button>
+
+          <!-- Icon - Add -->
+          <ion-button icon-only color="transparent"
+            class="no-shadow no-padding"
+            (click)="createPost()"
+          >
+            <ion-icon class="font-30" src="assets/icon/svg/add.svg"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- Filters -->
+      <ion-row [style]="'display: ' + ( showFilters ? 'block;' : 'none' )">
+        <!-- Sectors -->
+        <app-sectors #sectors
+          (OnSectorChange)="search()"
+          (OnSubsectorChange)="search()"
+        ></app-sectors>
+
+        <!-- Language -->
+        <ion-col size="12" size-sm="3" class="no-padding">
+          <ion-row class="pad-s20 pad-e20">
+            <ion-col size="6" class="no-margin no-padding center-v">{{ 'common.labelLang' | translate }}</ion-col>
+            <ion-col size="6" class="no-margin no-padding tx-end">
+              <app-lang-btn #lang
+                [changeAppLang]="false"
+                (onLangSelected)="search( searchBar.value )"
+              ></app-lang-btn>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <!-- User -->
+        <ion-col size="12" size-sm="3" class="no-padding" *ngIf="false">
+          <ion-row class="pad-s20 pad-e">
+            <ion-col size="6" class="no-margin no-padding">{{ 'common.labelUser' | translate }}</ion-col>
+            <ion-col size="6" class="no-margin no-padding">
+              <app-user-item #user (onUserClick)="userClicked()"></app-user-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [class]="'padding-top ' + (!isLoading && iAdvises?.length <= 0 ? 'tx-center' : '' )">
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+
+  <!-- Posts -->
+  <ng-container *ngIf="!isLoading">
+    <app-post-component
+      class="marg-b5"
+      *ngFor="let advise of iAdvises"
+      [id]="advise.id"
+      [iAdvise]="advise"
+      [showLang]="true"
+      [showSeePost]="true"
+    ></app-post-component>
+  </ng-container>
+
+  <!-- No Items -->
+  <ion-label
+    class="hint pointer"
+    *ngIf="!isLoading && iAdvises?.length <= 0"
+    (click)="createPost()"
+    [innerHTML]="'pages.posts.advises.error.no-items' + ( !hasFilters() ? '' : '-filters' ) | translate"
+  ></ion-label>
+</ion-content>
+
+<ion-footer
+  class="ion-no-border ion-text-center desktop"
+  no-border
+  color="transparent"
+  *ngIf="pagination?.qPages > 1"
+>
+  <ion-toolbar color="febelink">
+    <!-- Pagination Bottom -->
+    <app-pagination #pagination
+      [disabled]="isLoading"
+      (onPageChange)="displayActivePage()"
+    >
+  </app-pagination>
+  </ion-toolbar>
+</ion-footer>

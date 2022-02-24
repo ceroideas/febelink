@@ -1,0 +1,54 @@
+import { AdviseService } from './../services/advises.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IAdviseFull } from '../models/advises.model';
+
+@Component({
+  selector: 'app-post-advise',
+  templateUrl: './advise.page.html',
+  styleUrls: ['./advise.page.scss'],
+})
+export class AdvisePage implements OnInit {
+
+  @Input() id: number
+  @Input() iAdvise: IAdviseFull
+  
+  isLoading: boolean = false
+
+  paramsQuery: any
+  paramsUrl: any
+
+  constructor(
+    private actRoute: ActivatedRoute
+    , private router: Router
+    , private adviseSvc: AdviseService
+  ) {}
+
+  ngOnInit()
+  {
+    this.paramsQuery = this.actRoute.snapshot.queryParamMap;
+    this.paramsUrl = this.actRoute.snapshot.params
+
+    if( this.paramsUrl?.id )
+      this.getPost( this.paramsUrl?.id )
+  }
+
+  /* If has id -> editing post */
+  async getPost( id: number ) {
+    this.id = id;
+    this.isLoading = true;
+
+    const { response, error } = await this.adviseSvc.get( id )
+    /* if( error )
+      this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' ) */
+
+    this.iAdvise = !response?.id ? null : response
+
+    this.isLoading = false;
+  }
+
+  newOne() {
+    this.router.navigate(['posts/oracle/create']);
+  }
+
+}

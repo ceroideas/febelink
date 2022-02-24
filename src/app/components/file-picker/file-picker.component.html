@@ -1,0 +1,39 @@
+<form>
+  <!-- To Pick Files on Browsers -->
+  <input #filePicker
+    type="file"
+    [accept]="pickType"
+    (change)="pickMedia( filePicker )"
+  />
+  
+  <!-- Ion Img -->
+  <ion-img
+    [style]="styles || ''"
+    [src]="src || fallback"
+    *ngIf="elType == elTypes.ION_IMG"
+    [appImgErrorFallback]="fallback"
+    [class]="'pointer ' + ( classes || '' )"
+    (click)="filePicker.click()"
+  ></ion-img>
+  
+  <!-- IMG -->
+  <img
+    [style]="styles || ''"
+    [src]="src"
+    *ngIf="elType == elTypes.IMG"
+    [appImgErrorFallback]="fallback"
+    [class]="'pointer ' + ( classes || '' )"
+    (click)="filePicker.click()"
+  />
+  
+  <!-- Ion Avatar -->
+  <ion-avatar *ngIf="elType == elTypes.AVATAR">
+    <ion-img
+      [style]="styles || ''"
+      [src]="src"
+      [appImgErrorFallback]="fallback"
+      [class]="'pointer ' + ( classes || '' )"
+      (click)="filePicker.click()"
+    ></ion-img>
+  </ion-avatar>
+</form>

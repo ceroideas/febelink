@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { NavParams } from '@ionic/angular';
+import { NavParams, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-share-popover',
@@ -14,7 +14,11 @@ export class SharePopoverComponent implements OnInit {
   public desc: string;
   public image: string;
 
-  constructor( public navParams:NavParams, private metaService: Meta ) {
+  constructor(
+      public navParams:NavParams
+    , private metaService: Meta
+    , private popCtrl: PopoverController
+  ) {
 
     this.url = this.navParams.get('url');
     this.title = this.navParams.get('title');
@@ -50,17 +54,22 @@ export class SharePopoverComponent implements OnInit {
 
   shareFB() {
     window.open("https://www.facebook.com/sharer/sharer.php?u="+this.url);
+    this.dismiss( true )
   }
 
   shareTwitter() {
     window.open("https://twitter.com/intent/tweet?text="+this.url);
+    this.dismiss( true )
   }
 
   shareLinkedin() {
     window.open("https://linkedin.com/shareArticle?mini=true&url="+this.url+"&title="+this.title+"&summary="+this.desc);
+    this.dismiss( true )
   }
   
-
+  dismiss( shared: boolean ) {
+    this.popCtrl.dismiss({ shared })
+  }
 }
 
 class MetaTag {

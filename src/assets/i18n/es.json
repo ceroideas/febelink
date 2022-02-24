@@ -25,6 +25,9 @@
     "labelNewPass": "Contraseña nueva",
     "labelConfirmNewPass": "Confimar contraseña nueva",
     "labelTitle": "Título",
+    "labelEdited": "Editado",
+    "labelLang": "Idioma",
+    "labelUser": "Usuario",
     "clipboard": "Copiado al Portapapeles",
     "clipboardErr": "Error al copiar al Portapapeles",
     "clipboardNone": "Sin Valores para copiar al Portapapeles",
@@ -38,6 +41,8 @@
     "unavailable": "Función no disponible de momento",
     "yes": "Si",
     "no": "No",
+    "not-logged": "Para realizar esta accion necesitas estar Loguead@",
+    "developing": "Función en Desarrollo",
 
     "personal": {
       "accountname": "Nombre de Cuenta",
@@ -68,7 +73,10 @@
       "got-it": "Entendido",
       "report": "Denunciar",
       "block": "Bloquear",
-      "continue": "Continuar"
+      "continue": "Continuar",
+      "create": "Crear",
+      "edit": "Editar",
+      "delete": "Borrar"
     },
 
     "address": {
@@ -171,6 +179,13 @@
         "minLength": "Debe detallar con un mínimo de 5 palabras"
       }
     }
+
+    , "users": {
+      "no-items": "No hay usuarios con esos datos"
+      , "error": {
+        "list": "Parece que hubo un error al mostrar el listado. Vuelve a intentar"
+      }
+    }
   },
   "menu": {
     "tabs": {
@@ -178,6 +193,7 @@
       "token": "Token",
       "searchEngine": "Buscador",
       "recommend": "Recomendar",
+      "advises": "Oráculos",
       "chat": "Chat",
       "profile": "Perfil",
       "login": "Iniciar sesión",
@@ -261,7 +277,7 @@
         "idFormat": "El formato del Documento de Identidad no es correcto",
 
         "image": "Error al obtener imagen",
-        "imageMaxSize": "Imágen demasiado grande, max. 300KB",
+        "imageMaxSize": "Imágen demasiado grande, max. {{ max }}",
 
         "noFileSelected": "No has seleccionado archivo.",
         "noFileProvided": "No has provisto archivo",
@@ -502,6 +518,52 @@
       ],
 
       "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
+    }
+    , "posts": {
+      "see": "Ver Post"
+      , "react": "Reaccionar"
+      
+      , "advises": {
+        "title": "Oráculo"
+        
+        , "create": {
+          "title": "Crear publicación"
+          , "subtitle": "Subtitulo"
+          , "summary": "Resumen"
+          , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"
+
+          , "done": "Oráculo creado exitosamente"
+
+          , "error": {
+            "title": "El titulo no puede ser menor a 4 digitos"
+            , "content": "Debes indicar el contenido a publicar"
+            , "sector": "Debes indicar el sector al que referencias"
+          }
+        }
+
+        , "new": {
+          "title": "Gran trabajo!"
+          , "msg": "Ahora, ¿te gustaria crear otro Oráculo?"
+        }
+        , "confirm": {
+          "edit": "¿Confirmas que quieres editra este Oráculo?"
+          , "new": "¿Confirmas que quieres crear este Oráculo?"
+        }
+        , "delete": {
+          "title": "Eliminar Oráculo"
+          , "msg": "¿Estás seguro de querer eliminar este Oráculo?"
+          , "done": "Oráculo eliminado"
+        }
+        , "share": "Compartir"
+
+        , "error": {
+          "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
+          , "unauthorized": "No tienes permiso para editar este Oráculo"
+          , "no-item": "Ups, parece que este Oráculo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items": "Aun no hay Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items-filters": "Aun no hay Oráculos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+        }
+      }
     }
   },
   "toast": {

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/posts/oracles"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'pages.posts.advises.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <app-lang-btn [langIdSelected]="iAdvise?.lang" [disabled]="true"></app-lang-btn>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [class]="'padding-top ' + (!isLoading && !iAdvise ? 'tx-center' : '' )">
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+
+  <app-post-component
+    *ngIf="!isLoading && iAdvise"
+    [id]="id"
+    [iAdvise]="iAdvise"
+    [showOpts]="true"
+    [showContent]="true"
+  ></app-post-component>
+  
+  <!-- No Items -->
+  <ion-label
+    class="hint pointer"
+    *ngIf="!isLoading && !iAdvise"
+    (click)="newOne()"
+    [innerHTML]="'pages.posts.advises.error.no-item' | translate"
+  ></ion-label>
+</ion-content>

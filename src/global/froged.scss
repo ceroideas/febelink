@@ -7,8 +7,8 @@
     }
 }
 
-/* Add margin bottom when on page '/chat?' */
-[data-url*="/chat?"] {
+/* Add margin bottom when on page '/post?' AND '/posts/oracle/create' */
+[data-url*="/chat?"], [data-url*="/posts/oracle/create"] {
     #fg_bubble {
         margin-bottom: 45px !important;
     }

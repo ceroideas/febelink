@@ -148,4 +148,5 @@ export enum Tabs {
   Chat = 3,
   Profile = 4,
   ICO = 5,
+  Advises = 6,
 }

@@ -12,6 +12,8 @@ export interface IAlert {
   , css?: string
   , buttons?: ( string | any )[], btns?: ( string | any )[]
   , inputs?: any[]
+
+  , backdropDismiss?: boolean
 }
 
 @Injectable({
@@ -35,6 +37,7 @@ export class AlertSvc {
             , buttons: params?.buttons || params?.btns || [ 'OK' ]
             , inputs: params?.inputs || []
             , cssClass: params?.css || ''
+            , backdropDismiss: params?.backdropDismiss
         })).present();
     }
 

@@ -25,6 +25,9 @@
     "labelNewPass": "New password",
     "labelConfirmNewPass": "Confirm new password",
     "labelTitle": "Title",
+    "labelEdited": "Edited",
+    "labelLang": "Language",
+    "labelUser": "User",
     "clipboard": "Copied to Clipboard",
     "clipboardErr": "Error on Copy to Clipboard",
     "clipboardNone": "No Valies to Copy to Clipboard",
@@ -38,6 +41,8 @@
     "unavailable": "Function not available yet",
     "yes": "Yes",
     "no": "No",
+    "not-logged": "To perform this action you need to be Logged",
+    "developing": "Feature in Development",
 
     "personal": {
       "accountname": "Account Name",
@@ -68,7 +73,10 @@
       "got-it": "Got It",
       "report": "Report",
       "block": "Block",
-      "continue": "Continue"
+      "continue": "Continue",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete"
     },
 
     "address": {
@@ -171,6 +179,13 @@
         "minLength": "You must detail with a minimum of 5 words"
       }
     }
+
+    , "users": {
+      "no-items": "There are no users with that data"
+      , "error": {
+        "list": "It looks like there was an error displaying the list. Try again"
+      }
+    }
   },
   "menu": {
     "tabs": {
@@ -178,6 +193,7 @@
       "token": "Token",
       "searchEngine": "Search",
       "recommend": "Recommend",
+      "advises": "Oracles",
       "chat": "Chat",
       "profile": "Profile",
       "login": "Login",
@@ -261,7 +277,7 @@
         "idFormat": "The format of Identity Document is not correct",
 
         "image": "Error getting image",
-        "imageMaxSize": "Image too large, max. 300KB",
+        "imageMaxSize": "Image too large, max. {{ max }}",
 
         "noFileSelected": "No file selected.",
         "noFileProvided": "No file provided",
@@ -504,6 +520,52 @@
       ],
 
       "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located."
+    }
+    , "posts": {
+      "see": "See Post"
+      , "react": "React"
+      
+      , "advises": {
+        "title": "Oracle"
+        
+        , "create": {
+          "title": "Create Post"
+          , "subtitle": "Subtitle"
+          , "summary": "Summary"
+          , "wysiwyg": "Description text text text text text text text text"
+
+          , "done": "Oracle created successfully"
+
+          , "error": {
+            "title": "The title cannot be less than 4 digits"
+            , "content": "You must indicate the content to publish"
+            , "sector": "You must indicate the sector to which you refer"
+          }
+        }
+
+        , "new": {
+          "title": "Great Job!"
+          , "msg": "Now, ¿would you like to create another Oracle?"
+        }
+        , "confirm": {
+          "edit": "Do you confirm that want to edit this Oracle?"
+          , "new": "Do you confirm that want to create new Oracle?"
+        }
+        , "delete": {
+          "title": "Delete Oracle"
+          , "msg": "Are you sure you want to delete this Oracle?"
+          , "done": "Oracle deleted"
+        }
+        , "share": "Share"
+
+        , "error": {
+          "search": "There was an error in the search, please try again"
+          , "unauthorized": "You do not have permission to edit this Oracle"
+          , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
+          , "no-items": "There are no Oracles yet<br>Would you like to post one?<br>Click here"
+          , "no-items-filters": "There are no Oracles yet with these filters<br>Do you want to publish one?<br>Click here"  
+        }
+      }
     }
   },
   "toast": {

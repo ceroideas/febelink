@@ -8,14 +8,16 @@
 .tx-top{ vertical-align: text-top; }
 .tx-bottom{ vertical-align: text-bottom; }
 .hint { opacity: 0.5; }
-.one-line {
+.one-line, .lines-2, .lines-3, .lines-4 {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* number of lines to show */
-            line-clamp: 1; 
     -webkit-box-orient: vertical;
 }
+.one-line { -webkit-line-clamp: 1; line-clamp: 1; }
+.lines-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+.lines-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+.lines-4 { -webkit-line-clamp: 4; line-clamp: 4; }
 
 .bold-6 { font-weight: 600; }
 .bold-7 { font-weight: 700; }
@@ -27,9 +29,9 @@
     vertical-align: super;
 }
 
-.tx-upper { text-transform: uppercase; }
-.tx-lower { text-transform: lowercase; }
-.tx-capitalize { text-transform: capitalize; }
+.tx-upper, .tx-cap-1st::first-letter { text-transform: uppercase; }
+.tx-lower, .tx-cap-1st { text-transform: lowercase; }
+.tx-cap, .tx-capitalize { text-transform: capitalize; }
 
 .tx-transp { color: transparent; }
 
