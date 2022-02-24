@@ -268,9 +268,9 @@ export class ExchangeComponent implements OnInit, OnChanges {
     }, this.form );
   }
 
-  getConversion( isSelling: boolean = true, sell?: number, buy?: number ): number {
+  getConversion( isSelling: boolean = true, sell?: number | string, buy?: number | string ): number {
     const isBuy = this.exchangeType == ExchangeType.BUY
-    if( !this.useMarketPrice && !isBuy ) return isSelling ? 1 : sell / buy
+    if( !this.useMarketPrice && !isBuy ) return isSelling ? 1 : +sell / +buy
 
     return isSelling ?
       ( !isBuy ? this.mktPrice?.price_selling : +this.offer?.price )
