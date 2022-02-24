@@ -2,7 +2,7 @@ import { FileService } from './../../../../components/file-picker/services/file.
 import { AdviseService } from './../../advises/services/advises.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { DateFormatType } from 'src/app/pipes/date-format';
+import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { ShareService } from 'src/app/services/share.service';
 import { IAdviseFull } from '../../advises/models/advises.model';
 import { IUser } from 'src/app/models/user.model';

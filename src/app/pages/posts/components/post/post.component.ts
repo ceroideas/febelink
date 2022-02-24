@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
 import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
-import { DateFormatType } from 'src/app/pipes/date-format';
+import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { AlertSvc, IAlert } from 'src/app/services/alert.service';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { SeoService } from 'src/app/services/seo.service';
@@ -50,7 +50,7 @@ export class PostComponent implements OnInit {
       this.seoSvc.generateTags({
         title: this.iAdvise.title,
         description: this.iAdvise.content,
-        image: this.fileSvc.img2str( this.iAdvise.photo?.src )
+        image: this.fileSvc.img2str( this.iAdvise.photo )
       })
     }
   }
@@ -94,7 +94,7 @@ export class PostComponent implements OnInit {
   async edit()
   {
     this.toastSvc.show( 'common.developing', true )
-    // ToCheck
+    // ToDo
     // this.router.navigate([ `posts/oracle/${this.id}/edit` ])
   }
 
