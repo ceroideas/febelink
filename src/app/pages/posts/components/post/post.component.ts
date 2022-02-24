@@ -50,7 +50,7 @@ export class PostComponent implements OnInit {
       this.seoSvc.generateTags({
         title: this.iAdvise.title,
         description: this.iAdvise.content,
-        image: this.fileSvc.img2str( this.iAdvise.photo )
+        image: this.fileSvc.img2str( this.iAdvise.photo?.src )
       })
     }
   }
@@ -93,7 +93,9 @@ export class PostComponent implements OnInit {
 
   async edit()
   {
-    this.router.navigate([ `posts/oracle/${this.id}/edit` ])
+    this.toastSvc.show( 'common.developing', true )
+    // ToCheck
+    // this.router.navigate([ `posts/oracle/${this.id}/edit` ])
   }
 
   async delete()
