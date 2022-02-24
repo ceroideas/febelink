@@ -59,6 +59,7 @@ export class AdviseService {
       : !iAdvise?.content
           ? null
           : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
+          // : this.firstSentence( iAdvise.content )
   }
 
   extractSummary( iAdvise: IAdvise ): string
@@ -67,5 +68,16 @@ export class AdviseService {
       : !iAdvise?.content ? null
         : iAdvise?.title ? iAdvise.content
           : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
+          // : iAdvise.content?.replace( this.firstSentence( iAdvise.content ) || '', '' )
+  }
+
+  private firstSentence( str ): string
+  {
+    // https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions
+    // return !str ? '' : str.match( /\(?[^\.\?\!]+[\.!\?]\)?/g )[ 0 ]
+    // const ar = !str ? '' : str.match( /[^.?!]+[.!?]+[\])'"`’”]*/g )
+    const ar = !str ? '' : str.replace(/\.(?!\d)|([^\d])\.(?=\d)/g,'$1.|')
+    console.log({ str, ar })
+    return ar
   }
 }
