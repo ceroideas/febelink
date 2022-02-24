@@ -41,6 +41,8 @@
     "unavailable": "Function not available yet",
     "yes": "Yes",
     "no": "No",
+    "not-logged": "To perform this action you need to be Logged",
+    "developing": "Feature in Development",
 
     "personal": {
       "accountname": "Account Name",
@@ -71,7 +73,10 @@
       "got-it": "Got It",
       "report": "Report",
       "block": "Block",
-      "continue": "Continue"
+      "continue": "Continue",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete"
     },
 
     "address": {
@@ -188,6 +193,7 @@
       "token": "Token",
       "searchEngine": "Search",
       "recommend": "Recommend",
+      "advises": "Advises",
       "chat": "Chat",
       "profile": "Profile",
       "login": "Login",
@@ -516,19 +522,46 @@
       "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located."
     }
     , "posts": {
-      "advises": {
-        "create": {
+      "see": "See Post"
+      , "react": "React"
+      
+      , "advises": {
+        "title": "Advise"
+        
+        , "create": {
           "title": "Title"
           , "subtitle": "Subtitle"
           , "summary": "Summary"
           , "wysiwyg": "Description text text text text text text text text"
+
+          , "done": "Advise created successfully"
+
+          , "error": {
+            "title": "The title cannot be less than 4 digits"
+            , "sector": "You must indicate the sector to which you refer"
+          }
+        }
+
+        , "new": {
+          "title": "Great Job!"
+          , "msg": "Now, ¿would you like to create another Advise?"
+        }
+        , "confirm": {
+          "edit": "Do you confirm that want to edit this Advise?"
+          , "new": "Do you confirm that want to create new Advise?"
+        }
+        , "delete": {
+          "title": "Delete Advise"
+          , "msg": "Are you sure you want to delete this advise?"
         }
         , "share": "Share Advise"
+        , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
         , "no-items": "There are no Advises yet<br>Would you like to post one?<br>Click here"
         , "no-items-filter": "There are no Advises yet with these filters<br>Do you want to publish one?<br>Click here"
 
         , "error": {
           "search": "There was an error in the search, please try again"
+          , "unauthorized": "You do not have permission to edit this Advise"
         }
       }
     }

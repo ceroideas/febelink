@@ -41,6 +41,8 @@
     "unavailable": "Función no disponible de momento",
     "yes": "Si",
     "no": "No",
+    "not-logged": "Para realizar esta accion necesitas estar Loguead@",
+    "developing": "Función en Desarrollo",
 
     "personal": {
       "accountname": "Nombre de Cuenta",
@@ -71,7 +73,10 @@
       "got-it": "Entendido",
       "report": "Denunciar",
       "block": "Bloquear",
-      "continue": "Continuar"
+      "continue": "Continuar",
+      "create": "Crear",
+      "edit": "Editar",
+      "delete": "Borrar"
     },
 
     "address": {
@@ -188,6 +193,7 @@
       "token": "Token",
       "searchEngine": "Buscador",
       "recommend": "Recomendar",
+      "advises": "Consejos",
       "chat": "Chat",
       "profile": "Perfil",
       "login": "Iniciar sesión",
@@ -514,19 +520,46 @@
       "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
     }
     , "posts": {
-      "advises": {
-        "create": {
+      "see": "Ver Post"
+      , "react": "Reaccionar"
+      
+      , "advises": {
+        "title": "Consejo"
+        
+        , "create": {
           "title": "Titulo"
           , "subtitle": "Subtitulo"
           , "summary": "Resumen"
           , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"
+
+          , "done": "Consejo creado exitosamente"
+
+          , "error": {
+            "title": "El titulo no puede ser menor a 4 digitos"
+            , "sector": "Debes indicar el sector al que referencias"
+          }
+        }
+
+        , "new": {
+          "title": "Gran trabajo!"
+          , "msg": "Ahora, ¿te gustaria crear otro Consejo?"
+        }
+        , "confirm": {
+          "edit": "¿Confirmas que quieres editra este Consejo?"
+          , "new": "¿Confirmas que quieres crear este Consejo?"
+        }
+        , "delete": {
+          "title": "Eliminar Consejo"
+          , "msg": "¿Estás seguro de querer eliminar este consejo?"
         }
         , "share": "Compartir Consejo"
+        , "no-item": "Ups, parece que este consejo no exists<br>¿Quieres publicar uno?<br>Clickea aqui"
         , "no-items": "Aun no hay Consejos<br>¿Quieres publicar uno?<br>Clickea aqui"
         , "no-items-filter": "Aun no hay Consejos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
 
         , "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
+          , "unauthorized": "No tienes permiso para editar este Consejo"
         }
       }
     }
