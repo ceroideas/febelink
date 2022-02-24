@@ -1,3 +1,4 @@
+import { QuillModule } from 'ngx-quill';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,8 +18,13 @@ import { ClickStopPropagation } from '../components/stop-propagation.component';
 import { TwoFAComponent } from '../components/two-fa/two-fa.component';
 import { InformComponent } from '../components/inform/inform.component';
 import { LoadingBLComponent } from '../components/loading/loading.component';
-import { UserItemComponent } from '../components/user-item/user-item.component';
+import { UserItemComponent } from '../components/user/item/item.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';
+import { WYSIWYGComponent } from '../components/wysiwyg/wysiwyg.component';
+import { FilePickerComponent } from '../components/file-picker/file-picker.component';
+import { OptsMenuComponent } from '../components/opts-menu/opts-menu.component';
+import { SectorsComponent } from '../components/sectors/sectors.component';
+import { UserFilterComponent } from '../components/user/filter/filter.component';
 import { NumFloatComponent } from '../components/num-float/num-float.component';
 
 @NgModule({
@@ -37,7 +43,12 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
     InformComponent,
     LoadingBLComponent,
     UserItemComponent,
+    UserFilterComponent,
     PaginationComponent,
+    WYSIWYGComponent,
+    FilePickerComponent,
+    OptsMenuComponent,
+    SectorsComponent,
     NumFloatComponent,
   ],
   imports: [
@@ -47,6 +58,7 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
     IonicModule,
     PipesModule,
     TranslateModule.forChild(),
+    QuillModule.forRoot(),
   ],
   exports: [
     TranslateModule,
@@ -68,7 +80,12 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
     InformComponent,
     LoadingBLComponent,
     UserItemComponent,
+    UserFilterComponent,
     PaginationComponent,
+    WYSIWYGComponent,
+    FilePickerComponent,
+    OptsMenuComponent,
+    SectorsComponent,
     NumFloatComponent,
   ],
   entryComponents: [],
