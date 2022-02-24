@@ -14,7 +14,7 @@ ion-title {
 ion-card {
   padding: 10px;
   margin: 0px; margin-bottom: 10px;
-  cursor: pointer;
+  cursor: default;
 
   ion-row {
     margin-bottom: 5px;
@@ -29,13 +29,6 @@ ion-card {
   .abicon-shopping-cart {
     position: absolute;
     right: 0;
-  }
-
-  .number {
-    font-size: 20px
-  }
-  .decimal {
-    font-size: 12px
   }
 }
 

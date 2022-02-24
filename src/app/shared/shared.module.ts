@@ -18,6 +18,8 @@ import { TwoFAComponent } from '../components/two-fa/two-fa.component';
 import { InformComponent } from '../components/inform/inform.component';
 import { LoadingBLComponent } from '../components/loading/loading.component';
 import { UserItemComponent } from '../components/user-item/user-item.component';
+import { PaginationComponent } from '../components/pagination/pagination.component';
+import { NumFloatComponent } from '../components/num-float/num-float.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { UserItemComponent } from '../components/user-item/user-item.component';
     InformComponent,
     LoadingBLComponent,
     UserItemComponent,
+    PaginationComponent,
+    NumFloatComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +68,8 @@ import { UserItemComponent } from '../components/user-item/user-item.component';
     InformComponent,
     LoadingBLComponent,
     UserItemComponent,
+    PaginationComponent,
+    NumFloatComponent,
   ],
   entryComponents: [],
 })

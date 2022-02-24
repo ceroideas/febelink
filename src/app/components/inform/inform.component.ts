@@ -3,7 +3,9 @@ import { ModalController } from '@ionic/angular';
 
 export interface Button {
   text: string,
-  dismiss: boolean
+  name?: string,
+  dismiss?: boolean,
+  css?: string
 }
 
 @Component({
@@ -32,7 +34,7 @@ export class InformComponent implements OnInit {
   checkmark: string;
 
   @Input() buttons: Button[];
-  @Output() OnClick: EventEmitter<Button> = new EventEmitter()
+  @Output() OnClick: EventEmitter<Button> | any = new EventEmitter()
 
   constructor(
       private modalCtrl: ModalController
@@ -47,12 +49,13 @@ export class InformComponent implements OnInit {
   }
 
   onButtonClick( button: Button ) {
-    if( button?.dismiss ) {
+    if( button?.dismiss )
       this.onDismiss();
-      return;
-    }
 
     // Callback
-    this.OnClick.emit( button );
+    if( this.OnClick instanceof EventEmitter )
+      this.OnClick.emit( button );
+    else if( this.OnClick )
+      this.OnClick( button );
   }
 }

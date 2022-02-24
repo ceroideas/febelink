@@ -21,8 +21,11 @@ import { environment } from 'src/environments/environment';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
 import { GeoPlacesApi } from '../services/geoplaces.service';
 import { GeoPlacesModel } from '../models/geoplaces.model';
-import { VerificationComponent, VerifWhich } from '../components/verification/verification.component';
-import { KYCAliceComponent } from '../components/kyc-alice/kyc-alice.component';
+import {
+  VerificationComponent,
+  VerifWhich,
+} from '../components/verification/verification.component';
+import { KycPopSvc } from '../services/kyc/kyc.pop.service';
 
 @Component({
   selector: 'app-tab4',
@@ -85,7 +88,8 @@ export class Tab4Page {
     private actionSheet: ActionSheetController,
     private route: ActivatedRoute,
     private translateService: TranslateConfigService,
-    private geoPlaces: GeoPlacesApi
+    private geoPlaces: GeoPlacesApi,
+    private kycPopSvc: KycPopSvc
   ) {
     if (this.platform.is('cordova')) {
       this.isNative = true;
@@ -106,8 +110,14 @@ export class Tab4Page {
 
   // To add verified KYC values ( if already done )
   setKYClabels() {
-    this.labelDoc = this.translateService.instant( 'common.personal.id' )
-      + ( !this.perfil?.doc_type ? '' : ' - ' + this.translateService.instant( 'kyc.docTypes.' + this.perfil.doc_type ));
+    this.labelDoc =
+      this.translateService.instant('common.personal.id') +
+      (!this.perfil?.doc_type
+        ? ''
+        : ' - ' +
+          this.translateService.instant(
+            'kyc.docTypes.' + this.perfil.doc_type
+          ));
   }
 
   //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
@@ -187,10 +197,19 @@ export class Tab4Page {
     this.form = this.formBuilder.group({
       nick: [this.perfil.nick],
       telefono: [this.perfil.telefono],
-      descripcion: [this.perfil.descripcion == null || this.perfil.descripcion == 'null' ? '' : this.perfil.descripcion],
+      descripcion: [
+        this.perfil.descripcion == null || this.perfil.descripcion == 'null'
+          ? ''
+          : this.perfil.descripcion,
+      ],
 
       direccion: [this.geoPlaces.place.address],
-      direccion_resto: [this.perfil.direccion_resto == null || this.perfil.direccion_resto == 'null' ? '' : this.perfil.direccion_resto],
+      direccion_resto: [
+        this.perfil.direccion_resto == null ||
+        this.perfil.direccion_resto == 'null'
+          ? ''
+          : this.perfil.direccion_resto,
+      ],
 
       country: [this.perfil.country],
       state: [this.perfil.state],
@@ -347,16 +366,16 @@ export class Tab4Page {
    * ToDo: KYC
    */
   verifyToSubmit() {
-    const onVerificationDone = ( hasError: boolean, verifSent: boolean ) => {
-      if( hasError )
-        return;
+    const onVerificationDone = (hasError: boolean, verifSent: boolean) => {
+      if (hasError) return;
 
-      if( verifSent ) // Email controlled and saved on verification
+      if (verifSent)
+        // Email controlled and saved on verification
         this.emailPrevio = this.form.get('email').value;
 
       this.submitForm();
     };
-    this.verify( VerifWhich.Save, onVerificationDone );
+    this.verify(VerifWhich.Save, onVerificationDone);
   }
   /**
    * Metido a mano campos para enviarlos al servidor
@@ -371,11 +390,15 @@ export class Tab4Page {
 
     p = {
       nick: this.form.get('nick').value,
-      descripcion: descripcion == null || descripcion == 'null' ? '' : descripcion,
+      descripcion:
+        descripcion == null || descripcion == 'null' ? '' : descripcion,
       telefono: this.form.get('telefono').value,
 
       direccion: !place ? '' : place.address,
-      direccion_resto: direccion_resto == null || direccion_resto == 'null' ? '' : direccion_resto,
+      direccion_resto:
+        direccion_resto == null || direccion_resto == 'null'
+          ? ''
+          : direccion_resto,
 
       country: !place ? '' : place.Country.short,
       state: !place ? '' : place.State.long,
@@ -459,12 +482,12 @@ export class Tab4Page {
                     this.dniPrevio = p.dni;
 
                     // Email has changed, need to verify it
-                    if( this.emailPrevio != p.email ) {
+                    if (this.emailPrevio != p.email) {
                       this.perfil.email_verified_at = null;
                       this.emailVerified = false;
                     }
                     this.emailPrevio = p.email;
-                    
+
                     this.utilities.saveUserData(res.user);
                     this.utilities.dismissLoading();
 
@@ -618,7 +641,7 @@ export class Tab4Page {
                   this.dniPrevio = p.dni;
 
                   // Email has changed, need to verify it
-                  if( this.emailPrevio != p.email ) {
+                  if (this.emailPrevio != p.email) {
                     this.perfil.email_verified_at = null;
                     this.emailVerified = false;
                   }
@@ -864,42 +887,41 @@ export class Tab4Page {
     });
   }
 
-  async showSubscription(alert_message?:string) {
+  async showSubscription(alert_message?: string) {
     const suscribirseModal = await this.modalCtrl.create({
-        component: SuscribirsePage,
+      component: SuscribirsePage,
     });
 
-    if(alert_message){            
-        let alert = await this.alertCtrl.create({
-            header: this.translateService.instant("tabs.tab4.alerts.improve"),
-            message: alert_message,
-            buttons: [
-                {
-                    text: this.translateService.instant("common.buttons.cancel"),
-                    role: 'cancel',
-                },
-                {
-                    text: this.translateService.instant("common.labelSubsribe"),
-                    handler: async () => {    
-                        await this.showSubscriptionsModal(suscribirseModal);
-                    },
-                },
-            ],
-        });
-        await alert.present();
-    } else{
-        await this.showSubscriptionsModal(suscribirseModal);
+    if (alert_message) {
+      let alert = await this.alertCtrl.create({
+        header: this.translateService.instant('tabs.tab4.alerts.improve'),
+        message: alert_message,
+        buttons: [
+          {
+            text: this.translateService.instant('common.buttons.cancel'),
+            role: 'cancel',
+          },
+          {
+            text: this.translateService.instant('common.labelSubsribe'),
+            handler: async () => {
+              await this.showSubscriptionsModal(suscribirseModal);
+            },
+          },
+        ],
+      });
+      await alert.present();
+    } else {
+      await this.showSubscriptionsModal(suscribirseModal);
     }
-}
+  }
 
-private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
+  private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
     await suscribirseModal.present();
     this.obtenerPerfil();
-    suscribirseModal.onDidDismiss().then(response => {
-        if (response?.data?.subscriptionChanged)
-            this.loadSuscriptions();
+    suscribirseModal.onDidDismiss().then((response) => {
+      if (response?.data?.subscriptionChanged) this.loadSuscriptions();
     });
-}
+  }
 
   /**
    * Navegación a la demanda
@@ -1199,48 +1221,48 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
   /**
    * When input email changed, verify it
    */
-  public emailChanged( email ) {
-    if( this.hasEmailChanged( email ))
-      this.emailVerified = false;
-    else
-      this.emailVerified = this.isEmailVerified();
+  public emailChanged(email) {
+    if (this.hasEmailChanged(email)) this.emailVerified = false;
+    else this.emailVerified = this.isEmailVerified();
   }
 
   /**
    * Check if mail is verified
    */
   isEmailVerified(): boolean {
-    return this.perfil?.email_verified_at !== null && this.perfil?.email_verified_at !== '';
+    return (
+      this.perfil?.email_verified_at !== null &&
+      this.perfil?.email_verified_at !== ''
+    );
   }
 
   /**
    * Check if mail has changed
    */
-  hasEmailChanged( email : string = this.form.get('email').value ): boolean {
+  hasEmailChanged(email: string = this.form.get('email').value): boolean {
     return email !== this.perfil?.email;
   }
 
   /**
    * Alert to Verify email
    */
-  public async verify( which, onVerificationDone?: Function ) {
+  public async verify(which, onVerificationDone?: Function) {
     const email = this.form.get('email').value;
-    if( email === null || email === '' ) {
+    if (email === null || email === '') {
       this.utilities.showToast(
         this.translateService.instant('tabs.tab4.errors.mailEmpty')
       );
       return;
     }
 
-    if( !this.hasEmailChanged() && this.isEmailVerified() ) {
-      if( onVerificationDone )
-        onVerificationDone( false, true );
+    if (!this.hasEmailChanged() && this.isEmailVerified()) {
+      if (onVerificationDone) onVerificationDone(false, true);
       return;
     }
 
     const verif = await this.modalCtrl.create({
       component: VerificationComponent,
-      componentProps: { 
+      componentProps: {
         which: which,
         id: this.perfil.id,
         email: email,
@@ -1249,54 +1271,36 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
       mode: 'md',
       cssClass: 'pop-yt',
     });
-    
-    verif.onDidDismiss()
-      .then((data) => {
-        const hasError: boolean = data.data?.hasError;
-        const verifSent: boolean = data.role !== 'backdrop' && data.data?.verifSent;
 
-        if( onVerificationDone )
-          onVerificationDone( hasError, verifSent );
+    verif.onDidDismiss().then((data) => {
+      const hasError: boolean = data.data?.hasError;
+      const verifSent: boolean =
+        data.role !== 'backdrop' && data.data?.verifSent;
+
+      if (onVerificationDone) onVerificationDone(hasError, verifSent);
     });
 
     await verif.present();
   }
 
-  
-
   async verifyKYC() {
-    const popover = await this.popoverController.create({
-      component: KYCAliceComponent,
-      translucent: true,
-      mode: 'md',
-      cssClass: 'pop-yt',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
-
-    await popover.present();
-
-    // The data always returns `data.result`
-    const { data } = await popover.onDidDismiss();
-
-    // According to `isValidated` == true => perform the needed task
-    if( data.result.isValidated ) {
+    if (await this.kycPopSvc.verify()) {
       this.perfil.kyc_verified_at = new Date().toLocaleString();
-      this.obtenerPerfil() // Update user data on Verified
+      this.utilities.saveUserData(this.perfil);
     }
-      
-    
-    this.utilities.showToast(
-      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
-    );
   }
 
-  verified( which: string ) {
+  verified(which: string) {
     let msg: string = '';
-    switch( which ) {
-      case 'email': msg = 'common.verif.which.email'; break;
-      case 'kyc': msg = 'common.verif.which.kyc'; break;
+    switch (which) {
+      case 'email':
+        msg = 'common.verif.which.email';
+        break;
+      case 'kyc':
+        msg = 'common.verif.which.kyc';
+        break;
     }
 
-    this.utilities.showToast( this.translateService.instant( msg ));
+    this.utilities.showToast(this.translateService.instant(msg));
   }
 }

@@ -6,7 +6,6 @@ import { CookiesComponent } from './cookies/cookies.component';
 import { SharePopoverComponent } from './share-popover/share-popover.component';
 import { SocialLoginComponent } from './social-login/social-login.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
     entryComponents: [
@@ -16,14 +15,12 @@ import { PaginationComponent } from './pagination/pagination.component';
       CookiesComponent,
       SharePopoverComponent,
       SocialLoginComponent,
-      PaginationComponent,
     ],
     exports: [
       MenuComponent,
       CookiesComponent,
       SharePopoverComponent,
       SocialLoginComponent,
-      PaginationComponent,
       TranslateModule
     ],
     imports: [

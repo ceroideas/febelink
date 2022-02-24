@@ -7,10 +7,11 @@
         <ion-icon class="margin-start" [name]="'chevron-' + ( isDetailsShowing ? 'up' : 'down' ) + '-outline'"></ion-icon>
       </ion-col>
       <ion-col size="6" class="tx-end padding-end bold-6">
-        <ion-label color="febelink">{{{ value: asset?.amount } | splitNumber }}</ion-label>
-        <ion-label color="febelink" class="decimal">{{
-          { value: asset?.amount, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
-        }}</ion-label>
+        <app-num-float
+          color="febelink"
+          [number]="asset?.amount"
+          [round]="assetsMaxDecimals"
+        ></app-num-float>
       </ion-col>
     </ion-row>
   
@@ -22,10 +23,7 @@
       </ion-col>
       <ion-col size="6" class="tx-end padding-end bold-6">
         <ion-label class="margin-end">-</ion-label>
-        <ion-label>{{{ value: sumRetainedTks } | splitNumber }}</ion-label>
-        <ion-label class="decimal">{{
-          { value: sumRetainedTks, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
-        }}</ion-label>
+        <app-num-float [number]="sumRetainedTks" [round]="assetsMaxDecimals"></app-num-float>
       </ion-col>
     </ion-row>
   
@@ -37,10 +35,7 @@
           <ion-row><ion-label>{{ retainedTk?.date }}</ion-label></ion-row>
         </ion-col>
         <ion-col size="6" class="center-v tx-end">
-          <ion-label>{{{ value: retainedTk.num_tokens } | splitNumber }}</ion-label>
-          <ion-label class="decimal">{{
-            { value: retainedTk.num_tokens, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
-          }}</ion-label>
+          <app-num-float [number]="retainedTk.num_tokens" [round]="assetsMaxDecimals"></app-num-float>
         </ion-col>
       </ion-row>
     </ng-container>
@@ -53,10 +48,11 @@
       <ion-icon class="margin-start" [name]="'chevron-down-outline'" *ngIf="!isDetailsShowing && retainedTks.length > 0"></ion-icon>
     </ion-col>
     <ion-col size="6" class="tx-end padding-end bold-6">
-      <ion-label color="febelink">{{{ value: asset?.amount - sumRetainedTks } | splitNumber }}</ion-label>
-      <ion-label color="febelink" class="decimal">{{
-        { value: asset?.amount - sumRetainedTks, returnDecimal: true, round: assetsMaxDecimals } | splitNumber
-      }}</ion-label>
+      <app-num-float
+        [number]="asset?.amount - sumRetainedTks"
+        [round]="assetsMaxDecimals"
+        color="febelink"
+      ></app-num-float>
     </ion-col>
   </ion-row>
 </ion-grid>

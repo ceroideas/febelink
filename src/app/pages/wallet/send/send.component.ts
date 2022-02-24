@@ -1,13 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IUser } from 'src/app/models/user.model';
 import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TwoFAComponent } from 'src/app/components/two-fa/two-fa.component';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
+import { ClipboardSvc } from 'src/app/services/clipboard.service';
+import { ToastSvc } from 'src/app/services/toast.service';
+import { LoadingSvc } from 'src/app/services/loading.service';
+import { AlertSvc } from 'src/app/services/alert.service';
+import { InformSvc } from 'src/app/services/inform.service';
 
 @Component({
     selector: 'app-send',
@@ -42,8 +45,11 @@ export class SendComponent implements OnInit {
         , private modalCtrl: ModalController
         , private popCtrl: PopoverController
         , private wallet: WalletService
-        , public utils: UtilitiesService
-        , private translateSvc: TranslateConfigService
+        , public clipboardSvc: ClipboardSvc
+        , public toastSvc: ToastSvc
+        , public loadingSvc: LoadingSvc
+        , public alertSvc: AlertSvc
+        , public informSvc: InformSvc
     ) {}
 
     ngOnInit() {
@@ -82,13 +88,9 @@ export class SendComponent implements OnInit {
         this.calcs.diff = this.calcs.max - amount;
     }
 
-    async send() {
-        if( !this.checkErrors() ) return;
-    
+    private async doSend() {
         /* Verify 2FA */
-        const verified = await this.verify2FA();
-        
-        if( verified ) {
+        if( await this.verify2FA() )
             try {
                 const res = await this.wallet.send(
                     this.publicKey,
@@ -96,46 +98,68 @@ export class SendComponent implements OnInit {
                     this.calcs.send,
                     this.returnBalance
                 );
-                await this.utils.dismissLoading();
+                await this.loadingSvc.dismiss();
                 
                 // Had Error
                 if( res.status != 200 ) {
-                    this.utils.showAlert( null, res.message );
+                    this.alertSvc.show({ msg: res.message });
                     return;
                 }
 
                 // Show success message
-                this.utils.showToast( res.message );
+                this.toastSvc.show( res.message );
                 this.modalCtrl.dismiss({ asset: this.asset, response: res });
             } catch( ex ) {
-              await this.utils.dismissLoading();
-              // ToDo: Handle Stellar error Statuses
-              alert( ex.error.message );
+            await this.loadingSvc.dismiss();
+            // ToDo: Handle Stellar error Statuses
+            alert( ex.error.message );
             }
-        }
+    }
+
+    async send() {
+        if( !this.checkErrors() ) return;
+    
+        this.informSvc.show({
+            title: 'pages.wallet.send.alert.title'
+            , description: 'pages.wallet.send.alert.message'
+            , buttons: [
+                {
+                    text: 'common.buttons.cancel',
+                    dismiss: true,
+                }, {
+                    text: 'common.buttons.confirm',
+                    name: 'Confirm',
+                    dismiss: true
+                }
+            ]
+            , OnClick: button => {
+                if( button.name == 'Confirm' )
+                    this.doSend()
+            }
+        });
     }
 
     checkErrors(): boolean {
         const { publicKey } = this.form.value;
         
         if(( this.asset?.amount || 0 ) - this.calcs.retained <= 0 ) {
-            this.utils.showToast( this.translateSvc.instant( 'pages.wallet.error.cant-send' ));
+            this.toastSvc.show( 'pages.wallet.error.cant-send', true );
             return;
         }
 
         if( !this.calcs.send || this.calcs.send <= 0 ) {
-            this.utils.showToast( this.translateSvc.instant( 'pages.wallet.error.qSend' ));
+            this.toastSvc.show( 'pages.wallet.error.qSend', true );
             return false;
         }
         
         if( this.calcs.diff < 0 ) {
-            this.utils.showToast( this.translateSvc.instant( 'pages.wallet.error.minSend' ));
+            this.toastSvc.show( 'pages.wallet.error.minSend', true );
             return false;
         }
         
         this.publicKey = this.user?.public || publicKey;
         if( !this.publicKey || this.publicKey?.length == 0 ) {
-            this.utils.showToast( this.translateSvc.instant( 'pages.wallet.error.public-key' ));
+            this.toastSvc.show( 'pages.wallet.error.public-key', true );
             return false;
         }
     
@@ -153,9 +177,5 @@ export class SendComponent implements OnInit {
     
         const { data } = await twoFApop.onDidDismiss();
         return new Promise( resolve => { resolve( data?.verified )});
-    }
-
-    copyPublic( publicKey: string ) {
-        this.utils.copyClipboard( publicKey );
     }
 }

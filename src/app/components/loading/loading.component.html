@@ -1,6 +1,6 @@
-<ion-card class="center-v align-center marg-t" *ngIf="isLoading">
-  <ion-row class="center-v">
-    <ion-spinner class="marg-e"></ion-spinner>
-    <ion-label class="marg-s">{{ message }}</ion-label>
+<ion-grid class="center-v align-center margin-top" *ngIf="isLoading">
+  <ion-row class="center-v align-center vertical-content">
+    <ion-spinner class="margin-end"></ion-spinner>
+    <ion-label class="margin-start">{{ message | translate }}</ion-label>
   </ion-row>
-</ion-card>
+</ion-grid>

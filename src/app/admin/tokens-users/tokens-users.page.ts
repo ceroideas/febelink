@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TokensUsersService } from 'src/app/admin/services/tokens-users.service';
-import { CryptoCurrency } from 'src/app/models/currency.model';
-import { DateFormatType } from 'src/app/pipes/date-format';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
+import { DateFormatType } from 'src/app/pipes/date-format.pipe';
+import { AlertSvc } from 'src/app/services/alert.service';
+import { ClipboardSvc } from 'src/app/services/clipboard.service';
+import { LoadingSvc } from 'src/app/services/loading.service';
+import { ToastSvc } from 'src/app/services/toast.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
@@ -22,7 +26,10 @@ export class TokensUsersPage implements OnInit {
   constructor(
       private tokensUsersSvc:TokensUsersService
     , public modalCtrl:ModalController
-    , public utils:UtilitiesService
+    , public clipboardSvc: ClipboardSvc
+    , public alertSvc: AlertSvc
+    , public toastSvc: ToastSvc
+    , public loadingSvc: LoadingSvc
     , private translateSvc: TranslateConfigService
     , private walletSvc: WalletService
     ) { }
@@ -67,23 +74,23 @@ export class TokensUsersPage implements OnInit {
   async showObs( tokensUser: TokensUser ) {
     // Show Observations on click (if they exist)
     if( tokensUser?.observations )
-      this.utils.showAlert(
-        this.translateSvc.instant( 'admin.tokensUsers.obs' ),
-        tokensUser.observations
-      );
+      this.alertSvc.show({
+        title: 'admin.tokensUsers.obs',
+        msg: tokensUser.observations
+      }, true );
   }
 
   async showBalance( tokensUser: TokensUser ) {
     if( tokensUser.public == null ) {
-      this.utils.showToast( 'El usuario no tiene clave publica para ver el balance' );
+      this.toastSvc.show( 'El usuario no tiene clave publica para ver el balance' );
       return;
     }
 
     // ToDo: Extract to Component
-    await this.utils.showLoading();
+    await this.loadingSvc.show();
     const balance: { data: CryptoCurrency[] } =
         await ( await this.walletSvc.getBalanceByUserId( tokensUser.uid )).toPromise();
-    await this.utils.dismissLoading();
+    await this.loadingSvc.dismiss();
 
     let assets: string = '';
     balance.data.forEach(( crypto, index ) => {
@@ -91,7 +98,7 @@ export class TokensUsersPage implements OnInit {
         'Asset: ' + crypto.currency + '<br>' +
         'Cant: ' +crypto.amount ;
     });
-    this.utils.showAlert( 'Balance de ' + ( tokensUser.name || tokensUser.nick ), assets );
+    this.alertSvc.show({ title: 'Balance de ' + ( tokensUser.name || tokensUser.nick ), msg: assets });
   }
 
   async edit(tokensUser:TokensUser){
@@ -115,25 +122,33 @@ export class TokensUsersPage implements OnInit {
     if( this.isLoading ) { this.showToastLoading(); return; }
 
     try{
-      if(!await this.utils.confirm( 'admin.tokensUsers.modal', {
-        CRUD: this.translateSvc.instant( TokenCRUD.Delete ),
-        name: tokensUser?.name || tokensUser?.nick,
-        extra: this.translateSvc.instant( 'admin.tokensUsers.irreversible' )
-      })) return;
+      if( !await this.alertSvc.confirm({
+          title: 'admin.tokensUsers.modal.header',
+          titleParams: { CRUD: this.translateSvc.instant( TokenCRUD.Delete )},
+          msg: 'admin.tokensUsers.modal.body',
+          msgParams: {
+            CRUD: this.translateSvc.instant( TokenCRUD.Delete ),
+            name: tokensUser?.name || tokensUser?.nick,
+            extra: this.translateSvc.instant( 'admin.tokensUsers.irreversible' )
+          }
+        })) return;
       
       this.isLoading = true; 
+      this.loadingSvc.show();
       await this.tokensUsersSvc.deleteTokenUser(tokensUser.id);
-      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.delete.done' ));
-       this.search();
+      this.toastSvc.show( 'admin.tokensUsers.delete.done', true );
+      this.loadingSvc.dismiss();
+      this.search();
     }
     catch(e){
       this.isLoading = false;
-      this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.delete.error' ));
+      this.loadingSvc.dismiss();
+      this.toastSvc.show( 'admin.tokensUsers.delete.error', true );
     }
   }
 
   showToastLoading() {
-    this.utils.showToast( this.translateSvc.instant( 'admin.tokensUsers.loading' ));
+    this.toastSvc.show( 'admin.tokensUsers.loading', true );
   }
 
   /* Pagination */

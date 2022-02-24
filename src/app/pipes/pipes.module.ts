@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { SafeHtmlPipe } from '../pipes/safehtml.pipe';
-import { DateFormatPipe } from './date-format';
+import { DateFormatPipe } from './date-format.pipe';
 import { SplitNumberPipe } from './split-number.pipe';
-import { StringToNumberPipe } from './str-to-num';
+import { StringToNumberPipe } from './str-to-num.pipe';
 import { TypeofPipe } from './typeof.pipe';
 
 @NgModule({

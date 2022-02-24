@@ -3,7 +3,7 @@ import { AlertController, Platform, PopoverController } from '@ionic/angular';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { IUser } from 'src/app/models/user.model';
-import { KYCAliceService } from 'src/app/services/kyc.alice.service';
+import { KYCAliceService } from 'src/app/services/kyc/kyc.alice.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { KYC_Country, KYC_DOCtype, KYC_ERR_Validation } from 'src/app/models/kyc.alice.model';
 
@@ -11,33 +11,6 @@ import * as aliceonboarding from 'aliceonboarding';
 
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { environment } from 'src/environments/environment';
-
-
-
-  /**
-   * To call this PopOver, here is an example on how to
-   */
-  /*  async openKYC() {
-    const popover = await this.popoverController.create({
-      component: KYCAliceComponent,
-      translucent: true,
-      mode: 'md',
-      cssClass: 'pop-yt',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
-
-    await popover.present();
-
-    // The data always returns `data.result`
-    const { data } = await popover.onDidDismiss();
-
-    // According to `isValidated` == true => perform the needed task
-    this.utilities.showToast(
-      this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
-    );
-
-    // That's it, you've validated the user
-  } */
 
 @Component({
   selector: 'app-kyc-alice',

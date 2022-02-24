@@ -43,10 +43,16 @@
               {
                 "input": "src/global.scss"
               },
+              "src/global/border.scss",
+              "src/global/box.scss",
+              "src/global/buttons.scss",
               "src/global/colors.scss",
               "src/global/froged.scss",
               "src/global/icons.scss",
+              "src/global/margin.scss",
+              "src/global/padding.scss",
               "src/global/pops.scss",
+              "src/global/position.scss",
               "src/global/text.scss"
             ],
             "scripts": []

@@ -17,17 +17,22 @@
   <div class="container">
     <!-- Image Top | Usually the logo -->
     <img class="image" [src]="image" *ngIf="image && showImage">
+    <br>
 
     <h2 *ngIf="pompadour && showPompadour" [innerHTML]="pompadour | translate"></h2>
     <h4 *ngIf="subtitle && showSubtitle" [innerHTML]="subtitle | translate"></h4>
 
-    <ion-label class="text" [innerHTML]="description | translate"></ion-label><br>
+    <ion-label class="text margin-top" [innerHTML]="description | translate"></ion-label><br>
     <ion-icon *ngIf="showCheckmark" [name]="checkmark" [color]="showCheckmark ? 'success' : 'danger'" class="margin-top"></ion-icon>
   </div>
 </ion-content>
 
 <ion-footer no-border>
   <ion-toolbar *ngIf="buttons?.length > 0" class="tx-center">
-    <ion-button  *ngFor="let button of buttons" (click)="onButtonClick( button )" [innerHTML]="button?.text | translate"></ion-button>
+    <ion-button  *ngFor="let button of buttons"
+      [class]="button?.css || ''"
+      (click)="onButtonClick( button )"
+      [innerHTML]="button?.text | translate"
+    ></ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -1,0 +1,98 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="line-b">
+        <ion-col size="8">
+          <ion-segment
+            value="market"
+            color="febelink"
+            mode="md"
+            [(ngModel)]="segment"
+            (ionChange)="segmentChanged( true )"
+          >
+            <!-- Segment Based on OffersType -->
+            <ng-container *ngFor="let offers of offersList">
+              <ion-segment-button [value]="offers.type">
+                <ion-label [class]="segment != offers.type ? '' : 'bold-6'">
+                  {{ 'pages.wallet.offers.' + offers.type | translate }}
+                </ion-label>
+              </ion-segment-button>
+              
+              <h2 class="line no-margin margin-5"></h2>
+            </ng-container>
+          </ion-segment>
+        </ion-col>
+
+        <ion-col size="4" class="vertical-content align-end">
+          <!-- Refresh -->
+          <ion-icon class="margin-end" name="refresh-outline" (click)="refresh()"></ion-icon>
+
+          <!-- Order List ASC | DESC -->
+          <ion-img
+            class="btn-ic margin-end"
+            [src]="'assets/icon/svg/sort_number_' + ( orderAsc ? 'desc' : 'asc' ) + '.svg'"
+            (click)="order()"
+          ></ion-img>
+
+          <!-- Filter By Selling ASSET -->
+          <ion-img
+            class="btn-ic margin-end"
+            [src]="assetSvc.getImg( assetSelling?.currency, 'svg/filter.svg' )"
+            (click)="selectAsset( $event, true )"
+          ></ion-img>
+
+          <!-- Filter By Buying ASSET -->
+          <ion-img
+            class="btn-ic margin-end"
+            [src]="assetSvc.getImg( assetBuying?.currency, 'svg/filter.svg' )"
+            (click)="selectAsset( $event, false )"
+          ></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>    
+  </ion-toolbar>
+</ion-header>
+
+
+<div class="margin-5" *ngFor="let list of offersList">
+  <ng-container *ngIf="list.type == segment">
+    <!-- Loading -->
+    <app-loading [isLoading]="list.isLoading" message="common.labelLoading"></app-loading>
+
+    <ng-container *ngIf="!list.isLoading">
+      <div *ngIf="list?.offers?.length > 0">
+        <!-- Offers -->
+        <ion-grid *ngIf="segment == list.type">
+          <ion-row>
+            <ion-col size="12" size-sm="6" *ngFor="let offer of list.offers">
+              <app-offers
+                [offer]="offer"
+                [isSelling]="list.type == offersType.OWN"
+                [walletParams]="walletParams"
+                (OnChange)="refresh( list )"
+              ></app-offers>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-footer no-border>
+          <!-- Pagination -->
+          <!-- <app-pagination
+            *ngIf="qPages > 1"
+            [qPages]="qPages"
+            [totalRecords]="totalRecords"
+            [recordsPerPage]="recordsPerPage"
+            [activePage]="activePage"
+            [disabled]="isLoading"
+            (onPageChange)="displayActivePage( $event )"
+          >
+          </app-pagination> -->
+        </ion-footer>
+      </div>
+
+      <ion-label *ngIf="!list?.offers || list?.offers?.length == 0">
+        {{ 'pages.wallet.offers.nothing' | translate }}
+      </ion-label>
+    </ng-container>
+  </ng-container>
+</div>

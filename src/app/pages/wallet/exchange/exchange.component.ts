@@ -1,93 +1,157 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/currency.model';
+import { AlertSvc } from './../../../services/alert.service';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SelectAssetComponent } from '../select-asset/select-asset.component';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { TwoFAComponent } from 'src/app/components/two-fa/two-fa.component';
-import { KYCAliceComponent } from 'src/app/components/kyc-alice/kyc-alice.component';
-import { TokensUser } from 'src/app/admin/models/tokens-user';
+import { AssetService } from 'src/app/services/wallet/asset.service';
+import { TwoFAService } from 'src/app/services/two_fa.service';
+import { MarketPrice, Offer } from 'src/app/models/wallet/offers.models';
+import { ExchangeInput, ExchangeType } from 'src/app/models/wallet/exchange.model';
+import { OfferService } from 'src/app/services/wallet/offer.service';
+import { ToastSvc } from 'src/app/services/toast.service';
+import { KycPopSvc } from 'src/app/services/kyc/kyc.pop.service';
+import { DateFormatType } from 'src/app/pipes/date-format.pipe';
+import { ExchangeInputSvc } from 'src/app/services/wallet/exchange.input.service';
+import { CloneAssetSvc } from '../../../services/wallet/clone.assets.service';
+import { ExchangeService } from 'src/app/services/wallet/exchange.service';
+import { WalletParams } from 'src/app/models/wallet/params.model';
+import { TkLimitSvc } from 'src/app/services/wallet/tk-limit.service';
 
 @Component({
   selector: 'app-exchange',
   templateUrl: './exchange.component.html',
   styleUrls: ['./exchange.component.scss'],
 })
-export class ExchangeComponent implements OnInit {
+export class ExchangeComponent implements OnInit, OnChanges {
 
-  @Input() origin: CryptoCurrency = {};
-  @Input() destiny: CryptoCurrency = {};
-  @Input() minnersFee: string = '0.000002 FLAU = $ 0.0447';
+
+  @Input() offer: Offer;
+  @Input() sell: CryptoCurrency = {};
+  @Input() buy: CryptoCurrency = {};
   @Input() kycVerified: boolean = true;
+  @Input() exchangeType: ExchangeType = ExchangeType.CREATE;
   
-  @Input() userWallets: CryptoCurrency[] = [];
-  @Input() retainedTks: TokensUser[];
+  @Input() walletParams: WalletParams = {}
+  
+  @Input() useMarketPrice: boolean = false;
+  mktPrice: MarketPrice = { isLoading: true };
 
-  public exchangeForm: FormGroup;
+  @Output() OnDismiss: any
+  @Output() OnDone: EventEmitter<Object> = new EventEmitter()
+  
+  public form: FormGroup;
+  exchangeTypes = ExchangeType;
+  exchangesInput = ExchangeInput;
+  dateFormatType = DateFormatType;
+
+  limitSell: number
+  limitBuy: number
 
   constructor(
-      private modalController: ModalController
-    , private formBuilder: FormBuilder
-    , private popCtrl: PopoverController
-    , private translateSvc: TranslateConfigService
-    , private utilities: UtilitiesService
+      private formBuilder: FormBuilder
+    , private toastSvc: ToastSvc
+    , public assetSvc: AssetService
+    , private twoFASvc: TwoFAService
+    , private offerSvc: OfferService
+    , private exchangeInputSvc: ExchangeInputSvc
+    , private kycPopSvc: KycPopSvc
+    , private cloneAssetSvc: CloneAssetSvc
+    , private alertSvc: AlertSvc
+    , private exchangeSvc: ExchangeService
+    , private tkLimitSvc: TkLimitSvc
   ) {}
 
   ngOnInit() {
-    this.buildForm();
+    this.setDefaults();
+  }
+  
+  ngOnChanges( changes: SimpleChanges ) {
+    this.setDefaults();
   }
 
   ionViewDidLeave() {
-    this.exchangeForm.reset();
+    this.form.reset();
   }
 
   buildForm() {
-    this.exchangeForm = this.formBuilder.group({
-      num_origin: new FormControl(( '' ), [ Validators.required ]),
-      num_destiny: new FormControl(( '' ), [ Validators.required ])
+    const isBuy = this.exchangeType == ExchangeType.BUY;
+
+    this.form = this.formBuilder.group({
+        num_sell_qant: new FormControl(
+          ( this.sell?.amount == 0 ? '' : this.sell?.amount )
+          , [ Validators.required ]
+        )
+        , num_buy_qant: new FormControl(
+          ( this.buy?.amount == 0 ? '' : this.buy?.amount )
+          , [ Validators.required ]
+        )
     });
   }
 
-  onDismiss( ) {
-    this.modalController.dismiss({ });
+  // If Creating Exchange, no default asset selected, so pick one by default
+  setDefaults() {
+    if( !this.walletParams ) return;
+    
+    this.exchangeSvc.setType( this.exchangeType )
+    this.exchangeSvc.setParams( this.walletParams )
+
+    this.cloneAssetSvc.set( this.exchangeType , this.offer, this.walletParams )
+    
+    this.sell = this.cloneAssetSvc.get( this.sell, this.buy, true )
+    this.buy = this.cloneAssetSvc.get( this.buy, this.sell, false )
+    
+    this.setLimits();
+    this.buildForm();
+  }
+
+  setLimits() {
+    this.limitSell = this.tkLimitSvc.qantAvailable( this.sell, this.walletParams )
+    this.limitBuy = this.tkLimitSvc.qantAvailable( this.buy, this.walletParams )
+    this.marketPrice()
+  }
+
+  dismiss( object? ) {
+    if( object?.saved ) {
+      this.OnDone.emit( object )
+      this.form?.reset()
+    }
+
+    if( this.OnDismiss )
+      this.OnDismiss( object );
   }
   
-  async selectAsset( isOrigin: boolean ) {
-    event.stopPropagation();
-    const popover = await this.popCtrl.create({
-      component: SelectAssetComponent,
-      translucent: true,
-      mode: 'md',
-      componentProps: {
-        except: !isOrigin ? this.origin.currency : this.destiny.currency,
-        assetTypes: this.userWallets
-      }
-    });
-
-    await popover.present();
-
-    const { data } = await popover.onDidDismiss();
+  async selectAsset( event, isSelling: boolean ) {
+    const asset = await this.assetSvc.select(
+          event
+        , this.walletParams.userWallets
+        , !isSelling ? this.sell : this.buy
+    );
 
     // Only do if asset selected
-    if( !data?.asset )
+    if( !asset )
       return;
 
-    // Assign asset to corresponding card
-    const asset = data.asset as CryptoCurrency;
-
-    if( isOrigin )
-      this.origin.currency = asset.currency;
+    if( isSelling )
+      this.sell.currency = asset.currency;
     else
-      this.destiny.currency = asset.currency;
+      this.buy.currency = asset.currency;
+
+    this.setLimits();
   }
 
   switchAssets() {
-    const origin: CryptoCurrency = { currency: this.destiny?.currency };
-    const destiny: CryptoCurrency = { currency: this.origin?.currency };
+    if( this.exchangeType == ExchangeType.BUY ) {
+      this.toastSvc.show( 'pages.wallet.exchange.cant-switch', true );
+      return;
+    }
+
+    const selling: CryptoCurrency =
+      { currency: this.buy?.currency, assetId: this.buy?.assetId, issuerId: this.buy?.issuerId };
+    const buying: CryptoCurrency =
+      { currency: this.sell?.currency, assetId: this.sell?.assetId, issuerId: this.sell?.issuerId };
     
-    this.origin = origin;
-    this.destiny = destiny;
+    this.sell = selling;
+    this.buy = buying;
+    this.setLimits()
   }
 
   async exchange() {
@@ -95,121 +159,143 @@ export class ExchangeComponent implements OnInit {
       return;
 
     if( !this.kycVerified ) {
-      this.openPrevKYC();
-      return;
+      if( !await this.kycPopSvc.preVerify() )
+        return;
+
+      this.kycVerified = true;
     }
     
-      /* Verify 2FA */
-    const verified = await this.verify2FA();
-    
-    if( verified )
-      this.modalController.dismiss({ origin: this.origin, destiny: this.destiny });
+    if( await this.twoFASvc.verify() )
+      this.OnDo({ sell: this.sell, buy: this.buy });
   }
 
   checkErrors(): boolean {
-    const { num_origin, num_destiny } = this.exchangeForm.value;
+    const { num_sell_qant, num_buy_qant } = this.form.value;
 
-    if( !this.origin?.currency ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.missing-origin' ));
+    if( !this.sell?.currency ) {
+      this.toastSvc.show( 'pages.wallet.error.missing-sell', true );
       return false;
     }
 
-    if( !this.destiny?.currency ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.missing-destiny' ));
+    if( !this.buy?.currency ) {
+      this.toastSvc.show( 'pages.wallet.error.missing-buy', true );
       return false;
     }
 
-    if( !num_origin || Number( num_origin ) <= 0 ) {
-      this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.qOffer' ));
+    if( !num_sell_qant || Number( num_sell_qant ) <= 0 ) {
+      this.toastSvc.show( 'pages.wallet.error.sell_qant', true );
       return false;
     }
     
-    if( !num_destiny || Number( num_destiny ) <= 0 ) {
-       this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.qDemand' ));
+    if( !num_buy_qant || Number( num_buy_qant ) <= 0 ) {
+       this.toastSvc.show( 'pages.wallet.error.buy_qant', true );
       return false;
     }
 
-    if( !this.hasThatAmount( num_origin ))
+    if( !this.hasThatAmount( num_sell_qant ))
       return false;
 
-    this.origin.amount = Number( num_origin );
-    this.destiny.amount = Number( num_destiny );
+    this.sell.amount = Number( num_sell_qant );
+    this.buy.amount = Number( num_buy_qant );
 
     return true;
   }
 
   hasThatAmount( amount: number ): boolean {
-    for( let i = 0; i < this.userWallets?.length; i++ ) {
-      const asset = this.userWallets[ i ];
-      if( asset?.currency === this.origin?.currency ) {
-        let retained: number = 0;
-        
-        // Substract the retained assets amount
-        switch( asset?.currency ) {
-          case CryptoCurrencyType.aureo:
-            this.retainedTks?.forEach( tk => retained += Number( tk?.num_tokens || '0' ));
-            break;
-        }
+    if( !this.tkLimitSvc.exceeds( amount, this.sell, this.walletParams ))
+      return true;
 
-        if( asset.amount - retained >= amount )
-          return true;
-      }
-    }
-
-    this.utilities.showToast( this.translateSvc.instant( 'pages.wallet.error.exceeded' ));
+    this.toastSvc.show( 'pages.wallet.error.exceeded', true );
     return false;
   }
 
-  async openPrevKYC() {
-    const lang = 'kyc.alert.complete.';
-    const alert = await this.utilities.alertCtrl.create({
-      header: this.translateSvc.instant( lang + 'head' ),
-      message: this.translateSvc.instant( lang + 'msg' ),
-      buttons: [
-        {
-          text: this.translateSvc.instant( 'common.buttons.got-it' ),
-          handler: () => this.openKYC()
-        }
+  async marketPrice() {
+    if( this.exchangeType == ExchangeType.BUY || !this.sell?.currency || !this.buy?.currency ) return
+
+    this.mktPrice.isLoading = true;
+    const { response, error } = await this.offerSvc.marketPrice( this.sell, this.buy )
+    
+    this.mktPrice = {
+      isLoading: false
+
+      , selling: response?.selling
+      , sellingIssuerId: response?.sellingIssuerId
+      , price_selling: response?.price_selling
+      
+      , buying: response?.buying
+      , buyingIssuerId: response?.buyingIssuerId
+      , price_buying: response?.price_buying
+    }
+
+    /* if( !error )
+      this.OnMarketPriceChecked( this.useMarketPrice ) */
+  }
+
+  OnMarketPriceChecked()
+  {
+    if( this.useMarketPrice )   
+      this.qantChange()
+  }
+  calcBuy(): number {
+    return this.offerSvc.calcBuy( this.offer?.amount, this.offer?.price, this.walletParams.assetsMaxDecimals )
+  }
+  qantChange( exchangeInput: ExchangeInput = ExchangeInput.SELL_CONV ) {
+    const isBuy = this.exchangeType == ExchangeType.BUY;
+    // Do calculations only if can't alter conversion => using Market Price or isBuy
+    if( !this.useMarketPrice && !isBuy ) return
+
+    const { num_sell_qant, num_buy_qant } = this.form.getRawValue();
+    
+    const maxSell = !isBuy
+      ? undefined
+      : this.offerSvc.calcBuy( this.offer?.amount, this.offer?.price, this.walletParams.assetsMaxDecimals )
+    
+    const maxBuy = !isBuy
+      ? undefined
+      : Number.parseFloat( this.offer?.amount )
+
+    this.exchangeInputSvc.calc({
+        sell_qant: num_sell_qant
+      , sell_conv: this.getConversion()
+      , buy_qant: num_buy_qant
+      , buy_conv: this.getConversion( false )
+
+      , is: exchangeInput
+      , maxDecimals: this.walletParams.assetsMaxDecimals
+
+      , maxSell: maxSell
+      , maxBuy: maxBuy
+    }, this.form );
+  }
+
+  getConversion( isSelling: boolean = true, sell?: number, buy?: number ): number {
+    const isBuy = this.exchangeType == ExchangeType.BUY
+    if( !this.useMarketPrice && !isBuy ) return isSelling ? 1 : sell / buy
+
+    return isSelling ?
+      ( !isBuy ? this.mktPrice?.price_selling : +this.offer?.price )
+      :( isBuy ? 1 : this.mktPrice?.price_buying )
+  }
+
+  async delete() {
+    this.alertSvc.show({
+      title: 'pages.wallet.offers.delete.title',
+      msg: 'pages.wallet.offers.delete.message',
+      btns: [
+          // Cancel
+        { text: 'common.buttons.cancel', role: 'cancel' },
+        { // Continue
+          text: 'common.buttons.continue',
+          handler: () => this.OnDo({ delete: true }),
+        },
       ]
-    });
-
-    await alert.present();
+    }, true );
   }
 
-  async openKYC() {
-    const popover = await this.popCtrl.create({
-      component: KYCAliceComponent,
-      translucent: true,
-      mode: 'md',
-      cssClass: 'pop-yt',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
+  private async OnDo( data ) {
+    const { saved, response, error } = await this.exchangeSvc.OnDone( data, this.offer );
 
-    await popover.present();
-
-    // The data always returns `data.result`
-    const { data } = await popover.onDidDismiss();
-
-    // According to `isValidated` == true => perform the needed task
-    if( data.result.isValidated ) {
-      this.kycVerified = true;
-      this.exchange();
-    } else
-      this.utilities.showToast(
-        this.translateSvc.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
-      );
-  }
-
-  /* Verify 2FA PopoverControll */
-  async verify2FA(): Promise<any> {
-    const twoFApop = await this.popCtrl.create({
-      component: TwoFAComponent,
-      cssClass: 'pop-mobile-width',
-      backdropDismiss: false // To prevent user cancel on touch outside by error
-    });
-    await twoFApop.present();
-
-    const { data } = await twoFApop.onDidDismiss();
-    return new Promise( resolve => { resolve( data?.verified )});
+    if( !error )
+      this.dismiss({ saved, response, error });
   }
 }

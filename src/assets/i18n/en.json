@@ -67,7 +67,8 @@
       "retry": "Retry",
       "got-it": "Got It",
       "report": "Report",
-      "block": "Block"
+      "block": "Block",
+      "continue": "Continue"
     },
 
     "address": {
@@ -389,12 +390,6 @@
       "transactions": "Recent transactions",
       "no-transactions": "No recent transactions",
 
-      "select-origin": "Select Origin Currency",
-      "select-destiny": "Select Destination Currency",
-      "qOffer": "Quantity",
-      "qDemand": "Quantity",
-      "minnersFee": "Transaction cost",
-      "confirm": "Confirm Transaction",
       "buy": {
         "title": "Buy assets",
         "buy": "Quantity to Buy:",
@@ -422,7 +417,12 @@
         "title": "Send Tokens to",
         "addressee": "Addressee",
         "total": "Total Remaining Balance",
-        "button": "Send"
+        "button": "Send",
+
+        "alert": {
+          "title": "Important announcement",
+          "message": "For your safety, make sure to review the information of the wallet where you send your balances, as well as the functioning of the platform where you send them.<br><br>Febelink is not responsible for those balances once they are outside its platform.<br><br>We are at your disposal for any questions at <a href=\"mailto:soporte@febelink.com\">support@febelink.com</a>"
+        }
       },
 
       "balance": {
@@ -430,12 +430,53 @@
         "retained": "Total Retained",
         "balance-av": "Available Balance"
       },
+      "offers": {
+        "market": "Market",
+        "own": "My Offers",
+        "nothing": "There are no Items in the list",
+        "delete": {
+          "title": "Delete Offer",
+          "message": "Do you Confirm that you want to remove this offer?",
+          "success": "Offer removed successfully",
+          "error": "There was an error removing the offer:\n\n"
+        }
+      },
+      "exchange": {
+        "minnersFee": "Transaction cost",
+
+        "select-origin": "Select Origin Currency",
+        "select-destiny": "Select Destination Currency",
+
+        "sell_qant": "Quantity",
+        "sell_conv": "Conversion",
+        "buy_qant": "Quantity",
+        "buy_conv": "Conversion",
+
+        "create": "Offer",
+        "edit": "Edit",
+        "purchase": "Confirm",
+
+        "sell": "Sell",
+        "buy": "Receive",
+
+        "cant-switch": "Having selected an offer you cannot switch with the assets",
+        "exceeds-sell": "The Offer cannot exceed the sale amount",
+        "exceeds-buy": "The Offer cannot exceed the buy amount"
+
+        , "market-price": "Use Market Price"
+        , "available": "Available: "
+
+        , "title": {
+            "exchange": "Publish Order"
+          , "offer": "Offer Edited - "
+        }
+      },
 
       "error": {
-        "missing-origin": "You must select the Origin Currency",
-        "missing-destiny": "You must select the Destination Currency",
-        "qOffer": "Indicate the amount of Currency to Change",
-        "qDemand": "Indicate the amount of Currency to Receive",
+        "missing-sell": "You must select the Selling Currency",
+        "missing-buy": "You must select the Buying Currency",
+        "sell_qant": "Indicate the amount of Currency to Change",
+        "buy_qant": "Indicate the amount of Currency to Receive",
         "qSend": "Indicate the amount of Currency to Send",
         "minSend": "You cannot send more Tokens than you have",
         "public-key": "You must indicate the Public Key of the Wallet to send",

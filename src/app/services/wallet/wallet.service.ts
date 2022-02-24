@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { CryptoCurrency } from 'src/app/models/currency.model';
+import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { ApiService } from '../api.service';
 
 @Injectable({
@@ -43,7 +43,7 @@ export class WalletService {
       formData.append( 'returnBalance', returnBalance ? '1' : '0' );
 
       await this.api.utilities.showLoading();
-      const response = ( await this.api._createData('wallet/send', formData)).toPromise();
+      const response = ( await this.api._createData('wallet/payments/send', formData)).toPromise();
 
       return response;
   }

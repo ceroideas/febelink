@@ -10,8 +10,9 @@ export class SplitNumberPipe implements PipeTransform {
     const entero = Math.floor( Number( value || 0 ));
 
     let decimal: string = (( value || '0.0' ) + '' ).replace( ',', '.' );
-    decimal = decimal?.split( '.' )?.length == 0 ? '0' :
-        ( !round ? decimal : parseFloat( decimal ).toFixed( Number( round )).toString() ).split( '.' )[ 1 ];
+    decimal += decimal.includes( '.' ) ? '' : '.0';
+    decimal = ( !round ? decimal : parseFloat( decimal ).toFixed( Number( round )).toString() )
+        .split( '.' )[ 1 ];
 
     return returnDecimal ? decimal : entero;
   }

@@ -1,3 +1,5 @@
+import { Offer } from "./offers.models";
+
 export enum CryptoCurrencyType {
   aureo = 'FLAU',
   lumens = 'XLM',
@@ -7,10 +9,11 @@ export enum CryptoCurrencyType {
 }
 
 export interface CryptoCurrency {
-  currency?: CryptoCurrencyType;
+  currency?: CryptoCurrencyType | string;
   amount?: number;
   assetId?: string;
   priceBuy?: number;
+  issuerId?: string;
 }
 
 export const AssetTypes: CryptoCurrency[] = [
@@ -22,24 +25,10 @@ export const AssetTypes: CryptoCurrency[] = [
 ];
 
 export interface CryptoTransactions {
-    offers: { records: CryptoOffers[] }
+    offers: { records: Offer[] }
   , operations: { records: CryptoOperations[] }
   , payments: { records: CryptoOperations[] }
   , traders: { records: CryptoOperations[] }
-}
-
-export interface CryptoOffers {
-  amount: string
-  buying: any
-  id: string
-  last_modified_ledger: number
-  last_modified_time: string
-  paging_token: string
-  price: string
-  price_r: any
-  seller: string
-  selling: any
-  _links: any
 }
 
 export interface CryptoOperations {
