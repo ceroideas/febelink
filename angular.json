@@ -53,9 +53,17 @@
               "src/global/padding.scss",
               "src/global/pops.scss",
               "src/global/position.scss",
-              "src/global/text.scss"
+              "src/global/text.scss",
+
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
+              "./node_modules/quill-emoji/dist/quill-emoji.css",
+              "./node_modules/quill-mention/dist/quill.mention.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/quill/dist/quill.min.js"
+            ]
           },
           "configurations": {
             "production": {
