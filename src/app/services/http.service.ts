@@ -33,21 +33,13 @@ export class HttpService {
         return this.token;
     }
 
-    async get(endpoint: string, params?: {} )
+    async get(endpoint: string, params?: {} ): Promise<{ response, error }>
     {
-        return this.http
+        return this.toPromise( this.http
             .get<any>(environment.API_URL_AUTH + endpoint, {
                 headers: await this.headers(),
                 params: params
-            })
-            .pipe(
-                map((res: any) => {
-                    return { response: res };
-                }),
-                catchError((err: any, caught: Observable<any>) => {
-                    return this.handleError( err, caught, endpoint )
-                })
-            );
+            }), endpoint )
     }
 
     async post(endpoint: string, data: {} | FormData = new FormData() )
@@ -84,6 +76,15 @@ export class HttpService {
             );
     }
 
+    async patch(endpoint: string, data: {} | FormData = new FormData ): Promise<{ response, error }>
+    {
+        return this.toPromise( this.http
+            .patch<any>(environment.API_URL_AUTH + endpoint
+                , this.objToFromData( data )
+                , { headers: await this.headers(), params: this.formDataToObj( data )}
+            ), endpoint )
+    }
+
     async delete(endpoint: string, params: any = new FormData() )
     {
         return this.http
@@ -99,6 +100,21 @@ export class HttpService {
                     return this.handleError( err, caught, endpoint );
                 })
             );
+    }
+
+    private async toPromise( request: Observable<any>, endpoint: string ): Promise<{ response, error }> {
+        return ( await this.pipe( request, endpoint )).toPromise();
+    }
+
+    private async pipe( request: Observable<any>, endpoint: string ) {
+        return request.pipe(
+            map((res: any) => {
+                return { response: res };
+            }),
+            catchError((err: any, caught: Observable<any>) => {
+                return this.handleError( err, caught, endpoint );
+            })
+        )
     }
 
     
