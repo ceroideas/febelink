@@ -1,7 +1,6 @@
 import { AdviseService } from './../services/advises.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastSvc } from 'src/app/services/toast.service';
 import { IAdviseFull } from '../models/advises.model';
 
 @Component({
@@ -23,7 +22,6 @@ export class AdvisePage implements OnInit {
     private actRoute: ActivatedRoute
     , private router: Router
     , private adviseSvc: AdviseService
-    , private toastSvc: ToastSvc
   ) {}
 
   ngOnInit()
