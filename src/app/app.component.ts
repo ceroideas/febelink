@@ -349,7 +349,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     pushObject
       .on('error')
-      .subscribe((error) => alert('Error with Push plugin' + error));
+      .subscribe((error) => console.log('Error with Push plugin' + error));
   }
 
   async pushAlert(title, message, id) {
