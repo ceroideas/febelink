@@ -88,8 +88,10 @@ export class KYCAliceComponent implements OnInit {
     (await this.kycAliceService.verifyKYC( this.currentUser?.id, false )).subscribe(
       ( response ) => {
         // If already verified, dismiss
-        if( response?.hasVerified )
+        if( response?.hasVerified ) {
           this.dismiss({ isValidated: true });
+          if( response?.user ) this.utilities.saveUserData( response?.user )
+        }
         
         this.checkPlatform();
       },
@@ -525,8 +527,7 @@ export class KYCAliceComponent implements OnInit {
   }
 
   dismiss( result ) {
-    /* if( result.isValidated )
-      this.utilities.storage */
+    if( result?.user ) this.utilities.saveUserData( result?.user )
     this.popoverController.dismiss({ result })
   }
 }

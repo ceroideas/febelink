@@ -7,6 +7,7 @@
  * @interface
  */
 
+ import { IUser } from "./user.model";
 
 export interface KYC_Country {
     name?: string;
@@ -30,6 +31,8 @@ export interface KYC_ERR_Validation {
     selfie?: KYC_ERR_Selfie;
 
     isValid?: boolean;
+     
+     user: IUser;
 }
 
 export interface KYC_ERR_Doc {
