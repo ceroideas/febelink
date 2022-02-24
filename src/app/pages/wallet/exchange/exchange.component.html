@@ -124,7 +124,7 @@
                   <!-- Selling Conversion -->
                   <ion-col class="tx-center no-padding pad-e-5" size-sm="12" size-md="6" size="6">
                     <app-num-float
-                      [number]="getConversion( true, +numBuyQant.value, +numSellQant.value )"
+                      [number]="getConversion( true, numBuyQant.value, numSellQant.value )"
                       [round]="walletParams.assetsMaxDecimals"
                       classNbr="margin-start"
                       [bold]="true"
@@ -134,7 +134,7 @@
                   <!-- Buying Conversion -->
                   <ion-col class="tx-center no-padding" size-sm="12" size-md="6" size="6">
                     <app-num-float
-                    [number]="getConversion( false, +numBuyQant.value, +numSellQant.value )"
+                    [number]="getConversion( false, numBuyQant.value, numSellQant.value )"
                       [round]="walletParams.assetsMaxDecimals"
                       classNbr="margin-start"
                       [bold]="true"
