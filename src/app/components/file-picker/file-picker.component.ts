@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { FilePickType, FileElementType } from './models/file.model';
+import { FilePickType, FileElementType, IFile, FileMaxSize } from './models/file.model';
 import { FileService } from './services/file.service';
 
 @Component({
@@ -11,10 +11,11 @@ import { FileService } from './services/file.service';
 export class FilePickerComponent implements OnInit {
 
   @Input() src: string | ArrayBuffer
+  file: any
   @Input() fallback: string = 'assets/icon/svg/nopic.svg'
   @Input() height: string = '100%'
   @Input() width: string = '100%'
-  @Input() maxSize: number = 307200
+  @Input() maxSize: FileMaxSize = FileMaxSize.MAX_ALLOWED_PACKET
   @Input() styles: string = ''
   @Input() classes: string = ''
 
@@ -24,7 +25,7 @@ export class FilePickerComponent implements OnInit {
     elTypes = FileElementType
 
   @Output() OnClick: EventEmitter<any> = new EventEmitter()
-  @Output() OnFile: EventEmitter<string | ArrayBuffer> = new EventEmitter()
+  @Output() OnFile: EventEmitter<IFile> = new EventEmitter()
   
   isNative: boolean = false
 
@@ -46,7 +47,9 @@ export class FilePickerComponent implements OnInit {
 
   async pickMedia( filePicker ) {
     if( this.OnClick ) this.OnClick.emit( filePicker )
-    this.src = await this.mediaSvc.pickImg( filePicker )
-    if( this.src && this.OnFile ) this.OnFile.emit( this.src )
+    const { src, file } = await this.mediaSvc.pickImg( filePicker, this.maxSize )
+    this.src = src
+    this.file = file
+    if( this.src && this.OnFile ) this.OnFile.emit({ src, file })
   }
 }
