@@ -4,6 +4,11 @@
 }
 
 /* box-background-radius-line */
+.box-bw-r1-lln {
+    background: white;
+    border: var(--color_line) solid;
+    border-radius: 1px;
+}
 .box-bw-r3-lln {
     background: white;
     border: var(--color_line) solid;
