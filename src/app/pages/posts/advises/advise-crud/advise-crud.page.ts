@@ -11,6 +11,7 @@ import { AlertSvc } from 'src/app/services/alert.service';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
+import { IFile } from 'src/app/components/file-picker/models/file.model';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -25,7 +26,7 @@ export class AdviseCRUDPage implements OnInit {
   isLoading: boolean = false
 
   form: FormGroup
-  image: string | ArrayBuffer
+  image: IFile
   content: iWYSIWYG = {}
 
   id: number
@@ -111,9 +112,9 @@ export class AdviseCRUDPage implements OnInit {
     this.form.reset()
   }
 
-  imgSelected( src )
+  imgSelected( file: IFile )
   {
-    this.image = src
+    this.image = file
   }
 
   wysiwygChange( content: iWYSIWYG )
@@ -182,7 +183,7 @@ export class AdviseCRUDPage implements OnInit {
       , summary: summary
       , content: this.content.html
       
-      , photo: this.image
+      , photo: this.image?.src
     }
 
     const { response, error } = !this.id
@@ -192,7 +193,7 @@ export class AdviseCRUDPage implements OnInit {
     await this.loadingSvc.dismiss()
 
     this.toastSvc.show( error
-      ? error.msg || error.message || 'An error ocurred on creating post'
+      ? error.message || error.msg || 'An error ocurred on creating post'
       : response.message, true )
     if( error )
       return

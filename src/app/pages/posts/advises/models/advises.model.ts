@@ -13,7 +13,7 @@ export interface IAdvise {
     summary: string
     content?: string
     
-    photo?: string | ArrayBuffer
+    photo?: any
     video?: string
     
     shared?: number
