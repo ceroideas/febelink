@@ -1279,8 +1279,11 @@ private async showSubscriptionsModal(suscribirseModal: HTMLIonModalElement) {
     const { data } = await popover.onDidDismiss();
 
     // According to `isValidated` == true => perform the needed task
-    if( data.result.isValidated )
+    if( data.result.isValidated ) {
       this.perfil.kyc_verified_at = new Date().toLocaleString();
+      this.obtenerPerfil() // Update user data on Verified
+    }
+      
     
     this.utilities.showToast(
       this.translateService.instant( `kyc.${ data.result.isValidated ? '' : 'un' }verified` )
