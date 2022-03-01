@@ -71,13 +71,13 @@ export class WYSIWYGComponent implements OnInit {
 
   ngOnInit() {}
 
-  ngAfterViewInit()
+  ngAfterContentInit()
   {
-    if( this.html ) this.quill.content = this.html
+    if( this.html ) this.contenido = this.html
   }
 
   ngOnChanges( changes: SimpleChanges ): void {
-    if ( 'html' in changes && this.quill ) this.quill.content = changes.html.currentValue || ''
+    if ( 'html' in changes && this.quill ) this.contenido = changes.html.currentValue || ''
   }
 
   ionViewDidLeave()
