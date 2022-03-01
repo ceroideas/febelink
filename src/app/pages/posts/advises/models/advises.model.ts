@@ -1,4 +1,5 @@
 import { IPaginationFilter } from "src/app/models/pagination.model";
+import { IUserShow } from "src/app/models/user.model";
 
 export interface IAdvise {
     id?: number
@@ -25,12 +26,8 @@ export interface IAdvise {
     state?: string
 }
 
-export interface IAdviseFull extends IAdvise {
-    nick?: string
-    name?: string
-    lastName?: string
-    avatar?: string
-
+export interface IAdviseFull extends IAdvise, IUserShow
+{
     sector: string | number
     subsector?: string | number
 
