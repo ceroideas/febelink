@@ -41,10 +41,10 @@ export class UserFilterComponent implements OnInit {
     this.isLoading = true
     this.filter = text || this.filter
 
-    const { response, error } = await ( await this.httpSvc.get(
+    const { response, error } = await this.httpSvc.get(
         this.urlPath,
         { activePage: this.pagination?.activePage || 1, keys: this.filter, ...( this.params || {})}
-      )).toPromise()
+      )
 
     if( error ) {
       this.toastSvc.show( error.message || error.message || 'common.users.error.list', true )

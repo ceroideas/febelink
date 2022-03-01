@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { Offer, OffersFilter } from 'src/app/models/wallet/offers.models';
-import { HttpService } from '../http.service';
+import { HttpService, IHttpService } from '../http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,34 +12,34 @@ export class OfferService {
       private http: HttpService
   ) {}
 
-  async sell( offer: Offer )
+  async sell( offer: Offer ): Promise<IHttpService>
   {
-    return ( await this.http.post( 'wallet/offers/sell', this.offerToParam( offer ))).toPromise();
+    return this.http.post( 'wallet/offers/sell', this.offerToParam( offer ))
   }
 
-  async buy( offer: Offer )
+  async buy( offer: Offer ): Promise<IHttpService>
   {
-    return ( await this.http.post( 'wallet/offers/buy', this.offerToParam( offer ))).toPromise();
+    return this.http.post( 'wallet/offers/buy', this.offerToParam( offer ))
   }
 
-  async update( offer: Offer )
+  async update( offer: Offer ): Promise<IHttpService>
   {
-    return ( await this.http.put( 'wallet/offers/' + offer?.id, this.offerToParam( offer ))).toPromise();
+    return this.http.put( 'wallet/offers/' + offer?.id, this.offerToParam( offer ))
   }
 
-  async delete( offer: Offer )
+  async delete( offer: Offer ): Promise<IHttpService>
   {
-    return ( await this.http.delete( 'wallet/offers/' + offer?.id, this.offerToParam( offer ))).toPromise();
+    return this.http.delete( 'wallet/offers/' + offer?.id, this.offerToParam( offer ))
   }
 
-  async list( filter: OffersFilter )
+  async list( filter: OffersFilter ): Promise<IHttpService>
   {
-    return ( await this.http.get( 'wallet/offers/list', filter )).toPromise();
+    return this.http.get( 'wallet/offers/list', filter )
   }
 
-  async marketPrice( sell: CryptoCurrency, buy: CryptoCurrency )
+  async marketPrice( sell: CryptoCurrency, buy: CryptoCurrency ): Promise<IHttpService>
   {
-    return ( await this.http.get( 'wallet/offers/marketPrice', this.sellNbuyToParm( sell, buy ))).toPromise();
+    return this.http.get( 'wallet/offers/marketPrice', this.sellNbuyToParm( sell, buy ))
   }
 
   calcBuy( amount: string | number, price: string | number, maxDecimals: number ): number {

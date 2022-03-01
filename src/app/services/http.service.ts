@@ -38,7 +38,7 @@ export class HttpService {
         return this.token
     }
 
-    async get(endpoint: string, params?: {} )/* : Promise<IHttpService> */
+    async get(endpoint: string, params?: {} ): Promise<IHttpService>
     {
         return this.toPromise( this.http
             .get<any>(environment.API_URL_AUTH + endpoint, {
@@ -47,7 +47,7 @@ export class HttpService {
             }) , endpoint )
     }
 
-    async post(endpoint: string, data: {} | FormData = new FormData() )/* : Promise<IHttpService> */
+    async post(endpoint: string, data: {} | FormData = new FormData() ): Promise<IHttpService>
     {
         return this.toPromise( this.http
             .post<any>(environment.API_URL_AUTH + endpoint
@@ -56,7 +56,7 @@ export class HttpService {
             ) , endpoint )
     }
 
-    async put(endpoint: string, data: {} | FormData = new FormData )/* : Promise<IHttpService> */
+    async put(endpoint: string, data: {} | FormData = new FormData ): Promise<IHttpService>
     {
         return this.toPromise( this.http
             .put<any>(environment.API_URL_AUTH + endpoint
@@ -65,7 +65,7 @@ export class HttpService {
             ) , endpoint )
     }
 
-    async patch(endpoint: string, data: {} | FormData = new FormData )/* : Promise<IHttpService> */
+    async patch(endpoint: string, data: {} | FormData = new FormData ): Promise<IHttpService>
     {
         return this.toPromise( this.http
             .patch<any>(environment.API_URL_AUTH + endpoint
@@ -74,7 +74,7 @@ export class HttpService {
             ) , endpoint )
     }
 
-    async delete(endpoint: string, params: any = new FormData() )/* : Promise<IHttpService> */
+    async delete(endpoint: string, params: any = new FormData() ): Promise<IHttpService>
     {
         return this.toPromise( this.http
             .delete<any>(environment.API_URL_AUTH + endpoint, {
@@ -83,9 +83,9 @@ export class HttpService {
             }) , endpoint )
     }
 
-    private async toPromise( request: Observable<any>, endpoint: string )/* : Promise<IHttpService> */
+    private async toPromise( request: Observable<any>, endpoint: string ): Promise<IHttpService>
     {
-        return /* ( await  */this.pipe( request, endpoint )/* ).toPromise() */
+        return ( await this.pipe( request, endpoint )).toPromise()
     }
 
     private async pipe( request: Observable<any>, endpoint: string )

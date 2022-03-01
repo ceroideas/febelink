@@ -26,7 +26,7 @@ export class SubsectorService
                 nombre: 'Todas',
                 id_sector: 0
             }
-            , ...(( await ( await this.httpSvc.get( 'sub-sectores/' + id )).toPromise()).response || [])
+            , ...(( await this.httpSvc.get( 'sub-sectores/' + id )).response || [])
         ];
 
         return this.list;
