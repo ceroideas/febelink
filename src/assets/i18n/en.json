@@ -186,6 +186,17 @@
         "list": "It looks like there was an error displaying the list. Try again"
       }
     }
+
+    , "report": {
+      "create": {
+        "title": "Report"
+        , "msg": "Tell us in detail what is happening"
+        , "placeholder": "Write here your report"
+
+        , "done": "Report sent successfully! We will review the issue shortly"
+        , "error": "Error when trying to generate report"
+      }
+    }
   },
   "menu": {
     "tabs": {
@@ -542,6 +553,7 @@
             , "sector": "You must indicate the sector to which you refer"
           }
         }
+        , "edit": "Editar Post"
 
         , "new": {
           "title": "Great Job!"
