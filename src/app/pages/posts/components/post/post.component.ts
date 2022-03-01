@@ -3,13 +3,16 @@ import { Router } from '@angular/router';
 import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
 import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
+import { IReport } from 'src/app/models/report.model';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { AlertSvc, IAlert } from 'src/app/services/alert.service';
 import { LoadingSvc } from 'src/app/services/loading.service';
+import { ReportService } from 'src/app/services/report.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IAdviseFull } from '../../advises/models/advises.model';
+import { ICommentFull } from '../../advises/models/comment.model';
 import { AdviseService } from '../../advises/services/advises.service';
 
 @Component({
@@ -26,19 +29,22 @@ export class PostComponent implements OnInit {
   @Input() showOpts: boolean = false
   @Input() showSeePost: boolean = false
   @Input() showContent: boolean = false
+  @Input() showCommentInput: boolean = true
+  @Input() comments: ICommentFull[]
 
   dateFormatType = DateFormatType
 
   constructor(
       private optsMenuSvc: OptsMenuSvc
     , private adviseSvc: AdviseService
-    , private sessionSvc: UserSessionSvc
+    , public sessionSvc: UserSessionSvc
     , private alertSvc: AlertSvc
     , private toastSvc: ToastSvc
     , private loadingSvc: LoadingSvc
     , private router: Router
     , private seoSvc: SeoService
     , private fileSvc: FileService
+    , private reportSvc: ReportService
   ) { }
 
   ngOnInit() {}
@@ -93,9 +99,7 @@ export class PostComponent implements OnInit {
 
   async edit()
   {
-    this.toastSvc.show( 'common.developing', true )
-    // ToDo
-    // this.router.navigate([ `posts/oracle/${this.id}/edit` ])
+    this.router.navigate([ `posts/oracle/${this.id}/edit` ])
   }
 
   async delete()
@@ -119,7 +123,14 @@ export class PostComponent implements OnInit {
   }
 
   report()
-  { // ToDo
-    this.toastSvc.show( 'common.developing', true )
+  {
+    this.reportSvc.show({
+      advise: this.id
+    } as IReport )
+  }
+
+  comment( value: string | number )
+  {
+
   }
 }
