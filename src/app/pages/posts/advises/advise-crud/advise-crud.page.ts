@@ -12,6 +12,7 @@ import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IFile } from 'src/app/components/file-picker/models/file.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -26,7 +27,7 @@ export class AdviseCRUDPage implements OnInit {
   isLoading: boolean = false
 
   form: FormGroup
-  image: IFile
+  image: IFile = {}
   content: iWYSIWYG = {}
 
   id: number
@@ -34,6 +35,8 @@ export class AdviseCRUDPage implements OnInit {
 
   paramsQuery: any
   paramsUrl: any
+
+  hasVerifiedEmail: boolean
 
   constructor(
       private formBuilder: FormBuilder
@@ -45,6 +48,7 @@ export class AdviseCRUDPage implements OnInit {
     , private alertSvc: AlertSvc
     , private loadingSvc: LoadingSvc
     , private sessionSvc: UserSessionSvc
+    , private userSvc: UserService
   ) {}
 
   async ngOnInit()
@@ -54,8 +58,16 @@ export class AdviseCRUDPage implements OnInit {
     this.paramsQuery = this.actRoute.snapshot.queryParamMap;
     this.paramsUrl = this.actRoute.snapshot.params
 
+    /* If user not logged, can't create  */
+    if( !( await this.sessionSvc.isLogged )) {
+      this.kickOff()
+      return
+    }
+
     if( this.paramsUrl?.id )
       this.getPost( this.paramsUrl?.id )
+
+      this.hasVerifiedEmail = await this.userSvc.verifiedEmail()
   }
 
   /* If has id -> editing post */
@@ -98,9 +110,8 @@ export class AdviseCRUDPage implements OnInit {
       summary: this.iAdvise?.summary || '',
     });
 
-    this.sectors?.set( this.iAdvise?.id_sector, this.iAdvise?.id_subsector )
     this.content.html = this.iAdvise?.content;
-    this.image = this.iAdvise?.photo;
+    this.image.src = this.iAdvise?.photo;
   }
 
   clear()
@@ -176,7 +187,7 @@ export class AdviseCRUDPage implements OnInit {
     const opts: IAdviseFull = {
         lang: this.lang?.langSelected?.id || 1
       , sector: this.sectors?.sector
-      , subsector: this.sectors?.subsector
+      , subsector: this.sectors?.subsector == 0 ? null : this.sectors?.subsector
       
       , title: title
       , subtitle: subtitle
