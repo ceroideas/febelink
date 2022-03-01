@@ -76,6 +76,38 @@
       [post]="iAdvise"
       [showSeePost]="showSeePost"
     ></app-post-bottom-bar-component>
+
+    <!-- Comment -->
+    <ion-row class="marg-5 box-bw-r1-lln" *ngIf="showCommentInput">
+      <!-- Avatar -->
+      <ion-avatar slot="start" class="no-margin">
+        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!sessionSvc?.get().avatar" />
+        <ion-img
+            [src]="sessionSvc?.get().avatar"
+            *ngIf="sessionSvc?.get().avatar"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+        ></ion-img>
+      </ion-avatar>
+
+      <div>
+        <!-- Input -->
+        <ion-input #inComment
+          placeholder="{{ 'common.searchPlaceholder' | translate }}"
+          inputmode="text"
+        ></ion-input>
+
+        <!-- Button Send -->
+        <ion-buttons end>
+          <ion-button icon-only
+            class="no-padding marg-s10 wh-40"
+            shape="round"
+            color="primary"
+            (click)="comment( inComment.value )"
+          >
+            <ion-icon name="send-outline" color="white"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </ion-row>
   </ion-grid>
 </div>
-  
