@@ -37,7 +37,11 @@ export class UserSessionSvc
             this.storage.ready()
                 .then(() =>
                 {
-                    this.storage.get( UserSessionSvc.KEY ).then(userData => resolve(userData))
+                    this.storage.get( UserSessionSvc.KEY ).then(userData =>
+                    {
+                        this.user = userData
+                        resolve(userData)
+                    })
                     .catch(error => { console.log({ error }); reject( null )})
                 })
                 .catch( error => { console.log({ error }); reject( null )})
@@ -54,9 +58,9 @@ export class UserSessionSvc
         return ( await this.get() )?.id == id
     }
 
-    isLogged()
+    async isLogged()
     {
-        return this.user != null;
+        return await this.get() != null;
     }
 
     async checkLogged() {
