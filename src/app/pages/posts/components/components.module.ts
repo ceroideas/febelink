@@ -8,6 +8,7 @@ import { AdvisePageRoutingModule } from '../advises/advise-routing.module';
 
 import { PostBottomBarComponent } from './bottom-bar.component/bottom-bar.component';
 import { PostComponent } from './post/post.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
     imports: [
@@ -29,10 +30,12 @@ import { PostComponent } from './post/post.component';
 
       , PostBottomBarComponent
       , PostComponent
+      , CommentComponent
     ],
     declarations: [
         PostBottomBarComponent
       , PostComponent
+      , CommentComponent
     ],
   })
   export class PostComponentsModule { }
