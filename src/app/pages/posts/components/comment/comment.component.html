@@ -1,0 +1,67 @@
+<div class="marg-se max-w600">
+  <ion-grid class="box-bw-r1-lln margin-5 no-padding">
+    <ion-row class="marg-s10 marg-e10">
+      <!-- Avatar -->
+      <ion-avatar slot="start" class="no-margin">
+        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!iComment?.avatar" />
+        <ion-img
+            [src]="iComment?.avatar"
+            *ngIf="iComment?.avatar"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+        ></ion-img>
+      </ion-avatar>
+
+      <div>
+        <ion-row>
+          <!-- UserName -->
+          <ion-col [size]="8">
+              <ion-label>
+                {{ iComment?.name
+                  || iComment?.nick
+                  || ( 'common.labelUser' | translate )
+                }}
+                {{ ' ' }}
+                {{ iComment?.lastName }}
+              </ion-label>
+              <br><em class="font-13 hint">
+                {{ iComment?.created_at | dateFormat: dateFormatType.DateTime }}
+              </em>
+          </ion-col>
+
+          <!-- Date Created -->
+          <ion-col [size]="4">
+            <!-- Options Menu -->
+            <ion-row class="align-end">
+              <ion-button icon-only color="transparent"
+                class="no-padding no-shadow no-margin"
+                (click)="options( $event )"
+              >
+                <ion-icon class="font-30" src="assets/icon/svg/options.svg"></ion-icon>
+              </ion-button>
+            </ion-row>
+      
+            <ion-row class="align-end">
+              <!-- If has Edited The Post -->
+              <ion-label class="hint font-13" *ngIf="iComment.created_at != iComment.updated_at">
+                {{ 'common.labelEdited' | translate }}
+              </ion-label>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <!-- Comment -->
+        <ion-row>
+          <ion-label>
+            {{ iComment.comment }}
+          </ion-label>
+        </ion-row>
+    
+        <app-post-bottom-bar-component
+          [id]="post"
+          [comment]="iComment"
+        ></app-post-bottom-bar-component>
+      </div>
+    </ion-row>
+  </ion-grid>
+</div>
+  
