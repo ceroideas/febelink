@@ -13,6 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { MailService } from 'src/app/services/mail.service';
+import { ReportService } from 'src/app/services/report.service';
+import { IReport } from 'src/app/models/report.model';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -46,7 +48,8 @@ export class PerfilDemandantePage implements OnInit {
     private translateService: TranslateService,
     private authSvc:AuthenticationService,
     public userSvc: UserService,
-    public mailSvc: MailService
+    public mailSvc: MailService,
+    public reportSvc: ReportService
   ) {
     var data: any = route.snapshot.queryParamMap;
     // this.id_perfil = data.params.id_perfil;
@@ -267,5 +270,12 @@ export class PerfilDemandantePage implements OnInit {
       cssClass: 'guide-modal',
     });
     return await guideModal.present();
+  }
+
+  report()
+  {
+    this.reportSvc.show({
+      perfil: this.perfilpublico?.id
+    } as IReport )
   }
 }
