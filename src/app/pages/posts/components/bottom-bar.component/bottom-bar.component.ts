@@ -7,6 +7,7 @@ import { ShareService } from 'src/app/services/share.service';
 import { IAdviseFull } from '../../advises/models/advises.model';
 import { IUser } from 'src/app/models/user.model';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
+import { ICommentFull } from '../../advises/models/comment.model';
 
 @Component({
   selector: 'app-post-bottom-bar-component',
@@ -17,6 +18,7 @@ export class PostBottomBarComponent implements OnInit
 {
   @Input() id: number
   @Input() post: IAdviseFull
+  @Input() comment: ICommentFull
   @Input() showChat : boolean = false
   @Input() showSeePost : boolean = false
 
