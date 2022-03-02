@@ -3,7 +3,7 @@ import { IUserShow } from "src/app/models/user.model";
 export interface IComment
 {
     id?: number
-    post?: number
+    advise?: number
     id_comment?: number
     uid?: number
 
