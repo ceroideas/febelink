@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, SimpleChanges, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ViewEncapsulation, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
 import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
 import { IReport } from 'src/app/models/report.model';
+import { IUser } from 'src/app/models/user.model';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { AlertSvc, IAlert } from 'src/app/services/alert.service';
 import { LoadingSvc } from 'src/app/services/loading.service';
@@ -12,8 +13,10 @@ import { SeoService } from 'src/app/services/seo.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IAdviseFull } from '../../advises/models/advises.model';
-import { ICommentFull } from '../../advises/models/comment.model';
+import { IComment, ICommentFull } from '../../advises/models/comment.model';
 import { AdviseService } from '../../advises/services/advises.service';
+import { CommentService } from '../../advises/services/comment.service';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-post-component',
@@ -22,6 +25,8 @@ import { AdviseService } from '../../advises/services/advises.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class PostComponent implements OnInit {
+  
+  @ViewChild( "comments" ) comments: CommentsComponent
 
   @Input() id: number
   @Input() iAdvise: IAdviseFull
@@ -29,10 +34,13 @@ export class PostComponent implements OnInit {
   @Input() showOpts: boolean = false
   @Input() showSeePost: boolean = false
   @Input() showContent: boolean = false
-  @Input() showCommentInput: boolean = true
-  @Input() comments: ICommentFull[]
+  @Input() showComments: boolean = false
 
   dateFormatType = DateFormatType
+  iUser: IUser
+
+  // Comment selected
+  iComment: ICommentFull
 
   constructor(
       private optsMenuSvc: OptsMenuSvc
@@ -45,9 +53,13 @@ export class PostComponent implements OnInit {
     , private seoSvc: SeoService
     , private fileSvc: FileService
     , private reportSvc: ReportService
-  ) { }
+    , private commentSvc: CommentService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.sessionSvc.get().then(( userData ) => this.iUser = userData )
+  }
 
   ngOnChanges( changes: SimpleChanges ): void {
     if ( 'iAdvise' in changes) {
@@ -110,7 +122,7 @@ export class PostComponent implements OnInit {
     } as IAlert )) {
       this.loadingSvc.show()
       const { response, error } = await this.adviseSvc.delete( this.id )
-      this.loadingSvc.dismiss()
+      await this.loadingSvc.dismiss()
 
       if( error ) {
         this.toastSvc.show( error.msg || error.message || 'Error on deleting', true )
@@ -129,8 +141,21 @@ export class PostComponent implements OnInit {
     } as IReport )
   }
 
-  comment( value: string | number )
+  async comment( value: string | number )
   {
+    if( !value ) return
 
+    await this.loadingSvc.show()
+    const { response, error } = await this.commentSvc.create( this.id, {
+        comment: value + ''
+      , post: this.id
+      , id_comment: this.iComment?.id
+    } as IComment )
+
+    console.log({ response, error })
+
+    if( error ) this.toastSvc.show( error.msg || error.message || 'Error creating comment', true )
+    if( response ) this.comments.add( response?.comment )
+    await this.loadingSvc.dismiss()
   }
 }
