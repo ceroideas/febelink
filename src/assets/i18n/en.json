@@ -553,7 +553,7 @@
             , "sector": "You must indicate the sector to which you refer"
           }
         }
-        , "edit": "Editar Post"
+        , "edit": "Edit Post"
 
         , "new": {
           "title": "Great Job!"
