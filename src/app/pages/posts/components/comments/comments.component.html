@@ -1,0 +1,13 @@
+<div class="marg-5 container" *ngIf="isVisible">
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+
+  <ng-container *ngIf="!isLoading">
+    <app-comment-component *ngFor="let iComment of iComments"
+      [class]="iComment?.id_comment ? 'marg-s10' : ''"
+      [post]="post"
+      [iComment]="iComment"
+      (OnUpdate)="update( $event )"
+    ></app-comment-component>
+  </ng-container>
+</div>
