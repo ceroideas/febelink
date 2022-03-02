@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { PostPageRoutingModule } from './post-routing.module';
 
 import { PostPage } from './post.page';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { PostComponentsModule } from './components/components.module';
+import { TabsSharedModule } from 'src/app/tabs/tabs.shared.module';
 
 @NgModule({
   imports: [
@@ -17,11 +17,11 @@ import { PostComponentsModule } from './components/components.module';
     , ReactiveFormsModule 
     , IonicModule
     , PostPageRoutingModule
-    , SharedModule
     , PostComponentsModule
+    , TabsSharedModule
   ],
   declarations: [
       PostPage
-  ]
+  ],
 })
 export class PostPageModule {}
