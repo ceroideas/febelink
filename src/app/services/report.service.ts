@@ -49,7 +49,7 @@ export class ReportService {
 
     async exec( report: IReport )
     {
-        this.loadingSvc.show()
+        await this.loadingSvc.show()
 
         const { response, error } = await this.http.post( 'report', report )
         this.toastSvc.show( error
@@ -57,6 +57,6 @@ export class ReportService {
             : response.msg || response.message
         , true )
 
-        this.loadingSvc.dismiss()
+        await this.loadingSvc.dismiss()
     }
 }

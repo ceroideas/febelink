@@ -73,7 +73,7 @@ export class OffersComponent implements OnInit {
     const { response, error } = await this.offerSvc.delete( this.offer );
 
     if( error ) {
-      this.loadingSvc.dismiss();
+      await this.loadingSvc.dismiss();
       this.alertSvc.show({
         title: 'pages.wallet.offers.delete.title',
         message: this.translateSvc.instant( 'pages.wallet.offers.delete.error' ) + error.message
@@ -82,7 +82,7 @@ export class OffersComponent implements OnInit {
     }
     
     this.toastSvc.show( 'pages.wallet.offers.delete.success', true );
-    this.loadingSvc.dismiss();
+    await this.loadingSvc.dismiss();
     this.OnChange.emit( ExchangeType.DELETE );
   }
 }
