@@ -21,8 +21,8 @@ export class CommentComponent implements OnInit {
 
   @Input() post: number // Referencing Post Id
   @Input() iComment: ICommentFull
-  @Output() OnUpdate:
-      EventEmitter<{ comment: ICommentFull, component: CommentComponent }> = new EventEmitter();
+  @Output() OnDoEdit: EventEmitter<ICommentFull> = new EventEmitter();
+  @Output() OnDeleted: EventEmitter<ICommentFull> = new EventEmitter();
   
   dateFormatType = DateFormatType
 
@@ -72,16 +72,14 @@ export class CommentComponent implements OnInit {
 
   async edit()
   {
-    this.toastSvc.show( 'common.developing', true )
-    // ToDo
-    // this.router.navigate([ `posts/oracle/${this.id}/edit` ])
+    this.OnDoEdit?.emit( this.iComment )
   }
 
   async delete()
   {
     if( await this.alertSvc.confirm({
-        title: 'pages.posts.advises.delete.title'
-      , msg: 'pages.posts.advises.delete.msg'
+        title: 'pages.posts.comment.delete.title'
+      , msg: 'pages.posts.comment.delete.msg'
     } as IAlert )) {
       await this.loadingSvc.show()
       const { response, error } = await this.commentSvc.delete( this.post, this.iComment?.id )
@@ -92,6 +90,9 @@ export class CommentComponent implements OnInit {
         return
       }
 
+      // Inform item deleted
+      this.OnDeleted.emit( this.iComment )
+
       this.toastSvc.show( response.message, true )
     }
   }
@@ -101,19 +102,5 @@ export class CommentComponent implements OnInit {
     this.reportSvc.show({
       comment: this.iComment?.id
     } as IReport )
-  }
-
-  async update( comment: string )
-  {
-    if( ( comment || '').length < 4 ) {
-      this.toastSvc.show( 'El comentario es muy corto', true )
-      return
-    }
-
-    this.iComment.comment = comment
-
-    const { response, error } = !this.iComment.id
-      ? await this.commentSvc.create( this.post, this.iComment )
-      : await this.commentSvc.update( this.post, this.iComment.id, this.iComment )
   }
 }
