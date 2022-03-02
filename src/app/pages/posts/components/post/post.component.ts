@@ -13,10 +13,7 @@ import { SeoService } from 'src/app/services/seo.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IAdviseFull } from '../../advises/models/advises.model';
-import { IComment, ICommentFull } from '../../advises/models/comment.model';
 import { AdviseService } from '../../advises/services/advises.service';
-import { CommentService } from '../../advises/services/comment.service';
-import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-post-component',
@@ -25,8 +22,6 @@ import { CommentsComponent } from '../comments/comments.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class PostComponent implements OnInit {
-  
-  @ViewChild( "comments" ) comments: CommentsComponent
 
   @Input() id: number
   @Input() iAdvise: IAdviseFull
@@ -34,13 +29,13 @@ export class PostComponent implements OnInit {
   @Input() showOpts: boolean = false
   @Input() showSeePost: boolean = false
   @Input() showContent: boolean = false
-  @Input() showComments: boolean = false
+  @Input() listComments: boolean = false
+
+  isPostVisible: boolean = true
+  areCommentsVisible: boolean = true
 
   dateFormatType = DateFormatType
   iUser: IUser
-
-  // Comment selected
-  iComment: ICommentFull
 
   constructor(
       private optsMenuSvc: OptsMenuSvc
@@ -53,7 +48,6 @@ export class PostComponent implements OnInit {
     , private seoSvc: SeoService
     , private fileSvc: FileService
     , private reportSvc: ReportService
-    , private commentSvc: CommentService
   ) {}
 
   ngOnInit()
@@ -139,23 +133,5 @@ export class PostComponent implements OnInit {
     this.reportSvc.show({
       advise: this.id
     } as IReport )
-  }
-
-  async comment( value: string | number )
-  {
-    if( !value ) return
-
-    await this.loadingSvc.show()
-    const { response, error } = await this.commentSvc.create( this.id, {
-        comment: value + ''
-      , post: this.id
-      , id_comment: this.iComment?.id
-    } as IComment )
-
-    console.log({ response, error })
-
-    if( error ) this.toastSvc.show( error.msg || error.message || 'Error creating comment', true )
-    if( response ) this.comments.add( response?.comment )
-    await this.loadingSvc.dismiss()
   }
 }
