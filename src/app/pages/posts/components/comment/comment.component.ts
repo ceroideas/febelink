@@ -83,9 +83,9 @@ export class CommentComponent implements OnInit {
         title: 'pages.posts.advises.delete.title'
       , msg: 'pages.posts.advises.delete.msg'
     } as IAlert )) {
-      this.loadingSvc.show()
-      const { response, error } = await this.commentSvc.delete( this.iComment?.id )
-      this.loadingSvc.dismiss()
+      await this.loadingSvc.show()
+      const { response, error } = await this.commentSvc.delete( this.post, this.iComment?.id )
+      await this.loadingSvc.dismiss()
 
       if( error ) {
         this.toastSvc.show( error.msg || error.message || 'Error on deleting', true )
@@ -113,7 +113,7 @@ export class CommentComponent implements OnInit {
     this.iComment.comment = comment
 
     const { response, error } = !this.iComment.id
-      ? await this.commentSvc.create( this.iComment )
-      : await this.commentSvc.update( this.iComment.id, this.iComment )
+      ? await this.commentSvc.create( this.post, this.iComment )
+      : await this.commentSvc.update( this.post, this.iComment.id, this.iComment )
   }
 }
