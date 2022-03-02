@@ -1,4 +1,4 @@
-<div class="marg-se max-w600">
+<div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10">
       <ion-col size="10" class="no-padding">
@@ -63,59 +63,33 @@
     </ion-row>
   
     <!-- Image -->
-    <ion-row class="marg-t10" *ngIf="iAdvise.photo">
+    <ion-row class="marg-t10" *ngIf="iAdvise.photo && isPostVisible">
       <ion-img class="photo" [src]="iAdvise.photo"></ion-img>
     </ion-row>
   
     <!-- Content -->
-    <ion-row class="marg-10 content" *ngIf="showContent">
+    <ion-row class="marg-10 content" *ngIf="showContent && isPostVisible">
       <ion-label [innerHTML]="iAdvise.content"></ion-label>
     </ion-row>
     
-    <app-post-bottom-bar-component
+    <app-post-bottom-bar-component  *ngIf="isPostVisible"
       [id]="id"
       [post]="iAdvise"
       [showSeePost]="showSeePost"
     ></app-post-bottom-bar-component>
-  </ion-grid>
 
-  <ion-grid class="marg-5 box-bw-r1-lln" *ngIf="showComments">
-    <!-- Comment -->
-    <ion-row class="marg-s5 vertical-content">
-      <!-- Avatar -->
-      <ion-avatar class="no-margin marg-e5 wh-40">
-        <ion-img
-          [src]="iUser?.avatar || 'https://api.febelink.com/storage/users/default.png'"
-          appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
-        ></ion-img>
-      </ion-avatar>
-
-      <ion-item class="marg-5 box-bw-r1-lln comment" lines="none">
-        <!-- Input -->
-        <ion-input #inComment
-          placeholder="{{ 'common.searchPlaceholder' | translate }}"
-          inputmode="text"
-        ></ion-input>
-  
-        <!-- Button Send -->
-        <ion-buttons end>
-          <ion-button icon-only
-            class="no-padding marg-s10 wh-40"
-            shape="round"
-            color="primary"
-            (click)="comment( inComment.value )"
-          >
-            <ion-icon name="send-outline" color="white"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-    </ion-row>
-
-    <ion-row>
-      <app-comments-component #comments
-        [post]="id"
-        [isVisible]="showComments"
-      ></app-comments-component>
+    <!-- Set Post Visible -->
+    <ion-row class="align-center" *ngIf="!isPostVisible">
+      <em class="pointer font-12" (click)="isPostVisible = true; areCommentsVisible = false">
+        <ion-label color="primary">{{ 'Show Post' | translate }}</ion-label>
+      </em>
     </ion-row>
   </ion-grid>
+
+  <app-comments-component #comments
+    [post]="id"
+    [listComments]="listComments"
+    [isVisible]="areCommentsVisible"
+    (OnCommentsVisible)="isPostVisible = false"
+  ></app-comments-component>
 </div>
