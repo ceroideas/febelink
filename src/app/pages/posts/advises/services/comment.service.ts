@@ -15,19 +15,19 @@ export class CommentService {
   // To Create a Comment
   async create( oracle: number, comment: IComment ): Promise<IHttpService>
   {
-    return this.http.post( `posts/oracle/${oracle}/comment`, comment )
+    return this.http.post( `posts/oracle/${oracle}/comments`, comment )
   }
 
   // To Update a Comment
   async update( oracle: number, id: number, comment: IComment ): Promise<IHttpService>
   {
-    return this.http.put( `posts/oracle/${oracle}/comment/${id}`, comment )
+    return this.http.put( `posts/oracle/${oracle}/comments/${id}`, comment )
   }
 
   // To Delete a Comment
   async delete( oracle: number, id: number ): Promise<IHttpService>
   {
-    return this.http.delete( `posts/oracle/${oracle}/comment/${id}` )
+    return this.http.delete( `posts/oracle/${oracle}/comments/${id}` )
   }
 
   // To Get Comments based on Filter
