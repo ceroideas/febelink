@@ -18,7 +18,7 @@
                 </ion-label>
               </ion-segment-button>
               
-              <h2 class="line no-margin margin-5"></h2>
+              <h2 class="line no-margin marg-5"></h2>
             </ng-container>
           </ion-segment>
         </ion-col>
@@ -54,7 +54,7 @@
 </ion-header>
 
 
-<div class="margin-5" *ngFor="let list of offersList">
+<div class="marg-5" *ngFor="let list of offersList">
   <ng-container *ngIf="list.type == segment">
     <!-- Loading -->
     <app-loading [isLoading]="list.isLoading" message="common.labelLoading"></app-loading>
