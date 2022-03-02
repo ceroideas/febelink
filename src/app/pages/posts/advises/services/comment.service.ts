@@ -13,32 +13,26 @@ export class CommentService {
   ) {}
   
   // To Create a Comment
-  async create( comment: IComment ): Promise<IHttpService>
+  async create( oracle: number, comment: IComment ): Promise<IHttpService>
   {
-    return this.http.post( `posts/advise/comment`, comment )
+    return this.http.post( `posts/oracle/${oracle}/comment`, comment )
   }
 
   // To Update a Comment
-  async update( id: number, comment: IComment ): Promise<IHttpService>
+  async update( oracle: number, id: number, comment: IComment ): Promise<IHttpService>
   {
-    return this.http.put( `posts/advise/comment/${id}`, comment )
-  }
-
-  // To Inform a Comment reaction
-  async react( id: number, react: number, state: number ): Promise<IHttpService>
-  {
-    return this.http.patch( `posts/advise/comment/${id}/react`, { react, state })
+    return this.http.put( `posts/oracle/${oracle}/comment/${id}`, comment )
   }
 
   // To Delete a Comment
-  async delete( id: number ): Promise<IHttpService>
+  async delete( oracle: number, id: number ): Promise<IHttpService>
   {
-    return this.http.delete( `posts/advise/comment/${id}` )
+    return this.http.delete( `posts/oracle/${oracle}/comment/${id}` )
   }
 
   // To Get Comments based on Filter
-  async list( post: number, filter: IPaginationFilter ): Promise<IHttpService>
+  async list( oracle: number, filter: IPaginationFilter ): Promise<IHttpService>
   {
-    return this.http.get( `posts/advises/${post}/comments`, filter )
+    return this.http.get( `posts/oracle/${oracle}/comments`, filter )
   }
 }
