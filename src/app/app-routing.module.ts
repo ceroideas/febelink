@@ -208,9 +208,6 @@ const routes: Routes = [
     path: 'posts',
     loadChildren: () => import('./pages/posts/post.module').then( m => m.PostPageModule)
   },
-
-
-
 ];
 
 @NgModule({
