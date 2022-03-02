@@ -14,43 +14,43 @@ export class AdviseService {
   // To Create a Post
   async create( advise: IAdviseFull ): Promise<IHttpService>
   {
-    return this.http.post( 'posts/advise', advise )
+    return this.http.post( 'posts/oracle', advise )
   }
 
   // To Get a Post
   async get( id: number ): Promise<IHttpService>
   {
-    return this.http.get( 'posts/advise/' + id )
+    return this.http.get( 'posts/oracle/' + id )
   }
 
   // To Update a Post
   async update( id: number, advise: IAdviseFull ): Promise<IHttpService>
   {
-    return this.http.post( 'posts/advise/' + id, advise )
+    return this.http.post( 'posts/oracle/' + id, advise )
   }
 
   // To Inform a Post reaction
   async react( id: number, react: number, state: number ): Promise<IHttpService>
   {
-    return this.http.patch( `posts/advise/${id}/react`, { react, state })
+    return this.http.patch( `posts/oracle/${id}/react`, { react, state })
   }
 
   // To Inform a Post has been shared
   async shared( id: number ): Promise<IHttpService>
   {
-    return this.http.put( `posts/advise/${id}/shared`)
+    return this.http.put( `posts/oracle/${id}/shared`)
   }
 
   // To Delete a Post
   async delete( id: number ): Promise<IHttpService>
   {
-    return this.http.delete( 'posts/advise/' + id )
+    return this.http.delete( 'posts/oracle/' + id )
   }
 
   // To Get Posts based on Filter
   async list( filter: IAdviseFilter ): Promise<IHttpService>
   {
-    return this.http.get( 'posts/advises', filter )
+    return this.http.get( 'posts/oracles', filter )
   }
 
   extractTitle( iAdvise: IAdvise ): string
