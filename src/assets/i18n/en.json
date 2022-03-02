@@ -578,6 +578,17 @@
           , "no-items-filters": "There are no Oracles yet with these filters<br>Do you want to publish one?<br>Click here"  
         }
       }
+      
+      , "comment": {
+        "placeholder": "Comment..."
+        , "created": "Comment added"
+        , "updated": "Comment edited"
+        , "delete": {
+          "title": "Delete Comment"
+          , "msg": "Do you confirm that want to delete this Comment?"
+          , "done": "Comment deleted"
+        }
+      }
     }
   },
   "toast": {

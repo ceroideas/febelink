@@ -576,6 +576,17 @@
           , "no-items-filters": "Aun no hay Oráculos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
         }
       }
+      
+      , "comment": {
+        "placeholder": "Comentar..."
+        , "created": "Comentario agregado"
+        , "updated": "Comentario editado"
+        , "delete": {
+          "title": "Eliminar Comentario"
+          , "msg": "¿Confirmas que quieres eliminar este comentario?"
+          , "done": "Comentario eliminado"
+        }
+      }
     }
   },
   "toast": {
