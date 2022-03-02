@@ -1,13 +1,66 @@
-<div class="marg-5 container" *ngIf="isVisible">
-  <!-- Loading -->
-  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+<ion-grid class="marg-5 no-pad box-bw-r1-lln">
+  <!-- Comment -->
+  <ion-row class="marg-5 marg-s10 vertical-content">
+    <!-- Avatar -->
+    <ion-avatar class="no-margin marg-e5 wh-35">
+      <ion-img
+        [src]="iUser?.avatar || 'https://api.febelink.com/storage/users/default.png'"
+        appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+      ></ion-img>
+    </ion-avatar>
 
-  <ng-container *ngIf="!isLoading">
-    <app-comment-component *ngFor="let iComment of iComments"
-      [class]="iComment?.id_comment ? 'marg-s10' : ''"
-      [post]="post"
-      [iComment]="iComment"
-      (OnUpdate)="update( $event )"
-    ></app-comment-component>
-  </ng-container>
-</div>
+    <ion-item class="marg-5 no-pad h-min-30 box-bw-r1-lln comment" lines="none">
+      <!-- Input -->
+      <ion-input #inComment
+        class="marg-s10"
+        placeholder="{{ 'pages.posts.comment.placeholder' | translate }}"
+        inputmode="text"
+      ></ion-input>
+
+      <!-- Button Send -->
+      <ion-buttons end>
+        <ion-button icon-only
+          class="no-padding marg-s10 wh-40"
+          shape="round"
+          color="primary"
+          (click)="comment( inComment.value )"
+        >
+          <ion-icon name="send-outline" color="white"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-row>
+
+  <!-- Set Commetns Visible -->
+  <ion-row class="align-center" *ngIf="!isVisible && iComments?.length">
+    <em class="pointer font-12" (click)="showComments()">
+      <ion-label color="primary">{{ 'Show Comments' | translate }}</ion-label>
+    </em>
+  </ion-row>
+  
+  <div
+    class="pad-b20 pad-t5 container"
+    *ngIf="userComments?.length > 0 || ( iComments?.length > 0 && isVisible )"
+  >
+    <!-- Loading -->
+    <app-loading *ngIf="isLoading" message="common.labelSearching"></app-loading>
+
+    <ng-container *ngIf="!isLoading && isVisible">
+      <!-- Comments done by user from ion-input -->
+      <app-comment-component *ngFor="let iComment of userComments"
+        [post]="post"
+        [iComment]="iComment"
+        (OnDoEdit)="OnDoEdit( $event )"
+        (OnDeleted)="OnDeleted( $event )"
+      ></app-comment-component>
+
+      <!-- Comments from DBs -->
+      <app-comment-component *ngFor="let iComment of iComments"
+        [post]="post"
+        [iComment]="iComment"
+        (OnDoEdit)="OnDoEdit( $event )"
+        (OnDeleted)="OnDeleted( $event )"
+      ></app-comment-component>
+    </ng-container>
+  </div>
+</ion-grid>
