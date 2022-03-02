@@ -1,9 +1,14 @@
-import { Component, Input, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { IonInput } from '@ionic/angular';
 import { IPaginationFilter } from 'src/app/models/pagination.model';
+import { IUser } from 'src/app/models/user.model';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
+import { LoadingSvc } from 'src/app/services/loading.service';
 import { ToastSvc } from 'src/app/services/toast.service';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { ICommentFull } from '../../advises/models/comment.model';
 import { CommentService } from '../../advises/services/comment.service';
+import { CommentComponent } from '../comment/comment.component';
 
 @Component({
   selector: 'app-comments-component',
@@ -13,28 +18,42 @@ import { CommentService } from '../../advises/services/comment.service';
 })
 export class CommentsComponent implements OnInit {
 
+  @ViewChild( 'inComment', { static: false }) inComment: IonInput;
+
   @Input() post: number // Referencing Post Id
-  @Input() iComments: ICommentFull[]
+  @Input() iComments: ICommentFull[] = []
+  @Input() listComments: boolean = false
   @Input() isVisible: boolean = false
+  @Output() OnCommentsVisible: EventEmitter<any> = new EventEmitter();
   
   dateFormatType = DateFormatType
-
-  isLoading: boolean
+  iUser: IUser
+  
+  isLoading: boolean = false
   filter: IPaginationFilter = { activePage: 0 }
+  
+  // Comment selected
+  iComment: ICommentFull
+
+  // Comments done
+  userComments: ICommentFull[] = []
 
   constructor(
       private commentSvc: CommentService
     , private toastSvc: ToastSvc
+    , public sessionSvc: UserSessionSvc
+    , private loadingSvc: LoadingSvc
   ) {}
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.sessionSvc.get().then(( userData ) => this.iUser = userData )
+  }
 
   ngOnChanges( changes: SimpleChanges ): void {
-    console.log({ changes, length: this.iComments?.length })
-    if ( 'isVisible' in changes ) {
-      this.isVisible = changes.isVisible.currentValue
-
-      if( this.isVisible && !this.iComments ) this.list() 
+    if ( 'listComments' in changes ) {
+      this.listComments = changes.listComments.currentValue
+      if( this.listComments ) this.list() 
     }
   }
 
@@ -42,34 +61,86 @@ export class CommentsComponent implements OnInit {
   {
     this.isLoading = true
 
+    // Clear user comments, since will be brought from DBs
+    this.userComments = []
+
     const { response, error } = await this.commentSvc.list( this.post, this.filter )
     if( error ) {
       this.toastSvc.show( error.msg || error.message || 'There was an error geting comments', true )
       return
     }
-
+    console.log({ response, error })
     this.iComments = response
     this.isLoading = false
   }
 
-  add( iComment: ICommentFull )
+  async OnDoEdit( comment: ICommentFull )
   {
-    // unshift = Add comment at the beginning of the list
-    this.iComments.unshift( iComment )
+    this.iComment = comment
+    this.inComment.value = this.iComment?.comment || ''
+    this.inComment.setFocus()
   }
 
-  async update( event )
+  async OnDeleted( comment: ICommentFull )
   {
-    console.log({ event })
-    /* if( ( comment || '').length < 4 ) {
-      this.toastSvc.show( 'El comentario es muy corto', true )
-      return
+    // Remove from lists if is updating 
+    this.removeFromList( this.userComments, comment )
+    this.removeFromList( this.iComments, comment )
+  }
+
+  async comment( value: string | number )
+  {
+    if( !value ) return
+    this.loadingSvc.show()
+
+    // Set values
+    const comment = {
+        id: this.iComment?.id
+      , advise: this.post
+      , comment: value + ''
+      , id_comment: this.iComment?.id_comment
     }
 
-    this.iComment.comment = comment
+    const { response, error } = !this.iComment?.id
+        ? await this.commentSvc.create( this.post, comment )
+        : await this.commentSvc.update( this.post, this.iComment?.id, comment )
 
-    const { response, error } = !this.iComment.id
-      ? await this.commentSvc.create( this.iComment )
-      : await this.commentSvc.update( this.iComment.id, this.iComment ) */
+    console.log({ response, error })
+    if( error ) this.toastSvc.show( error.msg || error.message || 'Error creating comment', true )
+
+    // Remove from lists if is updating 
+    this.removeFromList( this.userComments, this.iComment )
+    this.removeFromList( this.iComments, this.iComment )
+
+    // Add new|updated item to List
+    if( response ) this.addToList( response?.comment )
+
+    // Clear Input
+    this.inComment.value = '';
+
+    // Clear selected comment to edit
+    this.iComment = null
+
+    this.loadingSvc.dismiss()
+  }
+
+  addToList( iComment: ICommentFull )
+  {
+    // unshift = Add at the beginning of the list
+    this.userComments.unshift( iComment )
+  }
+
+  removeFromList( array: ICommentFull[], iComment: ICommentFull )
+  {
+    if( !iComment ) return
+
+    const index = array.indexOf( iComment, 0 );
+    if (index > -1) array.splice(index, 1)
+  }
+
+  showComments()
+  {
+    this.isVisible = true
+    this.OnCommentsVisible.emit()
   }
 }
