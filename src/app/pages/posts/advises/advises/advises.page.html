@@ -19,9 +19,9 @@
             <ion-input #searchBar
               placeholder="{{ 'common.searchPlaceholder' | translate }}"
               inputmode="text"
-              (keyup.enter)="search( searchBar.value + '' )"
-              (ionChange)="search( searchBar.value + '' )"
-              (ionClear)="search( searchBar.value + '' )"
+              (keyup.enter)="clear2search( searchBar.value + '' )"
+              (ionChange)="clear2search( searchBar.value + '' )"
+              (ionClear)="clear2search( searchBar.value + '' )"
               debounce="500"
               [value]="searchTx"
             ></ion-input>
@@ -48,32 +48,49 @@
       </ion-row>
 
       <!-- Filters -->
-      <ion-row [style]="'display: ' + ( showFilters ? 'block;' : 'none' )">
+      <ion-row [style]="showFilters ? '' : 'display: none;'">
         <!-- Sectors -->
-        <app-sectors #sectors
-          (OnSectorChange)="search()"
-          (OnSubsectorChange)="search()"
-        ></app-sectors>
+        <ion-col size="12" size-md="8" class="no-padding center-v">
+          <app-sectors #sectors
+            (OnSectorChange)="clear2search()"
+            (OnSubsectorChange)="clear2search()"
+          ></app-sectors>
+        </ion-col>
 
         <!-- Language -->
-        <ion-col size="12" size-sm="3" class="no-padding">
+        <ion-col size="6" size-sm="4" class="no-padding center-v">
           <ion-row class="pad-s20 pad-e20">
-            <ion-col size="6" class="no-margin no-padding center-v">{{ 'common.labelLang' | translate }}</ion-col>
+            <ion-col size="6" class="no-margin no-padding center-v" (click)="lang.selectLang( $event )">
+              {{ 'common.labelLang' | translate }}
+            </ion-col>
             <ion-col size="6" class="no-margin no-padding tx-end">
               <app-lang-btn #lang
                 [changeAppLang]="false"
-                (onLangSelected)="search( searchBar.value )"
+                (onLangSelected)="clear2search( searchBar.value )"
               ></app-lang-btn>
             </ion-col>
           </ion-row>
         </ion-col>
+  
+        <!-- My Posts -->
+        <ion-col size="6" class="no-padding center-v">
+          <ion-row class="marg-tb-5 pad-s20 pad-e">
+            <ion-checkbox #chkMyPosts size="12" size-sm="3" class="no-padding"
+              [(ngModel)]="myPosts"
+              (ionChange)="clear2search()"
+            ></ion-checkbox>
+            <ion-label class="center-v pointer marg-s" (click)="chkMyPosts.checked = !chkMyPosts.checked">
+              {{ 'pages.posts.advises.my-posts' | translate }}
+            </ion-label>
+          </ion-row>
+        </ion-col>
 
         <!-- User -->
-        <ion-col size="12" size-sm="3" class="no-padding" *ngIf="false">
+        <ion-col size="12" size-md="6" class="no-padding center-v" *ngIf="!myPosts">
           <ion-row class="pad-s20 pad-e">
-            <ion-col size="6" class="no-margin no-padding">{{ 'common.labelUser' | translate }}</ion-col>
+            <ion-col size="6" class="no-margin no-padding center-v">{{ 'common.labelUser' | translate }}</ion-col>
             <ion-col size="6" class="no-margin no-padding">
-              <app-user-item #user (onUserClick)="userClicked()"></app-user-item>
+              <app-user-item #user classImg="wh-30" (onUserClick)="userClicked()"></app-user-item>
             </ion-col>
           </ion-row>
         </ion-col>
@@ -82,12 +99,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [class]="'padding-top ' + (!isLoading && iAdvises?.length <= 0 ? 'tx-center' : '' )">
+<ion-content class="padding-top pad-se">
   <!-- Loading -->
   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
-  <!-- Posts -->
-  <ng-container *ngIf="!isLoading">
+  <ion-list>
+    <!-- Posts -->
     <app-post-component
       *ngFor="let advise of iAdvises"
       [id]="advise.id"
@@ -95,29 +112,25 @@
       [showLang]="true"
       [showSeePost]="true"
     ></app-post-component>
-  </ng-container>
+  </ion-list>
 
+  <ion-infinite-scroll
+    threshold="20%"
+    (ionInfinite)="infiniteScroll($event)"
+    [disabled]="finishedSearch"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      [loadingText]="'common.labelSearching' | translate">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+    
   <!-- No Items -->
-  <ion-label
-    class="hint pointer"
-    *ngIf="!isLoading && iAdvises?.length <= 0"
-    (click)="createPost()"
-    [innerHTML]="'pages.posts.advises.error.no-items' + ( !hasFilters() ? '' : '-filters' ) | translate"
-  ></ion-label>
+  <ion-item lines="none" color="transparent" *ngIf="finishedSearch">
+    <ion-label
+      class="marg-b30 tx-center hint pointer"
+      (click)="createPost()"
+      [innerHTML]="'pages.posts.advises.error.no-items' + ( !hasFilters() ? '' : '-filters' ) | translate"
+    ></ion-label>
+  </ion-item>
 </ion-content>
-
-<ion-footer
-  class="ion-no-border ion-text-center desktop"
-  no-border
-  color="transparent"
-  *ngIf="pagination?.qPages > 1"
->
-  <ion-toolbar color="febelink">
-    <!-- Pagination Bottom -->
-    <app-pagination #pagination
-      [disabled]="isLoading"
-      (onPageChange)="displayActivePage()"
-    >
-  </app-pagination>
-  </ion-toolbar>
-</ion-footer>
