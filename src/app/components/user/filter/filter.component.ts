@@ -20,7 +20,7 @@ export class UserFilterComponent implements OnInit {
   @ViewChild( "pagination" ) pagination: PaginationComponent
 
   isLoading: boolean = false
-  list: IUserItem[] = []
+  list: IUserItem[]
   filter: string = ''
 
   constructor(
@@ -38,21 +38,25 @@ export class UserFilterComponent implements OnInit {
   
   async search( text?: string )
   {
-    this.isLoading = true
-    this.filter = text || this.filter
+    this.filter = text || text == '' ? text : this.filter
 
+    // If Empty do not search
+    if( !this.filter ) {
+      this.list = null
+      return
+    }
+    this.isLoading = true
+    
     const { response, error } = await this.httpSvc.get(
         this.urlPath,
         { activePage: this.pagination?.activePage || 1, keys: this.filter, ...( this.params || {})}
       )
 
-    if( error ) {
+    if( error )
       this.toastSvc.show( error.message || error.message || 'common.users.error.list', true )
-      return
-    }
     
     /* List Items */
-    this.list = response.items;
+    this.list = response;
 
     /* Pagination Values */
     this.pagination?.update( response )
