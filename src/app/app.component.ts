@@ -1,6 +1,6 @@
 import { WalletService } from './services/wallet/wallet.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   Platform,
   AlertController,
@@ -26,6 +26,7 @@ import { Observable } from 'rxjs';
 import { ILangDEFAULTS } from './models/langs.model';
 import { Meta, Title } from '@angular/platform-browser';
 import { FrogedService } from './services/froged.service';
+import { ConsoleSvc } from './services/console.service';
 
 const GENERAL_TITLE = 'Febelink | El buscador de servicios profesionales';
 const GENERAL_DESC =
@@ -80,7 +81,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private walletService: WalletService,
     private titleService: Title,
     private metaService: Meta,
-    private frogedSvc: FrogedService
+    private frogedSvc: FrogedService,
+    private consoleSvc: ConsoleSvc
   ) {
     this.router.events.subscribe(( e ) => {
       /* To Know in SCSS which url is currently opened */
@@ -103,6 +105,9 @@ export class AppComponent implements OnInit, OnDestroy {
     ]);
 
     this.frogedSvc.track( 'public_key' );
+
+    /* Show */
+    this.consoleSvc.warning()
   }
 
   initializeApp() {
