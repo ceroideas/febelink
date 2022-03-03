@@ -29,11 +29,14 @@ export class AdvisesPage implements OnInit
   showFilters: boolean
   isLoading: boolean = true
 
-  iAdvises: IAdviseFull[]
+  iAdvises: IAdviseFull[] = []
   filter: string | number
   langSelected: ILang
+  myPosts: boolean = false
   
   curUser: IUser
+  activePage: number = 1
+  finishedSearch: boolean = false
 
   constructor(
       private router: Router
@@ -56,13 +59,11 @@ export class AdvisesPage implements OnInit
 
   async ngAfterViewInit()
   {
-    this.search()
     this.curUser = await this.sessionSvc.get()
   }
 
   async search( text: string | number = null )
   {
-    this.isLoading = true
     this.filter = text != null ? text : this.filter
 
     const { response, error } = await this.adviseSvc.list( await this.getFilters() )
@@ -73,7 +74,9 @@ export class AdvisesPage implements OnInit
     }
     
     /* List Items */
-    this.iAdvises = response
+    this.iAdvises.push( ...response )
+    console.log({ response })
+    if( response?.length == 0 ) this.finishedSearch = true
 
     /* Pagination Values */
     this.pagination?.update( response )
@@ -84,15 +87,17 @@ export class AdvisesPage implements OnInit
   async getFilters(): Promise<IAdviseFilter>
   {
     const filters = {
-        activePage: this.pagination?.activePage || 0
+        activePage: this.activePage
       , keys: this.filter || null
       
       , sector: this.sectors?.sector || null
       , subsector: this.sectors?.subsector || null
       , lang: await this.lang?.id()
-      , user: this.user?.user?.id || null
+      , user: this.myPosts ? await this.sessionSvc.id() : this.user?.user?.id || null
     }
-    return filters;
+    this.activePage++
+
+    return filters
   }
   hasFilters(): boolean {
     return !( !this.filter && !this.sectors.sector && !this.sectors.subsector && !this.user?.user )
@@ -106,13 +111,30 @@ export class AdvisesPage implements OnInit
 
   async userClicked()
   {
-    this.userFilterPop.show( 'posts/oracles/users', await this.getFilters())
+    const user = await this.userFilterPop.show( 'posts/oracles/users' )
+    this.user.user = user
+    this.search()
   }
 
   
 
   /* Pagination */
-  displayActivePage(){
-    this.search();
+  async infiniteScroll( event )
+  {
+    await this.search()
+    event.target.complete();
+  }
+
+  clearSearch()
+  {
+    this.activePage = 1
+    this.finishedSearch = false
+    this.iAdvises = []
+  }
+  clear2search( text: string | number = null )
+  {
+    this.clearSearch()
+    this.isLoading = true
+    this.search( text )
   }
 }
