@@ -536,6 +536,7 @@
       
       , "advises": {
         "title": "Oráculo"
+        , "my-posts": "Mis Posts"
         
         , "create": {
           "title": "Crear Publicación"
@@ -572,8 +573,8 @@
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
           , "unauthorized": "No tienes permiso para editar este Oráculo"
           , "no-item": "Ups, parece que este Oráculo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items": "Aun no hay Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items-filters": "Aun no hay Oráculos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items": "Hasta aquí llegamos con los Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items-filters": "Hasta aquí llegamos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
         }
       }
       
@@ -1134,5 +1135,11 @@
     },
     "verified": "Verificacion de Vida Exitosa",
     "unverified": "Verificacion de Vida Fallida"
+  },
+  "console": {
+    "warning": {
+      "title": "¡ADVERTENCIA!",
+      "message": "Esta es una función del navegador para desarrolladores. Si se le pidió que copiara y pegara algo aquí, alguien podría querer tomar el control de su cuenta. No introduzca ningún código de script sin saber lo que hace."
+    }
   }
 }

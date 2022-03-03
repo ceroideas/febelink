@@ -538,6 +538,7 @@
       
       , "advises": {
         "title": "Oracle"
+        , "my-posts": "My Posts"
         
         , "create": {
           "title": "Create Post"
@@ -574,8 +575,8 @@
           "search": "There was an error in the search, please try again"
           , "unauthorized": "You do not have permission to edit this Oracle"
           , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
-          , "no-items": "There are no Oracles yet<br>Would you like to post one?<br>Click here"
-          , "no-items-filters": "There are no Oracles yet with these filters<br>Do you want to publish one?<br>Click here"  
+          , "no-items": "Till here we got with the Oracles<br>Would you like to post one?<br>Click here"
+          , "no-items-filters": "Till here we've got with these filters<br>Do you want to publish one?<br>Click here"  
         }
       }
       
@@ -1135,5 +1136,11 @@
     },
     "verified": "Life Verification Successfull",
     "unverified": "Life Verification Failed"
+  },
+  "console": {
+    "warning": {
+      "title": "WARNING!",
+      "message": "This is a browser feature for developers. If you were asked to copy and paste something here, someone might want to take control of your account. Do not enter any script code without knowing what it does."
+    }
   }
 }
