@@ -16,6 +16,7 @@ export class UserItemComponent implements OnInit {
   @Input() txEnd: string;
   @Input() txSubEnd: string;
   @Input() clase: string;
+  @Input() classImg: string;
   @Input() OnClickShowProfile: boolean = false;
   @Output() onUserClick: EventEmitter<IUserItem> = new EventEmitter()
 
