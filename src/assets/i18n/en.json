@@ -539,6 +539,9 @@
       , "advises": {
         "title": "Oracle"
         , "my-posts": "My Posts"
+
+        , "see": "Watch more Posts"
+        , "see-user": "Watch more posts of the User"
         
         , "create": {
           "title": "Create Post"
@@ -570,6 +573,11 @@
           , "done": "Oracle deleted"
         }
         , "share": "Share"
+
+        , "stats": {
+          "qCreated": "Oracles Created:",
+          "qReacts": "Reacts to these:"
+        }
 
         , "error": {
           "search": "There was an error in the search, please try again"

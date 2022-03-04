@@ -537,6 +537,9 @@
       , "advises": {
         "title": "Oráculo"
         , "my-posts": "Mis Posts"
+
+        , "see": "Ver mas posts"
+        , "see-user": "Ver mas posts del Usuario"
         
         , "create": {
           "title": "Crear Publicación"
@@ -568,6 +571,11 @@
           , "done": "Oráculo eliminado"
         }
         , "share": "Compartir"
+
+        , "stats": {
+          "qCreated": "Oráculos Creados:",
+          "qReacts": "Reacciones a ellos:"
+        }
 
         , "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
