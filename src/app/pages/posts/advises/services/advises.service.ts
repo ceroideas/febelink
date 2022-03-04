@@ -58,8 +58,8 @@ export class AdviseService {
     return iAdvise.title ? iAdvise.title
       : !iAdvise?.content
           ? null
-          : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
-          // : this.firstSentence( iAdvise.content )
+          : this.firstSentence( iAdvise.content )
+          // : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
   }
 
   extractSummary( iAdvise: IAdvise ): string
@@ -67,17 +67,18 @@ export class AdviseService {
     return iAdvise.summary ? iAdvise.summary
       : !iAdvise?.content ? null
         : iAdvise?.title ? iAdvise.content
-          : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
-          // : iAdvise.content?.replace( this.firstSentence( iAdvise.content ) || '', '' )
+          : iAdvise.content?.replace( this.firstSentence( iAdvise.content ) || '', '' )
+          // : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
   }
 
   private firstSentence( str ): string
   {
     // https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions
-    // return !str ? '' : str.match( /\(?[^\.\?\!]+[\.!\?]\)?/g )[ 0 ]
-    // const ar = !str ? '' : str.match( /[^.?!]+[.!?]+[\])'"`’”]*/g )
-    const ar = !str ? '' : str.replace(/\.(?!\d)|([^\d])\.(?=\d)/g,'$1.|')
-    console.log({ str, ar })
+    //const ar = !str ? '' : str.replace(/\.(?!\d)|([^\d])\.(?=\d)/g,'$1.|')
+
+    // https://regex101.com/r/nG1gU7/27
+    // const ar = !str ? '' : str.replace( /(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s/gm );
+    const ar = !str ? '' : str.replace( /(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!\:)\s+|\p{Cc}+|\p{Cf}+/gm );
     return ar
   }
 }
