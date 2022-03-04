@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Params } from '@angular/router';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
@@ -8,6 +7,7 @@ import { UserItemComponent } from 'src/app/components/user/item/item.component';
 import { UserFilterPopSvc } from 'src/app/components/user/services/user-filter.pop.service';
 import { ILang } from 'src/app/models/langs.model';
 import { IUser } from 'src/app/models/user.model';
+import { RouteSvc } from 'src/app/services/route.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IAdviseFull, IAdviseFilter } from '../models/advises.model';
@@ -34,12 +34,13 @@ export class AdvisesPage implements OnInit
   langSelected: ILang
   myPosts: boolean = false
   
+  uid: number
   curUser: IUser
   activePage: number = 1
   finishedSearch: boolean = false
 
   constructor(
-      private router: Router
+      private router: RouteSvc
     , private adviseSvc: AdviseService
     , private toastSvc: ToastSvc
     , private userFilterPop: UserFilterPopSvc
@@ -49,12 +50,12 @@ export class AdvisesPage implements OnInit
   ngOnInit()
   {
     // To refresh list on routing to this page
-    this.router.events.pipe(
-      filter((events: RouterEvent) => events instanceof NavigationEnd),
-    ).subscribe((val) => {
-      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( val.url ))
+    this.router.addListener(( url: string, params: Params ) => {
+      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( url )) {
+        this.uid = params?.uid
         this.search();
-    });
+      }
+    })
   }
 
   async ngAfterViewInit()
@@ -75,7 +76,6 @@ export class AdvisesPage implements OnInit
     
     /* List Items */
     this.iAdvises.push( ...response )
-    console.log({ response })
     if( response?.length == 0 ) this.finishedSearch = true
 
     /* Pagination Values */
@@ -93,7 +93,7 @@ export class AdvisesPage implements OnInit
       , sector: this.sectors?.sector || null
       , subsector: this.sectors?.subsector || null
       , lang: await this.lang?.id()
-      , user: this.myPosts ? await this.sessionSvc.id() : this.user?.user?.id || null
+      , user: this.myPosts ? await this.sessionSvc.id() : this.uid || this.user?.user?.id || null
     }
     this.activePage++
 
