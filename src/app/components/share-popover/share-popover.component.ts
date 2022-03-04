@@ -25,9 +25,9 @@ export class SharePopoverComponent implements OnInit {
     this.desc = this.navParams.get('desc');
     this.image = this.navParams.get('image') || 'https://febelink.com/about/febelinkweb/images/home/principal.png';
 
-    console.log("TIITLE",this.title);
+    /* console.log("TIITLE",this.title);
     console.log("DESC",this.desc);
-    console.log("URL",this.url);
+    console.log("URL",this.url); */
 
     this.setFacebookTags(this.url, this.title, this.desc, this.image);
 
