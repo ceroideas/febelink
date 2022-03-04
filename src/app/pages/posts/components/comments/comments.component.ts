@@ -69,7 +69,6 @@ export class CommentsComponent implements OnInit {
       this.toastSvc.show( error.msg || error.message || 'There was an error geting comments', true )
       return
     }
-    console.log({ response, error })
     this.iComments = response
     this.isLoading = false
   }
@@ -105,7 +104,6 @@ export class CommentsComponent implements OnInit {
         ? await this.commentSvc.create( this.post, comment )
         : await this.commentSvc.update( this.post, this.iComment?.id, comment )
 
-    console.log({ response, error })
     if( error ) this.toastSvc.show( error.msg || error.message || 'Error creating comment', true )
 
     // Remove from lists if is updating 
