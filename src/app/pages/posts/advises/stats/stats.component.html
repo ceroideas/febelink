@@ -1,0 +1,25 @@
+<ion-grid class="box-bw-r1-lln marg-tb-10" *ngIf="id">
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading"></app-loading>
+
+  <ion-row>
+    <!-- Total Posts Created By User -->
+    <ion-col size="6" class="tx-center">
+      <ion-label>{{ 'pages.posts.advises.stats.qCreated' | translate }}</ion-label>
+      <ion-label class="bold-6">{{ stats?.qPosts || 0 }}</ion-label>
+    </ion-col>
+    
+    <!-- Total Reacts to Posts Created By The User -->
+    <ion-col size="6" class="tx-center">
+      <ion-label>{{ 'pages.posts.advises.stats.qReacts' | translate }}</ion-label>
+      <ion-label class="bold-6">{{ stats?.qReacts || 0 }}</ion-label>
+    </ion-col>
+  </ion-row>
+    
+  <!-- See Oracles -->
+  <ion-row class="align-center marg-t5" *ngIf="!isLoading">
+    <ion-label class="pointer hint" (click)="seePosts()"><em>
+      {{ 'pages.posts.advises.see' + ( stats?.qPosts > 0 ? '-user' : '' ) | translate }}
+    </em></ion-label>
+  </ion-row>
+</ion-grid>
