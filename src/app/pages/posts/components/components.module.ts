@@ -10,6 +10,7 @@ import { PostBottomBarComponent } from './bottom-bar.component/bottom-bar.compon
 import { PostComponent } from './post/post.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
+import { SharedPostModule } from '../shared-post.module';
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import { CommentsComponent } from './comments/comments.component';
       , ReactiveFormsModule
       , AdvisePageRoutingModule
       , SharedModule
+      , SharedPostModule
     ],
     exports: [
         CommonModule
