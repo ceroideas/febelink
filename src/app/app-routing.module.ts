@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'menu/todas', pathMatch: 'full' },
+  { path: '', redirectTo: 'posts/oracles', pathMatch: 'full' },
   {
     path: 'menu',
     loadChildren: () =>
