@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { WalletService } from 'src/app/services/wallet/wallet.service';
 import { Observable } from 'rxjs';
-import { CryptoCurrency, CryptoTransactions } from 'src/app/models/wallet/currency.model';
+import {
+  CryptoCurrency,
+  CryptoTransactions,
+} from 'src/app/models/wallet/currency.model';
 import { ModalController } from '@ionic/angular';
 import { IUser } from 'src/app/models/user.model';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
@@ -24,9 +27,8 @@ import { ExchangePop } from 'src/app/services/wallet/exchange.pop';
   templateUrl: './wallet.page.html',
   styleUrls: ['./wallet.page.scss'],
 })
-export class WalletPage implements OnInit {
-
-  @ViewChild("offersList") offersList: OffersListComponent;
+export class WalletPage {
+  @ViewChild('offersList') offersList: OffersListComponent;
 
   isLoading: boolean = false;
   user: IUser;
@@ -38,45 +40,69 @@ export class WalletPage implements OnInit {
   hideTransactions: boolean = true;
 
   dateFormatType = DateFormatType;
-  exchangeTypes = ExchangeType
+  exchangeTypes = ExchangeType;
 
   constructor(
-      private walletSvc: WalletService
-    , private modalCtrl: ModalController
-    , private route: ActivatedRoute
-    , private userSvc: UserService
-    , private exchangePop: ExchangePop
-    , private router: Router
-    , private alertSvc: AlertSvc
-    , private clipboardSvc: ClipboardSvc
-    , private translateSvc: TranslateConfigService
-    , private accountSvc: AccountSvc
+    private walletSvc: WalletService,
+    private modalCtrl: ModalController,
+    private route: ActivatedRoute,
+    private userSvc: UserService,
+    private exchangePop: ExchangePop,
+    private router: Router,
+    private alertSvc: AlertSvc,
+    private clipboardSvc: ClipboardSvc,
+    private translateSvc: TranslateConfigService,
+    private accountSvc: AccountSvc
   ) {}
 
-  ngOnInit() {}
-  
   async ionViewWillEnter() {
-    this.getWalletInfo();
-    this.haveYouPurchased();
+    await this.getWalletInfo();
+    await this.haveYouPurchased();
+
+    this.checkIfShowBuyTokenModal();
+  }
+
+  checkIfShowBuyTokenModal() {
+    const buyTokenLinkCurrency = this.route.snapshot.paramMap.get('currency');
+    if (buyTokenLinkCurrency) {
+      this.showBuyTokenModal(buyTokenLinkCurrency);
+    }
+  }
+
+  async showBuyTokenModal(buyTokenLinkCurrency: string) {
+    const serviceRequest: Observable<any> = await this.walletSvc
+      .getWalletInfo()
+      .then();
+    serviceRequest.subscribe((response) => {
+      const currency = this.walletParams.userWallets.filter(
+        (walletCurrency) => {
+          return walletCurrency.currency === buyTokenLinkCurrency;
+        }
+      );
+      if (currency) this.buy(currency[0]);
+    });
   }
 
   async haveYouPurchased() {
-    const params = ( <any> this.route.snapshot.queryParamMap ).params;
+    const params = (<any>this.route.snapshot.queryParamMap).params;
 
-    if( params[ 'bought' ] != 'false' && params[ 'bought' ] != 'true' )
-      return;
-    
-    const bought = params[ 'bought' ] == 'true';
-    const assetId = params[ 'assetId' ];
-    const numTokens = params[ 'numTokens' ];
-    const cash = params[ 'cash' ];
-    const priceBuy = params[ 'priceBuy' ]
-    
+    if (params['bought'] != 'false' && params['bought'] != 'true') return;
+
+    const bought = params['bought'] == 'true';
+    const assetId = params['assetId'];
+    const numTokens = params['numTokens'];
+    const cash = params['cash'];
+    const priceBuy = params['priceBuy'];
+
     const exchangeModal = await this.modalCtrl.create({
       component: InformComponent,
-      componentProps:{
-        pompadour: this.translateSvc.instant( 'pages.wallet.purchase.title-' + ( bought ? 'success' : 'error' )),
-        description: this.translateSvc.instant( 'pages.wallet.purchase.msg-' + ( bought ? 'success' : 'error' )),
+      componentProps: {
+        pompadour: this.translateSvc.instant(
+          'pages.wallet.purchase.title-' + (bought ? 'success' : 'error')
+        ),
+        description: this.translateSvc.instant(
+          'pages.wallet.purchase.msg-' + (bought ? 'success' : 'error')
+        ),
         showCheckmark: bought,
       },
       cssClass: 'pop-w-300 pop-h-400 pop-opacity pop-br-10',
@@ -90,7 +116,7 @@ export class WalletPage implements OnInit {
 
   public async send() {
     // If user has not verified Data and Email, redirect to profile
-    if( !this.walletParams.verified.mandatory ) {
+    if (!this.walletParams.verified.mandatory) {
       await this.userSvc.showAlertToRedir();
       return;
     }
@@ -98,11 +124,11 @@ export class WalletPage implements OnInit {
     const sendTksModal = await this.modalCtrl.create({
       component: SendComponent,
       componentProps: {
-        asset: this.walletParams.userWallets[ 0 ],
+        asset: this.walletParams.userWallets[0],
         retainedTks: this.walletParams.retainedTks,
         assetsMaxDecimals: this.walletParams.assetsMaxDecimals,
 
-        returnBalance: true
+        returnBalance: true,
       },
       cssClass: 'modal-mobile',
     });
@@ -110,8 +136,7 @@ export class WalletPage implements OnInit {
 
     const { data } = await sendTksModal.onDidDismiss();
 
-    if( data?.response )
-      this.setVars( data.response );
+    if (data?.response) this.setVars(data.response);
   }
 
   async getWalletInfo() {
@@ -119,10 +144,10 @@ export class WalletPage implements OnInit {
     const serviceRequest: Observable<any> = await this.walletSvc
       .getWalletInfo()
       .then();
-    serviceRequest.subscribe((response) => this.setVars( response ));
+    serviceRequest.subscribe((response) => this.setVars(response));
   }
 
-  setVars( response ) {
+  setVars(response) {
     this.walletParams.publicKey = response.publicKey;
     this.walletParams.userWallets = response.data;
     this.walletParams.retainedTks = response.retainedTks;
@@ -131,50 +156,59 @@ export class WalletPage implements OnInit {
     this.walletParams.minnersFee = response.minnersFee;
     this.isLoading = false;
     this.walletParams.stripeFee = response.stripeFee;
-    this.walletParams.assetsMaxDecimals = Number( response.assetsMaxDecimals || '0' );
+    this.walletParams.assetsMaxDecimals = Number(
+      response.assetsMaxDecimals || '0'
+    );
   }
 
   async copyPublicKey() {
-    this.clipboardSvc.copy( this.walletParams.publicKey );
+    this.clipboardSvc.copy(this.walletParams.publicKey);
   }
 
-  async exchange( currency: CryptoCurrency ) {
+  async exchange(currency: CryptoCurrency) {
     const { saved, response, error } = await this.exchangePop.show(
       ExchangeType.CREATE,
       this.walletParams,
-      { sell: {
-        currency: currency?.currency,
-        assetId: currency?.assetId,
-        priceBuy: currency?.priceBuy,
-        issuerId: currency?.issuerId
-      }}
+      {
+        sell: {
+          currency: currency?.currency,
+          assetId: currency?.assetId,
+          priceBuy: currency?.priceBuy,
+          issuerId: currency?.issuerId,
+        },
+      }
     );
 
-    if( saved && !error ) this.offersList.refresh();
+    if (saved && !error) this.offersList.refresh();
   }
-  refresh() { this.offersList.refresh() }
+  refresh() {
+    this.offersList.refresh();
+  }
 
   showHelp() {
-    this.alertSvc.show({
-      title: 'pages.wallet.help.title',
-      msg: 'pages.wallet.help.message',
-      css: 'alertSmallTitle'
-    }, true );
+    this.alertSvc.show(
+      {
+        title: 'pages.wallet.help.title',
+        msg: 'pages.wallet.help.message',
+        css: 'alertSmallTitle',
+      },
+      true
+    );
   }
 
-  async buy( currency ) {
+  async buy(currency) {
     // If user has no Public Key or has not verified account
-    if( !this.walletParams.publicKey || !this.walletParams.verified.account ) {
+    if (!this.walletParams.publicKey || !this.walletParams.verified.account) {
       await this.userSvc.showAlertToRedir();
       return;
     }
 
     const exchangeModal = await this.modalCtrl.create({
       component: BuyAssetsComponent,
-      componentProps:{
+      componentProps: {
         asset: currency,
-        minnersFee: parseFloat( this.walletParams.minnersFee || '0' ),
-        stripeFee: parseFloat( this.walletParams.stripeFee || '0' ),
+        minnersFee: parseFloat(this.walletParams.minnersFee || '0'),
+        stripeFee: parseFloat(this.walletParams.stripeFee || '0'),
         assetsMaxDecimals: this.walletParams.assetsMaxDecimals,
       },
       cssClass: 'pop-mobile-width',
@@ -187,13 +221,12 @@ export class WalletPage implements OnInit {
     const buy = data?.buy;
   }
 
-  transaction( operation ) {
-    console.log( 'operation:', operation );
+  transaction(operation) {
+    console.log('operation:', operation);
   }
 
   async balance() {
     const { response, error } = await this.accountSvc.balance();
-    if( !error )
-      this.walletParams.userWallets = response;
+    if (!error) this.walletParams.userWallets = response;
   }
 }

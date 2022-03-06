@@ -177,6 +177,11 @@ const routes: Routes = [
       import('./landing/pages/pages.module').then((m) => m.PagesModule),
   },
   {
+    path: 'wallet/buy-tokens/:currency',
+    loadChildren: () =>
+      import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
+  },
+  {
     path: 'wallet',
     loadChildren: () =>
       import('./pages/wallet/wallet.module').then((m) => m.WalletPageModule),
