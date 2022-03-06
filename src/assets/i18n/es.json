@@ -178,29 +178,29 @@
       "error": {
         "minLength": "Debe detallar con un mínimo de 5 palabras"
       }
-    }
+    },
 
-    , "users": {
-      "no-items": "No hay usuarios con esos datos"
-      , "error": {
+    "users": {
+      "no-items": "No hay usuarios con esos datos",
+      "error": {
         "list": "Parece que hubo un error al mostrar el listado. Vuelve a intentar"
       }
-    }
+    },
 
-    , "report": {
+    "report": {
       "create": {
-        "title": "Denunciar"
-        , "msg": "Comentanos en detalle lo que está sucediendo"
-        , "placeholder": "Escribe aqui tu reporte"
+        "title": "Denunciar",
+        "msg": "Comentanos en detalle lo que está sucediendo",
+        "placeholder": "Escribe aqui tu reporte",
 
-        , "done": "Reporte enviado con exito! Analizaremos el tema a la brevedad"
-        , "error": "Error al intentar generar Reporte"
+        "done": "Reporte enviado con exito! Analizaremos el tema a la brevedad",
+        "error": "Error al intentar generar Reporte"
       }
     }
   },
   "menu": {
     "tabs": {
-      "landingICO": "Token FLAU",
+      "landingICO": "Comprar FLAU",
       "token": "Token",
       "searchEngine": "Buscador",
       "recommend": "Recomendar",
@@ -486,14 +486,14 @@
 
         "cant-switch": "Al haber seleccionado una oferta no puede hacer switch con los assets",
         "exceeds-sell": "La oferta no puede exceder la cantidad de venta",
-        "exceeds-buy": "La oferta no puede exceder la cantidad de compra"
+        "exceeds-buy": "La oferta no puede exceder la cantidad de compra",
 
-        , "market-price": "Usar Precio de Mercado"
-        , "available": "Dispones: "
+        "market-price": "Usar Precio de Mercado",
+        "available": "Dispones: ",
 
-        , "title": {
-            "exchange": "Publicar Orden"
-          , "offer": "Oferta Edita - "
+        "title": {
+          "exchange": "Publicar Orden",
+          "offer": "Oferta Edita - "
         }
       },
 
@@ -529,71 +529,71 @@
       ],
 
       "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
-    }
-    , "posts": {
-      "see": "Ver Post"
-      , "react": "Reaccionar"
-      
-      , "advises": {
-        "title": "Oráculo"
-        , "my-posts": "Mis Posts"
+    },
+    "posts": {
+      "see": "Ver Post",
+      "react": "Reaccionar",
 
-        , "see": "Ver mas posts"
-        , "see-user": "Ver mas posts del Usuario"
-        
-        , "create": {
-          "title": "Crear Publicación"
-          , "subtitle": "Subtitulo"
-          , "summary": "Resumen"
-          , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"
+      "advises": {
+        "title": "Oráculo",
+        "my-posts": "Mis Posts",
 
-          , "done": "Oráculo creado exitosamente"
+        "see": "Ver mas posts",
+        "see-user": "Ver mas posts del Usuario",
 
-          , "error": {
-            "title": "El titulo no puede ser menor a 4 digitos"
-            , "content": "Debes indicar el contenido a publicar"
-            , "sector": "Debes indicar el sector al que referencias"
+        "create": {
+          "title": "Crear Publicación",
+          "subtitle": "Subtitulo",
+          "summary": "Resumen",
+          "wysiwyg": "¿Qué quieres contar?",
+
+          "done": "Oráculo creado exitosamente",
+
+          "error": {
+            "title": "El titulo no puede ser menor a 4 digitos",
+            "content": "Debes indicar el contenido a publicar",
+            "sector": "Debes indicar el sector al que referencias"
           }
-        }
-        , "edit": "Editar Publicación"
+        },
+        "edit": "Editar Publicación",
 
-        , "new": {
-          "title": "Gran trabajo!"
-          , "msg": "Ahora, ¿te gustaria crear otro Oráculo?"
-        }
-        , "confirm": {
-          "edit": "¿Confirmas que quieres editar este Oráculo?"
-          , "new": "¿Confirmas que quieres crear este Oráculo?"
-        }
-        , "delete": {
-          "title": "Eliminar Oráculo"
-          , "msg": "¿Estás seguro de querer eliminar este Oráculo?"
-          , "done": "Oráculo eliminado"
-        }
-        , "share": "Compartir"
+        "new": {
+          "title": "Gran trabajo!",
+          "msg": "Ahora, ¿te gustaria crear otro Oráculo?"
+        },
+        "confirm": {
+          "edit": "¿Confirmas que quieres editar este Oráculo?",
+          "new": "¿Confirmas que quieres crear este Oráculo?"
+        },
+        "delete": {
+          "title": "Eliminar Oráculo",
+          "msg": "¿Estás seguro de querer eliminar este Oráculo?",
+          "done": "Oráculo eliminado"
+        },
+        "share": "Compartir",
 
-        , "stats": {
+        "stats": {
           "qCreated": "Oráculos Creados:",
           "qReacts": "Reacciones a ellos:"
-        }
+        },
 
-        , "error": {
-          "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
-          , "unauthorized": "No tienes permiso para editar este Oráculo"
-          , "no-item": "Ups, parece que este Oráculo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items": "Hasta aquí llegamos con los Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items-filters": "Hasta aquí llegamos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+        "error": {
+          "search": "Hubo un error en la búsqueda, vuelve a intentarlo",
+          "unauthorized": "No tienes permiso para editar este Oráculo",
+          "no-item": "Ups, parece que este Oráculo no existe<br>¿Quieres publicar uno?<br>Clickea aqui",
+          "no-items": "Hasta aquí llegamos con los Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui",
+          "no-items-filters": "Hasta aquí llegamos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
         }
-      }
-      
-      , "comment": {
-        "placeholder": "Comentar..."
-        , "created": "Comentario agregado"
-        , "updated": "Comentario editado"
-        , "delete": {
-          "title": "Eliminar Comentario"
-          , "msg": "¿Confirmas que quieres eliminar este comentario?"
-          , "done": "Comentario eliminado"
+      },
+
+      "comment": {
+        "placeholder": "Comentar...",
+        "created": "Comentario agregado",
+        "updated": "Comentario editado",
+        "delete": {
+          "title": "Eliminar Comentario",
+          "msg": "¿Confirmas que quieres eliminar este comentario?",
+          "done": "Comentario eliminado"
         }
       }
     }

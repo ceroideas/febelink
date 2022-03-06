@@ -178,29 +178,29 @@
       "error": {
         "minLength": "You must detail with a minimum of 5 words"
       }
-    }
+    },
 
-    , "users": {
-      "no-items": "There are no users with that data"
-      , "error": {
+    "users": {
+      "no-items": "There are no users with that data",
+      "error": {
         "list": "It looks like there was an error displaying the list. Try again"
       }
-    }
+    },
 
-    , "report": {
+    "report": {
       "create": {
-        "title": "Report"
-        , "msg": "Tell us in detail what is happening"
-        , "placeholder": "Write here your report"
+        "title": "Report",
+        "msg": "Tell us in detail what is happening",
+        "placeholder": "Write here your report",
 
-        , "done": "Report sent successfully! We will review the issue shortly"
-        , "error": "Error when trying to generate report"
+        "done": "Report sent successfully! We will review the issue shortly",
+        "error": "Error when trying to generate report"
       }
     }
   },
   "menu": {
     "tabs": {
-      "landingICO": "Token FLAU",
+      "landingICO": "Buy FLAU",
       "token": "Token",
       "searchEngine": "Search",
       "recommend": "Recommend",
@@ -488,14 +488,14 @@
 
         "cant-switch": "Having selected an offer you cannot switch with the assets",
         "exceeds-sell": "The Offer cannot exceed the sale amount",
-        "exceeds-buy": "The Offer cannot exceed the buy amount"
+        "exceeds-buy": "The Offer cannot exceed the buy amount",
 
-        , "market-price": "Use Market Price"
-        , "available": "Available: "
+        "market-price": "Use Market Price",
+        "available": "Available: ",
 
-        , "title": {
-            "exchange": "Publish Order"
-          , "offer": "Offer Edited - "
+        "title": {
+          "exchange": "Publish Order",
+          "offer": "Offer Edited - "
         }
       },
 
@@ -531,71 +531,71 @@
       ],
 
       "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located."
-    }
-    , "posts": {
-      "see": "See Post"
-      , "react": "React"
-      
-      , "advises": {
-        "title": "Oracle"
-        , "my-posts": "My Posts"
+    },
+    "posts": {
+      "see": "See Post",
+      "react": "React",
 
-        , "see": "Watch more Posts"
-        , "see-user": "Watch more posts of the User"
-        
-        , "create": {
-          "title": "Create Post"
-          , "subtitle": "Subtitle"
-          , "summary": "Summary"
-          , "wysiwyg": "Description text text text text text text text text"
+      "advises": {
+        "title": "Oracle",
+        "my-posts": "My Posts",
 
-          , "done": "Oracle created successfully"
+        "see": "Watch more Posts",
+        "see-user": "Watch more posts of the User",
 
-          , "error": {
-            "title": "The title cannot be less than 4 digits"
-            , "content": "You must indicate the content to publish"
-            , "sector": "You must indicate the sector to which you refer"
+        "create": {
+          "title": "Create Post",
+          "subtitle": "Subtitle",
+          "summary": "Summary",
+          "wysiwyg": "What do you want to tell?",
+
+          "done": "Oracle created successfully",
+
+          "error": {
+            "title": "The title cannot be less than 4 digits",
+            "content": "You must indicate the content to publish",
+            "sector": "You must indicate the sector to which you refer"
           }
-        }
-        , "edit": "Edit Post"
+        },
+        "edit": "Edit Post",
 
-        , "new": {
-          "title": "Great Job!"
-          , "msg": "Now, ¿would you like to create another Oracle?"
-        }
-        , "confirm": {
-          "edit": "Do you confirm that want to edit this Oracle?"
-          , "new": "Do you confirm that want to create new Oracle?"
-        }
-        , "delete": {
-          "title": "Delete Oracle"
-          , "msg": "Are you sure you want to delete this Oracle?"
-          , "done": "Oracle deleted"
-        }
-        , "share": "Share"
+        "new": {
+          "title": "Great Job!",
+          "msg": "Now, ¿would you like to create another Oracle?"
+        },
+        "confirm": {
+          "edit": "Do you confirm that want to edit this Oracle?",
+          "new": "Do you confirm that want to create new Oracle?"
+        },
+        "delete": {
+          "title": "Delete Oracle",
+          "msg": "Are you sure you want to delete this Oracle?",
+          "done": "Oracle deleted"
+        },
+        "share": "Share",
 
-        , "stats": {
+        "stats": {
           "qCreated": "Oracles Created:",
           "qReacts": "Reacts to these:"
-        }
+        },
 
-        , "error": {
-          "search": "There was an error in the search, please try again"
-          , "unauthorized": "You do not have permission to edit this Oracle"
-          , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
-          , "no-items": "Till here we got with the Oracles<br>Would you like to post one?<br>Click here"
-          , "no-items-filters": "Till here we've got with these filters<br>Do you want to publish one?<br>Click here"  
+        "error": {
+          "search": "There was an error in the search, please try again",
+          "unauthorized": "You do not have permission to edit this Oracle",
+          "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here",
+          "no-items": "Till here we got with the Oracles<br>Would you like to post one?<br>Click here",
+          "no-items-filters": "Till here we've got with these filters<br>Do you want to publish one?<br>Click here"
         }
-      }
-      
-      , "comment": {
-        "placeholder": "Comment..."
-        , "created": "Comment added"
-        , "updated": "Comment edited"
-        , "delete": {
-          "title": "Delete Comment"
-          , "msg": "Do you confirm that want to delete this Comment?"
-          , "done": "Comment deleted"
+      },
+
+      "comment": {
+        "placeholder": "Comment...",
+        "created": "Comment added",
+        "updated": "Comment edited",
+        "delete": {
+          "title": "Delete Comment",
+          "msg": "Do you confirm that want to delete this Comment?",
+          "done": "Comment deleted"
         }
       }
     }
