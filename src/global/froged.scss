@@ -1,5 +1,12 @@
 /* Add margin bottom when on page '/menu/' && media <= 768 */
-[data-url*="/menu/"] {
+[data-url*="/menu/"]
+
+/* Add margin bottom when on page '/post?' && '/posts/oracle/create' && media <= 768 */
+, [data-url*="/posts/oracles"]
+, [data-url*="/posts/oraculos"]
+, [data-url*="/posts/oracle/create"]
+
+{
     #fg_bubble {
         @media (max-width: 768px) {
             margin-bottom: 45px !important;
@@ -7,8 +14,7 @@
     }
 }
 
-/* Add margin bottom when on page '/post?' AND '/posts/oracle/create' */
-[data-url*="/chat?"], [data-url*="/posts/oracle/create"] {
+[data-url*="/chat?"] {
     #fg_bubble {
         margin-bottom: 45px !important;
     }

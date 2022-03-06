@@ -3,12 +3,13 @@
     [class]="'no-padding ' + ( clase || '' )"
     lines="none"
     (click)="userClick()"
+    color="transparent"
 >
-    <ion-avatar slot="start" class="no-margin">
-        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo" />
+    <ion-avatar slot="start" [class]="'no-margin ' + ( classImg || '')">
+        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.avatar" />
         <ion-img
-            [src]="user?.logo"
-            *ngIf="user?.logo"
+            [src]="user?.avatar"
+            *ngIf="user?.avatar"
             appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
         ></ion-img>
     </ion-avatar>

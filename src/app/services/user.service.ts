@@ -63,7 +63,7 @@ export class UserService {
     return await ( await this.api._getData( 'verif/address' )).toPromise();
   }
 
-  async verifiedEmail(): Promise<any> {
+  async verifiedEmail(): Promise<boolean> {
     return await ( await this.api._getData( 'user/verif/email' )).toPromise();
   }
 

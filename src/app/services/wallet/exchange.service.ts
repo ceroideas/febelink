@@ -3,6 +3,7 @@ import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { ExchangeType } from 'src/app/models/wallet/exchange.model';
 import { Asset, AssetTypes, Offer } from 'src/app/models/wallet/offers.models';
 import { WalletParams } from 'src/app/models/wallet/params.model';
+import { IHttpService } from '../http.service';
 import { LoadingSvc } from '../loading.service';
 import { ToastSvc } from '../toast.service';
 import { UserService } from '../user.service';
@@ -64,7 +65,7 @@ export class ExchangeService {
     {
         await this.loadingSvc.show();
 
-        let answer: { response, error };
+        let answer: IHttpService;
         switch( exchangeType ) {
             case ExchangeType.CREATE:
                 answer = await this.offerSvc.sell( this.toOffer( sell, buy, offer ));

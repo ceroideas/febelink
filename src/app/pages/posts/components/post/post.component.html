@@ -1,13 +1,14 @@
-<div class="marg-se max-w600">
-  <ion-grid class="box-bw-r1-lln margin-5 no-padding">
+<div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
+  <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10">
       <ion-col size="10" class="no-padding">
         <!-- Post Owner User -->
         <app-user-item
           class="no-padding"
+          [id]="iAdvise?.uid"
           [user]="iAdvise"
           [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
-          [OnClickShowProfile]="false"
+          [OnClickShowProfile]="true"
         ></app-user-item>
       </ion-col>
   
@@ -62,20 +63,33 @@
     </ion-row>
   
     <!-- Image -->
-    <ion-row class="marg-t10" *ngIf="iAdvise.photo">
+    <ion-row class="marg-t10" *ngIf="iAdvise.photo && isPostVisible">
       <ion-img class="photo" [src]="iAdvise.photo"></ion-img>
     </ion-row>
   
     <!-- Content -->
-    <ion-row class="marg-10 content" *ngIf="showContent">
+    <ion-row class="marg-10 content" *ngIf="showContent && isPostVisible">
       <ion-label [innerHTML]="iAdvise.content"></ion-label>
     </ion-row>
     
-    <app-post-bottom-bar-component
+    <app-post-bottom-bar-component  *ngIf="isPostVisible"
       [id]="id"
       [post]="iAdvise"
       [showSeePost]="showSeePost"
     ></app-post-bottom-bar-component>
+
+    <!-- Set Post Visible -->
+    <ion-row class="align-center" *ngIf="!isPostVisible">
+      <em class="pointer font-12" (click)="isPostVisible = true; areCommentsVisible = false">
+        <ion-label color="primary">{{ 'Show Post' | translate }}</ion-label>
+      </em>
+    </ion-row>
   </ion-grid>
+
+  <app-comments-component #comments
+    [post]="id"
+    [listComments]="listComments"
+    [isVisible]="areCommentsVisible"
+    (OnCommentsVisible)="isPostVisible = false"
+  ></app-comments-component>
 </div>
-  

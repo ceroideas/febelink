@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ISector, ISubSector } from 'src/app/models/sector.model';
 import { SubsectorService } from 'src/app/components/sectors/services/subsectores.service';
 import { SectorService } from './services/sectores.service';
@@ -15,8 +15,8 @@ export class SectorsComponent implements OnInit
 
   sectors: ISector[] = []
   subsectors: ISubSector[] = []
-  sector: number = null
-  subsector: number = null
+  @Input() sector: number = null
+  @Input() subsector: number = null
 
   constructor(
       private sectorSvc: SectorService
@@ -25,7 +25,7 @@ export class SectorsComponent implements OnInit
 
   ngOnInit()
   {
-    this.load()
+    this.load( this.sector )
   }
 
   ionViewDidLeave()

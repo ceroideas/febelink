@@ -78,13 +78,13 @@
         <ion-label class="responsive-max tx-cap">
           {{ 'menu.tabs.chat' | translate }}
         </ion-label>
-        <ion-badge color="danger" slot="end" *ngIf="totalUnreadMessages">{{
+        <ion-badge color="danger" slot="end" *ngIf="totalUnreadMessages" class="little-badge">{{
           totalUnreadMessages
         }}</ion-badge>
       </div></ion-button>
 
       <!-- Login -->
-      <ion-button class="btn-header" (click)="irA('/login')" *ngIf="!perfil"><div class="grid-rows">
+      <ion-button class="btn-header" (click)="irA('/login')" *ngIf="perfil == null"><div class="grid-rows">
         <ion-icon class="marg-se" slot="start" name="person"></ion-icon>
         <ion-label class="tx-cap">{{ 'menu.tabs.login' | translate }}</ion-label>
       </div></ion-button>
@@ -94,7 +94,7 @@
         class="btn-header"
         (click)="irA('/registro')"
         color="success"
-        *ngIf="!perfil"
+        *ngIf="perfil == null"
         fill="solid"
         style="--border-radius: 4px"
       ><div class="grid-rows">

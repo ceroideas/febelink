@@ -463,6 +463,7 @@
     </form>
 
     <ion-grid fixed>
+      <app-post-stats-component [id]="perfil?.id"></app-post-stats-component>
       <ion-row>
         <ion-col size="12">
           <span *ngIf="total_opinions<=0">{{ 'tabs.tab4.labelNoOpinions' | translate }}</span>

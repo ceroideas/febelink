@@ -19,6 +19,6 @@ export enum FileMaxSize { // In Bytes
 
 export interface IFile {
     type?: 'IFile'
-    src: string | ArrayBuffer
-    file: any
+    src?: string | ArrayBuffer
+    file?: any
 }

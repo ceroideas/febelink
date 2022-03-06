@@ -7,8 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LoadingBLComponent implements OnInit {
 
-  @Input() isLoading: boolean;
-  @Input() message: string = 'common.searching';
+  @Input() isLoading: boolean = true;
+  @Input() message: string = 'common.labelSearching';
   @Input() clase: string;
 
   constructor() { }

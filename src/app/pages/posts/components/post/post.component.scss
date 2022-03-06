@@ -11,3 +11,5 @@
 .title, .subtitle, .summary {
     p { display: inline; }
 }
+
+.comment{ width: calc( 100% - 40px - 5px - 10px ); }

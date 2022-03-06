@@ -1,11 +1,14 @@
-import { Component, OnInit, Input, SimpleChanges, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ViewEncapsulation, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
 import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
+import { IReport } from 'src/app/models/report.model';
+import { IUser } from 'src/app/models/user.model';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { AlertSvc, IAlert } from 'src/app/services/alert.service';
 import { LoadingSvc } from 'src/app/services/loading.service';
+import { ReportService } from 'src/app/services/report.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
@@ -26,22 +29,31 @@ export class PostComponent implements OnInit {
   @Input() showOpts: boolean = false
   @Input() showSeePost: boolean = false
   @Input() showContent: boolean = false
+  @Input() listComments: boolean = false
+
+  isPostVisible: boolean = true
+  areCommentsVisible: boolean = true
 
   dateFormatType = DateFormatType
+  iUser: IUser
 
   constructor(
       private optsMenuSvc: OptsMenuSvc
     , private adviseSvc: AdviseService
-    , private sessionSvc: UserSessionSvc
+    , public sessionSvc: UserSessionSvc
     , private alertSvc: AlertSvc
     , private toastSvc: ToastSvc
     , private loadingSvc: LoadingSvc
     , private router: Router
     , private seoSvc: SeoService
     , private fileSvc: FileService
-  ) { }
+    , private reportSvc: ReportService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.sessionSvc.get().then(( userData ) => this.iUser = userData )
+  }
 
   ngOnChanges( changes: SimpleChanges ): void {
     if ( 'iAdvise' in changes) {
@@ -93,9 +105,7 @@ export class PostComponent implements OnInit {
 
   async edit()
   {
-    this.toastSvc.show( 'common.developing', true )
-    // ToDo
-    // this.router.navigate([ `posts/oracle/${this.id}/edit` ])
+    this.router.navigate([ `posts/oracle/${this.id}/edit` ])
   }
 
   async delete()
@@ -106,7 +116,7 @@ export class PostComponent implements OnInit {
     } as IAlert )) {
       this.loadingSvc.show()
       const { response, error } = await this.adviseSvc.delete( this.id )
-      this.loadingSvc.dismiss()
+      await this.loadingSvc.dismiss()
 
       if( error ) {
         this.toastSvc.show( error.msg || error.message || 'Error on deleting', true )
@@ -119,7 +129,9 @@ export class PostComponent implements OnInit {
   }
 
   report()
-  { // ToDo
-    this.toastSvc.show( 'common.developing', true )
+  {
+    this.reportSvc.show({
+      advise: this.id
+    } as IReport )
   }
 }

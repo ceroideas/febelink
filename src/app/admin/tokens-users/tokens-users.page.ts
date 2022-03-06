@@ -134,15 +134,15 @@ export class TokensUsersPage implements OnInit {
         })) return;
       
       this.isLoading = true; 
-      this.loadingSvc.show();
+      await this.loadingSvc.show();
       await this.tokensUsersSvc.deleteTokenUser(tokensUser.id);
       this.toastSvc.show( 'admin.tokensUsers.delete.done', true );
-      this.loadingSvc.dismiss();
+      await this.loadingSvc.dismiss();
       this.search();
     }
     catch(e){
       this.isLoading = false;
-      this.loadingSvc.dismiss();
+      await this.loadingSvc.dismiss();
       this.toastSvc.show( 'admin.tokensUsers.delete.error', true );
     }
   }

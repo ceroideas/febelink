@@ -186,6 +186,17 @@
         "list": "It looks like there was an error displaying the list. Try again"
       }
     }
+
+    , "report": {
+      "create": {
+        "title": "Report"
+        , "msg": "Tell us in detail what is happening"
+        , "placeholder": "Write here your report"
+
+        , "done": "Report sent successfully! We will review the issue shortly"
+        , "error": "Error when trying to generate report"
+      }
+    }
   },
   "menu": {
     "tabs": {
@@ -527,6 +538,10 @@
       
       , "advises": {
         "title": "Oracle"
+        , "my-posts": "My Posts"
+
+        , "see": "Watch more Posts"
+        , "see-user": "Watch more posts of the User"
         
         , "create": {
           "title": "Create Post"
@@ -542,6 +557,7 @@
             , "sector": "You must indicate the sector to which you refer"
           }
         }
+        , "edit": "Edit Post"
 
         , "new": {
           "title": "Great Job!"
@@ -558,12 +574,28 @@
         }
         , "share": "Share"
 
+        , "stats": {
+          "qCreated": "Oracles Created:",
+          "qReacts": "Reacts to these:"
+        }
+
         , "error": {
           "search": "There was an error in the search, please try again"
           , "unauthorized": "You do not have permission to edit this Oracle"
           , "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here"
-          , "no-items": "There are no Oracles yet<br>Would you like to post one?<br>Click here"
-          , "no-items-filters": "There are no Oracles yet with these filters<br>Do you want to publish one?<br>Click here"  
+          , "no-items": "Till here we got with the Oracles<br>Would you like to post one?<br>Click here"
+          , "no-items-filters": "Till here we've got with these filters<br>Do you want to publish one?<br>Click here"  
+        }
+      }
+      
+      , "comment": {
+        "placeholder": "Comment..."
+        , "created": "Comment added"
+        , "updated": "Comment edited"
+        , "delete": {
+          "title": "Delete Comment"
+          , "msg": "Do you confirm that want to delete this Comment?"
+          , "done": "Comment deleted"
         }
       }
     }
@@ -1112,5 +1144,11 @@
     },
     "verified": "Life Verification Successfull",
     "unverified": "Life Verification Failed"
+  },
+  "console": {
+    "warning": {
+      "title": "WARNING!",
+      "message": "This is a browser feature for developers. If you were asked to copy and paste something here, someone might want to take control of your account. Do not enter any script code without knowing what it does."
+    }
   }
 }

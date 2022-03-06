@@ -186,6 +186,17 @@
         "list": "Parece que hubo un error al mostrar el listado. Vuelve a intentar"
       }
     }
+
+    , "report": {
+      "create": {
+        "title": "Denunciar"
+        , "msg": "Comentanos en detalle lo que está sucediendo"
+        , "placeholder": "Escribe aqui tu reporte"
+
+        , "done": "Reporte enviado con exito! Analizaremos el tema a la brevedad"
+        , "error": "Error al intentar generar Reporte"
+      }
+    }
   },
   "menu": {
     "tabs": {
@@ -525,9 +536,13 @@
       
       , "advises": {
         "title": "Oráculo"
+        , "my-posts": "Mis Posts"
+
+        , "see": "Ver mas posts"
+        , "see-user": "Ver mas posts del Usuario"
         
         , "create": {
-          "title": "Crear publicación"
+          "title": "Crear Publicación"
           , "subtitle": "Subtitulo"
           , "summary": "Resumen"
           , "wysiwyg": "Descripcion texto texto texto texto texto texto texto texto"
@@ -540,13 +555,14 @@
             , "sector": "Debes indicar el sector al que referencias"
           }
         }
+        , "edit": "Editar Publicación"
 
         , "new": {
           "title": "Gran trabajo!"
           , "msg": "Ahora, ¿te gustaria crear otro Oráculo?"
         }
         , "confirm": {
-          "edit": "¿Confirmas que quieres editra este Oráculo?"
+          "edit": "¿Confirmas que quieres editar este Oráculo?"
           , "new": "¿Confirmas que quieres crear este Oráculo?"
         }
         , "delete": {
@@ -556,12 +572,28 @@
         }
         , "share": "Compartir"
 
+        , "stats": {
+          "qCreated": "Oráculos Creados:",
+          "qReacts": "Reacciones a ellos:"
+        }
+
         , "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo"
           , "unauthorized": "No tienes permiso para editar este Oráculo"
           , "no-item": "Ups, parece que este Oráculo no existe<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items": "Aun no hay Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
-          , "no-items-filters": "Aun no hay Oráculos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items": "Hasta aquí llegamos con los Oráculos<br>¿Quieres publicar uno?<br>Clickea aqui"
+          , "no-items-filters": "Hasta aquí llegamos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
+        }
+      }
+      
+      , "comment": {
+        "placeholder": "Comentar..."
+        , "created": "Comentario agregado"
+        , "updated": "Comentario editado"
+        , "delete": {
+          "title": "Eliminar Comentario"
+          , "msg": "¿Confirmas que quieres eliminar este comentario?"
+          , "done": "Comentario eliminado"
         }
       }
     }
@@ -1111,5 +1143,11 @@
     },
     "verified": "Verificacion de Vida Exitosa",
     "unverified": "Verificacion de Vida Fallida"
+  },
+  "console": {
+    "warning": {
+      "title": "¡ADVERTENCIA!",
+      "message": "Esta es una función del navegador para desarrolladores. Si se le pidió que copiara y pegara algo aquí, alguien podría querer tomar el control de su cuenta. No introduzca ningún código de script sin saber lo que hace."
+    }
   }
 }

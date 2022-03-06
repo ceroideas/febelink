@@ -8,6 +8,9 @@ import { AdvisePageRoutingModule } from '../advises/advise-routing.module';
 
 import { PostBottomBarComponent } from './bottom-bar.component/bottom-bar.component';
 import { PostComponent } from './post/post.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentsComponent } from './comments/comments.component';
+import { SharedPostModule } from '../shared-post.module';
 
 @NgModule({
     imports: [
@@ -18,6 +21,7 @@ import { PostComponent } from './post/post.component';
       , ReactiveFormsModule
       , AdvisePageRoutingModule
       , SharedModule
+      , SharedPostModule
     ],
     exports: [
         CommonModule
@@ -29,10 +33,14 @@ import { PostComponent } from './post/post.component';
 
       , PostBottomBarComponent
       , PostComponent
+      , CommentComponent
+      , CommentsComponent
     ],
     declarations: [
         PostBottomBarComponent
       , PostComponent
+      , CommentComponent
+      , CommentsComponent
     ],
   })
   export class PostComponentsModule { }

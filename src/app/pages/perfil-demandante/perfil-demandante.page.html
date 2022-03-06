@@ -169,6 +169,10 @@
               </ion-item>
             </ion-list>
           </div>
+
+          <!-- Posts|Oracles statistics of this user -->
+          <app-post-stats-component [id]="perfilpublico?.id"></app-post-stats-component>
+
           <!-- Botón publicar opinión -->
           <ion-button
             class="boton max-width"
@@ -185,7 +189,7 @@
       <ion-row class="margin-top">
         <!-- Report -->
         <ion-col size="6" class="ion-no-padding">
-          <ion-button class="boton" color="febelink" (click)="mailSvc.reportUser( perfilpublico )">
+          <ion-button class="boton" color="febelink" (click)="report()">
             <ion-icon name="alert-outline"></ion-icon>
             &nbsp;{{ 'common.buttons.report' | translate }}
           </ion-button>

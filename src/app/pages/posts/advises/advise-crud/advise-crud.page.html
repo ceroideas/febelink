@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>{{ 'pages.posts.advises.create.title' | translate }}</ion-title>
+    <ion-title>{{ 'pages.posts.advises.' + ( id ? 'edit' : 'create.title' ) | translate }}</ion-title>
 
     <!-- Lang -->
     <ion-buttons slot="end">
@@ -21,7 +21,7 @@
   <form [formGroup]="form" class="pad-5" *ngIf="!isLoading && form">
     <ion-grid>
       <!-- Sector | Subsector -->
-      <app-sectors #sectors></app-sectors>
+      <app-sectors #sectors [sector]="iAdvise?.id_sector" [subsector]="iAdvise?.id_subsector"></app-sectors>
 
       <!-- Title -->
       <ion-row *ngIf="false">
@@ -67,7 +67,7 @@
       </ion-row>
 
       <!-- Image -->
-      <ion-row class="marg-t10" [style]="'display: ' + ( !image ? 'none' : 'block' )">
+      <ion-row class="marg-t10 img-post" [style]="'display: ' + ( !image?.src ? 'none' : 'block' )">
         <!-- Remove Image -->
         <ion-button icon-only
           shape="round"

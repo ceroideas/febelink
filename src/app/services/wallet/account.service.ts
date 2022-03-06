@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http.service';
+import { HttpService, IHttpService } from '../http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +10,8 @@ export class AccountSvc {
     private http: HttpService
   ) {}
   
-  async balance()
+  async balance(): Promise<IHttpService>
   {
-    return ( await this.http.get( 'wallet/account/balance' )).toPromise();
+    return this.http.get( 'wallet/account/balance' )
   }
 }

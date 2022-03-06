@@ -8,7 +8,7 @@
 
     <!-- Searchbar -->
     <ion-searchbar #searchBar
-      placeholder="{{ 'common.searchPlaceholder' | translate }}"
+      placeholder="{{ 'common.labelUser' | translate }}"
       inputmode="text"
       (keyup.enter)="search( searchBar.value )"
       (ionChange)="search( searchBar.value )"
@@ -19,19 +19,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="pad">
   <!-- Loading -->
-  <app-loading [isLoading]="isLoading" message="common.labelSector"></app-loading>
+  <app-loading [isLoading]="isLoading"></app-loading>
 
   <!-- User's List -->
   <ng-container *ngIf="!isLoading">
-    <app-user-item *ngFor="let user of list" (onUserClick)="userSelected( user )"></app-user-item>
+    <app-user-item *ngFor="let user of list"
+      [user]="user"
+      (onUserClick)="userSelected( user )"
+    ></app-user-item>
   </ng-container>
 
   <!-- No Items -->
-  <ion-label *ngIf="!isLoading && list?.length <= 0">{{ 'common.users.no-items' | translate }}</ion-label>
+  <ion-label *ngIf="!isLoading && list?.length == 0">{{ 'common.users.no-items' | translate }}</ion-label>
 </ion-content>
-
 
 <ion-footer
   class="ion-no-border ion-text-center desktop"

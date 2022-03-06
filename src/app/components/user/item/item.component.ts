@@ -10,11 +10,13 @@ import { IUserItem } from '../models/user-item.model';
 })
 export class UserItemComponent implements OnInit {
   
+  @Input() id: number;
   @Input() user: IUserItem;
   @Input() subtitle: string;
   @Input() txEnd: string;
   @Input() txSubEnd: string;
   @Input() clase: string;
+  @Input() classImg: string;
   @Input() OnClickShowProfile: boolean = false;
   @Output() onUserClick: EventEmitter<IUserItem> = new EventEmitter()
 
@@ -32,9 +34,9 @@ export class UserItemComponent implements OnInit {
   
   public async goToProfile() {
     if( await this.sessionSvc.checkLogged() )
-      this.router.navigate([ 'perfil/' + this.user.id ], {
+      this.router.navigate([ 'perfil/' + this.id ], {
         queryParams: {
-          id_perfil: this.user.id
+          id_perfil: this.id
           , contacto: false
         },
       });

@@ -29,6 +29,6 @@ export class UserFilterPopSvc {
         await popover.present();
     
         const { data } = await popover.onDidDismiss();
-        return new Promise( resolve => { resolve( data?.user ) });
+        return new Promise( resolve => { resolve( data?.iUser ) });
     }
 }

@@ -1,3 +1,4 @@
+import { ReportService } from 'src/app/services/report.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
@@ -24,6 +25,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { DemandaService } from 'src/app/services/demanda.service';
 import { UserService } from 'src/app/services/user.service';
 import { MailService } from 'src/app/services/mail.service';
+import { IReport } from 'src/app/models/report.model';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -63,7 +65,8 @@ export class DetalleDemandaPage implements OnInit {
     private authSvc:AuthenticationService,
     private demanadaSvc:DemandaService,
     private userSvc:UserService,
-    public mailSvc: MailService
+    public mailSvc: MailService,
+    public reportSvc: ReportService
   ) {
     let data: any = route.snapshot.queryParamMap;
     let id_demanda = data.params.id_demanda;
@@ -340,7 +343,8 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   reportUser() {
-    const extra: string = "\n\Id Demanda: " + this.demanda.id + "\n";
-    this.mailSvc.reportUser( this.demanda.user, extra );
+    this.reportSvc.show({
+      demanda: this.demanda?.id
+    } as IReport )
   }
 }
