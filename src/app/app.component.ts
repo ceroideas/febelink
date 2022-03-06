@@ -109,7 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.platform.ready().then(() => {
       this.setupLanguage();
       this.platform.backButton.subscribe(() => {
-        if (this.router.url === '' || this.router.url === '/menu/todas') {
+        if (this.router.url === '' || this.router.url === '/posts/oracles') {
           navigator['app'].exitApp();
         } else {
           this.navCtrl.back();
