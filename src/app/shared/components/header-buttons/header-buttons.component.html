@@ -16,19 +16,21 @@
     <ion-button
       class="btn-header bt-br"
       [class]="currentTab == tabs.ICO ? 'active' : ''"
-      (click)="irA('/token')"
-    ><div class="grid-rows">
-      <img class="marg-se"
-        slot="start"
-        density="ldpi"
-        src="assets/icon/febicon.png"
-        width="20px"
-        height="20px"
-      />
-      <ion-label class="responsive-max tx-cap" style="margin-left: 10px">
-        {{ 'menu.tabs.landingICO' | translate }}
-      </ion-label>
-    </div></ion-button>
+      (click)="irA('/wallet/buy-tokens/FLAU')"
+      ><div class="grid-rows">
+        <img
+          class="marg-se"
+          slot="start"
+          density="ldpi"
+          src="assets/icon/febicon.png"
+          width="20px"
+          height="20px"
+        />
+        <ion-label class="responsive-max tx-cap" style="margin-left: 10px">
+          {{ 'menu.tabs.landingICO' | translate }}
+        </ion-label>
+      </div></ion-button
+    >
 
     <div class="desktop">
       <!-- Search -->
