@@ -32,6 +32,7 @@
     "@ionic-native/deeplinks": "^5.26.0",
     "@ionic-native/facebook": "^5.27.0",
     "@ionic-native/google-plus": "^5.27.0",
+    "@ionic-native/ionic-webview": "^5.36.0",
     "@ionic-native/push": "^5.26.0",
     "@ionic-native/social-sharing": "^5.25.0",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -119,9 +120,7 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      },
+      "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "phonegap-plugin-push": {
         "SENDER_ID": "41183692404",
