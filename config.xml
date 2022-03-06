@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="17000" id="com.xerintel.febelink54831" version="1.7.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="19001" id="com.xerintel.febelink54831" version="1.9.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Febelink</name>
     <description>Febelink</description>
     <author email="soporte@febelink.com" href="http://febelink.com/">Febelink</author>
@@ -124,6 +124,11 @@
         <edit-config file="*-Info.plist" mode="merge" target="NFCReaderUsageDescription">
             <string>We need access to the NFC to validate your identity</string>
         </edit-config>
+        <preference name="WKWebViewOnly" value="true" />
+        <feature name="CDVWKWebViewEngine">`
+                                                                    <param name="ios-package" value="CDVWKWebViewEngine" />
+</feature>
+        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
