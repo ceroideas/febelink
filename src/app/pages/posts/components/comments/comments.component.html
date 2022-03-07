@@ -48,7 +48,7 @@
     <ng-container *ngIf="!isLoading && isVisible">
       <!-- Comments done by user from ion-input -->
       <app-comment-component *ngFor="let iComment of userComments"
-        [post]="post"
+        [post]="post?.id"
         [iComment]="iComment"
         (OnDoEdit)="OnDoEdit( $event )"
         (OnDeleted)="OnDeleted( $event )"
@@ -56,7 +56,7 @@
 
       <!-- Comments from DBs -->
       <app-comment-component *ngFor="let iComment of iComments"
-        [post]="post"
+        [post]="post?.id"
         [iComment]="iComment"
         (OnDoEdit)="OnDoEdit( $event )"
         (OnDeleted)="OnDeleted( $event )"

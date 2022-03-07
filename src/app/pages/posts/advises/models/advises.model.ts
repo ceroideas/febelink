@@ -33,6 +33,8 @@ export interface IAdviseFull extends IAdvise, IUserShow
 
     react_qant?: number
     reacted?: boolean
+
+    comments_qant?: number
 }
 
 export interface IAdviseFilter extends IPaginationFilter {
