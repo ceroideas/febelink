@@ -19,7 +19,7 @@ export class FilePickerComponent implements OnInit {
   @Input() styles: string = ''
   @Input() classes: string = ''
 
-  @Input() pickType: FilePickType = FilePickType.IMAGE
+  @Input() pickType: FilePickType = FilePickType.BOTH
     pickTypes = FilePickType
   @Input() elType: FileElementType = FileElementType.ION_IMG
     elTypes = FileElementType
@@ -51,5 +51,10 @@ export class FilePickerComponent implements OnInit {
     this.src = src
     this.file = file
     if( this.src && this.OnFile ) this.OnFile.emit({ src, file })
+  }
+
+  toggleVideo( event )
+  {
+    event.toElement.play()
   }
 }

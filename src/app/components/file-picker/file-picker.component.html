@@ -36,4 +36,9 @@
       (click)="filePicker.click()"
     ></ion-img>
   </ion-avatar>
+
+  <video controls (click)="toggleVideo( $event )" #videoPlayer *ngIf="elType == elTypes.VIDEO ">
+    <source [src]="src" type="video/mp4" />
+    Browser not supported
+  </video>
 </form>
