@@ -103,6 +103,11 @@
   <!-- Loading -->
   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
+  
+  <ion-refresher slot="fixed" (ionRefresh)="clear2search( searchBar.value + '', $event )">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <!-- Posts -->
     <app-post-component
