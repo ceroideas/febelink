@@ -58,8 +58,8 @@ export class AdviseService {
     return iAdvise.title ? iAdvise.title
       : !iAdvise?.content
           ? null
-          : this.firstSentence( iAdvise.content )
-          // : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
+          // : this.firstSentence( iAdvise.content )
+          : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
   }
 
   extractSummary( iAdvise: IAdvise ): string
@@ -67,8 +67,8 @@ export class AdviseService {
     return iAdvise.summary ? iAdvise.summary
       : !iAdvise?.content ? null
         : iAdvise?.title ? iAdvise.content
-          : iAdvise.content?.replace( this.firstSentence( iAdvise.content ) || '', '' )
-          // : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
+          // : iAdvise.content?.replace( this.firstSentence( iAdvise.content ) || '', '' )
+          : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
   }
 
   private firstSentence( str ): string
