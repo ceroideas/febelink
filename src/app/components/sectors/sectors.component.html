@@ -7,17 +7,15 @@
         <!-- Label -->
         <ion-label position="floating">{{ 'common.labelSector' | translate }}</ion-label>
         <!-- Select -->
-        <ion-select clearInput
-          [(ngModel)]="sector"
-          type="text"
-          (ionChange)="onChangeSector( $event.detail.value )"
-        >
-          <ion-select-option
-            *ngFor="let s of sectors"
-            [value]="s?.id"
-            >{{s?.nombre}}</ion-select-option
-          >
-        </ion-select>
+        <ionic-selectable
+          item-content
+          itemValueField="id"
+          itemTextField="nombre"
+          [items]="sectors"
+          [canSearch]="true"
+          [canClear]="true"
+          (onChange)="onChangeSector( $event )">
+        </ionic-selectable>
       </ion-item>
     </ion-col>
 
@@ -27,17 +25,15 @@
       <ion-item class="input" color="transparent" lines="none" *ngIf="subsectors?.length>0">
         <!-- Label -->
         <ion-label position="floating">{{ 'common.labelSubsector' | translate }}</ion-label>
-        <!-- Select -->
-        <ion-select clearInput
-          [(ngModel)]="subsector"
-          type="text"
-          (ionChange)="onChangeSubsector( $event.detail.value )"
-        >
-          <ion-select-option
-            *ngFor="let subsector of subsectors"
-            [value]="subsector?.id"
-          >{{subsector?.nombre}}</ion-select-option>
-        </ion-select>
+        <ionic-selectable
+          item-content
+          itemValueField="id"
+          itemTextField="nombre"
+          [items]="subsectors"
+          [canSearch]="true"
+          [canClear]="true"
+          (onChange)="onChangeSubsector( $event )">
+        </ionic-selectable>
       </ion-item>
     </ion-col>
   </ion-row>
