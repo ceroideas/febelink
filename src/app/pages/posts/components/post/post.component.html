@@ -67,6 +67,14 @@
       <ion-img class="photo" [src]="iAdvise.photo"></ion-img>
     </ion-row>
   
+    <!-- Comments -->
+    <ion-row class="marg-5 align-end comments" *ngIf="iAdvise.comments_qant > 0">
+      <em><ion-label
+        class="hint font-12"
+        [innerHTML]="iAdvise.comments_qant + ' ' + ('pages.posts.comments' | translate)"
+      ></ion-label></em>
+    </ion-row>
+  
     <!-- Content -->
     <ion-row class="marg-10 content" *ngIf="showContent && isPostVisible">
       <ion-label [innerHTML]="iAdvise.content"></ion-label>
@@ -87,7 +95,7 @@
   </ion-grid>
 
   <app-comments-component #comments
-    [post]="id"
+    [post]="iAdvise"
     [listComments]="listComments"
     [isVisible]="areCommentsVisible"
     (OnCommentsVisible)="isPostVisible = false"
