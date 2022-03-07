@@ -6,9 +6,9 @@ import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { ICommentFull } from '../../advises/models/comment.model';
+import { IAdviseFull } from '../../advises/models/advises.model';
+import { IComment, ICommentFull } from '../../advises/models/comment.model';
 import { CommentService } from '../../advises/services/comment.service';
-import { CommentComponent } from '../comment/comment.component';
 
 @Component({
   selector: 'app-comments-component',
@@ -20,7 +20,7 @@ export class CommentsComponent implements OnInit {
 
   @ViewChild( 'inComment', { static: false }) inComment: IonInput;
 
-  @Input() post: number // Referencing Post Id
+  @Input() post: IAdviseFull // Referencing Post
   @Input() iComments: ICommentFull[] = []
   @Input() listComments: boolean = false
   @Input() isVisible: boolean = false
@@ -64,7 +64,7 @@ export class CommentsComponent implements OnInit {
     // Clear user comments, since will be brought from DBs
     this.userComments = []
 
-    const { response, error } = await this.commentSvc.list( this.post, this.filter )
+    const { response, error } = await this.commentSvc.list( this.post?.id, this.filter )
     if( error ) {
       this.toastSvc.show( error.msg || error.message || 'There was an error geting comments', true )
       return
@@ -85,6 +85,7 @@ export class CommentsComponent implements OnInit {
     // Remove from lists if is updating 
     this.removeFromList( this.userComments, comment )
     this.removeFromList( this.iComments, comment )
+    this.post.comments_qant--
   }
 
   async comment( value: string | number )
@@ -93,16 +94,16 @@ export class CommentsComponent implements OnInit {
     this.loadingSvc.show()
 
     // Set values
-    const comment = {
+    const comment: IComment = {
         id: this.iComment?.id
-      , advise: this.post
+      , advise: this.post?.id
       , comment: value + ''
       , id_comment: this.iComment?.id_comment
     }
 
     const { response, error } = !this.iComment?.id
-        ? await this.commentSvc.create( this.post, comment )
-        : await this.commentSvc.update( this.post, this.iComment?.id, comment )
+        ? await this.commentSvc.create( this.post?.id, comment )
+        : await this.commentSvc.update( this.post?.id, this.iComment?.id, comment )
 
     if( error ) this.toastSvc.show( error.msg || error.message || 'Error creating comment', true )
 
@@ -111,7 +112,10 @@ export class CommentsComponent implements OnInit {
     this.removeFromList( this.iComments, this.iComment )
 
     // Add new|updated item to List
-    if( response ) this.addToList( response?.comment )
+    if( response ) {
+      this.addToList( response?.comment )
+      this.post.comments_qant++
+    }
 
     // Clear Input
     this.inComment.value = '';
