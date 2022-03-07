@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin',
@@ -11,6 +12,7 @@ export class AdminPage {
     {title:'Gestionar tokens de usuarios', icon:'wallet-outline', link:'tokens-users'}
   ]
 
+  homePage: string = environment.HOME_PAGE
 }
 
 interface Option {

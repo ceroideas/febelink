@@ -41,7 +41,7 @@ export class ApiService {
             });
 
             await alert.present();
-            this.router.navigate(['menu/todas']);
+            this.router.navigate([ environment.HOME_PAGE ]);
             return false;
           } else {
             await this.utilities.saveAccessTokenInfo(res);
@@ -60,7 +60,7 @@ export class ApiService {
                 if (firstLogin) {
                   this.router.navigate(['menu/welcome']);
                 } else {
-                  this.router.navigate(['menu/todas']);
+                  this.router.navigate([ environment.HOME_PAGE ]);
                 }
                 break;
             }

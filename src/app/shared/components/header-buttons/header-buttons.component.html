@@ -3,7 +3,7 @@
     tappable
     src="assets/imgs/logo.png"
     alt="Febelink logo"
-    (click)="irA('/menu/todas')"
+    (click)="irA( '/' + homePage )"
     *ngIf="currentTab != tabs.Search"
     class="logo"
   />
@@ -37,7 +37,7 @@
       <ion-button
         class="btn-header"
         [class]="currentTab == tabs.Search ? 'active' : ''"
-        (click)="irA('/menu/todas')"
+        (click)="irA( '/' + homePage )"
       ><div class="grid-rows">
         <ion-icon class="marg-se" slot="start" name="search"></ion-icon>
         <ion-label class="responsive-max tx-cap">

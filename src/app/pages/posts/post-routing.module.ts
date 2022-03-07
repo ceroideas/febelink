@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TabsPage } from 'src/app/tabs/tabs.page';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
       },
       
       // Redirect Tabs when clicked
-      { path: 'todas', redirectTo: '/menu/todas', pathMatch: 'prefix' },
+      { path: 'todas', redirectTo: '/' + environment.HOME_PAGE, pathMatch: 'prefix' },
       { path: 'busquedas', redirectTo: '/menu/busquedas', pathMatch: 'prefix' },
       { path: 'ofertas', redirectTo: '/menu/ofertas', pathMatch: 'prefix' },
       { path: 'perfil', redirectTo: '/menu/perfil', pathMatch: 'prefix' },

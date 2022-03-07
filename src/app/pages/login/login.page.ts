@@ -7,6 +7,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -115,7 +116,7 @@ export class LoginPage implements OnInit {
         await loading.present();
         await loading.onDidDismiss();
         this.api.emitUserLogged();
-        this.router.navigate(['menu/todas']);
+        this.router.navigate([ environment.HOME_PAGE ]);
         this.utilities.setGuia('login');
       }
     });

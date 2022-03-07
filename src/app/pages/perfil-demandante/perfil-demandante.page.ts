@@ -34,6 +34,7 @@ export class PerfilDemandantePage implements OnInit {
   currentUser: IUser = null;
   urlName:string;
 
+  homePage: string = environment.HOME_PAGE
 
   constructor(
     private route: ActivatedRoute,
@@ -249,7 +250,7 @@ export class PerfilDemandantePage implements OnInit {
 
 
   home() {
-    this.router.navigate(['menu/todas']);
+    this.router.navigate([ this.homePage ]);
   }
 
   public irA(p: string): void {

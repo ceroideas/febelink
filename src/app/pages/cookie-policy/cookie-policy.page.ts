@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { NavigationStart, Router} from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cookie-policy',
@@ -21,7 +22,7 @@ export class CookiePolicyPage implements OnInit {
     }
 
     else{
-      this.router.navigate(['menu/todas']);
+      this.router.navigate([ environment.HOME_PAGE ]);
     }
    
   }
