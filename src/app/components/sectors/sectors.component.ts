@@ -45,19 +45,19 @@ export class SectorsComponent implements OnInit
     this.subsector = subsector || 0
   }
 
-  async onChangeSector( id )
+  async onChangeSector( event? )
   {
-    this.sector = id
+    this.sector = event.value?.id
     this.subsector = null
     this.subsectors = []
-    if( this.OnSectorChange ) this.OnSectorChange.emit( id )
-    this.subsectors = await this.subsectorSvc.get( id )
+    if( this.OnSectorChange ) this.OnSectorChange.emit( this.sector )
+    this.subsectors = await this.subsectorSvc.get( this.sector )
   }
 
-  async onChangeSubsector( id )
+  async onChangeSubsector( event )
   {
-    this.subsector = id
-    if( this.OnSubsectorChange ) this.OnSubsectorChange.emit( id )
+    this.subsector = event.value?.id
+    if( this.OnSubsectorChange ) this.OnSubsectorChange.emit( this.subsector )
   }
 
   // Remove Selection
