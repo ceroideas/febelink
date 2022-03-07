@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'todas',
+        redirectTo: '/posts/oracles',
         pathMatch: 'full',
       },
       {
