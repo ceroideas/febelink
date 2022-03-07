@@ -588,6 +588,7 @@
         }
       },
 
+      "comments": "Comment/s",
       "comment": {
         "placeholder": "Comment...",
         "created": "Comment added",

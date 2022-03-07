@@ -586,6 +586,7 @@
         }
       },
 
+      "comments": "Comentario/s",
       "comment": {
         "placeholder": "Comentar...",
         "created": "Comentario agregado",
