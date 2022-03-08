@@ -11,7 +11,7 @@ import { AlertSvc } from 'src/app/services/alert.service';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { IFile } from 'src/app/components/file-picker/models/file.model';
+import { FilePickType, IFile } from 'src/app/components/file-picker/models/file.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class AdviseCRUDPage implements OnInit {
   isLoading: boolean = false
 
   form: FormGroup
-  image: IFile = {}
+  iFile: IFile = {}
   content: iWYSIWYG = {}
 
   id: number
@@ -111,7 +111,7 @@ export class AdviseCRUDPage implements OnInit {
     });
 
     this.content.html = this.iAdvise?.content;
-    this.image.src = this.iAdvise?.photo;
+    this.iFile.src = this.iAdvise?.photo;
   }
 
   clear()
@@ -125,7 +125,7 @@ export class AdviseCRUDPage implements OnInit {
 
   imgSelected( file: IFile )
   {
-    this.image = file
+    this.iFile = file
   }
 
   wysiwygChange( content: iWYSIWYG )
@@ -193,8 +193,8 @@ export class AdviseCRUDPage implements OnInit {
       , subtitle: subtitle
       , summary: summary
       , content: this.content.html
-      
-      , photo: this.image?.src
+      // ToDo: replace column 'photo' => 'media' | save on dir and set 'media' = 'dir/file.ext' 
+      , photo: this.iFile?.format != FilePickType.IMAGE ? null : this.iFile?.src
     }
 
     const { response, error } = !this.id
