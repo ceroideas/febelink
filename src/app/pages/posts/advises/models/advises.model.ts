@@ -32,7 +32,7 @@ export interface IAdviseFull extends IAdvise, IUserShow
     subsector?: string | number
 
     react_qant?: number
-    reacted?: boolean
+    reacted?: number
 
     comments_qant?: number
 }
