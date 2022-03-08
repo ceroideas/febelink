@@ -2,7 +2,7 @@ import { TranslateConfigService } from './../../../services/translate/translate-
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Platform } from '@ionic/angular';
-import { FileMaxSize, IFile } from '../models/file.model';
+import { FileMaxSize, FilePickType, IFile } from '../models/file.model';
 import { ToastSvc } from './../../../services/toast.service';
 
 @Injectable({
@@ -30,12 +30,12 @@ export class FileService
     ): Promise<any> {
         this.maxSize = maxSize|| this.maxSize
         if (this.platform.is('cordova'))
-            return this.pickImgNative( targetWidth, targetHeight );
+            return this.pickMediaNative( targetWidth, targetHeight );
         
-        return this.pickImgWeb( filePicker );
+        return this.pickMediaWeb( filePicker );
     }
   
-    private pickImgNative(
+    private pickMediaNative(
         targetWidth: number = 1920, targetHeight: number = 1080
     ): Promise<IFile> {
         return new Promise( async resolve => {
@@ -43,8 +43,8 @@ export class FileService
             {
                 quality: 100,
                 destinationType: this.camera.DestinationType.DATA_URL,
-                mediaType: this.camera.MediaType.PICTURE,
-                encodingType: this.camera.EncodingType.JPEG,
+                mediaType: this.camera.MediaType.ALLMEDIA,
+                // encodingType: this.camera.EncodingType.JPEG,
                 sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
                 targetWidth: targetWidth,
                 targetHeight: targetHeight,
@@ -65,20 +65,18 @@ export class FileService
         })
     }
 
-    private pickImgWeb( filePicker: HTMLInputElement ): Promise<IFile> {
+    private pickMediaWeb( filePicker: HTMLInputElement ): Promise<IFile> {
         return new Promise(async resolve => {
             if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
                 this.toastSvc.show( 'tabs.tab4.errors.noFileSelected', true );
                 return;
             }
 
-            const file = filePicker.files[ 0 ]
-            const src = await this.convert( file )
-
-            if( this.exceedsSize( src )) return
+            const iFile: IFile = await this.convert( filePicker.files[ 0 ] )
+            if( this.exceedsSize( iFile.src )) return
     
             // base64img
-            resolve({ src, file });
+            resolve( iFile );
         });
     }
 
@@ -86,19 +84,24 @@ export class FileService
       filePicker.value = '';
     }
   
-    public convert( file: File ): Promise<string | ArrayBuffer>
+    public convert( file: File ): Promise<IFile>
     {
-        return new Promise<string | ArrayBuffer>((resolve, reject) =>
+        return new Promise<IFile>( resolve =>
         {
             const fileReader = new FileReader();
             if ( fileReader && file )
             {
+
                 fileReader.readAsDataURL( file );
-                fileReader.onload = () => resolve( fileReader.result )
+                fileReader.onload = () => resolve({
+                    src: fileReader.result,
+                    file: file,
+                    format: file.type.indexOf('video')> -1 ? FilePickType.VIDEO : FilePickType.IMAGE
+                })
                 fileReader.onerror = error =>
                     this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true )
             } else
-            this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true );
+                this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true );
         });
     }
 
