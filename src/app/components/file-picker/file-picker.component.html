@@ -1,4 +1,4 @@
-<form>
+<form [class]="classWH + 'marg-se fmMedia'">
   <!-- To Pick Files on Browsers -->
   <input #filePicker
     type="file"
@@ -6,39 +6,45 @@
     (change)="pickMedia( filePicker )"
   />
   
-  <!-- Ion Img -->
-  <ion-img
-    [style]="styles || ''"
-    [src]="src || fallback"
-    *ngIf="elType == elTypes.ION_IMG"
-    [appImgErrorFallback]="fallback"
-    [class]="'pointer ' + ( classes || '' )"
-    (click)="filePicker.click()"
-  ></ion-img>
-  
-  <!-- IMG -->
-  <img
-    [style]="styles || ''"
-    [src]="src"
-    *ngIf="elType == elTypes.IMG"
-    [appImgErrorFallback]="fallback"
-    [class]="'pointer ' + ( classes || '' )"
-    (click)="filePicker.click()"
-  />
-  
-  <!-- Ion Avatar -->
-  <ion-avatar *ngIf="elType == elTypes.AVATAR">
+  <!-- Image -->
+  <ng-container *ngIf="iFile.src && iFile.format == pickTypes.IMAGE">
+    <!-- Ion Img -->
     <ion-img
       [style]="styles || ''"
-      [src]="src"
+      [src]="src || fallback"
+      *ngIf="elType == elTypes.ION_IMG"
       [appImgErrorFallback]="fallback"
-      [class]="'pointer ' + ( classes || '' )"
+      [class]="classWH + ( classes || '' )"
       (click)="filePicker.click()"
     ></ion-img>
-  </ion-avatar>
+    
+    <!-- IMG -->
+    <img
+      [style]="styles || ''"
+      [src]="src"
+      *ngIf="elType == elTypes.IMG"
+      [appImgErrorFallback]="fallback"
+      [class]="classWH + ( classes || '' )"
+      (click)="filePicker.click()"
+    />
+    
+    <!-- Ion Avatar -->
+    <ion-avatar *ngIf="elType == elTypes.AVATAR">
+      <ion-img
+        [style]="styles || ''"
+        [src]="src"
+        [appImgErrorFallback]="fallback"
+        [class]="classWH + ( classes || '' )"
+        (click)="filePicker.click()"
+      ></ion-img>
+    </ion-avatar>
+  </ng-container>
 
-  <video controls (click)="toggleVideo( $event )" #videoPlayer *ngIf="elType == elTypes.VIDEO ">
-    <source [src]="src" type="video/mp4" />
-    Browser not supported
-  </video>
+  <!-- Video -->
+  <video playsinline
+    controls
+    *ngIf="iFile.src && iFile.format == pickTypes.VIDEO"
+    [class]="classWH + 'media-video'"
+    [src]="iFile.src"
+  ></video>
 </form>
