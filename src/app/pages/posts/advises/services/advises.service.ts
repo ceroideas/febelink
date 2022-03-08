@@ -57,28 +57,30 @@ export class AdviseService {
   {
     return iAdvise.title ? iAdvise.title
       : !iAdvise?.content
-          ? null
-          // : this.firstSentence( iAdvise.content )
-          : iAdvise.content.substring( 0, Math.max( 0, iAdvise.content.indexOf( '.' )))
+        ? null : this.first( iAdvise.content )
   }
 
   extractSummary( iAdvise: IAdvise ): string
   {
     return iAdvise.summary ? iAdvise.summary
       : !iAdvise?.content ? null
-        : iAdvise?.title ? iAdvise.content
-          // : iAdvise.content?.replace( this.firstSentence( iAdvise.content ) || '', '' )
-          : iAdvise.content.substring( Math.max( 0, iAdvise.content.indexOf( '.' ) +1 ))
+        : iAdvise?.title ? iAdvise.content : this.after( iAdvise.content)
   }
 
-  private firstSentence( str ): string
+  private first( str ): string
   {
-    // https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions
-    //const ar = !str ? '' : str.replace(/\.(?!\d)|([^\d])\.(?=\d)/g,'$1.|')
+    str = this.html2str( str )
+    return str.substring( 0, Math.max( 0, this.html2str( str ).indexOf( '.' )))
+  }
 
-    // https://regex101.com/r/nG1gU7/27
-    // const ar = !str ? '' : str.replace( /(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s/gm );
-    const ar = !str ? '' : str.replace( /(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!\:)\s+|\p{Cc}+|\p{Cf}+/gm );
-    return ar
+  private after( str ): string
+  {
+    str = this.html2str( str )
+    return str.substring( Math.max( 0, this.html2str( str ).indexOf( '.' ) +1 ))
+  }
+
+  private html2str( html: string ): string
+  {
+    return !html ? '' : html.replace( /(<([^>]+)>)/g, "" )
   }
 }
