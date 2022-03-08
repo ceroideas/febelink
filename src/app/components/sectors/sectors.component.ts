@@ -17,6 +17,8 @@ export class SectorsComponent implements OnInit
   subsectors: ISubSector[] = []
   @Input() sector: number = null
   @Input() subsector: number = null
+  sectorSlctd: ISector = null
+  subsectorSlctd: ISubSector = null
 
   constructor(
       private sectorSvc: SectorService
@@ -73,6 +75,8 @@ export class SectorsComponent implements OnInit
     this.clear()
     this.sectors = []
     this.subsectors = []
+    this.sectorSlctd = null
+    this.subsectorSlctd = null
     this.load()
   }
 }

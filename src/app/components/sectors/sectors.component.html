@@ -9,6 +9,7 @@
         <!-- Select -->
         <ionic-selectable
           item-content
+          [(ngModel)]="sectorSlctd"
           itemValueField="id"
           itemTextField="nombre"
           [items]="sectors"
@@ -27,6 +28,7 @@
         <ion-label position="floating">{{ 'common.labelSubsector' | translate }}</ion-label>
         <ionic-selectable
           item-content
+          [(ngModel)]="subsectorSlctd"
           itemValueField="id"
           itemTextField="nombre"
           [items]="subsectors"
