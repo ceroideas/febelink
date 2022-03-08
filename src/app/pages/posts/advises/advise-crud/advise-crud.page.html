@@ -18,13 +18,13 @@
   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
   <!-- Form -->
-  <form [formGroup]="form" class="pad-5" *ngIf="!isLoading && form">
-    <ion-grid>
+  <form [formGroup]="form" class="no-pad" *ngIf="!isLoading && form">
+    <ion-grid class="no-pad pad-t10">
       <!-- Sector | Subsector -->
       <app-sectors #sectors [sector]="iAdvise?.id_sector" [subsector]="iAdvise?.id_subsector"></app-sectors>
 
       <!-- Title -->
-      <ion-row *ngIf="false">
+      <ion-row class="pad-5" *ngIf="false">
         <ion-input
           class="box-bw-r1-lln font-20"
           type="text"
@@ -35,7 +35,7 @@
       </ion-row>
 
       <!-- Subtitle -->
-      <ion-row class="marg-t10" *ngIf="false">
+      <ion-row class="marg-t10 pad-5" *ngIf="false">
         <ion-input
           class="box-bw-r1-lln font-16"
           type="text"
@@ -46,7 +46,7 @@
       </ion-row>
 
       <!-- Summary -->
-      <ion-row class="marg-t10" *ngIf="false">
+      <ion-row class="marg-t10 pad-5" *ngIf="false">
         <ion-textarea
           class="hint box-bw-r1-lln"
           type="text"
@@ -57,7 +57,7 @@
       </ion-row>
 
       <!-- WYSIWYG -->
-      <ion-row class="marg-t10">
+      <ion-row class="marg-t10 pad-5">
         <app-wysiwyg
           [html]="iAdvise?.content"
           [placeholder]="'pages.posts.advises.create.wysiwyg' | translate"
@@ -67,7 +67,7 @@
       </ion-row>
 
       <!-- Image | Video -->
-      <ion-row class="marg-t10 img-post" [style]="'display: ' + ( !image?.src ? 'none' : 'block' )">
+      <ion-row [class]="'marg-t10 marg-se wh-social-media media-pos' + ( iFile?.src ? '' : ' invisible' )">
         <!-- Remove Image -->
         <ion-button icon-only
           shape="round"
@@ -78,7 +78,7 @@
         </ion-button>
 
         <!-- File Picker -->
-        <app-file-picker #pick [src]="image?.src" (OnFile)="imgSelected( $event )"></app-file-picker>
+        <app-file-picker #pick [src]="iFile?.src" (OnFile)="imgSelected( $event )"></app-file-picker>
       </ion-row>
     </ion-grid>
   </form>
