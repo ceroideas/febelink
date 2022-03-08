@@ -41,6 +41,7 @@
 .w-35, .wh-35 { width: 35px; --width: 35px; }
 .w-40, .wh-40 { width: 40px; --width: 40px; }
 .w-full, .wh-full { width: 100%; --width: 100%; }
+.w-social-media, .wh-social-media { width: 360px; --width: 360px; max-width: 100%; }
 
 // Max
 .w-max-600 { max-width: 600px; --max-width: 600px; }
@@ -52,6 +53,7 @@
 .w-35, .wh-35 { height: 35px; --height: 35px; }
 .h-40, .wh-40 { height: 40px; --height: 40px; }
 .h-full, .wh-full { height: 100%; --height: 100; }
+.h-social-media, .wh-social-media { height: 360px; --height: 360px; max-height: 360px; }
 
 // Min
 .h-min-30 { min-height: 30px; --min-height: 30px; }
@@ -59,3 +61,14 @@
 // Shadows
 .shadow-light { box-shadow: 5px 2px 10px lightgrey; }
 .shadow-gray { box-shadow: 5px 2px 10px grey; }
+
+// Media
+.media-video {
+    vertical-align: baseline;
+    object-fit: contain;
+    -webkit-text-size-adjust: 100%;
+    background: rgb(0,0,0,0.7);
+}
+
+// Visibility
+.invisible { display: none; }
