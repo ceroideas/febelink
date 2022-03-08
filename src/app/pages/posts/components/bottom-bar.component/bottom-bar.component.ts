@@ -8,6 +8,8 @@ import { IAdviseFull } from '../../advises/models/advises.model';
 import { IUser } from 'src/app/models/user.model';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { ICommentFull } from '../../advises/models/comment.model';
+import { ReactTypePopSvc } from '../services/react-type.pop.service';
+import { IReactTypes, Reacts } from '../models/react-types.model';
 
 @Component({
   selector: 'app-post-bottom-bar-component',
@@ -24,6 +26,7 @@ export class PostBottomBarComponent implements OnInit
 
   user: IUser
   dateFormatType = DateFormatType
+  reacts = Reacts
 
   constructor(
       private router: Router
@@ -31,21 +34,29 @@ export class PostBottomBarComponent implements OnInit
     , private shareSvc: ShareService
     , private sessionSvc: UserSessionSvc
     , private fileSvc: FileService
+    , private reacTypeSvc: ReactTypePopSvc
   ) {}
 
   ngOnInit() {}
 
-  async react()
+  async react( ev: any )
   {
     if( !( await this.sessionSvc.checkLogged() )) return
 
-    this.post.reacted = !this.post.reacted
-
     // ToDo: select reaction from popover
-    const reactType = 1;
-    this.adviseSvc.react( this.id, reactType, this.post.reacted ? 1 : 0 )
+    const reactType: IReactTypes = await this.reacTypeSvc.show( ev )
 
-    this.post.react_qant = ( this.post.react_qant || 0 ) + ( this.post.reacted ? 1 : -1 )
+    // No reaction selected || Same reaction selected
+    if( !reactType || reactType?.id == this.post.reacted ) return
+
+    // Add or Substract only if is not a positive reaction after a positive reaction
+    const reaction = reactType?.id + this.post.reacted > 1 ? 0
+        : reactType?.id < 1 ? -1 : +1
+
+    this.post.reacted = reactType.id
+    this.post.react_qant = ( this.post.react_qant || 0 ) + reaction
+    
+    this.adviseSvc.react( this.id, reactType?.id, this.post.reacted ? 1 : 0 )
   }
 
   async share( ev: any )
