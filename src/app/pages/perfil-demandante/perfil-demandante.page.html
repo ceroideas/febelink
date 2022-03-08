@@ -170,9 +170,6 @@
             </ion-list>
           </div>
 
-          <!-- Posts|Oracles statistics of this user -->
-          <app-post-stats-component [id]="perfilpublico?.id"></app-post-stats-component>
-
           <!-- Botón publicar opinión -->
           <ion-button
             class="boton max-width"
@@ -203,6 +200,9 @@
           </ion-button>
         </ion-col>
       </ion-row>
+
+      <!-- Posts|Oracles statistics of this user -->
+      <app-post-stats-component [id]="perfilpublico?.id"></app-post-stats-component>
     </ion-grid>
   </div>
 </ion-content>
