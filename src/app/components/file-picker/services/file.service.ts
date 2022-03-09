@@ -21,8 +21,6 @@ export class FileService
         , private translateSvc: TranslateConfigService
     ){}
 
-    
-
     public pickImg(
         filePicker?: HTMLInputElement
         , maxSize?: FileMaxSize
@@ -130,5 +128,15 @@ export class FileService
     img2str( img: ArrayBuffer | String )
     {
         return img instanceof ArrayBuffer ? this.ab2st( img ) : this.str2ab( img as string )
+    }
+
+    isImage( ext: string ): boolean
+    {
+        return [ 'png', 'jpg', 'jpeg', 'gif' ].includes( ( ext || '__' ).toLowerCase() )
+    }
+
+    isVideo( ext: string ): boolean
+    {
+        return [ 'mp4' ].includes( ( ext || '__' ).toLowerCase() )
     }
 }
