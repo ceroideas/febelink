@@ -62,9 +62,22 @@
       ></ion-label>
     </ion-row>
   
-    <!-- Image -->
-    <ion-row class="marg-t10 media" color="black" *ngIf="iAdvise.photo && isPostVisible">
-      <ion-img class="h-social-media marg-se" [src]="iAdvise.photo"></ion-img>
+    <!-- Media-->
+    <ion-row class="marg-t10 media" color="black" *ngIf="isPostVisible && iAdvise.media_url">
+      <!-- Image -->
+      <ion-img
+        class="w-social-media h-social-media marg-se"
+        [src]="iAdvise.media_url"
+        *ngIf="fileSvc.isImage( iAdvise.media_ext )"
+      ></ion-img>
+
+      <!-- Video -->
+      <video playsinline
+        controls
+        *ngIf="fileSvc.isVideo( iAdvise.media_ext )"
+        class="w-social-media h-social-media media-video"
+        [src]="iAdvise.media_url"
+      ></video>
     </ion-row>
   
     <!-- Comments -->
