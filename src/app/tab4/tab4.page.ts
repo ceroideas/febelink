@@ -949,8 +949,8 @@ export class Tab4Page {
 
             this.storage.remove('userData').then(() => {
               this.api.refreshTabs();
-              this.router.navigate(['menu/todas']);
-              //this.router.navigateByUrl('menu/todas');
+              this.router.navigate([ environment.HOME_PAGE ]);
+              //this.router.navigateByUrl( environment.HOME_PAGE );
               this.utilities.showToast(
                 this.translateService.instant('tabs.tab4.labelDisableConfirmed')
               );
@@ -1205,7 +1205,7 @@ export class Tab4Page {
   }
 
   home() {
-    this.router.navigate(['menu/todas']);
+    this.router.navigate([ environment.HOME_PAGE ]);
   }
 
   /**

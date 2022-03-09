@@ -7,6 +7,7 @@ import { IUser } from 'src/app/models/user.model';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-whitelist',
@@ -58,6 +59,6 @@ export class WhitelistComponent implements OnInit {
 
   async login() {
     const user: IUser = await this.utils.getUserData();
-    this.router.navigate([ user ? 'menu/todas' : 'login']);
+    this.router.navigate([ user ? environment.HOME_PAGE : 'login']);
   }
 }

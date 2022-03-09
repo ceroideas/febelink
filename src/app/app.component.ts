@@ -27,6 +27,7 @@ import { ILangDEFAULTS } from './models/langs.model';
 import { Meta, Title } from '@angular/platform-browser';
 import { FrogedService } from './services/froged.service';
 import { ConsoleSvc } from './services/console.service';
+import { environment } from 'src/environments/environment';
 
 const GENERAL_TITLE = 'Febelink | El buscador de servicios profesionales';
 const GENERAL_DESC =
@@ -209,7 +210,7 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('backbutton1');
       if (this.routerOutlets && this.routerOutlets.canGoBack()) {
         this.routerOutlets.pop();
-      } else if (this.router.url === 'menu/todas') {
+      } else if (this.router.url === environment.HOME_PAGE ) {
         navigator['app'].exitApp();
       }
     });
@@ -383,7 +384,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public loginImplicito(): void {
-    this.router.navigate(['menu/todas']);
+    this.router.navigate([ environment.HOME_PAGE ]);
   }
 
   /**

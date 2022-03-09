@@ -15,5 +15,7 @@ export const environment = {
   GOOGLE_STORE: 'https://play.google.com/store/apps/details?id=com.xerintel.febelink54831',
   APP_STORE: 'https://febelink.us19.list-manage.com/track/click?u=2c62737fce42bba9ebb2f5d05&id=f9ee5da0af&e=45535eea63',
   // KYC Alice
-  KYC_SELFIE: true
+  KYC_SELFIE: true,
+  // Initial Page
+  HOME_PAGE: 'menu/oracles'
 };

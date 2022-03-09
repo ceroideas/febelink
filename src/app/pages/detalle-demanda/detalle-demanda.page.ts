@@ -47,6 +47,8 @@ export class DetalleDemandaPage implements OnInit {
   isLoading: boolean;
   showChat = false;
   urlName:string;
+  
+  homePage: string = environment.HOME_PAGE
 
   constructor(
     private utilities: UtilitiesService,
@@ -283,7 +285,7 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   home() {
-    this.router.navigate(['menu/todas']);
+    this.router.navigate([ this.homePage ]);
   }
 
   async openGuide() {

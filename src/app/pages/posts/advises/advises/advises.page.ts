@@ -51,7 +51,7 @@ export class AdvisesPage implements OnInit
   {
     // To refresh list on routing to this page
     this.router.addListener(( url: string, params: Params ) => {
-      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( url )) {
+      if ([ 'posts', '/menu/oracles', 'menu/oraculos' ].includes( url )) {
         this.uid = params?.uid
         this.search();
       }

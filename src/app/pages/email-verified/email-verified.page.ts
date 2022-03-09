@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-email-verified',
@@ -80,6 +81,6 @@ export class EmailVerifiedPage implements OnInit {
   }
 
   goHome() {
-    this.router.navigate([ 'menu/todas' ]);
+    this.router.navigate([ environment.HOME_PAGE ]);
   }
 }

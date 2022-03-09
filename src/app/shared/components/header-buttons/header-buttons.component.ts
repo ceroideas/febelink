@@ -25,6 +25,8 @@ export class HeaderButtonsComponent implements OnInit {
   notifCount: number;
   totalUnreadMessages: number;
 
+  homePage: string = environment.HOME_PAGE
+
   constructor(
     private modalCtrl: ModalController,
     private api: ApiService,

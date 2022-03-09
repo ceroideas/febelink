@@ -21,6 +21,7 @@ import { AlertSvc } from 'src/app/services/alert.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { AccountSvc } from 'src/app/services/wallet/account.service';
 import { ExchangePop } from 'src/app/services/wallet/exchange.pop';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'wallet-page',
@@ -111,7 +112,7 @@ export class WalletPage {
   }
 
   public goBack(): void {
-    this.router.navigate(['/menu/todas']);
+    this.router.navigate([ '/' + environment.HOME_PAGE ]);
   }
 
   public async send() {

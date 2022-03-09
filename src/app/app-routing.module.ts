@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   { path: '', redirectTo: 'posts/oracles', pathMatch: 'full' },
@@ -203,7 +204,7 @@ const routes: Routes = [
   },
   // If no id, redirect to home
   {
-    path: 'email-verified', redirectTo: 'menu/todas', pathMatch: 'full'
+    path: 'email-verified', redirectTo: environment.HOME_PAGE, pathMatch: 'full'
   },
   {
     path: 'admin',
@@ -229,7 +230,7 @@ export class AppRoutingModule {
      */
     this.router.errorHandler = (error: any) => {
       // Redirect to Main Page | Home Page
-      this.router.navigate(['/menu/todas']);
+      this.router.navigate([ '/' + environment.HOME_PAGE ]);
     }
   }
 }
