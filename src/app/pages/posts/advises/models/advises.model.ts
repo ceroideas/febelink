@@ -14,8 +14,11 @@ export interface IAdvise {
     summary: string
     content?: string
     
-    photo?: any
-    video?: string
+    media_url?: string
+    media_name?: string
+    media_ext?: string
+    //To Upload File
+    media?: File
     
     shared?: number
     reacts?: number
