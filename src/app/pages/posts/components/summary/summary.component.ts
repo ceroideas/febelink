@@ -1,3 +1,4 @@
+import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
 import { Router } from '@angular/router';
 import { DateFormatType } from 'src/app/pipes/date-format.pipe';
@@ -20,6 +21,7 @@ export class PostSummaryComponent implements OnInit {
   constructor(
       private router: Router
     , public adviseSvc: AdviseService
+    , public fileSvc: FileService
   ) {}
 
   ngOnInit() {}

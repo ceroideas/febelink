@@ -3,10 +3,24 @@
     <ion-row class="marg-s marg-e marg-t5">
       <ion-col size="10" class="no-padding">
         <ion-item tappable class="no-padding" lines="none" color="transparent">
-          <!-- Image -->
-          <ion-avatar slot="start" class="no-margin wh-40" *ngIf="iAdvise.photo">
-            <ion-img class="sum-photo" [src]="iAdvise.photo"></ion-img>
+          <!-- Media -->
+          <ion-avatar slot="start" class="no-margin wh-40" *ngIf="iAdvise.media_url">
+            <!-- Image -->
+            <ion-img
+              class="sum-media"
+              [src]="iAdvise.media_url"
+              *ngIf="fileSvc.isImage( iAdvise.media_ext )"
+            ></ion-img>
+            
+            <!-- Video -->
+            <video playsinline
+              controls
+              *ngIf="fileSvc.isVideo( iAdvise.media_ext )"
+              class="sum-media"
+              [src]="iAdvise.media_url"
+            ></video>
           </ion-avatar>
+
           <ion-grid class="marg-s10 marg-e10 w-full">
             <!-- Title -->
             <ion-row>
