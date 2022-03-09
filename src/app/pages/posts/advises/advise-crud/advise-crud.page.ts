@@ -11,7 +11,7 @@ import { AlertSvc } from 'src/app/services/alert.service';
 import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
 import { LoadingSvc } from 'src/app/services/loading.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { FilePickType, IFile } from 'src/app/components/file-picker/models/file.model';
+import { IFile } from 'src/app/components/file-picker/models/file.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -111,7 +111,7 @@ export class AdviseCRUDPage implements OnInit {
     });
 
     this.content.html = this.iAdvise?.content;
-    this.iFile.src = this.iAdvise?.photo;
+    this.iFile.src = this.iAdvise?.media_url;
   }
 
   clear()
@@ -119,11 +119,11 @@ export class AdviseCRUDPage implements OnInit {
     this.iAdvise = null
     this.content.html = ''
     this.sectors.clear()
-    this.imgSelected( null )
+    this.fileSelected( null )
     this.form.reset()
   }
 
-  imgSelected( file: IFile )
+  fileSelected( file: IFile )
   {
     this.iFile = file
   }
@@ -193,8 +193,8 @@ export class AdviseCRUDPage implements OnInit {
       , subtitle: subtitle
       , summary: summary
       , content: this.content.html
-      // ToDo: replace column 'photo' => 'media' | save on dir and set 'media' = 'dir/file.ext' 
-      , photo: this.iFile?.format != FilePickType.IMAGE ? null : this.iFile?.src
+      
+      , media: this.iFile.file
     }
 
     const { response, error } = !this.id

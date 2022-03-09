@@ -72,13 +72,13 @@
         <ion-button icon-only
           shape="round"
           class="no-padding wh-40 marg-t10 relativism"
-          (click)="imgSelected( null )"
+          (click)="fileSelected( null )"
         >
           <ion-icon name="trash-outline" color="primary"></ion-icon>
         </ion-button>
 
         <!-- File Picker -->
-        <app-file-picker #pick [src]="iFile?.src" (OnFile)="imgSelected( $event )"></app-file-picker>
+        <app-file-picker #pick [src]="iFile?.src" (OnFile)="fileSelected( $event )"></app-file-picker>
       </ion-row>
     </ion-grid>
   </form>
