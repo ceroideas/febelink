@@ -116,7 +116,7 @@ export class HttpService {
         const formData = new FormData();
         for (let key in obj ) {
             let value = obj[ key ];
-            if ( !( typeof value === "string" ))
+            if ( !( typeof value === "string" ) && !( value instanceof File ))
                 value = JSON.stringify( value );
 
             formData.append( key, value );
