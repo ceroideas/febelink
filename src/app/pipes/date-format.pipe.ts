@@ -26,7 +26,7 @@ export class DateFormatPipe implements PipeTransform {
       return '';
     
     try {
-      const date = new Date( value );
+      const date = new Date( value.replace( '-', '/' ));
       const day = date.getDate();
       const year = date.getFullYear();
       let month;
