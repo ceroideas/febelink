@@ -10,7 +10,7 @@ import { FileService } from './services/file.service';
 })
 export class FilePickerComponent implements OnInit {
 
-  @Input() src: string | ArrayBuffer
+  @Input() iFile: IFile = {}
   @Input() fallback: string = 'assets/icon/svg/nopic.svg'
   @Input() height: string = '100%'
   @Input() width: string = '100%'
@@ -32,20 +32,14 @@ export class FilePickerComponent implements OnInit {
   @ViewChild( "filePicker" ) filePicker: ElementRef
   @ViewChild('videoPlayer') videoPlayer: ElementRef
 
-  iFile: IFile = {}
-
   constructor(
       public mediaSvc: FileService
     , private platform: Platform
   ) { }
 
-  ngOnInit() {
-    this.platform.ready().then(() => this.isNative = this.platform.is( 'cordova' ))
-  }
-
-  ngOnChanges( changes: SimpleChanges ): void
+  ngOnInit()
   {
-    if ( 'src' in changes) this.iFile.src = changes.src.currentValue
+    this.platform.ready().then(() => this.isNative = this.platform.is( 'cordova' ))
   }
 
   clicks()
@@ -57,7 +51,11 @@ export class FilePickerComponent implements OnInit {
   {
     if( this.OnClick ) this.OnClick.emit( filePicker )
     this.iFile = await this.mediaSvc.pickImg( filePicker, this.maxSize )
-    if( this.iFile && this.OnFile ) this.OnFile.emit( this.iFile )
+    if( this.iFile ) {
+      this.iFile.ext = this.mediaSvc.getExt( this.iFile.file.name )
+      if( this.OnFile ) this.OnFile.emit( this.iFile )
+    }
+    console.log({ iFile: this.iFile })
   }
 
   toggleVideo( event )
