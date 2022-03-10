@@ -10,9 +10,20 @@ import { ToastSvc } from './../../../services/toast.service';
 })
 export class FileService
 {
-
     base64img: string
     maxSize: FileMaxSize = FileMaxSize.MAX_ALLOWED_PACKET
+
+    options: CameraOptions = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        // destinationType: this.camera.DestinationType.DATA_URL,
+        mediaType: this.camera.MediaType.ALLMEDIA,
+        // encodingType: this.camera.EncodingType.JPEG,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        targetWidth: 1920,
+        targetHeight: 1080,
+        allowEdit: true,
+    };
 
     constructor(
         private camera: Camera
@@ -21,39 +32,39 @@ export class FileService
         , private translateSvc: TranslateConfigService
     ){}
 
-    public pickImg(
-        filePicker?: HTMLInputElement
-        , maxSize?: FileMaxSize
-        , targetWidth: number = 1920, targetHeight: number = 1080
-    ): Promise<any> {
+    public pickImg( filePicker?: HTMLInputElement, maxSize?: FileMaxSize ): Promise<any>
+    {
         this.maxSize = maxSize|| this.maxSize
         if (this.platform.is('cordova'))
-            return this.pickMediaNative( targetWidth, targetHeight );
+            return this.pickMediaNative();
         
         return this.pickMediaWeb( filePicker );
     }
   
-    private pickMediaNative(
-        targetWidth: number = 1920, targetHeight: number = 1080
-    ): Promise<IFile> {
+    private pickMediaNative(): Promise<IFile>
+    {
         return new Promise( async resolve => {
-            const options: CameraOptions =
-            {
-                quality: 100,
-                destinationType: this.camera.DestinationType.DATA_URL,
-                mediaType: this.camera.MediaType.ALLMEDIA,
-                // encodingType: this.camera.EncodingType.JPEG,
-                sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-                targetWidth: targetWidth,
-                targetHeight: targetHeight,
-                allowEdit: true,
-            };
             this.camera
-                .getPicture( options )
-                .then((urlFoto) =>
+                .getPicture( this.options )
+                .then(( mediaURI ) =>
                 {
-                    const src = 'data:image/jpeg;base64,' + urlFoto
-                    resolve({ src, file: src });
+                    mediaURI = window['Ionic']['WebView'].convertFileSrc(
+                        mediaURI?.includes("file://") ? mediaURI : "file://" + mediaURI
+                    )
+                    this.toastSvc.show( mediaURI )
+                    console.log({ mediaURI })
+                    const filename = mediaURI.substr( mediaURI.lastIndexOf( '/' ) +1 )
+                    
+                    const iFile: IFile = {
+                        src: mediaURI,
+                        file: this.filePath2file( mediaURI, filename ),
+                        format: this.isVideo( this.getExt( filename ))
+                            ? FilePickType.VIDEO
+                            : FilePickType.IMAGE
+                    }
+                    if( this.exceedsSize( iFile.src )) return
+                    
+                    resolve( iFile )
                 })
                 .catch((error) =>
                 {
@@ -77,6 +88,18 @@ export class FileService
             resolve( iFile );
         });
     }
+    
+    private async filePath2file( filepath: string, filename: string )
+    {
+        return this.blob2file( await (await fetch( filepath )).blob(), filename )
+    }
+
+    private blob2file( blob: any, fileName: string ): File
+    {
+        blob.lastModifiedDate = new Date()
+        blob.name = fileName
+        return blob as File
+    }
 
     public resetFileInput( filePicker: HTMLInputElement ) {
       filePicker.value = '';
@@ -94,7 +117,7 @@ export class FileService
                 fileReader.onload = () => resolve({
                     src: fileReader.result,
                     file: file,
-                    format: file.type.indexOf('video')> -1 ? FilePickType.VIDEO : FilePickType.IMAGE
+                    format: file.type.indexOf('video') > -1 ? FilePickType.VIDEO : FilePickType.IMAGE
                 })
                 fileReader.onerror = error =>
                     this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true )
@@ -138,5 +161,10 @@ export class FileService
     isVideo( ext: string ): boolean
     {
         return [ 'mp4' ].includes( ( ext || '__' ).toLowerCase() )
+    }
+
+    getExt( fileName: string ): string
+    {
+        return ( fileName || '' ).split( '.' ).pop()
     }
 }
