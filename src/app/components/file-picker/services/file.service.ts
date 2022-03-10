@@ -4,6 +4,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Platform } from '@ionic/angular';
 import { FileMaxSize, FilePickType, IFile } from '../models/file.model';
 import { ToastSvc } from './../../../services/toast.service';
+// import { File as FileCordova } from '@ionic-native/file/ngx';
+import { File as FileCordova } from '@ionic-native/file';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +37,8 @@ export class FileService
     public pickImg( filePicker?: HTMLInputElement, maxSize?: FileMaxSize ): Promise<any>
     {
         this.maxSize = maxSize|| this.maxSize
-        if (this.platform.is('cordova'))
-            return this.pickMediaNative();
+        /* if (this.platform.is('cordova'))
+            return this.pickMediaNative(); */
         
         return this.pickMediaWeb( filePicker );
     }
@@ -48,17 +50,17 @@ export class FileService
                 .getPicture( this.options )
                 .then(( mediaURI ) =>
                 {
+                    const fileName = mediaURI.substr( mediaURI.lastIndexOf( '/' ) +1 )
                     mediaURI = window['Ionic']['WebView'].convertFileSrc(
                         mediaURI?.includes("file://") ? mediaURI : "file://" + mediaURI
                     )
                     this.toastSvc.show( mediaURI )
-                    console.log({ mediaURI })
-                    const filename = mediaURI.substr( mediaURI.lastIndexOf( '/' ) +1 )
+                    console.log({ mediaURI, fileName })
                     
                     const iFile: IFile = {
                         src: mediaURI,
-                        file: this.filePath2file( mediaURI, filename ),
-                        format: this.isVideo( this.getExt( filename ))
+                        file: this.filePath2file( mediaURI, fileName ),
+                        format: this.isVideo( this.getExt( fileName ))
                             ? FilePickType.VIDEO
                             : FilePickType.IMAGE
                     }
@@ -89,16 +91,11 @@ export class FileService
         });
     }
     
-    private async filePath2file( filepath: string, filename: string )
+    private async filePath2file( filepath: string, fileName: string ): Promise<File>
     {
-        return this.blob2file( await (await fetch( filepath )).blob(), filename )
-    }
-
-    private blob2file( blob: any, fileName: string ): File
-    {
-        blob.lastModifiedDate = new Date()
-        blob.name = fileName
-        return blob as File
+        const ab: ArrayBuffer = await FileCordova.readAsArrayBuffer( filepath, fileName )
+        return new File([ ab ], fileName, { type: this.getEnctype( fileName )})
+        // return this.blob2file( await (await fetch( filepath )).blob(), filename )
     }
 
     public resetFileInput( filePicker: HTMLInputElement ) {
@@ -166,5 +163,11 @@ export class FileService
     getExt( fileName: string ): string
     {
         return ( fileName || '' ).split( '.' ).pop()
+    }
+
+    getEnctype( fileName: string )
+    {
+        const ext: string = this.getExt( fileName )
+        return ( this.isVideo( ext ) ? 'video/' : 'image/' ) + ext
     }
 }
