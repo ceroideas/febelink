@@ -19,7 +19,8 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './advise-crud.page.html',
   styleUrls: ['./advise-crud.page.scss'],
 })
-export class AdviseCRUDPage implements OnInit {
+export class AdviseCRUDPage implements OnInit
+{
 
   @ViewChild( "sectors" ) sectors: SectorsComponent
   @ViewChild( "lang" ) lang: LangBtnComponent
@@ -71,19 +72,21 @@ export class AdviseCRUDPage implements OnInit {
   }
 
   /* If has id -> editing post */
-  async getPost( id: number ) {
+  async getPost( id: number )
+  {
     this.isLoading = true;
 
     this.id = id
     const { response, error } = await this.adviseSvc.get( id )
     this.iAdvise = response
-    if( error || !( await this.sessionSvc.isUser( this.iAdvise?.uid )) ) {
+    if( error || !( await this.sessionSvc.isUser( this.iAdvise?.uid )))
+    {
       this.kickOff()
       return
     }
 
     this.updateForm()
-    this.isLoading = false;
+    this.isLoading = false
   }
 
   ionViewDidLeave()
@@ -93,13 +96,13 @@ export class AdviseCRUDPage implements OnInit {
 
   buildForm()
   {
-    const disabled = this.paramsUrl?.id && this.isLoading;
+    const disabled = this.paramsUrl?.id && this.isLoading
 
     this.form = this.formBuilder.group({
       title: new FormControl({ value: this.iAdvise?.title || '', disabled: disabled }, Validators.required ),
       subtitle: new FormControl({ value: this.iAdvise?.subtitle || '', disabled: disabled }, Validators.required ),
       summary: new FormControl({ value: this.iAdvise?.summary || '', disabled: disabled }, Validators.required ),
-    });
+    })
   }
 
   updateForm()
@@ -108,10 +111,13 @@ export class AdviseCRUDPage implements OnInit {
       title: this.iAdvise?.title || '',
       subtitle: this.iAdvise?.subtitle || '',
       summary: this.iAdvise?.summary || '',
-    });
+    })
 
-    this.content.html = this.iAdvise?.content;
-    this.iFile.src = this.iAdvise?.media_url;
+    this.content.html = this.iAdvise?.content
+    this.iFile.src = this.iAdvise?.media_url
+    this.iFile.ext = this.iAdvise?.media_ext
+
+    console.log({ iFile: this.iFile, iAdvise: this.iAdvise })
   }
 
   clear()

@@ -78,7 +78,7 @@
         </ion-button>
 
         <!-- File Picker -->
-        <app-file-picker #pick [src]="iFile?.src" (OnFile)="fileSelected( $event )"></app-file-picker>
+        <app-file-picker #pick [iFile]="iFile" (OnFile)="fileSelected( $event )"></app-file-picker>
       </ion-row>
     </ion-grid>
   </form>
