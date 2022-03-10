@@ -10,7 +10,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ssl": "ng serve --port 8100 --open --ssl --ssl-cert .\\cert\\localhost.crt --ssl-key .\\cert\\localhost.key"
+    "ssl": "ng serve --port 8100 --open --ssl --ssl-cert .\\cert\\localhost.crt --ssl-key .\\cert\\localhost.key",
+    "android-rm": "ionic cordova platform rm android",
+    "android-add": "ionic cordova platform add android",
+    "android-build": "ionic cordova build android -- --prod --ssl",
+    "android-full": "npm run android-rm && npm run android-add && npm run android-build"
   },
   "private": true,
   "dependencies": {
