@@ -23,4 +23,5 @@ export interface IFile {
     src?: string | ArrayBuffer
     file?: any
     format?: FilePickType
+    ext?: string
 }
