@@ -71,12 +71,13 @@
         *ngIf="fileSvc.isImage( iAdvise.media_ext )"
       ></ion-img>
 
-      <!-- Video -->
+      <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
       <video playsinline
         controls
         *ngIf="fileSvc.isVideo( iAdvise.media_ext )"
         class="w-social-media h-social-media media-video"
-        [src]="iAdvise.media_url"
+        [src]="iAdvise.media_url + '#t=0.001'"
+        preload="metadata"
       ></video>
     </ion-row>
   

@@ -41,11 +41,12 @@
     </ion-avatar>
   </ng-container>
 
-  <!-- Video -->
+  <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
   <video playsinline
     controls
     *ngIf="iFile.src && ( iFile.format == pickTypes.VIDEO || mediaSvc.isVideo( iFile.ext ))"
     [class]="classWH + 'media-video'"
-    [src]="iFile.src"
+    [src]="iFile.src + '#t=0.001'"
+    preload="metadata"
   ></video>
 </form>
