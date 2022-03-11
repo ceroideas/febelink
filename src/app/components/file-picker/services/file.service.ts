@@ -4,8 +4,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Platform } from '@ionic/angular';
 import { FileMaxSize, FilePickType, IFile } from '../models/file.model';
 import { ToastSvc } from './../../../services/toast.service';
-// import { File as FileCordova } from '@ionic-native/file/ngx';
-import { File as FileCordova } from '@ionic-native/file';
+import { File as FileCordova, FileEntry, IFile as IFileNGX } from '@ionic-native/File/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +24,8 @@ export class FileService
         targetWidth: 1920,
         targetHeight: 1080,
         allowEdit: true,
+        saveToPhotoAlbum: false,
+        correctOrientation: true,
     };
 
     constructor(
@@ -32,13 +33,14 @@ export class FileService
         , private platform: Platform
         , private toastSvc: ToastSvc
         , private translateSvc: TranslateConfigService
+        , private fileCordova: FileCordova
     ){}
 
     public pickImg( filePicker?: HTMLInputElement, maxSize?: FileMaxSize ): Promise<any>
     {
         this.maxSize = maxSize|| this.maxSize
-        /* if (this.platform.is('cordova'))
-            return this.pickMediaNative(); */
+        if (this.platform.is('cordova'))
+            return this.pickMediaNative();
         
         return this.pickMediaWeb( filePicker );
     }
@@ -48,23 +50,22 @@ export class FileService
         return new Promise( async resolve => {
             this.camera
                 .getPicture( this.options )
-                .then(( mediaURI ) =>
+                .then( async mediaURI =>
                 {
                     const fileName = mediaURI.substr( mediaURI.lastIndexOf( '/' ) +1 )
-                    mediaURI = window['Ionic']['WebView'].convertFileSrc(
+                    const src = window['Ionic']['WebView'].convertFileSrc(
                         mediaURI?.includes("file://") ? mediaURI : "file://" + mediaURI
                     )
-                    this.toastSvc.show( mediaURI )
-                    console.log({ mediaURI, fileName })
                     
                     const iFile: IFile = {
-                        src: mediaURI,
-                        file: this.filePath2file( mediaURI, fileName ),
+                        src: src,
+                        file: await this.getFile( mediaURI ),
                         format: this.isVideo( this.getExt( fileName ))
                             ? FilePickType.VIDEO
                             : FilePickType.IMAGE
                     }
-                    if( this.exceedsSize( iFile.src )) return
+                    // console.log({ mediaURI, fileName, src })
+                    if( this.exceedsSize( iFile.file )) return
                     
                     resolve( iFile )
                 })
@@ -90,13 +91,46 @@ export class FileService
             resolve( iFile );
         });
     }
-    
-    private async filePath2file( filepath: string, fileName: string ): Promise<File>
+
+    async getFile( filePath: string ): Promise<File>
     {
-        const ab: ArrayBuffer = await FileCordova.readAsArrayBuffer( filepath, fileName )
-        return new File([ ab ], fileName, { type: this.getEnctype( fileName )})
-        // return this.blob2file( await (await fetch( filepath )).blob(), filename )
-    }
+        // Get FileEntry from media path
+        const fileEntry: FileEntry = await this.fileCordova.resolveLocalFilesystemUrl(filePath) as FileEntry;
+    
+        // Get File from FileEntry. Note that this file does not contain the actual file data yet.
+        const cordovaFile: IFileNGX = await this.convertFileEntryToCvaFile( fileEntry );
+    
+        // Use FileReader on each object to populate it with the true file contents.
+        return this.convertCvaToJsFile( cordovaFile );
+      }
+    
+      private convertFileEntryToCvaFile( fileEntry: FileEntry ): Promise<IFileNGX>
+      {
+        return new Promise<IFileNGX>((resolve, reject) => {
+          fileEntry.file(resolve, reject);
+        })
+      }
+    
+      private convertCvaToJsFile( cordovaFile: IFileNGX ): Promise<File>
+      {
+        return new Promise<File>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            if (reader.error) {
+              reject(reader.error);
+              console.log({ error: true, reader, cordovaFile })
+            } else {
+                console.log({ error: false, reader, cordovaFile })
+              const blob: any = new Blob([reader.result], { type: cordovaFile.type });
+              blob.lastModifiedDate = new Date();
+              blob.name = cordovaFile.name;
+              resolve(blob as File);
+            }
+          };
+          reader.readAsArrayBuffer(cordovaFile);
+        });
+      }
+
 
     public resetFileInput( filePicker: HTMLInputElement ) {
       filePicker.value = '';
