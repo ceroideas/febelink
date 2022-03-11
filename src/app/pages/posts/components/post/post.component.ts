@@ -69,7 +69,7 @@ export class PostComponent implements OnInit {
 
   extractTitle(): string
   {
-    return this.adviseSvc.extractTitle( this.iAdvise )
+    return this.adviseSvc.extractTitle( this.iAdvise, this.showContent )
   }
 
   extractSummary(): string
