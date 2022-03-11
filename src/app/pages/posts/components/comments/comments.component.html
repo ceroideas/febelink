@@ -4,7 +4,7 @@
     <!-- Avatar -->
     <ion-avatar class="no-margin marg-e5 wh-35">
       <ion-img
-        [src]="iUser?.avatar || 'https://api.febelink.com/storage/users/default.png'"
+        [src]="iUser?.logo || iUser?.avatar || 'https://api.febelink.com/storage/users/default.png'"
         appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
       ></ion-img>
     </ion-avatar>

@@ -29,7 +29,7 @@ export class FrogedService {
             country: user?.country,
             phone: user?.telefono,
             // web: user?.web,
-            avatar: user?.avatar,
+            avatar: user?.logo || user?.avatar,
             description: user?.descripcion,
             // company?,
             // lat?,                         // Latitude (number) 
