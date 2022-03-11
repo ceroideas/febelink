@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       
       // Redirect Tabs when clicked
-      { path: 'todas', redirectTo: '/' + environment.HOME_PAGE, pathMatch: 'prefix' },
+      { path: 'todas', redirectTo: '/menu/todas', pathMatch: 'prefix' },
       { path: 'busquedas', redirectTo: '/menu/busquedas', pathMatch: 'prefix' },
       { path: 'ofertas', redirectTo: '/menu/ofertas', pathMatch: 'prefix' },
       { path: 'perfil', redirectTo: '/menu/perfil', pathMatch: 'prefix' },
