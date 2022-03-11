@@ -55,5 +55,6 @@ export interface IUserShow
     nick?: string
     name?: string
     lastName?: string
+    logo?: string
     avatar?: string
 }
