@@ -51,11 +51,12 @@ export class AdvisesPage implements OnInit
   {
     // To refresh list on routing to this page
     this.router.addListener(( url: string, params: Params ) => {
-      if ([ 'posts', '/menu/oracles', 'menu/oraculos' ].includes( url )) {
+      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( url )) {
         this.uid = params?.uid
-        this.search();
+        this.clear2search()
       }
     })
+    this.clear2search()
   }
 
   async ngAfterViewInit()
@@ -131,10 +132,12 @@ export class AdvisesPage implements OnInit
     this.finishedSearch = false
     this.iAdvises = []
   }
-  clear2search( text: string | number = null )
+  clear2search( text: string | number = null, event? )
   {
     this.clearSearch()
     this.isLoading = true
     this.search( text )
+
+    if( event ) event.target.complete()
   }
 }
