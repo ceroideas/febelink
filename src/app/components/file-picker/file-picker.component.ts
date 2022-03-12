@@ -51,10 +51,8 @@ export class FilePickerComponent implements OnInit {
   {
     if( this.OnClick ) this.OnClick.emit( filePicker )
     this.iFile = await this.mediaSvc.pickImg( filePicker, this.maxSize )
-    if( this.iFile ) {
-      this.iFile.ext = this.mediaSvc.getExt( this.iFile.file.name )
+    if( this.iFile )
       if( this.OnFile ) this.OnFile.emit( this.iFile )
-    }
     console.log({ iFile: this.iFile })
   }
 
