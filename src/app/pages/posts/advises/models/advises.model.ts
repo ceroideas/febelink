@@ -45,4 +45,5 @@ export interface IAdviseFilter extends IPaginationFilter {
     subsector?: string | number
     lang?: number
     user?: number
+    hideContent?: boolean
 }
