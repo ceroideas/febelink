@@ -8,7 +8,7 @@
   />
   
   <!-- Image -->
-  <ng-container *ngIf="iFile.src && ( iFile.format == pickTypes.IMAGE || mediaSvc.isImage( iFile.ext ))">
+  <ng-container *ngIf="iFile?.src && ( iFile?.format == pickTypes.IMAGE || mediaSvc.isImage( iFile?.ext ))">
     <!-- Ion Img -->
     <ion-img
       [style]="styles || ''"
@@ -41,12 +41,12 @@
     </ion-avatar>
   </ng-container>
 
-  <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+  <!-- Video -->
   <video playsinline
     controls
-    *ngIf="iFile.src && ( iFile.format == pickTypes.VIDEO || mediaSvc.isVideo( iFile.ext ))"
+    *ngIf="iFile?.src && ( iFile?.format == pickTypes.VIDEO || mediaSvc.isVideo( iFile?.ext ))"
     [class]="classWH + 'media-video'"
-    [src]="iFile.src + '#t=0.001'"
+    [src]="iFile?.src"
     preload="metadata"
   ></video>
 </form>
