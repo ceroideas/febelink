@@ -50,7 +50,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { PipesModule } from './pipes/pipes.module';
 
 // Cordova File  
-import { File } from '@ionic-native/File/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
