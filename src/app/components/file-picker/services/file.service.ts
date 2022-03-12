@@ -4,7 +4,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Platform } from '@ionic/angular';
 import { FileMaxSize, FilePickType, IFile } from '../models/file.model';
 import { ToastSvc } from './../../../services/toast.service';
-import { File as FileCordova, FileEntry, IFile as IFileNGX } from '@ionic-native/File/ngx';
+import { File as FileCordova, FileEntry, IFile as IFileNGX } from '@ionic-native/file/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +16,15 @@ export class FileService
 
     options: CameraOptions = {
         quality: 100,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        // destinationType: this.camera.DestinationType.DATA_URL,
-        mediaType: this.camera.MediaType.ALLMEDIA,
-        // encodingType: this.camera.EncodingType.JPEG,
+        // destinationType: this.camera.DestinationType.FILE_URI,
+        // mediaType: this.camera.MediaType.ALLMEDIA,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        mediaType: this.camera.MediaType.PICTURE,
+        encodingType: this.camera.EncodingType.JPEG,
+        
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         targetWidth: 1920,
         targetHeight: 1080,
-        allowEdit: true,
         saveToPhotoAlbum: false,
         correctOrientation: true,
     };
@@ -50,24 +51,12 @@ export class FileService
         return new Promise( async resolve => {
             this.camera
                 .getPicture( this.options )
-                .then( async mediaURI =>
+                .then( async media =>
                 {
-                    const fileName = mediaURI.substr( mediaURI.lastIndexOf( '/' ) +1 )
-                    const src = window['Ionic']['WebView'].convertFileSrc(
-                        mediaURI?.includes("file://") ? mediaURI : "file://" + mediaURI
-                    )
-                    
-                    const iFile: IFile = {
-                        src: src,
-                        file: await this.getFile( mediaURI ),
-                        format: this.isVideo( this.getExt( fileName ))
-                            ? FilePickType.VIDEO
-                            : FilePickType.IMAGE
-                    }
-                    // console.log({ mediaURI, fileName, src })
-                    if( this.exceedsSize( iFile.file )) return
-                    
-                    resolve( iFile )
+                    const iFile = await this.getNativeDATA( media )
+                    // const iFile = await this.getNativeURI( media )
+
+                    if( !this.exceedsSize( iFile.file )) resolve( iFile )
                 })
                 .catch((error) =>
                 {
@@ -92,7 +81,39 @@ export class FileService
         });
     }
 
-    async getFile( filePath: string ): Promise<File>
+    private async getNativeDATA( media: string ): Promise<IFile>
+    {
+        const src = 'data:image/jpeg;base64,' + media
+        const iFile = {
+            src: src,
+            file: src
+        }
+        return iFile
+    }
+
+    private async getNativeURI( mediaURI: string ): Promise<IFile>
+    {
+        const filePath = mediaURI.substr( 0, mediaURI.lastIndexOf( '/' ) + 1 )
+        const fileName = mediaURI.substr( mediaURI.lastIndexOf( '/' ) +1, mediaURI.lastIndexOf( '?' ))
+        const ext = this.getExt( fileName )
+
+        const src = window['Ionic']['WebView'].convertFileSrc(
+            mediaURI?.includes("file://") ? mediaURI : "file://" + mediaURI
+        )
+        
+        const iFile: IFile = {
+            src: src,
+            file: await this.getNativeFile( mediaURI ),
+            format: this.isVideo( ext )
+                ? FilePickType.VIDEO
+                : FilePickType.IMAGE,
+            ext: ext
+        }
+        // console.log({ mediaURI, fileName, src })
+        return iFile
+    }
+
+    async getNativeFile( filePath: string ): Promise<File>
     {
         // Get FileEntry from media path
         const fileEntry: FileEntry = await this.fileCordova.resolveLocalFilesystemUrl(filePath) as FileEntry;
@@ -102,34 +123,36 @@ export class FileService
     
         // Use FileReader on each object to populate it with the true file contents.
         return this.convertCvaToJsFile( cordovaFile );
-      }
+    }
     
-      private convertFileEntryToCvaFile( fileEntry: FileEntry ): Promise<IFileNGX>
-      {
+    private convertFileEntryToCvaFile( fileEntry: FileEntry ): Promise<IFileNGX>
+    {
         return new Promise<IFileNGX>((resolve, reject) => {
           fileEntry.file(resolve, reject);
         })
-      }
+    }
     
-      private convertCvaToJsFile( cordovaFile: IFileNGX ): Promise<File>
-      {
-        return new Promise<File>((resolve, reject) => {
+    private convertCvaToJsFile( cvaFile: IFileNGX ): Promise<File>
+    {
+        return new Promise<File>((resolve, reject) =>
+        {
           const reader = new FileReader();
-          reader.onloadend = () => {
-            if (reader.error) {
-              reject(reader.error);
-              console.log({ error: true, reader, cordovaFile })
-            } else {
-                console.log({ error: false, reader, cordovaFile })
-              const blob: any = new Blob([reader.result], { type: cordovaFile.type });
-              blob.lastModifiedDate = new Date();
-              blob.name = cordovaFile.name;
-              resolve(blob as File);
+          reader.onloadend = () =>
+          {
+            if (reader.error)
+              reject( reader.error )
+            else {
+                const blob: any = new Blob([reader.result], { type: cvaFile.type });
+                blob.lastModified = cvaFile.lastModified
+                blob.lastModifiedDate = cvaFile.lastModifiedDate
+                blob.name = cvaFile.name
+                console.log({ blob, file: blob as File, reader, cvaFile })
+                resolve( blob as File )
             }
-          };
-          reader.readAsArrayBuffer(cordovaFile);
-        });
-      }
+          }
+          reader.readAsArrayBuffer(cvaFile)
+        })
+    }
 
 
     public resetFileInput( filePicker: HTMLInputElement ) {
@@ -143,12 +166,12 @@ export class FileService
             const fileReader = new FileReader();
             if ( fileReader && file )
             {
-
                 fileReader.readAsDataURL( file );
                 fileReader.onload = () => resolve({
                     src: fileReader.result,
                     file: file,
-                    format: file.type.indexOf('video') > -1 ? FilePickType.VIDEO : FilePickType.IMAGE
+                    format: file.type.indexOf('video') > -1 ? FilePickType.VIDEO : FilePickType.IMAGE,
+                    ext: this.getExt( file.name )
                 })
                 fileReader.onerror = error =>
                     this.toastSvc.show( 'tabs.tab4.errors.noFileProvided', true )
@@ -186,7 +209,7 @@ export class FileService
 
     isImage( ext: string ): boolean
     {
-        return [ 'png', 'jpg', 'jpeg', 'gif' ].includes( ( ext || '__' ).toLowerCase() )
+        return !ext || [ 'png', 'jpg', 'jpeg', 'gif' ].includes( ( ext || '__' ).toLowerCase() )
     }
 
     isVideo( ext: string ): boolean
