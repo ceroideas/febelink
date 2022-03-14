@@ -25,8 +25,6 @@ export class FileService
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         targetWidth: 1920,
         targetHeight: 1080,
-        saveToPhotoAlbum: false,
-        correctOrientation: true,
     };
 
     constructor(
