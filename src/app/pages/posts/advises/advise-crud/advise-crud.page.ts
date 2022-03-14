@@ -200,7 +200,7 @@ export class AdviseCRUDPage implements OnInit
       , summary: summary
       , content: this.content.html
       
-      , media: this.iFile.file
+      , media: this.iFile?.file
     }
 
     const { response, error } = !this.id
