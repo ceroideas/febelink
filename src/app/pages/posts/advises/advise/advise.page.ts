@@ -45,6 +45,9 @@ export class AdvisePage implements OnInit {
     this.iAdvise = !response?.id ? null : response
 
     this.isLoading = false;
+
+    // To Trigger Asynchronously Issue to Give Tokens by Views 
+    this.adviseSvc.issue( id )
   }
 
   newOne() {
