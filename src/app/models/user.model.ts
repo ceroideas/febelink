@@ -56,4 +56,7 @@ export interface IUserShow
     name?: string
     lastName?: string
     avatar?: string
+    email?: string
+
+    public?: string
 }
