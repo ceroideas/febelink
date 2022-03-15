@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { IUser } from 'src/app/models/user.model';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { ApiService } from '../api.service';
 
@@ -34,17 +35,24 @@ export class WalletService {
     return ( await this.api._createData( 'wallet/exchange', formData )).toPromise();
   }
 
-  async send(publicKey: string, currency: string, amount: number, returnBalance: boolean = true ) {
+  async send(
+    publicKey: string,
+    currency: string,
+    amount: number,
+    returnBalance: boolean = true,
+    user: IUser = null
+  ) {
     const formData = new FormData();
 
-      formData.append( 'destinationPublicKey', publicKey );
-      formData.append( 'asset', currency );
-      formData.append( 'amount', ( amount || '' ) + '' );
-      formData.append( 'returnBalance', returnBalance ? '1' : '0' );
+      formData.append( 'destinationPublicKey', publicKey )
+      formData.append( 'asset', currency )
+      formData.append( 'amount', ( amount || '' ) + '' )
+      formData.append( 'returnBalance', returnBalance ? '1' : '0' )
+      formData.append( 'user', !user ? null : JSON.stringify( user ))
 
-      await this.api.utilities.showLoading();
-      const response = ( await this.api._createData('wallet/payments/send', formData)).toPromise();
+      await this.api.utilities.showLoading()
+      const response = ( await this.api._createData('wallet/payments/send', formData)).toPromise()
 
-      return response;
+      return response
   }
 }

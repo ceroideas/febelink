@@ -19,6 +19,7 @@ import { InformSvc } from 'src/app/services/inform.service';
 })
 export class SendComponent implements OnInit {
 
+    @Input() title: string;
     @Input() asset: CryptoCurrency;
     @Input() user: IUser;
     @Input() retainedTks: TokensUser[];
@@ -96,7 +97,8 @@ export class SendComponent implements OnInit {
                     this.publicKey,
                     this.asset.assetId,
                     this.calcs.send,
-                    this.returnBalance
+                    this.returnBalance,
+                    this.user
                 );
                 await this.loadingSvc.dismiss();
                 
