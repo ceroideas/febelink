@@ -182,6 +182,16 @@
           </ion-button>
         </ion-col>
       </ion-row>
+
+      <ion-row class="marg-t" *ngIf="perfilpublico">
+        <!-- Donate -->
+        <ion-col size="12" class="ion-no-padding">
+          <app-follower-button
+            [user]="perfilpublico"
+            clase="boton max-width"
+          ></app-follower-button>
+        </ion-col>
+      </ion-row>
           
       <ion-row class="margin-top">
         <!-- Report -->

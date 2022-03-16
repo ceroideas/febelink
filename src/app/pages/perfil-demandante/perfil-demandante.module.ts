@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FollowerButtonModule } from 'src/app/components/follower/follower.module';
 import { SharedModule } from '../../shared/shared.module';
 import { SharedPostModule } from '../posts/shared-post.module';
 
@@ -11,6 +12,7 @@ import { PerfilDemandantePage } from './perfil-demandante.page';
       SharedModule
     , PerfilDemandantePageRoutingModule
     , SharedPostModule
+    , FollowerButtonModule
   ],
   declarations: [PerfilDemandantePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
