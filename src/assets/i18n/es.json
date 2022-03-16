@@ -196,6 +196,18 @@
         "done": "Reporte enviado con exito! Analizaremos el tema a la brevedad",
         "error": "Error al intentar generar Reporte"
       }
+    },
+
+    "follow": {
+      "do": "Seguir",
+      "cancel": "No Seguir",
+      "create": {
+        "done": "Seguido Exitosamente",
+        "error": "Error al intentar seguir"
+      },
+      "update": "Actualizado Exitosamente",
+      "toggle": "Cambiado Exitosamente",
+      "same": "No Puedes seguirte a ti mism@"
     }
   },
   "menu": {

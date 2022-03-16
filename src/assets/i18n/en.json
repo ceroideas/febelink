@@ -196,6 +196,18 @@
         "done": "Report sent successfully! We will review the issue shortly",
         "error": "Error when trying to generate report"
       }
+    },
+
+    "follow": {
+      "do": "Follow",
+      "cancel": "Unfollow",
+      "create": {
+        "done": "Followed Successfully",
+        "error": "Error trying to Follow"
+      },
+      "update": "Updated Successfully",
+      "toggle": "Toggled Successfully",
+      "same": "You can't follow yourself"
     }
   },
   "menu": {
