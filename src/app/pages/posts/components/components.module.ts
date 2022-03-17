@@ -11,6 +11,7 @@ import { PostComponent } from './post/post.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { SharedPostModule } from '../shared-post.module';
+import { DonateButtonModule } from 'src/app/components/donate/donate-button.module';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { SharedPostModule } from '../shared-post.module';
       , AdvisePageRoutingModule
       , SharedModule
       , SharedPostModule
+      , DonateButtonModule
     ],
     exports: [
         CommonModule

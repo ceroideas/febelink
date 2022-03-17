@@ -1,7 +1,7 @@
 <div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10">
-      <ion-col size="10" class="no-padding">
+      <ion-col [size]="!iAdvise?.public || !showContent ? 10 : 8" class="no-padding">
         <!-- Post Owner User -->
         <app-user-item
           class="no-padding"
@@ -10,6 +10,11 @@
           [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
           [OnClickShowProfile]="true"
         ></app-user-item>
+      </ion-col>
+
+      <!-- Text End -->
+      <ion-col [size]="2" *ngIf="iAdvise?.public && showContent">
+        <app-donate-button [user]="iAdvise"></app-donate-button>
       </ion-col>
   
       <ion-col size="2" class="no-padding">
@@ -55,7 +60,7 @@
     </ion-row>
   
     <!-- Summary -->
-    <ion-row class="lines-2 marg-t5 marg-s10 marg-e10 inline" *ngIf="iAdvise.summary || !showContent">
+    <ion-row class="lines-2 marg-10 marg-t5 inline" *ngIf="iAdvise.summary || !showContent">
       <ion-label
         [class]="'summary ' + ( !iAdvise?.subtitle ? '' : 'hint' )"
         [innerHTML]="extractSummary()"
@@ -63,7 +68,7 @@
     </ion-row>
   
     <!-- Image -->
-    <ion-row class="marg-t10" *ngIf="iAdvise.photo && isPostVisible">
+    <ion-row *ngIf="iAdvise.photo && isPostVisible">
       <ion-img class="photo" [src]="iAdvise.photo"></ion-img>
     </ion-row>
   
@@ -72,7 +77,7 @@
       <ion-label [innerHTML]="iAdvise.content"></ion-label>
     </ion-row>
     
-    <app-post-bottom-bar-component  *ngIf="isPostVisible"
+    <app-post-bottom-bar-component *ngIf="isPostVisible"
       [id]="id"
       [post]="iAdvise"
       [showSeePost]="showSeePost"
