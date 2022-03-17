@@ -41,6 +41,16 @@
         <ion-label class="font-14 pointer">{{ 'pages.posts.see' | translate }}</ion-label>
       </ion-row>
     </ion-col>
+
+    <!-- Give Tip -->
+    <ion-col
+      [size]="showChat ? 3 : 4"
+      class="no-padding align-center"
+      (click)="watch()"
+      *ngIf="post?.public && !showSeePost"
+    >
+      <app-donate-button [user]="post"></app-donate-button>
+    </ion-col>
   </ion-row>
 </ion-grid>
   

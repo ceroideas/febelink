@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, Platform } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
@@ -23,7 +23,7 @@ export class RegistroPage implements OnInit {
   passwordIcon2 = 'eye-off';
 
   redirect: string;
-  
+
   constructor(
     public navCtrl: NavController,
     private formBuilder: FormBuilder,
@@ -32,8 +32,9 @@ export class RegistroPage implements OnInit {
     private utilities: UtilitiesService,
     private router: Router,
     private cookSvc: CookieService,
-    private activatedRoute:ActivatedRoute,
-    private translateService: TranslateConfigService
+    private activatedRoute: ActivatedRoute,
+    private translateService: TranslateConfigService,
+    public platform: Platform
   ) {}
 
   /**
@@ -47,10 +48,10 @@ export class RegistroPage implements OnInit {
       sector: [''],
       sub_sector: [''],
       confirmPassword: ['', Validators.required],
-      privacyConditions: [null, Validators.requiredTrue]
+      privacyConditions: [null, Validators.requiredTrue],
     });
 
-    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect'); 
+    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
 
     this.form.get('sector').valueChanges.subscribe((id) => {
       this.obtenerSubSectores(id);
@@ -109,7 +110,7 @@ export class RegistroPage implements OnInit {
 
     this.api.login(formData, 'login', true, this.redirect).subscribe((res) => {
       this.utilities.dismissLoading();
-      this.verifSent( registrationPayload );
+      this.verifSent(registrationPayload);
     });
   }
 
@@ -118,7 +119,9 @@ export class RegistroPage implements OnInit {
       await this.utilities.showLoading();
 
       const idRecommender: string = this.cookSvc.get('recommenderId');
-      const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
+      const lang = (<ILang>(
+        await ILangDEFAULTS.getCurrentLang(this.translateService)
+      )).lang;
 
       const registrationPayload = {
         email: this.form.get('email').value,
@@ -132,7 +135,6 @@ export class RegistroPage implements OnInit {
       };
 
       // console.log(registrationPayload);
-      
 
       this.api.registro(registrationPayload).subscribe(
         (resp) => {
@@ -167,42 +169,48 @@ export class RegistroPage implements OnInit {
             cadenaErrores += `</ul>`;
 
             this.utilities.showAlert(
-              this.translateService.instant("pages.registro.errors.title"),
-              this.translateService.instant("pages.registro.errors.list") + cadenaErrores
+              this.translateService.instant('pages.registro.errors.title'),
+              this.translateService.instant('pages.registro.errors.list') +
+                cadenaErrores
             );
           } else {
             this.utilities.showAlert(
-              this.translateService.instant("pages.registro.errors.title"),
-              this.translateService.instant("pages.registro.errors.server")
+              this.translateService.instant('pages.registro.errors.title'),
+              this.translateService.instant('pages.registro.errors.server')
             );
           }
           this.utilities.dismissLoading();
         }
       );
     } else {
-      if (this.form.value.privacyConditions === null || !this.form.value.privacyConditions) {
+      if (
+        this.form.value.privacyConditions === null ||
+        !this.form.value.privacyConditions
+      ) {
         this.utilities.showToast(
-          this.translateService.instant("pages.registro.errors.terms")
+          this.translateService.instant('pages.registro.errors.terms')
         );
-      }
-      else {
+      } else {
         this.utilities.showToast(
-          this.translateService.instant("pages.registro.errors.fields"));
+          this.translateService.instant('pages.registro.errors.fields')
+        );
       }
     }
   }
 
-  async verifSent( registrationPayload ) {
+  async verifSent(registrationPayload) {
     const alert = await this.alertCtrl.create({
-      header: this.translateService.instant("common.verif.email.sent"),
-      subHeader: this.translateService.instant( 'common.verif.email.message', { email: registrationPayload.email }),
-      buttons: [ 'OK' ],
+      header: this.translateService.instant('common.verif.email.sent'),
+      subHeader: this.translateService.instant('common.verif.email.message', {
+        email: registrationPayload.email,
+      }),
+      buttons: ['OK'],
     });
 
     await alert.present();
   }
 
-  public navegar(ruta: string){
+  public navegar(ruta: string) {
     this.router.navigate([ruta]);
   }
 

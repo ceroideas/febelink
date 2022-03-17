@@ -42,9 +42,9 @@
           required
         ></ion-input>
       </ion-item>
-      
+
       {{ 'pages.login.forgotPass' | translate }}
-      <a (click)="openModal()" style="cursor: pointer;">
+      <a (click)="openModal()" style="cursor: pointer">
         <i class="fa fa-eye"></i> {{ 'pages.login.rememberPass' | translate }}
       </a>
       <br />
@@ -54,10 +54,14 @@
         type="submit"
         [disabled]="!form.valid"
         ion-button
-        color="febelink" >
+        color="febelink"
+      >
         {{ 'pages.login.button' | translate }}
       </ion-button>
-      <social-login [redirect]="redirect"></social-login>
+      <social-login
+        *ngIf="!platform.is('ios')"
+        [redirect]="redirect"
+      ></social-login>
     </form>
     <div class="links">
       <div class="clear"></div>

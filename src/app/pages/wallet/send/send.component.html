@@ -9,7 +9,10 @@
         </ion-buttons>
 
         <!-- Title -->
-        <ion-label class="margin-start">{{ 'pages.wallet.send.title' | translate }}</ion-label>
+        <ion-label
+            class="margin-start"
+            [innerHTML]="title || 'pages.wallet.send.title' | translate"
+        ></ion-label>
     </ion-toolbar>
 </ion-header>
   
@@ -22,7 +25,9 @@
         <ion-row><ion-label>{{ 'pages.wallet.send.addressee' | translate }}</ion-label></ion-row>
 
         <!-- User -->
-        <ion-row class="margin-start" *ngIf="user"><app-user-item [user]="user"></app-user-item></ion-row>
+        <ion-row class="margin-start" *ngIf="user">
+            <app-user-item [user]="user"></app-user-item>
+        </ion-row>
   
         <!-- Public Key - Only if there is no user -->
         <ng-container *ngIf="!user">

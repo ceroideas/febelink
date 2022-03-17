@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   form: FormGroup;
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
-  
+
   redirect: string;
 
   constructor(
@@ -28,8 +28,9 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private router: Router,
-    private activatedRoute:ActivatedRoute,
-    private translateService: TranslateConfigService
+    private activatedRoute: ActivatedRoute,
+    private translateService: TranslateConfigService,
+    public platform: Platform
   ) {}
 
   ngOnInit() {
@@ -44,33 +45,38 @@ export class LoginPage implements OnInit {
   async submitForm() {
     this.utilities.showLoading();
 
-    const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
+    const lang = (<ILang>(
+      await ILangDEFAULTS.getCurrentLang(this.translateService)
+    )).lang;
 
     const formData = new FormData();
     formData.append('email', this.form.get('email').value);
     formData.append('password', this.form.get('password').value);
     formData.append('remember_me', '1');
-    formData.append('lang', lang );
+    formData.append('lang', lang);
 
-    
-    (this.api.login(formData, 'login', null, this.redirect)).subscribe(
-      (res) => {        this.utilities.dismissLoading();},
+    this.api.login(formData, 'login', null, this.redirect).subscribe(
+      (res) => {
+        this.utilities.dismissLoading();
+      },
       (err) => {
         console.log('ERROR', err);
 
         // credenciales incorrectas
         if (err.status === 401) {
-          this.utilities.showToast( this.translateService.instant( 'pages.login.errors.data' ));
+          this.utilities.showToast(
+            this.translateService.instant('pages.login.errors.data')
+          );
         }
         // 422 (email no válido)
         else if (err.status === 422) {
           this.utilities.showToast(
-            this.translateService.instant( 'pages.login.errors.email' )
+            this.translateService.instant('pages.login.errors.email')
           );
         } else {
           this.utilities.showAlert(
-            this.translateService.instant( 'pages.login.errors.title' ),
-            this.translateService.instant( 'pages.login.errors.message' )
+            this.translateService.instant('pages.login.errors.title'),
+            this.translateService.instant('pages.login.errors.message')
           );
         }
         this.utilities.dismissLoading();
@@ -98,7 +104,7 @@ export class LoginPage implements OnInit {
    */
   openRegistro() {
     const route = ['registro'];
-    if(this.redirect) route.push(this.redirect)
+    if (this.redirect) route.push(this.redirect);
     this.router.navigate(route);
   }
 
@@ -109,14 +115,14 @@ export class LoginPage implements OnInit {
     this.utilities.getUserData().then(async (userData) => {
       if (userData) {
         let loading = await this.loadingCtrl.create({
-        message: 'Logging in...', // this.translateService.instant( 'pages.login.logging' ),
+          message: 'Logging in...', // this.translateService.instant( 'pages.login.logging' ),
           duration: 1500,
         });
 
         await loading.present();
         await loading.onDidDismiss();
         this.api.emitUserLogged();
-        this.router.navigate([ environment.HOME_PAGE ]);
+        this.router.navigate([environment.HOME_PAGE]);
         this.utilities.setGuia('login');
       }
     });

@@ -28,6 +28,7 @@
     "labelEdited": "Edited",
     "labelLang": "Language",
     "labelUser": "User",
+    "labelDonate": "Give Tip",
     "clipboard": "Copied to Clipboard",
     "clipboardErr": "Error on Copy to Clipboard",
     "clipboardNone": "No Valies to Copy to Clipboard",
@@ -462,6 +463,11 @@
           "title": "Important announcement",
           "message": "For your safety, make sure to review the information of the wallet where you send your balances, as well as the functioning of the platform where you send them.<br><br>Febelink is not responsible for those balances once they are outside its platform.<br><br>We are at your disposal for any questions at <a href=\"mailto:soporte@febelink.com\">support@febelink.com</a>"
         }
+      },
+      "donate": {
+        "title": "Give Tip to <b> {{ person }} </b>",
+        "no-user": "You have not selected user to tip",
+        "same-user": "You can't tip yourself"
       },
 
       "balance": {
