@@ -207,7 +207,14 @@ export class FileService
 
     isImage( ext: string ): boolean
     {
-        return !ext || [ 'png', 'jpg', 'jpeg', 'gif' ].includes( ( ext || '__' ).toLowerCase() )
+        return !ext || [
+            'avif',
+            'gif',
+            'jpg' , 'jpeg' , 'jfif ', 'pjpeg' , 'pjp',
+            'png', 'apng',
+            'svg',
+            'webp',
+        ].includes( ( ext || '__' ).toLowerCase() )
     }
 
     isVideo( ext: string ): boolean
