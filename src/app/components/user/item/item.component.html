@@ -6,10 +6,10 @@
     color="transparent"
 >
     <ion-avatar slot="start" [class]="'no-margin ' + ( classImg || '')">
-        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.avatar" />
+        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo && !user?.avatar" />
         <ion-img
-            [src]="user?.avatar"
-            *ngIf="user?.avatar"
+            [src]="user?.logo || user?.avatar"
+            *ngIf="user?.logo || user?.avatar"
             appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
         ></ion-img>
     </ion-avatar>

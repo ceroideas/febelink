@@ -116,8 +116,8 @@ export class HttpService {
         const formData = new FormData();
         for (let key in obj ) {
             let value = obj[ key ];
-            if ( !( typeof value === "string" ))
-                value = JSON.stringify( value );
+            if ( !( typeof value === "string" ) && !this.excepTypeOf( value ))
+                value = JSON.stringify( value )
 
             formData.append( key, value );
         }
@@ -150,5 +150,10 @@ export class HttpService {
                 return of({ error: error });
             }
         }
+    }
+
+    private excepTypeOf( value: any ): boolean
+    {
+        return value instanceof File || value instanceof Blob
     }
 }

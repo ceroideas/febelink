@@ -4,7 +4,7 @@
     <!-- Avatar -->
     <ion-avatar class="no-margin marg-e5 wh-35">
       <ion-img
-        [src]="iUser?.avatar || 'https://api.febelink.com/storage/users/default.png'"
+        [src]="iUser?.logo || iUser?.avatar || 'https://api.febelink.com/storage/users/default.png'"
         appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
       ></ion-img>
     </ion-avatar>
@@ -48,7 +48,7 @@
     <ng-container *ngIf="!isLoading && isVisible">
       <!-- Comments done by user from ion-input -->
       <app-comment-component *ngFor="let iComment of userComments"
-        [post]="post"
+        [post]="post?.id"
         [iComment]="iComment"
         (OnDoEdit)="OnDoEdit( $event )"
         (OnDeleted)="OnDeleted( $event )"
@@ -56,7 +56,7 @@
 
       <!-- Comments from DBs -->
       <app-comment-component *ngFor="let iComment of iComments"
-        [post]="post"
+        [post]="post?.id"
         [iComment]="iComment"
         (OnDoEdit)="OnDoEdit( $event )"
         (OnDeleted)="OnDeleted( $event )"

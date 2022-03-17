@@ -29,10 +29,10 @@ export class UserSessionSvc
     {
         return new Promise((resolve, reject) =>
         {
-            if( this.user ) {
+            /* if( this.user ) {
                 resolve( this.user )
                 return
-            }
+            } */
 
             this.storage.ready()
                 .then(() =>

@@ -1,0 +1,9 @@
+<ion-grid>
+  <ion-button icon-only color="transparent"
+    *ngFor="let reactType of reactTypes"
+    class="no-padding no-shadow"
+    (click)="reacted( reactType )"
+  >
+    <ion-icon class="wh-40" [src]="reacts.img( reactType?.id )"></ion-icon>
+  </ion-button>
+</ion-grid>

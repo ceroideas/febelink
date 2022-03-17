@@ -23,9 +23,10 @@ import { PaginationComponent } from '../components/pagination/pagination.compone
 import { WYSIWYGComponent } from '../components/wysiwyg/wysiwyg.component';
 import { FilePickerComponent } from '../components/file-picker/file-picker.component';
 import { OptsMenuComponent } from '../components/opts-menu/opts-menu.component';
-import { SectorsComponent } from '../components/sectors/sectors.component';
 import { UserFilterComponent } from '../components/user/filter/filter.component';
 import { NumFloatComponent } from '../components/num-float/num-float.component';
+import { SectorsModule } from '../components/sectors/sectors.module';
+import { LoadingModule } from '../components/loading/loading.module';
 
 @NgModule({
   declarations: [
@@ -41,14 +42,12 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
     ClickStopPropagation,
     TwoFAComponent,
     InformComponent,
-    LoadingBLComponent,
     UserItemComponent,
     UserFilterComponent,
     PaginationComponent,
     WYSIWYGComponent,
     FilePickerComponent,
     OptsMenuComponent,
-    SectorsComponent,
     NumFloatComponent,
   ],
   imports: [
@@ -59,6 +58,8 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
     PipesModule,
     TranslateModule.forChild(),
     QuillModule.forRoot(),
+    SectorsModule,
+    LoadingModule,
   ],
   exports: [
     TranslateModule,
@@ -78,15 +79,15 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
     ClickStopPropagation,
     TwoFAComponent,
     InformComponent,
-    LoadingBLComponent,
     UserItemComponent,
     UserFilterComponent,
     PaginationComponent,
     WYSIWYGComponent,
     FilePickerComponent,
     OptsMenuComponent,
-    SectorsComponent,
     NumFloatComponent,
+    SectorsModule,
+    LoadingModule,
   ],
   entryComponents: [],
 })

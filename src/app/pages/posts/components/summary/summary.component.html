@@ -1,0 +1,62 @@
+<div class="marg-se marg-b10 pad-tb-1 w-max-600 shadow-light pointer" (click)="watch()">
+  <ion-grid class="box-bw-r1-lln marg-5 no-padding">
+    <ion-row class="marg-s marg-e marg-t5">
+      <ion-col size="10" class="no-padding">
+        <ion-item tappable class="no-padding" lines="none" color="transparent">
+          <!-- Media -->
+          <ion-avatar slot="start" class="no-margin wh-40" *ngIf="iAdvise.media_url">
+            <!-- Image -->
+            <ion-img
+              class="sum-media"
+              [src]="iAdvise.media_url"
+              *ngIf="fileSvc.isImage( iAdvise.media_ext )"
+            ></ion-img>
+            
+            <!-- Video -->
+            <video playsinline
+              controls
+              *ngIf="fileSvc.isVideo( iAdvise.media_ext )"
+              class="sum-media"
+              [src]="iAdvise.media_url"
+            ></video>
+          </ion-avatar>
+
+          <ion-grid class="marg-s10 marg-e10 w-full">
+            <!-- Title -->
+            <ion-row>
+              <h1 class="no-margin bold-6 font-18 sum-title one-line"
+                [innerHTML]="adviseSvc.extractTitle( iAdvise )"></h1>
+            </ion-row>
+              
+            <!-- Summary -->
+            <ion-row class="lines-2 marg-t5 inline">
+              <ion-label class="sum-summary hint lines-2"
+                [innerHTML]="adviseSvc.extractSummary( iAdvise )"></ion-label>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-col>
+  
+      <ion-col size="2" class="no-padding">
+        <!-- Post Language -->
+        <ion-row class="align-end">
+          <app-lang-btn [langIdSelected]="iAdvise?.lang" [disabled]="true"></app-lang-btn>
+        </ion-row>
+  
+        <ion-row class="align-end">
+          <!-- If has Edited The Post -->
+          <ion-label class="hint font-13" *ngIf="iAdvise.created_at != iAdvise.updated_at">
+            {{ 'common.labelEdited' | translate }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Sector > Subsector -->
+    <ion-row class="marg-s10 marg-e10">
+      <ion-label color="febelink" class="font-14">{{ iAdvise.sector }}</ion-label>
+      <ion-label color="febelink" class="font-14 marg-s10 marg-e10" *ngIf="iAdvise.subsector" >></ion-label>
+      <ion-label color="febelink" class="font-14" *ngIf="iAdvise.subsector">{{ iAdvise.subsector }}</ion-label>
+    </ion-row>
+  </ion-grid>
+</div>

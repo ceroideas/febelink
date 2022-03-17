@@ -1,11 +1,9 @@
 <ion-grid class="marg-s10 marg-e10 no-paddingline line-t2">
   <ion-row class="pad-b5">
     <!-- Ract -->
-    <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="react()">
+    <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="react( $event )">
       <ion-row class="align-center vertical-content">
-        <ion-icon class="font-30 pointer"
-          [src]="'assets/icon/svg/react' + ( !this.post?.reacted ? '' : 'ed' ) + '.svg'"
-        ></ion-icon>
+        <ion-icon class="font-30 pointer" [src]="reacts.img( this.post?.reacted )"></ion-icon>
         <ion-label class="marg-s5 pointer" *ngIf="post?.react_qant > 0">{{ post?.react_qant }}</ion-label>
       </ion-row>
       <ion-row class="align-center">

@@ -67,9 +67,31 @@
       ></ion-label>
     </ion-row>
   
-    <!-- Image -->
-    <ion-row *ngIf="iAdvise.photo && isPostVisible">
-      <ion-img class="photo" [src]="iAdvise.photo"></ion-img>
+    <!-- Media-->
+    <ion-row class="marg-t10 media" color="black" *ngIf="isPostVisible && iAdvise.media_url">
+      <!-- Image -->
+      <ion-img
+        class="h-social-media marg-se"
+        [src]="iAdvise.media_url"
+        *ngIf="fileSvc.isImage( iAdvise.media_ext )"
+      ></ion-img>
+
+      <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+      <video playsinline
+        controls
+        *ngIf="fileSvc.isVideo( iAdvise.media_ext )"
+        class="w-social-media h-social-media media-video"
+        [src]="iAdvise.media_url + '#t=0.001'"
+        preload="metadata"
+      ></video>
+    </ion-row>
+  
+    <!-- Comments -->
+    <ion-row class="marg-5 align-end comments" *ngIf="iAdvise.comments_qant > 0">
+      <em><ion-label
+        class="hint font-12"
+        [innerHTML]="iAdvise.comments_qant + ' ' + ('pages.posts.comments' | translate)"
+      ></ion-label></em>
     </ion-row>
   
     <!-- Content -->
@@ -92,7 +114,7 @@
   </ion-grid>
 
   <app-comments-component #comments
-    [post]="id"
+    [post]="iAdvise"
     [listComments]="listComments"
     [isVisible]="areCommentsVisible"
     (OnCommentsVisible)="isPostVisible = false"

@@ -14,8 +14,11 @@ export interface IAdvise {
     summary: string
     content?: string
     
-    photo?: any
-    video?: string
+    media_url?: string
+    media_name?: string
+    media_ext?: string
+    //To Upload File
+    media?: File
     
     shared?: number
     reacts?: number
@@ -32,7 +35,9 @@ export interface IAdviseFull extends IAdvise, IUserShow
     subsector?: string | number
 
     react_qant?: number
-    reacted?: boolean
+    reacted?: number
+
+    comments_qant?: number
 }
 
 export interface IAdviseFilter extends IPaginationFilter {
@@ -40,4 +45,5 @@ export interface IAdviseFilter extends IPaginationFilter {
     subsector?: string | number
     lang?: number
     user?: number
+    hideContent?: boolean
 }

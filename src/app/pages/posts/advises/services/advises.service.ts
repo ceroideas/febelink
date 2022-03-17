@@ -59,9 +59,9 @@ export class AdviseService {
     return this.http.post( 'visitors/posts/oracle/' + id )
   }
 
-  extractTitle( iAdvise: IAdvise ): string
+  extractTitle( iAdvise: IAdvise, isContentVisible: boolean = false ): string
   {
-    return iAdvise.title ? iAdvise.title
+    return iAdvise.title || isContentVisible ? iAdvise.title
       : !iAdvise?.content
         ? null : this.first( iAdvise.content )
   }

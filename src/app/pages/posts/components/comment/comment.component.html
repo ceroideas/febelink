@@ -2,10 +2,10 @@
   <ion-row>
     <!-- Avatar -->
     <ion-avatar class="marg-s10 marg-t10 wh-40">
-      <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!iComment?.avatar" />
+      <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!iComment?.logo && !iComment?.avatar" />
       <ion-img
-          [src]="iComment?.avatar"
-          *ngIf="iComment?.avatar"
+          [src]="iComment?.logo || iComment?.avatar"
+          *ngIf="iComment?.logo || iComment?.avatar"
           appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
       ></ion-img>
     </ion-avatar>

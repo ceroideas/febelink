@@ -46,7 +46,7 @@ export class PostComponent implements OnInit {
     , private loadingSvc: LoadingSvc
     , private router: Router
     , private seoSvc: SeoService
-    , private fileSvc: FileService
+    , public fileSvc: FileService
     , private reportSvc: ReportService
   ) {}
 
@@ -62,14 +62,14 @@ export class PostComponent implements OnInit {
       this.seoSvc.generateTags({
         title: this.iAdvise.title,
         description: this.iAdvise.content,
-        image: this.fileSvc.img2str( this.iAdvise.photo )
+        image: this.fileSvc.img2str( this.iAdvise.media_url )
       })
     }
   }
 
   extractTitle(): string
   {
-    return this.adviseSvc.extractTitle( this.iAdvise )
+    return this.adviseSvc.extractTitle( this.iAdvise, this.showContent )
   }
 
   extractSummary(): string

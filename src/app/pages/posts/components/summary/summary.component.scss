@@ -1,0 +1,9 @@
+.sum-media {
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+}
+.sum-title, .sum-summary {
+    p { display: inline; }
+    img { display: none; }
+}

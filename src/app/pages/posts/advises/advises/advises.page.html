@@ -38,8 +38,8 @@
           </ion-button>
 
           <!-- Icon - Add -->
-          <ion-button icon-only color="transparent"
-            class="no-shadow no-padding"
+          <ion-button icon-only color="primary"
+            class="no-shadow no-padding wh-35 br-rad-30"
             (click)="createPost()"
           >
             <ion-icon class="font-30" src="assets/icon/svg/add.svg"></ion-icon>
@@ -103,6 +103,11 @@
   <!-- Loading -->
   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
+  
+  <ion-refresher slot="fixed" (ionRefresh)="clear2search( searchBar.value + '', $event )">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <!-- Posts -->
     <app-post-component
@@ -113,17 +118,6 @@
       [showSeePost]="true"
     ></app-post-component>
   </ion-list>
-
-  <ion-infinite-scroll
-    threshold="20%"
-    (ionInfinite)="infiniteScroll($event)"
-    [disabled]="finishedSearch"
-  >
-    <ion-infinite-scroll-content
-      loadingSpinner="crescent"
-      [loadingText]="'common.labelSearching' | translate">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
     
   <!-- No Items -->
   <ion-item lines="none" color="transparent" *ngIf="finishedSearch">

@@ -4,20 +4,28 @@
 
   <ion-row>
     <!-- Total Posts Created By User -->
-    <ion-col size="6" class="tx-center">
+    <ion-col size="6" class="tx-center" *ngIf="stats">
       <ion-label>{{ 'pages.posts.advises.stats.qCreated' | translate }}</ion-label>
       <ion-label class="bold-6">{{ stats?.qPosts || 0 }}</ion-label>
     </ion-col>
     
     <!-- Total Reacts to Posts Created By The User -->
-    <ion-col size="6" class="tx-center">
+    <ion-col size="6" class="tx-center" *ngIf="stats">
       <ion-label>{{ 'pages.posts.advises.stats.qReacts' | translate }}</ion-label>
       <ion-label class="bold-6">{{ stats?.qReacts || 0 }}</ion-label>
     </ion-col>
   </ion-row>
+
+  <ion-list *ngIf="stats?.posts">
+    <app-post-summary-component
+      *ngFor="let oracle of stats?.posts"
+      [id]="oracle?.id"
+      [iAdvise]="oracle"
+    ></app-post-summary-component>
+  </ion-list>
     
   <!-- See Oracles -->
-  <ion-row class="align-center marg-t5" *ngIf="!isLoading">
+  <ion-row class="align-center" *ngIf="!isLoading">
     <ion-label class="pointer hint" (click)="seePosts()"><em>
       {{ 'pages.posts.advises.see' + ( stats?.qPosts > 0 ? '-user' : '' ) | translate }}
     </em></ion-label>
