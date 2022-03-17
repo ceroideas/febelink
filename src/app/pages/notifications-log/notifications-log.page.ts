@@ -17,16 +17,25 @@ export class NotificationsLogPage implements OnInit {
   constructor(
     private notificationSvc: NotificationService,
     private router: Router,
-    private modalCtrl: ModalController
   ) {}
 
   notifications: Notification[];
+  isLoading: boolean = false
 
   async ngOnInit() {
+    await this.get()
+  }
+
+  async get( event: any = null )
+  {
+    if( event ) event.target.complete()
+    
+    this.isLoading = true
     this.notifications = await this.notificationSvc.getNotificacionsLog();
     this.notifications.map(notif => {
       notif['open'] = false;
     });
+    this.isLoading = false
   }
 
   getIconByType(type: NotifType) {
