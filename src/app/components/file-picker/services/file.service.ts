@@ -144,7 +144,6 @@ export class FileService
                 blob.lastModified = cvaFile.lastModified
                 blob.lastModifiedDate = cvaFile.lastModifiedDate
                 blob.name = cvaFile.name
-                console.log({ blob, file: blob as File, reader, cvaFile })
                 resolve( blob as File )
             }
           }
@@ -210,11 +209,11 @@ export class FileService
         return !ext || [
             'avif',
             'gif',
-            'jpg' , 'jpeg' , 'jfif ', 'pjpeg' , 'pjp',
+            'jpg' , 'jpeg' , 'jfif', 'pjpeg' , 'pjp',
             'png', 'apng',
             'svg',
             'webp',
-        ].includes( ( ext || '__' ).toLowerCase() )
+        ].includes(( ext || '__' ).toLowerCase() )
     }
 
     isVideo( ext: string ): boolean
