@@ -33,9 +33,12 @@ export class FollowerButtonComponent implements OnInit {
   {
     this.isLoading = true
 
-    const { response, error } = await this.followerSvc.get( this.user?.id )
+    const { response, error } = await this.followerSvc.get(
+      await this.userSessionSvc.id(),
+      this.user?.id
+    )
 
-    if( response?.follower ) this.follower = response.follower
+    if( response ) this.follower = response
     else this.follower = {
       uid_follower: await this.userSessionSvc.id(),
       uid_followed: this.user.id,
@@ -43,6 +46,8 @@ export class FollowerButtonComponent implements OnInit {
       created_at: null,
       canceled_at: null
     } as IFollower
+
+    console.log({ response, error })
     
     this.isLoading = false
   }

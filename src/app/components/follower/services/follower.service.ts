@@ -19,9 +19,9 @@ export class FollowerService {
   }
 
   // To Get a Follow
-  async get( uid: number ): Promise<IHttpService>
+  async get( uid_follower: number, uid_followed: number ): Promise<IHttpService>
   {
-    return this.http.get( 'followers', { uid_followed: uid })
+    return this.http.get( 'followers', { uid_follower: uid_follower, uid_followed: uid_followed })
   }
 
   // To Get Follows based on Filter
