@@ -53,6 +53,12 @@ export class AdviseService {
     return this.http.get( 'posts/oracles', filter )
   }
 
+  // To Issue Tokens to User every Posts' `n` Visualizations
+  async issue( id: number ): Promise<IHttpService>
+  {
+    return this.http.post( 'visitors/posts/oracle/' + id )
+  }
+
   extractTitle( iAdvise: IAdvise ): string
   {
     return iAdvise.title ? iAdvise.title
