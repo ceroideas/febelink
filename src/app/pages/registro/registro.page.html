@@ -107,21 +107,29 @@
           formControlName="privacyConditions"
         ></ion-checkbox>
         {{ 'pages.registro.cond1' | translate }}
-        <a (click)="openPrivacyPolicy()">{{ 'pages.registro.cond2' | translate }}</a>
-          <br>
+        <a (click)="openPrivacyPolicy()"
+          >{{ 'pages.registro.cond2' | translate }}</a
+        >
+        <br />
         {{ 'pages.registro.cond3' | translate }}
-        <a (click)="openUseConditions()">{{ 'pages.registro.cond4' | translate }}</a>
+        <a (click)="openUseConditions()"
+          >{{ 'pages.registro.cond4' | translate }}</a
+        >
       </span>
 
       <ion-button expand="full" type="submit" ion-button color="febelink">
         {{ 'pages.registro.button' | translate }}
       </ion-button>
-      
+
       <ion-button expand="full" color="febelink" (click)="login()">
         {{ 'pages.login.button' | translate }}
       </ion-button>
-      
-      <social-login firstLogin="true" [redirect]="redirect"></social-login>
+
+      <social-login
+        *ngIf="!platform.is('ios')"
+        firstLogin="true"
+        [redirect]="redirect"
+      ></social-login>
     </form>
   </div>
   <div class="cover-overlay">
