@@ -33,11 +33,11 @@ export abstract class Reacts
     public static list(): IReactTypes[]
     {
         return [
-            Reacts.NONE
-            , Reacts.LIKE
+            /* Reacts.NONE
+            , */ Reacts.LIKE
             , Reacts.DISAGREEMENT
             , Reacts.LOVE
-            , Reacts.USEFUL
+            // , Reacts.USEFUL
         ]
     }
     public static img( reactType?: ReactTypes ): string
