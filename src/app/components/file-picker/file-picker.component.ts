@@ -53,7 +53,6 @@ export class FilePickerComponent implements OnInit {
     this.iFile = await this.mediaSvc.pickImg( filePicker, this.maxSize )
     if( this.iFile )
       if( this.OnFile ) this.OnFile.emit( this.iFile )
-    console.log({ iFile: this.iFile })
   }
 
   toggleVideo( event )
