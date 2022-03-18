@@ -37,6 +37,8 @@ export class PostComponent implements OnInit {
   dateFormatType = DateFormatType
   iUser: IUser
 
+  oracleRef: IAdviseFull
+
   constructor(
       private optsMenuSvc: OptsMenuSvc
     , private adviseSvc: AdviseService
@@ -64,7 +66,17 @@ export class PostComponent implements OnInit {
         description: this.iAdvise.content,
         image: this.fileSvc.img2str( this.iAdvise.media_url )
       })
+
+      this.getReference()
     }
+  }
+
+  async getReference()
+  {
+    if( !this.iAdvise?.id_advise ) return
+    
+    const { response, error } = await this.adviseSvc.get( this.iAdvise?.id_advise )
+    if( response ) this.oracleRef = response
   }
 
   extractTitle(): string

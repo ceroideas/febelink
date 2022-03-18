@@ -29,4 +29,14 @@
     <p>Linkedin</p>
   
   </ion-item>
+
+  <!-- Reference Oracle -->
+  <ion-item (click)="referenceOracle()" class="pointer" *ngIf="id_oracle">
+    <ion-buttons slot="start">
+      <ion-button slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="bookmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>{{ 'common.labelReferenceOracle' | translate }}</p>
+  </ion-item>
 </ion-list>

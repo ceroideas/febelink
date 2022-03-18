@@ -33,6 +33,9 @@ export class AdviseCRUDPage implements OnInit
 
   id: number
   iAdvise: IAdviseFull
+  
+  id_reference: number
+  reference: IAdviseFull
 
   paramsQuery: any
   paramsUrl: any
@@ -67,6 +70,8 @@ export class AdviseCRUDPage implements OnInit
 
     if( this.paramsUrl?.id )
       this.getPost( this.paramsUrl?.id )
+    if( this.paramsQuery?.params?.id_reference )
+      this.getReference( this.paramsQuery?.params?.id_reference )
 
       this.hasVerifiedEmail = await this.userSvc.verifiedEmail()
   }
@@ -87,6 +92,14 @@ export class AdviseCRUDPage implements OnInit
 
     this.updateForm()
     this.isLoading = false
+  }
+
+  /* If has id -> editing post */
+  async getReference( id: number )
+  {
+    this.id_reference = id
+    const { response, error } = await this.adviseSvc.get( id )
+    if( response ) this.reference = response
   }
 
   ionViewDidLeave()
@@ -194,6 +207,8 @@ export class AdviseCRUDPage implements OnInit
         lang: this.lang?.langSelected?.id || 1
       , sector: this.sectors?.sector
       , subsector: this.sectors?.subsector == 0 ? null : this.sectors?.subsector
+
+      , id_advise: this.id_reference
       
       , title: title
       , subtitle: subtitle

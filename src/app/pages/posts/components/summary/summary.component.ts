@@ -15,6 +15,7 @@ export class PostSummaryComponent implements OnInit {
 
   @Input() id: number
   @Input() iAdvise: IAdviseFull
+  @Input() watchOnClick: boolean = true
 
   dateFormatType = DateFormatType
 
@@ -28,6 +29,6 @@ export class PostSummaryComponent implements OnInit {
 
   watch()
   {
-    this.router.navigate([ `posts/oracle/${this.id}` ]);
+    if( this.watchOnClick ) this.router.navigate([ `posts/oracle/${this.id}` ]);
   }
 }

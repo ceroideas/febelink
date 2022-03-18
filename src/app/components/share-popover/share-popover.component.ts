@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { NavParams, PopoverController } from '@ionic/angular';
 
 @Component({
@@ -13,11 +14,13 @@ export class SharePopoverComponent implements OnInit {
   public title: string;
   public desc: string;
   public image: string;
+  public id_oracle: number | null = null;
 
   constructor(
       public navParams:NavParams
     , private metaService: Meta
     , private popCtrl: PopoverController
+    , private router: Router
   ) {
 
     this.url = this.navParams.get('url');
@@ -65,6 +68,16 @@ export class SharePopoverComponent implements OnInit {
   shareLinkedin() {
     window.open("https://linkedin.com/shareArticle?mini=true&url="+this.url+"&title="+this.title+"&summary="+this.desc);
     this.dismiss( true )
+  }
+
+  referenceOracle()
+  {
+    if( this.id_oracle ) {
+      this.dismiss( false )
+      this.router.navigate([ `posts/oracle/create` ], {
+        queryParams: { id_reference: this.id_oracle }
+      })
+    }
   }
   
   dismiss( shared: boolean ) {
