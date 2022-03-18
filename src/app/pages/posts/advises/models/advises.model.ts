@@ -5,6 +5,7 @@ export interface IAdvise {
     id?: number
     uid?: number
     lang: number
+    id_advise?: number
 
     id_sector?: number
     id_subsector?: number
