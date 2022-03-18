@@ -66,6 +66,17 @@
         [innerHTML]="extractSummary()"
       ></ion-label>
     </ion-row>
+
+    <!-- Summary Referencing Post -->
+    <ion-row class="marg-t10" *ngIf="iAdvise?.id_advise">
+      <ion-spinner class="marg-se marg-b5" *ngIf="!oracleRef"></ion-spinner>
+      <app-post-summary-component
+        *ngIf="oracleRef"
+        class="w-full marg-se-10"
+        [id]="iAdvise?.id_advise"
+        [iAdvise]="oracleRef"
+      ></app-post-summary-component>
+    </ion-row>
   
     <!-- Media-->
     <ion-row class="marg-t10 media" color="black" *ngIf="isPostVisible && iAdvise.media_url">
