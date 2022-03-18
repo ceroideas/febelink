@@ -1,4 +1,17 @@
-<ion-button [class]="'w-full ' + ( clase || '' )" color="febelink" (click)="toggleFollow()">
-  <ion-spinner class="marg-e" *ngIf="isLoading"></ion-spinner>
-  <ion-label>{{ 'common.follow.' + ( !isFollowing() ? 'do' : 'cancel' ) | translate }}</ion-label>
+<ion-button
+  [class]="'w-full ' + ( clase || '' ) + ( !transparent ? '' : 'no-shadow no-pad no-marg' )"
+  [color]="!transparent ? 'febelink' : 'transparent'"
+  (click)="toggleFollow()"
+>
+  <!-- Spinner -->
+  <ion-spinner
+    class="marg-e"
+    [color]="!transparent ? '' : 'febelink'"
+    *ngIf="isLoading"
+  ></ion-spinner>
+
+  <!-- Label -->
+  <ion-label [color]="!transparent ? '' : 'febelink'">
+    {{ 'common.follow.' + ( !isFollowing() ? 'do' : 'cancel' ) | translate }}
+  </ion-label>
 </ion-button>
