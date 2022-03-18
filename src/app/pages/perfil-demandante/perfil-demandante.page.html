@@ -183,7 +183,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="marg-t" *ngIf="perfilpublico">
+      <ion-row class="marg-t" *ngIf="perfilpublico?.id != currentUser?.id">
         <!-- Donate -->
         <ion-col size="12" class="ion-no-padding">
           <app-follower-button
