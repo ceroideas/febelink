@@ -96,7 +96,8 @@
 
     <!-- Share Advise | Post Button -->
     <ion-button class="marg-s10" (click)="shareAlert()">
-      {{ 'pages.posts.advises.share' | translate}}
+      {{ 'pages.posts.advises.' + ( id ? 'editButton' : 'create.saveButton' ) |
+      translate }}
     </ion-button>
   </ion-toolbar>
 </ion-footer>

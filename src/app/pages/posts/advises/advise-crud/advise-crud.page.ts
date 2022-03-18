@@ -130,6 +130,11 @@ export class AdviseCRUDPage implements OnInit
   fileSelected( file: IFile )
   {
     this.iFile = file
+    if( file == null && this.iAdvise )
+    {
+      this.iAdvise.media_name = null
+      this.iAdvise.media_ext = null
+    }
   }
 
   wysiwygChange( content: iWYSIWYG )
@@ -199,6 +204,8 @@ export class AdviseCRUDPage implements OnInit
       , content: this.content.html
       
       , media: this.iFile?.file
+      , media_name: this.iAdvise?.media_name
+      , media_ext: this.iAdvise?.media_ext
     }
 
     const { response, error } = !this.id

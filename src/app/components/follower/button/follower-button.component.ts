@@ -15,6 +15,7 @@ export class FollowerButtonComponent implements OnInit {
   @Input() user: IUser
   @Input() clase: string
   @Input() follower: IFollower
+  @Input() transparent: boolean = false
 
   isLoading: boolean = false
 
@@ -46,8 +47,6 @@ export class FollowerButtonComponent implements OnInit {
       created_at: null,
       canceled_at: null
     } as IFollower
-
-    console.log({ response, error })
     
     this.isLoading = false
   }

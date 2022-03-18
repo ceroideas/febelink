@@ -1,9 +1,16 @@
 <ion-grid>
-  <ion-button icon-only color="transparent"
-    *ngFor="let reactType of reactTypes"
-    class="no-padding no-shadow"
-    (click)="reacted( reactType )"
-  >
-    <ion-icon class="wh-40" [src]="reacts.img( reactType?.id )"></ion-icon>
-  </ion-button>
+  <ion-row>
+    <ion-col
+      *ngFor="let reactType of reactTypes"
+      class="tx-center no-pad"
+      (click)="reacted( reactType )"
+    >
+      <ion-button icon-only color="transparent" class="no-marg no-pad no-shadow">
+        <ion-icon class="wh-40" [src]="reacts.img( reactType?.id )"></ion-icon>
+      </ion-button><br>
+      <ion-label *ngIf="reactType.type" class="font-13 no-marg">
+        {{ 'pages.posts.reacts.' + reactType.type | translate }}
+      </ion-label>
+    </ion-col>
+  </ion-row>
 </ion-grid>

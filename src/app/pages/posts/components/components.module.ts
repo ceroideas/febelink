@@ -1,3 +1,4 @@
+import { FollowerButtonModule } from 'src/app/components/follower/follower.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -24,6 +25,7 @@ import { DonateButtonModule } from 'src/app/components/donate/donate-button.modu
       , SharedModule
       , SharedPostModule
       , DonateButtonModule
+      , FollowerButtonModule
     ],
     exports: [
         CommonModule

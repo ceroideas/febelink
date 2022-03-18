@@ -22,7 +22,6 @@ export class DonateButtonComponent implements OnInit {
 
   async donate()
   {
-    console.log({ user: this.user })
     this.walletSendSvc.tip( this.user )
   }
 }

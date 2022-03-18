@@ -302,7 +302,7 @@
         "idFormat": "El formato del Documento de Identidad no es correcto",
 
         "image": "Error al obtener imagen",
-        "imageMaxSize": "Imágen demasiado grande, max. {{ max }}",
+        "imageMaxSize": "Archivo demasiado grande, max. {{ max }}",
 
         "noFileSelected": "No has seleccionado archivo.",
         "noFileProvided": "No has provisto archivo",
@@ -552,6 +552,12 @@
     "posts": {
       "see": "Ver Post",
       "react": "Reaccionar",
+      "reacts": {
+        "like": "Es Util",
+        "disagreement": "No es Util",
+        "love": "Me Encanta",
+        "useful": "Muy Util"
+      },
 
       "advises": {
         "title": "Oráculo",
@@ -572,9 +578,12 @@
             "title": "El titulo no puede ser menor a 4 digitos",
             "content": "Debes indicar el contenido a publicar",
             "sector": "Debes indicar el sector al que referencias"
-          }
+          },
+          "saveButton": "Publicar"
         },
+
         "edit": "Editar Publicación",
+        "editButton": "Guardar Cambios",
 
         "new": {
           "title": "Gran trabajo!",
