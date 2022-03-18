@@ -571,9 +571,12 @@
             "title": "El titulo no puede ser menor a 4 digitos",
             "content": "Debes indicar el contenido a publicar",
             "sector": "Debes indicar el sector al que referencias"
-          }
+          },
+          "saveButton": "Publicar"
         },
+
         "edit": "Editar Publicación",
+        "editButton": "Guardar Cambios",
 
         "new": {
           "title": "Gran trabajo!",

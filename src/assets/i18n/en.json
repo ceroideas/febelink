@@ -573,9 +573,11 @@
             "title": "The title cannot be less than 4 digits",
             "content": "You must indicate the content to publish",
             "sector": "You must indicate the sector to which you refer"
-          }
+          },
+          "saveButton": "Publish"
         },
         "edit": "Edit Post",
+        "editButton": "Save Changes",
 
         "new": {
           "title": "Great Job!",
