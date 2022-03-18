@@ -61,13 +61,13 @@
         <!-- Loading -->
         <ion-spinner class="marg-se marg-b5" *ngIf="!reference"></ion-spinner>
         <!-- Remove Reference -->
-        <ion-button icon-only
-          shape="round"
-          class="no-padding wh-40 marg-t10 relativism"
+        <ion-icon
+          *ngIf="reference"
+          name="close-circle-outline"
+          color="primary"
+          class="no-padding wh-30 shadow-light marg-t10 relativism"
           (click)="id_reference = null"
-        >
-          <ion-icon name="close-circle-outline" color="primary"></ion-icon>
-        </ion-button>
+        ></ion-icon>
         <!-- Reference -->
         <app-post-summary-component
           *ngIf="reference"
