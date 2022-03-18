@@ -46,6 +46,7 @@ export class WalleSendSvc
         assetsMaxDecimals: walletParams.assetsMaxDecimals,
 
         returnBalance: true,
+        hideWarning: true,
       },
       cssClass: 'modal-mobile',
     })

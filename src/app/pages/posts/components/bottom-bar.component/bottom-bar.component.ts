@@ -37,7 +37,10 @@ export class PostBottomBarComponent implements OnInit
     , private reacTypeSvc: ReactTypePopSvc
   ) {}
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.sessionSvc.get().then(( userData ) => this.user = userData )
+  }
 
   async react( ev: any )
   {

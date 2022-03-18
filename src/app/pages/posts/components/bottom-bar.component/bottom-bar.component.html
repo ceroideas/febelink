@@ -49,7 +49,10 @@
       (click)="watch()"
       *ngIf="post?.public && !showSeePost"
     >
-      <app-donate-button [user]="post"></app-donate-button>
+      <app-donate-button
+        [user]="post"
+        *ngIf="post && user && post.public != user.public"
+      ></app-donate-button>
     </ion-col>
   </ion-row>
 </ion-grid>
