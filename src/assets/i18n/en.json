@@ -301,7 +301,7 @@
         "idFormat": "The format of Identity Document is not correct",
 
         "image": "Error getting image",
-        "imageMaxSize": "Image too large, max. {{ max }}",
+        "imageMaxSize": "File too large, max. {{ max }}",
 
         "noFileSelected": "No file selected.",
         "noFileProvided": "No file provided",
@@ -553,6 +553,12 @@
     "posts": {
       "see": "See Post",
       "react": "React",
+      "reacts": {
+        "like": "Is Useful",
+        "disagreement": "Is Not Useful",
+        "love": "Love it",
+        "useful": "Useful"
+      },
 
       "advises": {
         "title": "Oracle",
