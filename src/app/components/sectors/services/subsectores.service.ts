@@ -31,4 +31,9 @@ export class SubsectorService
 
         return this.list;
     }
+
+    async sectorsNsub( id: number = null )
+    {
+      return ( await this.httpSvc.get( 'sectorsNsub' + ( id ? '/' + id : '' ))).response || []
+    }
 }
