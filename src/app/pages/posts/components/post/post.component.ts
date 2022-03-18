@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, SimpleChanges, ViewEncapsulation, ViewChild  } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  SimpleChanges,
+  ViewEncapsulation,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
@@ -22,48 +29,47 @@ import { AdviseService } from '../../advises/services/advises.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class PostComponent implements OnInit {
+  @Input() id: number;
+  @Input() iAdvise: IAdviseFull;
+  @Input() showLang: boolean = false;
+  @Input() showOpts: boolean = false;
+  @Input() showSeePost: boolean = false;
+  @Input() showContent: boolean = false;
+  @Input() listComments: boolean = false;
 
-  @Input() id: number
-  @Input() iAdvise: IAdviseFull
-  @Input() showLang: boolean = false
-  @Input() showOpts: boolean = false
-  @Input() showSeePost: boolean = false
-  @Input() showContent: boolean = false
-  @Input() listComments: boolean = false
+  isPostVisible: boolean = true;
+  areCommentsVisible: boolean = true;
 
-  isPostVisible: boolean = true
-  areCommentsVisible: boolean = true
+  dateFormatType = DateFormatType;
+  iUser: IUser;
 
-  dateFormatType = DateFormatType
-  iUser: IUser
-
-  showFollow: boolean = false
-  postUser: IUser
+  oracleRef: IAdviseFull;
+  showFollow: boolean = false;
+  postUser: IUser;
 
   constructor(
-      private optsMenuSvc: OptsMenuSvc
-    , private adviseSvc: AdviseService
-    , public sessionSvc: UserSessionSvc
-    , private alertSvc: AlertSvc
-    , private toastSvc: ToastSvc
-    , private loadingSvc: LoadingSvc
-    , private router: Router
-    , private seoSvc: SeoService
-    , public fileSvc: FileService
-    , private reportSvc: ReportService
+    private optsMenuSvc: OptsMenuSvc,
+    private adviseSvc: AdviseService,
+    public sessionSvc: UserSessionSvc,
+    private alertSvc: AlertSvc,
+    private toastSvc: ToastSvc,
+    private loadingSvc: LoadingSvc,
+    private router: Router,
+    private seoSvc: SeoService,
+    public fileSvc: FileService,
+    private reportSvc: ReportService
   ) {}
 
-  ngOnInit()
-  {
-    this.sessionSvc.get().then(( userData ) =>{
-      this.iUser = userData
-      this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent
-     } )
+  ngOnInit() {
+    this.sessionSvc.get().then((userData) => {
+      this.iUser = userData;
+      this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
+    });
   }
 
-  ngOnChanges( changes: SimpleChanges ): void {
-    if ( 'iAdvise' in changes) {
-      this.iAdvise = changes.iAdvise.currentValue
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('iAdvise' in changes) {
+      this.iAdvise = changes.iAdvise.currentValue;
 
       this.postUser = {
         id: this.iAdvise.uid,
@@ -74,86 +80,96 @@ export class PostComponent implements OnInit {
 
         logo: this.iAdvise.logo,
         avatar: this.iAdvise.avatar,
-        
+
         email: this.iAdvise.email,
 
-        public: this.iAdvise.public
-      } as IUser
-      this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent
-      
+        public: this.iAdvise.public,
+      } as IUser;
+      this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
+
       this.seoSvc.generateTags({
         title: this.iAdvise.title,
         description: this.iAdvise.content,
-        image: this.fileSvc.img2str( this.iAdvise.media_url )
-      })
+        image: this.fileSvc.img2str(this.iAdvise.media_url),
+      });
+
+      this.getReference();
     }
   }
 
-  extractTitle(): string
-  {
-    return this.adviseSvc.extractTitle( this.iAdvise, this.showContent )
+  async getReference() {
+    if (!this.iAdvise?.id_advise) return;
+
+    const { response, error } = await this.adviseSvc.get(
+      this.iAdvise?.id_advise
+    );
+    if (response) this.oracleRef = response;
   }
 
-  extractSummary(): string
-  {
-    return this.adviseSvc.extractSummary( this.iAdvise )
+  extractTitle(): string {
+    return this.adviseSvc.extractTitle(this.iAdvise, this.showContent);
   }
 
-  async options( event )
-  {
-    let opts: IOptsMenuButton[]
-    
-    if( await this.sessionSvc.isUser( this.iAdvise?.uid ))
+  extractSummary(): string {
+    return this.adviseSvc.extractSummary(this.iAdvise);
+  }
+
+  async options(event) {
+    let opts: IOptsMenuButton[];
+
+    if (await this.sessionSvc.isUser(this.iAdvise?.uid))
       opts = [
         {
-          text: 'common.buttons.edit'
-          , click: ( iOptsMenuButton: IOptsMenuButton ) => this.edit()
-        } as IOptsMenuButton
-        , {
-            text: 'common.buttons.delete'
-          , click: ( iOptsMenuButton: IOptsMenuButton ) => this.delete()
-        } as IOptsMenuButton
-      ]
+          text: 'common.buttons.edit',
+          click: (iOptsMenuButton: IOptsMenuButton) => this.edit(),
+        } as IOptsMenuButton,
+        {
+          text: 'common.buttons.delete',
+          click: (iOptsMenuButton: IOptsMenuButton) => this.delete(),
+        } as IOptsMenuButton,
+      ];
     else
       opts = [
         {
-          text: 'common.buttons.report'
-          , click: ( iOptsMenuButton: IOptsMenuButton ) => this.report()
-        } as IOptsMenuButton
-      ]
-    
-    this.optsMenuSvc.show( event, opts )
+          text: 'common.buttons.report',
+          click: (iOptsMenuButton: IOptsMenuButton) => this.report(),
+        } as IOptsMenuButton,
+      ];
+
+    this.optsMenuSvc.show(event, opts);
   }
 
-  async edit()
-  {
-    this.router.navigate([ `posts/oracle/${this.id}/edit` ])
+  async edit() {
+    this.router.navigate([`posts/oracle/${this.id}/edit`]);
   }
 
-  async delete()
-  {
-    if( await this.alertSvc.confirm({
-        title: 'pages.posts.advises.delete.title'
-      , msg: 'pages.posts.advises.delete.msg'
-    } as IAlert )) {
-      this.loadingSvc.show()
-      const { response, error } = await this.adviseSvc.delete( this.id )
-      await this.loadingSvc.dismiss()
+  async delete() {
+    if (
+      await this.alertSvc.confirm({
+        title: 'pages.posts.advises.delete.title',
+        msg: 'pages.posts.advises.delete.msg',
+      } as IAlert)
+    ) {
+      this.loadingSvc.show();
+      const { response, error } = await this.adviseSvc.delete(this.id);
+      await this.loadingSvc.dismiss();
 
-      if( error ) {
-        this.toastSvc.show( error.msg || error.message || 'Error on deleting', true )
-        return
+      if (error) {
+        this.toastSvc.show(
+          error.msg || error.message || 'Error on deleting',
+          true
+        );
+        return;
       }
 
-      this.toastSvc.show( response.message, true )
-      this.router.navigate([ `posts/oracles` ])
+      this.toastSvc.show(response.message, true);
+      this.router.navigate([`posts/oracles`]);
     }
   }
 
-  report()
-  {
+  report() {
     this.reportSvc.show({
-      advise: this.id
-    } as IReport )
+      advise: this.id,
+    } as IReport);
   }
 }

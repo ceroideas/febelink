@@ -34,6 +34,8 @@ import { DonateButtonModule } from 'src/app/components/donate/donate-button.modu
       , ReactiveFormsModule
       , AdvisePageRoutingModule
       , SharedModule
+      , SharedPostModule
+      , DonateButtonModule
 
       , PostBottomBarComponent
       , PostComponent

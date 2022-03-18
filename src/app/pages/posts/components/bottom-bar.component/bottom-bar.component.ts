@@ -70,6 +70,7 @@ export class PostBottomBarComponent implements OnInit
       , ( this.adviseSvc.extractTitle( this.post ) || '' ).replace(/<[^>]*>/g, '')
       , ( this.adviseSvc.extractSummary( this.post ) || '' ).replace(/<[^>]*>/g, '')
       , this.fileSvc.img2str( this.post?.media_url )
+      , this.id
     )) {
       this.post.shared = ( this.post?.shared || 0 ) + 1
       this.adviseSvc.shared( this.id )

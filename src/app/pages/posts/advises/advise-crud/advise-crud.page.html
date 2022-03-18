@@ -59,6 +59,28 @@
         ></ion-textarea>
       </ion-row>
 
+      <!-- Summary Referencing Post -->
+      <ion-row class="marg-t10" *ngIf="id_reference">
+        <!-- Loading -->
+        <ion-spinner class="marg-se marg-b5" *ngIf="!reference"></ion-spinner>
+        <!-- Remove Reference -->
+        <ion-icon
+          *ngIf="reference"
+          name="close-circle-outline"
+          color="primary"
+          class="no-padding wh-30 shadow-light marg-t10 relativism"
+          (click)="id_reference = null"
+        ></ion-icon>
+        <!-- Reference -->
+        <app-post-summary-component
+          *ngIf="reference"
+          class="w-full"
+          [id]="id_reference"
+          [iAdvise]="reference"
+          [watchOnClick]="false"
+        ></app-post-summary-component>
+      </ion-row>
+
       <!-- WYSIWYG -->
       <ion-row class="marg-t10 pad-5">
         <app-wysiwyg
