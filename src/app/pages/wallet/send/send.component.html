@@ -88,7 +88,7 @@
         </ion-row>
 
         <!-- TrustLine -->
-        <ion-row class="margin-top">
+        <ion-row class="margin-top" *ngIf="!hideWarning">
             <ion-label color="danger">{{ 'pages.wallet.trustline' | translate }}</ion-label>
         </ion-row>
       </ion-grid>

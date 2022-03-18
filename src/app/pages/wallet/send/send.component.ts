@@ -24,6 +24,7 @@ export class SendComponent implements OnInit {
     @Input() user: IUser;
     @Input() retainedTks: TokensUser[];
     @Input() returnBalance: boolean = false;
+    @Input() hideWarning: boolean = false;
     @Input() assetsMaxDecimals: number = 7;
 
     // Value to send predefined
