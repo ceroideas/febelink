@@ -37,6 +37,9 @@ export class PostComponent implements OnInit {
   dateFormatType = DateFormatType
   iUser: IUser
 
+  showFollow: boolean = false
+  postUser: IUser
+
   constructor(
       private optsMenuSvc: OptsMenuSvc
     , private adviseSvc: AdviseService
@@ -52,13 +55,32 @@ export class PostComponent implements OnInit {
 
   ngOnInit()
   {
-    this.sessionSvc.get().then(( userData ) => this.iUser = userData )
+    this.sessionSvc.get().then(( userData ) =>{
+      this.iUser = userData
+      this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent
+     } )
   }
 
   ngOnChanges( changes: SimpleChanges ): void {
     if ( 'iAdvise' in changes) {
       this.iAdvise = changes.iAdvise.currentValue
 
+      this.postUser = {
+        id: this.iAdvise.uid,
+
+        nick: this.iAdvise.nick,
+        name: this.iAdvise.name,
+        lastName: this.iAdvise.lastName,
+
+        logo: this.iAdvise.logo,
+        avatar: this.iAdvise.avatar,
+        
+        email: this.iAdvise.email,
+
+        public: this.iAdvise.public
+      } as IUser
+      this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent
+      
       this.seoSvc.generateTags({
         title: this.iAdvise.title,
         description: this.iAdvise.content,
