@@ -15,6 +15,7 @@ export class SectorsComponent implements OnInit
 
   sectors: ISector[] = []
   subsectors: ISubSector[] = []
+  @Input() showSector: boolean = true
   @Input() sector: number = null
   @Input() subsector: number = null
   sectorSlctd: ISector = null
@@ -36,9 +37,16 @@ export class SectorsComponent implements OnInit
   }
 
   load( idSector?: number ) {
-    this.sectorSvc.get( false ).then( sectors => this.sectors = sectors )
-    this.subsectorSvc.get( idSector || 0 )
-      .then( subsectors => this.subsectors = subsectors )
+    if( this.showSector )
+    {
+      this.sectorSvc.get( false ).then( sectors => this.sectors = sectors )
+      this.subsectorSvc.get( idSector )
+        .then( subsectors => this.subsectors = subsectors )
+    } else
+    {
+      this.subsectorSvc.sectorsNsub()
+        .then( sectorsNsub => this.subsectors = sectorsNsub )
+    }
   }
 
   set( sector?: number , subsector?: number )
@@ -53,13 +61,14 @@ export class SectorsComponent implements OnInit
     this.subsector = null
     this.subsectors = []
     if( this.OnSectorChange ) this.OnSectorChange.emit( this.sector )
-    this.subsectors = await this.subsectorSvc.get( this.sector )
+    this.subsectors = await this.subsectorSvc.get( !this.showSector ? null : this.sector )
   }
 
   async onChangeSubsector( event )
   {
     this.subsector = event.value?.id
     if( this.OnSubsectorChange ) this.OnSubsectorChange.emit( this.subsector )
+    if( !this.showSector ) this.sector = this.subsectorSlctd.id_sector
   }
 
   // Remove Selection

@@ -116,8 +116,6 @@ export class AdviseCRUDPage implements OnInit
     this.content.html = this.iAdvise?.content
     this.iFile.src = this.iAdvise?.media_url
     this.iFile.ext = this.iAdvise?.media_ext
-
-    console.log({ iFile: this.iFile, iAdvise: this.iAdvise })
   }
 
   clear()
@@ -162,7 +160,7 @@ export class AdviseCRUDPage implements OnInit
       this.toastSvc.show( 'pages.posts.advises.create.error.content', true )
       return false
     }
-    if( !this.sectors?.sector ) {
+    if( !this.sectors?.subsector ) {
       this.toastSvc.show( 'pages.posts.advises.create.error.sector', true )
       return false
     }
@@ -192,8 +190,8 @@ export class AdviseCRUDPage implements OnInit
 
     const opts: IAdviseFull = {
         lang: this.lang?.langSelected?.id || 1
-      , sector: this.sectors?.sector
-      , subsector: this.sectors?.subsector == 0 ? null : this.sectors?.subsector
+      , sector: this.sectors?.sector || this.iAdvise?.id_sector
+      , subsector: this.sectors?.subsector || this.iAdvise?.id_subsector
       
       , title: title
       , subtitle: subtitle
