@@ -21,7 +21,10 @@
   <form [formGroup]="form" class="no-pad" *ngIf="!isLoading && form">
     <ion-grid class="no-pad pad-t10">
       <!-- Sector | Subsector -->
-      <app-sectors #sectors [sector]="iAdvise?.id_sector" [subsector]="iAdvise?.id_subsector"></app-sectors>
+      <app-sectors #sectors
+        [subsector]="iAdvise?.id_subsector"
+        [showSector]="false"
+      ></app-sectors>
 
       <!-- Title -->
       <ion-row class="pad-5" *ngIf="false">

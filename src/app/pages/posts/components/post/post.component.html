@@ -1,7 +1,7 @@
 <div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10">
-      <ion-col [size]="!iAdvise?.public || !showContent ? 10 : 8" class="no-padding">
+      <ion-col [size]="!showFollow ? 10 : 8" class="no-padding">
         <!-- Post Owner User -->
         <app-user-item
           class="no-padding"
@@ -11,13 +11,8 @@
           [OnClickShowProfile]="true"
         ></app-user-item>
       </ion-col>
-
-      <!-- Text End -->
-      <ion-col [size]="2" *ngIf="iAdvise?.public && showContent">
-        <app-donate-button [user]="iAdvise"></app-donate-button>
-      </ion-col>
   
-      <ion-col size="2" class="no-padding">
+      <ion-col [size]="!showFollow ? 2 : 4" class="no-padding">
         <!-- Post Language -->
         <ion-row class="align-end" *ngIf="showLang">
           <app-lang-btn [langIdSelected]="iAdvise?.lang" [disabled]="true"></app-lang-btn>
@@ -38,6 +33,10 @@
           <ion-label class="hint font-13" *ngIf="iAdvise.created_at != iAdvise.updated_at">
             {{ 'common.labelEdited' | translate }}
           </ion-label>
+        </ion-row>
+
+        <ion-row class="align-end" *ngIf="showFollow">
+          <app-follower-button [user]="postUser" [transparent]="true"></app-follower-button>
         </ion-row>
       </ion-col>
     </ion-row>

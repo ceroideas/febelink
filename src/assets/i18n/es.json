@@ -6,6 +6,7 @@
     "labelSubsectors2": "Subsector/es",
     "labelSector": "Sector",
     "labelSubsector": "Subsector",
+    "labelSectorNsub": "Sector y Subsector",
     "labelProvince": "Provincia",
     "labelTown": "Localidad",
     "labelNoElements": "No hay elementos para mostrar",
@@ -302,7 +303,7 @@
         "idFormat": "El formato del Documento de Identidad no es correcto",
 
         "image": "Error al obtener imagen",
-        "imageMaxSize": "Imágen demasiado grande, max. {{ max }}",
+        "imageMaxSize": "Archivo demasiado grande, max. {{ max }}",
 
         "noFileSelected": "No has seleccionado archivo.",
         "noFileProvided": "No has provisto archivo",
@@ -552,6 +553,12 @@
     "posts": {
       "see": "Ver Post",
       "react": "Reaccionar",
+      "reacts": {
+        "like": "Es Util",
+        "disagreement": "No es Util",
+        "love": "Me Encanta",
+        "useful": "Muy Util"
+      },
 
       "advises": {
         "title": "Oráculo",
