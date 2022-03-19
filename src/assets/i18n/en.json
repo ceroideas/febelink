@@ -12,7 +12,7 @@
     "labelNoElements": "No elements to show",
     "labelLoading": "Loading...",
     "labelSearching": "Searching...",
-    "publishPlaceholder": "Publish your search",
+    "publishPlaceholder": "What do you need?",
     "searchPlaceholder": "Search in Febelink",
     "labelDescription": "Description",
     "cookies1": "We use cookies to provide you with the best possible experience. By continuing, we assume that you agree with our",
@@ -550,7 +550,10 @@
         "Management of offer to buy (bid) one asset for another"
       ],
 
-      "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located."
+      "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located.",
+
+      "moreFunds": "Need more funds?",
+      "moreFundsButton": "Buy FLAU"
     },
     "posts": {
       "see": "See Post",
