@@ -12,7 +12,7 @@
     "labelNoElements": "No hay elementos para mostrar",
     "labelLoading": "Cargando...",
     "labelSearching": "Buscando...",
-    "publishPlaceholder": "Publica tu búsqueda",
+    "publishPlaceholder": "¿Qué necesitas?",
     "searchPlaceholder": "Buscar en Febelink",
     "labelDescription": "Descripción",
     "cookies1": "Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra",
@@ -548,7 +548,10 @@
         "Gestión de oferta de compra (bid) de un activo por otro"
       ],
 
-      "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio."
+      "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio.",
+
+      "moreFunds": "¿Necesitas más fondos?",
+      "moreFundsButton": "Comprar FLAU"
     },
     "posts": {
       "see": "Ver Post",
