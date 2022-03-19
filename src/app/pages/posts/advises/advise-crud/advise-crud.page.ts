@@ -209,6 +209,8 @@ export class AdviseCRUDPage implements OnInit {
       lang: this.lang?.langSelected?.id || 1,
       sector: this.sectors?.sector || this.iAdvise?.id_sector,
       subsector: this.sectors?.subsector || this.iAdvise?.id_subsector,
+      
+      id_advise: this.id_reference,
 
       title: title,
       subtitle: subtitle,
