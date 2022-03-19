@@ -550,7 +550,6 @@
 
       "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio.",
 
-      "moreFunds": "¿Necesitas más fondos?",
       "moreFundsButton": "Comprar FLAU"
     },
     "posts": {
