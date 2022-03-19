@@ -552,7 +552,6 @@
 
       "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located.",
 
-      "moreFunds": "Need more funds?",
       "moreFundsButton": "Buy FLAU"
     },
     "posts": {
