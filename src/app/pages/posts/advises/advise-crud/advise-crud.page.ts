@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { IAdviseFull } from '../models/advises.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../../../../components/file-picker/services/file.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { AdviseService } from '../services/advises.service';
@@ -18,6 +18,7 @@ import { LoadingSvc } from 'src/app/services/loading.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
 import { IFile } from 'src/app/components/file-picker/models/file.model';
 import { UserService } from 'src/app/services/user.service';
+import { RouteSvc } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -49,7 +50,7 @@ export class AdviseCRUDPage implements OnInit {
     private formBuilder: FormBuilder,
     public mediaSvc: FileService,
     private actRoute: ActivatedRoute,
-    private router: Router,
+    private router: RouteSvc,
     private adviseSvc: AdviseService,
     private toastSvc: ToastSvc,
     private alertSvc: AlertSvc,
@@ -158,12 +159,14 @@ export class AdviseCRUDPage implements OnInit {
   /* User is not allowed to edit this post */
   kickOff() {
     this.toastSvc.show('pages.posts.advises.error.unauthorized', true);
-    this.cancel();
+    this.goHome();
   }
 
   /* On Cancel */
-  cancel() {
-    this.router.navigate(['posts/oracles']);
+  goHome( canceled: boolean = true)
+  {
+    if( canceled ) this.router.navigate([ 'posts/oracles' ])
+    else this.router.navigateReload([ 'posts/oracles' ])
   }
 
   async check(): Promise<boolean> {
@@ -237,7 +240,7 @@ export class AdviseCRUDPage implements OnInit {
     if (error) return;
 
     // this.askNew()
-    this.cancel();
+    this.goHome( false );
   }
 
   askNew() {
@@ -248,7 +251,7 @@ export class AdviseCRUDPage implements OnInit {
         btns: [
           {
             text: 'common.buttons.back',
-            handler: () => this.cancel(),
+            handler: () => this.goHome(),
           },
           {
             text: 'common.buttons.create',
