@@ -51,10 +51,8 @@ export class AdvisesPage implements OnInit
   {
     // To refresh list on routing to this page
     this.router.addListener(( url: string, params: Params ) => {
-      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( url )) {
+      if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( url ))
         this.uid = params?.uid
-        this.clear2search()
-      }
     })
     this.clear2search()
   }
@@ -93,7 +91,7 @@ export class AdvisesPage implements OnInit
       
       , sector: this.sectors?.sector || null
       , subsector: this.sectors?.subsector || null
-      , lang: await this.lang?.id()
+      , lang: await this.lang?.idSelected( null )
       , user: this.myPosts ? await this.sessionSvc.id() : this.uid || this.user?.user?.id || null
       , hideContent: true
     }
@@ -115,7 +113,7 @@ export class AdvisesPage implements OnInit
   {
     const user = await this.userFilterPop.show( 'posts/oracles/users' )
     this.user.user = user
-    this.search()
+    this.clear2search()
   }
 
   
