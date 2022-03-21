@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, OnInit, Output } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { NavigationEnd, NavigationExtras, Params, Router, RouterEvent } from "@angular/router";
 import { filter } from "rxjs/operators";
 
@@ -45,5 +45,13 @@ export class RouteSvc
     navigate(commands: any[], extras?: NavigationExtras): Promise<boolean>
     {
         return this.router.navigate( commands, extras );
+    }
+
+    navigateReload(commands: any[], extras?: NavigationExtras)
+    {
+      this.navigate( commands, extras )
+        .then(() => {
+          window.location.reload();
+        })
     }
 }
