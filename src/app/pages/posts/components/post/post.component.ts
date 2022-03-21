@@ -140,7 +140,9 @@ export class PostComponent implements OnInit {
   }
 
   async edit() {
-    this.router.navigate([`posts/oracle/${this.id}/edit`]);
+    this.router.navigate([`posts/oracle/${this.id}/edit`], {
+      queryParams: !this.iAdvise?.id_advise ? {} : { id_reference: this.iAdvise?.id_advise }
+    })
   }
 
   async delete() {
