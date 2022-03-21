@@ -1,5 +1,5 @@
 <ion-list lines="none">
-  <ion-item (click)="shareFB()" style="cursor:pointer">
+  <ion-item (click)="shareFB()" style="cursor:pointer" *ngIf="!isNative">
 
     <ion-buttons slot="start">
       <ion-button color="facebook" slot="icon-only"> 
@@ -9,7 +9,7 @@
     <p>Facebook</p>
 
   </ion-item>
-  <ion-item (click)="shareTwitter()" style="cursor:pointer">
+  <ion-item (click)="shareTwitter()" style="cursor:pointer" *ngIf="!isNative">
 
     <ion-buttons slot="start">
       <ion-button color="twitter" slot="icon-only"> 
@@ -19,7 +19,7 @@
     <p>Twitter</p>
 
   </ion-item>
-  <ion-item (click)="shareLinkedin()" style="cursor:pointer">
+  <ion-item (click)="shareLinkedin()" style="cursor:pointer" *ngIf="!isNative">
 
     <ion-buttons slot="start">
       <ion-button slot="icon-only"> 
@@ -27,6 +27,18 @@
       </ion-button>
     </ion-buttons>
     <p>Linkedin</p>
+  
+  </ion-item>
+
+  <!-- Social Sharing Native -->
+  <ion-item (click)="shareSocialNative()" class="pointer" *ngIf="isNative">
+
+    <ion-buttons slot="start">
+      <ion-button slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="share-social-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>{{ 'common.labelSocialShare' | translate }}</p>
   
   </ion-item>
 
