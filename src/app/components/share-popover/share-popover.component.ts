@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { NavParams, PopoverController } from '@ionic/angular';
+import { NavParams, Platform, PopoverController } from '@ionic/angular';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-share-popover',
@@ -16,11 +17,15 @@ export class SharePopoverComponent implements OnInit {
   public image: string;
   public id_oracle: number | null = null;
 
+  public isNative: boolean
+
   constructor(
       public navParams:NavParams
     , private metaService: Meta
     , private popCtrl: PopoverController
     , private router: Router
+    , private platform: Platform
+    , private socialSharing: SocialSharing
   ) {
 
     this.url = this.navParams.get('url');
@@ -53,7 +58,10 @@ export class SharePopoverComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.platform.ready().then(() => this.isNative = this.platform.is( 'cordova' ))
+  }
 
   shareFB() {
     window.open("https://www.facebook.com/sharer/sharer.php?u="+this.url);
@@ -68,6 +76,14 @@ export class SharePopoverComponent implements OnInit {
   shareLinkedin() {
     window.open("https://linkedin.com/shareArticle?mini=true&url="+this.url+"&title="+this.title+"&summary="+this.desc);
     this.dismiss( true )
+  }
+
+  shareSocialNative()
+  {
+    this.socialSharing
+      .share( this.title, this.desc, this.image, this.url )
+      .then(( result ) => this.dismiss( true ))
+      .catch(( error ) => this.dismiss( false ))
   }
 
   referenceOracle()
