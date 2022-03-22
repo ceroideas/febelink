@@ -53,11 +53,12 @@ export class AdvisesPage implements OnInit
     this.router.addListener(( url: string, params: Params ) => {
       if ([ 'posts', '/posts/oracles', 'posts/oraculos' ].includes( url ))
         this.uid = params?.uid
+        this.getUser()
     })
     this.clear2search()
   }
 
-  async ngAfterViewInit()
+  async getUser()
   {
     this.curUser = await this.sessionSvc.get()
   }
