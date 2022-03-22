@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NavParams, PopoverController } from '@ionic/angular';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
 
 @Component({
   selector: 'app-share-popover',
@@ -21,6 +22,7 @@ export class SharePopoverComponent implements OnInit {
     , private metaService: Meta
     , private popCtrl: PopoverController
     , private router: Router
+    , private sessionSvc: UserSessionSvc
   ) {
 
     this.url = this.navParams.get('url');
@@ -70,8 +72,10 @@ export class SharePopoverComponent implements OnInit {
     this.dismiss( true )
   }
 
-  referenceOracle()
+  async referenceOracle()
   {
+    if( !( await this.sessionSvc.checkLogged() )) return
+
     if( this.id_oracle ) {
       this.dismiss( false )
       this.router.navigate([ `posts/oracle/create` ], {
