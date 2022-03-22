@@ -39,14 +39,36 @@ export class SectorsComponent implements OnInit
   load( idSector?: number ) {
     if( this.showSector )
     {
-      this.sectorSvc.get( false ).then( sectors => this.sectors = sectors )
+      this.sectorSvc.get( false ).then( sectors => this.autoselectSector( sectors ))
       this.subsectorSvc.get( idSector )
-        .then( subsectors => this.subsectors = subsectors )
+      .then( subsectors => this.autoselectSubsector( subsectors ))
     } else
     {
       this.subsectorSvc.sectorsNsub()
-        .then( sectorsNsub => this.subsectors = sectorsNsub )
+        .then( sectorsNsub => this.autoselectSubsector( sectorsNsub ))
     }
+  }
+
+  autoselectSector( list: ISector[] )
+  {
+    this.sectors = list
+
+    if( this.sector )
+      list.forEach( ( item: ISubSector ) => {
+        if( item.id == this.sector )
+          this.sectorSlctd = item
+      })
+  }
+
+  autoselectSubsector( list: ISubSector[] )
+  {
+    this.subsectors = list
+
+    if( this.subsector )
+      list.forEach( ( item: ISubSector ) => {
+        if( item.id == this.subsector )
+          this.subsectorSlctd = item
+      })
   }
 
   set( sector?: number , subsector?: number )
