@@ -66,7 +66,7 @@ export class AdviseCRUDPage implements OnInit {
     this.paramsUrl = this.actRoute.snapshot.params;
 
     /* If user not logged, can't create  */
-    if (!(await this.sessionSvc.isLogged)) {
+    if (!(await this.sessionSvc.isLogged())) {
       this.kickOff();
       return;
     }
@@ -142,6 +142,7 @@ export class AdviseCRUDPage implements OnInit {
     this.sectors.clear();
     this.fileSelected(null);
     this.form.reset();
+    this.id_reference = null
   }
 
   fileSelected(file: IFile) {
@@ -176,7 +177,9 @@ export class AdviseCRUDPage implements OnInit {
       this.toastSvc.show( 'pages.posts.advises.create.error.title', true )
       return false
     } */
-    if ((this.content?.html || '').length < 4) {
+
+    // if 'iAdvise.id_advise' || 'id_reference' -> Is referencing, no need to have comment
+    if ((this.content?.html || '').length < 4 && !this.iAdvise?.id_advise && !this.id_reference ) {
       this.toastSvc.show('pages.posts.advises.create.error.content', true);
       return false;
     }
