@@ -5,10 +5,10 @@
     --padding-bottom: 10px;
     --padding-start: 10px;
 }
-.padding-top, .pad-t, .pad-t10 { padding-top: 10px; --padding-top: 10px; --inner-padding-top: 10px; }
-.padding-end, .pad-e, .pad-e10 { padding-right: 10px; --padding-end: 10px; --inner-padding-top: 10px; }
-.padding-bottom, .pad-b, .pad-b10 { padding-bottom: 10px; --padding-bottom: 10px; --inner-padding-top: 10px; }
-.padding-start, .pad-s, .pad-s10 { padding-left: 10px; --padding-start: 10px; --inner-padding-top: 10px; }
+.padding-top, .pad-t, .pad-t10, .pad-tb-10 { padding-top: 10px; --padding-top: 10px; --inner-padding-top: 10px; }
+.padding-end, .pad-e, .pad-e10, .pad-se-10 { padding-right: 10px; --padding-end: 10px; --inner-padding-top: 10px; }
+.padding-bottom, .pad-b, .pad-b10, .pad-tb-10 { padding-bottom: 10px; --padding-bottom: 10px; --inner-padding-top: 10px; }
+.padding-start, .pad-s, .pad-s10, .pad-se-10 { padding-left: 10px; --padding-start: 10px; --inner-padding-top: 10px; }
 
 .pad-1, .pad-t1, .pad-tb-1 { padding-top: 1px; --padding-top: 1px; --inner-padding-top: 1px; }
 .pad-1, .pad-e1, .pad-se-1 { padding-right: 1px; --padding-end: 1px; --inner-padding-end: 1px; }
