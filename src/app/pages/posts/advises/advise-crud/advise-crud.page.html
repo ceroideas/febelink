@@ -68,8 +68,8 @@
           *ngIf="reference"
           name="close-circle-outline"
           color="primary"
-          class="no-padding wh-30 shadow-light marg-t10 relativism"
-          (click)="id_reference = null"
+          class="no-padding wh-30 shadow-light marg-t10 relativism pointer"
+          (click)="id_reference = null; iAdvise.id_advise = null"
         ></ion-icon>
         <!-- Reference -->
         <app-post-summary-component
