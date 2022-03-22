@@ -2,6 +2,7 @@
   [class]="'w-full ' + ( clase || '' ) + ( !transparent ? '' : 'no-shadow no-pad no-marg' )"
   [color]="!transparent ? 'febelink' : 'transparent'"
   (click)="toggleFollow()"
+  *ngIf="isLogged"
 >
   <!-- Spinner -->
   <ion-spinner
