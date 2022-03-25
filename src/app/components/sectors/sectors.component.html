@@ -15,6 +15,7 @@
           [items]="sectors"
           [canSearch]="true"
           [canClear]="true"
+          (onClose)="onCloseSector( $event )"
           (onChange)="onChangeSector( $event )">
         </ionic-selectable>
       </ion-item>
@@ -37,6 +38,7 @@
           [items]="subsectors"
           [canSearch]="true"
           [canClear]="true"
+          (onClose)="onCloseSubsector( $event )"
           (onChange)="onChangeSubsector( $event )">
         </ionic-selectable>
       </ion-item>
