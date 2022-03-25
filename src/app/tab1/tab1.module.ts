@@ -5,6 +5,7 @@ import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { Tab1Page } from './tab1.page';
+import { AssistantModule } from './assistant/assistant.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { Tab1Page } from './tab1.page';
     ComponentsModule,
     IonicSelectableModule,
     Tab1PageRoutingModule,
+    AssistantModule,
   ],
   declarations: [Tab1Page],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
