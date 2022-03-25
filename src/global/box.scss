@@ -55,6 +55,7 @@
 .h-30, .wh-30 { height: 30px; --height: 30px; }
 .w-35, .wh-35 { height: 35px; --height: 35px; }
 .h-40, .wh-40 { height: 40px; --height: 40px; }
+.h-200 { height: 200px; --height: 200px; }
 .h-full, .wh-full { height: 100%; --height: 100; }
 .h-social-media, .wh-social-media { height: 360px; --height: 360px; max-height: 360px; }
 
@@ -74,4 +75,8 @@
 }
 
 // Visibility
-.invisible { display: none; }
+.gone { display: none; }
+.invisible {
+    visibility: hidden;
+    height: 0px; --height: 0px;
+}
