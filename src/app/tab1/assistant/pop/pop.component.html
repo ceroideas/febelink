@@ -1,0 +1,64 @@
+<!-- Header -->
+<ion-header>
+    <ion-toolbar color="febelink">
+        <!-- Back Button -->
+        <ion-buttons slot="start">
+            <ion-button (click)="back()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+      </ion-buttons>
+      <!-- Title -->
+      <ion-title>{{ 'tabs.tab1.pop.head' | translate }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<!-- Content -->
+<ion-content class="no-marg no-pad">
+    <ion-grid class="no-pad">
+        <!-- Sector > Subsector -->
+        <ion-row class="marg-10" *ngIf="id_sector">
+            <ion-label color="febelink" class="font-14 pointer" (click)="clearSector()">
+                {{ sector }}
+            </ion-label>
+            <ion-label color="febelink" class="font-14 marg-s10 marg-e10" *ngIf="subsector">></ion-label>
+            <ion-label color="febelink" class="font-14 pointer" *ngIf="subsector" (click)="clearSubsector()">
+                {{ subsector }}
+            </ion-label>
+        </ion-row>
+
+        <!-- Loading -->
+        <app-loading [isLoading]="isLoading"></app-loading>
+
+        <!-- Search Keywords -->
+        <ion-row *ngIf="!id_sector">
+            <app-assistant-search #search
+                class="w-full" clase="autocomplete"
+                (OnGotKeys)="OnGotKeys( $event )"
+            ></app-assistant-search>
+        </ion-row>
+
+        <!-- Subsector -->
+        <ion-row *ngIf="id_sector && !id_subsector">
+            <ion-list mode="ios" class="w-full" *ngIf="subsectors">
+                <ion-item
+                    (click)="OnSubsectorSelected( subsector )"
+                    *ngFor="let subsector of subsectors"
+                    class="pointer"
+                    style="font-size: 16px"
+                >
+                    <ion-icon slot="start" name="create-outline"></ion-icon>
+                    <span [innerHTML]="subsector.nombre"></span>
+            </ion-item>
+            </ion-list>
+        </ion-row>
+
+        <!-- Form -->
+        <ion-row *ngIf="id_sector && id_subsector">
+            <app-assistant-form
+                class="w-full"
+                (OnSubmit)="publish( $event )"
+                (OnCancel)="dismiss()"
+            ></app-assistant-form>
+        </ion-row>
+    </ion-grid>
+</ion-content>
