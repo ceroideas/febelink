@@ -245,7 +245,12 @@
       "messageSearchDone": "A search has been made, look at your panel!",
       "messageSearchSent": "Search sent. You will soon receive your answers. Good luck!",
       "errorPublishSearch": "There was an error in publishing the search.",
-      "errorMissingProfileInfo": "You must fill in your profile fields to perform the searches."
+      "errorMissingProfileInfo": "You must fill in your profile fields to perform the searches.",
+      "pop": {
+        "head": "Publish new Search",
+        "title": "Cancel Search",
+        "msg": "Do you confirm that you want to leave this search?"
+      }
     },
     "tab2": {
       "filters": "Filters",

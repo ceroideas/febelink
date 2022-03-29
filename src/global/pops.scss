@@ -166,6 +166,16 @@
         --height: 400px;
     }
 }
+.pop-h-80 {
+    .popover-content{
+        max-height: 80%; --max-height: 80%;
+        height: 80%; --height: 80%;
+    }
+    .modal-wrapper {
+        max-height: 80%; --max-height: 80%;
+        height: 80%; --height: 80%;
+    }
+}
 
 /* Border Radius */
 .pop-br-5 {

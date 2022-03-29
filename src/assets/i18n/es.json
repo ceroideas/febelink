@@ -239,13 +239,19 @@
   },
   "tabs": {
     "tab1": {
-      "labelPhoto": "¿Quieres añadir una foto?",
-      "labelAnswers": "¿Cuántas respuestas quieres recibir?",
+      "labelPhoto": "(Opcial) ¿Desea añadir una foto para personalizar su busqueda?",
+      "labelAnswers": "(Opcional) ¿Desea limitar el número de respuestas recibidas?",
+      "labelDescription": "(Opcional) ¿Deseña añadir una descripción a su búsqueda?",
       "buttonSend": "Enviar búsqueda",
       "messageSearchDone": "Se ha realizado una búsqueda, mira en tu panel!",
       "messageSearchSent": "Búsqueda enviada. En breve recibirás tus respuestas. ¡Suerte!",
       "errorPublishSearch": "Hubo un error al publicar la búsqueda.",
-      "errorMissingProfileInfo": "Debes rellenar los campos de tu perfil para realizar las búsquedas."
+      "errorMissingProfileInfo": "Debes rellenar los campos de tu perfil para realizar las búsquedas.",
+      "pop": {
+        "head": "Publicar nueva Búsqueda",
+        "title": "Cancelar Búsqueda",
+        "msg": "¿Confirmas que quieres abandonar esta búsqueda?"
+      }
     },
     "tab2": {
       "filters": "Filtros",

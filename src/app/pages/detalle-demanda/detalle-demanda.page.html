@@ -17,9 +17,14 @@
         <ion-icon slot="start" name="chatbubbles"></ion-icon>
         {{ 'menu.tabs.chat' | translate }}
       </ion-button>
-      <ion-button *ngIf="perfil === null" class="btn-header" (click)="irA('/menu/perfil')">
+      <ion-button
+        *ngIf="perfil === null"
+        class="btn-header"
+        (click)="irA('/menu/perfil')"
+      >
         <ion-icon slot="start" name="person"></ion-icon>
-        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}
+        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') |
+        translate }}
       </ion-button>
     </ion-buttons>
 
@@ -51,8 +56,16 @@
         <ion-col size="12" size-sm="6" class="no-padding">
           <ion-slides>
             <ion-slide>
-              <img [src]="demanda?.imagen" *ngIf="demanda?.imagen" (error)="handleImgError( $event )" />
-              <ion-img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" appImgErrorFallback></ion-img>
+              <img
+                [src]="demanda?.imagen"
+                *ngIf="demanda?.imagen"
+                (error)="handleImgError( $event )"
+              />
+              <ion-img
+                src="assets/imgs/4.jpg"
+                *ngIf="!demanda?.imagen"
+                appImgErrorFallback
+              ></ion-img>
             </ion-slide>
           </ion-slides>
         </ion-col>
@@ -66,22 +79,42 @@
 
           <hr />
 
-          <ion-button class="btn-info" expand="full" color="febelink" (click)="irAPerfil()">
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="irAPerfil()"
+          >
             <ion-icon name="checkmark-circle" item-left></ion-icon>
             &nbsp;VER PERFIL
           </ion-button>
 
-          <ion-button class="btn-info" expand="full" color="febelink" (click)="viewChat()">
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="viewChat()"
+          >
             <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
             &nbsp;CHAT
           </ion-button>
 
-          <ion-button class="btn-info" expand="full" color="febelink" (click)="share(demanda?.id,$event)">
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="share(demanda?.id,$event)"
+          >
             <ion-icon name="share-social" item-left></ion-icon>
             &nbsp;COMPARTIR
           </ion-button>
 
-          <ion-button class="btn-info" expand="full" color="febelink" (click)="reportUser()">
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="reportUser()"
+          >
             <ion-icon name="alert-outline"></ion-icon>
             &nbsp;{{ 'common.buttons.report' | translate }}
           </ion-button>
@@ -95,7 +128,7 @@
           <hr />
           <div class="apartado">
             <h2 class="title">Descripción</h2>
-            <p class="desc">{{demanda?.descripcion}}</p>
+            <em class="desc">{{demanda?.descripcion || "Sin Descripción"}}</em>
           </div>
         </ion-col>
       </ion-row>
@@ -111,42 +144,53 @@
               <em class="desc"
                 >Búsquedas relacionadas que te pueden interesar</em
               >
-              <ion-list  class="results-list">
-                <ion-item lines="none" (click)="detalleDemanda(demanda)"
-                *ngFor="let demanda of demandasRelacionadas"
-              >
-                <ion-avatar slot="start">
-                  <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
-                  <ion-img [src]="demanda?.imagen" *ngIf="demanda?.imagen" appImgErrorFallback></ion-img>
-                </ion-avatar>
-                <ion-label>
-                  <h2><strong>{{demanda?.nombre}}</strong></h2>
-                  <em class="desc">{{demanda?.descripcion}}</em>
-                
-                  <div class="social">
-                    <span class="share" *ngIf="demanda?.valoracion==null">
-                      <ion-icon name="star"></ion-icon> 0 / 5
-                    </span>
-                    <span class="share" *ngIf="demanda?.valoracion!=null">
-                      <ion-icon name="star"></ion-icon> {{demanda?.valoracion}} / 5
-                    </span>
-                    <span class="share">
-                      <ion-icon class="share" name="share-social"></ion-icon>
-                      <ion-icon class="share" name="eye"></ion-icon>
-                    </span>
-                  </div>
-                </ion-label>
-                <ion-label slot="end">
-                  <em style="padding: 5px">{{demanda?.user?.nick}}</em>
-                </ion-label>
-                <ion-icon slot="end" [color]="demanda.favorito ? 'danger' : 'grey'" [name]="demanda.favorito ? 'heart' : 'heart-outline'" (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"></ion-icon>
-              </ion-item>
+              <ion-list class="results-list">
+                <ion-item
+                  lines="none"
+                  (click)="detalleDemanda(demanda)"
+                  *ngFor="let demanda of demandasRelacionadas"
+                >
+                  <ion-avatar slot="start">
+                    <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+                    <ion-img
+                      [src]="demanda?.imagen"
+                      *ngIf="demanda?.imagen"
+                      appImgErrorFallback
+                    ></ion-img>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2><strong>{{demanda?.nombre}}</strong></h2>
+                    <em class="desc">{{demanda?.descripcion}}</em>
+
+                    <div class="social">
+                      <span class="share" *ngIf="demanda?.valoracion==null">
+                        <ion-icon name="star"></ion-icon> 0 / 5
+                      </span>
+                      <span class="share" *ngIf="demanda?.valoracion!=null">
+                        <ion-icon name="star"></ion-icon>
+                        {{demanda?.valoracion}} / 5
+                      </span>
+                      <span class="share">
+                        <ion-icon class="share" name="share-social"></ion-icon>
+                        <ion-icon class="share" name="eye"></ion-icon>
+                      </span>
+                    </div>
+                  </ion-label>
+                  <ion-label slot="end">
+                    <em style="padding: 5px">{{demanda?.user?.nick}}</em>
+                  </ion-label>
+                  <ion-icon
+                    slot="end"
+                    [color]="demanda.favorito ? 'danger' : 'grey'"
+                    [name]="demanda.favorito ? 'heart' : 'heart-outline'"
+                    (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"
+                  ></ion-icon>
+                </ion-item>
               </ion-list>
             </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-      
     </div>
   </div>
 </ion-content>
