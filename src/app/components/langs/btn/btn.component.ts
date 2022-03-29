@@ -16,6 +16,7 @@ export class LangBtnComponent implements OnInit {
   @Input() langIdSelected: number
   @Input() changeAppLang: boolean = true;
   @Input() disabled: boolean = false;
+  @Input() initNull: boolean = false;
   @Output() onLangSelected: EventEmitter<ILang> = new EventEmitter()
 
   constructor(
@@ -24,7 +25,7 @@ export class LangBtnComponent implements OnInit {
     private translateService: TranslateConfigService ) { }
 
   async ngOnInit() {
-    this.langSelected = await this.getLang();
+    this.langSelected = this.initNull ? null : await this.getLang();
   }
 
   ngOnChanges( changes: SimpleChanges ): void {
@@ -38,6 +39,11 @@ export class LangBtnComponent implements OnInit {
   {
     return this.langSelected ? this.langSelected :
       <ILang> await ILangDEFAULTS.getCurrentLang( this.translateService );
+  }
+
+  async getLangSelected(): Promise<ILang>
+  {
+    return this.langSelected;
   }
 
 
@@ -74,8 +80,13 @@ export class LangBtnComponent implements OnInit {
     this.onLangSelected.emit( this.langSelected );
   }
 
-  async id(): Promise<number>
+  async id( ifNull: number | null = 1 ): Promise<number>
   {
-    return (await this.getLang() )?.id || 1
+    return (await this.getLang() )?.id || ifNull
+  }
+
+  async idSelected( ifNull: number | null = 1 ): Promise<number>
+  {
+    return (await this.getLangSelected() )?.id || ifNull
   }
 }

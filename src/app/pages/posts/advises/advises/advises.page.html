@@ -66,6 +66,7 @@
             <ion-col size="6" class="no-margin no-padding tx-end">
               <app-lang-btn #lang
                 [changeAppLang]="false"
+                [initNull]="true"
                 (onLangSelected)="clear2search( searchBar.value )"
               ></app-lang-btn>
             </ion-col>

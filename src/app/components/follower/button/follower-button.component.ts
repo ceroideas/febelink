@@ -18,6 +18,7 @@ export class FollowerButtonComponent implements OnInit {
   @Input() transparent: boolean = false
 
   isLoading: boolean = false
+  isLogged: boolean = null
 
   constructor(
     private userSessionSvc: UserSessionSvc,
@@ -32,6 +33,9 @@ export class FollowerButtonComponent implements OnInit {
 
   async get()
   {
+    if( this.isLogged == null ) this.isLogged = await this.userSessionSvc.isLogged()
+    if( !this.isLogged ) return
+
     this.isLoading = true
 
     const { response, error } = await this.followerSvc.get(

@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdvisePageRoutingModule } from '../advises/advise-routing.module';
 
-import { PostBottomBarComponent } from './bottom-bar.component/bottom-bar.component';
+import { PostBottomBarComponent } from './bottom-bar/bottom-bar.component';
 import { PostComponent } from './post/post.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
