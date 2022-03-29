@@ -12,6 +12,12 @@ export class SectorsComponent implements OnInit
 {
   @Output() OnSectorChange: EventEmitter<number> = new EventEmitter()
   @Output() OnSubsectorChange: EventEmitter<number> = new EventEmitter()
+  
+  @Output() OnGotSectors: EventEmitter<ISector[]> = new EventEmitter()
+  @Output() OnGotSubsectors: EventEmitter<ISubSector[]> = new EventEmitter()
+  
+  @Output() OnCloseSector: EventEmitter<any> = new EventEmitter()
+  @Output() OnCloseSubsector: EventEmitter<any> = new EventEmitter()
 
   sectors: ISector[] = []
   subsectors: ISubSector[] = []
@@ -39,14 +45,40 @@ export class SectorsComponent implements OnInit
   load( idSector?: number ) {
     if( this.showSector )
     {
-      this.sectorSvc.get( false ).then( sectors => this.sectors = sectors )
+      this.sectorSvc.get( false ).then( sectors => this.autoselectSector( sectors ))
       this.subsectorSvc.get( idSector )
-        .then( subsectors => this.subsectors = subsectors )
+        .then( subsectors => this.autoselectSubsector( subsectors ))
     } else
     {
       this.subsectorSvc.sectorsNsub()
-        .then( sectorsNsub => this.subsectors = sectorsNsub )
+        .then( sectorsNsub => this.autoselectSubsector( sectorsNsub ))
     }
+  }
+
+  autoselectSector( list: ISector[] )
+  {
+    this.sectors = list
+
+    if( this.sector )
+      list.forEach( ( item: ISubSector ) => {
+        if( item.id == this.sector )
+          this.sectorSlctd = item
+      })
+    
+    this.OnGotSectors.emit( list )
+  }
+
+  autoselectSubsector( list: ISubSector[] )
+  {
+    this.subsectors = list
+
+    if( this.subsector )
+      list.forEach( ( item: ISubSector ) => {
+        if( item.id == this.subsector )
+          this.subsectorSlctd = item
+      })
+    
+    this.OnGotSubsectors.emit( list )
   }
 
   set( sector?: number , subsector?: number )
@@ -69,6 +101,16 @@ export class SectorsComponent implements OnInit
     this.subsector = event.value?.id
     if( this.OnSubsectorChange ) this.OnSubsectorChange.emit( this.subsector )
     if( !this.showSector ) this.sector = this.subsectorSlctd.id_sector
+  }
+
+  /* OnClose */
+  onCloseSector( event )
+  {
+    this.OnCloseSector.emit( event )
+  }
+  onCloseSubsector( event )
+  {
+    this.OnCloseSubsector.emit( event )
   }
 
   // Remove Selection
