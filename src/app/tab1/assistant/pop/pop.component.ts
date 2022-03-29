@@ -12,151 +12,155 @@ import { IForm, IKeywords } from '../models/assistant.model';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { IUser } from 'src/app/models/user.model';
+import { AssistantSearchSvc } from '../services/assistant-search.service';
 
 @Component({
   selector: 'app-assistant-pop',
   templateUrl: './pop.component.html',
   styleUrls: ['./pop.component.scss'],
 })
-export class AssistantPopComponent implements OnInit
-{
+export class AssistantPopComponent implements OnInit {
   @Input() iKeywords: IKeywords = {
-    selectorEnabled: false
-  }
-  @Input() searchText: string = ''
+    selectorEnabled: false,
+  };
+  @Input() searchText: string = '';
 
-  @Input() id_sector: number
-  @Input() sector: string
+  @Input() id_sector: number;
+  @Input() sector: string;
 
-  @Input() id_subsector: number
-  @Input() subsector: string
+  @Input() id_subsector: number;
+  @Input() subsector: string;
 
-  @Input() subsectors: ISubSector[]
+  @Input() subsectors: ISubSector[];
 
-  @Input() perfil: IUser
-  
-  @ViewChild( "search" ) searchComponent: AssistantSearchComponent
+  @Input() perfil: IUser;
 
-  isLoading: boolean = false
+  @ViewChild('search') searchComponent: AssistantSearchComponent;
+
+  isLoading: boolean = false;
 
   constructor(
-      private popCrtl: PopoverController
-    , private alertSvc: AlertSvc
-    , private subsectorSvc: SubsectorService
-    , private authSvc: AuthenticationService
-    , private userSvc: UserService
-    , private loadingSvc: LoadingSvc
-    , private toastSvc: ToastSvc
-    , private apiSvc: ApiService
-    , private translateSvc: TranslateConfigService
-  ) {}
+    private popCrtl: PopoverController,
+    private alertSvc: AlertSvc,
+    private subsectorSvc: SubsectorService,
+    private authSvc: AuthenticationService,
+    private userSvc: UserService,
+    private loadingSvc: LoadingSvc,
+    private toastSvc: ToastSvc,
+    private apiSvc: ApiService,
+    private translateSvc: TranslateConfigService,
+    public assistantSearchSvc: AssistantSearchSvc
+  ) {
+    console.log(
+      'Testeo la inicialización de KEYS: ',
+      this.assistantSearchSvc.keys()
+    );
+  }
 
   ngOnInit() {}
-  
-  ngAfterContentInit()
-  {
-    if( !this.id_sector )
-      this.searchComponent.text( this.searchText )
-    else if( !this.id_subsector )
-      this.getSubsectors()
+
+  ngAfterContentInit() {
+    if (!this.id_subsector) this.getSubsectors();
   }
 
-  back()
-  {
-    if( this.id_subsector ) { this.id_subsector = null; this.subsector = null }
-    else if( this.id_sector ) { this.id_sector = null; this.sector = null }
-    else this.dismiss()
+  back() {
+    if (this.id_subsector) {
+      this.id_subsector = null;
+      this.subsector = null;
+    } else if (this.id_sector) {
+      this.id_sector = null;
+      this.sector = null;
+    } else this.dismiss();
   }
 
-  dismiss( data: any = {} )
-  {
-    this.popCrtl.dismiss( data )
+  dismiss(data: any = {}) {
+    this.popCrtl.dismiss(data);
   }
 
-  getSubsectors()
-  {
-    this.isLoading = true
-    this.subsectorSvc.get( this.id_sector )
-        .then( subsectors => {
-          console.log({ subsectors })
-          this.subsectors = subsectors
-          this.isLoading = false
-        })
+  getSubsectors() {
+    this.isLoading = true;
+    this.subsectorSvc.get(this.id_sector).then((subsectors) => {
+      console.log({ subsectors });
+      this.subsectors = subsectors;
+      this.isLoading = false;
+    });
   }
 
-  clearSector()
-  {
-    this.clearSubsector()
-    this.id_sector = null
-    this.sector = null
+  clearSector() {
+    this.clearSubsector();
+    this.id_sector = null;
+    this.sector = null;
   }
-  clearSubsector()
-  {
-    this.id_subsector = null
-    this.subsector = null
+  clearSubsector() {
+    this.id_subsector = null;
+    this.subsector = null;
   }
 
-  OnGotKeys( data )
-  {
-    this.id_sector = data?.sector_id
-    this.sector = data?.sector_nombre
-    
-    this.id_subsector = data?.subsector_id
-    this.subsector = data?.subsector_nombre
-    this.getSubsectors()
+  OnGotKeys(data) {
+    this.id_sector = data?.sector_id;
+    this.sector = data?.sector_nombre;
+
+    this.id_subsector = data?.subsector_id;
+    this.subsector = data?.subsector_nombre;
+    this.getSubsectors();
   }
 
-  OnSubsectorSelected( subsector: ISubSector )
-  {
-    this.id_subsector = subsector.id
-    this.subsector = subsector.nombre
+  OnSubsectorSelected(subsector: ISubSector) {
+    this.id_subsector = subsector.id;
+    this.subsector = subsector.nombre;
   }
 
-  async publish( iForm: IForm )
-  {
-    if( !this.perfil )
-    {
-      this.authSvc.userNeedsToRegister()
-      return
+  async publish(iForm: IForm) {
+    if (!this.perfil) {
+      this.authSvc.userNeedsToRegister();
+      return;
     }
 
-    if( this.userSvc.checkUserDataComplete( this.perfil ))
-    {
+    if (this.userSvc.checkUserDataComplete(this.perfil)) {
       this.loadingSvc.show();
 
-      ( await this.apiSvc.publicarDemanda(
-        this.searchText,
-        iForm.descript,
-        this.id_sector,
-        this.id_subsector,
-        iForm.ofertas_restantes,
-        iForm.file?.src
-      )).subscribe( async resp =>
-      {
-        await this.apiSvc.enviarNotificacionAOfertantes(
-          this.translateSvc.instant( 'tabs.tab1.messageSearchDone' ),
-          `${this.translateSvc.instant( 'common.labelTitle' )}:  ${this.searchText} \n${this.translateSvc.instant( 'common.labelDescription')}: ${iForm.descript}`,
+      (
+        await this.apiSvc.publicarDemanda(
+          this.searchText,
+          iForm.descript,
           this.id_sector,
           this.id_subsector,
-          resp.id
+          iForm.ofertas_restantes,
+          iForm.file?.src
         )
+      ).subscribe(
+        async (resp) => {
+          await this.apiSvc.enviarNotificacionAOfertantes(
+            this.translateSvc.instant('tabs.tab1.messageSearchDone'),
+            `${this.translateSvc.instant('common.labelTitle')}:  ${
+              this.searchText
+            } \n${this.translateSvc.instant('common.labelDescription')}: ${
+              iForm.descript
+            }`,
+            this.id_sector,
+            this.id_subsector,
+            resp.id
+          );
 
-        this.loadingSvc.dismiss()
-        this.dismiss()
-        this.toastSvc.show( 'tabs.tab1.messageSearchSent', true )
-      }, err => {
-        this.loadingSvc.dismiss()
-        this.toastSvc.show( 'tabs.tab1.errorPublishSearch' )
-      })
+          this.loadingSvc.dismiss();
+          this.dismiss();
+          this.toastSvc.show('tabs.tab1.messageSearchSent', true);
+        },
+        (err) => {
+          this.loadingSvc.dismiss();
+          this.toastSvc.show('tabs.tab1.errorPublishSearch');
+        }
+      );
     }
   }
 
-  async cancel()
-  {
-    if( await this.alertSvc.confirm({
-      title: 'tabs.tab1.pop.title',
-      msg: 'tabs.tab1.pop.msg',
-    } as IAlert ))
-      this.dismiss()
+  async cancel() {
+    if (
+      await this.alertSvc.confirm({
+        title: 'tabs.tab1.pop.title',
+        msg: 'tabs.tab1.pop.msg',
+      } as IAlert)
+    )
+      this.dismiss();
   }
 }

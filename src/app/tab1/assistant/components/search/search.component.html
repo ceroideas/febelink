@@ -1,34 +1,37 @@
-<ion-grid [class]="'no-pad ' + ( clase || '' )">
-    <!-- SearchBar -->
-    <ion-row *ngIf="showSearchbar">
-        <!-- (ionBlur)="assistantSearchSvc.removeFocus()" -->
-        <ion-searchbar
-            class="searchbar"
-            placeholder="{{ 'common.publishPlaceholder' | translate }}"
-            [(ngModel)]="searchText"
-            (ionFocus)="assistantSearchSvc.addFocus()"
-            (ionChange)="assistantSearchSvc.search( searchText )"
-            (ionClear)="assistantSearchSvc.clearBtn()"
-            (keyup.enter)="OnEnterPress( $event )"
-            debounce="500"
-        ></ion-searchbar>
-    </ion-row>
+<ion-grid [class]="'no-pad ' + (clase || '')">
+  <!-- SearchBar -->
+  <ion-row *ngIf="showSearchbar">
+    <!-- (ionBlur)="assistantSearchSvc.removeFocus()" -->
+    <ion-searchbar
+      class="searchbar"
+      placeholder="{{ 'common.publishPlaceholder' | translate }}"
+      [(ngModel)]="searchText"
+      (ionFocus)="assistantSearchSvc.addFocus()"
+      (ionChange)="assistantSearchSvc.search(searchText)"
+      (ionClear)="assistantSearchSvc.clearBtn()"
+      (keyup.enter)="OnEnterPress($event)"
+      debounce="500"
+    ></ion-searchbar>
+  </ion-row>
 
-    <!-- Loading -->
-    <app-loading [isLoading]="assistantSearchSvc.isLoading"></app-loading>
+  <!-- Loading -->
+  <!-- <app-loading [isLoading]="assistantSearchSvc.isLoading"></app-loading> -->
 
-    <!-- Item Options -->
-    <div class="keys-dropdown">
-        <ion-list mode="ios" *ngIf="searchText.length > 2 && assistantSearchSvc.hasKeys()">
-            <ion-item
-                (click)="assistantSearchSvc.getSectorsByKeys( key )"
-                *ngFor="let key of assistantSearchSvc.keys()"
-                class="pointer"
-                style="font-size: 16px"
-            >
-            <ion-icon slot="start" name="search-outline"></ion-icon>
-            <span [innerHTML]="key.name"></span>
-        </ion-item>
-        </ion-list>
-    </div>
+  <!-- Item Options -->
+  <div class="keys-dropdown">
+    <ion-list
+      mode="ios"
+      *ngIf="searchText.length > 2 && assistantSearchSvc.hasKeys()"
+    >
+      <ion-item
+        (click)="assistantSearchSvc.getSectorsByKeys(key)"
+        *ngFor="let key of assistantSearchSvc.keys()"
+        class="pointer"
+        style="font-size: 16px"
+      >
+        <ion-icon slot="start" name="search-outline"></ion-icon>
+        <span [innerHTML]="key.name"></span>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-grid>

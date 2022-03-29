@@ -7,54 +7,49 @@ import { AssistantSearchSvc } from '../../services/assistant-search.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class AssistantSearchComponent implements OnInit
-{
-  @Input() showSearchbar: boolean = true
-  @Input() searchText: string = ''
-  @Input() clase: string = ''
+export class AssistantSearchComponent implements OnInit {
+  @Input() showSearchbar: boolean = true;
+  @Input() searchText: string = '';
+  @Input() clase: string = '';
 
-  @Output() OnGotKeys: EventEmitter<number> = new EventEmitter()
-  @Output() OnEnter: EventEmitter<any> = new EventEmitter()
+  @Output() OnGotKeys: EventEmitter<number> = new EventEmitter();
+  @Output() OnEnter: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-      public assistantSearchSvc: AssistantSearchSvc
-  ) {
-    this.assistantSearchSvc.OnGotKeys.unsubscribe() // In case there is a previous subscrioption
-    this.assistantSearchSvc.OnGotKeys = this.OnGotKeys
+  constructor(public assistantSearchSvc: AssistantSearchSvc) {
+    this.assistantSearchSvc.OnGotKeys.unsubscribe(); // In case there is a previous subscrioption
+    this.assistantSearchSvc.OnGotKeys = this.OnGotKeys;
   }
 
   ngOnInit() {}
 
-  get(): IKeywords
-  {
-    return this.assistantSearchSvc.get()
+  get(): IKeywords {
+    return this.assistantSearchSvc.get();
   }
 
-  text( text?: string ): string
-  {
-    if( text != undefined ) this.searchText = text
+  text(text?: string): string {
+    if (text != undefined) this.searchText = text;
     // this.assistantSearchSvc.searchText( text )
-    return this.searchText || ''
+    return this.searchText || '';
   }
 
-  getSectorsByKeys( keys?: IKeys )
-  {
-    this.assistantSearchSvc.getSectorsByKeys( keys || {
-      name: this.assistantSearchSvc.highlight( this.searchText ),
-      value: this.searchText
-    })
+  getSectorsByKeys(keys?: IKeys) {
+    this.assistantSearchSvc.getSectorsByKeys(
+      keys || {
+        name: this.assistantSearchSvc.highlight(this.searchText),
+        value: this.searchText,
+      }
+    );
   }
 
-  async OnEnterPress( $event )
-  {
-    await this.assistantSearchSvc.detectKeyPressed( $event )
+  async OnEnterPress($event) {
+    console.log('OnEnterPress ', this.searchText);
+    await this.assistantSearchSvc.detectKeyPressed($event, this.searchText);
     // Will only emit when enter promise resolved
-    this.OnEnter.emit()
+    this.OnEnter.emit();
   }
 
-  clear()
-  {
-    this.searchText = ''
-    this.assistantSearchSvc.clear()
+  clear() {
+    this.searchText = '';
+    this.assistantSearchSvc.clear();
   }
 }
