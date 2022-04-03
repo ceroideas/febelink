@@ -4,6 +4,12 @@
     <form [formGroup]="form" (ngSubmit)="submit()">
       <!-- Offers Number to Receive -->
       <ion-list class="ion-no-padding" lines="none">
+        <!-- Title -->
+        <ion-label
+          ><b class="searchQuestionLabel replyLimit">
+            {{ 'tabs.tab1.labelAnswers' | translate }}
+          </b>
+        </ion-label>
         <ion-radio-group formControlName="ofertas_restantes">
           <!-- Title -->
           <ion-list-header
