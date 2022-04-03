@@ -1,4 +1,7 @@
-<div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
+<div
+  class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light"
+  (click)="navigateToPost()"
+>
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10">
       <ion-col [size]="!showFollow ? 10 : 8" class="no-padding">
@@ -11,57 +14,92 @@
           [OnClickShowProfile]="true"
         ></app-user-item>
       </ion-col>
-  
+
       <ion-col [size]="!showFollow ? 2 : 4" class="no-padding">
         <!-- Post Language -->
         <ion-row class="align-end" *ngIf="showLang">
-          <app-lang-btn [langIdSelected]="iAdvise?.lang" [disabled]="true"></app-lang-btn>
+          <app-lang-btn
+            [langIdSelected]="iAdvise?.lang"
+            [disabled]="true"
+          ></app-lang-btn>
         </ion-row>
-        
+
         <!-- Options Menu -->
         <ion-row class="align-end" *ngIf="showOpts">
-          <ion-button icon-only color="transparent"
+          <ion-button
+            icon-only
+            color="transparent"
             class="no-padding no-shadow no-margin"
-            (click)="options( $event )"
+            (click)="options($event)"
           >
-            <ion-icon class="font-30" src="assets/icon/svg/options.svg"></ion-icon>
+            <ion-icon
+              class="font-30"
+              src="assets/icon/svg/options.svg"
+            ></ion-icon>
           </ion-button>
         </ion-row>
-  
+
         <ion-row class="align-end">
           <!-- If has Edited The Post -->
-          <ion-label class="hint font-13" *ngIf="iAdvise.created_at != iAdvise.updated_at">
+          <ion-label
+            class="hint font-13"
+            *ngIf="iAdvise.created_at != iAdvise.updated_at"
+          >
             {{ 'common.labelEdited' | translate }}
           </ion-label>
         </ion-row>
 
         <ion-row class="align-end">
-          <app-follower-button [user]="postUser" [transparent]="true"></app-follower-button>
+          <app-follower-button
+            [user]="postUser"
+            [transparent]="true"
+          ></app-follower-button>
         </ion-row>
       </ion-col>
     </ion-row>
-  
+
     <!-- Sector > Subsector -->
     <ion-row class="marg-s10 marg-e10">
-      <ion-label color="febelink" class="font-14">{{ iAdvise.sector }}</ion-label>
-      <ion-label color="febelink" class="font-14 marg-s10 marg-e10" *ngIf="iAdvise.subsector" >></ion-label>
-      <ion-label color="febelink" class="font-14" *ngIf="iAdvise.subsector">{{ iAdvise.subsector }}</ion-label>
+      <ion-label color="febelink" class="font-14">{{
+        iAdvise.sector
+      }}</ion-label>
+      <ion-label
+        color="febelink"
+        class="font-14 marg-s10 marg-e10"
+        *ngIf="iAdvise.subsector"
+        >></ion-label
+      >
+      <ion-label color="febelink" class="font-14" *ngIf="iAdvise.subsector">{{
+        iAdvise.subsector
+      }}</ion-label>
     </ion-row>
-  
+
     <!-- Title -->
     <ion-row class="one-line marg-t5 marg-s10 marg-e10">
-      <h1 class="no-margin bold-6 font-18 title" [innerHTML]="extractTitle()"></h1>
+      <h1
+        class="no-margin bold-6 font-18 title"
+        [innerHTML]="extractTitle()"
+      ></h1>
     </ion-row>
-  
+
     <!-- Subitle -->
-    <ion-row class="one-line marg-t5 marg-s10 marg-e10" *ngIf="iAdvise.subtitle">
-      <h3 class="no-margin font-16 subtitle" [innerHTML]="iAdvise.subtitle"></h3>
+    <ion-row
+      class="one-line marg-t5 marg-s10 marg-e10"
+      *ngIf="iAdvise.subtitle"
+    >
+      <h3
+        class="no-margin font-16 subtitle"
+        [innerHTML]="iAdvise.subtitle"
+      ></h3>
     </ion-row>
-  
+
     <!-- Summary -->
-    <ion-row class="lines-2 marg-10 marg-t5 inline" *ngIf="iAdvise.summary || !showContent">
+    <ion-row
+      class="lines-2 marg-10 marg-t5 inline"
+      *ngIf="iAdvise.summary || !showContent"
+    >
       <ion-label
-        [class]="'summary ' + ( !iAdvise?.subtitle ? '' : 'hint' )"
+        [class]="'summary ' + (!iAdvise?.subtitle ? '' : 'hint')"
         [innerHTML]="extractSummary()"
       ></ion-label>
     </ion-row>
@@ -76,40 +114,53 @@
         [iAdvise]="oracleRef"
       ></app-post-summary-component>
     </ion-row>
-  
+
     <!-- Media-->
-    <ion-row class="marg-t10 media" color="black" *ngIf="isPostVisible && iAdvise.media_url">
+    <ion-row
+      class="marg-t10 media"
+      color="black"
+      *ngIf="isPostVisible && iAdvise.media_url"
+    >
       <!-- Image -->
       <ion-img
         class="h-social-media marg-se"
         [src]="iAdvise.media_url"
-        *ngIf="fileSvc.isImage( iAdvise.media_ext )"
+        *ngIf="fileSvc.isImage(iAdvise.media_ext)"
       ></ion-img>
 
       <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
-      <video playsinline
+      <video
+        playsinline
         controls
-        *ngIf="fileSvc.isVideo( iAdvise.media_ext )"
+        *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
         class="w-social-media h-social-media media-video"
         [src]="iAdvise.media_url + '#t=0.001'"
         preload="metadata"
       ></video>
     </ion-row>
-  
+
     <!-- Comments -->
-    <ion-row class="marg-5 align-end comments" *ngIf="iAdvise.comments_qant > 0">
-      <em><ion-label
-        class="hint font-12"
-        [innerHTML]="iAdvise.comments_qant + ' ' + ('pages.posts.comments' | translate)"
-      ></ion-label></em>
+    <ion-row
+      class="marg-5 align-end comments"
+      *ngIf="iAdvise.comments_qant > 0"
+    >
+      <em
+        ><ion-label
+          class="hint font-12"
+          [innerHTML]="
+            iAdvise.comments_qant + ' ' + ('pages.posts.comments' | translate)
+          "
+        ></ion-label
+      ></em>
     </ion-row>
-  
+
     <!-- Content -->
     <ion-row class="marg-10 content" *ngIf="showContent && isPostVisible">
       <ion-label [innerHTML]="iAdvise.content"></ion-label>
     </ion-row>
-    
-    <app-post-bottom-bar-component *ngIf="isPostVisible"
+
+    <app-post-bottom-bar-component
+      *ngIf="isPostVisible"
       [id]="id"
       [post]="iAdvise"
       [showSeePost]="showSeePost"
@@ -117,13 +168,17 @@
 
     <!-- Set Post Visible -->
     <ion-row class="align-center" *ngIf="!isPostVisible">
-      <em class="pointer font-12" (click)="isPostVisible = true; areCommentsVisible = false">
+      <em
+        class="pointer font-12"
+        (click)="isPostVisible = true; areCommentsVisible = false"
+      >
         <ion-label color="primary">{{ 'Show Post' | translate }}</ion-label>
       </em>
     </ion-row>
   </ion-grid>
 
-  <app-comments-component #comments
+  <app-comments-component
+    #comments
     [post]="iAdvise"
     [listComments]="listComments"
     [isVisible]="areCommentsVisible"
