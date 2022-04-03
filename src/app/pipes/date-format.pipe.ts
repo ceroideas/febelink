@@ -26,7 +26,9 @@ export class DateFormatPipe implements PipeTransform {
       return '';
     
     try {
-      const date = new Date( value.replace( '-', '/' ));
+      const date = this.isValidDate( value.replace( '-', '/' ))
+          ? new Date( value.replace( '-', '/' ))
+          : new Date( value )
       const day = date.getDate();
       const year = date.getFullYear();
       let month;
@@ -60,5 +62,10 @@ export class DateFormatPipe implements PipeTransform {
     } catch( err ) {
       return value;
     }
+  }
+
+  isValidDate( strDate )
+  {
+    return !isNaN(( new Date( strDate )).getMonth() )
   }
 }
