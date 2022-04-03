@@ -79,7 +79,7 @@ export class Tab4Page {
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,
-    private platform: Platform,
+    public platform: Platform,
     private elementRef: ElementRef,
     private camera: Camera,
     private storage: Storage,
@@ -850,7 +850,9 @@ export class Tab4Page {
 
       if (myFile.size > 307200) {
         this.utilities.showToast(
-          this.translateService.instant('tabs.tab4.errors.imageMaxSize', { max: '300mb' })
+          this.translateService.instant('tabs.tab4.errors.imageMaxSize', {
+            max: '300mb',
+          })
         );
         //reject('Image is too big (max. 300KB)');
         return;
@@ -949,7 +951,7 @@ export class Tab4Page {
 
             this.storage.remove('userData').then(() => {
               this.api.refreshTabs();
-              this.router.navigate([ environment.HOME_PAGE ]);
+              this.router.navigate([environment.HOME_PAGE]);
               //this.router.navigateByUrl( environment.HOME_PAGE );
               this.utilities.showToast(
                 this.translateService.instant('tabs.tab4.labelDisableConfirmed')
@@ -1205,7 +1207,7 @@ export class Tab4Page {
   }
 
   home() {
-    this.router.navigate([ environment.HOME_PAGE ]);
+    this.router.navigate([environment.HOME_PAGE]);
   }
 
   /**
