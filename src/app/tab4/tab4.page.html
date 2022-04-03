@@ -1,11 +1,10 @@
 <ion-header>
   <ion-toolbar color="light">
-
     <ion-buttons buttons-start slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    
-    <app-header-buttons [perfil]="perfil" currentTab=4></app-header-buttons>
+
+    <app-header-buttons [perfil]="perfil" currentTab="4"></app-header-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -47,26 +46,42 @@
             accept="image/x-png,image/jpeg,image/gif"
             (change)="attachImage()"
           />
-          <img class="kyc-verified" src="assets/imgs/verified.svg" (click)="verified( 'kyc' )" *ngIf="perfil?.kyc_verified_at"/>
+          <img
+            class="kyc-verified"
+            src="assets/imgs/verified.svg"
+            (click)="verified( 'kyc' )"
+            *ngIf="perfil?.kyc_verified_at"
+          />
         </div>
 
         <div>
           <ion-button
-          style="max-width: 300px; margin-bottom: 10px"
-          class="guardar-cambios"
-          expand="block"
+            style="max-width: 300px; margin-bottom: 10px"
+            class="guardar-cambios"
+            expand="block"
             (click)="recommend($event)"
             >{{ 'tabs.tab4.buttonAskRecommendation' | translate }} &nbsp;
             <ion-icon name="checkmark"> </ion-icon>
           </ion-button>
 
-          <ion-button (click)="showSubscription()" expand="block" fill="clear" shape="round">
-            {{ ((!subscription)?'tabs.tab4.buttonSuscription':'tabs.tab4.proUser') | translate }}
-          </ion-button>
-          
           <ion-button
-            style="max-width: 300px; margin-bottom: 10px" class="guardar-cambios" expand="block"
-            (click)="verifyKYC()" *ngIf="perfil && !perfil?.kyc_verified_at"
+            *ngIf="!platform.is('ios')"
+            (click)="showSubscription()"
+            expand="block"
+            fill="clear"
+            shape="round"
+          >
+            {{
+            ((!subscription)?'tabs.tab4.buttonSuscription':'tabs.tab4.proUser')
+            | translate }}
+          </ion-button>
+
+          <ion-button
+            style="max-width: 300px; margin-bottom: 10px"
+            class="guardar-cambios"
+            expand="block"
+            (click)="verifyKYC()"
+            *ngIf="perfil && !perfil?.kyc_verified_at"
           >
             {{ 'kyc.verify' | translate }}
           </ion-button>
@@ -82,7 +97,9 @@
         <ion-row>
           <ion-col size="12">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelDescription' | translate }}
+              </ion-label>
               <ion-textarea
                 [value]="perfil?.descripcion"
                 type="text"
@@ -96,7 +113,9 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.personal.accountname' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.personal.accountname' | translate }}
+              </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -108,8 +127,10 @@
 
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
-              <ion-row style="width: 100%;">
+              <ion-label position="floating">
+                {{ 'common.labelEmail' | translate }}
+              </ion-label>
+              <ion-row style="width: 100%">
                 <ion-input
                   clearInput
                   type="email"
@@ -117,10 +138,20 @@
                   [value]="perfil?.email"
                   (ionInput)="emailChanged( $event.target.value )"
                 ></ion-input>
-                <img src="assets/imgs/verified.svg" class="clickable" (click)="verified( 'email' )" *ngIf="emailVerified"/>
+                <img
+                  src="assets/imgs/verified.svg"
+                  class="clickable"
+                  (click)="verified( 'email' )"
+                  *ngIf="emailVerified"
+                />
               </ion-row>
             </ion-item>
-            <ion-label position="floating" class="verif" *ngIf="!emailVerified" (click)="verify( verifWhich.Email )">
+            <ion-label
+              position="floating"
+              class="verif"
+              *ngIf="!emailVerified"
+              (click)="verify( verifWhich.Email )"
+            >
               {{ 'common.verif.email.not-verified' | translate }}
             </ion-label>
           </ion-col>
@@ -129,7 +160,9 @@
         <ion-row>
           <ion-col size="12">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelAddress' | translate }}
+              </ion-label>
               <ion-input
                 [value]="perfil?.direccion"
                 formControlName="direccion"
@@ -142,7 +175,9 @@
         <ion-row>
           <ion-col size="12">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelAddressRest' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelAddressRest' | translate }}
+              </ion-label>
               <ion-input
                 [value]="perfil?.direccion_resto"
                 formControlName="direccion_resto"
@@ -154,7 +189,9 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelPhone' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelPhone' | translate }}
+              </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -167,7 +204,7 @@
             <ion-item class="input">
               <ion-label position="floating"> {{ labelDoc }} </ion-label>
               <ion-input
-                id='dninie'
+                id="dninie"
                 clearInput
                 type="text"
                 [value]="perfil?.dni"
@@ -181,7 +218,9 @@
         <ion-row *ngIf="subscription != null">
           <ion-col size="12">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelLink' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelLink' | translate }}
+              </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -195,7 +234,9 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input" *ngIf="sectores?.length>0">
-              <ion-label position="floating"> {{ 'common.labelSectors2' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelSectors2' | translate }}
+              </ion-label>
               <ion-select
                 clearInput
                 (ionChange)="selectFamily()"
@@ -212,7 +253,9 @@
           </ion-col>
           <ion-col size="6">
             <ion-item class="input" *ngIf="subsectores.length>0">
-              <ion-label position="floating"> {{ 'common.labelSubsectors2' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelSubsectors2' | translate }}
+              </ion-label>
               <ion-select
                 clearInput
                 [multiple]="subscription == null ? false : true"
@@ -233,7 +276,9 @@
         <ion-row *ngIf="perfil?.kyc_verified_at">
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelName' | translate }}
+              </ion-label>
               <ion-input
                 clearInput
                 type="text"
@@ -244,14 +289,17 @@
           </ion-col>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
+              <ion-label position="floating"
+                >{{ 'common.personal.surname' | translate }}</ion-label
+              >
               <ion-input
                 clearInput
                 type="text"
                 [value]="perfil?.lastName"
                 maxlength="200"
                 readonly
-              > </ion-input>
+              >
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -259,7 +307,9 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="input">
-              <ion-label position="floating"> {{ 'common.labelNewPass' | translate }} </ion-label>
+              <ion-label position="floating">
+                {{ 'common.labelNewPass' | translate }}
+              </ion-label>
               <ion-icon
                 slot="end"
                 (click)="hideShowPassword()"
@@ -273,7 +323,9 @@
                 [type]="passwordType"
                 formControlName="password"
               ></ion-input>
-              <p id="msgpass1" class="hide">{{ 'common.personal.passEr' | translate }}</p>
+              <p id="msgpass1" class="hide">
+                {{ 'common.personal.passEr' | translate }}
+              </p>
             </ion-item>
           </ion-col>
           <ion-col size="6">
@@ -294,7 +346,9 @@
                 [type]="passwordType2"
                 formControlName="passwordConfirmation"
               ></ion-input>
-              <p id="msgpass2" class="hide">{{ 'common.personal.passEr' | translate }}</p>
+              <p id="msgpass2" class="hide">
+                {{ 'common.personal.passEr' | translate }}
+              </p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -302,19 +356,30 @@
 
       <div class="mobile">
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelDescription' | translate }} </ion-label>
+          <ion-label position="floating">
+            {{ 'common.labelDescription' | translate }}
+          </ion-label>
           <ion-textarea
             [maxlength]="max_bio"
             formControlName="descripcion"
           ></ion-textarea>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.personal.accountname' | translate }} </ion-label>
-          <ion-input clearInput type="text" formControlName="nick" [value]="perfil?.nick" ></ion-input>
+          <ion-label position="floating">
+            {{ 'common.personal.accountname' | translate }}
+          </ion-label>
+          <ion-input
+            clearInput
+            type="text"
+            formControlName="nick"
+            [value]="perfil?.nick"
+          ></ion-input>
         </ion-item>
         <ion-item class="input" style="margin-bottom: 5px">
-          <ion-label position="floating"> {{ 'common.labelEmail' | translate }} </ion-label>
-          <ion-row style="width: 100%;">
+          <ion-label position="floating">
+            {{ 'common.labelEmail' | translate }}
+          </ion-label>
+          <ion-row style="width: 100%">
             <ion-input
               clearInput
               type="email"
@@ -322,15 +387,27 @@
               [value]="perfil?.email"
               (ionInput)="emailChanged( $event.target.value )"
             ></ion-input>
-            <img src="assets/imgs/verified.svg" class="clickable" (click)="verified( 'email' )" *ngIf="emailVerified"/>
+            <img
+              src="assets/imgs/verified.svg"
+              class="clickable"
+              (click)="verified( 'email' )"
+              *ngIf="emailVerified"
+            />
           </ion-row>
         </ion-item>
-        <ion-label class="input" class="verif" *ngIf="!emailVerified" (click)="verify( verifWhich.Email )">
+        <ion-label
+          class="input"
+          class="verif"
+          *ngIf="!emailVerified"
+          (click)="verify( verifWhich.Email )"
+        >
           {{ 'common.verif.email.not-verified' | translate }}
         </ion-label>
 
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelAddress' | translate }} </ion-label>
+          <ion-label position="floating">
+            {{ 'common.labelAddress' | translate }}
+          </ion-label>
           <ion-input
             [value]="perfil?.direccion"
             formControlName="direccion"
@@ -338,14 +415,18 @@
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelAddressRest' | translate }} </ion-label>
+          <ion-label position="floating">
+            {{ 'common.labelAddressRest' | translate }}
+          </ion-label>
           <ion-input
             [value]="perfil?.direccion_resto"
             formControlName="direccion_resto"
           ></ion-input>
         </ion-item>
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelPhone' | translate }} </ion-label>
+          <ion-label position="floating">
+            {{ 'common.labelPhone' | translate }}
+          </ion-label>
           <ion-input
             clearInput
             type="text"
@@ -364,7 +445,9 @@
           ></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="subscription != null">
-          <ion-label position="floating"> {{ 'common.labelLink' | translate }} </ion-label>
+          <ion-label position="floating">
+            {{ 'common.labelLink' | translate }}
+          </ion-label>
           <ion-input
             clearInput
             type="text"
@@ -405,24 +488,41 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-        
+
         <ion-item class="input" *ngIf="perfil?.kyc_verified_at">
-          <ion-label position="floating"> {{ 'common.labelName' | translate }} </ion-label>
-          <ion-input clearInput type="text" [value]="perfil?.name" readonly></ion-input>
+          <ion-label position="floating">
+            {{ 'common.labelName' | translate }}
+          </ion-label>
+          <ion-input
+            clearInput
+            type="text"
+            [value]="perfil?.name"
+            readonly
+          ></ion-input>
         </ion-item>
         <ion-item class="input" *ngIf="perfil?.kyc_verified_at">
-          <ion-label position="floating">{{ 'common.personal.surname' | translate }}</ion-label>
-          <ion-input clearInput type="text" [value]="perfil?.lastName" maxlength="200"  readonly></ion-input>
+          <ion-label position="floating"
+            >{{ 'common.personal.surname' | translate }}</ion-label
+          >
+          <ion-input
+            clearInput
+            type="text"
+            [value]="perfil?.lastName"
+            maxlength="200"
+            readonly
+          ></ion-input>
         </ion-item>
 
         <ion-item class="input">
-          <ion-label position="floating"> {{ 'common.labelNewPass' | translate }} </ion-label>
+          <ion-label position="floating">
+            {{ 'common.labelNewPass' | translate }}
+          </ion-label>
           <ion-icon
-          slot="end"
-          (click)="hideShowPassword()"
-          [name]="passwordIcon"
-          class="passwordIcon"
-        ></ion-icon>
+            slot="end"
+            (click)="hideShowPassword()"
+            [name]="passwordIcon"
+            class="passwordIcon"
+          ></ion-icon>
           <ion-input
             [(ngModel)]="inputpass1"
             (keyup)="showHidePassMessages()"
@@ -431,7 +531,9 @@
             formControlName="password"
           ></ion-input>
         </ion-item>
-        <p id="msgpass3" class="hide">{{ 'common.personal.passEr' | translate }}</p>
+        <p id="msgpass3" class="hide">
+          {{ 'common.personal.passEr' | translate }}
+        </p>
         <ion-item class="input">
           <ion-label position="floating">
             {{ 'common.labelConfirmNewPass' | translate }}
@@ -441,7 +543,7 @@
             (click)="hideShowPassword2()"
             [name]="passwordIcon2"
             class="passwordIcon"
-        ></ion-icon>
+          ></ion-icon>
           <ion-input
             [(ngModel)]="inputpass2"
             (keyup)="showHidePassMessages()"
@@ -450,7 +552,9 @@
             formControlName="passwordConfirmation"
           ></ion-input>
         </ion-item>
-        <p id="msgpass4" class="hide">{{ 'common.personal.passEr' | translate }}</p>
+        <p id="msgpass4" class="hide">
+          {{ 'common.personal.passEr' | translate }}
+        </p>
       </div>
       <ion-button
         id="savebtn"
@@ -465,18 +569,23 @@
     <ion-grid fixed>
       <!-- Posts|Oracles statistics of this user -->
       <app-post-stats-component [id]="perfil?.id"></app-post-stats-component>
-      
+
       <ion-row>
         <ion-col size="12">
-          <span *ngIf="total_opinions<=0">{{ 'tabs.tab4.labelNoOpinions' | translate }}</span>
+          <span *ngIf="total_opinions<=0"
+            >{{ 'tabs.tab4.labelNoOpinions' | translate }}</span
+          >
           <div class="opinions-container" [hidden]="!(total_opinions>0)">
             <div class="opinions">
               <span class="reviews">
-                <a>{{ total_opinions }} {{ 'tabs.tab4.labelOpinions' | translate }}</a>
+                <a
+                  >{{ total_opinions }} {{ 'tabs.tab4.labelOpinions' | translate
+                  }}</a
+                >
               </span>
             </div>
             <div class="opinions-graphic">
-              <canvas #barCanvas id="barCanvas" ></canvas>
+              <canvas #barCanvas id="barCanvas"></canvas>
             </div>
           </div>
         </ion-col>
@@ -484,12 +593,12 @@
     </ion-grid>
 
     <ion-button
-            style="max-width: 200px; margin-top: 20px"
-            class="guardar-cambios"
-
-            (click)="suspended_profile()">
-        {{ 'tabs.tab4.labelDisable' | translate }}
-    <ion-icon name="suspended_profile"></ion-icon>
+      style="max-width: 200px; margin-top: 20px"
+      class="guardar-cambios"
+      (click)="suspended_profile()"
+    >
+      {{ 'tabs.tab4.labelDisable' | translate }}
+      <ion-icon name="suspended_profile"></ion-icon>
     </ion-button>
   </div>
 </ion-content>
