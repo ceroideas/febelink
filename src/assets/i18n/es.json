@@ -239,9 +239,9 @@
   },
   "tabs": {
     "tab1": {
-      "labelPhoto": "(Opcional) ¿Desea añadir una foto para personalizar su busqueda?",
-      "labelAnswers": "(Opcional) ¿Desea limitar el número de respuestas recibidas?",
-      "labelDescription": "(Opcional) ¿Deseña añadir una descripción a su búsqueda?",
+      "labelPhoto": "(Opcional) ¿Quieres añadir una foto para personalizar tu búsqueda?",
+      "labelAnswers": "(Opcional) ¿Quieres limitar el número de respuestas recibidas?",
+      "labelDescription": "(Opcional) ¿Quieres añadir una descripción a tu búsqueda?",
       "buttonSend": "Enviar búsqueda",
       "messageSearchDone": "Se ha realizado una búsqueda, mira en tu panel!",
       "messageSearchSent": "Búsqueda enviada. En breve recibirás tus respuestas. ¡Suerte!",
