@@ -141,8 +141,10 @@ export class PostComponent implements OnInit {
 
   async edit() {
     this.router.navigate([`posts/oracle/${this.id}/edit`], {
-      queryParams: !this.iAdvise?.id_advise ? {} : { id_reference: this.iAdvise?.id_advise }
-    })
+      queryParams: !this.iAdvise?.id_advise
+        ? {}
+        : { id_reference: this.iAdvise?.id_advise },
+    });
   }
 
   async delete() {
@@ -173,5 +175,9 @@ export class PostComponent implements OnInit {
     this.reportSvc.show({
       advise: this.id,
     } as IReport);
+  }
+
+  navigateToPost() {
+    this.router.navigate([`posts/oracle/${this.id}`]);
   }
 }
