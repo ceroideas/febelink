@@ -26,6 +26,7 @@
     "labelNewPass": "New password",
     "labelConfirmNewPass": "Confirm new password",
     "labelTitle": "Title",
+    "labelTopic": "Topic",
     "labelEdited": "Edited",
     "labelLang": "Language",
     "labelUser": "User",
@@ -588,7 +589,7 @@
           "error": {
             "title": "The title cannot be less than 4 digits",
             "content": "You must indicate the content to publish",
-            "sector": "You must indicate the sector to which you refer"
+            "topic": "You must indicate the topic to which you refer"
           },
           "saveButton": "Publish"
         },

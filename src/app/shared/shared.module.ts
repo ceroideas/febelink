@@ -27,6 +27,7 @@ import { UserFilterComponent } from '../components/user/filter/filter.component'
 import { NumFloatComponent } from '../components/num-float/num-float.component';
 import { SectorsModule } from '../components/sectors/sectors.module';
 import { LoadingModule } from '../components/loading/loading.module';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { LoadingModule } from '../components/loading/loading.module';
     NumFloatComponent,
     SectorsModule,
     LoadingModule,
+    IonicSelectableModule,
   ],
   entryComponents: [],
 })

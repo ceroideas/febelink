@@ -4,7 +4,10 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>{{ 'pages.posts.advises.' + ( id ? 'edit' : 'create.title' ) | translate }}</ion-title>
+    <ion-title
+      >{{ 'pages.posts.advises.' + ( id ? 'edit' : 'create.title' ) | translate
+      }}</ion-title
+    >
 
     <!-- Lang -->
     <ion-buttons slot="end">
@@ -15,16 +18,28 @@
 
 <ion-content>
   <!-- Loading -->
-  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+  <app-loading
+    [isLoading]="isLoading"
+    clase="marg-t10"
+    message="common.labelSearching"
+  ></app-loading>
 
   <!-- Form -->
   <form [formGroup]="form" class="no-pad" *ngIf="!isLoading && form">
     <ion-grid class="no-pad pad-t10">
-      <!-- Sector | Subsector -->
-      <app-sectors #sectors
-        [subsector]="iAdvise?.id_subsector"
-        [showSector]="false"
-      ></app-sectors>
+      <!-- Topic -->
+      <ion-row class="col-flexed pad-5">
+        <ion-label> {{ 'common.labelTopic' | translate }} </ion-label>
+        <ion-select
+          interface="popover"
+          formControlName="topic"
+          [(ngModel)]="topicSelected"
+        >
+          <ion-select-option *ngFor="let topic of topics" [value]="topic.id">
+            {{ topic.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-row>
 
       <!-- Title -->
       <ion-row class="pad-5" *ngIf="false">
@@ -92,9 +107,12 @@
       </ion-row>
 
       <!-- Image | Video -->
-      <ion-row [class]="'marg-t10 marg-se wh-social-media media-pos' + ( iFile?.src ? '' : ' gone' )">
+      <ion-row
+        [class]="'marg-t10 marg-se wh-social-media media-pos' + ( iFile?.src ? '' : ' gone' )"
+      >
         <!-- Remove Image -->
-        <ion-button icon-only
+        <ion-button
+          icon-only
           shape="round"
           class="no-padding wh-40 marg-t10 relativism"
           (click)="fileSelected( null )"
@@ -103,7 +121,11 @@
         </ion-button>
 
         <!-- File Picker -->
-        <app-file-picker #pick [iFile]="iFile" (OnFile)="fileSelected( $event )"></app-file-picker>
+        <app-file-picker
+          #pick
+          [iFile]="iFile"
+          (OnFile)="fileSelected( $event )"
+        ></app-file-picker>
       </ion-row>
     </ion-grid>
   </form>
