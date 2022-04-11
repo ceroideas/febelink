@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { IAdviseFull } from '../models/advises.model';
+import { IAdviseFull, ITopic } from '../models/advises.model';
 import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../../../../components/file-picker/services/file.service';
 import { ToastSvc } from 'src/app/services/toast.service';
@@ -45,6 +45,33 @@ export class AdviseCRUDPage implements OnInit {
   paramsUrl: any;
 
   hasVerifiedEmail: boolean;
+
+  topicSelected: ITopic;
+  topics = [
+    { id: null, name: 'Todos' },
+    { id: 1, name: 'Política' },
+    { id: 2, name: 'Música' },
+    { id: 3, name: 'Deportes' },
+    { id: 4, name: 'Moda y Belleza' },
+    { id: 5, name: 'Ocio' },
+    { id: 6, name: 'Arte y Cultura' },
+    { id: 7, name: 'Marketing' },
+    { id: 8, name: 'Negocios' },
+    { id: 9, name: 'Startups' },
+    { id: 10, name: 'Tecnología' },
+    { id: 11, name: 'Cine' },
+    { id: 12, name: 'Naturaleza' },
+    { id: 13, name: 'Ciencia' },
+    { id: 14, name: 'Economía y Finanzas' },
+    { id: 15, name: 'Anime y Manga' },
+    { id: 16, name: 'Noticias y Actualidad' },
+    { id: 17, name: 'Viajes' },
+    { id: 18, name: 'Hogar y Familia' },
+    { id: 19, name: 'Comida' },
+    { id: 20, name: 'Videojuegos' },
+    { id: 21, name: 'Salud' },
+    { id: 22, name: 'Criptomonedas' },
+  ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
     private formBuilder: FormBuilder,
@@ -121,11 +148,16 @@ export class AdviseCRUDPage implements OnInit {
         { value: this.iAdvise?.summary || '', disabled: disabled },
         Validators.required
       ),
+      topic: new FormControl(
+        { value: this.iAdvise?.topic || '', disabled: disabled },
+        Validators.required
+      ),
     });
   }
 
   updateForm() {
     this.form.patchValue({
+      topic: this.iAdvise?.topic || '',
       title: this.iAdvise?.title || '',
       subtitle: this.iAdvise?.subtitle || '',
       summary: this.iAdvise?.summary || '',
@@ -139,10 +171,9 @@ export class AdviseCRUDPage implements OnInit {
   clear() {
     this.iAdvise = null;
     this.content.html = '';
-    this.sectors.clear();
     this.fileSelected(null);
     this.form.reset();
-    this.id_reference = null
+    this.id_reference = null;
   }
 
   fileSelected(file: IFile) {
@@ -164,10 +195,9 @@ export class AdviseCRUDPage implements OnInit {
   }
 
   /* On Cancel */
-  goHome( canceled: boolean = true)
-  {
-    if( canceled ) this.router.navigate([ 'posts/oracles' ])
-    else this.router.navigateReload([ 'posts/oracles' ])
+  goHome(canceled: boolean = true) {
+    if (canceled) this.router.navigate(['posts/oracles']);
+    else this.router.navigateReload(['posts/oracles']);
   }
 
   async check(): Promise<boolean> {
@@ -179,12 +209,12 @@ export class AdviseCRUDPage implements OnInit {
     } */
 
     // if 'iAdvise.id_advise' || 'id_reference' -> Is referencing, no need to have comment
-    if ((this.content?.html || '').length < 4 && !this.iAdvise?.id_advise && !this.id_reference ) {
+    if (
+      (this.content?.html || '').length < 4 &&
+      !this.iAdvise?.id_advise &&
+      !this.id_reference
+    ) {
       this.toastSvc.show('pages.posts.advises.create.error.content', true);
-      return false;
-    }
-    if (!this.sectors?.subsector) {
-      this.toastSvc.show('pages.posts.advises.create.error.sector', true);
       return false;
     }
 
@@ -209,13 +239,12 @@ export class AdviseCRUDPage implements OnInit {
   async shareAdvise() {
     await this.loadingSvc.show();
 
-    const { title, subtitle, summary } = this.form.value;
+    const { title, subtitle, summary, topic } = this.form.value;
 
     const opts: IAdviseFull = {
+      topic,
       lang: this.lang?.langSelected?.id || 1,
-      sector: this.sectors?.sector || this.iAdvise?.id_sector,
-      subsector: this.sectors?.subsector || this.iAdvise?.id_subsector,
-      
+
       id_advise: this.id_reference,
 
       title: title,
@@ -243,7 +272,7 @@ export class AdviseCRUDPage implements OnInit {
     if (error) return;
 
     // this.askNew()
-    this.goHome( false );
+    this.goHome(false);
   }
 
   askNew() {

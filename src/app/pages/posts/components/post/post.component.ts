@@ -46,6 +46,32 @@ export class PostComponent implements OnInit {
   oracleRef: IAdviseFull;
   showFollow: boolean = false;
   postUser: IUser;
+  topic: string;
+  topics = [
+    { id: null, name: 'Todos' },
+    { id: 1, name: 'Política' },
+    { id: 2, name: 'Música' },
+    { id: 3, name: 'Deportes' },
+    { id: 4, name: 'Moda y Belleza' },
+    { id: 5, name: 'Ocio' },
+    { id: 6, name: 'Arte y Cultura' },
+    { id: 7, name: 'Marketing' },
+    { id: 8, name: 'Negocios' },
+    { id: 9, name: 'Startups' },
+    { id: 10, name: 'Tecnología' },
+    { id: 11, name: 'Cine' },
+    { id: 12, name: 'Naturaleza' },
+    { id: 13, name: 'Ciencia' },
+    { id: 14, name: 'Economía y Finanzas' },
+    { id: 15, name: 'Anime y Manga' },
+    { id: 16, name: 'Noticias y Actualidad' },
+    { id: 17, name: 'Viajes' },
+    { id: 18, name: 'Hogar y Familia' },
+    { id: 19, name: 'Comida' },
+    { id: 20, name: 'Videojuegos' },
+    { id: 21, name: 'Salud' },
+    { id: 22, name: 'Criptomonedas' },
+  ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
     private optsMenuSvc: OptsMenuSvc,
@@ -61,6 +87,9 @@ export class PostComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.topic = this.topics.find((topic) => {
+      return topic.id === this.iAdvise?.topic;
+    }).name; // ToDo: Fetch this info from DB
     this.sessionSvc.get().then((userData) => {
       this.iUser = userData;
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
@@ -73,6 +102,8 @@ export class PostComponent implements OnInit {
 
       this.postUser = {
         id: this.iAdvise.uid,
+
+        topic: null,
 
         nick: this.iAdvise.nick,
         name: this.iAdvise.name,

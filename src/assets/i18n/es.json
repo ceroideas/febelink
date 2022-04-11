@@ -26,6 +26,7 @@
     "labelNewPass": "Contraseña nueva",
     "labelConfirmNewPass": "Confimar contraseña nueva",
     "labelTitle": "Título",
+    "labelTopic": "Tema",
     "labelEdited": "Editado",
     "labelLang": "Idioma",
     "labelUser": "Usuario",
@@ -587,7 +588,7 @@
           "error": {
             "title": "El titulo no puede ser menor a 4 digitos",
             "content": "Debes indicar el contenido a publicar",
-            "sector": "Debes indicar el sector al que referencias"
+            "topic": "Debes indicar el tema al que referencias"
           },
           "saveButton": "Publicar"
         },

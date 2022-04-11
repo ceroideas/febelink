@@ -1,9 +1,6 @@
-<div
-  class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light"
-  (click)="navigateToPost()"
->
+<div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
-    <ion-row class="marg-s10 marg-e10">
+    <ion-row class="marg-s10 marg-e10" (click)="navigateToPost()">
       <ion-col [size]="!showFollow ? 10 : 8" class="no-padding">
         <!-- Post Owner User -->
         <app-user-item
@@ -58,24 +55,20 @@
       </ion-col>
     </ion-row>
 
-    <!-- Sector > Subsector -->
-    <ion-row class="marg-s10 marg-e10">
-      <ion-label color="febelink" class="font-14">{{
-        iAdvise.sector
-      }}</ion-label>
-      <ion-label
-        color="febelink"
-        class="font-14 marg-s10 marg-e10"
-        *ngIf="iAdvise.subsector"
-        >></ion-label
-      >
-      <ion-label color="febelink" class="font-14" *ngIf="iAdvise.subsector">{{
-        iAdvise.subsector
-      }}</ion-label>
+    <!-- Topic -->
+    <ion-row
+      class="marg-s10 marg-e10"
+      *ngIf="iAdvise.topic"
+      (click)="navigateToPost()"
+    >
+      <ion-label color="febelink" class="font-14"> #{{ topic }} </ion-label>
     </ion-row>
 
     <!-- Title -->
-    <ion-row class="one-line marg-t5 marg-s10 marg-e10">
+    <ion-row
+      class="one-line marg-t5 marg-s10 marg-e10"
+      (click)="navigateToPost()"
+    >
       <h1
         class="no-margin bold-6 font-18 title"
         [innerHTML]="extractTitle()"
@@ -86,6 +79,7 @@
     <ion-row
       class="one-line marg-t5 marg-s10 marg-e10"
       *ngIf="iAdvise.subtitle"
+      (click)="navigateToPost()"
     >
       <h3
         class="no-margin font-16 subtitle"
@@ -97,6 +91,7 @@
     <ion-row
       class="lines-2 marg-10 marg-t5 inline"
       *ngIf="iAdvise.summary || !showContent"
+      (click)="navigateToPost()"
     >
       <ion-label
         [class]="'summary ' + (!iAdvise?.subtitle ? '' : 'hint')"
@@ -105,7 +100,11 @@
     </ion-row>
 
     <!-- Summary Referencing Post -->
-    <ion-row class="marg-t10" *ngIf="iAdvise?.id_advise">
+    <ion-row
+      class="marg-t10"
+      *ngIf="iAdvise?.id_advise"
+      (click)="navigateToPost()"
+    >
       <ion-spinner class="marg-se marg-b5" *ngIf="!oracleRef"></ion-spinner>
       <app-post-summary-component
         *ngIf="oracleRef"
@@ -120,6 +119,7 @@
       class="marg-t10 media"
       color="black"
       *ngIf="isPostVisible && iAdvise.media_url"
+      (click)="navigateToPost()"
     >
       <!-- Image -->
       <ion-img
