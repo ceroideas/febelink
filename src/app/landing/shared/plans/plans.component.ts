@@ -28,18 +28,6 @@ export class PlansComponent implements OnInit {
       tag: 'david',
       linkedin: 'david-bernal-guerrero-74a5ba10a/',
     },
-    {
-      pic: 'MD',
-      name: 'Miguel Díaz de Terán',
-      tag: 'miguel',
-      linkedin: 'migueldiazdeteran/',
-    },
-    {
-      pic: 'MA',
-      name: 'Miguel Ángel Romero de los Llanos',
-      tag: 'miguelAngel',
-      linkedin: 'miguel-angel-romero-de-los-llanos/',
-    },
   ];
   constructor() {}
 
