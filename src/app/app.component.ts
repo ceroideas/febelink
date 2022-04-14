@@ -29,7 +29,8 @@ import { FrogedService } from './services/froged.service';
 import { ConsoleSvc } from './services/console.service';
 import { environment } from 'src/environments/environment';
 
-const GENERAL_TITLE = 'Febelink | El buscador de servicios profesionales';
+const GENERAL_TITLE =
+  'Febelink | Comparte y encuentra soluciones profesionales';
 const GENERAL_DESC =
   'En Febelink encontrarás lo que estás buscando - Entra y encuentra rápidamente lo que buscas en el sector o categoría que necesites. Explora todas las ventajas que te ofrece Febelink para ayudarte en tu día a día.';
 @Component({
@@ -85,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private frogedSvc: FrogedService,
     private consoleSvc: ConsoleSvc
   ) {
-    this.router.events.subscribe(( e ) => {
+    this.router.events.subscribe((e) => {
       /* To Know in SCSS which url is currently opened */
       document.body.dataset.url = location.href;
     });
@@ -105,10 +106,10 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'description', content: GENERAL_DESC },
     ]);
 
-    this.frogedSvc.track( 'public_key' );
+    this.frogedSvc.track('public_key');
 
     /* Show */
-    this.consoleSvc.warning()
+    this.consoleSvc.warning();
   }
 
   initializeApp() {
@@ -143,7 +144,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.notificationSvc.getUnreadNotificationsCount();
         const serviceRequest: Observable<any> =
           await this.walletService.getBalanceByUserId();
-        
+
         this.userWallets = []; //Clear wallet just in case has another session info
         serviceRequest.subscribe((response) => {
           this.userWallets = response.data;
@@ -210,7 +211,7 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('backbutton1');
       if (this.routerOutlets && this.routerOutlets.canGoBack()) {
         this.routerOutlets.pop();
-      } else if (this.router.url === environment.HOME_PAGE ) {
+      } else if (this.router.url === environment.HOME_PAGE) {
         navigator['app'].exitApp();
       }
     });
@@ -301,7 +302,7 @@ export class AppComponent implements OnInit, OnDestroy {
         senderID: '41183692404',
         // By default the icon selected is app's icon:
         // https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/PAYLOAD.md#images
-        // else you can specify by name, refering an icon inside res/drawable folder 
+        // else you can specify by name, refering an icon inside res/drawable folder
         // icon: 'notification', // this icon does not exist in drawable folder
       },
       ios: {
@@ -384,7 +385,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public loginImplicito(): void {
-    this.router.navigate([ environment.HOME_PAGE ]);
+    this.router.navigate([environment.HOME_PAGE]);
   }
 
   /**
@@ -430,8 +431,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async getUserData() {
     this.currentUser = { ...(await this.utilities.getUserData()) };
-    if(  this.currentUser )
-      this.frogedSvc.set( this.currentUser );
+    if (this.currentUser) this.frogedSvc.set(this.currentUser);
   }
 
   async getUserSectorsAndSubsectors() {
