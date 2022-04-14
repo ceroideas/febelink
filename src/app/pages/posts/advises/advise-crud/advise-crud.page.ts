@@ -71,6 +71,8 @@ export class AdviseCRUDPage implements OnInit {
     { id: 20, name: 'Videojuegos' },
     { id: 21, name: 'Salud' },
     { id: 22, name: 'Criptomonedas' },
+    { id: 23, name: 'Animales' },
+    { id: 24, name: 'Historia' },
   ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
