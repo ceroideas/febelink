@@ -5,6 +5,13 @@
     justify-content: space-between;
 }
 
+.center-col-flexed {
+    padding-left: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .marginLeft {
     margin-left: 1em;
 }
