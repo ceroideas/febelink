@@ -5,16 +5,16 @@ import { IAssistant, IKeywords } from '../models/assistant.model';
 import { AssistantPopComponent } from '../pop/pop.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AssistantPopSvc
-{
-  constructor(
-      private popCtrl: PopoverController
-  ) {}
+export class AssistantPopSvc {
+  constructor(private popCtrl: PopoverController) {}
 
-  async show( perfil: IUser, iKeywords: IKeywords ): Promise<IAssistant>
-  {
+  async show(
+    perfil: IUser,
+    iKeywords: IKeywords,
+    localidad?: string
+  ): Promise<IAssistant> {
     const popover = await this.popCtrl.create({
       component: AssistantPopComponent,
       translucent: true,
@@ -30,7 +30,9 @@ export class AssistantPopSvc
         id_subsector: iKeywords?.main?.subsector_id,
         subsector: iKeywords?.main?.subsector_nombre,
 
-        perfil: perfil
+        perfil: perfil,
+
+        localidad,
       },
       cssClass: 'pop-h-80 pop-w-700',
     });
@@ -39,9 +41,8 @@ export class AssistantPopSvc
 
     const { data } = await popover.onDidDismiss();
 
-    if( !data )
-      return;
-    
+    if (!data) return;
+
     return data;
   }
 }

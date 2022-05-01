@@ -106,21 +106,21 @@ export class AssistantSearchSvc {
     this.searchText(key.value);
 
     this.callSectors?.unsubscribe(); // To avoid memory leaks
-    this.callSectors = (await this.api.getSectorsByKeys(key.value)).subscribe(
-      (keywords) => {
-        console.log('keywords', keywords);
+    await (
+      await this.api.getSectorsByKeys(key.value)
+    ).subscribe((keywords) => {
+      console.log('keywords', keywords);
 
-        this.set(key.value, keywords?.main, true);
+      this.set(key.value, keywords?.main, true);
 
-        // check if found a match
-        if (keywords.main) this.OnGotKeys.emit(keywords.main);
+      // check if found a match
+      if (keywords.main) this.OnGotKeys.emit(keywords.main);
 
-        this.showCard(true);
-        this.removeFocus();
+      this.showCard(true);
+      this.removeFocus();
 
-        this.isLoading = false;
-      }
-    );
+      this.isLoading = false;
+    });
   }
 
   // Getters && Setters
@@ -130,9 +130,11 @@ export class AssistantSearchSvc {
     this.main(main);
     this.selectorEnabled(enabled);
   }
+
   get(): IKeywords {
     return this.iKeyWords;
   }
+
   searchText(text?: string): string {
     if (text != undefined) this.iKeyWords.searchText = text;
     return this.iKeyWords?.searchText;
