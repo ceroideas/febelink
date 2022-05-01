@@ -85,6 +85,8 @@
         class="w-full"
         (OnSubmit)="publish($event)"
         (OnCancel)="dismiss()"
+        [perfil]="perfil"
+        [localidad]="localidad"
       ></app-assistant-form>
     </ion-row>
   </ion-grid>

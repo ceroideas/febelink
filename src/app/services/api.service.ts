@@ -27,7 +27,12 @@ export class ApiService {
     public translateSvc: TranslateConfigService
   ) {}
 
-  login(params, endpoint, firstLogin?: boolean, redirect?:string): Observable<any> {
+  login(
+    params,
+    endpoint,
+    firstLogin?: boolean,
+    redirect?: string
+  ): Observable<any> {
     return this.http
       .post<any>(environment.API_URL_AUTH + endpoint, params)
       .pipe(
@@ -41,13 +46,15 @@ export class ApiService {
             });
 
             await alert.present();
-            this.router.navigate([ environment.HOME_PAGE ]);
+            this.router.navigate([environment.HOME_PAGE]);
             return false;
           } else {
             await this.utilities.saveAccessTokenInfo(res);
             await this.utilities.saveUserData(res.user);
             await this.utilities.saveUserSubscription(res.subscription);
-            await this.utilities.saveUserSubscriptionDetails(res.subscription_details);
+            await this.utilities.saveUserSubscriptionDetails(
+              res.subscription_details
+            );
             await this.utilities.setGuia('login');
             this.authenticationService.login();
             this.userLogged.emit('user:login');
@@ -55,12 +62,12 @@ export class ApiService {
               case 'token':
                 this.router.navigate(['token', 'buy']);
                 break;
-            
-              default: 
+
+              default:
                 if (firstLogin) {
                   this.router.navigate(['menu/welcome']);
                 } else {
-                  this.router.navigate([ environment.HOME_PAGE ]);
+                  this.router.navigate([environment.HOME_PAGE]);
                 }
                 break;
             }
@@ -83,7 +90,7 @@ export class ApiService {
   }
 
   async getUserData() {
-    return (await this._getData( 'user' )).pipe( first() );
+    return (await this._getData('user')).pipe(first());
   }
 
   refreshTabs() {
@@ -112,7 +119,7 @@ export class ApiService {
       );
   }
 
-  async _createData(endpoint: string, data: any = new FormData() ) {
+  async _createData(endpoint: string, data: any = new FormData()) {
     let token;
     await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
       token = tokenInfo ? tokenInfo.access_token : null;
@@ -139,7 +146,7 @@ export class ApiService {
    * Recuperar contraseña y enviar email
    * @param email
    */
-  public async recuperarContraseña( email, lang: string ) {
+  public async recuperarContraseña(email, lang: string) {
     const formData = new FormData();
     formData.append('email', email);
     formData.append('lang', lang);
@@ -253,10 +260,11 @@ export class ApiService {
     sector,
     sub_sector,
     ofertas_restantes,
-    file
+    file,
+    userInfo?,
+    userId?
   ) {
     const formData = new FormData();
-    formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
 
     if (sector !== null) {
@@ -266,6 +274,16 @@ export class ApiService {
 
     formData.append('ofertas_restantes', ofertas_restantes);
     formData.append('file', file);
+
+    if (userInfo) {
+      formData.append('nombre', userInfo.nombre);
+      formData.append('email', userInfo.email);
+      formData.append('password', userInfo.password);
+      formData.append('locality', userInfo.locality);
+    } else {
+      if (userId) formData.append('userId', userId);
+      formData.append('nombre', nombre);
+    }
 
     return this._createData('publicar-demanda', formData);
   }
@@ -332,10 +350,13 @@ export class ApiService {
     return this._createData('notificacion-oferta', formData);
   }
 
-  public async paySubscription(idSelectedSubscription:number) {
+  public async paySubscription(idSelectedSubscription: number) {
     const formData = new FormData();
-    formData.append('subscriptionId', idSelectedSubscription+'');
-    const responseObs:Observable<any> = await this._createData('paySubscription', formData);
+    formData.append('subscriptionId', idSelectedSubscription + '');
+    const responseObs: Observable<any> = await this._createData(
+      'paySubscription',
+      formData
+    );
     return responseObs.pipe(first()).toPromise();
   }
 
@@ -347,12 +368,17 @@ export class ApiService {
 
   public async cancelSubscription() {
     const formData = new FormData();
-    const responseObs:Observable<any> = await this._createData('cancel-subscription', formData);
+    const responseObs: Observable<any> = await this._createData(
+      'cancel-subscription',
+      formData
+    );
     return responseObs.pipe(first()).toPromise();
   }
 
-  async getUserSusbcription(){
-    return (await this._getData('getUserSusbcription')).pipe(first()).toPromise();
+  async getUserSusbcription() {
+    return (await this._getData('getUserSusbcription'))
+      .pipe(first())
+      .toPromise();
   }
 
   /**
@@ -414,8 +440,8 @@ export class ApiService {
     return this._getData('get-subscriptions');
   }
 
-  public hasSubscription( userId ) {
-    return this._getData( `has-subscription/${ userId }` );
+  public hasSubscription(userId) {
+    return this._getData(`has-subscription/${userId}`);
   }
 
   /**
@@ -512,7 +538,7 @@ export class ApiService {
     formData.append('nick', nick);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
-    
+
     formData.append('direccion', direccion);
     formData.append('direccion_resto', direccion_resto);
     formData.append('country', country);
@@ -520,7 +546,7 @@ export class ApiService {
     formData.append('department', department);
     formData.append('locality', locality);
     formData.append('place_id', place_id);
-    
+
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
@@ -567,7 +593,7 @@ export class ApiService {
     formData.append('nick', nick);
     formData.append('descripcion', descripcion);
     formData.append('telefono', telefono);
-    
+
     formData.append('direccion', direccion);
     formData.append('direccion_resto', direccion_resto);
     formData.append('country', country);
@@ -575,7 +601,7 @@ export class ApiService {
     formData.append('department', department);
     formData.append('locality', locality);
     formData.append('place_id', place_id);
-    
+
     formData.append('sector', sector);
     formData.append('sub_sector', sub_sector);
     formData.append('dni', dni);
@@ -802,7 +828,7 @@ export class ApiService {
    * Comprobar si existe un usuario con un dni que le pasamos por parámetro
    * @param dni
    */
-   public existeDNI(dni) {
+  public existeDNI(dni) {
     // Agrego esta linea porque sino cuando quiere borrar
     // su dni, no pasa párametro y provoca error
     dni = dni ? dni : 'null';
@@ -813,7 +839,7 @@ export class ApiService {
    * Comprobar si existe un usuario con un email que le pasamos por parámetro
    * @param email
    */
-   public existeEmail(email) {
+  public existeEmail(email) {
     return this._getData('existe-usuario-email/' + email);
   }
 
@@ -821,36 +847,33 @@ export class ApiService {
    * To verify Email account and save on user info
    * @param email
    */
-  public async verifyEmail( id, email ) {
-    const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateSvc )).lang;
-    return await this._getData( `verify-email/${ id }/${ lang }/${ email }` );
+  public async verifyEmail(id, email) {
+    const lang = (<ILang>await ILangDEFAULTS.getCurrentLang(this.translateSvc))
+      .lang;
+    return await this._getData(`verify-email/${id}/${lang}/${email}`);
   }
 
   /**
    * To verify Email account and save on user info
    * @param email
    */
-  public async emailVerified( id ) {
-    return await this._getData( 'email-verified/' + id );
+  public async emailVerified(id) {
+    return await this._getData('email-verified/' + id);
   }
-
 
   /**
    * To Generate 2FA code
    */
   public async generate2FAcode() {
-    return ( await this._createData( 'generate2FAcode' )).toPromise();
+    return (await this._createData('generate2FAcode')).toPromise();
   }
-
 
   /**
    * To Verify 2FA code
    */
-  public async verify2FAcode( code ) {
+  public async verify2FAcode(code) {
     const data = new FormData();
-    data.append( 'code', code );
-    return ( await this._createData( 'verify2FAcode', data ))
-        .toPromise();
+    data.append('code', code);
+    return (await this._createData('verify2FAcode', data)).toPromise();
   }
-
 }

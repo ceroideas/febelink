@@ -75,6 +75,69 @@
 
       <ion-item-divider></ion-item-divider>
 
+      <ion-item>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Opcional) ¿Desea limitar la búsqueda a una localidad?
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="localidad"
+          [(ngModel)]="localidad"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="!perfil">
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Requerido) ¿Qué nombre quieres asociar a la publicación?
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="name"
+          [(ngModel)]="name"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+        <ion-item-divider></ion-item-divider>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Requerido) ¿En qué dirección email quieres recibir las
+            notificaciones?
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="email"
+          [(ngModel)]="email"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+        <ion-item-divider></ion-item-divider>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Requerido) Introduzca una contraseña con la que podrás consultar o
+            editar tus publicaciones
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="passw"
+          type="password"
+          [(ngModel)]="password"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+      </ion-item>
+
       <!-- Buttons -->
       <ion-item lines="none">
         <!-- Submit -->

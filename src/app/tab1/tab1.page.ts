@@ -9,6 +9,9 @@ import { IUser } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { AssistantSearchComponent } from './assistant/components/search/search.component';
 import { AssistantPopSvc } from './assistant/services/assistant.pop.service';
+import { AssistantSearchSvc } from './assistant/services/assistant-search.service';
+import { IKeywords } from './assistant/models/assistant.model';
+import { SubsectorService } from '../components/sectors/services/subsectores.service';
 
 @Component({
   selector: 'app-tab1',
@@ -24,7 +27,7 @@ export class Tab1Page {
   filter_hidden: boolean;
 
   //SEARCH COMPONENT
-  @ViewChild( "search" ) searchComponent: AssistantSearchComponent
+  @ViewChild('search') searchComponent: AssistantSearchComponent;
   openKeys: boolean = false;
   showCookies = false;
   refreshTab: any;
@@ -44,8 +47,10 @@ export class Tab1Page {
     private utilities: UtilitiesService,
     private router: Router,
     private cookSvc: CookieService,
-    private activatedRoute:ActivatedRoute,
-    private assistantPop: AssistantPopSvc
+    private activatedRoute: ActivatedRoute,
+    private assistantPop: AssistantPopSvc,
+    public assistantSearchSvc: AssistantSearchSvc,
+    private subsectorSvc: SubsectorService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.obtenerPerfil();
@@ -54,23 +59,32 @@ export class Tab1Page {
     this.utilities.getGuia().then((data) => {
       this.isLogin = data;
     });
-    if(this.platform.is('cordova')){
+    if (this.platform.is('cordova')) {
       this.isNative = true;
-
     } else {
       this.isNative = false;
     }
   }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      let sector = params['sector'] !== 'null' ? params['sector'] : null;
+      let servicio = params['servicio'] !== 'null' ? params['servicio'] : null;
+      let localidad =
+        params['localidad'] !== 'null' ? params['localidad'] : null;
+
+      if (sector || servicio || localidad) {
+        this.renderModalWithURLParams(sector, servicio, localidad);
+      }
+    });
+
     /**
      * If searchbar param passed
-    */
+     */
     const searchbar = this.activatedRoute.snapshot.paramMap.get('searchbar');
-    if( searchbar )
-    {
+    if (searchbar) {
       this.isLoading = true;
-      this.searchComponent.text( searchbar )
+      this.searchComponent.text(searchbar);
     }
   }
 
@@ -81,19 +95,23 @@ export class Tab1Page {
 
   ionViewDidLeave() {
     this.showCard = false;
-    this.searchComponent.clear()
+    this.searchComponent.clear();
   }
 
   checkUserFields(): boolean {
-    return this.perfil?.dni !== null && this.perfil?.telefono !== null && this.perfil?.direccion !== null;
+    return (
+      this.perfil?.dni !== null &&
+      this.perfil?.telefono !== null &&
+      this.perfil?.direccion !== null
+    );
   }
 
   async loadData() {
     await this.obtenerPerfil();
 
     // Select sector only if url path had value
-    if( this.isLoading && this.searchComponent.text() )
-      this.searchComponent.getSectorsByKeys()
+    if (this.isLoading && this.searchComponent.text())
+      this.searchComponent.getSectorsByKeys();
   }
 
   async obtenerPerfil() {
@@ -126,17 +144,15 @@ export class Tab1Page {
     });
   }
 
-  OnGotKeys( data )
-  {
-    console.log({ data, searchComponent: this.searchComponent.get() })
-    this.assistantPop.show( this.perfil, this.searchComponent.get() )
-    this.searchComponent.clear()
+  OnGotKeys(data) {
+    console.log({ data, searchComponent: this.searchComponent.get() });
+    this.assistantPop.show(this.perfil, this.searchComponent.get());
+    this.searchComponent.clear();
   }
 
-  OnEnter()
-  {
-    this.assistantPop.show( this.perfil, this.searchComponent.get() )
-    this.searchComponent.clear()
+  OnEnter() {
+    this.assistantPop.show(this.perfil, this.searchComponent.get());
+    this.searchComponent.clear();
   }
 
   async openCookies() {
@@ -147,16 +163,56 @@ export class Tab1Page {
     this.showCookies = false;
   }
 
-  public navegar(ruta: string){
+  public navegar(ruta: string) {
     this.router.navigate([ruta]);
   }
 
   private recomendation() {
-    const recommenderId: string = this.activatedRoute.snapshot.paramMap.get('recommenderId');
-    if(recommenderId){
-      console.log('Recomended by', recommenderId); 
+    const recommenderId: string =
+      this.activatedRoute.snapshot.paramMap.get('recommenderId');
+    if (recommenderId) {
+      console.log('Recomended by', recommenderId);
       this.cookSvc.set('recommenderId', recommenderId, 1);
     }
   }
 
+  private async renderModalWithURLParams(
+    sector: string,
+    servicio: string,
+    localidad: string
+  ) {
+    let editedKeywords: IKeywords;
+
+    if (sector || servicio) {
+      editedKeywords = this.assistantSearchSvc.get();
+      (await this.api.getSectorsByKeys(sector ?? servicio)).subscribe(
+        (sectors) => {
+          this.assistantSearchSvc.main(sectors.main);
+
+          this.subsectorSvc
+            .get(editedKeywords.main.sector_id)
+            .then((subsectors) => {
+              const subsector = subsectors.find((elem) => {
+                return elem.nombre === servicio;
+              });
+
+              this.assistantPop.show(
+                this.perfil,
+                subsector
+                  ? {
+                      ...editedKeywords,
+                      main: {
+                        ...editedKeywords.main,
+                        subsector_id: subsector.id,
+                        subsector_nombre: subsector.nombre,
+                      },
+                    }
+                  : editedKeywords,
+                localidad
+              );
+            });
+        }
+      );
+    }
+  }
 }

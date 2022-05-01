@@ -35,6 +35,8 @@ export class AssistantPopComponent implements OnInit {
 
   @Input() perfil: IUser;
 
+  @Input() localidad: string;
+
   @ViewChild('search') searchComponent: AssistantSearchComponent;
 
   isLoading: boolean = false;
@@ -50,12 +52,7 @@ export class AssistantPopComponent implements OnInit {
     private apiSvc: ApiService,
     private translateSvc: TranslateConfigService,
     public assistantSearchSvc: AssistantSearchSvc
-  ) {
-    console.log(
-      'Testeo la inicialización de KEYS: ',
-      this.assistantSearchSvc.keys()
-    );
-  }
+  ) {}
 
   ngOnInit() {}
 
@@ -111,47 +108,47 @@ export class AssistantPopComponent implements OnInit {
   }
 
   async publish(iForm: IForm) {
-    if (!this.perfil) {
-      this.authSvc.userNeedsToRegister();
-      return;
-    }
+    this.loadingSvc.show();
 
-    if (this.userSvc.checkUserDataComplete(this.perfil)) {
-      this.loadingSvc.show();
-
-      (
-        await this.apiSvc.publicarDemanda(
-          this.searchText,
-          iForm.descript,
+    (
+      await this.apiSvc.publicarDemanda(
+        this.searchText,
+        iForm.descript,
+        this.id_sector,
+        this.id_subsector,
+        iForm.ofertas_restantes,
+        iForm.file?.src,
+        !this.perfil && {
+          nombre: iForm.name,
+          email: iForm.email,
+          password: iForm.password,
+          locality: iForm.localidad,
+        },
+        this.perfil?.id
+      )
+    ).subscribe(
+      async (resp) => {
+        await this.apiSvc.enviarNotificacionAOfertantes(
+          this.translateSvc.instant('tabs.tab1.messageSearchDone'),
+          `${this.translateSvc.instant('common.labelTitle')}:  ${
+            this.searchText
+          } \n${this.translateSvc.instant('common.labelDescription')}: ${
+            iForm.descript
+          }`,
           this.id_sector,
           this.id_subsector,
-          iForm.ofertas_restantes,
-          iForm.file?.src
-        )
-      ).subscribe(
-        async (resp) => {
-          await this.apiSvc.enviarNotificacionAOfertantes(
-            this.translateSvc.instant('tabs.tab1.messageSearchDone'),
-            `${this.translateSvc.instant('common.labelTitle')}:  ${
-              this.searchText
-            } \n${this.translateSvc.instant('common.labelDescription')}: ${
-              iForm.descript
-            }`,
-            this.id_sector,
-            this.id_subsector,
-            resp.id
-          );
+          resp.id
+        );
 
-          this.loadingSvc.dismiss();
-          this.dismiss();
-          this.toastSvc.show('tabs.tab1.messageSearchSent', true);
-        },
-        (err) => {
-          this.loadingSvc.dismiss();
-          this.toastSvc.show('tabs.tab1.errorPublishSearch');
-        }
-      );
-    }
+        this.loadingSvc.dismiss();
+        this.dismiss();
+        this.toastSvc.show('tabs.tab1.messageSearchSent', true);
+      },
+      (err) => {
+        this.loadingSvc.dismiss();
+        this.toastSvc.show('tabs.tab1.errorPublishSearch');
+      }
+    );
   }
 
   async cancel() {
