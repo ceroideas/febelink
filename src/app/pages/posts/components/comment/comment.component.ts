@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, SimpleChanges, ViewEncapsulation, Output, EventEmitter  } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  SimpleChanges,
+  ViewEncapsulation,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
 import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
 import { IReport } from 'src/app/models/report.model';
@@ -18,23 +26,26 @@ import { CommentService } from '../../advises/services/comment.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class CommentComponent implements OnInit {
-
-  @Input() post: number // Referencing Post Id
-  @Input() iComment: ICommentFull
+  @Input() post: number; // Referencing Post Id
+  @Input() iComment: ICommentFull;
   @Output() OnDoEdit: EventEmitter<ICommentFull> = new EventEmitter();
   @Output() OnDeleted: EventEmitter<ICommentFull> = new EventEmitter();
-  
-  dateFormatType = DateFormatType
+  @Output() childSubmit: EventEmitter<{
+    message: string | number;
+    parentId: number;
+  }> = new EventEmitter();
+
+  dateFormatType = DateFormatType;
 
   constructor(
-      private optsMenuSvc: OptsMenuSvc
-    , private commentSvc: CommentService
-    , private sessionSvc: UserSessionSvc
-    , private alertSvc: AlertSvc
-    , private toastSvc: ToastSvc
-    , private loadingSvc: LoadingSvc
-    , private reportSvc: ReportService
-  ) { }
+    private optsMenuSvc: OptsMenuSvc,
+    private commentSvc: CommentService,
+    private sessionSvc: UserSessionSvc,
+    private alertSvc: AlertSvc,
+    private toastSvc: ToastSvc,
+    private loadingSvc: LoadingSvc,
+    private reportSvc: ReportService
+  ) {}
 
   ngOnInit() {}
 
@@ -44,63 +55,71 @@ export class CommentComponent implements OnInit {
     }
   } */
 
-  async options( event )
-  {
-    let opts: IOptsMenuButton[]
-    
-    if( await this.sessionSvc.isUser( this.iComment?.uid ))
+  async options(event) {
+    let opts: IOptsMenuButton[];
+
+    if (await this.sessionSvc.isUser(this.iComment?.uid))
       opts = [
         {
-          text: 'common.buttons.edit'
-          , click: ( iOptsMenuButton: IOptsMenuButton ) => this.edit()
-        } as IOptsMenuButton
-        , {
-            text: 'common.buttons.delete'
-          , click: ( iOptsMenuButton: IOptsMenuButton ) => this.delete()
-        } as IOptsMenuButton
-      ]
+          text: 'common.buttons.edit',
+          click: (iOptsMenuButton: IOptsMenuButton) => this.edit(),
+        } as IOptsMenuButton,
+        {
+          text: 'common.buttons.delete',
+          click: (iOptsMenuButton: IOptsMenuButton) => this.delete(),
+        } as IOptsMenuButton,
+      ];
     else
       opts = [
         {
-          text: 'common.buttons.report'
-          , click: ( iOptsMenuButton: IOptsMenuButton ) => this.report()
-        } as IOptsMenuButton
-      ]
-    
-    this.optsMenuSvc.show( event, opts )
+          text: 'common.buttons.report',
+          click: (iOptsMenuButton: IOptsMenuButton) => this.report(),
+        } as IOptsMenuButton,
+      ];
+
+    this.optsMenuSvc.show(event, opts);
   }
 
-  async edit()
-  {
-    this.OnDoEdit?.emit( this.iComment )
+  async edit() {
+    this.OnDoEdit?.emit(this.iComment);
   }
 
-  async delete()
-  {
-    if( await this.alertSvc.confirm({
-        title: 'pages.posts.comment.delete.title'
-      , msg: 'pages.posts.comment.delete.msg'
-    } as IAlert )) {
-      await this.loadingSvc.show()
-      const { response, error } = await this.commentSvc.delete( this.post, this.iComment?.id )
-      await this.loadingSvc.dismiss()
+  async delete() {
+    if (
+      await this.alertSvc.confirm({
+        title: 'pages.posts.comment.delete.title',
+        msg: 'pages.posts.comment.delete.msg',
+      } as IAlert)
+    ) {
+      await this.loadingSvc.show();
+      const { response, error } = await this.commentSvc.delete(
+        this.post,
+        this.iComment?.id
+      );
+      await this.loadingSvc.dismiss();
 
-      if( error ) {
-        this.toastSvc.show( error.msg || error.message || 'Error on deleting', true )
-        return
+      if (error) {
+        this.toastSvc.show(
+          error.msg || error.message || 'Error on deleting',
+          true
+        );
+        return;
       }
 
       // Inform item deleted
-      this.OnDeleted.emit( this.iComment )
+      this.OnDeleted.emit(this.iComment);
 
-      this.toastSvc.show( response.message, true )
+      this.toastSvc.show(response.message, true);
     }
   }
 
-  report()
-  {
+  report() {
     this.reportSvc.show({
-      comment: this.iComment?.id
-    } as IReport )
+      comment: this.iComment?.id,
+    } as IReport);
+  }
+
+  comment(message: string | number) {
+    this.childSubmit.emit({ message, parentId: this.iComment?.id });
   }
 }

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -50,7 +51,8 @@ export class CommentsComponent implements OnInit {
     private commentSvc: CommentService,
     private toastSvc: ToastSvc,
     public sessionSvc: UserSessionSvc,
-    private loadingSvc: LoadingSvc
+    private loadingSvc: LoadingSvc,
+    private ref: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -98,7 +100,7 @@ export class CommentsComponent implements OnInit {
     this.post.comments_qant--;
   }
 
-  async comment(value: string | number) {
+  async comment(value: string | number, parentId?: number) {
     if (!value) return;
     this.loadingSvc.show();
 
@@ -107,7 +109,7 @@ export class CommentsComponent implements OnInit {
       id: this.iComment?.id,
       advise: this.post?.id,
       comment: value + '',
-      id_comment: this.iComment?.id_comment,
+      ...(parentId && { parentId }),
     };
 
     const { response, error } = !this.iComment?.id
@@ -154,5 +156,10 @@ export class CommentsComponent implements OnInit {
   showComments() {
     this.isVisible = true;
     this.OnCommentsVisible.emit();
+  }
+
+  childSubmit(event: { message: string | number; parentId: number }) {
+    this.ref.detectChanges();
+    this.comment(event?.message, event?.parentId);
   }
 }
