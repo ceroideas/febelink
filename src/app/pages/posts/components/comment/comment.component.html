@@ -68,6 +68,79 @@
       </ion-row>
     </ion-grid>
   </ion-row>
+  <!-- Child comments -->
+  <ion-row
+    class="margin-start marg-5 marg-s10 vertical-content"
+    *ngFor="let childComment of iComment?.childComments"
+  >
+    <!-- Avatar -->
+    <ion-avatar class="marg-s10 marg-t10 wh-40">
+      <img
+        src="https://api.febelink.com/storage/users/default.png"
+        *ngIf="!childComment?.logo && !childComment?.avatar"
+      />
+      <ion-img
+        [src]="childComment?.logo || childComment?.avatar"
+        *ngIf="childComment?.logo || childComment?.avatar"
+        appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+      ></ion-img>
+    </ion-avatar>
+
+    <ion-grid class="marg-s10 box-bw-r1-lln">
+      <ion-row>
+        <!-- UserName -->
+        <ion-col [size]="8">
+          <ion-label>
+            {{
+              childComment?.name ||
+                childComment?.nick ||
+                ('common.labelUser' | translate)
+            }}
+            {{ ' ' }}
+            {{ childComment?.lastName }}
+          </ion-label>
+          <br /><em class="font-13 hint">
+            {{ childComment?.created_at | dateFormat: dateFormatType.DateTime }}
+          </em>
+        </ion-col>
+
+        <!-- Date Created -->
+        <ion-col [size]="4" class="no-pad">
+          <!-- Options Menu -->
+          <ion-row class="align-end">
+            <ion-button
+              icon-only
+              color="transparent"
+              class="no-padding no-shadow no-margin wh-30"
+              (click)="options($event)"
+            >
+              <ion-icon
+                class="font-30"
+                src="assets/icon/svg/options.svg"
+              ></ion-icon>
+            </ion-button>
+          </ion-row>
+
+          <ion-row class="align-end">
+            <!-- If has Edited The Post -->
+            <ion-label
+              class="hint font-13"
+              *ngIf="childComment.created_at != childComment.updated_at"
+            >
+              {{ 'common.labelEdited' | translate }}
+            </ion-label>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <!-- Comment -->
+      <ion-row>
+        <ion-label class="marg-s5 opacity-8">
+          {{ childComment.comment }}
+        </ion-label>
+      </ion-row>
+    </ion-grid>
+  </ion-row>
   <!-- Comment -->
   <ion-row class="margin-start marg-5 marg-s10 vertical-content">
     <!-- Avatar -->
@@ -94,6 +167,7 @@
           class="no-padding marg-s10 wh-40"
           shape="round"
           color="primary"
+          (click)="comment(inComment.value)"
         >
           <ion-icon name="send-outline" color="white"></ion-icon>
         </ion-button>
