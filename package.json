@@ -67,6 +67,7 @@
     "jquery": "^3.5.1",
     "ng-socket-io": "^0.2.4",
     "ngx-cookie-service": "^3.0.4",
+    "ngx-link-preview": "^1.1.6",
     "ngx-owl-carousel-o": "^6.0.0",
     "ngx-quill": "^11.1.0",
     "ngx-socket-io": "^3.2.0",

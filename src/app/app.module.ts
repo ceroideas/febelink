@@ -44,12 +44,12 @@ import { LoginPageModule } from './pages/login/login.module';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 // Quill WYSIWYG ( What You See Is What You Get )
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
 
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { PipesModule } from './pipes/pipes.module';
 
-// Cordova File  
+// Cordova File
 import { File } from '@ionic-native/file/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -90,9 +90,7 @@ const config: SocketIoConfig = {
     QuillModule.forRoot(),
     PipesModule,
   ],
-  exports: [
-    PipesModule
-  ],
+  exports: [PipesModule],
   providers: [
     StatusBar,
     SplashScreen,

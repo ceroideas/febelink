@@ -28,6 +28,7 @@ import { NumFloatComponent } from '../components/num-float/num-float.component';
 import { SectorsModule } from '../components/sectors/sectors.module';
 import { LoadingModule } from '../components/loading/loading.module';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { NgxLinkPreviewModule } from 'ngx-link-preview';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
     QuillModule.forRoot(),
     SectorsModule,
     LoadingModule,
+    NgxLinkPreviewModule,
   ],
   exports: [
     TranslateModule,
@@ -90,6 +92,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
     SectorsModule,
     LoadingModule,
     IonicSelectableModule,
+    NgxLinkPreviewModule,
   ],
   entryComponents: [],
 })
