@@ -124,7 +124,7 @@ export class WYSIWYGComponent implements OnInit {
         text: event?.editor?.root?.innerText || event?.text,
       };
 
-      this.linksArray = this.content?.text?
+      this.linksArray = this.content?.text
         .split(/[\s,]+/)
         .filter((splitedWord) => {
           if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
