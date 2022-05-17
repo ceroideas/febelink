@@ -68,13 +68,18 @@ export class Tab1Page {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
-      let sector = params['sector'] !== 'null' ? params['sector'] : null;
-      let servicio = params['servicio'] !== 'null' ? params['servicio'] : null;
-      let localidad =
+      const sector = params['sector'] !== 'null' ? params['sector'] : null;
+      const servicio =
+        params['servicio'] !== 'null' ? params['servicio'] : null;
+      const localidad =
         params['localidad'] !== 'null' ? params['localidad'] : null;
+      const busqueda =
+        params['busqueda'] !== 'null' ? params['busqueda'] : null;
 
-      if (sector || servicio || localidad) {
-        this.renderModalWithURLParams(sector, servicio, localidad);
+      console.log('Depurando búsqueda: ', busqueda);
+
+      if (sector || servicio || localidad || busqueda) {
+        this.renderModalWithURLParams(sector, servicio, localidad, busqueda);
       }
     });
 
@@ -179,40 +184,41 @@ export class Tab1Page {
   private async renderModalWithURLParams(
     sector: string,
     servicio: string,
-    localidad: string
+    localidad: string,
+    busqueda: string
   ) {
     let editedKeywords: IKeywords;
 
-    if (sector || servicio) {
+    if (sector || servicio || busqueda) {
       editedKeywords = this.assistantSearchSvc.get();
-      (await this.api.getSectorsByKeys(sector ?? servicio)).subscribe(
-        (sectors) => {
-          this.assistantSearchSvc.main(sectors.main);
+      (
+        await this.api.getSectorsByKeys(sector ?? servicio ?? busqueda)
+      ).subscribe((sectors) => {
+        this.assistantSearchSvc.main(sectors.main);
 
-          this.subsectorSvc
-            .get(editedKeywords.main.sector_id)
-            .then((subsectors) => {
-              const subsector = subsectors.find((elem) => {
-                return elem.nombre === servicio;
-              });
-
-              this.assistantPop.show(
-                this.perfil,
-                subsector
-                  ? {
-                      ...editedKeywords,
-                      main: {
-                        ...editedKeywords.main,
-                        subsector_id: subsector.id,
-                        subsector_nombre: subsector.nombre,
-                      },
-                    }
-                  : editedKeywords,
-                localidad
-              );
+        this.subsectorSvc
+          .get(editedKeywords.main.sector_id)
+          .then((subsectors) => {
+            const subsector = subsectors.find((elem) => {
+              return elem.nombre === servicio;
             });
-        }
-      );
+
+            this.assistantPop.show(
+              this.perfil,
+              subsector
+                ? {
+                    ...editedKeywords,
+                    main: {
+                      ...editedKeywords.main,
+                      subsector_id: subsector.id,
+                      subsector_nombre: subsector.nombre,
+                    },
+                  }
+                : editedKeywords,
+              localidad
+            );
+          });
+      });
     }
   }
 }
