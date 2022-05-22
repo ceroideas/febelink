@@ -116,16 +116,19 @@
 
     <!-- Media-->
     <ion-row
-      class="marg-t10 media"
-      color="black"
-      *ngIf="isPostVisible && iAdvise.media_url"
+      class="marg-t10"
+      *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
       (click)="navigateToPost()"
     >
       <!-- Image -->
       <ion-img
-        class="h-social-media marg-se"
+        class="h-social-media marg-se media"
         [src]="iAdvise.media_url"
-        *ngIf="fileSvc.isImage(iAdvise.media_ext)"
+        *ngIf="
+          isPostVisible &&
+          iAdvise.media_url &&
+          fileSvc.isImage(iAdvise.media_ext)
+        "
       ></ion-img>
 
       <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
@@ -133,10 +136,20 @@
         playsinline
         controls
         *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
-        class="w-social-media h-social-media media-video"
+        class="w-social-media h-social-media media-video media"
         [src]="iAdvise.media_url + '#t=0.001'"
         preload="metadata"
       ></video>
+
+      <ngx-link-preview
+        *ngIf="!iAdvise.media_url"
+        class="modern"
+        [apiRoute]="apiMetaTagUrl"
+        [getApiEndpoint$]="apiCallbackFn"
+        [links]="linksArray"
+        [showLinkUrl]="true"
+        [useHtmlLinkDefaultClickEvent]="true"
+      ></ngx-link-preview>
     </ion-row>
 
     <!-- Comments -->

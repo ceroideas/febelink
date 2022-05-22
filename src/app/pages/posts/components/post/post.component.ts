@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import {
   Component,
   OnInit,
@@ -19,6 +20,7 @@ import { ReportService } from 'src/app/services/report.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
+import { environment } from 'src/environments/environment';
 import { IAdviseFull } from '../../advises/models/advises.model';
 import { AdviseService } from '../../advises/services/advises.service';
 
@@ -39,6 +41,9 @@ export class PostComponent implements OnInit {
 
   isPostVisible: boolean = true;
   areCommentsVisible: boolean = true;
+
+  apiMetaTagUrl: string = `${environment.baseWebUrl}api/auth/meta-tags`;
+  linksArray: string[] = [];
 
   dateFormatType = DateFormatType;
   iUser: IUser;
@@ -83,7 +88,8 @@ export class PostComponent implements OnInit {
     private router: Router,
     private seoSvc: SeoService,
     public fileSvc: FileService,
-    private reportSvc: ReportService
+    private reportSvc: ReportService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -94,6 +100,12 @@ export class PostComponent implements OnInit {
       this.iUser = userData;
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
     });
+    this.linksArray = this.iAdvise?.content
+      .split(/[\s,]+/)
+      .filter((splitedWord) => {
+        if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
+          return splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -211,4 +223,12 @@ export class PostComponent implements OnInit {
   navigateToPost() {
     this.router.navigate([`posts/oracle/${this.id}`]);
   }
+
+  public apiCallbackFn = (route: string) => {
+    try {
+      return this.http.get(route);
+    } catch (error) {
+      console.log('ups', error);
+    }
+  };
 }
