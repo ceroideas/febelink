@@ -77,8 +77,17 @@ export class AssistantPopComponent implements OnInit {
   getSubsectors() {
     this.isLoading = true;
     this.subsectorSvc.get(this.id_sector).then((subsectors) => {
-      console.log({ subsectors });
       this.subsectors = subsectors;
+
+      const subsectorMatch = subsectors.find((elem) => {
+        return elem.nombre === this.searchText;
+      });
+
+      if (subsectorMatch) {
+        this.id_subsector = subsectorMatch.id;
+        this.subsector = subsectorMatch.nombre;
+      }
+
       this.isLoading = false;
     });
   }
@@ -96,6 +105,8 @@ export class AssistantPopComponent implements OnInit {
   OnGotKeys(data) {
     this.id_sector = data?.sector_id;
     this.sector = data?.sector_nombre;
+
+    this.searchText = data?.searchText;
 
     this.id_subsector = data?.subsector_id;
     this.subsector = data?.subsector_nombre;

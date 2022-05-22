@@ -28,15 +28,16 @@ export class AssistantSearchSvc {
         this.isLoading = true;
 
         this.callSearch?.unsubscribe(); // To avoid memory leaks
+
         this.callSearch = (await this.api.searchByKeys(text)).subscribe(
           (keywords) => {
-            console.log({ keywords });
             if (keywords.length !== 0) {
               this.iKeyWords.keys = [];
-              for (let key of keywords) {
-                let item = {
+              for (const key of keywords) {
+                const item = {
                   name: this.highlight(key.keyword),
                   value: key.keyword,
+                  level: key.level,
                   key,
                 };
                 this.iKeyWords.keys.push(item);
@@ -50,10 +51,6 @@ export class AssistantSearchSvc {
                 resolve(this.iKeyWords);
               }, 500);
             }
-            console.log({
-              keys: this.iKeyWords.keys,
-              iKeyWords: this.iKeyWords,
-            });
           }
         );
       }
@@ -106,17 +103,16 @@ export class AssistantSearchSvc {
     this.searchText(key.value);
 
     this.callSectors?.unsubscribe(); // To avoid memory leaks
-    await (
-      await this.api.getSectorsByKeys(key.value)
-    ).subscribe((keywords) => {
-      console.log('keywords', keywords);
 
+    await (
+      await this.api.getSectorsByKeys(key.value, key.level)
+    ).subscribe((keywords) => {
       this.set(key.value, keywords?.main, true);
 
       // check if found a match
-      if (keywords.main) this.OnGotKeys.emit(keywords.main);
+      if (keywords.main)
+        this.OnGotKeys.emit({ ...keywords.main, searchText: key.value });
 
-      this.showCard(true);
       this.removeFocus();
 
       this.isLoading = false;
