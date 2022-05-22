@@ -76,8 +76,6 @@ export class Tab1Page {
       const busqueda =
         params['busqueda'] !== 'null' ? params['busqueda'] : null;
 
-      console.log('Depurando búsqueda: ', busqueda);
-
       if (sector || servicio || localidad || busqueda) {
         this.renderModalWithURLParams(sector, servicio, localidad, busqueda);
       }
@@ -150,7 +148,6 @@ export class Tab1Page {
   }
 
   OnGotKeys(data) {
-    console.log({ data, searchComponent: this.searchComponent.get() });
     this.assistantPop.show(this.perfil, this.searchComponent.get());
     this.searchComponent.clear();
   }
@@ -176,7 +173,6 @@ export class Tab1Page {
     const recommenderId: string =
       this.activatedRoute.snapshot.paramMap.get('recommenderId');
     if (recommenderId) {
-      console.log('Recomended by', recommenderId);
       this.cookSvc.set('recommenderId', recommenderId, 1);
     }
   }
@@ -197,26 +193,29 @@ export class Tab1Page {
         this.assistantSearchSvc.main(sectors.main);
 
         this.subsectorSvc
-          .get(editedKeywords.main.sector_id)
+          .get(editedKeywords.main?.sector_id)
           .then((subsectors) => {
             const subsector = subsectors.find((elem) => {
-              return elem.nombre === servicio;
+              const searchTerm = servicio ?? busqueda;
+              return elem.nombre === searchTerm;
             });
 
-            this.assistantPop.show(
-              this.perfil,
-              subsector
-                ? {
-                    ...editedKeywords,
-                    main: {
-                      ...editedKeywords.main,
-                      subsector_id: subsector.id,
-                      subsector_nombre: subsector.nombre,
-                    },
-                  }
-                : editedKeywords,
-              localidad
-            );
+            if (editedKeywords.main) {
+              this.assistantPop.show(
+                this.perfil,
+                subsector
+                  ? {
+                      ...editedKeywords,
+                      main: {
+                        ...editedKeywords.main,
+                        subsector_id: subsector.id,
+                        subsector_nombre: subsector.nombre,
+                      },
+                    }
+                  : editedKeywords,
+                localidad
+              );
+            }
           });
       });
     }

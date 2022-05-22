@@ -38,7 +38,7 @@ export interface IKeywords {
 }
 
 export interface IMatch {
-  coincidences: number;
+  coincidences?: number;
 
   priority: number;
   priority_level: string;
