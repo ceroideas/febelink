@@ -8,6 +8,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Platform } from '@ionic/angular';
 import {
   FilePickType,
@@ -45,7 +46,11 @@ export class FilePickerComponent implements OnInit {
   @ViewChild('filePicker') filePicker: ElementRef;
   @ViewChild('videoPlayer') videoPlayer: ElementRef;
 
-  constructor(public mediaSvc: FileService, private platform: Platform) {}
+  constructor(
+    public mediaSvc: FileService,
+    private platform: Platform,
+    public domSanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     this.platform
