@@ -213,8 +213,9 @@ export class AdviseCRUDPage implements OnInit {
     // if 'iAdvise.id_advise' || 'id_reference' -> Is referencing, no need to have comment
     if (
       (this.content?.html || '').length < 4 &&
-      !this.iAdvise?.id_advise &&
-      !this.id_reference
+      !this.iFile?.file
+      // !this.iAdvise?.id_advise &&
+      // !this.id_reference
     ) {
       this.toastSvc.show('pages.posts.advises.create.error.content', true);
       return false;

@@ -219,7 +219,20 @@ export class FileService {
   }
 
   isVideo(ext: string): boolean {
-    return ['mp4'].includes((ext || '__').toLowerCase());
+    return [
+      'mp4',
+      'quicktime',
+      'mpeg',
+      'mov',
+      'avi',
+      'ogg',
+      'webm',
+      'x-ms-wmv',
+      'x-flv',
+      'x-matroska',
+      'x-msvideo',
+      'x-dv',
+    ].includes((ext || '__').toLowerCase());
   }
 
   getExt(fileName: string): string {
