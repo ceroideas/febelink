@@ -132,6 +132,8 @@ export class CommentsComponent implements OnInit {
       this.post.comments_qant++;
     }
 
+    this.list();
+
     // Clear Input
     this.inComment.value = '';
 
