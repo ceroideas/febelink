@@ -454,8 +454,10 @@ export class ApiService {
   /**
    * Get sectors by keys
    */
-  public getSectorsByKeys(key) {
-    return this._getData('sectores-keys?keys=' + key);
+  public getSectorsByKeys(keyword: string, level?: string) {
+    return this._getData(
+      `sectores-keys?keys=${keyword}` + (level ? `&level=${level}` : '')
+    );
   }
 
   /**

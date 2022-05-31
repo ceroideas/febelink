@@ -68,13 +68,16 @@ export class Tab1Page {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
-      let sector = params['sector'] !== 'null' ? params['sector'] : null;
-      let servicio = params['servicio'] !== 'null' ? params['servicio'] : null;
-      let localidad =
+      const sector = params['sector'] !== 'null' ? params['sector'] : null;
+      const servicio =
+        params['servicio'] !== 'null' ? params['servicio'] : null;
+      const localidad =
         params['localidad'] !== 'null' ? params['localidad'] : null;
+      const busqueda =
+        params['busqueda'] !== 'null' ? params['busqueda'] : null;
 
-      if (sector || servicio || localidad) {
-        this.renderModalWithURLParams(sector, servicio, localidad);
+      if (sector || servicio || localidad || busqueda) {
+        this.renderModalWithURLParams(sector, servicio, localidad, busqueda);
       }
     });
 
@@ -145,7 +148,6 @@ export class Tab1Page {
   }
 
   OnGotKeys(data) {
-    console.log({ data, searchComponent: this.searchComponent.get() });
     this.assistantPop.show(this.perfil, this.searchComponent.get());
     this.searchComponent.clear();
   }
@@ -171,7 +173,6 @@ export class Tab1Page {
     const recommenderId: string =
       this.activatedRoute.snapshot.paramMap.get('recommenderId');
     if (recommenderId) {
-      console.log('Recomended by', recommenderId);
       this.cookSvc.set('recommenderId', recommenderId, 1);
     }
   }
@@ -179,23 +180,27 @@ export class Tab1Page {
   private async renderModalWithURLParams(
     sector: string,
     servicio: string,
-    localidad: string
+    localidad: string,
+    busqueda: string
   ) {
     let editedKeywords: IKeywords;
 
-    if (sector || servicio) {
+    if (sector || servicio || busqueda) {
       editedKeywords = this.assistantSearchSvc.get();
-      (await this.api.getSectorsByKeys(sector ?? servicio)).subscribe(
-        (sectors) => {
-          this.assistantSearchSvc.main(sectors.main);
+      (
+        await this.api.getSectorsByKeys(sector ?? servicio ?? busqueda)
+      ).subscribe((sectors) => {
+        this.assistantSearchSvc.main(sectors.main);
 
-          this.subsectorSvc
-            .get(editedKeywords.main.sector_id)
-            .then((subsectors) => {
-              const subsector = subsectors.find((elem) => {
-                return elem.nombre === servicio;
-              });
+        this.subsectorSvc
+          .get(editedKeywords.main?.sector_id)
+          .then((subsectors) => {
+            const subsector = subsectors.find((elem) => {
+              const searchTerm = servicio ?? busqueda;
+              return elem.nombre === searchTerm;
+            });
 
+            if (editedKeywords.main) {
               this.assistantPop.show(
                 this.perfil,
                 subsector
@@ -210,9 +215,9 @@ export class Tab1Page {
                   : editedKeywords,
                 localidad
               );
-            });
-        }
-      );
+            }
+          });
+      });
     }
   }
 }

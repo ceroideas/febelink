@@ -30,6 +30,16 @@
         style="font-size: 16px"
       >
         <ion-icon slot="start" name="search-outline"></ion-icon>
+        <span
+          *ngIf="key.level"
+          [innerHTML]="
+            key.level === 'sector'
+              ? 'Sector -&nbsp;'
+              : key.level === 'subsector'
+              ? 'Subsector -&nbsp;'
+              : ''
+          "
+        ></span>
         <span [innerHTML]="key.name"></span>
       </ion-item>
     </ion-list>

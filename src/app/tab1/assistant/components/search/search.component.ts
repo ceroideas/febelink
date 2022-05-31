@@ -42,7 +42,6 @@ export class AssistantSearchComponent implements OnInit {
   }
 
   async OnEnterPress($event) {
-    console.log('OnEnterPress ', this.searchText);
     await this.assistantSearchSvc.detectKeyPressed($event, this.searchText);
     // Will only emit when enter promise resolved
     this.OnEnter.emit();
