@@ -100,12 +100,14 @@ export class PostComponent implements OnInit {
       this.iUser = userData;
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
     });
-    this.linksArray = this.iAdvise?.content
-      .split(/[\s,]+|\.\s/)
-      .filter((splitedWord) => {
-        if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
-          return splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i)[0];
-      });
+    if (this.iAdvise?.content) {
+      this.linksArray = this.iAdvise.content
+        .split(/[\s,]+|\.\s|<p>|<\/p>/)
+        .filter((splitedWord) => {
+          if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
+            return splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+        });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
