@@ -127,8 +127,8 @@ export class WYSIWYGComponent implements OnInit {
       this.linksArray = this.content?.text
         .split(/[\s,]+|\.\s/)
         .filter((splitedWord) => {
-          if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
-            return splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+          if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
+            return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
         });
 
       if (this.OnChange) this.OnChange.emit(this.content);
