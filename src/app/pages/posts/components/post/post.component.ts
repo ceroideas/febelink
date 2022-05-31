@@ -101,11 +101,16 @@ export class PostComponent implements OnInit {
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
     });
     if (this.iAdvise?.content) {
-      this.linksArray = this.iAdvise.content
+      const html = this.iAdvise.content;
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      const adaptedText = div.textContent || div.innerText || '';
+
+      this.linksArray = adaptedText
         .split(/[\s,]+|\.\s|<p>|<\/p>/)
         .filter((splitedWord) => {
-          if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
-            return splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+          if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
+            return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
         });
     }
   }
