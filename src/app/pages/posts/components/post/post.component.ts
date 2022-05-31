@@ -101,7 +101,7 @@ export class PostComponent implements OnInit {
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
     });
     this.linksArray = this.iAdvise?.content
-      .split(/[\s,]+/)
+      .split(/[\s,]+|\.\s/)
       .filter((splitedWord) => {
         if (splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i))
           return splitedWord.match(/https?:\/\/.*\.(com|es|net|org|be)/i)[0];
