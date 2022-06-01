@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
+  AfterViewInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -22,7 +23,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './wysiwyg.component.html',
   styleUrls: ['./wysiwyg.component.scss'],
 })
-export class WYSIWYGComponent implements OnInit {
+export class WYSIWYGComponent implements OnInit, AfterViewInit {
   // https://www.freakyjolly.com/angular-rich-text-editor-using-ngx-quill-tutorial/
   // https://www.youtube.com/watch?v=f1qQOorMKGo
   // https://quilljs.com/docs/quickstart/
@@ -102,6 +103,15 @@ export class WYSIWYGComponent implements OnInit {
     if (this.html) this.contenido = this.html;
   }
 
+  ngAfterViewInit() {
+    const html = this.contenido;
+    const div = document.createElement('div');
+    div.innerHTML = html.replace(/<br>/g, ' ');
+    const adaptedText = div.textContent || div.innerText || '';
+
+    this.loadLinks(adaptedText);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if ('html' in changes && this.quill)
       this.contenido = changes.html.currentValue || '';
@@ -124,12 +134,7 @@ export class WYSIWYGComponent implements OnInit {
         text: event?.editor?.root?.innerText || event?.text,
       };
 
-      this.linksArray = this.content?.text
-        .split(/[\s,]+|\.\s/)
-        .filter((splitedWord) => {
-          if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
-            return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
-        });
+      this.loadLinks(this.content?.text);
 
       if (this.OnChange) this.OnChange.emit(this.content);
     }
@@ -163,5 +168,12 @@ export class WYSIWYGComponent implements OnInit {
     }, (range, context) => {
       console.log('KEYBINDING SHIFT + B', range, context)
     }) */
+  }
+
+  loadLinks(text: string) {
+    this.linksArray = text.split(/[\s,]+|\.\s/).filter((splitedWord) => {
+      if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
+        return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+    });
   }
 }
