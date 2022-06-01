@@ -103,11 +103,11 @@ export class PostComponent implements OnInit {
     if (this.iAdvise?.content) {
       const html = this.iAdvise.content;
       const div = document.createElement('div');
-      div.innerHTML = html;
+      div.innerHTML = html.replace(/<br>/g, ' ');
       const adaptedText = div.textContent || div.innerText || '';
 
       this.linksArray = adaptedText
-        .split(/[\s,]+|\.\s|<p>|<\/p>/)
+        .split(/[\s,]+|\.\s/)
         .filter((splitedWord) => {
           if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
             return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
