@@ -1,4 +1,4 @@
-<div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light">
+<div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light post-box">
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10" (click)="navigateToPost()">
       <ion-col [size]="!showFollow ? 10 : 8" class="no-padding">
@@ -65,7 +65,7 @@
     </ion-row>
 
     <!-- Title -->
-    <ion-row
+    <!-- <ion-row
       class="one-line marg-t5 marg-s10 marg-e10"
       (click)="navigateToPost()"
     >
@@ -73,10 +73,10 @@
         class="no-margin bold-6 font-18 title"
         [innerHTML]="extractTitle()"
       ></h1>
-    </ion-row>
+    </ion-row> -->
 
     <!-- Subitle -->
-    <ion-row
+    <!-- <ion-row
       class="one-line marg-t5 marg-s10 marg-e10"
       *ngIf="iAdvise.subtitle"
       (click)="navigateToPost()"
@@ -85,10 +85,10 @@
         class="no-margin font-16 subtitle"
         [innerHTML]="iAdvise.subtitle"
       ></h3>
-    </ion-row>
+    </ion-row> -->
 
     <!-- Summary -->
-    <ion-row
+    <!-- <ion-row
       class="lines-2 marg-10 marg-t5 inline"
       *ngIf="iAdvise.summary || !showContent"
       (click)="navigateToPost()"
@@ -96,6 +96,16 @@
       <ion-label
         [class]="'summary ' + (!iAdvise?.subtitle ? '' : 'hint')"
         [innerHTML]="extractSummary()"
+      ></ion-label>
+    </ion-row> -->
+    <ion-row
+      class="lines-2 marg-10 marg-t5 inline"
+      *ngIf="iAdvise.summary || !showContent"
+      (click)="navigateToPost()"
+    >
+      <ion-label
+        [class]="'summary ' + (!iAdvise?.subtitle ? '' : 'hint')"
+        [innerHTML]="iAdvise.content"
       ></ion-label>
     </ion-row>
 
@@ -168,7 +178,10 @@
     </ion-row>
 
     <!-- Content -->
-    <ion-row class="marg-10 content" *ngIf="showContent && isPostVisible">
+    <ion-row
+      class="marg-10 content word-wrap"
+      *ngIf="showContent && isPostVisible"
+    >
       <ion-label [innerHTML]="iAdvise.content"></ion-label>
     </ion-row>
 

@@ -29,10 +29,9 @@ import { FrogedService } from './services/froged.service';
 import { ConsoleSvc } from './services/console.service';
 import { environment } from 'src/environments/environment';
 
-const GENERAL_TITLE =
-  'Febelink | Comparte y encuentra soluciones profesionales';
+const GENERAL_TITLE = 'Febelink | La red social de los profesionales';
 const GENERAL_DESC =
-  'En Febelink encontrarás lo que estás buscando - Entra y encuentra rápidamente lo que buscas en el sector o categoría que necesites. Explora todas las ventajas que te ofrece Febelink para ayudarte en tu día a día.';
+  'Febelink es la red social de los profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas.';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
