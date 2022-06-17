@@ -106,7 +106,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const html = this.contenido;
     const div = document.createElement('div');
-    div.innerHTML = html.replace(/<br>/g, ' ');
+    div.innerHTML = html.replace(/<br>/g, ' ').replace(/<p>|<\/p>/g, ' ');
     const adaptedText = div.textContent || div.innerText || '';
 
     this.loadLinks(adaptedText);

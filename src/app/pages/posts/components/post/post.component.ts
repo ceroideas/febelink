@@ -103,7 +103,7 @@ export class PostComponent implements OnInit {
     if (this.iAdvise?.content) {
       const html = this.iAdvise.content;
       const div = document.createElement('div');
-      div.innerHTML = html.replace(/<br>/g, ' ');
+      div.innerHTML = html.replace(/<br>/g, ' ').replace(/<p>|<\/p>/g, ' ');
       const adaptedText = div.textContent || div.innerText || '';
 
       this.linksArray = adaptedText
@@ -137,11 +137,11 @@ export class PostComponent implements OnInit {
       } as IUser;
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
 
-      this.seoSvc.generateTags({
+      /* this.seoSvc.generateTags({
         title: this.iAdvise.title,
         description: this.iAdvise.content,
         image: this.fileSvc.img2str(this.iAdvise.media_url),
-      });
+      }); */
 
       this.getReference();
     }

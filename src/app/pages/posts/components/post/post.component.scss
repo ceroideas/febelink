@@ -14,3 +14,22 @@
 }
 
 .comment{ width: calc( 100% - 40px - 5px - 10px ); }
+
+.modern, .word-wrap, .modern > * {
+    margin: 0.3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.text-data {
+    width: 100% !important;
+
+    .description {
+        max-height: inherit !important;
+    }
+}
+
+.post-box {
+    padding: 1px 0 0 1px;
+}
