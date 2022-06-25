@@ -14,7 +14,8 @@
     "android-rm": "ionic cordova platform rm android",
     "android-add": "ionic cordova platform add android",
     "android-build": "ionic cordova build android -- --prod --ssl",
-    "android-full": "npm run android-rm && npm run android-add && npm run android-build"
+    "android-full": "npm run android-rm && npm run android-add && npm run android-build",
+    "ionic-serve": "ionic serve"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/common": "~9.1.6",
     "@angular/core": "~9.1.6",
     "@angular/forms": "~9.1.6",
+    "@angular/localize": "^9.1.13",
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
