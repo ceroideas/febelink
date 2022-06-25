@@ -412,14 +412,14 @@ export class ChatPage {
 
     getMessageDate(messageIndex: number):
         string {
-        var options = {year: 'numeric', month: 'long', day: 'numeric'};
-        let dateToday = new Date().toLocaleDateString("es-ES", options)
+        const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long', day: 'numeric'};
+        let dateToday = new Date().toLocaleDateString('es-ES', options)
 
-        let longDateYesterday = new Date();
+        const longDateYesterday = new Date();
         longDateYesterday.setDate(new Date().getDate() - 1);
-        let dateYesterday = longDateYesterday.toLocaleDateString("es-ES", options)
-        let today = dateToday;
-        let yesterday = dateYesterday;
+        const dateYesterday = longDateYesterday.toLocaleDateString('es-ES', options);
+        const today = dateToday;
+        const yesterday = dateYesterday;
 
         const wholeDate = new Date(
             this.messages[messageIndex].timecreated
