@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { IAdviseFull, ITopic } from '../models/advises.model';
@@ -31,7 +31,7 @@ export class AdviseCRUDPage implements OnInit {
 
   isLoading: boolean = false;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   iFile: IFile = {};
   content: iWYSIWYG = {};
 
@@ -76,7 +76,7 @@ export class AdviseCRUDPage implements OnInit {
   ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public mediaSvc: FileService,
     private actRoute: ActivatedRoute,
     private router: RouteSvc,
@@ -138,19 +138,19 @@ export class AdviseCRUDPage implements OnInit {
     const disabled = this.paramsUrl?.id && this.isLoading;
 
     this.form = this.formBuilder.group({
-      title: new FormControl(
+      title: new UntypedFormControl(
         { value: this.iAdvise?.title || '', disabled: disabled },
         Validators.required
       ),
-      subtitle: new FormControl(
+      subtitle: new UntypedFormControl(
         { value: this.iAdvise?.subtitle || '', disabled: disabled },
         Validators.required
       ),
-      summary: new FormControl(
+      summary: new UntypedFormControl(
         { value: this.iAdvise?.summary || '', disabled: disabled },
         Validators.required
       ),
-      topic: new FormControl(
+      topic: new UntypedFormControl(
         { value: this.iAdvise?.topic || '', disabled: disabled },
         Validators.required
       ),

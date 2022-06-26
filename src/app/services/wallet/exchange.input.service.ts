@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { iExchangeInput, ExchangeInput } from 'src/app/models/wallet/exchange.model';
 import { ToastSvc } from '../toast.service';
 
@@ -12,7 +12,7 @@ export class ExchangeInputSvc
         private toastSvc: ToastSvc
     ) {}
     
-    calc( iEx: iExchangeInput, form: FormGroup ) {
+    calc( iEx: iExchangeInput, form: UntypedFormGroup ) {
         let key: string, qant: number = 0
 
         switch( iEx.is ) {
@@ -37,7 +37,7 @@ export class ExchangeInputSvc
     }
 
     private continue(
-        input: string, qant: number, key: string, maxDecimals: number, form: FormGroup
+        input: string, qant: number, key: string, maxDecimals: number, form: UntypedFormGroup
     ): boolean {
         if( !qant || Number.parseFloat( input || '0' ) <= qant )
             return true
@@ -48,7 +48,7 @@ export class ExchangeInputSvc
 
     }
 
-    public update( form: FormGroup, key: string, qant: number, maxDec: number, emit: boolean = false )
+    public update( form: UntypedFormGroup, key: string, qant: number, maxDec: number, emit: boolean = false )
     {
         form.patchValue({
             [ key ]: qant == 0 ? '' : qant.toFixed( maxDec )}

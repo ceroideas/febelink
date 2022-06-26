@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { IUser } from 'src/app/models/user.model';
@@ -23,7 +23,7 @@ export class BuyAssetsComponent implements OnInit {
   @Input() stripeFee: number;
   @Input() assetsMaxDecimals: number;
 
-  public buyForm: FormGroup;
+  public buyForm: UntypedFormGroup;
 
   cash: number = 0;
   calcStripe: number = 0;
@@ -39,7 +39,7 @@ export class BuyAssetsComponent implements OnInit {
   dontCheckDiff: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
     private api: ApiService,
     public platform: Platform
@@ -55,8 +55,8 @@ export class BuyAssetsComponent implements OnInit {
 
   buildForm() {
     this.buyForm = this.formBuilder.group({
-      num_origin: new FormControl('', [Validators.required]),
-      num_destiny: new FormControl('', [Validators.required]),
+      num_origin: new UntypedFormControl('', [Validators.required]),
+      num_destiny: new UntypedFormControl('', [Validators.required]),
     });
   }
 

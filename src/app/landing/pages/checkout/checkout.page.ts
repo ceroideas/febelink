@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import {
@@ -30,9 +30,9 @@ export class CheckoutPage implements OnInit {
     locale: 'es'
   };
 
-  stripeTest: FormGroup;
+  stripeTest: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder
+  constructor(private fb: UntypedFormBuilder
     , private stripeSvc: StripeService
     , private router: Router
     , private api: ApiService

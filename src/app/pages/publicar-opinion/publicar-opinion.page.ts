@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { NavParams, ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -11,7 +11,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 })
 export class PublicarOpinionPage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   id_demandante: any;
   opinion_types: any[];
   subsectores: any[];
@@ -19,7 +19,7 @@ export class PublicarOpinionPage implements OnInit {
   constructor( public navParams: NavParams,
                private api: ApiService,
                private utilities: UtilitiesService,
-               private formBuilder: FormBuilder,
+               private formBuilder: UntypedFormBuilder,
                private modalCtrl: ModalController
                ) { 
 

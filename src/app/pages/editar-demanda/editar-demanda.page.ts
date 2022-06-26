@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { NavParams, ModalController, Platform } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class EditarDemandaPage implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   srcFoto: any;
   base64img: any;
   demanda: any;
@@ -24,7 +24,7 @@ export class EditarDemandaPage implements OnInit {
   
   constructor( public navParams: NavParams,
                private modalCtrl: ModalController,
-               private formBuilder: FormBuilder,
+               private formBuilder: UntypedFormBuilder,
                private api: ApiService,
                private utilities: UtilitiesService,
                private camera: Camera,

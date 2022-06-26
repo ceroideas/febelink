@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { IUser } from 'src/app/models/user.model';
@@ -37,7 +37,7 @@ export class SendComponent implements OnInit {
   // If user can or cannot change the amount
   @Input() canModify: boolean = true;
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   isLoading: boolean;
   calcs: {
     retained?: number;
@@ -48,7 +48,7 @@ export class SendComponent implements OnInit {
   publicKey: string;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
     private popCtrl: PopoverController,
     private wallet: WalletService,
@@ -82,11 +82,11 @@ export class SendComponent implements OnInit {
 
   buildForm() {
     this.form = this.formBuilder.group({
-      amount: new FormControl(
+      amount: new UntypedFormControl(
         { value: this.amount || '', disabled: !this.canModify },
         [Validators.required]
       ),
-      publicKey: new FormControl(
+      publicKey: new UntypedFormControl(
         { value: this.user?.public || '', disabled: this.user },
         [Validators.required]
       ),
