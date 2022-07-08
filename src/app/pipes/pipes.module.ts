@@ -7,23 +7,22 @@ import { StringToNumberPipe } from './str-to-num.pipe';
 import { TypeofPipe } from './typeof.pipe';
 
 @NgModule({
-  declarations: [
-      FilterPipe
-    , SafeHtmlPipe
-    , TypeofPipe
-    , SplitNumberPipe
-    , DateFormatPipe
-    , StringToNumberPipe
-  ],
-  imports: [],
-  exports: [
-      FilterPipe
-    , SafeHtmlPipe
-    , TypeofPipe
-    , SplitNumberPipe
-    , DateFormatPipe
-    , StringToNumberPipe
-  ],
-  entryComponents: [],
+    declarations: [
+        FilterPipe,
+        SafeHtmlPipe,
+        TypeofPipe,
+        SplitNumberPipe,
+        DateFormatPipe,
+        StringToNumberPipe
+    ],
+    imports: [],
+    exports: [
+        FilterPipe,
+        SafeHtmlPipe,
+        TypeofPipe,
+        SplitNumberPipe,
+        DateFormatPipe,
+        StringToNumberPipe
+    ]
 })
 export class PipesModule {}

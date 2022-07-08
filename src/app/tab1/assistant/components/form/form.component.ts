@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
+  UntypedFormBuilder,
   FormControl,
-  FormGroup,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Platform } from '@ionic/angular';
@@ -25,7 +25,7 @@ export class AssistantFormComponent implements OnInit {
   @Input() perfil: IUser;
   @Input() localidad: string;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   iFile: IFile;
   answerOptions = answerOptions();
 
@@ -34,7 +34,7 @@ export class AssistantFormComponent implements OnInit {
   password: string;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public fileSvc: FileService,
     public platform: Platform,
     public alertSvc: AlertSvc

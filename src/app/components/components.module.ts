@@ -8,25 +8,23 @@ import { SocialLoginComponent } from './social-login/social-login.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    entryComponents: [
-    ],
     declarations: [
-      MenuComponent,
-      CookiesComponent,
-      SharePopoverComponent,
-      SocialLoginComponent,
+        MenuComponent,
+        CookiesComponent,
+        SharePopoverComponent,
+        SocialLoginComponent,
     ],
     exports: [
-      MenuComponent,
-      CookiesComponent,
-      SharePopoverComponent,
-      SocialLoginComponent,
-      TranslateModule
+        MenuComponent,
+        CookiesComponent,
+        SharePopoverComponent,
+        SocialLoginComponent,
+        TranslateModule
     ],
     imports: [
-      CommonModule,
-      IonicModule,
-      TranslateModule.forChild()
+        CommonModule,
+        IonicModule,
+        TranslateModule.forChild()
     ]
-  })
+})
   export class ComponentsModule { }

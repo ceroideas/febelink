@@ -4,7 +4,7 @@ import { IUser } from 'src/app/models/user.model';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { TokenCRUD, TokenPhase, TokensUser } from '../../models/tokens-user';
 import { TokensUsersService } from '../../services/tokens-users.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertSvc } from 'src/app/services/alert.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 
@@ -25,7 +25,7 @@ export class EditTokensComponent implements OnInit {
   isLoading: boolean = false;
   loadingMsg: string;
   usersList: IUser[];
-  tokensForm: FormGroup;
+  tokensForm: UntypedFormGroup;
 
   constructor(
       private tokenSvc: TokensUsersService
@@ -33,7 +33,7 @@ export class EditTokensComponent implements OnInit {
     , private alertSvc: AlertSvc
     , private toastSvc: ToastSvc
     , private translateSvc: TranslateConfigService
-    , private formBuilder: FormBuilder
+    , private formBuilder: UntypedFormBuilder
   ) { }
 
   ngOnInit() {
@@ -57,16 +57,16 @@ export class EditTokensComponent implements OnInit {
 
   builtForm() {
     this.tokensForm = this.formBuilder.group({
-      name: new FormControl({ value: this.tokensUser?.name || this.tokensUser?.nick, disabled: true }),
-      lastname: new FormControl({ value: this.tokensUser?.lastname, disabled: true }),
-      email: new FormControl({ value: this.tokensUser?.email, disabled: true }),
-      dni: new FormControl({ value: this.tokensUser?.dni, disabled: true }),
-      num_tokens: new FormControl({ value: this.tokensUser?.num_tokens, disabled: false }, Validators.required ),
-      id_phase_tokens: new FormControl({ value: this.tokensUser?.id_phase_tokens, disabled: false }, Validators.required ),
-      retained: new FormControl({ value: this.tokenCRUD == TokenCRUD.Create ? true : this.tokensUser?.retained, disabled: true }),
-      date: new FormControl({ value: this.tokensUser?.date, disabled: false }),
-      payed_date: new FormControl({ value: this.tokensUser?.payed_date, disabled: false }),
-      obs: new FormControl({ value: this.tokensUser?.observations, disabled: false })
+      name: new UntypedFormControl({ value: this.tokensUser?.name || this.tokensUser?.nick, disabled: true }),
+      lastname: new UntypedFormControl({ value: this.tokensUser?.lastname, disabled: true }),
+      email: new UntypedFormControl({ value: this.tokensUser?.email, disabled: true }),
+      dni: new UntypedFormControl({ value: this.tokensUser?.dni, disabled: true }),
+      num_tokens: new UntypedFormControl({ value: this.tokensUser?.num_tokens, disabled: false }, Validators.required ),
+      id_phase_tokens: new UntypedFormControl({ value: this.tokensUser?.id_phase_tokens, disabled: false }, Validators.required ),
+      retained: new UntypedFormControl({ value: this.tokenCRUD == TokenCRUD.Create ? true : this.tokensUser?.retained, disabled: true }),
+      date: new UntypedFormControl({ value: this.tokensUser?.date, disabled: false }),
+      payed_date: new UntypedFormControl({ value: this.tokensUser?.payed_date, disabled: false }),
+      obs: new UntypedFormControl({ value: this.tokensUser?.observations, disabled: false })
     });
   }
 

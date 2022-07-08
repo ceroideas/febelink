@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
@@ -19,11 +19,11 @@ export class VerificationComponent implements OnInit {
   verifSent: boolean = false;
   hasError: boolean = false;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   
   constructor(
     public alertCtrl: AlertController,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: ApiService,
     private utilities: UtilitiesService,
     private modalCtrl: ModalController,

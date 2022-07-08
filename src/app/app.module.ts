@@ -62,68 +62,67 @@ const config: SocketIoConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    FormsModule,
-    SocketIoModule.forRoot(config),
-    ReactiveFormsModule,
-    HttpClientModule,
-    ComponentsModule,
-    IonicStorageModule.forRoot(),
-    NgxStripeModule.forRoot(environment.stripe_publick_key),
-    SocialLoginModule,
-    LoginPageModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-    }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    QuillModule.forRoot(),
-    PipesModule,
-  ],
-  exports: [PipesModule],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Push,
-    SocialSharing,
-    BrowserTab,
-    Camera,
-    File,
-    Deeplinks,
-    CookieService,
-    Facebook,
-    GooglePlus,
-    Badge,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.WEB_CLIENT_ID),
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
-    AndroidPermissions,
-    Clipboard,
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        FormsModule,
+        SocketIoModule.forRoot(config),
+        ReactiveFormsModule,
+        HttpClientModule,
+        ComponentsModule,
+        IonicStorageModule.forRoot(),
+        NgxStripeModule.forRoot(environment.stripe_publick_key),
+        SocialLoginModule,
+        LoginPageModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+        }),
+        QuillModule.forRoot(),
+        PipesModule,
+    ],
+    exports: [PipesModule],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        Push,
+        SocialSharing,
+        BrowserTab,
+        Camera,
+        File,
+        Deeplinks,
+        CookieService,
+        Facebook,
+        GooglePlus,
+        Badge,
+        {
+            provide: 'SocialAuthServiceConfig',
+            useValue: {
+                autoLogin: false,
+                providers: [
+                    {
+                        id: GoogleLoginProvider.PROVIDER_ID,
+                        provider: new GoogleLoginProvider(environment.WEB_CLIENT_ID),
+                    },
+                    {
+                        id: FacebookLoginProvider.PROVIDER_ID,
+                        provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
+                    },
+                ],
+            } as SocialAuthServiceConfig,
+        },
+        AndroidPermissions,
+        Clipboard,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

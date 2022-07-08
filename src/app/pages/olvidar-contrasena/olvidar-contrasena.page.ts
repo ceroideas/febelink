@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,11 +13,11 @@ import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
 })
 export class OlvidarContrasenaPage implements OnInit {
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public email: any;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
     private utilities: UtilitiesService,
     private api: ApiService,

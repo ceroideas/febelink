@@ -1,7 +1,7 @@
 import { AlertSvc } from './../../../services/alert.service';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AssetService } from 'src/app/services/wallet/asset.service';
 import { TwoFAService } from 'src/app/services/two_fa.service';
 import { MarketPrice, Offer } from 'src/app/models/wallet/offers.models';
@@ -38,7 +38,7 @@ export class ExchangeComponent implements OnInit, OnChanges {
   @Output() OnDismiss: any
   @Output() OnDone: EventEmitter<Object> = new EventEmitter()
   
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   exchangeTypes = ExchangeType;
   exchangesInput = ExchangeInput;
   dateFormatType = DateFormatType;
@@ -47,7 +47,7 @@ export class ExchangeComponent implements OnInit, OnChanges {
   limitBuy: number
 
   constructor(
-      private formBuilder: FormBuilder
+      private formBuilder: UntypedFormBuilder
     , private toastSvc: ToastSvc
     , public assetSvc: AssetService
     , private twoFASvc: TwoFAService
@@ -76,11 +76,11 @@ export class ExchangeComponent implements OnInit, OnChanges {
     const isBuy = this.exchangeType == ExchangeType.BUY;
 
     this.form = this.formBuilder.group({
-        num_sell_qant: new FormControl(
+        num_sell_qant: new UntypedFormControl(
           ( this.sell?.amount == 0 ? '' : this.sell?.amount )
           , [ Validators.required ]
         )
-        , num_buy_qant: new FormControl(
+        , num_buy_qant: new UntypedFormControl(
           ( this.buy?.amount == 0 ? '' : this.buy?.amount )
           , [ Validators.required ]
         )

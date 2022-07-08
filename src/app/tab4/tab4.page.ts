@@ -11,7 +11,7 @@ import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { Chart } from 'chart.js';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -43,7 +43,7 @@ export class Tab4Page {
   opiniones: any;
   total_opinions: any;
   opinion_types: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
   base64img: any;
   demandas: any[] = [];
   sectores: any[];
@@ -75,7 +75,7 @@ export class Tab4Page {
   constructor(
     private modalCtrl: ModalController,
     public alertCtrl: AlertController,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: ApiService,
     private utilities: UtilitiesService,
     private router: Router,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, Platform } from '@ionic/angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { TranslateConfigService } from 'src/app/services/translate/translate-con
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   sectores: any;
   subsectores: any;
   passwordType = 'password';
@@ -26,7 +26,7 @@ export class RegistroPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private alertCtrl: AlertController,
     private api: ApiService,
     private utilities: UtilitiesService,
