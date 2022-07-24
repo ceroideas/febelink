@@ -300,7 +300,7 @@ export class Tab2Page {
           }
         } else {
           for (const demanda of this.demandas) {
-            if (demanda.sector === this.sector.id) {
+            if (demanda.sector == this.sector.id) {
               this.searchResults.push(this.checkDescrip(demanda));
             }
           }
