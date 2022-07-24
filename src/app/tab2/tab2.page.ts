@@ -156,13 +156,7 @@ export class Tab2Page {
     component: IonicSelectableComponent;
     value: any;
   }): void {
-    this.subSectors = [
-      {
-        id: 0,
-        nombre: 'Todas',
-        id_sector: 0,
-      },
-    ];
+    this.subSectors = [];
     this.loadSubSectors(event.value.id);
     this.subsector = this.subSectors[0];
     this.sector = event.value;
