@@ -22,14 +22,14 @@
               src="assets/icon/svg/search.svg"
             ></ion-icon>
             <ion-input
-              #searchBar
-              placeholder="{{ 'common.searchPlaceholder' | translate }}"
-              inputmode="text"
-              (keyup.enter)="clear2search( searchBar.value + '' )"
-              (ionChange)="clear2search( searchBar.value + '' )"
-              (ionClear)="clear2search( searchBar.value + '' )"
-              debounce="500"
-              [value]="searchTx"
+                #searchBar
+                placeholder="{{ 'common.searchPlaceholder' | translate }}"
+                inputmode="text"
+                (keyup.enter)="clear2search( searchBar.value + '' )"
+                (ionChange)="clear2search( searchBar.value + '' )"
+                (ionClear)="clear2search( searchBar.value + '' )"
+                debounce="500"
+                [value]="searchTx"
             ></ion-input>
           </ion-row>
         </ion-col>
@@ -94,10 +94,10 @@
             </ion-col>
             <ion-col size="6" class="no-margin no-padding tx-end">
               <app-lang-btn
-                #lang
-                [changeAppLang]="false"
-                [initNull]="true"
-                (onLangSelected)="clear2search( searchBar.value )"
+                  #lang
+                  [changeAppLang]="false"
+                  [initNull]="true"
+                  (onLangSelected)="clear2search( searchBar.value )"
               ></app-lang-btn>
             </ion-col>
           </ion-row>
@@ -107,12 +107,12 @@
         <ion-col size="3" class="no-padding center-v">
           <ion-row class="marg-tb-5 pad-s20 pad-e">
             <ion-checkbox
-              #chkMyPosts
-              size="12"
-              size-sm="3"
-              class="no-padding"
-              [(ngModel)]="myPosts"
-              (ionChange)="clear2search()"
+                #chkMyPosts
+                size="12"
+                size-sm="3"
+                class="no-padding"
+                [(ngModel)]="myPosts"
+                (ionChange)="clear2search()"
             ></ion-checkbox>
             <ion-label
               class="center-v pointer marg-s"
@@ -131,9 +131,9 @@
           *ngIf="!myPosts"
         >
           <app-user-item
-            #user
-            classImg="wh-30"
-            (onUserClick)="userClicked()"
+              #user
+              classImg="wh-30"
+              (onUserClick)="userClicked()"
           ></app-user-item>
         </ion-col>
       </ion-row>
@@ -141,7 +141,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="padding-top pad-se">
+<ion-content class="padding-top pad-se" (scroll)="onScrollDown($event)">
   <!-- <h1>¡Bienvenido a la comunidad de Febelink!</h1> -->
 
   <!-- Loading -->
@@ -158,25 +158,25 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list>
-    <!-- Posts -->
-    <app-post-component
-      *ngFor="let advise of iAdvises"
-      [id]="advise.id"
-      [iAdvise]="advise"
-      [showLang]="true"
-      [showSeePost]="true"
-    ></app-post-component>
-    <div class="center-col-flexed">
-      <ion-button
-        color="success"
-        class="col-flexed center-col-flexed"
-        (click)="search()"
-      >
-        Cargar más elementos
-      </ion-button>
-    </div>
-  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="search()">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más elementos..."
+      threshold="100px">
+
+      <ion-list>
+        <!-- Posts -->
+        <app-post-component
+          *ngFor="let advise of iAdvises"
+          [id]="advise.id"
+          [iAdvise]="advise"
+          [showLang]="true"
+          [showSeePost]="true"
+        ></app-post-component>
+      </ion-list>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 
   <!-- No Items -->
   <ion-item lines="none" color="transparent" *ngIf="finishedSearch">
