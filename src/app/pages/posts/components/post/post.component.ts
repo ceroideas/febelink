@@ -1,28 +1,29 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {
   Component,
   OnInit,
   Input,
   SimpleChanges,
   ViewEncapsulation,
-  ViewChild,
+  ViewChild, AfterViewInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { FileService } from 'src/app/components/file-picker/services/file.service';
-import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
-import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
-import { IReport } from 'src/app/models/report.model';
-import { IUser } from 'src/app/models/user.model';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
-import { AlertSvc, IAlert } from 'src/app/services/alert.service';
-import { LoadingSvc } from 'src/app/services/loading.service';
-import { ReportService } from 'src/app/services/report.service';
-import { SeoService } from 'src/app/services/seo.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { environment } from 'src/environments/environment';
-import { IAdviseFull } from '../../advises/models/advises.model';
-import { AdviseService } from '../../advises/services/advises.service';
+import {Router} from '@angular/router';
+import {FileService} from 'src/app/components/file-picker/services/file.service';
+import {IOptsMenuButton} from 'src/app/components/opts-menu/models/opts-menu.model';
+import {OptsMenuSvc} from 'src/app/components/opts-menu/services/opts-menu.service';
+import {IReport} from 'src/app/models/report.model';
+import {IUser} from 'src/app/models/user.model';
+import {DateFormatType} from 'src/app/pipes/date-format.pipe';
+import {AlertSvc, IAlert} from 'src/app/services/alert.service';
+import {LoadingSvc} from 'src/app/services/loading.service';
+import {ReportService} from 'src/app/services/report.service';
+import {SeoService} from 'src/app/services/seo.service';
+import {ToastSvc} from 'src/app/services/toast.service';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {environment} from 'src/environments/environment';
+import {IAdviseFull} from '../../advises/models/advises.model';
+import {AdviseService} from '../../advises/services/advises.service';
+import {Meta} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-component',
@@ -30,7 +31,7 @@ import { AdviseService } from '../../advises/services/advises.service';
   styleUrls: ['./post.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, AfterViewInit {
   @Input() id: number;
   @Input() iAdvise: IAdviseFull;
   @Input() showLang: boolean = false;
@@ -53,29 +54,29 @@ export class PostComponent implements OnInit {
   postUser: IUser;
   topic: string;
   topics = [
-    { id: null, name: 'Todos' },
-    { id: 1, name: 'Política' },
-    { id: 2, name: 'Música' },
-    { id: 3, name: 'Deportes' },
-    { id: 4, name: 'Moda y Belleza' },
-    { id: 5, name: 'Ocio' },
-    { id: 6, name: 'Arte y Cultura' },
-    { id: 7, name: 'Marketing' },
-    { id: 8, name: 'Negocios' },
-    { id: 9, name: 'Startups' },
-    { id: 10, name: 'Tecnología' },
-    { id: 11, name: 'Cine' },
-    { id: 12, name: 'Naturaleza' },
-    { id: 13, name: 'Ciencia' },
-    { id: 14, name: 'Economía y Finanzas' },
-    { id: 15, name: 'Anime y Manga' },
-    { id: 16, name: 'Noticias y Actualidad' },
-    { id: 17, name: 'Viajes' },
-    { id: 18, name: 'Hogar y Familia' },
-    { id: 19, name: 'Comida' },
-    { id: 20, name: 'Videojuegos' },
-    { id: 21, name: 'Salud' },
-    { id: 22, name: 'Criptomonedas' },
+    {id: null, name: 'Todos'},
+    {id: 1, name: 'Política'},
+    {id: 2, name: 'Música'},
+    {id: 3, name: 'Deportes'},
+    {id: 4, name: 'Moda y Belleza'},
+    {id: 5, name: 'Ocio'},
+    {id: 6, name: 'Arte y Cultura'},
+    {id: 7, name: 'Marketing'},
+    {id: 8, name: 'Negocios'},
+    {id: 9, name: 'Startups'},
+    {id: 10, name: 'Tecnología'},
+    {id: 11, name: 'Cine'},
+    {id: 12, name: 'Naturaleza'},
+    {id: 13, name: 'Ciencia'},
+    {id: 14, name: 'Economía y Finanzas'},
+    {id: 15, name: 'Anime y Manga'},
+    {id: 16, name: 'Noticias y Actualidad'},
+    {id: 17, name: 'Viajes'},
+    {id: 18, name: 'Hogar y Familia'},
+    {id: 19, name: 'Comida'},
+    {id: 20, name: 'Videojuegos'},
+    {id: 21, name: 'Salud'},
+    {id: 22, name: 'Criptomonedas'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
@@ -89,8 +90,17 @@ export class PostComponent implements OnInit {
     private seoSvc: SeoService,
     public fileSvc: FileService,
     private reportSvc: ReportService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private metaService: Meta,
+  ) {
+  }
+
+  ngAfterViewInit(): void {
+    if (this.iAdvise.media_url) {
+      this.metaService.updateTag({property: 'og:image', content: this.iAdvise.media_url});
+      this.metaService.updateTag({property: 'og:image:url', content: this.iAdvise.media_url});
+    }
+  }
 
   ngOnInit() {
     this.topic = this.topics.find((topic) => {
@@ -109,8 +119,9 @@ export class PostComponent implements OnInit {
       this.linksArray = adaptedText
         .split(/[\s,]+|\.\s/)
         .filter((splitedWord) => {
-          if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
+          if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)) {
             return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+          }
         });
     }
   }
@@ -148,12 +159,16 @@ export class PostComponent implements OnInit {
   }
 
   async getReference() {
-    if (!this.iAdvise?.id_advise) return;
+    if (!this.iAdvise?.id_advise) {
+      return;
+    }
 
-    const { response, error } = await this.adviseSvc.get(
+    const {response, error} = await this.adviseSvc.get(
       this.iAdvise?.id_advise
     );
-    if (response) this.oracleRef = response;
+    if (response) {
+      this.oracleRef = response;
+    }
   }
 
   extractTitle(): string {
@@ -167,7 +182,7 @@ export class PostComponent implements OnInit {
   async options(event) {
     let opts: IOptsMenuButton[];
 
-    if (await this.sessionSvc.isUser(this.iAdvise?.uid))
+    if (await this.sessionSvc.isUser(this.iAdvise?.uid)) {
       opts = [
         {
           text: 'common.buttons.edit',
@@ -178,13 +193,14 @@ export class PostComponent implements OnInit {
           click: (iOptsMenuButton: IOptsMenuButton) => this.delete(),
         } as IOptsMenuButton,
       ];
-    else
+    } else {
       opts = [
         {
           text: 'common.buttons.report',
           click: (iOptsMenuButton: IOptsMenuButton) => this.report(),
         } as IOptsMenuButton,
       ];
+    }
 
     this.optsMenuSvc.show(event, opts);
   }
@@ -193,7 +209,7 @@ export class PostComponent implements OnInit {
     this.router.navigate([`posts/oracle/${this.id}/edit`], {
       queryParams: !this.iAdvise?.id_advise
         ? {}
-        : { id_reference: this.iAdvise?.id_advise },
+        : {id_reference: this.iAdvise?.id_advise},
     });
   }
 
@@ -205,7 +221,7 @@ export class PostComponent implements OnInit {
       } as IAlert)
     ) {
       this.loadingSvc.show();
-      const { response, error } = await this.adviseSvc.delete(this.id);
+      const {response, error} = await this.adviseSvc.delete(this.id);
       await this.loadingSvc.dismiss();
 
       if (error) {
