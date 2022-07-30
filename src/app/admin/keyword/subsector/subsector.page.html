@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-searchbar
+      [placeholder]="'Buscar por palabra clave...'"
+      inputmode="text"
+      (keyup.enter)="search($event)"
+      (ionChange)="search($event)"
+      (ionClear)="search($event)"
+      debounce="500"
+    ></ion-searchbar>
+  </ion-toolbar>
+
+</ion-header>
+
+<div id="createKeywordController">
+  <div>
+    <label>Sector: </label>
+    <select #newKeywordSubSector>
+      <option *ngFor="let subSector of subSectors" [value]="subSector.id">{{subSector.nombre}}</option>
+    </select>
+  </div>
+  <div>
+    <label>Keyword: </label>
+    <input type="text" #newKeywordValue>
+  </div>
+  <ion-button color="success" (click)="create(newKeywordSubSector.value, newKeywordValue.value)">Añadir</ion-button>
+</div>
+
+<ion-content>
+  <!-- Loading -->
+  <div class="cargando-container" margin-top *ngIf="isLoading">
+    <ion-row>
+      <ion-spinner></ion-spinner>
+      <h4>{{ 'common.labelSearching' | translate }}</h4>
+    </ion-row>
+  </div>
+
+  <div class="scroll-inner">
+    <table id="tokensUsersTable">
+      <tr>
+        <th style="width: 15%">SubSector</th>
+        <th>Keywords</th>
+        <th colspan="2" style="width: 10%">Acciones</th>
+      </tr>
+      <tr *ngFor="let keys of subSectorKeys">
+        <td [ngSwitch]="keys.isEdit">
+          <span *ngSwitchDefault>{{keys.sub_sector_id | subSector:subSectors}}</span>
+          <select *ngSwitchCase="true"
+                  [(ngModel)]="keys.sub_sector_id"
+                  (ngModelChange)="edit(keys)">
+            <option *ngFor="let subSector of subSectors" [value]="subSector.id">{{subSector.nombre}}</option>
+          </select>
+        </td>
+        <td [ngSwitch]="keys.isEdit">
+          <span *ngSwitchDefault>{{keys.key_name}}</span>
+          <input *ngSwitchCase="true" [(ngModel)]="keys.key_name"
+                 (focusout)="edit(keys)"
+                 (keyup.enter)="edit(keys)">
+        </td>
+        <td class="edit">
+          <ion-icon name="create-outline" (click)="keys.isEdit = !keys.isEdit"></ion-icon>
+        </td>
+        <td class="delete">
+          <ion-icon
+            name="trash-outline"
+            (click)="delete(keys)"
+          ></ion-icon>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Pagination Bottom -->
+  <app-pagination
+    *ngIf="qPages > 1"
+    [qPages]="qPages"
+    [totalRecords]="totalRecords"
+    [recordsPerPage]="recordsPerPage"
+    [activePage]="activePage"
+    [disabled]="isLoading"
+    (onPageChange)="displayActivePage( $event )"
+  >
+  </app-pagination>
+</ion-content>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {environment} from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin',
@@ -8,15 +8,17 @@ import { environment } from 'src/environments/environment';
 })
 export class AdminPage {
 
-  options:Option[] = [
-    {title:'Gestionar tokens de usuarios', icon:'wallet-outline', link:'tokens-users'}
-  ]
+  options: Option[] = [
+    {title: 'Gestión de Reservas y Airdrops', icon: 'wallet-outline', link: 'tokens-users'},
+    {title: 'Gestión de Keywords - Sectores', icon: 'wallet-outline', link: 'keyword/sector'},
+    {title: 'Gestión de Keywords - Subsectores', icon: 'wallet-outline', link: 'keyword/sub-sector'},
+  ];
 
-  homePage: string = environment.HOME_PAGE
+  homePage: string = environment.HOME_PAGE;
 }
 
 interface Option {
-  title:string, 
-  icon: string, 
-  link:string
+  title: string,
+  icon: string,
+  link: string
 }
