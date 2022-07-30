@@ -78,7 +78,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
 
           /* ['emoji'] */
 
-          /* ['clean'], */ // remove formatting button
+          ['clean'], // remove formatting button
         ],
         handlers: {
           image: () => {
