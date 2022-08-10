@@ -141,7 +141,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="padding-top pad-se" (scroll)="onScrollDown($event)">
+<ion-content class="padding-top pad-se">
   <!-- <h1>¡Bienvenido a la comunidad de Febelink!</h1> -->
 
   <!-- Loading -->
@@ -158,22 +158,19 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-infinite-scroll (ionInfinite)="search()">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Cargando más elementos..."
-      threshold="100px">
+  <!-- Posts -->
+  <app-post-component
+    *ngFor="let advise of iAdvises"
+    [id]="advise.id"
+    [iAdvise]="advise"
+    [showLang]="true"
+    [showSeePost]="true"
+  ></app-post-component>
 
-      <ion-list>
-        <!-- Posts -->
-        <app-post-component
-          *ngFor="let advise of iAdvises"
-          [id]="advise.id"
-          [iAdvise]="advise"
-          [showLang]="true"
-          [showSeePost]="true"
-        ></app-post-component>
-      </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="triggerInfiniteSearch($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="lines-small"
+      loadingText="Cargando más elementos...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
