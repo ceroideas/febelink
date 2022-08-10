@@ -180,4 +180,8 @@ export class AdvisesPage implements OnInit {
             event.target.complete();
         }
     }
+  async triggerInfiniteSearch(event) {
+    await this.search();
+    event.target.complete();
+  }
 }
