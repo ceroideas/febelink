@@ -128,9 +128,11 @@ export class AdvisesPage implements OnInit {
             subsector: this.sectors?.subsector || null,
             lang: await this.lang?.idSelected(null),
             user: this.myPosts
-                ? await this.sessionSvc.id()
-                : this.uid || this.user?.user?.id || null,
+              ? await this.sessionSvc.id()
+              : this.uid || this.user?.user?.id || null,
             hideContent: true,
+
+            content: this.filter
         };
         this.activePage++;
 
