@@ -1,9 +1,15 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom" color="febelink">
-    <!-- Search -->
+  <ion-tab-bar slot="bottom" color="menuf">
+    <!-- Inicio -->
     <ion-tab-button tab="todas">
-      <ion-icon name="search"></ion-icon>
-      <ion-label>{{ 'menu.tabs.searchEngine' | translate }}</ion-label>
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <!-- Carrito -->
+    <ion-tab-button tab="carro">
+      <ion-icon name="cart-outline"></ion-icon>
+      <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
     </ion-tab-button>
 
     <!-- Recommend -->
@@ -14,21 +20,24 @@
 
     <!-- Oracles -->
     <ion-tab-button tab="oracles">
-      <ion-icon class="no-margin font-30" src="assets/icon/svg/advise.svg"></ion-icon>
+      <ion-icon name="eye-outline"></ion-icon>
       <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
     </ion-tab-button>
 
     <!-- Chat -->
+    <!--
     <ion-tab-button tab="ofertas">
       <ion-icon name="chatbubbles"></ion-icon>
       <ion-label>{{ 'menu.tabs.chat' | translate }}</ion-label>
       <ion-badge color="danger" *ngIf="totalUnreadMessages">{{totalUnreadMessages}}</ion-badge>
     </ion-tab-button>
-
+    -->
     <!-- Login -->
+    <!--
     <ion-tab-button *ngIf="perfil === null" (click)="irA('perfil')">
       <ion-icon name="person"></ion-icon>
       <ion-label>{{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') | translate }}</ion-label>
     </ion-tab-button>
+    -->
   </ion-tab-bar>
 </ion-tabs>

@@ -18,6 +18,8 @@ const routes: Routes = [
         loadChildren: () =>
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
+      { path: 'carro', redirectTo: '#', pathMatch: 'full' },
+      { path: 'oracles', redirectTo: '#', pathMatch: 'full' },
       {
         path: 'todas/:searchbar',
         loadChildren: () =>
@@ -33,7 +35,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/posts/advises/advise.module').then( m => m.AdvisePageModule ),
       }, */
-      { path: 'oracles', redirectTo: '/posts/oracles', pathMatch: 'prefix' },
       {
         path: 'ofertas',
         loadChildren: () =>
