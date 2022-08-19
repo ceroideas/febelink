@@ -214,6 +214,11 @@ const routes: Routes = [
     path: 'posts',
     loadChildren: () => import('./pages/posts/post.module').then( m => m.PostPageModule)
   },
+  {
+    path: 'cart',
+    loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule)
+  },
+
 ];
 
 @NgModule({
@@ -227,10 +232,10 @@ export class AppRoutingModule {
   constructor(private router: Router) {
     /**
      * To prevent 'Error: Cannot match any routes' when wrong url
-     */
+     
     this.router.errorHandler = (error: any) => {
       // Redirect to Main Page | Home Page
       this.router.navigate([ '/' + environment.HOME_PAGE ]);
-    }
+    }*/
   }
 }
