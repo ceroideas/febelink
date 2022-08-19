@@ -13,9 +13,7 @@
           {{dataItems.length}} elementos
         </div>
         <div *ngIf="!isEditItems" class="carrito-edit" (click)="editItems()">
-          <svg class="carrito-edit-svg" width="20" height="20" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.586 4.08592C13.7705 3.8949 13.9912 3.74253 14.2352 3.63772C14.4792 3.5329 14.7416 3.47772 15.0072 3.47542C15.2728 3.47311 15.5361 3.52371 15.7819 3.62427C16.0277 3.72484 16.251 3.87334 16.4388 4.06113C16.6266 4.24891 16.7751 4.47222 16.8756 4.71801C16.9762 4.9638 17.0268 5.22716 17.0245 5.49272C17.0222 5.75828 16.967 6.02072 16.8622 6.26473C16.7574 6.50874 16.605 6.72942 16.414 6.91392L15.621 7.70692L12.793 4.87892L13.586 4.08592ZM11.379 6.29292L3 14.6719V17.4999H5.828L14.208 9.12092L11.378 6.29292H11.379Z" fill="#1C64F2"/>
-          </svg>
+          <img src="assets/icon/svg/pencil.svg" class="carrito-edit-svg" />
           Editar
         </div>
         <div *ngIf="isEditItems" class="carrito-edit"(click)="confirmEdit()">
@@ -27,14 +25,10 @@
         <div *ngFor="let item of dataItems; let i = index" class="div-carrito-item">
           <!-- Editar Contenido Carrito -->
           <div *ngIf="isEditItems && item.cantidad>1" class="edit-item" (click)="changeQuantity(i)">
-            <svg class="edit-item-svg" width="17" height="3" viewBox="0 0 17 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="1.25" y1="1.75" x2="15.75" y2="1.75" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+            <img src="assets/icon/svg/minus.svg" class="edit-item-svg size-minus" />
           </div>
           <div *ngIf="isEditItems && item.cantidad==1" class="edit-item" (click)="deleteItem(i)">
-            <svg class="edit-item-svg" width="16" height="18" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 9V15M11 9V15M1 5H17M16 5L15.133 17.142C15.0971 17.6466 14.8713 18.1188 14.5011 18.4636C14.1309 18.8083 13.6439 19 13.138 19H4.862C4.35614 19 3.86907 18.8083 3.49889 18.4636C3.1287 18.1188 2.90292 17.6466 2.867 17.142L2 5H16ZM12 5V2C12 1.73478 11.8946 1.48043 11.7071 1.29289C11.5196 1.10536 11.2652 1 11 1H7C6.73478 1 6.48043 1.10536 6.29289 1.29289C6.10536 1.48043 6 1.73478 6 2V5H12Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>              
+            <img src="assets/icon/svg/trash.svg" class="edit-item-svg size-trash" />        
           </div>
           <!-- --- -->
           <div class="div-table-100">
@@ -72,15 +66,11 @@
     
     <div class="carrito-items position-relative">
       <div class="close-compra" (click)="shopItems()">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M0.38999 0.407051C0.639775 0.15709 0.978512 0.0166691 1.33171 0.0166691C1.68491 0.0166691 2.02364 0.15709 2.27343 0.407051L7.99167 6.13105L13.7099 0.407051C13.8328 0.279704 13.9798 0.178128 14.1423 0.108249C14.3048 0.0383705 14.4796 0.00158876 14.6564 5.03427e-05C14.8333 -0.00148808 15.0087 0.0322472 15.1724 0.0992884C15.3361 0.16633 15.4848 0.265334 15.6099 0.390524C15.7349 0.515714 15.8338 0.664584 15.9008 0.828446C15.9678 0.992307 16.0015 1.16788 15.9999 1.34492C15.9984 1.52196 15.9617 1.69692 15.8919 1.85959C15.8221 2.02226 15.7206 2.16939 15.5934 2.29238L9.87511 8.01638L15.5934 13.7404C15.836 13.9919 15.9702 14.3287 15.9672 14.6783C15.9642 15.0278 15.8241 15.3623 15.5771 15.6095C15.3302 15.8567 14.9961 15.9969 14.6468 15.9999C14.2976 16.003 13.9611 15.8686 13.7099 15.6257L7.99167 9.90172L2.27343 15.6257C2.02221 15.8686 1.68575 16.003 1.3365 15.9999C0.987258 15.9969 0.653177 15.8567 0.406215 15.6095C0.159253 15.3623 0.0191681 15.0278 0.0161333 14.6783C0.0130984 14.3287 0.147356 13.9919 0.38999 13.7404L6.10824 8.01638L0.38999 2.29238C0.14028 2.04235 0 1.70327 0 1.34972C0 0.996165 0.14028 0.657088 0.38999 0.407051Z" fill="#6B7280"/>
-        </svg>          
+        <img src="assets/icon/svg/close.svg" class="compra-close-svg" />     
       </div>
       <div class="div-compra">
         <div class="div-compra-svg">
-          <svg width="78" height="78" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M27 40L35.6667 48.6667L53 31.3333M79 40C79 45.1216 77.9912 50.193 76.0313 54.9247C74.0714 59.6564 71.1986 63.9557 67.5772 67.5772C63.9557 71.1986 59.6564 74.0714 54.9247 76.0313C50.193 77.9912 45.1216 79 40 79C34.8784 79 29.807 77.9912 25.0753 76.0313C20.3436 74.0714 16.0443 71.1986 12.4228 67.5772C8.80135 63.9557 5.92863 59.6564 3.9687 54.9247C2.00876 50.193 1 45.1216 1 40C1 29.6566 5.10892 19.7368 12.4228 12.4228C19.7368 5.10892 29.6566 1 40 1C50.3434 1 60.2632 5.10892 67.5772 12.4228C74.8911 19.7368 79 29.6566 79 40Z" stroke="#1C64F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>                       
+          <img src="assets/icon/svg/check-circle.svg" class="compra-check-svg" />                 
         </div>
         <div class="div-compra-title">
           Compra realizada con éxito
@@ -110,9 +100,7 @@
       </div>
       <div class="div-no-items">
         <div class="div-no-items-svg">
-          <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1H5.66667L6.6 5.66667M6.6 5.66667H43L33.6667 24.3333H10.3333M6.6 5.66667L10.3333 24.3333M10.3333 24.3333L4.983 29.6837C3.513 31.1537 4.55367 33.6667 6.63267 33.6667H33.6667M33.6667 33.6667C32.429 33.6667 31.242 34.1583 30.3668 35.0335C29.4917 35.9087 29 37.0957 29 38.3333C29 39.571 29.4917 40.758 30.3668 41.6332C31.242 42.5083 32.429 43 33.6667 43C34.9043 43 36.0913 42.5083 36.9665 41.6332C37.8417 40.758 38.3333 39.571 38.3333 38.3333C38.3333 37.0957 37.8417 35.9087 36.9665 35.0335C36.0913 34.1583 34.9043 33.6667 33.6667 33.6667ZM15 38.3333C15 39.571 14.5083 40.758 13.6332 41.6332C12.758 42.5083 11.571 43 10.3333 43C9.09566 43 7.90867 42.5083 7.0335 41.6332C6.15833 40.758 5.66667 39.571 5.66667 38.3333C5.66667 37.0957 6.15833 35.9087 7.0335 35.0335C7.90867 34.1583 9.09566 33.6667 10.3333 33.6667C11.571 33.6667 12.758 34.1583 13.6332 35.0335C14.5083 35.9087 15 37.0957 15 38.3333Z" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>            
+          <img src="assets/icon/svg/cart.svg" class="no-items-svg" />         
         </div>
         <div class="div-no-items-title">
           Tu carrito está vacío
