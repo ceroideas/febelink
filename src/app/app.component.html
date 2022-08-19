@@ -3,12 +3,12 @@
         <app-menu></app-menu>
         <ion-router-outlet id="main"></ion-router-outlet>
     -->
-    <!-- *ngIf="authenticationService.isAuthenticated()" -->
   <ion-menu
     class="pos_menu"
     contentId="main-content"
     type="overlay"
     (ionWillOpen)="onMenuOpen()"
+    *ngIf="authenticationService.isAuthenticated()"
     side="start"
   >
     <ion-avatar slot="start">
