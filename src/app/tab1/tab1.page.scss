@@ -45,6 +45,22 @@ ion-content {
   }
 }
 
+.avatarmenu{
+  width: 36px;
+  height: 36px;  
+}
+
+.pos_menu{
+  z-index: -1;
+  display: flex;
+  margin-left: -18px;
+  height: 25px;
+}
+
+.chat{
+  margin-left: 10px;
+}
+
 ion-thumbnail {
   width: 75px;
   height: 75px;
