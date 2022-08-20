@@ -127,3 +127,32 @@ ion-icon {
 .pad-s5 {
   padding-left: 5px; --padding-start: 5px;
 }
+
+@media (min-width: 940px){
+}
+
+@media (min-width: 768px){
+  ion-grid{
+    --ion-grid-padding:10px:
+  }
+  .textoCentrado{
+    --ion-grid-column-padding:10px;
+  }
+  .lista_footer{
+    display: flex;
+    justify-content: space-between;
+  }
+  .logo{
+    width: 114px;
+    height: 59px;
+  }
+
+  ion-list{
+    ion-item{
+      height: 2em;
+      ion-label{
+        margin: 0;
+      }
+    }
+  }
+}

@@ -1,12 +1,4 @@
 <div class="header-buttons" [class]="currentTab == tabs.Search ? 'right' : ''">
-  <img
-    tappable
-    src="assets/imgs/logo.png"
-    alt="Febelink logo"
-    (click)="irA('/' + homePage)"
-    *ngIf="currentTab != tabs.Search"
-    class="logo"
-  />
 
   <ion-buttons>
     <!-- Token FLAU -->
@@ -14,8 +6,8 @@
       *ngIf="perfil"
       class="btn-header bt-br"
       [class]="currentTab == tabs.ICO ? 'active' : ''"
-      (click)="irA('/wallet/buy-tokens/FLAU')"
-      ><div class="grid-rows">
+      (click)="irA('/wallet/buy-tokens/FLAU')">
+      <div class="grid-rows">
         <img
           class="marg-se"
           slot="start"
@@ -27,8 +19,8 @@
         <ion-label class="responsive-max tx-cap" style="margin-left: 10px">
           {{ 'menu.tabs.landingICO' | translate }}
         </ion-label>
-      </div></ion-button
-    >
+      </div>
+    </ion-button>
 
     <div class="desktop">
       <!-- Search -->
@@ -128,13 +120,14 @@
     </div>
 
     <!-- Share -->
+    <!--
     <ion-button class="btn-header" (click)="shareFebelink($event)"
       ><div class="grid-rows">
         <ion-icon class="marg-se" slot="start" name="share-social"></ion-icon>
         <span class="responsive-max tx-cap" translate>common.share</span>
       </div></ion-button
     >
-
+    -->
     <!-- Notifications -->
     <ion-button *ngIf="perfil" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
@@ -144,17 +137,27 @@
     </ion-button>
 
     <!-- Guide -->
+    <!--
     <ion-button
       size="large"
       color="primary"
       slot="icon-only"
       (click)="openYTguide()"
     >
-      <ion-icon style="font-size: x-large" name="information-circle">
-      </ion-icon>
+    <ion-icon style="font-size: x-large" name="information-circle"></ion-icon>
+    
     </ion-button>
-
+    -->
     <!-- Lang -->
-    <app-lang-btn></app-lang-btn>
+    <!-- <app-lang-btn></app-lang-btn> -->
+
+    <!-- Img Logo -->
+    <ion-img 
+      tappable 
+      src="assets/imgs/logo.png" 
+      alt="Febelink logo" 
+      (click)="irA('/' + homePage)"
+      class="ion-margin logo"></ion-img>
+    
   </ion-buttons>
 </div>

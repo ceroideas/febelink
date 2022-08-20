@@ -1,4 +1,4 @@
 <ion-button size="small"  fill="clear" (click)="selectLang( $event )" >
   <img *ngIf="langSelected" slot="start" density="ldpi" src="assets/icon-flags/{{langSelected?.flag}}.png" width="30px" height="30px"/>
-  <ion-label class="desktop">{{ langSelected?.shortCode }}</ion-label>
+  <ion-label class="desktop idiomaMin">{{ langSelected?.language }}</ion-label><ion-label class="desktop idiomaMay">({{langSelected?.country}})</ion-label>
 </ion-button>
