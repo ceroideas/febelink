@@ -76,6 +76,7 @@ import { NgxLinkPreviewModule } from 'ngx-link-preview';
         LangBtnComponent,
         LangPopComponent,
         YouTubePopComponent,
+        FooterComponent,
         LinkPreviewComponent,
         VerificationComponent,
         KYCAliceComponent,
