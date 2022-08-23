@@ -1,20 +1,50 @@
-h2 {
-  font-weight: bold;
+ion-header, ion-content, ion-footer {
+  --ion-background-color: rgba(243, 244, 246, 1);
+  --background: rgba(243, 244, 246, 1);
+  --ion--color: #111928;
+  font-style: normal;
+  font-weight: 400;
 }
 
-ion-avatar {
-  width: 48px;
-  height: 48px;
+.avatarmenu{
+  width: 56px;
+  height: 56px;  
 }
 
-ion-label p {
-  font-size: 14px;
-  font-weight: bold;
-  padding-top: 5px;
+.pos_avatar{
+  padding-bottom: 3.5em;
+  padding-top: 1em;
+}
+
+.label_avatar{
+  margin-bottom: 0px;
+}
+
+ion-item-divider{
+  min-height: 8px;
+  width: 80%;;
+  margin-bottom: 1em;
+}
+
+.legal{
+  min-height: 0px;  
+  padding-top: 1rem;
+  margin-bottom: 2em;
 }
 
 .menu-username {
   font-size: 18px;
+  color:#111928;
+}
+
+.menu-editar{
+  font-size: 14px;
+  color:#1C64F2;
+  font-weight: 400;
+}
+
+.premium{
+  color:#FF5A1F;
 }
 
 a:hover {
@@ -43,4 +73,43 @@ ion-content {
 
 .pointer {
   cursor: pointer;
+}
+
+.desktop_no_visible{
+  display: block;
+}
+
+.dot_notif_avatar{
+  width: 12px;
+  height: 12px;
+  margin-left: -14px;
+  position: fixed;
+  margin-top: -26px;
+}
+
+@media (min-width: 768px) {
+  ion-menu{
+    --height: 40em;
+    --max-height: 40em;
+    --width: 23em;
+  }
+  :host(.menu-type-overlay) .show-backdrop{
+    display: none !important;
+  }
+  .desktop_no_visible{
+    display: none;
+  }
+
+  .menu{
+    padding-top: 2em;
+  }
+
+  .menu_despliege{
+    font-weight: 400;
+    margin-left: 3em;
+  }
+}
+
+.menu_despliege{
+  margin-left: 10px;
 }

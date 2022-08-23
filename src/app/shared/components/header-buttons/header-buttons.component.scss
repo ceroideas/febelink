@@ -17,11 +17,44 @@
         margin-left: 10px;
         width: 120px;
     }
+}
 
+
+@media (min-width: 768px){
+    .logo{
+        padding: 1em;
+        width: 120px;
+    }
+
+    .logo_header{
+        width: 100%;
+        height: 100%;
+    }
+
+    .icono_parte_ojo{
+        margin-left: -15px;
+    }
+
+    .label_icon_menu{
+        margin-left: -7px;
+    }
+
+    .desktop_no_visible{
+        display: none;
+    }
+}
+
+
+.img_desktop_menu{
+    margin-left: 1em;
+}
+
+.desktop_no_visible{
+    display: block;
 }
 
 .right{
-    float: right;
+    margin-left: 1em;
 }
 
 ion-badge {

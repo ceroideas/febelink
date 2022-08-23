@@ -1,10 +1,31 @@
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar class="ion-align-items-start" color="header">
     <ion-buttons buttons-start slot="start">
-      <ion-menu-button></ion-menu-button>
+        <ion-menu-button class="desktop_menu_avatar">
+            <ion-img class="avatarmenu"
+              id="menuImg"
+              [src]="
+                currentUser?.logo !== null
+                  ? currentUser?.logo
+                  : 'https://api.febelink.com/storage/users/default.png'
+              "
+              (error)="onImgError($event)"
+              alt="Menu profile picture">
+          </ion-img>
+        </ion-menu-button>  
+        <ion-img class="pos_menu" src="assets/icon/svg/menu_header.svg"></ion-img>
+        <ion-img class="dot_notif_avatar" src="assets/icon/svg/dot_notif.svg"></ion-img>
     </ion-buttons>
-
-    <app-header-buttons [perfil]="perfil" currentTab="1"></app-header-buttons>
+    <app-header-buttons class="buttons_flex" [perfil]="perfil" currentTab="1"></app-header-buttons>  
+    <ion-buttons buttons-start slot="end">
+      <ion-img style="margin-left:5em;"
+      tappable 
+      src="assets/imgs/logo.png" 
+      alt="Febelink logo" 
+      (click)="irA('/' + homePage)"
+      class="ion-margin logo"></ion-img> 
+    </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 
