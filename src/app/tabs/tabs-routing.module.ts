@@ -8,11 +8,11 @@ const routes: Routes = [
     path: '',
     component: TabsPage,
     children: [
-      /* {
-        path: '',
+       {
+        path: 'oracles',
         redirectTo: '/posts/oracles',
         pathMatch: 'full',
-      }, */
+      }, 
       {
         path: 'todas',
         loadChildren: () =>
