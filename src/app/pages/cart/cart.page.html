@@ -1,7 +1,17 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <app-header-buttons [perfil]="perfil"></app-header-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
 
   <!-- Pantalla Contenido Carrito -->
-  <div *ngIf="!isSuccessBuy && !isNoItems" class="div-carrito-background">
+  <div *ngIf="!isSuccessBuy && !isNoItems && !isErrorBuy" class="div-carrito-background">
     
     <div class="carrito-items">
       <div class="carrito-title">
@@ -42,7 +52,7 @@
               <div class="cell-item-subtitle">{{item.ofertante}}</div>
             </div>
             <div class="display-cell-middle cell-price">
-              {{(item.precio*item.cantidad).toFixed(2)}}€
+              {{(item.precio*item.cantidad).toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€
             </div>
           </div>
         </div>
@@ -81,7 +91,7 @@
       </div>
     </div>
 
-    <div id="pantalla-3" class="carrito-buttons carrito-buttons-height-a">
+    <div class="carrito-buttons carrito-buttons-height-a">
       <div class="carrito-button-primary" (click)="shopItems()">
         Seguir comprando
       </div>
@@ -94,7 +104,7 @@
   <!-- Pantalla Carrito Vacío -->
   <div *ngIf="isNoItems" class="div-carrito-background">
     
-    <div id="pantalla4" class="carrito-items-b position-relative">
+    <div class="carrito-items-b position-relative">
       <div class="carrito-title">
         Carrito
       </div>
@@ -111,12 +121,39 @@
       </div>
     </div>
 
-    <div id="pantalla-4" class="carrito-buttons carrito-buttons-height-b">
-      <div class="carrito-button-secondary" (click)="restartItems()">
+    <div class="carrito-buttons carrito-buttons-height-b">
+      <div class="carrito-button-secondary" (click)="errorItems()">
         Seguir comprando
       </div>
     </div>
 
+  </div>
+
+  <!-- Pantalla Compra Fallida -->
+  <div *ngIf="isErrorBuy" class="div-carrito-background">
+    
+    <div class="carrito-items position-relative">
+      <div class="close-compra" (click)="restartItems()">
+        <img src="assets/icon/svg/close.svg" class="compra-close-svg" />     
+      </div>
+      <div class="div-compra">
+        <div class="div-compra-svg">
+          <img src="assets/icon/svg/close-circle.svg" class="compra-check-svg" />                 
+        </div>
+        <div class="div-compra-title">
+          Ha habido un error en la compra
+        </div>
+        <div class="div-compra-subtitle">
+          Por favor, inténtalo de nuevo
+        </div>
+      </div>
+    </div>
+
+    <div class="carrito-buttons carrito-buttons-height-a">
+      <div class="carrito-button-secondary" (click)="restartItems()">
+        Seguir comprando
+      </div>
+    </div>
   </div>
 
 </ion-content>

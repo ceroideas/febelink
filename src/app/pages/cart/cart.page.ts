@@ -27,6 +27,7 @@ export class CartPage implements OnInit {
   isEditItems:boolean=false;
   isSuccessBuy:boolean=false;
   isNoItems:boolean=false;
+  isErrorBuy:boolean=false;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,6 +82,7 @@ export class CartPage implements OnInit {
       this.isNoItems=true;
       this.isSuccessBuy=false;
       this.isEditItems=false;
+      this.isErrorBuy=false;
     }
   }
 
@@ -94,9 +96,17 @@ export class CartPage implements OnInit {
     this.isSuccessBuy=true;
     this.isEditItems=false;
     this.isNoItems=false;
+    this.isErrorBuy=false;
   }
   shopItems() {
     this.isNoItems=true;
+    this.isSuccessBuy=false;
+    this.isEditItems=false;
+    this.isErrorBuy=false;
+  }
+  errorItems() {
+    this.isErrorBuy=true;
+    this.isNoItems=false;
     this.isSuccessBuy=false;
     this.isEditItems=false;
   }
@@ -104,6 +114,7 @@ export class CartPage implements OnInit {
     this.isNoItems=false;
     this.isSuccessBuy=false;
     this.isEditItems=false;
+    this.isErrorBuy=false;
 
     this.dataItems = [
       {
