@@ -29,6 +29,20 @@ ion-header {
     color: white;
   }
 }
+
+
+.row_buscador{
+  margin-top: -10em;
+ /* margin-left: .5em;*/
+}
+
+.text_buscador{
+  color:#FFFFFF;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: left;
+}
+
 ion-content {
   .cargando-container {
     text-align: center;

@@ -1,0 +1,71 @@
+{
+    "data": {
+      "recomendations": [
+        {
+          "id": "1",
+          "imagen": "bg1.jpg",
+          "nombre": "Fisioterapia Nicolás",
+          "texto": "Masaje drenante",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
+        },
+        {
+          "id": "2",
+          "imagen": "bg1.jpg",
+          "nombre": "Fisioterapia C&O",
+          "texto": "Masaje drenante",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
+        },
+        {
+          "id": "3",
+          "imagen": "bg1.jpg",
+          "nombre": "Colocación de toldos",
+          "texto": "Masaje drenante",
+          "mediaVal": 5,
+          "numVal": 210,
+          "precio": 56
+        },
+        {
+          "id": "4",
+          "imagen": "bg1.jpg",
+          "nombre": "Fisioterapia Carlos",
+          "texto": "Masaje drenante",
+          "mediaVal": 1.5,
+          "numVal": 5,
+          "precio": 5
+        },
+        {
+          "id": "5",
+          "imagen": "bg1.jpg",
+          "nombre": "Trauma José",
+          "texto": "Masaje drenante",
+          "mediaVal": 2,
+          "numVal": 10,
+          "precio": 30
+        },
+        {
+          "id": "6",
+          "imagen": "bg1.jpg",
+          "nombre": "Fisioterapia Nicolás",
+          "texto": "Masaje drenante",
+          "mediaVal": 4.5,
+          "numVal": 11,
+          "precio": 25
+        },
+        {
+          "id": "7",
+          "imagen": "bg1.jpg",
+          "nombre": "Fisioterapia Nicolás",
+          "texto": "Masaje drenante",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
+        }
+      ]
+    }
+  }
+
+  

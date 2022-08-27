@@ -1,0 +1,105 @@
+<ion-grid class="ion-no-padding">
+    <ion-row *ngIf="showSearchbar">
+      <ion-searchbar
+        class="searchbar"
+        placeholder="{{ 'common.publishPlaceholder' | translate }}"
+        [(ngModel)]="searchText"
+        (ionChange)="searchService.search(searchText)"
+        debounce="500"
+      ></ion-searchbar>
+    </ion-row>
+    <ion-segment *ngIf="!searchService.visibleListas" color="segment" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="resultado" selected>
+            <ion-text class="ion-text-capitalize">({{getR()?.length}}) Resultados</ion-text>
+        </ion-segment-button>
+        <ion-segment-button value="oferta">
+            <ion-text class="ion-text-capitalize">({{getOf()?.length}}) Ofertas</ion-text>
+        </ion-segment-button>
+        <ion-segment-button value="listado">
+            <ion-text class="ion-text-capitalize">({{getL()?.length}}) Listado</ion-text>
+        </ion-segment-button>
+    </ion-segment>
+    <ion-card class="keys-dropdown"> 
+        <ion-section *ngIf="!searchService.visibleListas">
+            <div [ngSwitch]="type">
+                <ion-list *ngSwitchCase="'resultado'">
+                <ion-item *ngFor="let data of getR()">
+                    <ion-avatar slot="start">
+                        <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                    </ion-avatar>
+                    <ion-label class="content_item">
+                        <h3>{{data?.texto}} {{data?.precio}}€/mes</h3>
+                        <p> 
+                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                            ({{data?.numVal}}) valoraciones
+                        </p>    
+                        <h2>{{data?.nombre}}</h2>
+                    </ion-label>
+                </ion-item>
+                </ion-list>
+                <ion-list *ngSwitchCase="'oferta'">
+                    <ion-item *ngFor="let data of getOf()">
+                        <ion-avatar slot="start">
+                            <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                        </ion-avatar>
+                        <ion-label class="content_item">
+                            <h3>{{data?.texto}} {{data?.precio}}€/mes</h3> 
+                            <h2>{{data?.nombre}}</h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list *ngSwitchCase="'listado'">
+                    <ion-item *ngFor="let data of getL()">
+                        <!--item-search -->
+                        <ion-avatar slot="start">
+                            <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                        </ion-avatar>
+                        <ion-label class="content_item">
+                            <h3>{{data?.texto}} {{data?.precio}}€/mes</h3>
+                            <p> 
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                ({{data?.numVal}}) valoraciones
+                            </p>    
+                            <h2>{{data?.nombre}}</h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-section>
+        <ion-list *ngIf="searchService.visibleListas" mode="ios">
+            <ion-card-header>
+                <ion-card-title>Recomendaciones</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-no-padding">
+                <div *ngIf="data">
+                    <ion-item *ngFor="let data of data.data?.recomendations">
+                        <ion-avatar slot="start">
+                            <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                        </ion-avatar>
+                        <ion-label class="content_item">
+                            <h3>{{data?.texto}} {{data?.precio}}€/mes</h3>
+                            <p> 
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                ({{data?.numVal}}) valoraciones
+                            </p>    
+                            <h2>{{data?.nombre}}</h2>
+                        </ion-label>
+                    </ion-item>
+                </div>
+            </ion-card-content>
+        </ion-list>
+    </ion-card>
+</ion-grid>
+  
