@@ -29,6 +29,7 @@ import { SectorsModule } from '../components/sectors/sectors.module';
 import { LoadingModule } from '../components/loading/loading.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgxLinkPreviewModule } from 'ngx-link-preview';
+import { CartComponent } from '../components/cart/cart.component';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { NgxLinkPreviewModule } from 'ngx-link-preview';
         FilePickerComponent,
         OptsMenuComponent,
         NumFloatComponent,
+        CartComponent,
     ],
     imports: [
         CommonModule,
@@ -93,6 +95,7 @@ import { NgxLinkPreviewModule } from 'ngx-link-preview';
         LoadingModule,
         IonicSelectableModule,
         NgxLinkPreviewModule,
+        CartComponent,
     ]
 })
 export class SharedModule {}
