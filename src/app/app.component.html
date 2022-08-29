@@ -8,9 +8,8 @@
     contentId="main-content"
     type="overlay"
     (ionWillOpen)="onMenuOpen()"
-    *ngIf="authenticationService.isAuthenticated()"
     side="start"
-  >
+    *ngIf="authenticationService.isAuthenticated()">
     <ion-avatar slot="start">
         <ion-img class="ion-margin avatarmenu"
           id="menuImg"
