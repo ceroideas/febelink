@@ -19,3 +19,143 @@ h1 {
 .marginLeft {
     margin-left: 1em;
 }
+
+
+.avatarmenu{
+    width: 36px;
+    height: 36px;  
+  }
+  
+  .pos_menu{
+    z-index: -1;
+    display: flex;
+    margin-left: -18px;
+    height: 25px;
+  }
+
+  ion-header {
+    text-align: center;
+    background: var(--ion-color-light);
+  
+    ion-toolbar {
+      @media (min-width: 768px) {
+        margin: 0 auto;
+        max-width: 1400px;
+      }
+    }   
+  }
+
+  ion-img{
+    .logo{
+        margin-left: 60% !important;
+    }
+  }
+  
+  ion-content {
+    .cargando-container {
+      text-align: center;
+    }
+  
+    h1 {
+      text-align: center;
+    }
+  
+    .content-filter {
+      @media (min-width: 768px) {
+        margin: 40px 0px;
+      }
+    }
+  }
+  
+  ion-thumbnail {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .terms-text {
+    text-decoration: underline;
+  }
+  .terms-text:hover {
+    cursor: pointer;
+  }
+  
+  .content-filter-header {
+    background: white;
+    border-top: 1px solid #d0d0d0;
+  }
+  
+  ion-item img {
+    margin: 10% auto 10% auto;
+    max-height: 60px;
+  }
+  
+  .app-services,
+  .app-whyUse,
+  .downloads .section-header {
+    text-align: center;
+  }
+  
+  .app-services .section-header,
+  .app-whyUse .section-header,
+  .downloads .section-header,
+  .section-header * {
+    width: 100%;
+    margin: 1.5em 0;
+  }
+  
+  .flexed-row {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .flexed-row section {
+    flex: 1 1 0px;
+    min-width: 15em;
+  }
+  
+  .app-whyUse img {
+    width: 5em;
+  }
+  
+  .image-aligned {
+    vertical-align: middle;
+  }
+  
+  ion-icon {
+    color: green;
+  }
+  
+  .row-store {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5em;
+  }
+  
+  .col-store {
+    text-align: center;
+  }
+  
+  #google-button,
+  #apple-button {
+    margin-top: 1.5em;
+    width: 15em;
+  }
+  
+  #registro ion-icon {
+    color: white;
+  }
+  
+  .pad-s5 {
+    padding-left: 5px; --padding-start: 5px;
+  }
+
+.logo_margen{
+    float: right;
+}
+
+.header_buttons{
+  padding-left: 1em;
+}
+  
+  
