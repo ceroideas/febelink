@@ -67,8 +67,12 @@ a:hover {
 }
 
 ion-content {
-  --ion-background-color: rgb(62, 101, 137);
-  --background: rgb(62, 101, 137);
+  --ion-background-color: #FFFFFF;
+  --background: #FFFFFF;
+}
+
+.color_ppal{
+  color: #111928;
 }
 
 .pointer {

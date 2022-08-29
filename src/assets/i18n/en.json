@@ -234,10 +234,18 @@
     "pages": {
       "opinions": "Opinions",
       "wallet": "My Wallet",
-      "subscriptions": "Subscriptions"
+      "subscriptions": "Subscriptions",
+      "datosPersonales": "Datos personales",
+      "historialCompras": "Historial de compras",
+      "misPublicaciones": "Mis publicaciones",
+      "cambioAPremium": "Cambiar a cuenta profesional",
+      "idioma": "Idioma",
+      "ayuda": "Ayudar",
+      "salir": "Salir"
     },
     "labels": {
-      "currentPlan": "Current plan"
+      "currentPlan": "Current plan",
+      "editarPerfil": "Editar perfil"
     }
   },
   "tabs": {

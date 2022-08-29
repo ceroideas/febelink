@@ -1,13 +1,4 @@
 <div class="header-buttons" [class]="currentTab == tabs.Search ? 'right' : ''">
-  <img
-    tappable
-    src="assets/imgs/logo.png"
-    alt="Febelink logo"
-    (click)="irA('/' + homePage)"
-    *ngIf="currentTab != tabs.Search"
-    class="logo"
-  />
-
   <ion-buttons>
     <!-- Token FLAU -->
     <ion-button
@@ -32,7 +23,7 @@
     <div>
       <ion-grid>
         <ion-row>   
-          <ion-item (click)="irA('/menu/ofertas')" class="ion-no-padding pointer" lines="none">
+          <ion-item (click)="irA('/menu/todas')" class="ion-no-padding pointer" lines="none">
             <ion-img class="img_desktop_menu" src="assets/icon/svg/chat_header.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu desktop">{{ 'menu.tabs.chat' | translate }}</ion-label>
           </ion-item>
@@ -147,7 +138,5 @@
     -->
     <!-- Lang -->
     <!-- <app-lang-btn></app-lang-btn> -->
-
-    <!-- Img Logo -->   
   </ion-buttons>
 </div>

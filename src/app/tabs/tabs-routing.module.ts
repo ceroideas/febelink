@@ -28,12 +28,14 @@ const routes: Routes = [
         loadChildren: () =>
           import('../tab2/tab2.module').then((m) => m.Tab2PageModule),
       },
-      /* {
+       {
         path: 'oracles',
         loadChildren: () =>
           import('../pages/posts/advises/advise.module').then( m => m.AdvisePageModule ),
-      }, */
+      }, 
+      /*
       { path: 'oracles', redirectTo: '/posts/oracles', pathMatch: 'prefix' },
+      */
       {
         path: 'ofertas',
         loadChildren: () =>
