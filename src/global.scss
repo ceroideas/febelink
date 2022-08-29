@@ -175,3 +175,8 @@ ionic-selectable-modal {
 .pointer {
   cursor: pointer;
 }
+
+/*Desaparecer chat externo - temporal*/
+div#fg_bubble {
+  display: none !important;
+}
