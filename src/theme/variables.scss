@@ -203,6 +203,9 @@
   --ion-color-linkedin-shade: #0A6E9C;
   --ion-color-linkedin-tint: #1699D6;
 
+  --ion-color-texto-ppal: #111928;
+  --ion-color-texto-gray: #6B7280;
+
   /**
   * Currencies
   **/
@@ -216,6 +219,16 @@
   --ion-color-currency-usd: #6CDE07;
   /** Bitcoin **/
   --ion-color-currency-btc: #F7931A;
+}
+
+.ion-color-texto-bold-footer{
+  color: var(--ion-color-texto-ppal);
+  font-weight: 600;
+}
+
+.ion-color-texto-gray-footer{
+  color: var(--ion-color-texto-gray);
+  font-weight: 400;
 }
 
 .ion-color-febelink {

@@ -78,6 +78,7 @@ import { CartComponent } from '../components/cart/cart.component';
         LangBtnComponent,
         LangPopComponent,
         YouTubePopComponent,
+        FooterComponent,
         LinkPreviewComponent,
         VerificationComponent,
         KYCAliceComponent,

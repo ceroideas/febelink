@@ -1,8 +1,11 @@
 /* Add margin bottom when on page '/menu/' && media <= 768 */
-[data-url*="/menu/"]
-
+  [data-url*="/menu/"]{
+    #fg_bubble {
+        display: none !important;
+    }
+}
 /* Add margin bottom when on page '/post?' && '/posts/oracle/create' && media <= 768 */
-, [data-url*="/posts/oracles"]
+  [data-url*="/posts/oracles"]
 , [data-url*="/posts/oraculos"]
 , [data-url*="/posts/oracle/create"]
 
