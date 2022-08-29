@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 import { SearchService } from '../../services/search.service';
 import { IKeywords } from '../../models/search.model';
+
 
 @Component({
   selector: 'app-search',
@@ -13,10 +15,15 @@ export class SearchComponent implements OnInit {
   public data: any;
   @Input() type: string = '';
 
+
+  public slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+  
   constructor(public searchService: SearchService) {
     this.type = "resultado";
   }
-
 
   ngOnInit() {
     this.searchService.getData()

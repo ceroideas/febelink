@@ -64,6 +64,80 @@
           "numVal": 21,
           "precio": 35
         }
+      ],
+      "offersTop":[
+        {
+          "id": "1",
+          "imagen": "bg1.jpg",
+          "titulo": "Fisioterapia Nicolás",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 1"
+        },
+        {
+          "id": "2",
+          "imagen": "bg1.jpg",
+          "titulo": "Fisioterapia Nicolás",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 2"
+        },
+        {
+          "id": "3",
+          "imagen": "bg1.jpg",
+          "titulo": "Fisioterapia Nicolás",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 3"
+        },
+        {
+          "id": "4",
+          "imagen": "bg1.jpg",
+          "titulo": "Fisioterapia Nicolás",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 4"
+        },
+        {
+          "id": "5",
+          "imagen": "bg1.jpg",
+          "titulo": "Fisioterapia Nicolás",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 5"
+        }
+      ],
+      "recomendationsSearch":[
+        {
+          "id": "1",
+          "imagen": "bg1.jpg",
+          "titulo": "Recomendacion búsqueda 1",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 1"
+        },
+        {
+          "id": "2",
+          "imagen": "bg1.jpg",
+          "titulo": "Recomendacion búsqueda 2",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 2"
+        },
+        {
+          "id": "3",
+          "imagen": "bg1.jpg",
+          "titulo": "Recomendacion búsqueda 3",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 3"
+        },
+        {
+          "id": "4",
+          "imagen": "bg1.jpg",
+          "titulo": "Recomendacion búsqueda 4",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 4"
+        },
+        {
+          "id": "5",
+          "imagen": "bg1.jpg",
+          "titulo": "Recomendacion búsqueda 5",
+          "subtitulo": "Masaje drenante",
+          "texto": "texto 5"
+        }
       ]
     }
   }

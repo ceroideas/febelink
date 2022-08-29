@@ -60,24 +60,7 @@
         }
       ],
       "list": [
-        {
-          "id": "1",
-          "imagen": "bg2.jpg",
-          "nombre": "Colocación de toldos",
-          "texto": "Montaje de cosas",
-          "mediaVal": 5,
-          "numVal": 10,
-          "precio": 56
-        },
-        {
-          "id": "2",
-          "imagen": "bg1.jpg",
-          "nombre": "Fisioterapia Carlos",
-          "texto": "Masaje drenante",
-          "mediaVal": 1.5,
-          "numVal": 5,
-          "precio": 5
-        }
+        
       ]
     }
 }
