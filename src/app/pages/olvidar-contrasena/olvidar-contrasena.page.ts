@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
 import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
@@ -15,10 +16,15 @@ export class OlvidarContrasenaPage implements OnInit {
 
   public form: UntypedFormGroup;
   public email: any;
+  langSelect:string='ES';
+
+  redirect: string;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private utilities: UtilitiesService,
     private api: ApiService,
     private translateService: TranslateConfigService
@@ -29,7 +35,18 @@ export class OlvidarContrasenaPage implements OnInit {
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
     });
+    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
 
+  }
+
+
+  /**
+   * Open sign up page
+   */
+  openLogin() {
+    const route = ['login'];
+    if (this.redirect) route.push(this.redirect);
+    this.router.navigate(route);
   }
 
   /**

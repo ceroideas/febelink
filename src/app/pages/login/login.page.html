@@ -1,79 +1,175 @@
 <ion-content>
-  <div class="cover-content">
-    <div class="logo">
-      <img src="assets/imgs/logo.png" alt="logo" />
-      <app-lang-btn></app-lang-btn>
+  <!-- Desktop version -->
+  <div class="desktop">
+
+    <div class="login-header-b">
+      <div class="login-header-left">
+        <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo-b" />
+      </div>
+      <div class="login-header-right">
+        <ion-item class="no-padding login-lang-item">
+          <ion-select class="login-lang-select" placeholder="" cancelText="Cancelar" okText="Aceptar" [ngModel]="langSelect">
+            <ion-select-option value="ES">ES</ion-select-option>
+            <ion-select-option value="EN">EN</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
     </div>
 
-    <div class="slogan">{{ 'common.slogan' | translate }}</div>
-    <h1 class="title">{{ 'pages.login.title' | translate }}</h1>
-    <form
-      *ngIf="form"
-      [formGroup]="form"
-      (ngSubmit)="submitForm()"
-      (keyup.enter)="submitForm()"
-    >
-      <ion-item class="input">
-        <ion-label>
-          <ion-icon name="person"></ion-icon>
-        </ion-label>
-        <ion-input
-          type="email"
-          placeholder="{{ 'common.labelEmail' | translate }}"
-          formControlName="email"
-          required
-        ></ion-input>
-      </ion-item>
-      <ion-item class="input">
-        <ion-label>
-          <ion-icon name="lock-closed"></ion-icon>
-        </ion-label>
-        <ion-icon
-          slot="end"
-          (click)="hideShowPassword()"
-          [name]="passwordIcon"
-          class="passwordIcon"
-        ></ion-icon>
-        <ion-input
-          (key.enter)="submitForm()"
-          [type]="passwordType"
-          placeholder="{{ 'common.personal.pass' | translate }}"
-          formControlName="password"
-          required
-        ></ion-input>
-      </ion-item>
+    <div class="login-content-b">
+      <div class="login-wrapper-dark"></div>
+      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size" />
+      
+      <div class="login-content-floating">
 
-      {{ 'pages.login.forgotPass' | translate }}
-      <a (click)="openModal()" style="cursor: pointer">
-        <i class="fa fa-eye"></i> {{ 'pages.login.rememberPass' | translate }}
-      </a>
-      <br />
+        <div class="login-content-background">
+          <form
+          *ngIf="form"
+          [formGroup]="form"
+          (ngSubmit)="submitForm()"
+          (keyup.enter)="submitForm()">
+  
+          <div class="login-content-title">
+            {{ 'pages.login.title' | translate }}
+          </div>
+          <div class="login-label-input">
+            Correo electrónico
+          </div>
+          <div class="login-input-margin">
+            <ion-input type="email" formControlName="email" required placeholder="Correo electrónico" class="padding-input-12 login-input"></ion-input>
+          </div>
+          <div class="login-label-input">
+            {{ 'common.personal.pass' | translate }}
+          </div>
+          <div class="login-input-margin">
+            <ion-input type="password" (key.enter)="submitForm()" [type]="passwordType" formControlName="password" required placeholder="**********" class="padding-input-12 login-input"></ion-input>
+          </div>
+          <div class="login-options-table">
+            <div class="login-options-left">
+              <ion-checkbox class="login-checkbox"></ion-checkbox>
+              <div class="login-checkbox-label">Recordar ahora</div>
+            </div>
+            <div class="login-options-right">
+              <div class="login-option-pass" (click)="openPassRemember()">
+                Olvidé la contraseña
+              </div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="!form.valid" class="login-button-connections login-button-back-a margin-bottom-button">
+            Iniciar sesión
+          </button>
+          <div class="button-separator margin-bottom-button">
+            ó
+          </div>
+          <div class="login-button-connections login-button-back-b margin-bottom-button">
+            Continuar con Facebook
+          </div>
+          <div class="login-button-connections login-button-back-c">
+            Continuar con Google
+          </div>
+  
+          </form>
+        </div>
+  
+        <div class="login-content-background margin-top-content-bottom-b">
+          <div class="login-content-title-small">
+            Nuevo usuario?
+          </div>
+          <div class="login-button-connections login-button-back-d" (click)="openRegistro()">
+            {{ 'pages.login.register' | translate }}
+          </div>
+        </div>
 
-      <ion-button
-        expand="block"
-        type="submit"
-        [disabled]="!form.valid"
-        ion-button
-        color="febelink"
-      >
-        {{ 'pages.login.button' | translate }}
-      </ion-button>
-      <social-login
-        *ngIf="!platform.is('ios')"
-        [redirect]="redirect"
-      ></social-login>
-    </form>
-    <div class="links">
-      <div class="clear"></div>
+      </div>
+
     </div>
+
   </div>
-  <div class="cover-content newAccountBox">
-    <ion-label>{{ 'pages.login.newUser' | translate }}</ion-label>
-    <ion-button color="success" (click)="openRegistro()">
-      {{ 'pages.login.register' | translate }}
-    </ion-button>
-  </div>
-  <div class="cover-overlay">
-    <a href="mailto:info@febelink.com">{{ 'common.contactUs' | translate }}</a>
+
+  <!-- Mobile version -->
+  <div class="mobile">
+    <div class="login-header">
+      <div class="login-header-left">
+        <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo" />
+      </div>
+      <div class="login-header-right">
+        <ion-item class="no-padding login-lang-item">
+          <ion-select class="login-lang-select" placeholder="" cancelText="Cancelar" okText="Aceptar" [ngModel]="langSelect">
+            <ion-select-option value="ES">ES</ion-select-option>
+            <ion-select-option value="EN">EN</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="login-img-back">
+      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size" />
+    </div>
+
+    <div class="login-content login-content-margin">
+      <div class="login-content-background">
+        <form
+        *ngIf="form"
+        [formGroup]="form"
+        (ngSubmit)="submitForm()"
+        (keyup.enter)="submitForm()">
+
+        <div class="login-content-title">
+          {{ 'pages.login.title' | translate }}
+        </div>
+        <div class="login-label-input">
+          Correo electrónico
+        </div>
+        <div class="login-input-margin">
+          <ion-input type="email" formControlName="email" required placeholder="Correo electrónico" class="padding-input-12 login-input"></ion-input>
+        </div>
+        <div class="login-label-input">
+          {{ 'common.personal.pass' | translate }}
+        </div>
+        <div class="login-input-margin">
+          <ion-input type="password" (key.enter)="submitForm()" [type]="passwordType" formControlName="password" required placeholder="**********" class="padding-input-12 login-input"></ion-input>
+        </div>
+        <div class="login-options-table">
+          <div class="login-options-left">
+            <ion-checkbox class="login-checkbox"></ion-checkbox>
+            <div class="login-checkbox-label">Recordar ahora</div>
+          </div>
+          <div class="login-options-right">
+            <div class="login-option-pass" (click)="openPassRemember()">
+              Olvidé la contraseña
+            </div>
+          </div>
+        </div>
+        <button type="submit" [disabled]="!form.valid" class="login-button-connections login-button-back-a margin-bottom-button">
+          Iniciar sesión
+        </button>
+        <div class="button-separator margin-bottom-button">
+          ó
+        </div>
+        <div class="login-button-connections login-button-back-b margin-bottom-button">
+          Continuar con Facebook
+        </div>
+        <div class="login-button-connections login-button-back-c">
+          Continuar con Google
+        </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="login-content-bottom">
+      <div class="login-content-background">
+        <div class="login-content-title-small">
+          Nuevo usuario?
+        </div>
+        <div class="login-button-connections login-button-back-d" (click)="openRegistro()">
+          {{ 'pages.login.register' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="login-footer-contact">
+      <a href="mailto:info@febelink.com" class="a-reset">{{ 'common.contactUs' | translate }}</a>
+    </div>
   </div>
 </ion-content>

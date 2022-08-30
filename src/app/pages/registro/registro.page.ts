@@ -21,6 +21,7 @@ export class RegistroPage implements OnInit {
   passwordIcon = 'eye-off';
   passwordType2 = 'password';
   passwordIcon2 = 'eye-off';
+  langSelect:string='ES';
 
   redirect: string;
 

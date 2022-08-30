@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
   form: UntypedFormGroup;
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
+  langSelect:string='ES';
 
   redirect: string;
 
@@ -102,8 +103,16 @@ export class LoginPage implements OnInit {
   /**
    * Open sign up page
    */
-  openRegistro() {
+   openRegistro() {
     const route = ['registro'];
+    if (this.redirect) route.push(this.redirect);
+    this.router.navigate(route);
+  }
+  /**
+   * Open remember password page
+   */
+   openPassRemember() {
+    const route = ['olvidar-contrasena'];
     if (this.redirect) route.push(this.redirect);
     this.router.navigate(route);
   }
