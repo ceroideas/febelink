@@ -161,6 +161,14 @@ export class Tab1Page {
     this.navegar('cookie-policy');
   }
 
+  async openPrivacyPolicy() {
+    this.navegar('privacy-policy');
+  }
+
+  async openUseConditions() {
+    this.navegar('use-conditions');
+  }
+
   closeCookies() {
     this.showCookies = false;
   }
