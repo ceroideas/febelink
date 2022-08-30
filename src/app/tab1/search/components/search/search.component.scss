@@ -20,14 +20,133 @@ ion-slides{
 .keys-dropdown{
     margin-top: 2em;
     width: 24.2em;
-    margin-left: 0.8em;
     margin-right: 0.8em;
 }
+
+.list_dropdown{
+    margin-top:-1em;
+}
+
+.item_dropdown{
+    border-bottom: 1px solid #E5E7EB; 
+    margin-left: 1em; 
+    margin-right: 1em;
+}
+
+.style_font_item{
+    font-size: 12px; 
+    margin-left: .5em; 
+    font-weight: bold;
+}
+
+.style_font_item_normal{
+    font-size: 12px; 
+    font-weight: normal;
+}
+
+.list_empty_grid{
+    height: 8em; 
+    margin-top: 17%;
+}
+
+.list_empty_col{
+    line-height: .5em;
+}
+
+ion-img{
+    .list_empty_icono{
+        width: 42px; 
+        height: 42px;
+    }    
+}
+
+.font_texto_18{
+    font-size: 18px;
+}
+
+.list_empty_p_18{
+    text-align: center; 
+    margin-left: -2em; 
+    font-size:18px; 
+    color:#111928;
+}
+
+.font_texto_14{
+    font-size: 14px;
+}
+
+.list_empty_p_14{
+    text-align: center; 
+    margin-left: -2em; 
+    font-size:14px; 
+    color:#111928;
+}
+
+.list_title_card{
+    font-size: 24px; 
+    color: #111928;
+}
+
+ion-slides{
+    .list_slides{
+        width: 21em; 
+        height: 20em; 
+        margin-top: -2em;
+    }
+
+    ion-slide{
+        width: 18em;
+    }
+}
+
+.list_label_18{
+    font-size:18px; 
+    color: #111928; 
+    margin-left: 1em; 
+    height: 1.5em;
+}
+
+.list_label_14{
+    font-size:14px; 
+    color: #374151; 
+    margin-left: 1.3em;
+}
+
+.list_label_14_claro{
+    font-size:14px; 
+    color: #6B7280; 
+    margin-left: 1.3em;
+}
+
+.aux_padding_bottom{
+    padding-bottom: 1em;
+}
+
+.font_valoraciones{
+    font-size: 12px; 
+    margin-left: .5em;
+}
+
+.list_card_header{
+    padding: 0; 
+    height: 11em; 
+    width: 21em;
+}
+
 
 ion-avatar{
     ion-img{
         width: 48px;
         height: 48px;
+    }
+
+    .avatar_dropdown{
+        margin-left: -1em; margin-top: -10px;
+    }
+
+    .avatar{
+        margin-left: -1em; 
+        margin-top: -30px;
     }
 }
 
