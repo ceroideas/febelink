@@ -1,6 +1,7 @@
 <div class="header-buttons" [class]="currentTab == tabs.Search ? 'right' : ''">
   <ion-buttons>
     <!-- Token FLAU -->
+    <!--
     <ion-button
       *ngIf="perfil"
       class="btn-header bt-br"
@@ -20,14 +21,15 @@
         </ion-label>
       </div>
     </ion-button>
+    -->
     <div>
       <ion-grid>
         <ion-row>   
-          <ion-item (click)="irA('/menu/todas')" class="ion-no-padding pointer" lines="none">
+          <ion-item (click)="irA('#')" class="ion-no-padding pointer" lines="none">
             <ion-img class="img_desktop_menu" src="assets/icon/svg/chat_header.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu desktop">{{ 'menu.tabs.chat' | translate }}</ion-label>
           </ion-item>
-          <ion-item class="ion-no-padding desktop" lines="none"> 
+          <ion-item class="ion-no-padding desktop pointer" lines="none"> 
             <ion-img src="assets/icon/svg/cart_icon.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.carro' | translate }}</ion-label>   
           </ion-item>
@@ -36,7 +38,7 @@
               <ion-img class="icono_parte_ojo" src="assets/icon/svg/menu_eye_dentro.svg"></ion-img>
               <ion-label class="ion-padding">{{ 'menu.tabs.advises' | translate }}</ion-label>
           </ion-item>
-          <ion-item class="ion-no-padding desktop" lines="none"> 
+          <ion-item (click)="irA('/posts/oracles')" class="ion-no-padding desktop pointer" lines="none"> 
             <ion-img src="assets/icon/svg/home_icon.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.inicio' | translate }}</ion-label>
           </ion-item>
@@ -117,13 +119,14 @@
     >
     -->
     <!-- Notifications -->
+    <!--
     <ion-button *ngIf="perfil" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
       <ion-badge color="danger" slot="end" *ngIf="notifCount">{{
         notifCount
       }}</ion-badge>
     </ion-button>
-
+    -->
     <!-- Guide -->
     <!--
     <ion-button
