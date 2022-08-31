@@ -372,7 +372,10 @@
     cursor:pointer;--background:linear-gradient(90deg, #1C64F2 95%, #fff 10%);height:36px;--border-radius:8px 0px 0px 8px;display: -webkit-box;
 }
 .div-item-slide {
-    display:table;position:relative;width:100%;margin-top:-8px;background: #EDEDED;border-radius: 8px;height:36px;line-height:36px;text-align:center;font-weight: 400;font-size: 12px;color: #9CA3AF;
+    display:table;position:relative;width:100%;margin-top:-11px;background: #EDEDED;border-radius: 8px;height:36px;line-height:36px;text-align:center;font-weight: 400;font-size: 12px;color: #9CA3AF;
+}
+.div-item-slide-ios {
+    margin-top:-8px;
 }
 .button-slide {
     position:absolute;left:0px;top:0;text-align:center;background: #1C64F2;width: 50px;height: 36px;border-radius: 8px;

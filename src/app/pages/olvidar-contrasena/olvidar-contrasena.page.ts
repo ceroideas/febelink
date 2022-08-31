@@ -16,7 +16,6 @@ export class OlvidarContrasenaPage implements OnInit {
 
   public form: UntypedFormGroup;
   public email: any;
-  langSelect:string='ES';
 
   redirect: string;
 

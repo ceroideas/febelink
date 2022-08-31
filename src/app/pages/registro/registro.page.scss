@@ -1,103 +1,5 @@
 ion-content {
   --background: #F9FAFB;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-align: center;
-
-  .cover-content {
-    z-index: 99 !important;
-    position: relative;
-    background-color: white;
-    margin: 0 auto;
-    padding: 0em 2em 1em 2em;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
-    
-    @media (min-width: 768px) {
-      max-width: 450px;
-      margin: 1% auto 0px;
-    }
-    ion-item {
-      margin: 0.4em;
-    }
-    .logo {
-      position: relative;
-    }
-    img {
-      display: block;
-      width: 30%;
-      margin: 1.5em auto 0 auto;
-    }
-    app-lang-btn {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
-    .slogan{
-      color: rgb(185, 185, 185);
-      margin-top: 0.5em;
-      font-size: 14px;
-    }
-    ion-button {
-      width: 100%;
-      margin-top: 10px;
-    }
-    .input {
-      margin-left: 0;
-      padding-left: 0;
-      font-size: 1.2em;
-    }
-    .title {
-      font-size: 24px;
-      font-weight: bold;
-      margin: .8em 0 0 0;
-    }
-    .subtitle {
-      margin-top: 5px;
-      font-size: 10px;
-      opacity: 0.8;
-    }
-    .rgs-title {
-      text-align: center;
-      line-height: 24px;
-      font-size: 12px;
-      opacity: 0.7;
-    }
-    .privacyConditions {
-      padding-left: 0 !important;
-      font-size: 14px;
-      ion-label {
-        padding-left: 0 !important;
-      }
-      ion-checkbox {
-        margin: 2px !important;
-        width: 15px;
-        height: 15px;
-        vertical-align: baseline;
-      }
-    }
-    .box-terms {
-      margin: 5px 5px;
-      margin-bottom: 15px;
-    }
-    .privacyConditions {
-      display: block;
-      margin: 0.75em auto;
-      a {
-        text-decoration: underline;
-        color: #55abdd;
-        cursor: pointer;
-      }
-    }
-    .or {
-      text-transform: lowercase;
-    }
-  }
-  .cover-overlay {
-    margin: 0.6em;
-  }
 }
 
 .passwordIcon {
@@ -107,8 +9,6 @@ ion-content {
   top: 5px !important;
   margin: 0 auto !important;
 }
-
-
 
 .login-header-b {
   width:100%;display:table;height:91px;padding:0px 60px;background: #FFFFFF;border-bottom: 1px solid #EDEDED;

@@ -382,7 +382,7 @@
         </ion-item-options>
     
         <ion-item class="no-padding item-slide">
-        <div class="div-item-slide">
+        <div class="div-item-slide" [ngClass]="{'div-item-slide-ios' : platform.is('ios')}">
           <div class="button-slide">
             <img class="button-slide-width" src="assets/icon/svg/chevron-right-white.svg" /><img class="button-slide-width" src="assets/icon/svg/chevron-right-white.svg" /><img class="button-slide-width" src="assets/icon/svg/chevron-right-white.svg" />
           </div>

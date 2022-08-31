@@ -1,4 +1,5 @@
 <ion-content>
+
   <!-- Desktop version -->
   <div class="desktop">
 
@@ -7,12 +8,7 @@
         <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo-b" />
       </div>
       <div class="login-header-right">
-        <ion-item class="no-padding login-lang-item">
-          <ion-select class="login-lang-select" placeholder="" cancelText="Cancelar" okText="Aceptar" [ngModel]="langSelect">
-            <ion-select-option value="ES">ES</ion-select-option>
-            <ion-select-option value="EN">EN</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <app-lang-btn></app-lang-btn>
       </div>
     </div>
 
@@ -58,16 +54,8 @@
           <button type="submit" [disabled]="!form.valid" class="login-button-connections login-button-back-a margin-bottom-button">
             Iniciar sesión
           </button>
-          <div class="button-separator margin-bottom-button">
-            ó
-          </div>
-          <div class="login-button-connections login-button-back-b margin-bottom-button">
-            Continuar con Facebook
-          </div>
-          <div class="login-button-connections login-button-back-c">
-            Continuar con Google
-          </div>
-  
+
+          <social-login *ngIf="!platform.is('ios')" [redirect]="redirect"></social-login>
           </form>
         </div>
   
@@ -93,12 +81,7 @@
         <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo" />
       </div>
       <div class="login-header-right">
-        <ion-item class="no-padding login-lang-item">
-          <ion-select class="login-lang-select" placeholder="" cancelText="Cancelar" okText="Aceptar" [ngModel]="langSelect">
-            <ion-select-option value="ES">ES</ion-select-option>
-            <ion-select-option value="EN">EN</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <app-lang-btn></app-lang-btn>
       </div>
     </div>
 
@@ -143,16 +126,8 @@
         <button type="submit" [disabled]="!form.valid" class="login-button-connections login-button-back-a margin-bottom-button">
           Iniciar sesión
         </button>
-        <div class="button-separator margin-bottom-button">
-          ó
-        </div>
-        <div class="login-button-connections login-button-back-b margin-bottom-button">
-          Continuar con Facebook
-        </div>
-        <div class="login-button-connections login-button-back-c">
-          Continuar con Google
-        </div>
 
+        <social-login *ngIf="!platform.is('ios')" [redirect]="redirect"></social-login>
         </form>
       </div>
     </div>

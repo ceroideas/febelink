@@ -7,12 +7,7 @@
         <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo-b" />
       </div>
       <div class="login-header-right">
-        <ion-item class="no-padding login-lang-item">
-          <ion-select class="login-lang-select" placeholder="" cancelText="Cancelar" okText="Aceptar" [ngModel]="langSelect">
-            <ion-select-option value="ES">ES</ion-select-option>
-            <ion-select-option value="EN">EN</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <app-lang-btn></app-lang-btn>
       </div>
     </div>
 
@@ -36,19 +31,19 @@
             Nombre de cuenta
           </div>
           <div class="login-input-margin">
-            <ion-input clearInput formControlName="name" required type="text" placeholder="Nombre de cuenta" class="padding-input-12 login-input"></ion-input>
+            <ion-input formControlName="name" required type="text" placeholder="Nombre de cuenta" class="padding-input-12 login-input"></ion-input>
           </div>
           <div class="login-label-input">
             Correo electrónico
           </div>
           <div class="login-input-margin">
-            <ion-input clearInput formControlName="email" required type="email" placeholder="Correo electrónico" class="padding-input-12 login-input"></ion-input>
+            <ion-input formControlName="email" required type="email" placeholder="Correo electrónico" class="padding-input-12 login-input"></ion-input>
           </div>
           <div class="login-label-input">
             {{ 'common.personal.pass' | translate }}
           </div>
           <div class="login-input-margin">
-            <ion-input clearInput [type]="passwordType" formControlName="password" required type="password" required placeholder="**********" class="padding-input-12 login-input"></ion-input>
+            <ion-input [type]="passwordType" formControlName="password" required type="password" required placeholder="**********" class="padding-input-12 login-input"></ion-input>
           </div>
           <div class="login-options-table">
             <div class="login-options-left">
@@ -63,16 +58,8 @@
           <button type="submit" class="login-button-connections login-button-back-a margin-bottom-button">
             Registrarse
           </button>
-          <div class="button-separator margin-bottom-button">
-            ó
-          </div>
-          <div class="login-button-connections login-button-back-b margin-bottom-button">
-            Continuar con Facebook
-          </div>
-          <div class="login-button-connections login-button-back-c">
-            Continuar con Google
-          </div>
-    
+
+          <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>
           </form>
         </div>
 
@@ -96,12 +83,7 @@
         <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo" />
       </div>
       <div class="login-header-right">
-        <ion-item class="no-padding login-lang-item">
-          <ion-select class="login-lang-select" placeholder="" cancelText="Cancelar" okText="Aceptar" [ngModel]="langSelect">
-            <ion-select-option value="ES">ES</ion-select-option>
-            <ion-select-option value="EN">EN</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <app-lang-btn></app-lang-btn>
       </div>
     </div>
   
@@ -124,19 +106,19 @@
           Nombre de cuenta
         </div>
         <div class="login-input-margin">
-          <ion-input clearInput formControlName="name" required type="text" placeholder="Nombre de cuenta" class="padding-input-12 login-input"></ion-input>
+          <ion-input formControlName="name" required type="text" placeholder="Nombre de cuenta" class="padding-input-12 login-input"></ion-input>
         </div>
         <div class="login-label-input">
           Correo electrónico
         </div>
         <div class="login-input-margin">
-          <ion-input clearInput formControlName="email" required type="email" placeholder="Correo electrónico" class="padding-input-12 login-input"></ion-input>
+          <ion-input formControlName="email" required type="email" placeholder="Correo electrónico" class="padding-input-12 login-input"></ion-input>
         </div>
         <div class="login-label-input">
           {{ 'common.personal.pass' | translate }}
         </div>
         <div class="login-input-margin">
-          <ion-input clearInput [type]="passwordType" formControlName="password" required type="password" required placeholder="**********" class="padding-input-12 login-input"></ion-input>
+          <ion-input [type]="passwordType" formControlName="password" required type="password" required placeholder="**********" class="padding-input-12 login-input"></ion-input>
         </div>
         <div class="login-options-table">
           <div class="login-options-left">
@@ -151,16 +133,8 @@
         <button type="submit" class="login-button-connections login-button-back-a margin-bottom-button">
           Registrarse
         </button>
-        <div class="button-separator margin-bottom-button">
-          ó
-        </div>
-        <div class="login-button-connections login-button-back-b margin-bottom-button">
-          Continuar con Facebook
-        </div>
-        <div class="login-button-connections login-button-back-c">
-          Continuar con Google
-        </div>
-  
+
+        <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>
         </form>
       </div>
     </div>
@@ -180,4 +154,5 @@
       <a href="mailto:info@febelink.com" class="a-reset">{{ 'common.contactUs' | translate }}</a>
     </div> 
   </div> 
+
 </ion-content>

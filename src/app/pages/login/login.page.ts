@@ -18,7 +18,6 @@ export class LoginPage implements OnInit {
   form: UntypedFormGroup;
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
-  langSelect:string='ES';
 
   redirect: string;
 
