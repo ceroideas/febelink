@@ -221,6 +221,8 @@
       "searchEngine": "Search",
       "recommend": "Recommend",
       "advises": "Oracles",
+      "inicio": "Home",
+      "carrito": "Cart",
       "chat": "Chat",
       "profile": "Profile",
       "login": "Login",
@@ -241,8 +243,24 @@
       "salir": "Sign out"
     },
     "labels": {
-      "currentPlan": "Current plan",
-      "editarPerfil": "Edit profile"
+      "currentPlan": "Current plan"
+    },
+    "footer": {
+      "company":"COMPANY",
+      "about":"About",
+      "premium":"Premium",
+      "blog":"Blog",
+      "affiliate":"Affiliate Program",
+      "cupon": "Get Coupon",
+      "support":"HELP AND SUPPORT",
+      "contact":"Contact Us",
+      "conocimiento":"Knowledge Center",
+      "premiumBis":"Premium Support",
+      "sponsor":"Sponsorsship",
+      "legal":"LEGACY",
+      "privacy":"Privacy Policy",
+      "terms":"Terms & Conditions",
+      "derechos": "All rights reserved."
     }
   },
   "tabs": {

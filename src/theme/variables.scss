@@ -2,6 +2,12 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
+
+@font-face {
+  font-family: InterFont;
+  src: url("../assets/fonts/Inter-font.ttf");
+}
+
 :root {
   /** primary **/
   /*--ion-color-primary: #3880ff;
@@ -10,6 +16,8 @@
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;*/
+
+  --ion-font-family: 'InterFont';
 
   /** primary **/
   --ion-color-primary: #55abdd;
@@ -98,6 +106,8 @@
   --ion-color-febelink-shade: #4b96c2;
   --ion-color-febelink-tint: #66b3e0;
 
+  /* Menu Footer */
+  --ion-color-menuf-contrast-rgb: 156, 163, 175, 1;
 
   /** Aceptada **/
   --ion-color-aceptada: #19cf50;
@@ -193,6 +203,9 @@
   --ion-color-linkedin-shade: #0A6E9C;
   --ion-color-linkedin-tint: #1699D6;
 
+  --ion-color-texto-ppal: #111928;
+  --ion-color-texto-gray: #6B7280;
+
   /**
   * Currencies
   **/
@@ -237,14 +250,34 @@
   font-style: normal;
 }
 
+.ion-color-texto-bold-footer{
+  color: var(--ion-color-texto-ppal);
+  font-weight: 600;
+}
+
+.ion-color-texto-gray-footer{
+  color: var(--ion-color-texto-gray);
+  font-weight: 400;
+}
+
 .ion-color-febelink {
   --ion-color-base: var(--ion-color-febelink);
   --ion-color-base-rgb: var(--ion-color-febelink-rgb);
   --ion-color-contrast: var(--ion-color-febelink-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-menuf-contrast-rgb);
+  --ion-color-shade: var(--ion-color-febelink-shade);
+  --ion-color-tint: var(--ion-color-febelink-tint);
+}
+
+.ion-color-menuf {
+  --ion-color-base: var(--ion-color-primary-contrast);
+  --ion-color-base-rgb: var(--ion-color-febelink-rgb);
+  --ion-color-contrast: #1B80F8;
   --ion-color-contrast-rgb: var(--ion-color-febelink-contrast-rgb);
   --ion-color-shade: var(--ion-color-febelink-shade);
   --ion-color-tint: var(--ion-color-febelink-tint);
 }
+
 
 .ion-color-aceptada {
   --ion-color-base: var(--ion-color-aceptada);
