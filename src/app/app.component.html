@@ -24,7 +24,7 @@
     </ion-avatar>
     <ion-content id="menu-list">
       <ion-toolbar color="header">
-        <ion-item lines="none">
+        <ion-item class="item_menu_margen" lines="none">
           <ion-avatar class="pos_avatar" slot="start">
             <ion-img class="avatarmenu"
               id="menuImg"
@@ -46,7 +46,7 @@
         </ion-item>
       </ion-toolbar>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
-      <ion-item class="menu menu_despliege" color="item" routerLink="#" lines="none">
+      <ion-item class="menu item_menu_margen" color="item" routerLink="#" lines="none">
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_user.svg"></ion-img>
         <ion-router-link class="ion-text-wrap color_ppal" href="#">
@@ -62,7 +62,7 @@
         Admin panel
       </ion-button>
       <ion-toolbar id="menu-wallet-section">
-          <ion-item class="menu_despliege" color="item" lines="none">
+          <ion-item class="item_menu_margen" color="item" lines="none">
             <div tabindex="0"></div>
             <ion-img size="small" src="assets/icon/svg/menu_wallet.svg"></ion-img>
             <ion-router-link (click)="goTo('wallet')" class="ion-text-wrap color_ppal">
@@ -96,14 +96,14 @@
         </ng-container>
       </ion-toolbar>
       <ion-toolbar>
-        <ion-item class="menu_despliege" color="item" lines="none">
+        <ion-item class="item_menu_margen" color="item" lines="none">
           <div tabindex="0"></div>
           <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
           <ion-router-link class="ion-text-wrap color_ppal" href="#">
             <ion-label class="ion-padding">{{ 'menu.pages.historialCompras' | translate }}</ion-label>
           </ion-router-link>
         </ion-item>
-        <ion-item class="menu_despliege" color="item" lines="none">
+        <ion-item class="item_menu_margen" color="item" lines="none">
           <div tabindex="0"></div>
           <ion-img size="small" src="assets/icon/svg/menu_publicacion.svg"></ion-img>
           <ion-router-link class="ion-text-wrap color_ppal" href="#">
@@ -111,7 +111,7 @@
           </ion-router-link>
         </ion-item>
       </ion-toolbar>
-      <ion-item class="menu_despliege" color="item" lines="none">
+      <ion-item class="item_menu_margen" color="item" lines="none">
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_premium.svg"></ion-img>
         <ion-router-link class="ion-text-wrap color_ppal" href="#">
@@ -119,21 +119,21 @@
         </ion-router-link>
       </ion-item>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
-      <ion-item class="menu menu_despliege" color="item" lines="none">
+      <ion-item class="menu item_menu_margen" color="item" lines="none">
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_idioma.svg"></ion-img>
         <ion-router-link class="ion-text-wrap color_ppal" href="#">
           <ion-label class="ion-padding">{{ 'menu.pages.idioma' | translate }}</ion-label>
         </ion-router-link>
       </ion-item>
-      <ion-item class="menu_despliege" color="item" lines="none">
+      <ion-item class="item_menu_margen" color="item" lines="none">
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_ayudar.svg"></ion-img>
         <ion-router-link class="ion-text-wrap color_ppal" href="#">
           <ion-label class="ion-padding">{{ 'menu.pages.ayuda' | translate }}</ion-label>
         </ion-router-link>
       </ion-item>
-      <ion-item (click)="logout()" class="menu_despliege pointer" color="item" lines="none">
+      <ion-item (click)="logout()" class="item_menu_margen pointer" color="item" lines="none">
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_salida.svg"></ion-img>
         <ion-router-link class="ion-text-wrap color_ppal" href="#">

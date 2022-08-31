@@ -66,6 +66,10 @@ a:hover {
   cursor: pointer;
 }
 
+.item_menu_margen{
+  margin-left: 10%;
+}
+
 ion-content {
   --ion-background-color: #FFFFFF;
   --background: #FFFFFF;
@@ -95,7 +99,7 @@ ion-content {
   ion-menu{
     --height: 40em;
     --max-height: 40em;
-    --width: 23em;
+    --width: 24em;
   }
   :host(.menu-type-overlay) .show-backdrop{
     display: none !important;
