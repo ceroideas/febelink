@@ -1,0 +1,190 @@
+<!-- Pantalla Contenido Carrito -->
+<div *ngIf="cartService.isToggleCart && !isSuccessBuy && !isNoItems && !isErrorBuy" class="div-desktop-carrito">
+  <div class="breadcrumbs-carrito">
+    <div class="breadrumbs-text">
+      Inicio
+      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
+      <span class="color-blue">Carrito</span>
+    </div>
+  </div>
+  <div class="content-carrito">
+    <div class="padding-top-content">
+      <div class="top-content-title">
+        <div class="top-content-title-text">
+          Carrito
+        </div>
+      </div>
+      <div class="top-content-buttons">
+        <div class="top-content-buttons-secondary button-margin" (click)="shopItems()">
+          Vaciar carrito
+        </div>
+        <div class="top-content-buttons-primary" (click)="buyItems()">
+          Comprar
+        </div>
+      </div>
+    </div>
+
+    <div class="div-items-carrito">
+
+      <div *ngFor="let item of dataItems; let i = index" class="item-content-carrito">
+        <div class="item-cell-img">
+          <img src="assets/imgs/img-prueba.jpg" class="item-img" />
+        </div>
+        <div class="item-cell-text">
+          <div class="item-title">
+            {{item.servicio}}
+          </div>
+          <div class="item-subtitle">
+            {{item.ofertante}}
+          </div>
+          <div class="item-div-buttons">
+            <ion-item class="no-padding item-quantity-select">
+              <ion-label class="quantity-label">Cantidad:</ion-label>
+              <ion-select class="quantity-select" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="item.cantidad" (ionChange)="onChangeQuantity($event)">
+                <ion-select-option [value]="1">1</ion-select-option>
+                <ion-select-option [value]="2">2</ion-select-option>
+                <ion-select-option [value]="3">3</ion-select-option>
+                <ion-select-option [value]="4">4</ion-select-option>
+                <ion-select-option [value]="5">5</ion-select-option>
+                <ion-select-option [value]="6">6</ion-select-option>
+                <ion-select-option [value]="7">7</ion-select-option>
+                <ion-select-option [value]="8">8</ion-select-option>
+                <ion-select-option [value]="9">9</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <div class="button-delete" (click)="deleteItem(i)">
+              Eliminar
+            </div>
+          </div>
+        </div>
+        <div class="item-cell-price">
+          <div class="item-price">
+            {{(item.precio*item.cantidad).toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-content-carrito">
+      <div class="bottom-content-carrito-text">
+        Subtotal 3 productos: <span class="bold-600">{{subtotalItems.toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Pantalla Compra Exitosa -->
+<div *ngIf="cartService.isToggleCart && isSuccessBuy" class="div-desktop-carrito">
+  <div class="breadcrumbs-carrito">
+    <div class="breadrumbs-text">
+      Inicio
+      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
+      <span class="color-blue">Carrito</span>
+    </div>
+  </div>
+  <div class="content-carrito">
+    <div class="padding-top-content-success">
+      <div class="top-content-title">
+        <div class="top-content-title-text">
+          Carrito
+        </div>
+      </div>
+      <div class="top-content-buttons">
+        <div class="top-content-buttons-primary" (click)="shopItems()">
+          Seguir comprando
+        </div>
+      </div>
+    </div>
+
+    <div class="div-compra">
+      <div class="div-compra-svg">
+        <img src="assets/icon/svg/check-circle.svg" class="compra-check-svg" />                 
+      </div>
+      <div class="div-compra-title">
+        Compra realizada con éxito
+      </div>
+      <div class="div-compra-subtitle">
+        Pronto recibirás una confirmación en tu correo electrónico
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Pantalla Carrito Vacío -->
+<div *ngIf="cartService.isToggleCart && isNoItems" class="div-desktop-carrito">
+  <div class="breadcrumbs-carrito">
+    <div class="breadrumbs-text">
+      Inicio
+      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
+      <span class="color-blue">Carrito</span>
+    </div>
+  </div>
+  <div class="content-carrito">
+    <div class="padding-top-content-success">
+      <div class="top-content-title">
+        <div class="top-content-title-text">
+          Carrito
+        </div>
+      </div>
+      <div class="top-content-buttons">
+        <div class="top-content-buttons-secondary" (click)="errorItems()">
+          Seguir comprando
+        </div>
+      </div>
+    </div>
+
+    <div class="div-compra">
+      <div class="div-no-items-svg">
+        <img src="assets/icon/svg/cart.svg" class="no-items-svg" />         
+      </div>
+      <div class="div-no-items-title">
+        Tu carrito está vacío
+      </div>
+      <div class="div-no-items-subtitle">
+        Añade productos y servicios a tu carrito
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Pantalla Compra Fallida -->
+<div *ngIf="cartService.isToggleCart && isErrorBuy" class="div-desktop-carrito">
+  <div class="breadcrumbs-carrito">
+    <div class="breadrumbs-text">
+      Inicio
+      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
+      <span class="color-blue">Carrito</span>
+    </div>
+  </div>
+  <div class="content-carrito">
+    <div class="padding-top-content-success">
+      <div class="top-content-title">
+        <div class="top-content-title-text">
+          Carrito
+        </div>
+      </div>
+      <div class="top-content-buttons">
+        <div class="top-content-buttons-primary" (click)="restartItems()">
+          Seguir comprando
+        </div>
+      </div>
+    </div>
+
+    <div class="div-compra">
+      <div class="div-compra-svg">
+        <img src="assets/icon/svg/close-circle.svg" class="compra-check-svg" />                 
+      </div>
+      <div class="div-compra-title">
+        Ha habido un error en la compra
+      </div>
+      <div class="div-compra-subtitle">
+        Por favor, inténtalo de nuevo
+      </div>
+    </div>
+
+  </div>
+</div>

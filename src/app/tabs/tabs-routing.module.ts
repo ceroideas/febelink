@@ -8,16 +8,18 @@ const routes: Routes = [
     path: '',
     component: TabsPage,
     children: [
-      /* {
-        path: '',
+       {
+        path: 'oracles',
         redirectTo: '/posts/oracles',
         pathMatch: 'full',
-      }, */
+      }, 
       {
         path: 'todas',
         loadChildren: () =>
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
+      { path: 'carro', redirectTo: '#', pathMatch: 'full' },
+      { path: 'oracles', redirectTo: '#', pathMatch: 'full' },
       {
         path: 'todas/:searchbar',
         loadChildren: () =>
