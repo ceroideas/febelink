@@ -2,12 +2,6 @@
     .logo{
         width: 120px;
     }
-  
-    .dot_notif_avatar{
-      margin-left: -25px;
-      z-index: 10;
-      margin-top: -31px;
-    }
   }
   
   .logo{
@@ -17,12 +11,10 @@
   }
   
   .dot_notif_avatar{
-    margin-left: -25px;
+    margin-left: -31px;
     z-index: 10;
-    margin-top: -23px;
+    margin-top: -29px;
   }
-
-.desktop_menu_avatar .avatarmenu #menuImg .pos_menu .dot_notif_avatar .buttons_flex
 
 .col-flexed {
     padding-left: 1em;
@@ -50,8 +42,9 @@
   .pos_menu{
     z-index: -1;
     display: flex;
-    margin-left: -18px;
-    height: 25px;
+    margin-left: -13px;
+    width: 28px;
+    height: 20px;
   }
   
   .chat{
