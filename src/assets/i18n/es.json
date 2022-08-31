@@ -243,7 +243,8 @@
       "salir": "Cerrar sesión"
     },
     "labels": {
-      "currentPlan": "Plan actual"
+      "currentPlan": "Plan actual",
+      "editarPerfil": "Editar perfil"
     },
     "footer":{
       "company":"EMPRESA",
