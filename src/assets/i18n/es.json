@@ -246,6 +246,23 @@
     "labels": {
       "currentPlan": "Plan actual",
       "editarPerfil": "Editar perfil"
+    },
+    "footer":{
+      "company":"EMPRESA",
+      "about":"Acerca de",
+      "premium":"Premium",
+      "blog":"Blog",
+      "affiliate":"Programa afiliación",
+      "cupon": "Obtener cupón",
+      "support":"AYUDA Y SOPORTE",
+      "contact":"Contáctanos",
+      "conocimiento":"Centro de conocimiento",
+      "premiumBis":"Soporte Premium",
+      "sponsor":"Patrocinio",
+      "legal":"LEGAL",
+      "privacy":"Política Privacidad",
+      "terms":"Términos y condiciones",
+      "derechos": "Todos los derechos reservados."
     }
   },
   "tabs": {

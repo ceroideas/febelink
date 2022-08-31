@@ -235,17 +235,34 @@
       "opinions": "Opinions",
       "wallet": "My Wallet",
       "subscriptions": "Subscriptions",
-      "datosPersonales": "Datos personales",
-      "historialCompras": "Historial de compras",
-      "misPublicaciones": "Mis publicaciones",
-      "cambioAPremium": "Cambiar a cuenta profesional",
-      "idioma": "Idioma",
-      "ayuda": "Ayudar",
-      "salir": "Salir"
+      "datosPersonales": "Personal information",
+      "historialCompras": "Shopping history",
+      "misPublicaciones": "My posts",
+      "cambioAPremium": "Switch to professional account",
+      "idioma": "Idiom",
+      "ayuda": "Help",
+      "salir": "Sign off"
     },
     "labels": {
       "currentPlan": "Current plan",
-      "editarPerfil": "Editar perfil"
+      "editarPerfil": "Edit profile"
+    },
+    "footer": {
+      "company":"COMPANY",
+      "about":"About",
+      "premium":"Premium",
+      "blog":"Blog",
+      "affiliate":"Affiliate Program",
+      "cupon": "Get Coupon",
+      "support":"HELP AND SUPPORT",
+      "contact":"Contact Us",
+      "conocimiento":"Knowledge Center",
+      "premiumBis":"Premium Support",
+      "sponsor":"Sponsorsship",
+      "legal":"LEGACY",
+      "privacy":"Privacy Policy",
+      "terms":"Terms & Conditions",
+      "derechos": "All rights reserved."
     }
   },
   "tabs": {

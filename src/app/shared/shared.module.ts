@@ -74,6 +74,7 @@ import { NgxLinkPreviewModule } from 'ngx-link-preview';
         ImgErrorFallbackDirective,
         HeaderButtonsComponent,
         LangBtnComponent,
+        FooterComponent,
         LangPopComponent,
         YouTubePopComponent,
         LinkPreviewComponent,
