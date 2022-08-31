@@ -78,7 +78,8 @@ export class ServiciosPage implements OnInit {
         precio_por: 'mes',
         img: 'assets/imgs/servicios-prev-2.png',
         valoraciones: 40,
-        num_valoraciones: 10
+        num_valoraciones: 10,
+        publicado: true
       },
       {
         tipo: 'disponible',

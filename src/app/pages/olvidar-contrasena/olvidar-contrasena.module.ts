@@ -8,6 +8,8 @@ import { OlvidarContrasenaPageRoutingModule } from './olvidar-contrasena-routing
 
 import { OlvidarContrasenaPage } from './olvidar-contrasena.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     OlvidarContrasenaPageRoutingModule,
     TranslateModule.forChild(),
+    ComponentsModule,
+    SharedModule,
   ],
   declarations: [OlvidarContrasenaPage],
   exports: [ TranslateModule ],
