@@ -24,7 +24,7 @@
 
 ion-header {
   text-align: center;
-  background: var(--ion-color-light);
+  background: var(--ion-color-toolbar);
 
   ion-toolbar {
     @media (min-width: 768px) {
@@ -100,8 +100,9 @@ ion-content {
 .pos_menu{
   z-index: -1;
   display: flex;
-  margin-left: -18px;
-  height: 25px;
+  margin-left: -13px;
+  width: 28px;
+  height: 20px;
 }
 
 .chat{
