@@ -161,6 +161,7 @@
           <img src="{{servicio.img}}" class="servicios-item-img" />
         </div>
         <div class="servicios-item-cell-text">
+          <div *ngIf="servicio.publicado" class="servicios-chip-publicado-b">Publicado</div>
           <div class="display-table-100">
             <div class="servicios-item-title">
               {{servicio.nombre}}
