@@ -1,9 +1,23 @@
-.button-lang {
-    cursor:pointer;padding:12px;float:right;background: #FFFFFF;border: 1px solid #D1D5DB;border-radius: 8px;width: 75px;height: 42px;text-align:center;
+ion-button {
+    height: auto;
+    background: transparent !important;
+    color: #64697A !important;
+    --padding-start: 0;
+    --padding-end: 0;
 }
-.button-lang-text {
-    display:inline-block;padding-right:14px;font-weight: 400;font-size: 14px;line-height: 125%;color: #6B7280;text-transform:uppercase;
+
+.idiomaMin{
+    text-transform: capitalize;
 }
-.button-lang-svg {
-    width:12px;position:relative;top:-2px;
+
+.idiomaMay{
+    text-transform:uppercase;
+}
+
+.icono_idioma{
+    margin-left:1em;
+}
+
+.btn_idioma{
+    margin-right: 8em;
 }

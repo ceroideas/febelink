@@ -69,7 +69,7 @@ a:hover {
 }
 
 .item_menu_margen{
-  margin-left: 10%;
+  margin-left: 0%;
 }
 
 ion-content {
@@ -83,6 +83,10 @@ ion-content {
 
 .color_ppal_premium{
   color:#FF7746;
+}
+
+.color_ayuda{
+  color: #6B7280;
 }
 
 .pointer {
@@ -121,6 +125,10 @@ ion-content {
   .menu_despliege{
     font-weight: 400;
     margin-left: 3em;
+  }
+
+  .item_menu_margen{
+    margin-left: 10%;
   }
 }
 
