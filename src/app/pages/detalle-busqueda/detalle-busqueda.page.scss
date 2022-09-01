@@ -1,0 +1,28 @@
+.icon_star{
+    width: 14.87px;
+    height: 14.24px;
+    display: inline-block;
+}
+
+.footer_detalle{
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    padding-top: 0em;
+}
+
+ion-footer{
+    ion-button{
+        text-transform: capitalize;
+        .btn_ppal{
+            background-color:#1C64F2;
+            color: #FFFFFF;
+        }
+        
+        .btn_aux{
+            background-color: #FFFFFF;
+            color: #1C64F2;
+        }
+    }
+}
+

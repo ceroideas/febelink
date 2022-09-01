@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="detalle">
+    <ion-grid size="12">
+      <ion-row size="12">
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
+          <ion-breadcrumb href="#">{{ 'menu.pages.detalle.servicio' | translate }}</ion-breadcrumb>
+        </ion-breadcrumbs>
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="10">
+          {{detalle.detalle?.nombre}}
+        </ion-col>
+        <ion-col size="2">
+          <!-- ICONO -->
+        </ion-col>
+      </ion-row>
+      <ion-row size="12">
+        <p class="ion-no-margin"> 
+          <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+          <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+          <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+          <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+          <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+          ({{detalle.detalle?.valoracion}}) {{ 'menu.pages.detalle.valoracion' | translate }}
+        </p>    
+      </ion-row>
+      <ion-row size="12">
+        <ion-slides pager="true" [options]="slideOpts">
+          <ion-slide>
+            <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
+          </ion-slide>
+          <ion-slide>
+            <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
+          </ion-slide>
+          <ion-slide>
+            <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+      <ion-row size="12">
+        {{detalle.detalle?.descripcion}}
+      </ion-row>
+      <ion-row size="12">
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>{{ 'menu.pages.detalle.cantidad' | translate }}</ion-label>
+            <ion-select>
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          {{detalle.detalle?.precio}},00€
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer class="footer_detalle">
+    <ion-button class="ion-padding btn_ppal" expand="block">{{ 'menu.pages.detalle.comprar' | translate }}</ion-button>
+    <ion-button class="ion-padding btn_aux" expand="block">{{ 'menu.pages.detalle.add' | translate }}</ion-button>
+</ion-footer>

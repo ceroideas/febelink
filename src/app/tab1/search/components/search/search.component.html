@@ -25,7 +25,7 @@
                 <ion-list class="list_dropdown" *ngSwitchCase="'resultado'">
                     <ion-card *ngIf="getR().length > 0" class="ion-no-margin">
                         <ion-card-content class="ion-no-padding">
-                            <ion-item class="item_dropdown" lines="none" *ngFor="let data of getR()">
+                            <ion-item (click)="irA('/detalle/1')" class="item_dropdown" lines="none" *ngFor="let data of getR()">
                                 <ion-avatar class="avatar_dropdown" slot="start">
                                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                 </ion-avatar>
@@ -39,7 +39,7 @@
                                         <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                                     </p>    
                                     <span class="font_texto_14">{{data?.nombre}}</span>
-                                </ion-label>  
+                                </ion-label>   
                             </ion-item>
                         </ion-card-content>
                     </ion-card>
@@ -58,7 +58,7 @@
                 <ion-list class="list_dropdown" *ngSwitchCase="'oferta'">
                     <ion-card *ngIf="getOf().length > 0" class="ion-no-margin">
                         <ion-card-content class="ion-no-padding">
-                            <ion-item lines="none" class="item_dropdown" *ngFor="let data of getOf()">
+                            <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown" *ngFor="let data of getOf()">
                                 <ion-avatar class="avatar_dropdown" slot="start">
                                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                 </ion-avatar>
@@ -91,7 +91,7 @@
                 <ion-list class="list_dropdown" *ngSwitchCase="'listado'">
                     <ion-card *ngIf="getL().length > 0" class="ion-no-margin">
                         <ion-card-content class="ion-no-padding" >
-                            <ion-item lines="none" class="item_dropdown" *ngFor="let data of getL()">
+                            <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown" *ngFor="let data of getL()">
                                 <ion-avatar class="avatar_dropdown" slot="start">
                                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                 </ion-avatar>
@@ -133,7 +133,7 @@
                             <ion-card-title class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-card-title>
                         </ion-card-header>
                         <ion-card-content class="ion-no-padding">
-                            <ion-item lines="none" class="item_dropdown" *ngFor="let data of data.data?.recomendations">
+                            <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown" *ngFor="let data of data.data?.recomendations">
                                 <ion-avatar class="avatar_dropdown" slot="start">
                                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                 </ion-avatar>
@@ -198,7 +198,7 @@
                                 <ion-card-title class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-card-title>
                             </ion-card-header>
                             <ion-card-content class="ion-no-padding">
-                                <ion-item lines="none" class="item_dropdown" *ngFor="let data of data.data?.recomendationsSearch">
+                                <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown" *ngFor="let data of data.data?.recomendationsSearch">
                                     <ion-avatar class="avatar" slot="start">
                                         <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                     </ion-avatar>

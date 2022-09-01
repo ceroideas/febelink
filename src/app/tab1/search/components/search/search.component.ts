@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { SearchService } from '../../services/search.service';
 import { IKeywords } from '../../models/search.model';
@@ -21,7 +22,8 @@ export class SearchComponent implements OnInit {
     speed: 400
   };
   
-  constructor(public searchService: SearchService) {
+  constructor(public searchService: SearchService,
+              private router: Router) {
     this.type = "resultado";
   }
 
@@ -36,6 +38,10 @@ export class SearchComponent implements OnInit {
 
   segmentChanged(event){
     console.log(event);
+  }
+
+  public irA(p: string): void {
+    this.router.navigate([p]);
   }
 
   getR(){

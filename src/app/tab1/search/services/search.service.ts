@@ -58,6 +58,18 @@ export class SearchService {
       
   }
 
+  getDetalle(id: number){
+    return new Promise((resolve, reject) => {
+      this.http.get('assets/search_detalle.json')
+        .subscribe(data => {
+            resolve(data);
+        }, error => {
+          console.log('Error al obtener los datos recomendados: ' + error);
+          reject(error);
+        });
+    })
+  }
+
   getResult(){
     if(this.dataLists != null){
       return this.dataLists.data.results;

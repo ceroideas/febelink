@@ -234,7 +234,14 @@
     "pages": {
       "opinions": "Opiniones",
       "wallet": "Mi Wallet",
-      "subscriptions": "Suscripciones"
+      "subscriptions": "Suscripciones",
+      "detalle": {
+        "servicio": "Servicio",
+        "valoracion": "valoraciones",
+        "cantidad": "Cantidad",
+        "comprar": "Comprar ahora",
+        "add": "Añadir al carrito"
+      }
     },
     "labels": {
       "currentPlan": "Plan actual"
