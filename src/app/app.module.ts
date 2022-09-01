@@ -51,6 +51,7 @@ import { PipesModule } from './pipes/pipes.module';
 
 // Cordova File
 import { File } from '@ionic-native/file/ngx';
+import { SharedModule } from './shared/shared.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -88,6 +89,7 @@ const config: SocketIoConfig = {
         }),
         QuillModule.forRoot(),
         PipesModule,
+        SharedModule,
     ],
     exports: [PipesModule],
     providers: [

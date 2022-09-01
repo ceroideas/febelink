@@ -47,7 +47,6 @@ export class RegistroPage implements OnInit {
       name: ['', Validators.required],
       sector: [''],
       sub_sector: [''],
-      confirmPassword: ['', Validators.required],
       privacyConditions: [null, Validators.requiredTrue],
     });
 
@@ -62,10 +61,6 @@ export class RegistroPage implements OnInit {
   hideShowPassword() {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
-  }
-  hideShowPassword2() {
-    this.passwordType2 = this.passwordType2 === 'text' ? 'password' : 'text';
-    this.passwordIcon2 = this.passwordIcon2 === 'eye-off' ? 'eye' : 'eye-off';
   }
 
   /**
@@ -126,7 +121,7 @@ export class RegistroPage implements OnInit {
       const registrationPayload = {
         email: this.form.get('email').value,
         password: this.form.get('password').value,
-        password_confirmation: this.form.get('confirmPassword').value,
+        password_confirmation: this.form.get('password').value,
         nick: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
