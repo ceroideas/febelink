@@ -29,8 +29,8 @@ ion-slides{
 
 .item_dropdown{
     border-bottom: 1px solid #E5E7EB; 
-    margin-left: 1em; 
-    margin-right: 1em;
+    margin-left: 0em; 
+    margin-right: 0em;
 }
 
 .style_font_item{
@@ -152,7 +152,7 @@ ion-avatar{
 
 ion-grid{
     ion-segment{
-        margin-top: 1em;
+        margin-top: 3em;
         --ion-color-base:#1C64F2;
         font-size: 14px;
         ion-segment-button{
@@ -177,4 +177,8 @@ ion-slides {
 
 .list_search{
     margin-top: 1.1em;
+}
+
+.margin_12{
+    margin: 12px;
 }
