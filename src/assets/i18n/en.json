@@ -240,7 +240,8 @@
         "valoracion": "ratings",
         "cantidad": "Quantity",
         "comprar": "Buy now",
-        "add": "Add to cart"
+        "add": "Add to cart",
+        "readmore": " Read more"
       }
     },
     "labels": {

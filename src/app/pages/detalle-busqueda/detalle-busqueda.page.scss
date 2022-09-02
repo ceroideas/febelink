@@ -2,6 +2,7 @@
     width: 14.87px;
     height: 14.24px;
     display: inline-block;
+    margin-left: 8px;
 }
 
 .footer_detalle{
@@ -24,5 +25,56 @@ ion-footer{
             color: #1C64F2;
         }
     }
+}
+
+.icon_compartir{
+    width: 18px;
+    height: 18px;
+    margin-top: 17%;
+    margin-left: 1em;
+}
+
+.text_compartir{
+    font-size: 24px;
+    color: #111928;
+    font-weight: 700;
+}
+.parrafo_val{
+    margin-left: 5px;
+    margin-top: 0;
+}
+
+.parrafo_val_bis{
+    margin-left:0px;
+    margin-top: 0;
+}
+.row_cantidad{
+    margin-top: 3.5em;
+}
+.item_cantidad{
+    margin-left: -1em;
+}
+.item_cantidad_border{
+    border: 1px solid #D1D5DB; 
+    border-radius: 8px;
+}
+.label_cantidad{
+    font-weight: 600; 
+    font-size: 16px; 
+    margin-top: -0.3em; 
+    color:#111928;
+}
+.text_cantidad{
+    color: #111928; 
+    font-size:28px; 
+    margin-left: 2em;
+}
+
+.read_more{
+    color: #1C64F2;
+}
+
+.row_val{
+    margin-top: 1%;
 }
 

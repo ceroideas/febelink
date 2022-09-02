@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetalleBusquedaPageRoutingModule } from './detalle-busqueda-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { DetalleBusquedaPage } from './detalle-busqueda.page';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { DetalleBusquedaPage } from './detalle-busqueda.page';
     FormsModule,
     IonicModule,
     DetalleBusquedaPageRoutingModule, 
-    SharedModule
+    SharedModule,
+    SwiperModule
   ],
   declarations: [DetalleBusquedaPage]
 })

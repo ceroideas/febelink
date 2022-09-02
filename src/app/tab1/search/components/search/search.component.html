@@ -9,17 +9,18 @@
         debounce="500"
       ></ion-searchbar>
     </ion-row>
-    <ion-segment *ngIf="!searchService.visibleListas" color="segment" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="resultado" selected>
-            <ion-text class="ion-text-capitalize">({{getR()?.length}}) {{ 'tabs.tab1.search.resultado' | translate }}</ion-text>
-        </ion-segment-button>
-        <ion-segment-button value="oferta">
-            <ion-text class="ion-text-capitalize">({{getOf()?.length}}) {{ 'tabs.tab1.search.oferta' | translate }}</ion-text>
-        </ion-segment-button>
-        <ion-segment-button value="listado">
-            <ion-text class="ion-text-capitalize">({{getL()?.length}}) {{ 'tabs.tab1.search.listado' | translate }}</ion-text>
-        </ion-segment-button>
-    </ion-segment>
+    <div class="mobile">
+        <ion-segment *ngIf="!searchService.visibleListas" color="segment" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="resultado" selected>
+                <ion-text class="ion-text-capitalize">({{getR()?.length}}) {{ 'tabs.tab1.search.resultado' | translate }}</ion-text>
+            </ion-segment-button>
+            <ion-segment-button value="oferta">
+                <ion-text class="ion-text-capitalize">({{getOf()?.length}}) {{ 'tabs.tab1.search.oferta' | translate }}</ion-text>
+            </ion-segment-button>
+            <ion-segment-button value="listado">
+                <ion-text class="ion-text-capitalize">({{getL()?.length}}) {{ 'tabs.tab1.search.listado' | translate }}</ion-text>
+            </ion-segment-button>
+        </ion-segment>
         <div class="keys-dropdown" *ngIf="!searchService.visibleListas">
             <div [ngSwitch]="type">
                 <ion-list class="list_dropdown" *ngSwitchCase="'resultado'">
@@ -187,7 +188,7 @@
                                 </ion-col>
                             </ion-grid>
                         </ion-slide>
-                      </ion-slides>
+                        </ion-slides>
                 </ion-card-content>
             </ion-card>
             <ion-card class="ion-no-margin">
@@ -221,5 +222,7 @@
                 </ion-card-content>
             </ion-card>
         </ion-list>
+    </div>
+    
 </ion-grid>
   

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from 'src/app/tab1/search/services/search.service';
+import SwiperCore from 'swiper';
 
 @Component({
   selector: 'app-detalle-busqueda',
@@ -13,7 +14,11 @@ export class DetalleBusquedaPage implements OnInit {
   public data: any;
   
   slideOpts = {
-    initialSlide: 1
+    initialSlide: 1,
+    effect: 'cards',
+    cardsEffect: {
+      // ...
+    }
   };
 
   constructor(public searchService: SearchService) { }
@@ -26,5 +31,12 @@ export class DetalleBusquedaPage implements OnInit {
     }).catch(err => {
         console.log(err);
     }); 
+  }
+
+  onSwiper([swiper]) {
+    console.log(swiper);
+  }
+  onSlideChange() {
+    console.log('slide change');
   }
 }
