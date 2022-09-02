@@ -5,3 +5,27 @@
 .margin-bottom {
     margin-bottom: 3em;
 }
+
+
+.padding-input-12 {
+  --padding-top: 12px;--inner-padding-top: 12px;--padding-end: 12px;--inner-padding-end: 12px;--padding-bottom: 12px;--inner-padding-bottom: 12px;--padding-start: 12px;--inner-padding-start: 12px;
+}
+.textarea-comment {
+  font-size:14px;font-weight:400;line-height:125%;background: #F9FAFB;border: 1px solid #D1D5DB;border-radius: 8px;--placeholder-opacity:0.52;height:42px;
+}
+.img-avatar-comment {
+    width: 32px;height: 32px;
+}
+.img-avatar-comment::part(image) {
+    border-radius:32px;
+  }
+
+.all-comments-main {
+    width:100%;display:table;margin-top:16px;
+}
+.all-comments-user {
+    display:table-cell;width:32px;vertical-align:middle;
+}
+.all-comments-input {
+    display:table-cell;padding-left:8px;vertical-align:middle;
+}

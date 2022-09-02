@@ -581,12 +581,12 @@
       "moreFundsButton": "Buy FLAU"
     },
     "posts": {
-      "see": "See Post",
+      "see": "See post",
       "react": "React",
       "reacts": {
-        "like": "Is Useful",
-        "disagreement": "Is Not Useful",
-        "love": "Love it",
+        "like": "Useful",
+        "disagreement": "Not useful",
+        "love": "Like it",
         "useful": "Useful"
       },
 

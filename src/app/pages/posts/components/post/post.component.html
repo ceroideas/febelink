@@ -1,8 +1,66 @@
+<div class="div-main-post">
+  <div class="table-100">
+    <app-user-item
+          class="no-padding"
+          [id]="iAdvise?.uid"
+          [user]="iAdvise"
+          [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
+          [OnClickShowProfile]="true"
+        ></app-user-item>
+    <div class="cell-dots-top">
+      <img src="assets/icon/svg/menu-dots.svg" (click)="options($event)" class="cell-dots-top-svg" />
+    </div>
+  </div>
+  <app-follower-button
+            [user]="postUser"
+            [transparent]="true"
+          ></app-follower-button>
+  <div class="content-post" [innerHTML]="iAdvise.content" class="post-content-main"></div>
+  <div class="post-content-topic">#{{ topic }}</div>
+  <ion-img
+        class="content-post-img"
+        [src]="iAdvise.media_url"
+        *ngIf="
+          isPostVisible &&
+          iAdvise.media_url &&
+          fileSvc.isImage(iAdvise.media_ext)
+        "
+      ></ion-img>
+  <div class="post-main-reactions">
+    <div class="post-main-reactions-left">
+      <span *ngIf="iAdvise.react_qant > 0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.react_qant > 0)">0 </span>
+      <span *ngIf="iAdvise.react_qant == 1">reacción</span><span *ngIf="iAdvise.react_qant != 1">reacciones</span>
+    </div>
+    <div class="post-main-reactions-right">
+      <span *ngIf="iAdvise.comments_qant > 0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant > 0)">0 </span>
+      <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+    </div>
+  </div>
+
+  <app-post-bottom-bar-component
+      *ngIf="isPostVisible"
+      [id]="id"
+      [post]="iAdvise"
+      [showSeePost]="showSeePost"
+    ></app-post-bottom-bar-component>
+
+
+  <app-comments-component
+  #comments
+  [post]="iAdvise"
+  [listComments]="listComments"
+  [isVisible]="areCommentsVisible"
+  (OnCommentsVisible)="isPostVisible = false"
+></app-comments-component>
+  
+</div>
+
+<!--
 <div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light post-box">
   <ion-grid class="box-bw-r1-lln marg-5 no-padding">
     <ion-row class="marg-s10 marg-e10" (click)="navigateToPost()">
       <ion-col [size]="!showFollow ? 10 : 8" class="no-padding">
-        <!-- Post Owner User -->
+        <!-- Post Owner User 
         <app-user-item
           class="no-padding"
           [id]="iAdvise?.uid"
@@ -13,7 +71,7 @@
       </ion-col>
 
       <ion-col [size]="!showFollow ? 2 : 4" class="no-padding">
-        <!-- Post Language -->
+        <!-- Post Language 
         <ion-row class="align-end" *ngIf="showLang">
           <app-lang-btn
             [langIdSelected]="iAdvise?.lang"
@@ -21,7 +79,7 @@
           ></app-lang-btn>
         </ion-row>
 
-        <!-- Options Menu -->
+        <!-- Options Menu 
         <ion-row class="align-end" *ngIf="showOpts">
           <ion-button
             icon-only
@@ -37,7 +95,7 @@
         </ion-row>
 
         <ion-row class="align-end">
-          <!-- If has Edited The Post -->
+          <!-- If has Edited The Post 
           <ion-label
             class="hint font-13"
             *ngIf="iAdvise.created_at != iAdvise.updated_at"
@@ -55,7 +113,7 @@
       </ion-col>
     </ion-row>
 
-    <!-- Topic -->
+    <!-- Topic 
     <ion-row
       class="marg-s10 marg-e10"
       *ngIf="iAdvise.topic"
@@ -97,7 +155,7 @@
         [class]="'summary ' + (!iAdvise?.subtitle ? '' : 'hint')"
         [innerHTML]="extractSummary()"
       ></ion-label>
-    </ion-row> -->
+    </ion-row> 
     <ion-row
       class="lines-2 marg-10 marg-t5 inline"
       *ngIf="iAdvise.summary || !showContent"
@@ -109,7 +167,7 @@
       ></ion-label>
     </ion-row>
 
-    <!-- Summary Referencing Post -->
+    <!-- Summary Referencing Post
     <ion-row
       class="marg-t10"
       *ngIf="iAdvise?.id_advise"
@@ -124,13 +182,13 @@
       ></app-post-summary-component>
     </ion-row>
 
-    <!-- Media-->
+    <!-- Media
     <ion-row
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
       (click)="navigateToPost()"
     >
-      <!-- Image -->
+      <!-- Image 
       <ion-img
         class="h-social-media marg-se media"
         [src]="iAdvise.media_url"
@@ -141,7 +199,7 @@
         "
       ></ion-img>
 
-      <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+      <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video 
       <video
         playsinline
         controls
@@ -162,7 +220,7 @@
       ></ngx-link-preview>
     </ion-row>
 
-    <!-- Comments -->
+    <!-- Comments 
     <ion-row
       class="marg-5 align-end comments"
       *ngIf="iAdvise.comments_qant > 0"
@@ -177,7 +235,7 @@
       ></em>
     </ion-row>
 
-    <!-- Content -->
+    <!-- Content
     <ion-row
       class="marg-10 content word-wrap"
       *ngIf="showContent && isPostVisible"
@@ -192,7 +250,7 @@
       [showSeePost]="showSeePost"
     ></app-post-bottom-bar-component>
 
-    <!-- Set Post Visible -->
+    <!-- Set Post Visible 
     <ion-row class="align-center" *ngIf="!isPostVisible">
       <em
         class="pointer font-12"
@@ -211,3 +269,4 @@
     (OnCommentsVisible)="isPostVisible = false"
   ></app-comments-component>
 </div>
+-->

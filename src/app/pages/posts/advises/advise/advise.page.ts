@@ -50,6 +50,10 @@ export class AdvisePage implements OnInit {
     this.adviseSvc.issue( id )
   }
 
+  backButton() {
+    this.router.navigate(['posts/oracles']);
+  }
+
   newOne() {
     this.router.navigate(['posts/oracle/create']);
   }
