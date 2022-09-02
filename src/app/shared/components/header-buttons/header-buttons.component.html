@@ -1,7 +1,7 @@
 <div class="header-buttons" [class]="currentTab == tabs.Search ? 'right' : ''">
-
   <ion-buttons>
     <!-- Token FLAU -->
+    <!--
     <ion-button
       *ngIf="perfil"
       class="btn-header bt-br"
@@ -21,7 +21,7 @@
         </ion-label>
       </div>
     </ion-button>
-
+    -->
     <div class="desktop">
       <!-- Search -->
       <ion-button
@@ -129,13 +129,14 @@
     >
     -->
     <!-- Notifications -->
+    <!--
     <ion-button *ngIf="perfil" (click)="irA('/menu/notificaciones')">
       <ion-icon name="notifications"></ion-icon>
       <ion-badge color="danger" slot="end" *ngIf="notifCount">{{
         notifCount
       }}</ion-badge>
     </ion-button>
-
+    -->
     <!-- Guide -->
     <!--
     <ion-button

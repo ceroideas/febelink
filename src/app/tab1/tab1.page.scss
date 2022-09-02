@@ -9,20 +9,6 @@ ion-header {
     }
   }
 
-  #logo {
-    width: 45%;
-    margin: 1em;
-    color: white;
-
-    @media (min-width: 768px) {
-      position: relative;
-      width: 45%;
-      max-width: 130px;
-      left: 0;
-      float: left;
-      margin-left: 20px;
-    }
-  }
   .register-button {
     background-color: #2dd36f;
     border-radius: 5px;
@@ -45,85 +31,26 @@ ion-content {
   }
 }
 
+.avatarmenu{
+  width: 36px;
+  height: 36px;  
+}
+
+.pos_menu{
+  z-index: -1;
+  display: flex;
+  margin-left: -13px;
+  width: 28px;
+  height: 20px;
+}
+
 ion-thumbnail {
   width: 75px;
   height: 75px;
 }
-
-.terms-text {
-  text-decoration: underline;
-}
-.terms-text:hover {
-  cursor: pointer;
+ 
+.header_buttons{
+  padding-left: 1em;
 }
 
-.content-filter-header {
-  background: white;
-  border-top: 1px solid #d0d0d0;
-}
 
-ion-item img {
-  margin: 10% auto 10% auto;
-  max-height: 60px;
-}
-
-.app-services,
-.app-whyUse,
-.downloads .section-header {
-  text-align: center;
-}
-
-.app-services .section-header,
-.app-whyUse .section-header,
-.downloads .section-header,
-.section-header * {
-  width: 100%;
-  margin: 1.5em 0;
-}
-
-.flexed-row {
-  display: flex;
-  align-items: baseline;
-}
-
-.flexed-row section {
-  flex: 1 1 0px;
-  min-width: 15em;
-}
-
-.app-whyUse img {
-  width: 5em;
-}
-
-.image-aligned {
-  vertical-align: middle;
-}
-
-ion-icon {
-  color: green;
-}
-
-.row-store {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5em;
-}
-
-.col-store {
-  text-align: center;
-}
-
-#google-button,
-#apple-button {
-  margin-top: 1.5em;
-  width: 15em;
-}
-
-#registro ion-icon {
-  color: white;
-}
-
-.pad-s5 {
-  padding-left: 5px; --padding-start: 5px;
-}

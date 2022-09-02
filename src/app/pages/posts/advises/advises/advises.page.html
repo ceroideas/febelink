@@ -1,17 +1,35 @@
 <!-- <ion-header class="ion-no-border"> -->
 
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar class="header_buttons" color="header">
     <ion-buttons buttons-start slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+      <ion-menu-button>
+          <ion-img class="avatarmenu"
+            id="menuImg"
+            [src]="
+              currentUser?.logo !== null
+                ? currentUser?.logo
+                : 'https://api.febelink.com/storage/users/default.png'
+            "
+            (error)="onImgError($event)"
+            alt="Menu profile picture">
+        </ion-img>
+      </ion-menu-button>  
+      <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+      <ion-img *ngIf="currentUser" class="ion-padding chat" size="small" src="assets/icon/svg/chat_header.svg"></ion-img>
+  </ion-buttons>
 
-    <app-header-buttons [perfil]="curUser" currentTab="6"></app-header-buttons>
-  </ion-toolbar>
-  </ion-header>
   <!--
+=======
+    <!-- Header Buttoms -->
+    <app-header-buttons class="logo_margen" [perfil]="curUser" currentTab="6"></app-header-buttons>
+  </ion-toolbar>
+</ion-header>
+ <!--
+>>>>>>> 23c320deb7b55c3abcb1e8f22f8ab7fefa9a6298
   <ion-toolbar color="light">
     <ion-grid class="no-padding">
+     
       <ion-row>
         <ion-col size="9">
           <ion-row
@@ -39,8 +57,7 @@
             icon-only
             color="transparent"
             class="no-padding no-shadow"
-            (click)="showFilters = !showFilters"
-          >
+            (click)="showFilters = !showFilters">
             <ion-icon
               class="font-30"
               src="assets/icon/svg/filter.svg"
@@ -51,14 +68,88 @@
             icon-only
             color="primary"
             class="no-shadow no-padding wh-35 br-rad-30"
-            (click)="createPost()"
-          >
+            (click)="createPost()">
             <ion-icon class="font-30" src="assets/icon/svg/add.svg"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
+<<<<<<< HEAD
 
       
+=======
+-->
+<!--
+      <ion-row [style]="showFilters ? '' : 'display: none;'">
+        <ion-col
+          size="3"
+          size-md="3"
+          class="col-flexed margin-left no-padding center-v">
+          <ion-label> {{ 'common.labelTopic' | translate }} </ion-label>
+          <ionic-selectable
+            class="marginLeft"
+            #topic
+            item-content
+            [(ngModel)]="topicSelected"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="topics"
+            (onChange)="clear2search( topic.value )"
+          >
+          </ionic-selectable>
+        </ion-col>
+
+        <ion-col size="3" size-sm="3" class="no-padding center-v">
+          <ion-row class="pad-s20 pad-e20">
+            <ion-col
+              size="6"
+              class="no-margin no-padding center-v"
+              (click)="lang.selectLang( $event )">
+              {{ 'common.labelLang' | translate }}
+            </ion-col>
+            <ion-col size="6" class="no-margin no-padding tx-end">
+              <app-lang-btn
+                  #lang
+                  [changeAppLang]="false"
+                  [initNull]="true"
+                  (onLangSelected)="clear2search( searchBar.value )"
+              ></app-lang-btn>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="3" class="no-padding center-v">
+          <ion-row class="marg-tb-5 pad-s20 pad-e">
+            <ion-checkbox
+                #chkMyPosts
+                size="12"
+                size-sm="3"
+                class="no-padding"
+                [(ngModel)]="myPosts"
+                (ionChange)="clear2search()"
+            ></ion-checkbox>
+            <ion-label
+              class="center-v pointer marg-s"
+              (click)="chkMyPosts.checked = !chkMyPosts.checked">
+              {{ 'pages.posts.advises.my-posts' | translate }}
+            </ion-label>
+          </ion-row>
+        </ion-col>
+
+       
+        <ion-col
+          size="3"
+          size-md="3"
+          class="no-padding center-v"
+          *ngIf="!myPosts"
+        >
+          <app-user-item
+              #user
+              classImg="wh-30"
+              (onUserClick)="userClicked()"
+          ></app-user-item>
+        </ion-col>
+      </ion-row>
+    
     </ion-grid>
   </ion-toolbar>
 </ion-header>
