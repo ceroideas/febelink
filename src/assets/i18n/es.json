@@ -100,7 +100,6 @@
 
     "legal": {
       "privacyPolicy": "Política de Privacidad",
-      "termsNconds": "Condiciones y Términos",
       "condsNterms": "Términos y Condiciones",
       "warning": "Aviso Legal",
       "lastUpdate": "Última actualización",
@@ -242,7 +241,7 @@
       "cambioAPremium": "Cambiar a cuenta profesional",
       "idioma": "Idioma",
       "ayuda": "Ayudar",
-      "salir": "Salir"
+      "salir": "Cerrar sesión"
     },
     "labels": {
       "currentPlan": "Plan actual",
