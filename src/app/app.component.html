@@ -4,12 +4,12 @@
         <ion-router-outlet id="main"></ion-router-outlet>
     -->
   <ion-menu
-    *ngIf="authenticationService.isAuthenticated()"
+    class="pos_menu"
     contentId="main-content"
     type="overlay"
     (ionWillOpen)="onMenuOpen()"
-    side="start"
-    *ngIf="authenticationService.isAuthenticated()">
+    *ngIf="authenticationService.isAuthenticated()"
+    side="start">
     <ion-avatar slot="start">
         <ion-img class="ion-margin avatarmenu"
           id="menuImg"
@@ -23,44 +23,8 @@
         </ion-img>
     </ion-avatar>
     <ion-content id="menu-list">
-      <ion-list class="ion-no-padding" id="inbox-list">
-        <ion-menu-toggle
-          auto-hide="false"
-          *ngFor="let p of appPages; let i = index">
-          <ion-item
-            *ngIf="p.key !== 'subscriptions'"
-            routerDirection="root"
-            [routerLink]="[p.url]"
-            lines="none"
-            detail="false"
-            routerLinkActive="selected">
-            <div tabindex="0"></div>
-            <ion-icon
-              slot="start"
-              [ios]="p.icon + '-outline'"
-              [md]="p.icon + '-sharp'"
-            ></ion-icon>
-            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
-          </ion-item>
-          <ion-item
-            *ngIf="p.key === 'subscriptions'"
-            lines="none"
-            detail="false"
-            routerLinkActive="selected"
-            (click)="showSubscriptionsModal()"
-          >
-            <div tabindex="0"></div>
-            <ion-icon
-              slot="start"
-              [ios]="p.icon + '-outline'"
-              [md]="p.icon + '-sharp'"
-            ></ion-icon>
-            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-      <ion-toolbar>
-        <ion-item lines="none">
+      <ion-toolbar color="header">
+        <ion-item class="item_menu_margen" lines="none">
           <ion-avatar class="pos_avatar" slot="start">
             <ion-img class="avatarmenu"
               id="menuImg"
@@ -73,9 +37,10 @@
               alt="Menu profile picture">
             </ion-img>
           </ion-avatar>
+          <ion-img class="dot_notif_avatar" src="assets/icon/svg/dot_notif.svg"></ion-img>
           <ion-label class="ion-padding label_avatar">
             <ion-label class="menu-username">{{ currentUser?.nick ? currentUser?.nick : 'Juan Garrido' }}</ion-label>
-            <ion-label class="menu-editar" (click)="goTo('menu/perfil')">{{ 'menu.labels.editarPerfil' | translate }}</ion-label>   
+            <ion-label class="menu-editar pointer" (click)="goTo('menu/perfil')">{{ 'menu.labels.editarPerfil' | translate }}</ion-label>   
           </ion-label>
           <ion-img size="small" src="assets/icon/svg/menu_cerrar.svg" alt="Cerrar menú"></ion-img>
         </ion-item>
@@ -138,83 +103,55 @@
             <ion-label class="ion-padding">{{ 'menu.pages.historialCompras' | translate }}</ion-label>
           </ion-router-link>
         </ion-item>
-        <!-- Section options. -->
-        <ng-container *ngIf="showOpinions">
-          <ion-card>
-            <ion-item lines="none">
-              <div tabindex="0"></div>
-              <ion-label color="sandybrown" class="ion-text-wrap">
-                <p *ngFor="let opinion of userFeedback">
-                  {{ opinion.count }} {{ opinion.type }}
-                </p>
-              </ion-label>
-            </ion-item>
-          </ion-card>
-        </ng-container>
+        <ion-item class="item_menu_margen" color="item" lines="none">
+          <div tabindex="0"></div>
+          <ion-img size="small" src="assets/icon/svg/menu_publicacion.svg"></ion-img>
+          <ion-router-link class="ion-text-wrap color_ppal" href="#">
+            <ion-label class="ion-padding">{{ 'menu.pages.misPublicaciones' | translate }}</ion-label>
+          </ion-router-link>
+        </ion-item>
       </ion-toolbar>
-    </ion-header>
-    <ion-content id="menu-list">
-      <ion-list id="inbox-list">
-        <ion-menu-toggle
-          auto-hide="false"
-          *ngFor="let p of appPages; let i = index"
-        >
-          <ion-item
-            *ngIf="p.key !== 'subscriptions'"
-            routerDirection="root"
-            [routerLink]="[p.url]"
-            lines="none"
-            detail="false"
-            routerLinkActive="selected"
-          >
-            <div tabindex="0"></div>
-            <ion-icon
-              slot="start"
-              [ios]="p.icon + '-outline'"
-              [md]="p.icon + '-sharp'"
-            ></ion-icon>
-            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
-          </ion-item>
-          <ion-item
-            *ngIf="p.key === 'subscriptions'"
-            lines="none"
-            detail="false"
-            routerLinkActive="selected"
-            (click)="showSubscriptionsModal()"
-          >
-            <div tabindex="0"></div>
-            <ion-icon
-              slot="start"
-              [ios]="p.icon + '-outline'"
-              [md]="p.icon + '-sharp'"
-            ></ion-icon>
-            <ion-label>{{ 'menu.pages.' + p.key | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-    </ion-content>
-    <ion-footer>
-      <ion-toolbar>
-        <ion-item color="primary">
-          <ion-label>
-            <p style="margin-bottom: 0px">© {{ currentYear }} Febelink</p>
-            <p style="margin-top: 5px">soporte@febelink.com</p>
-
-            <p
-              class="pointer"
-              style="margin-top: 5px"
-              (click)="openPrivacyPolicy()"
-            >
+      <ion-item routerLink="#" class="item_menu_margen pointer" color="item" lines="none">
+        <div tabindex="0"></div>
+        <ion-img size="small" src="assets/icon/svg/menu_premium.svg"></ion-img>
+        <ion-label class="ion-padding">{{ 'menu.pages.cambioAPremium' | translate }}</ion-label>
+      </ion-item>
+      <ion-item-divider class="desktop_no_visible"></ion-item-divider>
+      <ion-item class="menu item_menu_margen" color="item" lines="none">
+        <div tabindex="0"></div>
+        <ion-img size="small" src="assets/icon/svg/menu_idioma.svg"></ion-img>
+        <ion-router-link class="ion-text-wrap color_ppal" href="#">
+          <ion-label class="ion-padding">{{ 'menu.pages.idioma' | translate }}</ion-label>
+        </ion-router-link>
+      </ion-item>
+      <ion-item class="item_menu_margen" color="item" lines="none">
+        <div tabindex="0"></div>
+        <ion-img size="small" src="assets/icon/svg/menu_ayudar.svg"></ion-img>
+        <ion-router-link class="ion-text-wrap color_ppal" href="#">
+          <ion-label class="ion-padding">{{ 'menu.pages.ayuda' | translate }}</ion-label>
+        </ion-router-link>
+      </ion-item>
+      <ion-item (click)="logout()" class="item_menu_margen pointer" color="item" lines="none">
+        <div tabindex="0"></div>
+        <ion-img size="small" src="assets/icon/svg/menu_salida.svg"></ion-img>
+        <ion-router-link class="ion-text-wrap color_ppal" href="#">
+          <ion-label class="ion-padding">{{ 'menu.pages.salir' | translate }}</ion-label>
+        </ion-router-link>
+      </ion-item>
+      <ion-item-divider class="legal desktop_no_visible"></ion-item-divider>   
+        <ion-item class="desktop_no_visible" color="menuayuda" lines="none">
+          <ion-router-link class="ion-text-wrap color_ayuda" (click)="openUseConditions()">
+            <ion-label class="ion-no-padding ion-text-wrap">
+              {{ 'common.legal.condsNterms' | translate }}
+            </ion-label>
+          </ion-router-link>
+        </ion-item>
+        <ion-item class="desktop_no_visible" color="menuayuda" lines="none">
+          <ion-router-link class="ion-text-wrap color_ayuda" (click)="openPrivacyPolicy()">
+            <ion-label class="ion-no-padding ion-text-wrap">
               {{ 'common.legal.privacyPolicy' | translate }}
-            </p>
-            <p
-              class="pointer"
-              style="margin-top: 5px"
-              (click)="openUseConditions()"
-            >
-              {{ 'common.legal.termsNconds' | translate }}
-            </p>
-          </ion-label>
+            </ion-label>
+          </ion-router-link>
         </ion-item>
     </ion-content>
   </ion-menu>
