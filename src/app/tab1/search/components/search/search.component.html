@@ -12,19 +12,19 @@
     <div class="mobile">
         <ion-segment *ngIf="!searchService.visibleListas" color="segment" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
             <ion-segment-button value="resultado" selected>
-                <ion-text class="ion-text-capitalize">({{getR()?.length}}) {{ 'tabs.tab1.search.resultado' | translate }}</ion-text>
+                <ion-label class="ion-text-capitalize">({{getR()?.length}}) {{ 'tabs.tab1.search.resultado' | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="oferta">
-                <ion-text class="ion-text-capitalize">({{getOf()?.length}}) {{ 'tabs.tab1.search.oferta' | translate }}</ion-text>
+                <ion-label class="ion-text-capitalize">({{getOf()?.length}}) {{ 'tabs.tab1.search.oferta' | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="listado">
-                <ion-text class="ion-text-capitalize">({{getL()?.length}}) {{ 'tabs.tab1.search.listado' | translate }}</ion-text>
+                <ion-label class="ion-text-capitalize">({{getL()?.length}}) {{ 'tabs.tab1.search.listado' | translate }}</ion-label>
             </ion-segment-button>
         </ion-segment>
         <div class="keys-dropdown" *ngIf="!searchService.visibleListas">
             <div [ngSwitch]="type">
                 <ion-list class="list_dropdown" *ngSwitchCase="'resultado'">
-                    <ion-card *ngIf="getR().length > 0" class="ion-no-margin">
+                    <ion-card *ngIf="getR()?.length > 0" class="ion-no-margin">
                         <ion-card-content class="ion-no-padding">
                             <ion-item (click)="irA('/detalle/1')" class="item_dropdown" lines="none" *ngFor="let data of getR()">
                                 <ion-avatar class="avatar_dropdown" slot="start">
@@ -178,12 +178,12 @@
                                 </ion-row>
                                 <ion-row size="12">
                                     <ion-col size="12">
-                                        <ion-text class="list_label_14">{{data?.subtitulo}}</ion-text>
+                                        <ion-label class="list_label_14">{{data?.subtitulo}}</ion-label>
                                     </ion-col>   
                                 </ion-row>
                                 <ion-col size="12">
                                     <ion-row size="12" class="aux_padding_bottom">
-                                        <iont-text class="list_label_14_claro">{{data?.texto}}</iont-text>
+                                        <ion-label class="list_label_14_claro">{{data?.texto}}</ion-label>
                                     </ion-row>
                                 </ion-col>
                             </ion-grid>
@@ -223,6 +223,96 @@
             </ion-card>
         </ion-list>
     </div>
-    
+    <div class="desktop">
+        <ion-row style="margin-top: 5em; margin-left: 10em; margin-right: 10em; display: flex; justify-content: center;" size="12">
+            <ion-col size="4">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>
+                <ion-list style="margin-right: 5em;" *ngIf="data">
+                    <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.recomendations">
+                        <ion-card-content class="ion-no-padding">
+                            <ion-item lines="none" class="item_dropdown">
+                                <ion-avatar class="avatar_dropdown" slot="start">
+                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                </ion-avatar>
+                                <ion-label class="content_item">
+                                    <p>
+                                        <span class="font_texto_18">{{data?.texto}}</span>
+                                    </p>
+                                    <p>
+                                        <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                    </p>
+                                    <p class="ion-no-margin"> 
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                                    </p>    
+                                    <span class="font_texto_14">{{data?.nombre}}</span>
+                                </ion-label>
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-list>
+            </ion-col>
+            <ion-col size="4">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label>
+                <ion-list style="margin-right: 5em;" *ngIf="data">
+                    <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.offersTop">
+                        <ion-card-content class="ion-no-padding">
+                            <ion-item lines="none" class="item_dropdown">
+                                <ion-avatar class="avatar_dropdown" slot="start">
+                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                </ion-avatar>
+                                <ion-label class="content_item">
+                                    <p>
+                                        <span class="font_texto_18">{{data?.titulo}}</span>
+                                    </p>
+                                    <p>
+                                        <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                    </p>
+                                    <p>
+                                        <span class="font_texto_14">{{data?.subtitulo}}</span>
+                                    </p>
+                                </ion-label>
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-list>
+            </ion-col>
+            <ion-col size="4">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label>
+                <ion-list style="margin-right: 5em;" *ngIf="data">
+                    <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.offersTop">
+                        <ion-card-content class="ion-no-padding">
+                            <ion-item lines="none" class="item_dropdown">
+                                <ion-avatar class="avatar_dropdown" slot="start">
+                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                </ion-avatar>
+                                <ion-label class="content_item">
+                                    <p>
+                                        <span class="font_texto_18">{{data?.texto}}</span>
+                                    </p>
+                                    <p>
+                                        <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                    </p>
+                                    <p class="ion-no-margin"> 
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                                    </p>    
+                                    <span class="font_texto_14">{{data?.nombre}}</span>
+                                </ion-label>
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </div>
 </ion-grid>
   

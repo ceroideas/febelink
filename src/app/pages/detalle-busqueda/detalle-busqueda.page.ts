@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from 'src/app/tab1/search/services/search.service';
-import SwiperCore from 'swiper';
+import SwiperCore, {Pagination, Thumbs} from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([Thumbs, Pagination]);
 
 @Component({
   selector: 'app-detalle-busqueda',
@@ -12,6 +15,7 @@ export class DetalleBusquedaPage implements OnInit {
 
   public detalle: any;
   public data: any;
+  thumbsSwiper: any;
   
   slideOpts = {
     initialSlide: 1,
@@ -35,7 +39,7 @@ export class DetalleBusquedaPage implements OnInit {
 
   onSwiper([swiper]) {
     console.log(swiper);
-  }
+  } 
   onSlideChange() {
     console.log('slide change');
   }

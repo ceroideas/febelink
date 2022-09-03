@@ -71,35 +71,50 @@
           "imagen": "bg1.jpg",
           "titulo": "Fisioterapia Nicolás",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 1"
+          "texto": "texto 1",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "2",
           "imagen": "bg1.jpg",
           "titulo": "Fisioterapia Nicolás",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 2"
+          "texto": "texto 2",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "3",
           "imagen": "bg1.jpg",
           "titulo": "Fisioterapia Nicolás",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 3"
+          "texto": "texto 3",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "4",
           "imagen": "bg1.jpg",
           "titulo": "Fisioterapia Nicolás",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 4"
+          "texto": "texto 4",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "5",
           "imagen": "bg1.jpg",
           "titulo": "Fisioterapia Nicolás",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 5"
+          "texto": "texto 5",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         }
       ],
       "recomendationsSearch":[
@@ -108,35 +123,50 @@
           "imagen": "bg1.jpg",
           "titulo": "Recomendacion búsqueda 1",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 1"
+          "texto": "texto 1",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "2",
           "imagen": "bg1.jpg",
           "titulo": "Recomendacion búsqueda 2",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 2"
+          "texto": "texto 2",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "3",
           "imagen": "bg1.jpg",
           "titulo": "Recomendacion búsqueda 3",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 3"
+          "texto": "texto 3",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "4",
           "imagen": "bg1.jpg",
           "titulo": "Recomendacion búsqueda 4",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 4"
+          "texto": "texto 4",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         },
         {
           "id": "5",
           "imagen": "bg1.jpg",
           "titulo": "Recomendacion búsqueda 5",
           "subtitulo": "Masaje drenante",
-          "texto": "texto 5"
+          "texto": "texto 5",
+          "mediaVal": 4.5,
+          "numVal": 21,
+          "precio": 35
         }
       ]
     }

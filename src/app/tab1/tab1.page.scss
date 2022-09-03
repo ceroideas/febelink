@@ -30,6 +30,13 @@ ion-header {
   }
 }
 
+@media (min-width: 768px) {
+  .altura_imagen_ppl{
+    height: 333px;
+    width: 100%;
+  }
+}
+
 .app_search{
   width: 100%;
 }
@@ -144,4 +151,9 @@ ion-icon {
 
 .pad-s5 {
   padding-left: 5px; --padding-start: 5px;
+}
+
+.altura_imagen_ppl{
+  height: 360px;
+  width: 100%;
 }

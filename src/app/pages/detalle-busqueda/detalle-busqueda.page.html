@@ -36,20 +36,36 @@
       </ion-row>
     <div class="ion-margin parrafo_val">
       <swiper
-        [slidesPerView]="1"
-        [spaceBetween]="50"
-        (swiper)="onSwiper($event)"
-        (slideChange)="onSlideChange()">
+      [spaceBetween]="10"
+      [navigation]="true"
+      [thumbs]="{ swiper: thumbsSwiper }">
         <ng-template swiperSlide>
-          <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
+          <ion-img src="./assets/imgs/bg0.jpg"></ion-img>
         </ng-template>
         <ng-template swiperSlide>
           <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
         </ng-template>
         <ng-template swiperSlide>
-          <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
+          <ion-img src="./assets/imgs/bg2.jpg"></ion-img>
         </ng-template>
       </swiper>
+      <swiper
+      (swiper)="thumbsSwiper = $event"
+      [spaceBetween]="10"
+      [slidesPerView]="4"
+      [freeMode]="true"
+      [watchSlidesProgress]="true"
+      class="mySwiper">
+        <ng-template swiperSlide>
+          <img src="./assets/imgs/bg0.jpg"/>
+        </ng-template>
+        <ng-template swiperSlide>
+          <img src="./assets/imgs/bg1.jpg"/>
+        </ng-template>
+        <ng-template swiperSlide>
+          <img src="./assets/imgs/bg2.jpg"/>
+        </ng-template>
+    </swiper>
     </div> 
       <ion-row size="12" class="ion-margin parrafo_val">
         {{detalle.detalle?.descripcion}} <ion-text class="read_more">{{ 'menu.pages.detalle.readmore' | translate }}</ion-text>
@@ -71,7 +87,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-row class="row_cantidad">
-            <iont-text class="text_cantidad">{{detalle.detalle?.precio}},00€</iont-text>
+            <ion-label class="text_cantidad">{{detalle.detalle?.precio}},00€</ion-label>
           </ion-row>
         </ion-col>
       </ion-row>
