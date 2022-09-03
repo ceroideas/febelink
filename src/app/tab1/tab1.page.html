@@ -13,8 +13,8 @@
               alt="Menu profile picture">
           </ion-img>
         </ion-menu-button>  
-        <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
-        <ion-img *ngIf="currentUser" class="ion-padding" size="small" src="assets/icon/svg/chat_header.svg"></ion-img>
+        <ion-img *ngIf="perfil" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+        <ion-img *ngIf="perfil" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
     </ion-buttons>
     <app-header-buttons [perfil]="perfil" currentTab="1"></app-header-buttons>
     <ion-buttons buttons-start slot="end">
