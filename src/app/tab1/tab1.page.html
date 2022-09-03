@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar class="header_buttons" color="header">
     <ion-buttons buttons-start slot="start">
-        <ion-menu-button>
+        <ion-menu-button class="desktop_menu_avatar">
             <ion-img class="avatarmenu"
               id="menuImg"
               [src]="
@@ -13,10 +13,18 @@
               alt="Menu profile picture">
           </ion-img>
         </ion-menu-button>  
-        <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
-        <ion-img *ngIf="currentUser" class="ion-padding" size="small" src="assets/icon/svg/chat_header.svg"></ion-img>
+        <ion-img *ngIf="perfil" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+        <ion-img *ngIf="perfil" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
     </ion-buttons>
-    <app-header-buttons [perfil]="perfil" currentTab="1"></app-header-buttons>
+    <app-header-buttons class="buttons_flex" [perfil]="perfil" currentTab="1"></app-header-buttons>
+    <ion-buttons buttons-start slot="end">
+      <ion-img style="margin-left:5em;"
+      tappable 
+      src="assets/imgs/logo.png" 
+      alt="Febelink logo" 
+      (click)="irA('/' + homePage)"
+      class="ion-margin logo desktop"></ion-img> 
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
