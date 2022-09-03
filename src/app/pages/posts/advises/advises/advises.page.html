@@ -1,17 +1,35 @@
-<!-- <ion-header class="ion-no-border"> -->
 <ion-header>
-  <ion-toolbar color="light">
-    <!-- Hamburger Button -->
+  <ion-toolbar class="header_buttons" color="header">
     <ion-buttons buttons-start slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button class="desktop_menu_avatar">
+          <ion-img class="avatarmenu"
+            id="menuImg"
+            [src]="
+              currentUser?.logo !== null
+                ? currentUser?.logo
+                : 'https://api.febelink.com/storage/users/default.png'
+            "
+            (error)="onImgError($event)"
+            alt="Menu profile picture">
+        </ion-img>
+      </ion-menu-button>  
+      <ion-img *ngIf="curUser" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+      <ion-img *ngIf="curUser" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
+    </ion-buttons>  
+    <app-header-buttons class="buttons_flex" [perfil]="curUser" currentTab="6"></app-header-buttons>
+    <ion-buttons buttons-start slot="end">
+      <ion-img style="margin-left:5em;"
+      tappable 
+      src="assets/imgs/logo.png" 
+      alt="Febelink logo" 
+      (click)="irA('/' + homePage)"
+      class="ion-margin logo desktop"></ion-img> 
     </ion-buttons>
-
-    <!-- Header Buttoms -->
-    <app-header-buttons [perfil]="curUser" currentTab="6"></app-header-buttons>
   </ion-toolbar>
-
+<!--
   <ion-toolbar color="light">
     <ion-grid class="no-padding">
+     
       <ion-row>
         <ion-col size="9">
           <ion-row
@@ -33,41 +51,31 @@
             ></ion-input>
           </ion-row>
         </ion-col>
-
         <ion-col size="3">
-          <!-- Icon - Filter -->
           <ion-button
             icon-only
             color="transparent"
             class="no-padding no-shadow"
-            (click)="showFilters = !showFilters"
-          >
+            (click)="showFilters = !showFilters">
             <ion-icon
               class="font-30"
               src="assets/icon/svg/filter.svg"
             ></ion-icon>
           </ion-button>
-
-          <!-- Icon - Add -->
           <ion-button
             icon-only
             color="primary"
             class="no-shadow no-padding wh-35 br-rad-30"
-            (click)="createPost()"
-          >
+            (click)="createPost()">
             <ion-icon class="font-30" src="assets/icon/svg/add.svg"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
-
-      <!-- Filters -->
       <ion-row [style]="showFilters ? '' : 'display: none;'">
-        <!-- Topic -->
         <ion-col
           size="3"
           size-md="3"
-          class="col-flexed margin-left no-padding center-v"
-        >
+          class="col-flexed margin-left no-padding center-v">
           <ion-label> {{ 'common.labelTopic' | translate }} </ion-label>
           <ionic-selectable
             class="marginLeft"
@@ -77,19 +85,16 @@
             itemValueField="id"
             itemTextField="name"
             [items]="topics"
-            (onChange)="clear2search( topic.value )"
-          >
+            (onChange)="clear2search( topic.value )">
           </ionic-selectable>
         </ion-col>
 
-        <!-- Language -->
         <ion-col size="3" size-sm="3" class="no-padding center-v">
           <ion-row class="pad-s20 pad-e20">
             <ion-col
               size="6"
               class="no-margin no-padding center-v"
-              (click)="lang.selectLang( $event )"
-            >
+              (click)="lang.selectLang( $event )">
               {{ 'common.labelLang' | translate }}
             </ion-col>
             <ion-col size="6" class="no-margin no-padding tx-end">
@@ -103,7 +108,6 @@
           </ion-row>
         </ion-col>
 
-        <!-- My Posts -->
         <ion-col size="3" class="no-padding center-v">
           <ion-row class="marg-tb-5 pad-s20 pad-e">
             <ion-checkbox
@@ -116,20 +120,17 @@
             ></ion-checkbox>
             <ion-label
               class="center-v pointer marg-s"
-              (click)="chkMyPosts.checked = !chkMyPosts.checked"
-            >
+              (click)="chkMyPosts.checked = !chkMyPosts.checked">
               {{ 'pages.posts.advises.my-posts' | translate }}
             </ion-label>
           </ion-row>
         </ion-col>
 
-        <!-- User -->
         <ion-col
           size="3"
           size-md="3"
           class="no-padding center-v"
-          *ngIf="!myPosts"
-        >
+          *ngIf="!myPosts">
           <app-user-item
               #user
               classImg="wh-30"
@@ -137,8 +138,11 @@
           ></app-user-item>
         </ion-col>
       </ion-row>
+    
     </ion-grid>
+
   </ion-toolbar>
+-->
 </ion-header>
 
 <ion-content class="padding-top pad-se">
@@ -184,3 +188,4 @@
     ></ion-label>
   </ion-item>
 </ion-content>
+<app-footer></app-footer>

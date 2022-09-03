@@ -1,6 +1,20 @@
-h1 {
-    text-align: center;
-}
+@media (min-width: 768px){
+    .logo{
+        width: 120px;
+    }
+  }
+  
+  .logo{
+    object-fit: scale-down;
+    margin-left: 10px;
+    width: 120px;
+  }
+  
+  .dot_notif_avatar{
+    margin-left: -31px;
+    z-index: 10;
+    margin-top: -29px;
+  }
 
 .col-flexed {
     padding-left: 1em;
@@ -18,4 +32,61 @@ h1 {
 
 .marginLeft {
     margin-left: 1em;
+}
+
+.menu_header{
+  margin-left:1em;
+}
+.desktop_menu_avatar, .avatarmenu{
+    width: 46px;
+    height: 46px;  
+  }
+  
+  .pos_menu{
+    z-index: -1;
+    display: flex;
+    margin-left: -13px;
+    width: 28px;
+    height: 20px;
+  }
+  
+  .chat{
+    margin-left: 10px;
+  }
+
+ion-header {
+    text-align: center;
+    background: var(--ion-color-light);
+    ion-toolbar {
+        @media (min-width: 768px) {
+        width: 100%;
+        padding-left: 3%;
+        padding-right: 2.7%;
+
+        .buttons_flex{
+            display: flex;
+            margin-left: 1em;
+            width: 100%;
+        }
+
+        .desktop_menu_avatar, .avatarmenu{
+            width:56px;
+            height: 56px;
+        }
+        }
+    }
+
+    ion-header {
+        ion-toolbar {
+        @media (min-width: 820px) {
+          width: 100%;
+          padding-left: 3em;
+          padding-right: 3em;
+        }
+      }
+    }
+}
+
+.header_buttons{
+  padding-left: 1em;
 }

@@ -219,6 +219,36 @@
   --ion-color-currency-usd: #6CDE07;
   /** Bitcoin **/
   --ion-color-currency-btc: #F7931A;
+  /** Menu principal **/
+  --ion-color-menu: #111928;
+  --ion-color-menu-ayuda: #6B7280;
+  --ion-color-toolbar: #FFFFFF;
+}
+
+.ion-color-header{
+  --ion-color-base: var(--ion-color-linkedin-contrast);
+  --border-style:2px solid;
+  --border-color: #EDEDED;
+  color:var(--ion-color-menu);
+}
+
+.ion-color-menu{
+  color: var(--ion-color-menu);
+  --ion-color-base: var(--ion-color-linkedin-contrast);
+}
+
+.ion-color-menuayuda{
+  color: var(--ion-color-menu-ayuda);
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: -14px;
+}
+
+.ion-color-item{
+  color:var(--ion-color-menu);
+  font-weight: 600;
+  font-family: 'Inter';
+  font-style: normal;
 }
 
 .ion-color-texto-bold-footer{

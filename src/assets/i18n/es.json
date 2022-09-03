@@ -100,7 +100,6 @@
 
     "legal": {
       "privacyPolicy": "Política de Privacidad",
-      "termsNconds": "Condiciones y Términos",
       "condsNterms": "Términos y Condiciones",
       "warning": "Aviso Legal",
       "lastUpdate": "Última actualización",
@@ -222,8 +221,9 @@
       "searchEngine": "Buscador",
       "recommend": "Recomendar",
       "advises": "Oráculo",
-      "inicio": "Inicio",
-      "carrito": "Cesta",
+      "inicio": "Home",
+      "carro": "Carrito",
+      "carrito": "Carrito",
       "chat": "Chat",
       "profile": "Perfil",
       "login": "Iniciar sesión",
@@ -235,6 +235,14 @@
       "opinions": "Opiniones",
       "wallet": "Mi Wallet",
       "subscriptions": "Suscripciones",
+      "datosPersonales": "Datos personales",
+      "historialCompras": "Historial de compras",
+      "misPublicaciones": "Mis publicaciones",
+      "cambioAPremium": "Cambiar a cuenta profesional",
+      "idioma": "Idioma",
+      "ayuda": "Ayudar",
+      "salir": "Cerrar sesión"
+    },
       "detalle": {
         "servicio": "Servicio",
         "valoracion": "valoraciones",
@@ -242,10 +250,10 @@
         "comprar": "Comprar ahora",
         "add": "Añadir al carrito",
         "readmore": " Leer más"
-      }
     },
     "labels": {
-      "currentPlan": "Plan actual"
+      "currentPlan": "Plan actual",
+      "editarPerfil": "Editar perfil"
     },
     "footer":{
       "company":"EMPRESA",

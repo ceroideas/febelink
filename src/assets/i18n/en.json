@@ -100,7 +100,6 @@
 
     "legal": {
       "privacyPolicy": "Privacy Policy",
-      "termsNconds": "Terms and Conditions",
       "condsNterms": "Conditions and Terms",
       "warning": "Legal Warning",
       "lastUpdate": "Last update",
@@ -224,6 +223,7 @@
       "advises": "Oracles",
       "inicio": "Home",
       "carrito": "Cart",
+      "carro": "Cart",
       "chat": "Chat",
       "profile": "Profile",
       "login": "Login",
@@ -235,6 +235,13 @@
       "opinions": "Opinions",
       "wallet": "My Wallet",
       "subscriptions": "Subscriptions",
+      "datosPersonales": "Personal information",
+      "historialCompras": "Shopping history",
+      "misPublicaciones": "My posts",
+      "cambioAPremium": "Switch to professional account",
+      "idioma": "Idiom",
+      "ayuda": "Help",
+      "salir": "Sign out",
       "detalle": {
         "servicio": "Service",
         "valoracion": "ratings",
@@ -245,7 +252,8 @@
       }
     },
     "labels": {
-      "currentPlan": "Current plan"
+      "currentPlan": "Current plan",
+      "editarPerfil": "Edit profile"
     },
     "footer": {
       "company":"COMPANY",
