@@ -4,7 +4,7 @@ import { SearchService } from 'src/app/tab1/search/services/search.service';
 import SwiperCore, {Pagination, Thumbs} from 'swiper';
 
 // install Swiper modules
-SwiperCore.use([Thumbs, Pagination]);
+SwiperCore.use([Thumbs]);
 
 @Component({
   selector: 'app-detalle-busqueda',

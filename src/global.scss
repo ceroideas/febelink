@@ -31,6 +31,14 @@
 @import "swiper/css/navigation";
 @import "swiper/css/thumbs";
 
+.swiper-button-prev{
+  display: none;
+}
+
+.swiper-button-next{
+  display: none !important;
+}
+
 ionic-selectable-modal {
   ion-header {
     ion-toolbar {
