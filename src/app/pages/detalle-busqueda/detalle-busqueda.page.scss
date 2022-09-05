@@ -136,6 +136,15 @@ ion-footer{
     box-sizing: border-box;
     padding: 10px 0;
   }
+
+  .tam_img{
+    height: 3em;
+    width: 3em;
+    border-radius: 8px;
+  }
+  .tam_img_normal{
+    border-radius: 8px;
+  }
   
   .mySwiper .swiper-slide {
     width: 25%;
