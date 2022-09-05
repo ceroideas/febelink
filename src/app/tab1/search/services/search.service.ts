@@ -11,6 +11,9 @@ export class SearchService {
   private dataLists = null;
   private iKeyWords: IKeywords;
   public isLoading: boolean = false;
+  public show_imagen: boolean = true;
+  public show_detalle: boolean = false;
+  public dataDesktopDetail = null;
 
   constructor(private http: HttpClient) { 
   }
@@ -41,6 +44,20 @@ export class SearchService {
     })
   }
 
+  show_detalle_desktop(){
+    let id = 1;
+    this.show_imagen = false;
+    this.show_detalle = true;
+    this.getDetalle(id)
+    .then(detalle =>{
+        this.dataDesktopDetail = detalle;
+        console.log(this.dataDesktopDetail);
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+  }
+
   set(searchText: string) {
     this.searchText(searchText);
   }
@@ -58,7 +75,7 @@ export class SearchService {
       
   }
 
-  getDetalle(id: number){
+  async getDetalle(id: number){
     return new Promise((resolve, reject) => {
       this.http.get('assets/search_detalle.json')
         .subscribe(data => {
@@ -68,7 +85,7 @@ export class SearchService {
           reject(error);
         });
     })
-  }
+  }  
 
   getResult(){
     if(this.dataLists != null){

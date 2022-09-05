@@ -7,6 +7,7 @@
         [(ngModel)]="searchText"
         (ionChange)="searchService.search(searchText)"
         debounce="500"
+        *ngIf="searchService.show_imagen"
       ></ion-searchbar>
     </ion-row>
     <div class="mobile">
@@ -230,7 +231,7 @@
                 <ion-list style="margin-right: 5em;" *ngIf="data">
                     <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.recomendations">
                         <ion-card-content class="ion-no-padding">
-                            <ion-item lines="none" class="item_dropdown">
+                            <ion-item (click)="searchService.show_detalle_desktop()" lines="none" class="item_dropdown">
                                 <ion-avatar class="avatar_dropdown" slot="start">
                                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                 </ion-avatar>

@@ -22,6 +22,119 @@
   margin-top: -29px;
 }
 
+.icon_star{
+  width: 14.87px;
+  height: 14.24px;
+  display: inline-block;
+}
+
+.content_item{
+  margin-left: 1em;
+}
+
+.label_cantidad{
+  font-weight: 600; 
+  font-size: 16px; 
+  margin-top: -0.3em; 
+  color:#111928;
+}
+
+.item_cantidad_border{
+  border: 1px solid #D1D5DB; 
+  border-radius: 8px;
+}
+
+.item_cantidad{
+  margin-left: -1em;
+}
+
+.parrafo_val{
+  margin-left: 5px;
+  margin-top: 0;
+}
+
+.swiper-button-prev{
+  display: none;
+}
+
+.swiper-button-next{
+  display: none;
+}
+
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper {
+  width: 100%;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper2 {
+  height: 80%;
+  width: 100%;
+}
+
+.mySwiper {
+  height: 20%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.tam_img{
+  height: 4em;
+  width: 5em;
+  border-radius: 8px;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-slider img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 ion-header {
   text-align: center;
   background: var(--ion-color-toolbar);
