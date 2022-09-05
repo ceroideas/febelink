@@ -26,10 +26,11 @@
   width: 14.87px;
   height: 14.24px;
   display: inline-block;
+  margin-left: 0.5em;
 }
 
 .content_item{
-  margin-left: 1em;
+  margin-left: -0.5em;
 }
 
 .label_cantidad{
@@ -121,6 +122,9 @@
 .tam_img{
   height: 4em;
   width: 5em;
+  border-radius: 8px;
+}
+.tam_img_normal{
   border-radius: 8px;
 }
 

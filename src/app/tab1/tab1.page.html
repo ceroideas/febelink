@@ -32,17 +32,17 @@
 
   <ion-grid *ngIf="searchService.show_detalle" style="width: 100%; height: 573px; background-color: white;">
     <ion-row style="display: flex; justify-content: space-around;" size="12" *ngIf="searchService.dataDesktopDetail">
-      <ion-col size="5">
+      <ion-col size="4">
         <ion-row size="12" class="ion-margin parrafo_val">
           <ion-breadcrumbs rel="-">
             <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
             <ion-breadcrumb href="#">{{ 'menu.pages.detalle.servicio' | translate }}</ion-breadcrumb>
           </ion-breadcrumbs>
         </ion-row>
-        <ion-row>
+        <ion-row style="margin-top:3em;">
           <ion-label style="font-size:32px;">{{searchService.dataDesktopDetail?.detalle.nombre}}</ion-label>
         </ion-row>
-        <ion-row>
+        <ion-row style="margin-top:1em;">
           <ion-label class="content_item">
             <p class="ion-no-margin"> 
                 <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
@@ -54,13 +54,13 @@
             </p>    
           </ion-label>
         </ion-row>
-        <ion-row>
+        <ion-row style="margin-top:1em;">
           <ion-label>{{searchService.dataDesktopDetail?.detalle.descripcion}}</ion-label>
         </ion-row>
-        <ion-row>
-          <ion-label>{{searchService.dataDesktopDetail?.detalle.precio}}€</ion-label>
+        <ion-row style="margin-top:3em;">
+          <ion-label style="font-size:28px;">{{searchService.dataDesktopDetail?.detalle.precio}}€</ion-label>
         </ion-row>
-        <ion-row>
+        <ion-row style="margin-top:2em;">
           <ion-item class="item_cantidad">
             <ion-label class="ion-no-padding label_cantidad">{{ 'menu.pages.detalle.cantidad' | translate }}</ion-label>
           </ion-item>
@@ -77,20 +77,20 @@
           <ion-button class="ion-padding btn_aux" expand="block">{{ 'menu.pages.detalle.add' | translate }}</ion-button>
         </ion-row>
       </ion-col>
-      <ion-col size="5">
-        <div class="ion-margin parrafo_val">
+      <ion-col size="4">
+        <div style="margin-top: 5em;" class="ion-margin">
           <swiper
           [spaceBetween]="10"
           [navigation]="true"
           [thumbs]="{ swiper: thumbsSwiper }">
             <ng-template swiperSlide>
-              <ion-img src="./assets/imgs/bg0.jpg"></ion-img>
+              <ion-img class="tam_img_normal" src="./assets/imgs/bg0.jpg"></ion-img>
             </ng-template>
             <ng-template swiperSlide>
-              <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
+              <ion-img class="tam_img_normal" src="./assets/imgs/bg1.jpg"></ion-img>
             </ng-template>
             <ng-template swiperSlide>
-              <ion-img src="./assets/imgs/bg2.jpg"></ion-img>
+              <ion-img class="tam_img_normal" src="./assets/imgs/bg2.jpg"></ion-img>
             </ng-template>
           </swiper>
           <swiper
