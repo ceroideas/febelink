@@ -1,9 +1,8 @@
 <!-- <ion-header class="ion-no-border"> -->
-
 <ion-header>
   <ion-toolbar class="header_buttons" color="header">
     <ion-buttons buttons-start slot="start">
-      <ion-menu-button>
+      <ion-menu-button class="desktop_menu_avatar">
           <ion-img class="avatarmenu"
             id="menuImg"
             [src]="
@@ -18,15 +17,26 @@
       <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
       <ion-img *ngIf="currentUser" class="ion-padding chat" size="small" src="assets/icon/svg/chat_header.svg"></ion-img>
   </ion-buttons>
-
-  <!--
-=======
-    <!-- Header Buttoms -->
-    <app-header-buttons class="logo_margen" [perfil]="curUser" currentTab="6"></app-header-buttons>
   </ion-toolbar>
 </ion-header>
  <!--
 >>>>>>> 23c320deb7b55c3abcb1e8f22f8ab7fefa9a6298
+=======
+      <ion-img *ngIf="curUser" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+      <ion-img *ngIf="curUser" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
+    </ion-buttons>  
+    <app-header-buttons class="buttons_flex" [perfil]="curUser" currentTab="6"></app-header-buttons>
+    <ion-buttons buttons-start slot="end">
+      <ion-img style="margin-left:5em;"
+      tappable 
+      src="assets/imgs/logo.png" 
+      alt="Febelink logo" 
+      (click)="irA('/' + homePage)"
+      class="ion-margin logo desktop"></ion-img> 
+    </ion-buttons>
+  </ion-toolbar>
+<!--
+>>>>>>> adbfbe0d02f7badbaf5eca152ba1226a0af35e62
   <ion-toolbar color="light">
     <ion-grid class="no-padding">
      
@@ -51,7 +61,6 @@
             ></ion-input>
           </ion-row>
         </ion-col>
-
         <ion-col size="3">
           <ion-button
             icon-only
@@ -63,7 +72,6 @@
               src="assets/icon/svg/filter.svg"
             ></ion-icon>
           </ion-button>
-
           <ion-button
             icon-only
             color="primary"
@@ -74,11 +82,14 @@
         </ion-col>
       </ion-row>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
       
 =======
 -->
 <!--
+=======
+>>>>>>> adbfbe0d02f7badbaf5eca152ba1226a0af35e62
       <ion-row [style]="showFilters ? '' : 'display: none;'">
         <ion-col
           size="3"
@@ -93,8 +104,7 @@
             itemValueField="id"
             itemTextField="name"
             [items]="topics"
-            (onChange)="clear2search( topic.value )"
-          >
+            (onChange)="clear2search( topic.value )">
           </ionic-selectable>
         </ion-col>
 
@@ -135,13 +145,11 @@
           </ion-row>
         </ion-col>
 
-       
         <ion-col
           size="3"
           size-md="3"
           class="no-padding center-v"
-          *ngIf="!myPosts"
-        >
+          *ngIf="!myPosts">
           <app-user-item
               #user
               classImg="wh-30"
@@ -151,8 +159,11 @@
       </ion-row>
     
     </ion-grid>
+<<<<<<< HEAD
   </ion-toolbar>
-</ion-header>
+=======
+
+  </ion-toolbar>
 -->
 
 
@@ -293,3 +304,5 @@
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>
