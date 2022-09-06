@@ -1,6 +1,20 @@
-h1 {
-    text-align: center;
-}
+@media (min-width: 768px){
+    .logo{
+        width: 120px;
+    }
+  }
+  
+  .logo{
+    object-fit: scale-down;
+    margin-left: 10px;
+    width: 120px;
+  }
+  
+  .dot_notif_avatar{
+    margin-left: -31px;
+    z-index: 10;
+    margin-top: -29px;
+  }
 
 .col-flexed {
     padding-left: 1em;
@@ -164,6 +178,13 @@ h1 {
 .avatarmenu{
     width: 36px;
     height: 36px;  
+    }
+.menu_header{
+  margin-left:1em;
+}
+.desktop_menu_avatar, .avatarmenu{
+    width: 46px;
+    height: 46px;  
   }
   
   .pos_menu{
@@ -173,126 +194,42 @@ h1 {
     width: 28px;
     height: 20px;
   }
+  
+  .chat{
+    margin-left: 10px;
+  }
 
-  ion-header {
+ion-header {
     text-align: center;
     background: var(--ion-color-light);
-  
     ion-toolbar {
-      @media (min-width: 768px) {
-        margin: 0 auto;
-        max-width: 1400px;
-      }
-    }   
-  }
+        @media (min-width: 768px) {
+        width: 100%;
+        padding-left: 3%;
+        padding-right: 2.7%;
 
-  ion-img{
-    .logo{
-        margin-left: 60% !important;
+        .buttons_flex{
+            display: flex;
+            margin-left: 1em;
+            width: 100%;
+        }
+
+        .desktop_menu_avatar, .avatarmenu{
+            width:56px;
+            height: 56px;
+        }
+        }
     }
-  }
-  
-  ion-content {
-    .cargando-container {
-      text-align: center;
-    }
-  
-    h1 {
-      text-align: center;
-    }
-  
-    .content-filter {
-      @media (min-width: 768px) {
-        margin: 40px 0px;
+
+    ion-header {
+        ion-toolbar {
+        @media (min-width: 820px) {
+          width: 100%;
+          padding-left: 3em;
+          padding-right: 3em;
+        }
       }
     }
-  }
-  
-  ion-thumbnail {
-    width: 75px;
-    height: 75px;
-  }
-  
-  .terms-text {
-    text-decoration: underline;
-  }
-  .terms-text:hover {
-    cursor: pointer;
-  }
-  
-  .content-filter-header {
-    background: white;
-    border-top: 1px solid #d0d0d0;
-  }
-  
-  ion-item img {
-    margin: 10% auto 10% auto;
-    max-height: 60px;
-  }
-  
-  .app-services,
-  .app-whyUse,
-  .downloads .section-header {
-    text-align: center;
-  }
-  
-  .app-services .section-header,
-  .app-whyUse .section-header,
-  .downloads .section-header,
-  .section-header * {
-    width: 100%;
-    margin: 1.5em 0;
-  }
-  
-  .flexed-row {
-    display: flex;
-    align-items: baseline;
-  }
-  
-  .flexed-row section {
-    flex: 1 1 0px;
-    min-width: 15em;
-  }
-  
-  .app-whyUse img {
-    width: 5em;
-  }
-  
-  .image-aligned {
-    vertical-align: middle;
-  }
-  
-  ion-icon {
-    color: green;
-  }
-  
-  .row-store {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5em;
-  }
-  
-  .col-store {
-    text-align: center;
-  }
-  
-  #google-button,
-  #apple-button {
-    margin-top: 1.5em;
-    width: 15em;
-  }
-  
-  #registro ion-icon {
-    color: white;
-  }
-  
-  .pad-s5 {
-    padding-left: 5px; --padding-start: 5px;
-  }
-
-.logo_margen{
-    float: right;
 }
 
 .header_buttons{

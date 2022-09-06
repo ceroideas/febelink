@@ -76,6 +76,7 @@ import { CartComponent } from '../components/cart/cart.component';
         ImgErrorFallbackDirective,
         HeaderButtonsComponent,
         LangBtnComponent,
+        FooterComponent,
         LangPopComponent,
         YouTubePopComponent,
         FooterComponent,

@@ -1,5 +1,9 @@
-.button-lang {
-    cursor:pointer;padding:12px;float:right;background: #FFFFFF;border: 1px solid #D1D5DB;border-radius: 8px;width: 75px;height: 42px;text-align:center;
+ion-button {
+    height: auto;
+    background: transparent !important;
+    color: #64697A !important;
+    --padding-start: 0;
+    --padding-end: 0;
 }
 .button-full {
     width:100%;display: table;background: #F9FAFB;
@@ -15,4 +19,20 @@
 }
 .lang-cell-b {
     display: table-cell;text-transform: inherit;text-align: right;vertical-align:middle;width:12px;
+
+
+.idiomaMin{
+    text-transform: capitalize;
+}
+
+.idiomaMay{
+    text-transform:uppercase;
+}
+
+.icono_idioma{
+    margin-left:1em;
+}
+
+.btn_idioma{
+    margin-right: 8em;
 }
