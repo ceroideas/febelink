@@ -22,8 +22,32 @@
       </div>
     </ion-button>
     -->
-    <div class="desktop">
+
+    <div>
+      <ion-grid>
+        <ion-row class="margen_row">   
+          <ion-item (click)="irA('/chat')" class="ion-no-padding pointer" lines="none">
+            <ion-img class="desktop" src="assets/icon/svg/chat_header.svg"></ion-img>
+            <ion-label class="ion-padding label_icon_menu desktop">{{ 'menu.tabs.chat' | translate }}</ion-label>
+          </ion-item>
+          <ion-item (click)="irA('/cart')" class="ion-no-padding desktop pointer" lines="none"> 
+            <ion-img src="assets/icon/svg/cart_icon.svg"></ion-img>
+            <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.carro' | translate }}</ion-label>   
+          </ion-item>
+          <ion-item (click)="irA('/posts/oracles')" class="ion-no-padding desktop pointer" lines="none"> 
+              <ion-img src="assets/icon/svg/menu_eye.svg"></ion-img>
+              <ion-img class="icono_parte_ojo" src="assets/icon/svg/menu_eye_dentro.svg"></ion-img>
+              <ion-label class="ion-padding">{{ 'menu.tabs.advises' | translate }}</ion-label>
+          </ion-item>
+          <ion-item (click)="irA('/menu/todas')" class="ion-no-padding desktop pointer" lines="none"> 
+            <ion-img src="assets/icon/svg/home_icon.svg"></ion-img>
+            <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.inicio' | translate }}</ion-label>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+
       <!-- Search -->
+      <!--
       <ion-button
         class="btn-header"
         [class]="currentTab == tabs.Search ? 'active' : ''"
@@ -35,8 +59,10 @@
           </ion-label>
         </div></ion-button
       >
+      -->
 
       <!-- Recommend -->
+      <!--
       <ion-button
         *ngIf="perfil"
         class="btn-header"
@@ -47,49 +73,13 @@
           <ion-label class="responsive-max tx-cap">
             {{ 'menu.tabs.recommend' | translate }}
           </ion-label>
-          <!-- <ion-badge color="danger" slot="end">1</ion-badge> -->
+          <ion-badge color="danger" slot="end">1</ion-badge>
         </div></ion-button
       >
-
-      <!-- Advises -->
-      <ion-button
-        class="btn-header"
-        [class]="currentTab == tabs.Advises ? 'active' : ''"
-        (click)="irA('/posts/oracles')"
-        ><div class="grid-rows">
-          <ion-icon
-            class="marg-se font-30"
-            src="assets/icon/svg/advise.svg"
-            style="margin-top: -5px"
-          ></ion-icon>
-          <ion-label class="responsive-max tx-cap" style="margin-top: -5px">
-            {{ 'menu.tabs.advises' | translate }}
-          </ion-label>
-        </div></ion-button
-      >
-
-      <!-- Chat -->
-      <ion-button
-        *ngIf="perfil"
-        class="btn-header"
-        [class]="currentTab == tabs.Chat ? 'active' : ''"
-        (click)="irA('/menu/ofertas')"
-        ><div class="grid-rows">
-          <ion-icon class="marg-se" slot="start" name="chatbubbles"></ion-icon>
-          <ion-label class="responsive-max tx-cap">
-            {{ 'menu.tabs.chat' | translate }}
-          </ion-label>
-          <ion-badge
-            color="danger"
-            slot="end"
-            *ngIf="totalUnreadMessages"
-            class="little-badge"
-            >{{ totalUnreadMessages }}</ion-badge
-          >
-        </div></ion-button
-      >
+      -->
 
       <!-- Login -->
+      <!--
       <ion-button
         class="btn-header"
         (click)="irA('/login')"
@@ -101,8 +91,9 @@
           }}</ion-label>
         </div></ion-button
       >
-
+        -->
       <!-- Register -->
+      <!--
       <ion-button
         class="btn-header"
         (click)="irA('/registro')"
@@ -117,8 +108,9 @@
           }}</ion-label>
         </div></ion-button
       >
+    -->
     </div>
-
+    
     <!-- Share -->
     <!--
     <ion-button class="btn-header" (click)="shareFebelink($event)"
@@ -153,12 +145,13 @@
     <!-- <app-lang-btn></app-lang-btn> -->
 
     <!-- Img Logo -->
+  </ion-buttons>
+  <ion-buttons class="mobile">
     <ion-img 
-      tappable 
-      src="assets/imgs/logo.png" 
-      alt="Febelink logo" 
-      (click)="irA('/' + homePage)"
-      class="ion-margin logo"></ion-img>
-    
+    tappable 
+    src="assets/imgs/logo.png" 
+    alt="Febelink logo" 
+    (click)="irA('/' + homePage)"
+    class="ion-margin mobile logo"></ion-img>    
   </ion-buttons>
 </div>

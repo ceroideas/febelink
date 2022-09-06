@@ -18,6 +18,7 @@ ion-header, ion-content, ion-footer {
 
 .label_avatar{
   margin-bottom: 0px;
+  margin-left: 3%;
 }
 
 ion-item-divider{
@@ -34,6 +35,18 @@ ion-item-divider{
 
 .menu-username {
   font-size: 18px;
+  color:#111928;
+}
+
+.menu-editar{
+  font-size: 14px;
+  color:#1C64F2;
+  font-weight: 400;
+  margin-top: 8px;
+}
+
+.premium{
+  color:#FF5A1F;
 }
 
 .menu-editar{
@@ -64,7 +77,70 @@ a:hover {
   cursor: pointer;
 }
 
+.item_menu_margen{
+  margin-left: 0%;
+}
+
+ion-content {
+  --ion-background-color: #FFFFFF;
+  --background: #FFFFFF;
+}
+
+.color_ppal{
+  color: #111928;
+}
+
+.color_ppal_premium{
+  color:#FF7746;
+}
+
+.color_ayuda{
+  color: #6B7280;
+}
 
 .pointer {
   cursor: pointer;
+}
+
+.desktop_no_visible{
+  display: block;
+}
+
+.dot_notif_avatar{
+  width: 12px;
+  height: 12px;
+  margin-left: -14px;
+  position: fixed;
+  margin-top: -26px;
+}
+
+@media (min-width: 768px) {
+  ion-menu{
+    --height: 40em;
+    --max-height: 40em;
+    --width: 24em;
+  }
+  :host(.menu-type-overlay) .show-backdrop{
+    display: none !important;
+  }
+  .desktop_no_visible{
+    display: none;
+  }
+
+  .menu{
+    padding-top: 2em;
+  }
+
+  .menu_despliege{
+    font-weight: 400;
+    margin-left: 3em;
+  }
+
+  .item_menu_margen{
+    margin-left: 10%;
+  }
+}
+
+.menu_despliege{
+  margin-left: 10px;
 }
