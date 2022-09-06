@@ -242,6 +242,7 @@ export class AdviseCRUDPage implements OnInit {
         backdropDismiss: false,
       })
     ) {
+      this.adviseSvc.showCreatePost = !this.adviseSvc.showCreatePost;
       this.shareAdvise();
     }
   }

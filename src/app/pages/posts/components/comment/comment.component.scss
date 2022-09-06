@@ -60,14 +60,23 @@
 .table-reactions {
     display:table;width:100%;margin-top:12px;
 }
+.table-reactions-b {
+    display:table;margin-top:12px;
+}
 .share-reaction {
     cursor:pointer;display:table-cell;vertical-align:middle;text-align:center;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
+}
+.share-reaction-b {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;padding-right:26px;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
 }
 .share-reaction-svg {
     width:14px;margin-right:13px;position:relative;top:2px;
 }
 .reply-reaction {
     cursor:pointer;display:table-cell;vertical-align:middle;text-align:center;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
+}
+.reply-reaction {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
 }
 .reply-reaction-svg {
     width:14px;margin-right:13px;position:relative;top:2px;

@@ -155,18 +155,42 @@
   -->
   
   
-  <div class="top-create-post">
-    <div class="top-create-post-left">
-      <div (click)="createPost()" class="top-create-post-left-inside">
-        Comparte tus noticias y comentarios
+  <div class="mobile">
+    <div class="top-create-post">
+      <div class="top-create-post-left">
+        <div (click)="createPost()" class="top-create-post-left-inside">
+          Comparte tus noticias y comentarios
+        </div>
+      </div>
+      <div class="top-create-post-right">
+        <img src="assets/icon/svg/filter-post.svg" (click)="showFilters = !showFilters" class="top-create-post-svg" />
       </div>
     </div>
-    <div class="top-create-post-right">
-      <img src="assets/icon/svg/filter-post.svg" (click)="showFilters = !showFilters" class="top-create-post-svg" />
+  </div>
+
+  <div *ngIf="!adviseSvc.showCreatePost" class="desktop">
+    <div class="top-create-post-b">
+      <div class="top-create-post-left">
+        <div (click)="createPost()" class="top-create-post-left-inside">
+          Comparte tus noticias y comentarios
+        </div>
+      </div>
+      <div class="top-create-post-right-b">
+        <div class="create-post-button-secondary" (click)="showFilters = !showFilters">
+          Filtros <img src="assets/icon/svg/filter-blue.svg" class="create-post-svg-b" />
+        </div>
+        <div class="create-post-button-primary" (click)="adviseSvc.showCreatePost = !adviseSvc.showCreatePost">
+          Nueva entrada
+        </div>
+      </div>
     </div>
   </div>
+
+  <div *ngIf="adviseSvc.showCreatePost" class="width-100">
+    <app-post-advise-crud></app-post-advise-crud>
+  </div>
   
-  <ion-content class="padding-top pad-se">
+  <ion-content class="padding-top pad-se background-content-desktop">
     <!-- <h1>¡Bienvenido a la comunidad de Febelink!</h1> -->
   
     <!-- Loading -->
@@ -210,8 +234,7 @@
     </ion-item>
   </ion-content>
   
-  
-  <div *ngIf="showFilters" class="modal-back-background">
+  <div *ngIf="showFilters" class="mobile modal-back-background">
     <div class="filter-content-background">
       <div class="filter-content-padding">
         <div class="modal-front-title">
@@ -292,4 +315,88 @@
       </div>
     </div>
   </div>
+
+
+<div class="desktop modal-filter-floating" *ngIf="showFilters">
+      <div>
+        <div class="modal-front-title">
+          Filtros
+        </div>
+        <div class="modal-add-name">
+          {{ 'common.labelTopic' | translate }}
+        </div>
+        <div class="modal-input-div">
+          <ion-item class="no-padding modal-add-price-select">
+              <ionic-selectable class="price-select" placeholder="Tema"
+              #topic
+              item-content
+              [(ngModel)]="topicSelected"
+              itemValueField="id"
+              itemTextField="name"
+              [items]="topics"
+            >
+            </ionic-selectable>
+          </ion-item>
+        </div>
+        <div class="modal-add-name">
+          {{ 'common.labelLang' | translate }}
+        </div>
+        <div class="modal-input-div height-lang-button">
+          <app-lang-btn
+                #lang
+                [changeAppLang]="false"
+                [initNull]="true"
+                [short]="false"
+            ></app-lang-btn>
+        </div>
+        <div class="modal-add-name margin-bottom-title">
+          Entradas del oráculo
+        </div>
+        <div class="div-filter-check">
+          <ion-checkbox class="no-padding filter-check-a"
+              size="12"
+              size-sm="3"
+              [(ngModel)]="!myPosts" (ngModelChange)="myPosts = !$event"
+          ></ion-checkbox>
+            Todas
+        </div>
+        <div class="div-filter-check-b">
+          <ion-checkbox class="no-padding filter-check-a"
+              #chkMyPosts
+              size="12"
+              size-sm="3"
+              [(ngModel)]="myPosts"
+          ></ion-checkbox>
+            Solo mis post
+        </div>
+        
+        <div *ngIf="!myPosts" class="modal-add-name margin-bottom-title">
+          Búsqueda por usuario
+        </div>
   
+        <div *ngIf="!myPosts" class="filter-section-search" (click)="userClicked()">
+          <div class="filter-section-img">
+            <img src="assets/icon/svg/search-user.svg" class="filter-section-img-svg" />
+          </div>
+          <div *ngIf="!userNickSearch" class="filter-section-search-text">
+            Buscar usuario
+          </div>
+          <div *ngIf="userNickSearch" class="filter-section-search-text">
+            {{userNickSearch}}
+          </div>
+        </div>
+      </div>
+      
+      <div class="bottom-buttons-b">
+        <div class="bottom-buttons-left">
+          <div class="modal-button-primary-filter-b" (click)="clear2search();showFilters = !showFilters">
+            Aplicar
+          </div>
+        </div>
+        <div class="bottom-buttons-right">
+          <div class="modal-button-secondary-filter-b" (click)="showFilters = !showFilters">
+            Cancelar
+          </div>
+        </div>
+      </div>
+</div>

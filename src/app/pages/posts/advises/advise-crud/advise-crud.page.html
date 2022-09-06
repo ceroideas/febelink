@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="mobile">
   <ion-toolbar color="light">
     <ion-buttons buttons-start slot="start">
       <ion-menu-button></ion-menu-button>
@@ -8,7 +8,7 @@
   </ion-toolbar>
   </ion-header>
 
-<ion-content>
+<ion-content class="mobile">
   <!-- Loading -->
   <app-loading
     [isLoading]="isLoading"
@@ -108,6 +108,7 @@
 
 
 
+<div class="mobile">
 <div class="modal-back-background">
   <div class="modal-front-content-create">
     
@@ -175,4 +176,95 @@
     </div>
 
 </div>
+</div>
+</div>
 
+
+<div class="desktop">
+  <div class="modal-floating-create">
+    <div class="breadcrumbs-create">
+      Inicio <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next" /> Oráculo <img src="assets/icon/svg/chevron-right.svg"class="breadcrumbs-next" /> <span class="color-blue">Crear publicación</span>
+    </div>
+    <div class="titles-create">
+      <div class="titles-create-left">
+        <div class="titles-create-title">
+          Crear publicación
+        </div>
+      </div>
+      <div class="titles-create-right">
+        <div class="titles-create-button-secondary" (click)="adviseSvc.showCreatePost = !adviseSvc.showCreatePost">Cancelar</div>
+        <div class="titles-create-button-primary" (click)="shareAlert()">Publicar</div>
+      </div>
+    </div>
+
+    <form [formGroup]="form" *ngIf="!isLoading && form">
+    <div class="table-100">
+      <div class="create-content-left">
+        <div class="modal-add-name-b">
+          {{ 'common.labelTopic' | translate }}
+        </div>
+        <div class="modal-input-div">
+          <ion-item class="no-padding modal-add-price-select">
+              <ionic-selectable class="price-select" placeholder="Tema"
+              #topic
+              item-content
+              [(ngModel)]="topicSelected"
+              itemValueField="id"
+              itemTextField="name"
+              [items]="topics"
+              formControlName="topic"
+            >
+            </ionic-selectable>
+          </ion-item>
+        </div>
+        <div class="modal-add-name-b padding-top-label">
+          Enlace
+        </div>
+        <div class="modal-input-div">
+          <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
+        </div>
+      </div>
+      <div class="create-content-middle">
+        <div class="modal-add-name-b">
+          Mensaje
+        </div>
+        <div class="modal-input-div">
+          <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>
+        </div>
+      </div>
+      <div class="create-content-right">
+        <div class="add-images-label">
+          <span class="add-images-label-title">Imágenes</span>Peso máximo 2MB. Máximo 5 imágenes
+        </div>
+        <div class="width-100">
+          <div>
+            <!--
+            <div class="add-service-img-selected">
+              <img src="assets/imgs/servicios-prev-6.png" class="add-service-img" />
+              <div class="add-service-remove-div">
+                <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
+              </div>
+            </div>
+            -->
+            <div class="add-service-img-select">
+              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
+            </div>
+            <div class="add-service-img-select">
+              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
+            </div>
+            <div class="add-service-img-select">
+              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
+            </div>
+            <div class="add-service-img-select">
+              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
+            </div>
+            <div class="add-service-img-select">
+              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

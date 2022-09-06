@@ -1,17 +1,37 @@
-<div class="user-item-main">
-    <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo && !user?.avatar" (click)="userClick()" />
-    <ion-img class="user-item-img-main"
-        [src]="user?.logo || user?.avatar"
-        *ngIf="user?.logo || user?.avatar"
-        appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
-    ></ion-img>
-</div>
-<div class="user-item-text">
-    <div class="user-item-text-name" (click)="userClick()">
-        {{ user?.name || user?.nick || ( 'common.labelUser' | translate )}} {{ user?.lastName }}
+<div class="mobile">
+    <div class="user-item-main">
+        <img src="https://api.febelink.com/storage/users/default.png" class="user-item-img-main" *ngIf="!user?.logo && !user?.avatar" (click)="userClick()" />
+        <ion-img class="user-item-img-main"
+            [src]="user?.logo || user?.avatar"
+            *ngIf="user?.logo || user?.avatar"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+        ></ion-img>
     </div>
-    <div class="user-item-text-date">
-        {{ subtitle }}
+    <div class="user-item-text">
+        <div class="user-item-text-name" (click)="userClick()">
+            {{ user?.name || user?.nick || ( 'common.labelUser' | translate )}} {{ user?.lastName }}
+        </div>
+        <div class="user-item-text-date">
+            {{ subtitle }}
+        </div>
+    </div>
+</div>
+<div class="desktop">
+    <div class="user-item-main">
+        <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!user?.logo && !user?.avatar" class="user-item-img-main-b" (click)="userClick()" />
+        <ion-img class="user-item-img-main-b"
+            [src]="user?.logo || user?.avatar"
+            *ngIf="user?.logo || user?.avatar"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+        ></ion-img>
+    </div>
+    <div class="user-item-text-b">
+        <div class="user-item-text-name-b" (click)="userClick()">
+            {{ user?.name || user?.nick || ( 'common.labelUser' | translate )}} {{ user?.lastName }}
+        </div>
+        <div class="user-item-text-date-b">
+            {{ subtitle }}
+        </div>
     </div>
 </div>
 
