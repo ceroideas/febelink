@@ -31,11 +31,11 @@
         ></ion-img>
     <div class="post-main-reactions">
       <div class="post-main-reactions-left">
-        <span>{{iAdvise.react_qant}} </span>
+        <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
         <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
       </div>
       <div class="post-main-reactions-right">
-        <span>{{iAdvise.comments_qant}} </span>
+        <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
         <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
       </div>
     </div>
@@ -90,11 +90,11 @@
         ></ion-img>
     <div class="post-main-reactions-b">
       <div class="post-main-reactions-left">
-        <span>{{iAdvise.react_qant}} </span>
+        <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
         <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
       </div>
       <div class="post-main-reactions-right">
-        <span>{{iAdvise.comments_qant}} </span>
+        <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
         <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
       </div>
     </div>
