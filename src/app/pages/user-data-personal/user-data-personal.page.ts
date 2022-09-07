@@ -25,7 +25,9 @@ export class UserDataPersonalPage implements OnInit {
       web: [''],
       idioma: [''],
       tarjeta_credito: [''],
-      num_cuenta: ['']
+      num_cuenta: [''],
+      password: [''],
+      aboutme:['']
     });
     this.getUser();
   }

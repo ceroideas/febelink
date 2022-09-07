@@ -21,7 +21,8 @@ export class UserDataPage implements OnInit {
       email: [''],
       password: [''],
       cambiopass: [''],
-      aboutme: ['']
+      aboutme: [''],
+      web:['']
     });
     this.getUser();
   }
