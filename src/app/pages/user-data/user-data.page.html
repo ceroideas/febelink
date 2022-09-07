@@ -3,27 +3,27 @@
     <ion-buttons buttons-start slot="start">
       <ion-menu-button class="desktop_menu_avatar">
         <ion-img class="desktop_menu_avatar"
-          id="menuImg"
-          [src]="
+                 id="menuImg"
+                 [src]="
             currentUser?.logo !== null
               ? currentUser?.logo
               : 'https://api.febelink.com/storage/users/default.png'
           "
-          (error)="onImgError($event)"
-          alt="Menu profile picture">
+                 (error)="onImgError($event)"
+                 alt="Menu profile picture">
         </ion-img>
-      </ion-menu-button>  
+      </ion-menu-button>
       <ion-img *ngIf="curUser" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
       <ion-img *ngIf="curUser" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
-    </ion-buttons>  
+    </ion-buttons>
     <app-header-buttons class="buttons_flex" [perfil]="curUser" currentTab="6"></app-header-buttons>
     <ion-buttons buttons-start slot="end">
       <ion-img
-      tappable 
-      src="assets/imgs/logo.png" 
-      alt="Febelink logo" 
-      (click)="irA('/' + homePage)"
-      class="ion-margin logo desktop"></ion-img> 
+        tappable
+        src="assets/imgs/logo.png"
+        alt="Febelink logo"
+        (click)="irA('/' + homePage)"
+        class="ion-margin logo desktop"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -45,7 +45,7 @@
         <div class="div-breadcrumbs-b">
           <div class="breadcrumbs-text-b">
             <span class="breadcrumbs-index-b">Inicio</span>
-            <img class="breadcrumbs-next-b" src="assets/icon/svg/chevron-right.svg" />
+            <img class="breadcrumbs-next-b" src="assets/icon/svg/chevron-right.svg"/>
             <span>Datos de usuario</span>
           </div>
         </div>
@@ -80,15 +80,15 @@
               <ion-row class="flex_content">
                 <ion-col size="3">
                   <ion-img class="avatarmenu"
-                  id="menuImg"
-                  [src]="
+                           id="menuImg"
+                           [src]="
                     currentUser?.logo !== null
                       ? currentUser?.logo
                       : 'https://api.febelink.com/storage/users/default.png'
                   "
-                  (error)="onImgError($event)"
-                  alt="Menu profile picture">
-                </ion-img>
+                           (error)="onImgError($event)"
+                           alt="Menu profile picture">
+                  </ion-img>
                 </ion-col>
               </ion-row>
               <ion-row class="flex_content margin_05" size="12">
@@ -106,23 +106,27 @@
               <ion-row size="12">
                 <ion-col size="12">
                   <form *ngIf="form"
-                  [formGroup]="form"
-                  (ngSubmit)="submitForm()">
-                    <ion-item lines="none"> 
+                        [formGroup]="form"
+                        (ngSubmit)="submitForm()">
+                    <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Usuario</ion-label>
-                      <ion-input formControlName="email" placeholder="Usuario" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
+                      <ion-input formControlName="username" placeholder="Usuario" type="text"
+                                 class="padding-input-12 userform-input-mobile"></ion-input>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Contraseña</ion-label>
-                      <ion-input formControlName="password" placeholder="Contraseña" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
+                      <ion-input formControlName="password" placeholder="Contraseña" type="text"
+                                 class="padding-input-12 userform-input-mobile"></ion-input>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Repetir contraseña</ion-label>
-                      <ion-input formControlName="cambiopass" placeholder="Repetir contraseña" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
+                      <ion-input formControlName="cambiopass" placeholder="Repetir contraseña" type="text"
+                                 class="padding-input-12 userform-input-mobile"></ion-input>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Sobre mí</ion-label>
-                      <ion-textarea formControlName="aboutme" rows="6" cols="20" class="padding-input-12 userform-input-mobile" placeholder="Máximo 500 caracteres">
+                      <ion-textarea formControlName="aboutme" rows="6" cols="20"
+                                    class="padding-input-12 userform-input-mobile" placeholder="Máximo 500 caracteres">
                       </ion-textarea>
                     </ion-item>
                   </form>
@@ -136,53 +140,57 @@
     <ion-row class="desktop" size="12">
       <ion-grid>
         <form *ngIf="form"
-            [formGroup]="form"
-            (ngSubmit)="submitForm()">
-        <ion-row size="10">
-          <ion-col size="2">
-            <ion-img class="avatarmenu"
-              id="menuImg"
-              [src]="
+              [formGroup]="form"
+              (ngSubmit)="submitForm()">
+          <ion-row size="10">
+            <ion-col size="2">
+              <ion-img class="avatarmenu"
+                       id="menuImg"
+                       [src]="
                 currentUser?.logo !== null
                   ? currentUser?.logo
                   : 'https://api.febelink.com/storage/users/default.png'
               "
-              (error)="onImgError($event)"
-              alt="Menu profile picture">
-            </ion-img>
-            <ion-row class="flex_content margin_05" size="12">
-              <ion-col size="10" class="ion-text-center">
-                <ion-label class="text_label_blue">Cambiar foto de perfil</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row class="ion-no-margin flex_content" size="12">
-              <ion-col size="10" class="ion-text-center">
-                <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
-              </ion-col>
-            </ion-row>
-          </ion-col>  
-          <ion-col size="3">
-            <ion-item lines="none"> 
-              <ion-label position="stacked" class="text_label_form">Usuario</ion-label>
-              <ion-input formControlName="email" placeholder="Usuario" color="input" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-            </ion-item>
-            <ion-item lines="none">
-              <ion-label position="stacked" class="text_label_form">Contraseña</ion-label>
-              <ion-input formControlName="password" placeholder="Contraseña" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-            </ion-item>
-            <ion-item lines="none">
-              <ion-label position="stacked" class="text_label_form">Web</ion-label>
-              <ion-input formControlName="web" placeholder="Web" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="5"> 
-            <ion-item lines="none">
-              <ion-label position="stacked" class="text_label_form">Sobre mí</ion-label>
-              <ion-textarea formControlName="aboutme" rows="6" cols="70" class="padding-input-12 userform-input-desktop" placeholder="Máximo 500 caracteres">
-              </ion-textarea>
-            </ion-item>
-          </ion-col>
-        </ion-row> 
+                       (error)="onImgError($event)"
+                       alt="Menu profile picture">
+              </ion-img>
+              <ion-row class="flex_content margin_05" size="12">
+                <ion-col size="10" class="ion-text-center">
+                  <ion-label class="text_label_blue">Cambiar foto de perfil</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-no-margin flex_content" size="12">
+                <ion-col size="10" class="ion-text-center">
+                  <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item lines="none">
+                <ion-label position="stacked" class="text_label_form">Usuario</ion-label>
+                <ion-input formControlName="email" placeholder="Usuario" color="input" type="text"
+                           class="padding-input-12 userform-input-desktop"></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="stacked" class="text_label_form">Contraseña</ion-label>
+                <ion-input formControlName="password" placeholder="Contraseña" type="text"
+                           class="padding-input-12 userform-input-desktop"></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="stacked" class="text_label_form">Web</ion-label>
+                <ion-input formControlName="web" placeholder="Web" type="text"
+                           class="padding-input-12 userform-input-desktop"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="5">
+              <ion-item lines="none">
+                <ion-label position="stacked" class="text_label_form">Sobre mí</ion-label>
+                <ion-textarea formControlName="aboutme" rows="6" cols="70"
+                              class="padding-input-12 userform-input-desktop" placeholder="Máximo 500 caracteres">
+                </ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
         </form>
       </ion-grid>
     </ion-row>
