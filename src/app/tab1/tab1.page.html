@@ -36,7 +36,7 @@
         <ion-row size="12" class="ion-margin parrafo_val">
           <ion-breadcrumbs rel="-">
             <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
-            <ion-breadcrumb href="#">{{ 'menu.pages.detalle.servicio' | translate }}</ion-breadcrumb>
+            <ion-breadcrumb href="#">Servicio</ion-breadcrumb>
           </ion-breadcrumbs>
         </ion-row>
         <ion-row style="margin-top:3em;">
@@ -50,7 +50,7 @@
                 <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                 <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                 <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                ({{searchService.dataDesktopDetail?.detalle.valoracion}}) {{ 'menu.pages.detalle.valoracion' | translate }}
+                ({{searchService.dataDesktopDetail?.detalle.valoracion}}) valoraciones
             </p>    
           </ion-label>
         </ion-row>
@@ -62,7 +62,7 @@
         </ion-row>
         <ion-row style="margin-top:2em;">
           <ion-item class="item_cantidad">
-            <ion-label class="ion-no-padding label_cantidad">{{ 'menu.pages.detalle.cantidad' | translate }}</ion-label>
+            <ion-label class="ion-no-padding label_cantidad">Cantidad</ion-label>
           </ion-item>
           <ion-item class="item_cantidad_border">
             <ion-label>1</ion-label>
@@ -73,8 +73,8 @@
               <ion-select-option value="4">4</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-button class="ion-padding btn_ppal" expand="block">{{ 'menu.pages.detalle.comprar' | translate }}</ion-button>
-          <ion-button class="ion-padding btn_aux" expand="block">{{ 'menu.pages.detalle.add' | translate }}</ion-button>
+          <ion-button class="ion-padding btn_ppal botonf1" expand="block">Comprar ahora</ion-button>
+          <ion-button class="ion-padding btn_aux botonf2" expand="block">Añadir al carrito</ion-button>
         </ion-row>
       </ion-col>
       <ion-col size="4">

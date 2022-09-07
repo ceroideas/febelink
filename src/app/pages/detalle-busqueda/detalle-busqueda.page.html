@@ -11,7 +11,7 @@
         <ion-img src="assets/icon/svg/icon_casa.svg"></ion-img>
         <ion-breadcrumbs rel="-">
           <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
-          <ion-breadcrumb href="#">{{ 'menu.pages.detalle.servicio' | translate }}</ion-breadcrumb>
+          <ion-breadcrumb href="#">Servicio</ion-breadcrumb>
         </ion-breadcrumbs>
       </ion-row>
       <ion-row size="12">
@@ -29,7 +29,7 @@
           <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
           <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
           <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-          ({{detalle.detalle?.valoracion}}) {{ 'menu.pages.detalle.valoracion' | translate }}
+          ({{detalle.detalle?.valoracion}}) valoraciones
         </p>    
       </ion-row>
       <ion-row size="12">
@@ -68,12 +68,12 @@
     </swiper>
     </div> 
       <ion-row size="12" class="ion-margin parrafo_val">
-        {{detalle.detalle?.descripcion}} <ion-text class="read_more">{{ 'menu.pages.detalle.readmore' | translate }}</ion-text>
+        {{detalle.detalle?.descripcion}} <ion-text class="read_more">Leer más</ion-text>
       </ion-row>
       <ion-row class="ion-margin parrafo_val" size="12">
         <ion-col size="6">
           <ion-item class="item_cantidad">
-            <ion-label class="ion-no-padding label_cantidad">{{ 'menu.pages.detalle.cantidad' | translate }}</ion-label>
+            <ion-label class="ion-no-padding label_cantidad">Cantidad</ion-label>
           </ion-item>
           <ion-item class="item_cantidad_border">
             <ion-label>1</ion-label>
@@ -93,7 +93,15 @@
       </ion-row>
     </ion-grid>
 </ion-content>
-<ion-footer class="footer_detalle">
-    <ion-button class="ion-padding btn_ppal" expand="block">{{ 'menu.pages.detalle.comprar' | translate }}</ion-button>
-    <ion-button class="ion-padding btn_aux" expand="block">{{ 'menu.pages.detalle.add' | translate }}</ion-button>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid fixed>
+      <ion-row class="ion-padding paddingf1">
+        <ion-button expand class="botonf1" type="submit">Comprar ahora</ion-button>
+      </ion-row>
+      <ion-row class="ion-padding paddingf2">
+        <ion-button expand class="botonf2" type="submit">Añadir al carrito</ion-button>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
 </ion-footer>
