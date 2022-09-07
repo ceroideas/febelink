@@ -1,6 +1,7 @@
 import { NumberSymbol } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {CartService} from '../../services/cart.service';
+import {CartServiceShow} from '../../services/cart.service';
+import {CartService} from '../../pages/cart/services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,9 +15,13 @@ export class CartComponent implements OnInit {
   isNoItems:boolean=false;
   isErrorBuy:boolean=false;
 
-  constructor(public cartService:CartService) { }
+  iCart:any;
+
+  constructor(public cartServiceShow:CartServiceShow, private cartService:CartService) { }
 
   ngOnInit() {
+    this.getCart();
+
     this.dataItems = [
       {
         servicio: '2x1 masajes drenantes',
@@ -41,6 +46,28 @@ export class CartComponent implements OnInit {
     for (var key in this.dataItems) {
       this.subtotalItems += this.dataItems[key].precio*this.dataItems[key].cantidad;
     };
+  }
+
+  async getCart() {
+    const { response, error } = await this.cartService.get();
+    this.iCart = response;
+  }
+
+  async updateCart(id:number,amount:number) {
+    const { response, error } = await this.cartService.update(id,amount);
+    this.getCart();
+  }
+
+  async buyCart() {
+    const { response, error } = await this.cartService.buy();
+    console.log(response);
+  }
+
+  async emptyCart() {
+    for (var item in this.iCart.items) {
+      const { response, error } = await this.cartService.update(this.iCart.items[item].productId,0);
+    };
+    this.getCart();
   }
 
   onChangeQuantity(e) {

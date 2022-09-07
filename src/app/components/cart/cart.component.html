@@ -1,5 +1,5 @@
 <!-- Pantalla Contenido Carrito -->
-<div *ngIf="cartService.isToggleCart && !isSuccessBuy && !isNoItems && !isErrorBuy" class="div-desktop-carrito">
+<div *ngIf="cartServiceShow.isToggleCart && !isSuccessBuy && !isNoItems && !isErrorBuy" class="div-desktop-carrito">
   <div class="breadcrumbs-carrito">
     <div class="breadrumbs-text">
       Inicio
@@ -15,32 +15,32 @@
         </div>
       </div>
       <div class="top-content-buttons">
-        <div class="top-content-buttons-secondary button-margin" (click)="shopItems()">
+        <div class="top-content-buttons-secondary button-margin" (click)="emptyCart()">
           Vaciar carrito
         </div>
-        <div class="top-content-buttons-primary" (click)="buyItems()">
+        <div class="top-content-buttons-primary" (click)="buyCart()">
           Comprar
         </div>
       </div>
     </div>
 
-    <div class="div-items-carrito">
+    <div *ngIf="iCart" class="div-items-carrito">
 
-      <div *ngFor="let item of dataItems; let i = index" class="item-content-carrito">
+      <div *ngFor="let item of iCart.items; let i = index" class="item-content-carrito">
         <div class="item-cell-img">
           <img src="assets/imgs/img-prueba.jpg" class="item-img" />
         </div>
         <div class="item-cell-text">
           <div class="item-title">
-            {{item.servicio}}
+            {{item.product}}
           </div>
           <div class="item-subtitle">
-            {{item.ofertante}}
+            {{item.username}}
           </div>
           <div class="item-div-buttons">
             <ion-item class="no-padding item-quantity-select">
               <ion-label class="quantity-label">Cantidad:</ion-label>
-              <ion-select class="quantity-select" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="item.cantidad" (ionChange)="onChangeQuantity($event)">
+              <ion-select class="quantity-select" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="item.productAmount" (ionChange)="updateCart(item.productId,item.productAmount)">
                 <ion-select-option [value]="1">1</ion-select-option>
                 <ion-select-option [value]="2">2</ion-select-option>
                 <ion-select-option [value]="3">3</ion-select-option>
@@ -52,23 +52,23 @@
                 <ion-select-option [value]="9">9</ion-select-option>
               </ion-select>
             </ion-item>
-            <div class="button-delete" (click)="deleteItem(i)">
+            <div class="button-delete" (click)="updateCart(item.productId,0)">
               Eliminar
             </div>
           </div>
         </div>
         <div class="item-cell-price">
           <div class="item-price">
-            {{(item.precio*item.cantidad).toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€
+            {{(item.productUnitPrice).toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€
           </div>
         </div>
       </div>
 
     </div>
 
-    <div class="bottom-content-carrito">
+    <div *ngIf="iCart" class="bottom-content-carrito">
       <div class="bottom-content-carrito-text">
-        Subtotal 3 productos: <span class="bold-600">{{subtotalItems.toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€</span>
+        Subtotal {{iCart.items.length}} productos: <span class="bold-600">{{iCart.totalPrice.toLocaleString('es', {minimumFractionDigits: 2,maximumFractionDigits: 2})}}€</span>
       </div>
     </div>
 
@@ -76,7 +76,7 @@
 </div>
 
 <!-- Pantalla Compra Exitosa -->
-<div *ngIf="cartService.isToggleCart && isSuccessBuy" class="div-desktop-carrito">
+<div *ngIf="cartServiceShow.isToggleCart && isSuccessBuy" class="div-desktop-carrito">
   <div class="breadcrumbs-carrito">
     <div class="breadrumbs-text">
       Inicio
@@ -114,7 +114,7 @@
 </div>
 
 <!-- Pantalla Carrito Vacío -->
-<div *ngIf="cartService.isToggleCart && isNoItems" class="div-desktop-carrito">
+<div *ngIf="cartServiceShow.isToggleCart && isNoItems" class="div-desktop-carrito">
   <div class="breadcrumbs-carrito">
     <div class="breadrumbs-text">
       Inicio
@@ -152,7 +152,7 @@
 </div>
 
 <!-- Pantalla Compra Fallida -->
-<div *ngIf="cartService.isToggleCart && isErrorBuy" class="div-desktop-carrito">
+<div *ngIf="cartServiceShow.isToggleCart && isErrorBuy" class="div-desktop-carrito">
   <div class="breadcrumbs-carrito">
     <div class="breadrumbs-text">
       Inicio

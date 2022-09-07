@@ -71,8 +71,11 @@
         <div class="sections-add-service-button-secondary" (click)="cancelNuevoServicio()">
           Cancelar
         </div>
-        <div class="sections-add-service-button-primary" (click)="addNuevoServicio()">
+        <div *ngIf="!doUpdate"class="sections-add-service-button-primary" (click)="addNuevoServicio()">
           Añadir ahora
+        </div>
+        <div *ngIf="doUpdate"class="sections-add-service-button-primary" (click)="editServicio()">
+          Editar
         </div>
       </div>  
     </div>
@@ -85,22 +88,23 @@
           Nombre del servicio
         </div>
         <div class="add-service-margin-input">
-          <ion-input placeholder="Máximo 130 caracteres" class="padding-input-12 add-service-input"></ion-input>
+          <ion-input *ngIf="isTemplate" disabled="true" [(ngModel)]="title" placeholder="Máximo 130 caracteres" class="padding-input-12 add-service-input"></ion-input>
+          <ion-input *ngIf="!isTemplate" [(ngModel)]="title" placeholder="Máximo 130 caracteres" class="padding-input-12 add-service-input"></ion-input>
         </div>
         <div class="add-service-label-input">
           Descripción
         </div>
         <div class="add-service-margin-input">
-          <ion-textarea placeholder="Máximo 2800 caracteres.&#10;Tip: intenta describir brevemente los beneficios del servicio y para quién está pensado; indica por ejemplo si es para ambos sexos y todas las edades." rows="6" class="padding-input-12 add-service-input"></ion-textarea>
+          <ion-textarea [(ngModel)]="description" placeholder="Máximo 2800 caracteres.&#10;Tip: intenta describir brevemente los beneficios del servicio y para quién está pensado; indica por ejemplo si es para ambos sexos y todas las edades." rows="6" class="padding-input-12 add-service-input"></ion-textarea>
         </div>
         
-        <div class="display-table-100">
+        <div class="display-table-100 add-service-margin-input">
           <div class="add-service-price-cell-left">
             <div class="add-service-label-input">
               Precio
             </div>
             <div class="position-relative">
-              <ion-input placeholder="00.00€" class="padding-input-12 add-service-input add-service-padding-end-input"></ion-input>
+              <ion-input [(ngModel)]="unitPrice" placeholder="00.00€" class="padding-input-12 add-service-input add-service-padding-end-input"></ion-input>
               <div class="modal-add-price-euro">
                 €
               </div>
@@ -112,12 +116,23 @@
             </div>
             <div>
               <ion-item class="no-padding add-service-select-item">
-                <ion-select class="add-service-select" placeholder="Precio por" cancelText="Cancelar" okText="Aceptar">
-                  <ion-select-option value="mes">mes</ion-select-option>
+                <ion-select [(ngModel)]="unitType" class="add-service-select" placeholder="Precio por" cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option *ngFor="let unit of unitTypes" [value]="unit.id">{{unit.name}}</ion-select-option>
                 </ion-select>
               </ion-item>
             </div>
           </div>
+        </div>
+
+        <div class="add-service-label-input">
+          Profesiones
+        </div>
+        <div>
+          <ion-item class="no-padding add-service-select-item">
+            <ion-select [(ngModel)]="sector" class="add-service-select" placeholder="Profesiones" cancelText="Cancelar" okText="Aceptar">
+              <ion-select-option *ngFor="let sector of ProfessionsMapped" [value]="sector.subSectorId">{{sector.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </div>
 
       </div>
@@ -129,11 +144,16 @@
           Peso máximo 3 Mb. Máximo 5 imágenes.
         </div>
         <div>
+          <!--
           <div class="add-service-img-selected">
             <img src="assets/imgs/servicios-prev-6.png" class="add-service-img" />
             <div class="add-service-remove-div">
               <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
             </div>
+          </div>
+          -->
+          <div class="add-service-img-select">
+            <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
           </div>
           <div class="add-service-img-select">
             <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
@@ -153,32 +173,32 @@
   </div>
 
 
-  <div *ngIf="isDisponibles && !isNuevoServicio" class="desktop">
+  <div *ngIf="isDisponibles && !isNuevoServicio && iProducts" class="desktop">
     <div class="servicios-content-items-b">
 
-      <div *ngFor="let servicio of dataServicios; let i = index" class="servicios-content-items-item">
+      <div *ngFor="let servicio of iProducts.available; let i = index" class="servicios-content-items-item">
         <div class="servicios-item-cell-img">
-          <img src="{{servicio.img}}" class="servicios-item-img" />
+          <img src="assets/imgs/servicios-prev.png" class="servicios-item-img" />
         </div>
         <div class="servicios-item-cell-text">
-          <div *ngIf="servicio.publicado" class="servicios-chip-publicado-b">Publicado</div>
+          <div *ngIf="servicio.isPublished" class="servicios-chip-publicado-b">Publicado</div>
           <div class="display-table-100">
             <div class="servicios-item-title">
-              {{servicio.nombre}}
+              {{servicio.title}}
             </div>
             <div class="servicios-item-rating">
-              <img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" />(35 valoraciones)
+              <app-rating [rating]="servicio.avgRating"></app-rating>({{servicio.ratingNumber}} valoraciones)
             </div>
           </div>
           <div class="servicios-item-description">
-            {{servicio.descripcion}}
+            {{servicio.description}}
           </div>
           <div class="servicios-item-bottom">
             <div class="servicios-item-price">
-              {{servicio.precio}}€/{{servicio.precio_por}}
+              {{servicio.productUnitPrice}}€/{{unitTypes[servicio.unitTypeId-1].shorthand}}
             </div>
             <div class="servicios-item-cell-button">
-              <div class="servicios-item-button-secondary" (click)="selectNuevoServicio()">
+              <div class="servicios-item-button-secondary" (click)="selectEditarServicio(servicio)">
                 Editar
               </div>
             </div>
@@ -190,26 +210,26 @@
   </div>
 
 
-  <div *ngIf="isFinalizados && !isNuevoServicio" class="desktop">
+  <div *ngIf="isFinalizados && !isNuevoServicio && iProducts" class="desktop">
     <div class="servicios-content-items-c">
 
-      <div *ngFor="let curso of dataClientesCurso; let i = index" class="servicios-content-items-item">
+      <div *ngFor="let finalizado of iProducts.finished; let i = index" class="servicios-content-items-item">
         <div class="servicios-item-cell-img-b">
-          <img src="{{curso.img}}" class="servicios-item-img-b" />
+          <img src="assets/imgs/servicios-prev.png" class="servicios-item-img-b" />
         </div>
         <div class="servicios-item-cell-text-b">
           <div class="servicios-item-title-b">
-            {{curso.nombre}}
+            {{finalizado.title}}
           </div>
           <div class="servicios-item-subtitle-b">
-            {{curso.cliente}}
+            {{finalizado.clientUsername}}
           </div>
           <div class="servicios-item-padding-bottom">
             <div class="servicios-item-price-b">
-              <span class="servicios-item-price-number-b">{{curso.precio}}€</span>/{{curso.precio_por}}
+              <span class="servicios-item-price-number-b">{{finalizado.productUnitPrice}}€</span>/{{unitTypes[finalizado.unitTypeId-1].shorthand}}
             </div>
             <div class="servicios-item-date-b">
-              {{curso.fecha}}
+              {{finalizado.serviceEndDate}}
             </div>
           </div>
         </div>
@@ -219,32 +239,32 @@
   </div>
 
 
-  <div *ngIf="isCurso && !isNuevoServicio" class="desktop">
+  <div *ngIf="isCurso && !isNuevoServicio && iProducts" class="desktop">
     <div class="servicios-content-items-c">
 
-      <div *ngFor="let finalizado of dataClientesFinalizados; let i = index" class="servicios-content-items-item">
+      <div *ngFor="let curso of iProducts.inProgress; let i = index" class="servicios-content-items-item">
         <div class="display-table-100">
           <div class="servicios-item-cell-img-b">
-            <img src="{{finalizado.img}}" class="servicios-item-img-b" />
+            <img src="assets/imgs/servicios-prev.png" class="servicios-item-img-b" />
           </div>
           <div class="servicios-item-cell-text-b">
             <div class="servicios-item-title-b">
-              {{finalizado.nombre}}
+              {{curso.title}}
             </div>
             <div class="servicios-item-subtitle-b">
-              {{finalizado.cliente}}
+              {{curso.clientUsername}}
             </div>
             <div class="servicios-item-padding-bottom-b">
               <div class="servicios-item-cell-left">
                 <div class="servicios-item-price-b">
-                  <span class="servicios-item-price-number-b">{{finalizado.precio}}€</span>/{{finalizado.precio_por}}
+                  <span class="servicios-item-price-number-b">{{curso.productUnitPrice}}€</span>/{{unitTypes[curso.unitTypeId-1].shorthand}}
                 </div>
                 <div class="servicios-item-date-b">
-                  {{finalizado.fecha}}
+                  {{curso.buyDate}}
                 </div>
               </div>
               <div class="servicios-item-cell-right">
-                <div *ngIf="indexTerminarServicio!=i" class="servicios-item-button-secondary-b" (click)="terminarServicio(i)">
+                <div *ngIf="indexTerminarServicio!=i" class="servicios-item-button-secondary-b" (click)="terminarServicio(i,curso.productId,curso.cartId)">
                   Terminar
                 </div>
               </div>
@@ -292,55 +312,57 @@
     Mis servicios
   </div>
   
-  <div *ngIf="dataServicios.length" class="mobile servicios-sections">
-    <div class="servicios-sections-wrapper">
-      <div class="servicios-sections-cell">
-        <div class="servicios-sections-title" [ngClass]="{'servicios-sections-selected' : isDisponibles}" (click)="selectDisponibles()">
-          Disponibles
+  <ng-conteiner *ngIf="iProducts">
+    <div *ngIf="iProducts.available.length || iProducts.inProgress.length || iProducts.finished.length" class="mobile servicios-sections">
+      <div class="servicios-sections-wrapper">
+        <div class="servicios-sections-cell">
+          <div class="servicios-sections-title" [ngClass]="{'servicios-sections-selected' : isDisponibles}" (click)="selectDisponibles()">
+            Disponibles
+          </div>
         </div>
-      </div>
-      <div class="servicios-sections-cell">
-        <div class="servicios-sections-title" [ngClass]="{'servicios-sections-selected' : isCurso}" (click)="selectCurso()">
-          En curso
+        <div class="servicios-sections-cell">
+          <div class="servicios-sections-title" [ngClass]="{'servicios-sections-selected' : isCurso}" (click)="selectCurso()">
+            En curso
+          </div>
         </div>
-      </div>
-      <div class="servicios-sections-cell">
-        <div class="servicios-sections-title" [ngClass]="{'servicios-sections-selected' : isFinalizados}" (click)="selectFinalizados()">
-          Finalizados
+        <div class="servicios-sections-cell">
+          <div class="servicios-sections-title" [ngClass]="{'servicios-sections-selected' : isFinalizados}" (click)="selectFinalizados()">
+            Finalizados
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-conteiner>
 
-  <div *ngIf="isDisponibles && dataServicios.length" class="mobile div-servicios-content">
+  <div *ngIf="isDisponibles && iProducts" class="mobile div-servicios-content">
     
-    <div *ngFor="let servicio of dataServicios; let i = index" class="servicios-content-wrapper">
+    <div *ngFor="let servicio of iProducts.available; let i = index" class="servicios-content-wrapper">
         <div class="servicios-left servicios-left-padding-a">
-          <img class="servicios-img" src="{{servicio.img}}" />
-          <div class="servicios-edit" (click)="selectNuevoServicio()">
+          <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
+          <div class="servicios-edit" (click)="selectEditarServicio(servicio)">
             Editar
           </div>
         </div>
         <div class="servicios-right">
-          <div *ngIf="servicio.publicado" class="servicios-chip-publicado">Publicado</div>
+          <div *ngIf="servicio.isPublished" class="servicios-chip-publicado">Publicado</div>
           <div class="servicios-right-top">
             <div class="servicios-title">
-              {{servicio.nombre}}
+              {{servicio.title}}
             </div>
             <div class="servicios-price">
-              <span class="servicios-price-number">{{servicio.precio}}€</span>/{{servicio.precio_por}}
+              <span class="servicios-price-number">{{servicio.productUnitPrice}}€</span>/{{unitTypes[servicio.unitTypeId-1].shorthand}}
             </div>
           </div>
           <div class="servicios-right-medium">
             <div class="servicios-rating">
-              <img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" /><img class="servicios-rating-star" src="assets/icon/svg/star.svg" />
+              <app-rating [rating]="servicio.avgRating"></app-rating>
             </div>
             <div class="servicios-rating-number">
-              ({{servicio.num_valoraciones}} valoraciones)
+              ({{servicio.ratingNumber}} valoraciones)
             </div>
           </div>
           <div class="servicios-right-description">
-            {{servicio.descripcion}}
+            {{servicio.description}}
           </div>
         </div>
     </div>
@@ -348,34 +370,34 @@
   </div>
 
 
-  <div *ngIf="isCurso && dataServicios.length" class="mobile div-servicios-content">
+  <div *ngIf="isCurso && iProducts" class="mobile div-servicios-content">
 
-    <div *ngFor="let finalizado of dataClientesFinalizados; let i = index" class="servicios-content-wrapper">
+    <div *ngFor="let curso of iProducts.inProgress; let i = index" class="servicios-content-wrapper">
       <div class="display-table-100">
         <div class="servicios-left servicios-left-padding-b">
-          <img class="servicios-img" src="{{finalizado.img}}" />
+          <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
         </div>
         <div class="servicios-right">
           <div class="servicios-right-top-b">
             <div class="servicios-title">
-              {{finalizado.nombre}}
+              {{curso.title}}
             </div>
             <div class="servicios-price">
-              <span class="servicios-price-number">{{finalizado.precio}}€</span>/{{finalizado.precio_por}}
+              <span class="servicios-price-number">{{curso.productUnitPrice}}€</span>/{{unitTypes[curso.unitTypeId-1].shorthand}}
             </div>
           </div>
           <div class="display-table-100">
             <div class="servicios-client">
-              {{finalizado.cliente}}
+              {{curso.clientUsername}}
             </div>
             <div class="servicios-date">
-              {{finalizado.fecha}}
+              {{curso.buyDate}}
             </div>
           </div>
         </div>
       </div>
 
-      <ion-item-sliding (ionDrag)="logDrag($event,i)" class="margin-slide">
+      <ion-item-sliding (ionDrag)="logDrag($event,i,curso.productId,curso.cartId)" class="margin-slide">
         <ion-item-options side="start">
           <ion-item-option expandable class="slide-expandable">
           </ion-item-option>
@@ -396,27 +418,27 @@
   </div>
 
 
-  <div *ngIf="isFinalizados && dataServicios.length" class="mobile div-servicios-content">
+  <div *ngIf="isFinalizados && iProducts" class="mobile div-servicios-content">
     
-    <div *ngFor="let curso of dataClientesCurso; let i = index" class="servicios-content-wrapper">
+    <div *ngFor="let finalizado of iProducts.finished; let i = index" class="servicios-content-wrapper">
         <div class="servicios-left servicios-left-padding-b">
-          <img class="servicios-img" src="{{curso.img}}" />
+          <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
         </div>
         <div class="servicios-right">
           <div class="servicios-right-top-b">
             <div class="servicios-title">
-              {{curso.nombre}}
+              {{finalizado.title}}
             </div>
             <div class="servicios-price">
-              <span class="servicios-price-number">{{curso.precio}}€</span>/{{curso.precio_por}}
+              <span class="servicios-price-number">{{finalizado.productUnitPrice}}€</span>/{{unitTypes[finalizado.unitTypeId-1].shorthand}}
             </div>
           </div>
           <div class="display-table-100">
             <div class="servicios-client">
-              {{curso.cliente}}
+              {{finalizado.clientUsername}}
             </div>
             <div class="servicios-date">
-              {{curso.fecha}}
+              {{finalizado.serviceEndDate}}
             </div>
           </div>
         </div>
@@ -424,18 +446,19 @@
 
   </div>
   
-  
-  <div *ngIf="!dataServicios.length" class="mobile div-no-service">
-    <div class="div-no-service-svg">
-      <img src="assets/icon/svg/service.svg" class="no-service-svg" />         
+  <ng-container *ngIf="iProducts">
+    <div *ngIf="!iProducts.available.length && !iProducts.inProgress.length && !iProducts.finished.length" class="mobile div-no-service">
+      <div class="div-no-service-svg">
+        <img src="assets/icon/svg/service.svg" class="no-service-svg" />         
+      </div>
+      <div class="div-no-service-title">
+        Ningún servicio disponible
+      </div>
+      <div class="div-no-service-subtitle">
+        Añade tu primer servicio pulsando en "+"
+      </div>
     </div>
-    <div class="div-no-service-title">
-      Ningún servicio disponible
-    </div>
-    <div class="div-no-service-subtitle">
-      Añade tu primer servicio pulsando en "+"
-    </div>
-  </div>
+  </ng-container>
 
   <div class="mobile add-service-floating" (click)="selectNuevoServicio()">
     <img class="add-service-svg" src="assets/icon/svg/plus.svg" />
@@ -617,13 +640,14 @@
         Nombre del servicio
       </div>
       <div class="modal-input-div">
-        <ion-input placeholder="Nombre del servicio" class="padding-input-12 modal-add-name-input"></ion-input>
+        <ion-input *ngIf="isTemplate" disabled="true" [(ngModel)]="title" placeholder="Nombre del servicio" class="padding-input-12 modal-add-name-input"></ion-input>
+        <ion-input *ngIf="!isTemplate" [(ngModel)]="title" placeholder="Nombre del servicio" class="padding-input-12 modal-add-name-input"></ion-input>
       </div>
       <div class="modal-add-description">
         Descripción
       </div>
       <div class="modal-input-div">
-        <ion-textarea placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input"></ion-textarea>
+        <ion-textarea [(ngModel)]="description" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input"></ion-textarea>
       </div>
       <div class="modal-add-separator">
         <div class="modal-add-separator-left">
@@ -631,7 +655,7 @@
             Precio
           </div>
           <div class="position-relative">
-            <ion-input placeholder="Precio" class="padding-input-12 modal-add-price-input add-service-padding-end-input"></ion-input>
+            <ion-input [(ngModel)]="unitPrice" placeholder="Precio" class="padding-input-12 modal-add-price-input add-service-padding-end-input"></ion-input>
             <div class="modal-add-price-euro">
               €
             </div>
@@ -643,12 +667,23 @@
           </div>
           <div>
             <ion-item class="no-padding modal-add-price-select">
-              <ion-select class="price-select" placeholder="Precio por" cancelText="Cancelar" okText="Aceptar">
-                <ion-select-option value="mes">mes</ion-select-option>
+              <ion-select [(ngModel)]="unitType" class="price-select" placeholder="Precio por" cancelText="Cancelar" okText="Aceptar">
+                <ion-select-option *ngFor="let unit of unitTypes" [value]="unit.id">{{unit.name}}</ion-select-option>
               </ion-select>
             </ion-item>
           </div>
         </div>
+      </div>
+
+      <div class="modal-add-name">
+        Profesiones
+      </div>
+      <div class="modal-input-div">
+        <ion-item class="no-padding modal-add-price-select">
+          <ion-select [(ngModel)]="sector" class="price-select" placeholder="Profesiones" cancelText="Cancelar" okText="Aceptar">
+            <ion-select-option *ngFor="let sector of ProfessionsMapped" [value]="sector.subSectorId">{{sector.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
 
       <div class="modal-add-images">
@@ -658,12 +693,19 @@
         Peso máximo de las imágenes 3 Mb (máximo 5 imágenes).
       </div>
       <div class="display-table-100">
+        <!--
         <div class="table-cell-5">
           <div class="div-add-image-selected">
             <img src="assets/imgs/preview2.png" class="add-image-selected" />
             <div class="add-image-remove">
               <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg" />
             </div>
+          </div>
+        </div>
+        -->
+        <div class="table-cell-5">
+          <div class="div-add-image-select">
+            <img src="assets/icon/svg/plus-blue.svg" class="add-image-select" />
           </div>
         </div>
         <div class="table-cell-5">
@@ -690,8 +732,11 @@
 
     </div>
     <div class="modal-add-bottom">
-      <div class="modal-add-button-primary" (click)="addNuevoServicio()">
+      <div *ngIf="!doUpdate" class="modal-add-button-primary" (click)="addNuevoServicio()">
         Añadir ahora
+      </div>
+      <div *ngIf="doUpdate" class="modal-add-button-primary" (click)="editServicio()">
+        Editar
       </div>
       <div class="modal-add-button-secondary" (click)="cancelNuevoServicio()">
         Cancelar

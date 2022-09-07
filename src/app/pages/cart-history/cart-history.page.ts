@@ -15,22 +15,17 @@ import { UserService } from 'src/app/services/user.service';
 import { MailService } from 'src/app/services/mail.service';
 import { ReportService } from 'src/app/services/report.service';
 import { IReport } from 'src/app/models/report.model';
-import { CartService } from './services/cart.service';
+import { CartService } from '../cart/services/cart.service';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.page.html',
-  styleUrls: ['./cart.page.scss'],
+  selector: 'app-cart-history',
+  templateUrl: './cart-history.page.html',
+  styleUrls: ['./cart-history.page.scss'],
 })
-export class CartPage implements OnInit {
-
-  isEditItems:boolean=false;
-  isSuccessBuy:boolean=false;
-  isNoItems:boolean=false;
-  isErrorBuy:boolean=false;
+export class CartHistoryPage implements OnInit {
 
   iCart:any;
-
+  
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -47,59 +42,22 @@ export class CartPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     public cartSvc: CartService
-  ) {
+    ) { 
 
-  }
+    }
 
-
-  ngOnInit() {
-    this.getCart();
-  }
-
-  async getCart() {
-    const { response, error } = await this.cartSvc.get();
-    this.iCart = response;
-  }
-
-  async updateCart(id:number,amount:number) {
-    const { response, error } = await this.cartSvc.update(id,amount);
-    this.getCart();
-  }
-
-  async buyCart() {
-    const { response, error } = await this.cartSvc.buy();
-    var linkCheckout = response;
-    window.location.href = linkCheckout;
-  }
-
-
-  editItems() {
-    this.isEditItems=true;
-  }
-  confirmEdit() {
-    this.isEditItems=false;
-  }
-  buyItems() {
-    this.isSuccessBuy=true;
-    this.isEditItems=false;
-    this.isNoItems=false;
-    this.isErrorBuy=false;
-  }
-  shopItems() {
-    this.isNoItems=true;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-    this.isErrorBuy=false;
-  }
-  errorItems() {
-    this.isErrorBuy=true;
-    this.isNoItems=false;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-  }
+    ngOnInit() {
+      this.getHistoryCart();
+    }
+  
+    async getHistoryCart() {
+      const { response, error } = await this.cartSvc.history();
+      this.iCart = response;
+    }
 
 
   public irA(p: string): void {
     this.router.navigate([p]);
   }
+
 }

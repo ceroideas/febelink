@@ -15,21 +15,15 @@ import { UserService } from 'src/app/services/user.service';
 import { MailService } from 'src/app/services/mail.service';
 import { ReportService } from 'src/app/services/report.service';
 import { IReport } from 'src/app/models/report.model';
-import { CartService } from './services/cart.service';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.page.html',
-  styleUrls: ['./cart.page.scss'],
+  selector: 'app-cart-success',
+  templateUrl: './cart-success.page.html',
+  styleUrls: ['./cart-success.page.scss'],
 })
-export class CartPage implements OnInit {
+export class CartSuccessPage implements OnInit {
 
-  isEditItems:boolean=false;
-  isSuccessBuy:boolean=false;
-  isNoItems:boolean=false;
-  isErrorBuy:boolean=false;
-
-  iCart:any;
+  bought:number;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,61 +39,24 @@ export class CartPage implements OnInit {
     private authSvc:AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
-    public reportSvc: ReportService,
-    public cartSvc: CartService
-  ) {
+    public reportSvc: ReportService
+    ) { 
 
-  }
-
+    }
 
   ngOnInit() {
-    this.getCart();
   }
 
-  async getCart() {
-    const { response, error } = await this.cartSvc.get();
-    this.iCart = response;
+  goToBuscador() {
+    this.irA('menu/todas');
   }
 
-  async updateCart(id:number,amount:number) {
-    const { response, error } = await this.cartSvc.update(id,amount);
-    this.getCart();
+  goToHistory() {
+    this.irA('cart-history');
   }
-
-  async buyCart() {
-    const { response, error } = await this.cartSvc.buy();
-    var linkCheckout = response;
-    window.location.href = linkCheckout;
-  }
-
-
-  editItems() {
-    this.isEditItems=true;
-  }
-  confirmEdit() {
-    this.isEditItems=false;
-  }
-  buyItems() {
-    this.isSuccessBuy=true;
-    this.isEditItems=false;
-    this.isNoItems=false;
-    this.isErrorBuy=false;
-  }
-  shopItems() {
-    this.isNoItems=true;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-    this.isErrorBuy=false;
-  }
-  errorItems() {
-    this.isErrorBuy=true;
-    this.isNoItems=false;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-  }
-
 
   public irA(p: string): void {
     this.router.navigate([p]);
   }
+
 }

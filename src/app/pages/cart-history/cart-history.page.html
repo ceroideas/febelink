@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <app-header-buttons [perfil]="perfil"></app-header-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-content">
+  <div class="mobile">
+    <div class="content-wrapper">
+      <div class="breadcrumbs-text">
+        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg" />
+        Inicio
+        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg" />
+        Historial de compras
+      </div>
+      <div class="content-title">
+        Historial de compras
+      </div>
+
+      <div class="cart-block">
+        <div class="cart-date">
+          19/07/2022
+        </div>
+        <div>
+
+          <div class="div-carrito-item">
+            <div class="div-table-100">
+              <div class="display-cell-middle cell-number" [ngClass]="{'cell-number-edit' : isEditItems}">
+                <div class="cell-number-box">
+                  <span class="cell-number-text">1</span>
+                </div>
+              </div>
+              <div class="display-cell-middle">
+                <div class="cell-item-title">2x1 masajes frenantes</div>
+                <div class="cell-item-subtitle">Fisioterapia nicolas</div>
+              </div>
+              <div class="display-cell-middle cell-price">
+                50,00€
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="desktop">
+    <div class="content-wrapper-b">
+      <div class="breadcrumbs-text-b">
+        Inicio
+        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg-b" />
+        <span class="color-blue">Historial de compras</span>
+      </div>
+      <div class="content-title-b">
+        Historial de compras
+      </div>
+
+      <div class="cart-block-b">
+        <div class="cart-date-b">
+          19/07/2022
+        </div>
+        <div>
+
+          <div class="item-content-carrito">
+            <div class="item-cell-img">
+              <img src="assets/imgs/img-prueba.jpg" class="item-img" />
+            </div>
+            <div class="item-cell-text">
+              <div class="item-title">
+                2x1 masajes dreanntes
+              </div>
+              <div class="item-subtitle">
+                Fisioterapia nicolas
+              </div>
+              <div class="item-div-buttons">
+                <ion-item class="no-padding item-quantity-select">
+                  <ion-label class="quantity-label">Cantidad: </ion-label>
+                  <ion-select class="quantity-select" cancelText="Cancelar" okText="Aceptar"[(ngModel)]="product">
+                    <ion-select-option [value]="1">1</ion-select-option>
+                    <ion-select-option [value]="2">2</ion-select-option>
+                    <ion-select-option [value]="3">3</ion-select-option>
+                    <ion-select-option [value]="4">4</ion-select-option>
+                    <ion-select-option [value]="5">5</ion-select-option>
+                    <ion-select-option [value]="6">6</ion-select-option>
+                    <ion-select-option [value]="7">7</ion-select-option>
+                    <ion-select-option [value]="8">8</ion-select-option>
+                    <ion-select-option [value]="9">9</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+            <div class="item-cell-price">
+              <div class="item-price">
+                50,00€
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

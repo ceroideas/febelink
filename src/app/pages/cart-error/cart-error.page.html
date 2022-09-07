@@ -1,0 +1,28 @@
+<div class="div-carrito-background">
+    
+  <div class="carrito-items position-relative">
+    <div class="close-compra" (click)="goToBuscador()">
+      <img src="assets/icon/svg/close.svg" class="compra-close-svg" />     
+    </div>
+    <div class="div-compra">
+      <div class="div-compra-svg">
+        <img src="assets/icon/svg/close-circle.svg" class="compra-check-svg" />                 
+      </div>
+      <div class="div-compra-title">
+        Ha habido un error en la compra
+      </div>
+      <div class="div-compra-subtitle">
+        Por favor, inténtalo de nuevo
+      </div>
+    </div>
+  </div>
+
+  <div class="carrito-buttons carrito-buttons-height-a">
+    <div class="carrito-button-primary" (click)="goToBuscador()">
+      Seguir comprando
+    </div>
+    <div class="mobile carrito-button-secondary" (click)="goToCart()">
+      Volver al carrito
+    </div>
+  </div>
+</div>
