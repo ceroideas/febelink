@@ -217,10 +217,19 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule)
-  },  {
+  },
+  {
     path: 'servicios',
     loadChildren: () => import('./pages/servicios/servicios.module').then( m => m.ServiciosPageModule)
+  },  {
+    path: 'user-data',
+    loadChildren: () => import('./pages/user-data/user-data.module').then( m => m.UserDataPageModule)
   },
+  {
+    path: 'user-data-personal',
+    loadChildren: () => import('./pages/user-data-personal/user-data-personal.module').then( m => m.UserDataPersonalPageModule)
+  },
+
 
 
 ];
