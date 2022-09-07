@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CartServiceShow {
 
-  private isToggleCart:boolean=false;
+  public isToggleCart:boolean=false;
 
   constructor() { }
 

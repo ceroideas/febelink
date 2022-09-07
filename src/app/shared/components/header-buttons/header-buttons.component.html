@@ -30,7 +30,7 @@
             <ion-img class="desktop" src="assets/icon/svg/chat_header.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu desktop">{{ 'menu.tabs.chat' | translate }}</ion-label>
           </ion-item>
-          <ion-item (click)="irA('/cart')" class="ion-no-padding desktop pointer" lines="none"> 
+          <ion-item (click)="cartServiceShow.isToggleCart = !cartServiceShow.isToggleCart" class="ion-no-padding desktop pointer" lines="none"> 
             <ion-img src="assets/icon/svg/cart_icon.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.carro' | translate }}</ion-label>   
           </ion-item>

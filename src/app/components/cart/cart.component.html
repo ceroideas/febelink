@@ -1,5 +1,6 @@
 <!-- Pantalla Contenido Carrito -->
-<div *ngIf="cartServiceShow.isToggleCart && !isSuccessBuy && !isNoItems && !isErrorBuy" class="div-desktop-carrito">
+<ng-container *ngIf="cartServiceShow.isToggleCart && iCart">
+<div *ngIf="iCart.items.length>0" class="div-desktop-carrito">
   <div class="breadcrumbs-carrito">
     <div class="breadrumbs-text">
       Inicio
@@ -74,117 +75,45 @@
 
   </div>
 </div>
+</ng-container>
 
-<!-- Pantalla Compra Exitosa -->
-<div *ngIf="cartServiceShow.isToggleCart && isSuccessBuy" class="div-desktop-carrito">
-  <div class="breadcrumbs-carrito">
-    <div class="breadrumbs-text">
-      Inicio
-      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
-      <span class="color-blue">Carrito</span>
-    </div>
-  </div>
-  <div class="content-carrito">
-    <div class="padding-top-content-success">
-      <div class="top-content-title">
-        <div class="top-content-title-text">
-          Carrito
-        </div>
-      </div>
-      <div class="top-content-buttons">
-        <div class="top-content-buttons-primary" (click)="shopItems()">
-          Seguir comprando
-        </div>
-      </div>
-    </div>
-
-    <div class="div-compra">
-      <div class="div-compra-svg">
-        <img src="assets/icon/svg/check-circle.svg" class="compra-check-svg" />                 
-      </div>
-      <div class="div-compra-title">
-        Compra realizada con éxito
-      </div>
-      <div class="div-compra-subtitle">
-        Pronto recibirás una confirmación en tu correo electrónico
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <!-- Pantalla Carrito Vacío -->
-<div *ngIf="cartServiceShow.isToggleCart && isNoItems" class="div-desktop-carrito">
-  <div class="breadcrumbs-carrito">
-    <div class="breadrumbs-text">
-      Inicio
-      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
-      <span class="color-blue">Carrito</span>
+<ng-container *ngIf="cartServiceShow.isToggleCart && iCart">
+  <div *ngIf="iCart.items.length==0" class="div-desktop-carrito">
+    <div class="breadcrumbs-carrito">
+      <div class="breadrumbs-text">
+        Inicio
+        <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
+        <span class="color-blue">Carrito</span>
+      </div>
     </div>
-  </div>
-  <div class="content-carrito">
-    <div class="padding-top-content-success">
-      <div class="top-content-title">
-        <div class="top-content-title-text">
-          Carrito
+    <div class="content-carrito">
+      <div class="padding-top-content-success">
+        <div class="top-content-title">
+          <div class="top-content-title-text">
+            Carrito
+          </div>
+        </div>
+        <div class="top-content-buttons">
+          <div class="top-content-buttons-secondary" (click)="goToBuscador()">
+            Seguir comprando
+          </div>
         </div>
       </div>
-      <div class="top-content-buttons">
-        <div class="top-content-buttons-secondary" (click)="errorItems()">
-          Seguir comprando
+
+      <div class="div-compra">
+        <div class="div-no-items-svg">
+          <img src="assets/icon/svg/cart.svg" class="no-items-svg" />         
+        </div>
+        <div class="div-no-items-title">
+          Tu carrito está vacío
+        </div>
+        <div class="div-no-items-subtitle">
+          Añade productos y servicios a tu carrito
         </div>
       </div>
-    </div>
 
-    <div class="div-compra">
-      <div class="div-no-items-svg">
-        <img src="assets/icon/svg/cart.svg" class="no-items-svg" />         
-      </div>
-      <div class="div-no-items-title">
-        Tu carrito está vacío
-      </div>
-      <div class="div-no-items-subtitle">
-        Añade productos y servicios a tu carrito
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- Pantalla Compra Fallida -->
-<div *ngIf="cartServiceShow.isToggleCart && isErrorBuy" class="div-desktop-carrito">
-  <div class="breadcrumbs-carrito">
-    <div class="breadrumbs-text">
-      Inicio
-      <img class="breadcrumbs-svg" src="assets/icon/svg/chevron-right.svg" />
-      <span class="color-blue">Carrito</span>
     </div>
   </div>
-  <div class="content-carrito">
-    <div class="padding-top-content-success">
-      <div class="top-content-title">
-        <div class="top-content-title-text">
-          Carrito
-        </div>
-      </div>
-      <div class="top-content-buttons">
-        <div class="top-content-buttons-primary" (click)="restartItems()">
-          Seguir comprando
-        </div>
-      </div>
-    </div>
-
-    <div class="div-compra">
-      <div class="div-compra-svg">
-        <img src="assets/icon/svg/close-circle.svg" class="compra-check-svg" />                 
-      </div>
-      <div class="div-compra-title">
-        Ha habido un error en la compra
-      </div>
-      <div class="div-compra-subtitle">
-        Por favor, inténtalo de nuevo
-      </div>
-    </div>
-
-  </div>
-</div>
+</ng-container>

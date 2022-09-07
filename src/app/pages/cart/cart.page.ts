@@ -25,9 +25,6 @@ import { CartService } from './services/cart.service';
 export class CartPage implements OnInit {
 
   isEditItems:boolean=false;
-  isSuccessBuy:boolean=false;
-  isNoItems:boolean=false;
-  isErrorBuy:boolean=false;
 
   iCart:any;
 
@@ -79,25 +76,12 @@ export class CartPage implements OnInit {
   confirmEdit() {
     this.isEditItems=false;
   }
-  buyItems() {
-    this.isSuccessBuy=true;
-    this.isEditItems=false;
-    this.isNoItems=false;
-    this.isErrorBuy=false;
-  }
-  shopItems() {
-    this.isNoItems=true;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-    this.isErrorBuy=false;
-  }
-  errorItems() {
-    this.isErrorBuy=true;
-    this.isNoItems=false;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-  }
 
+
+
+  goToBuscador() {
+    this.irA('menu/todas');
+  }
 
   public irA(p: string): void {
     this.router.navigate([p]);
