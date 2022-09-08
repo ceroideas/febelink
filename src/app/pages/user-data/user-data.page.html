@@ -64,7 +64,7 @@
             <div class="servicios-sections-right">
               <div class="servicios-sections-cell-b">
                 <div class="servicios-sections-title-b">
-                  <ion-button expand class="botoneditar" type="submit">Editar</ion-button>
+                  <ion-button expand class="botoneditar" (click)="onClickSubmit()" type="submit">Editar</ion-button>
                 </div>
               </div>
             </div>
@@ -117,15 +117,17 @@
                       <ion-label position="stacked" class="text_label_form">Contraseña</ion-label>
                       <ion-input formControlName="password" placeholder="Contraseña" type="text"
                                  class="padding-input-12 userform-input-mobile"></ion-input>
+                                 <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Repetir contraseña</ion-label>
-                      <ion-input formControlName="cambiopass" placeholder="Repetir contraseña" type="text"
+                      <ion-input formControlName="changePass" placeholder="Repetir contraseña" type="text"
                                  class="padding-input-12 userform-input-mobile"></ion-input>
+                                 <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Sobre mí</ion-label>
-                      <ion-textarea formControlName="aboutme" rows="6" cols="20"
+                      <ion-textarea formControlName="description" rows="6" cols="20"
                                     class="padding-input-12 userform-input-mobile" placeholder="Máximo 500 caracteres">
                       </ion-textarea>
                     </ion-item>
@@ -168,7 +170,7 @@
             <ion-col size="3">
               <ion-item lines="none">
                 <ion-label position="stacked" class="text_label_form">Usuario</ion-label>
-                <ion-input formControlName="email" placeholder="Usuario" color="input" type="text"
+                <ion-input formControlName="username" placeholder="Usuario" color="input" type="text"
                            class="padding-input-12 userform-input-desktop"></ion-input>
               </ion-item>
               <ion-item lines="none">
@@ -177,15 +179,15 @@
                            class="padding-input-12 userform-input-desktop"></ion-input>
               </ion-item>
               <ion-item lines="none">
-                <ion-label position="stacked" class="text_label_form">Web</ion-label>
-                <ion-input formControlName="web" placeholder="Web" type="text"
-                           class="padding-input-12 userform-input-desktop"></ion-input>
+                <ion-label position="stacked" class="text_label_form">Repetir contraseña</ion-label>
+                <ion-input formControlName="changePass" placeholder="Repetir contraseña" type="text"
+                           class="padding-input-12 userform-input-mobile"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="5">
               <ion-item lines="none">
                 <ion-label position="stacked" class="text_label_form">Sobre mí</ion-label>
-                <ion-textarea formControlName="aboutme" rows="6" cols="70"
+                <ion-textarea formControlName="description" rows="6" cols="70"
                               class="padding-input-12 userform-input-desktop" placeholder="Máximo 500 caracteres">
                 </ion-textarea>
               </ion-item>
@@ -200,10 +202,10 @@
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" type="submit">Guardar cambios</ion-button>
+        <ion-button expand class="botonf1" (click)="onClickSubmit()" type="submit">Guardar cambios</ion-button>
       </ion-row>
       <ion-row class="ion-padding paddingf2">
-        <ion-button expand class="botonf2" type="submit">Cancelar</ion-button>
+        <ion-button routerLink="/posts/oracles" expand class="botonf2" type="submit">Cancelar</ion-button>
       </ion-row>
     </ion-grid>
   </ion-toolbar>

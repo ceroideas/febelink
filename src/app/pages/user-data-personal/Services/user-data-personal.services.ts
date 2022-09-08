@@ -4,7 +4,7 @@ import {HttpService, IHttpService} from 'src/app/services/http.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UserDataService {
+export class UserDataPersonalService {
 
   constructor(
     private http: HttpService
@@ -15,7 +15,7 @@ export class UserDataService {
     return this.http.get('user/info');
   }
 
-  async updateBasicInfoUserData(userData: any): Promise<IHttpService> {
-    return this.http.post('user/update', JSON.stringify(userData));
+  async updatePersonalDataUser(userData: any): Promise<IHttpService> {
+    return this.http.put('user/update/personal', userData);
   }
 }

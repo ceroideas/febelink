@@ -63,7 +63,7 @@
             <div class="servicios-sections-right">
               <div class="servicios-sections-cell-b">
                 <div class="servicios-sections-title-b">
-                  <ion-button expand class="botoneditar" type="submit">Editar</ion-button>
+                  <ion-button expand class="botoneditar" (click)="onClickSubmit()" type="submit">Editar</ion-button>
                 </div>
               </div>
             </div>
@@ -79,6 +79,7 @@
               <ion-row size="12">
                 <ion-col size="12">
                   <form *ngIf="form"
+                  #profileForm="ngForm" name="profileForm" id="profileForm"
                   [formGroup]="form"
                   (ngSubmit)="submitForm()">
                     <ion-item lines="none">
@@ -131,6 +132,7 @@
     <ion-row class="desktop" size="12">
       <ion-grid>
         <form *ngIf="form"
+            #profileForm="ngForm" name="profileForm" id="profileForm"
             [formGroup]="form"
             (ngSubmit)="submitForm()">
         <ion-row class="row_form" size="8">
@@ -189,10 +191,10 @@
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" type="submit">Guardar cambios</ion-button>
+        <ion-button expand class="botonf1" form="form1" (click)="onClickSubmit()" type="submit">Guardar cambios</ion-button>
       </ion-row>
       <ion-row class="ion-padding paddingf2">
-        <ion-button expand class="botonf2" type="submit">Cancelar</ion-button>
+        <ion-button routerLink="/posts/oracles" expand class="botonf2" type="submit">Cancelar</ion-button>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
