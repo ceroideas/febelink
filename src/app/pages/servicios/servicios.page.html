@@ -239,8 +239,10 @@
           </div>
           <div class="servicios-item-padding-bottom">
             <div class="servicios-item-price-b">
-              <span class="servicios-item-price-number-b">{{finalizado.productUnitPrice}}
-                €</span>/{{unitTypes[finalizado.unitTypeId - 1].shorthand}}
+              <span class="servicios-item-price-number-b">
+                {{finalizado.productUnitPrice}}€</span>
+              <ng-container *ngIf="finalizado.unitTypeId">
+                /{{unitTypes[finalizado.unitTypeId - 1].shorthand}}</ng-container>
             </div>
             <div class="servicios-item-date-b">
               {{finalizado.serviceEndDate}}
@@ -271,8 +273,9 @@
             <div class="servicios-item-padding-bottom-b">
               <div class="servicios-item-cell-left">
                 <div class="servicios-item-price-b">
-                  <span class="servicios-item-price-number-b">{{curso.productUnitPrice}}
-                    €</span>/{{unitTypes[curso.unitTypeId - 1].shorthand}}
+                  <span class="servicios-item-price-number-b">
+                    {{curso.productUnitPrice}}€</span>
+                  <ng-container *ngIf="curso.unitTypeId">/{{unitTypes[curso.unitTypeId - 1].shorthand}}</ng-container>
                 </div>
                 <div class="servicios-item-date-b">
                   {{curso.buyDate}}
@@ -402,8 +405,9 @@
               {{curso.title}}
             </div>
             <div class="servicios-price">
-              <span class="servicios-price-number">{{curso.productUnitPrice}}
-                €</span>/{{unitTypes[curso.unitTypeId - 1].shorthand}}
+              <span class="servicios-price-number">
+                {{curso.productUnitPrice}}€</span>
+              <ng-container *ngIf="curso.unitTypeId">/{{unitTypes[curso.unitTypeId - 1].shorthand}}</ng-container>
             </div>
           </div>
           <div class="display-table-100">
@@ -452,8 +456,10 @@
             {{finalizado.title}}
           </div>
           <div class="servicios-price">
-            <span class="servicios-price-number">{{finalizado.productUnitPrice}}
-              €</span>/{{unitTypes[finalizado.unitTypeId - 1].shorthand}}
+            <span class="servicios-price-number">
+              {{finalizado.productUnitPrice}}€</span>
+            <ng-container *ngIf="finalizado.unitTypeId">
+              /{{unitTypes[finalizado.unitTypeId - 1].shorthand}}</ng-container>
           </div>
         </div>
         <div class="display-table-100">
