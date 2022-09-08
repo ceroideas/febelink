@@ -234,7 +234,11 @@ const routes: Routes = [
     path: 'cart/error',
     loadChildren: () => import('./pages/cart-error/cart-error.module').then(m => m.CartErrorPageModule)
   },
-
+  {
+    path: 'detalle/:id',
+    loadChildren: () =>
+      import('./pages/detalle-busqueda/detalle-busqueda.module').then((m) => m.DetalleBusquedaPageModule)
+  }
 
 ];
 
