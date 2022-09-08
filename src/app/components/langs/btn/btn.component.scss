@@ -5,6 +5,21 @@ ion-button {
     --padding-start: 0;
     --padding-end: 0;
 }
+.button-full {
+    width:100%;display: table;background: #F9FAFB;
+}
+.button-lang-text {
+    display:inline-block;padding-right:14px;font-weight: 400;font-size: 14px;line-height: 125%;color: #6B7280;text-transform:uppercase;
+}
+.button-lang-svg {
+    width:12px;position:relative;top:-2px;
+}
+.lang-cell {
+    display: table-cell;text-transform: inherit;text-align: left;vertical-align:middle;
+}
+.lang-cell-b {
+    display: table-cell;text-transform: inherit;text-align: right;vertical-align:middle;width:12px;
+}
 
 .idiomaMin{
     text-transform: capitalize;

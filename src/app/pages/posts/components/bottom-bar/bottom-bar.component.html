@@ -1,6 +1,24 @@
+<div class="table-main-reactions">
+  <div (click)="react( $event )" class="react-left">
+    <img src="assets/icon/svg/heart.svg" class="react-left-svg" />{{ 'pages.posts.react' | translate }}
+  </div>
+  <div (click)="share( $event )" class="react-middle">
+    <img src="assets/icon/svg/share.svg" class="react-middle-svg" />{{ 'common.share' | translate }}
+  </div>
+  <div (click)="watch()" *ngIf="showSeePost" class="react-right-a">
+    <img src="assets/icon/svg/eye.svg" class="react-right-a-svg" />{{ 'pages.posts.see' | translate }}
+  </div>
+  <div class="react-right-b">
+    <app-donate-button *ngIf="!showSeePost"
+        [user]="post"
+      ></app-donate-button>
+  </div>
+</div>
+
+<!--
 <ion-grid class="marg-s10 marg-e10 no-paddingline line-t2">
   <ion-row class="pad-b5">
-    <!-- Ract -->
+    
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="react( $event )">
       <ion-row class="align-center vertical-content">
         <ion-icon class="font-30 pointer" [src]="reacts.img( this.post?.reacted )"></ion-icon>
@@ -11,7 +29,6 @@
       </ion-row>
     </ion-col>
 
-    <!-- Share -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="share( $event )">
       <ion-row class="align-center vertical-content">
         <ion-icon name="share-social" class="marg-t5 marg-b5 font-20 pointer"></ion-icon>
@@ -22,7 +39,6 @@
       </ion-row>
     </ion-col>
 
-    <!-- Chat -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="chat()" *ngIf="showChat">
       <ion-row class="align-center">
         <ion-icon name="chatbubbles" class="marg-t5 marg-b5 font-20 pointer"></ion-icon>
@@ -32,7 +48,6 @@
       </ion-row>
     </ion-col>
 
-    <!-- See Post -->
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="watch()" *ngIf="showSeePost">
       <ion-row class="align-center">
         <ion-icon class="font-30 pointer" src="assets/icon/svg/see_post.svg"></ion-icon>
@@ -42,7 +57,6 @@
       </ion-row>
     </ion-col>
 
-    <!-- Give Tip -->
     <ion-col
       [size]="showChat ? 3 : 4"
       class="no-padding align-center"
@@ -56,4 +70,4 @@
     </ion-col>
   </ion-row>
 </ion-grid>
-  
+-->
