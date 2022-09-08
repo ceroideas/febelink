@@ -335,36 +335,38 @@
   </ng-conteiner>
 
   <div *ngIf="isDisponibles && iProducts" class="mobile div-servicios-content">
-    
+
     <div *ngFor="let servicio of iProducts.available; let i = index" class="servicios-content-wrapper">
-        <div class="servicios-left servicios-left-padding-a">
-          <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
-          <div class="servicios-edit" (click)="selectEditarServicio(servicio)">
-            Editar
+      <div class="servicios-left servicios-left-padding-a">
+        <img class="servicios-img" src="assets/imgs/servicios-prev.png"/>
+        <div class="servicios-edit" (click)="selectEditarServicio(servicio)">
+          Editar
+        </div>
+      </div>
+      <div class="servicios-right">
+        <div *ngIf="servicio.isPublished" class="servicios-chip-publicado">Publicado</div>
+        <div class="servicios-right-top">
+          <div class="servicios-title">
+            {{servicio.title}}
+          </div>
+          <div class="servicios-price">
+            <span class="servicios-price-number">
+              {{servicio.productUnitPrice}}€</span>
+            <ng-container *ngIf="servicio.unitTypeId">/{{unitTypes[servicio.unitTypeId - 1].shorthand}}</ng-container>
           </div>
         </div>
-        <div class="servicios-right">
-          <div *ngIf="servicio.isPublished" class="servicios-chip-publicado">Publicado</div>
-          <div class="servicios-right-top">
-            <div class="servicios-title">
-              {{servicio.title}}
-            </div>
-            <div class="servicios-price">
-              <span class="servicios-price-number">{{servicio.productUnitPrice}}€</span>/{{unitTypes[servicio.unitTypeId-1].shorthand}}
-            </div>
+        <div class="servicios-right-medium">
+          <div class="servicios-rating">
+            <app-rating [rating]="servicio.avgRating"></app-rating>
           </div>
-          <div class="servicios-right-medium">
-            <div class="servicios-rating">
-              <app-rating [rating]="servicio.avgRating"></app-rating>
-            </div>
-            <div class="servicios-rating-number">
-              ({{servicio.ratingNumber}} valoraciones)
-            </div>
-          </div>
-          <div class="servicios-right-description">
-            {{servicio.description}}
+          <div class="servicios-rating-number">
+            ({{servicio.ratingNumber}} valoraciones)
           </div>
         </div>
+        <div class="servicios-right-description">
+          {{servicio.description}}
+        </div>
+      </div>
     </div>
 
   </div>
@@ -419,29 +421,30 @@
 
 
   <div *ngIf="isFinalizados && iProducts" class="mobile div-servicios-content">
-    
+
     <div *ngFor="let finalizado of iProducts.finished; let i = index" class="servicios-content-wrapper">
-        <div class="servicios-left servicios-left-padding-b">
-          <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
-        </div>
-        <div class="servicios-right">
-          <div class="servicios-right-top-b">
-            <div class="servicios-title">
-              {{finalizado.title}}
-            </div>
-            <div class="servicios-price">
-              <span class="servicios-price-number">{{finalizado.productUnitPrice}}€</span>/{{unitTypes[finalizado.unitTypeId-1].shorthand}}
-            </div>
+      <div class="servicios-left servicios-left-padding-b">
+        <img class="servicios-img" src="assets/imgs/servicios-prev.png"/>
+      </div>
+      <div class="servicios-right">
+        <div class="servicios-right-top-b">
+          <div class="servicios-title">
+            {{finalizado.title}}
           </div>
-          <div class="display-table-100">
-            <div class="servicios-client">
-              {{finalizado.clientUsername}}
-            </div>
-            <div class="servicios-date">
-              {{finalizado.serviceEndDate}}
-            </div>
+          <div class="servicios-price">
+            <span class="servicios-price-number">{{finalizado.productUnitPrice}}
+              €</span>/{{unitTypes[finalizado.unitTypeId - 1].shorthand}}
           </div>
         </div>
+        <div class="display-table-100">
+          <div class="servicios-client">
+            {{finalizado.clientUsername}}
+          </div>
+          <div class="servicios-date">
+            {{finalizado.serviceEndDate}}
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
