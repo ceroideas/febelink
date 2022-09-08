@@ -1,83 +1,70 @@
-<ion-header>
-  <ion-toolbar color="header">
-    <ion-buttons buttons-start slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-
-    <app-header-buttons
-      [perfil]="currentUser"
-      currentTab="3"
-    ></app-header-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="doRefreshOffers($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <!-- List of chats -->
-      <div class="limit-size">      
-        <div class="content-filter">
-          <div class="autocomplete">
-            <ion-searchbar #mysearch
-              placeholder="{{ 'common.searchPlaceholder' | translate }}"
-              debounce="500"
-              id="searchChat"
-            >
-            </ion-searchbar>
-          </div>
-        </div>
+  <div class="limit-size">
+    <div class="content-filter">
+      <div class="autocomplete">
+        <ion-searchbar #mysearch
+                       placeholder="{{ 'common.searchPlaceholder' | translate }}"
+                       debounce="500"
+                       id="searchChat"
+        >
+        </ion-searchbar>
+      </div>
+    </div>
 
-        <ion-list *ngIf="!isLoading" class="results-list">
+    <ion-list *ngIf="!isLoading" class="results-list">
 
-            <ion-item tappable lines="none"
-            *ngFor="let offer of offers | filter:mysearch.value" (click)="onClickSearchHandler(offer)"
-          >
-            <ion-avatar slot="start">
-              <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen" />
-              <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
-              <ion-badge color="danger">{{getUnreadMessages(offer)}}</ion-badge>
-            </ion-avatar>
-            <ion-label>
-              <div class="flex">
+      <ion-item tappable lines="none"
+                *ngFor="let offer of offers | filter:mysearch.value" (click)="onClickSearchHandler(offer)"
+      >
+        <ion-avatar slot="start">
+          <img src="assets/imgs/4.jpg" *ngIf="!offer?.imagen"/>
+          <ion-img [src]="offer?.imagen" *ngIf="offer?.imagen" appImgErrorFallback></ion-img>
+          <ion-badge color="danger">{{getUnreadMessages(offer)}}</ion-badge>
+        </ion-avatar>
+        <ion-label>
+          <div class="flex">
 
-                <h2><strong>{{offer?.nombre}}</strong></h2>
-  
-                <ng-template [ngIf]="offer?.demanda" [ngIfElse]="offerReceived">
-                  <div class="ion-text-end">
+            <h2><strong>{{offer?.nombre}}</strong></h2>
+
+            <ng-template [ngIf]="offer?.demanda" [ngIfElse]="offerReceived">
+              <div class="ion-text-end">
                     <span
                       class="estado"
                       [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
-                      >{{offer?.estado_oferta}}</span>
-                  </div>
-                </ng-template>
-                <ng-template #offerReceived>
+                    >{{offer?.estado_oferta}}</span>
+              </div>
+            </ng-template>
+            <ng-template #offerReceived>
                   <span
                     class="estado"
                     [style]="{'background-color': getOfferBackgroundColor(offer?.estado)}"
-                    >{{ getOfferText(offer?.estado) }}</span>
-                </ng-template>
-              
-              </div>
+                  >{{ getOfferText(offer?.estado) }}</span>
+            </ng-template>
 
-              <p>{{offer?.demanda}}</p>
-              <p class="desc">{{offer?.descripcion}}</p>
-            </ion-label>
-            <div slot="end" class="ion-text-end">
+          </div>
 
-            </div>
-            <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();" class="editBtn">
-              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-            </ion-button>
-            <ion-button color="danger" fill="clear" (click)="deleteItem(offer); $event.stopPropagation();">
-              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-list>
-      </div>
+          <p>{{offer?.demanda}}</p>
+          <p class="desc">{{offer?.descripcion}}</p>
+        </ion-label>
+        <div slot="end" class="ion-text-end">
+
+        </div>
+        <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear"
+                    (click)="editItem(offer); $event.stopPropagation();" class="editBtn">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" fill="clear" (click)="deleteItem(offer); $event.stopPropagation();">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
   <!-- END List of chats -->
-       
+  <app-footer></app-footer>
 </ion-content>
 
-<app-footer></app-footer>

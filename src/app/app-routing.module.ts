@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, Router, RouterModule, Routes} from '@angular/router';
+import {environment} from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'posts/oracles', pathMatch: 'full' },
+  {path: '', redirectTo: 'posts/oracles', pathMatch: 'full'},
   {
     path: 'menu',
     loadChildren: () =>
@@ -189,18 +189,18 @@ const routes: Routes = [
   },
   {
     path: 'success/:ref',
-    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+    loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
   },
   {
     path: 'success',
-    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+    loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
   },
   /**
    * Email Verified from mailbox
    */
   {
     path: 'email-verified/:id',
-    loadChildren: () => import('./pages/email-verified/email-verified.module').then( m => m.EmailVerifiedPageModule)
+    loadChildren: () => import('./pages/email-verified/email-verified.module').then(m => m.EmailVerifiedPageModule)
   },
   // If no id, redirect to home
   {
@@ -208,40 +208,39 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminPageModule)
   },
   {
     path: 'posts',
-    loadChildren: () => import('./pages/posts/post.module').then( m => m.PostPageModule)
+    loadChildren: () => import('./pages/posts/post.module').then(m => m.PostPageModule)
   },
   {
     path: 'cart',
-    loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule)
+    loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartPageModule)
   },
   {
     path: 'servicios',
-    loadChildren: () => import('./pages/servicios/servicios.module').then( m => m.ServiciosPageModule)
+    loadChildren: () => import('./pages/servicios/servicios.module').then(m => m.ServiciosPageModule)
   },
   {
-    path: 'cart-history',
-    loadChildren: () => import('./pages/cart-history/cart-history.module').then( m => m.CartHistoryPageModule)
+    path: 'cart/history',
+    loadChildren: () => import('./pages/cart-history/cart-history.module').then(m => m.CartHistoryPageModule)
   },
   {
     path: 'cart/success',
-    loadChildren: () => import('./pages/cart-success/cart-success.module').then( m => m.CartSuccessPageModule)
+    loadChildren: () => import('./pages/cart-success/cart-success.module').then(m => m.CartSuccessPageModule)
   },
   {
     path: 'cart/error',
-    loadChildren: () => import('./pages/cart-error/cart-error.module').then( m => m.CartErrorPageModule)
+    loadChildren: () => import('./pages/cart-error/cart-error.module').then(m => m.CartErrorPageModule)
   },
-
 
 
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}),
   ],
   exports: [RouterModule],
 })
@@ -250,8 +249,8 @@ export class AppRoutingModule {
   constructor(private router: Router) {
     /**
      * To prevent 'Error: Cannot match any routes' when wrong url
-     
-    this.router.errorHandler = (error: any) => {
+
+     this.router.errorHandler = (error: any) => {
       // Redirect to Main Page | Home Page
       this.router.navigate([ '/' + environment.HOME_PAGE ]);
     }*/
