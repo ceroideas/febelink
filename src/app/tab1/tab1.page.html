@@ -1,33 +1,3 @@
-<ion-header>
-  <ion-toolbar class="header_buttons" color="header">
-    <ion-buttons buttons-start slot="start">
-        <ion-menu-button class="desktop_menu_avatar">
-            <ion-img class="avatarmenu"
-              id="menuImg"
-              [src]="
-                currentUser?.logo !== null
-                  ? currentUser?.logo
-                  : 'https://api.febelink.com/storage/users/default.png'
-              "
-              (error)="onImgError($event)"
-              alt="Menu profile picture">
-          </ion-img>
-        </ion-menu-button>  
-        <ion-img *ngIf="perfil" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
-        <ion-img *ngIf="perfil" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
-    </ion-buttons>
-    <app-header-buttons class="buttons_flex" [perfil]="perfil" currentTab="1"></app-header-buttons>
-    <ion-buttons buttons-start slot="end">
-      <ion-img style="margin-left:5em;"
-      tappable 
-      src="assets/imgs/logo.png" 
-      alt="Febelink logo" 
-      (click)="irA('/' + homePage)"
-      class="ion-margin logo desktop"></ion-img> 
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <ion-grid fixed>
     <ion-row class="ion-align-items-center">
@@ -47,10 +17,10 @@
         <!-- Search engine. -->
         <div class="content-filter" *ngIf="!isLoading">
           <app-assistant-search
-            #search
-            clase="autocomplete"
-            (OnGotKeys)="OnGotKeys( $event )"
-            (OnEnter)="OnEnter()"
+              #search
+              clase="autocomplete"
+              (OnGotKeys)="OnGotKeys( $event )"
+              (OnEnter)="OnEnter()"
           ></app-assistant-search>
         </div>
       </ion-col>
@@ -64,9 +34,9 @@
       </ion-row>
       <ion-row class="flexed-row">
         <section>
-          <img src="assets/imgs/home/services/service1.png" alt="service1" />
+          <img src="assets/imgs/home/services/service1.png" alt="service1"/>
           <h3>Crea tu perfil de usuario</h3>
-          <br />
+          <br/>
           <p>
             Date de alta de forma rápida y sencilla con tan sólo un click en
           </p>
@@ -83,7 +53,7 @@
           </a>
         </section>
         <section>
-          <img src="assets/imgs/home/services/service2.png" alt="service2" />
+          <img src="assets/imgs/home/services/service2.png" alt="service2"/>
           <h3>Publica tu búsqueda y recibe múltiples respuestas</h3>
           <p>
             Selecciona el límite de respuestas que quieres recibir o recibe
@@ -91,7 +61,7 @@
           </p>
         </section>
         <section>
-          <img src="assets/imgs/home/services/service3.png" alt="service3" />
+          <img src="assets/imgs/home/services/service3.png" alt="service3"/>
           <h3>Responde a otros usuarios, comparte y valora</h3>
           <p>Colabora con la comunidad y recibe su apoyo.</p>
         </section>
@@ -113,16 +83,16 @@
       </ion-row>
       <ion-row class="flexed-row">
         <section>
-          <img src="assets/imgs/home/whyUse/whyUse1.png" alt="whyUse1" />
+          <img src="assets/imgs/home/whyUse/whyUse1.png" alt="whyUse1"/>
           <h3>Date de alta gratis</h3>
           <p class="pad-s5">
             Encontrar los mejores profesionales de confianza. Encuentra el mejor
-            abogado, marmolista, carpintero, asesoría, informático y mucho más.
+            abogado, marmolista, carpintero, asesoría, informático y mucxho más.
             Conseguir clientes en internet.
           </p>
         </section>
         <section>
-          <img src="assets/imgs/home/whyUse/whyUse2.png" alt="whyUse2" />
+          <img src="assets/imgs/home/whyUse/whyUse2.png" alt="whyUse2"/>
           <h3>Tienes el control</h3>
           <p class="pad-s5">
             Tendrás en tu mano el poder de decisión. Elige al profesional que
@@ -130,7 +100,7 @@
           </p>
         </section>
         <section>
-          <img src="assets/imgs/home/whyUse/whyUse3.png" alt="whyUse3" />
+          <img src="assets/imgs/home/whyUse/whyUse3.png" alt="whyUse3"/>
           <h3>Rapidísimo</h3>
           <p class="pad-s5">
             Encontrar a tu profesional es más fácil que nunca. Obtén respuestas
@@ -149,15 +119,18 @@
       <ion-row class="flexed-row">
         <section>
           <p>
-            <ion-icon name="checkmark-outline"></ion-icon> Controla tu solicitud
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Controla tu solicitud
             donde y cuando quieras.
           </p>
           <p>
-            <ion-icon name="checkmark-outline"></ion-icon> Responde, Chatea y
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Responde, Chatea y
             obtén la información de los usuarios.
           </p>
           <p>
-            <ion-icon name="checkmark-outline"></ion-icon> Recibe notificaciones
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Recibe notificaciones
             relacionadas con tu búsqueda o con tu sector.
           </p>
 
@@ -188,5 +161,5 @@
       </ion-row>
     </div>
   </ion-grid>
+  <app-footer></app-footer>
 </ion-content>
-<app-footer></app-footer>

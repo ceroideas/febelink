@@ -1,18 +1,8 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons buttons-start slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-
-    <app-header-buttons [perfil]="curUser" currentTab="6"></app-header-buttons>
-  </ion-toolbar>
-  </ion-header>
-
-  <div class="div-main-back-button">
-    <div (click)="backButton()" class="div-back-button-content">
-      <img src="assets/icon/svg/chevron-left.svg" class="div-back-button-svg" /> Volver
-    </div>
+<div class="div-main-back-button">
+  <div (click)="backButton()" class="div-back-button-content">
+    <img src="assets/icon/svg/chevron-left.svg" class="div-back-button-svg"/> Volver
   </div>
+</div>
 
 <ion-content [class]="'padding-top ' + (!isLoading && !iAdvise ? 'tx-center' : '' )">
   <!-- Loading -->
@@ -26,7 +16,7 @@
     [showContent]="true"
     [listComments]="true"
   ></app-post-component>
-  
+
   <!-- No Items -->
   <ion-label
     class="hint pointer"
