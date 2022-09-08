@@ -15,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 import { MailService } from 'src/app/services/mail.service';
 import { ReportService } from 'src/app/services/report.service';
 import { IReport } from 'src/app/models/report.model';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -23,11 +24,9 @@ import { IReport } from 'src/app/models/report.model';
 })
 export class CartPage implements OnInit {
 
-  dataItems:any;
   isEditItems:boolean=false;
-  isSuccessBuy:boolean=false;
-  isNoItems:boolean=false;
-  isErrorBuy:boolean=false;
+
+  iCart:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,48 +42,33 @@ export class CartPage implements OnInit {
     private authSvc:AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public cartSvc: CartService
   ) {
 
   }
 
 
   ngOnInit() {
-    this.dataItems = [
-      {
-        servicio: '2x1 masajes drenantes',
-        ofertante: 'Fisioterapia Nicolás',
-        precio: 50,
-        cantidad: 1
-      },
-      {
-        servicio: 'Sesión doble masaje',
-        ofertante: 'Fisioterapia Nicolás',
-        precio: 44.99,
-        cantidad: 1
-      },
-      {
-        servicio: 'Masaje tradicional',
-        ofertante: 'Fisioterapia Nicolás',
-        precio: 30,
-        cantidad: 3
-      }
-    ]
+    this.getCart();
   }
 
-  changeQuantity(index:number) {
-    this.dataItems[index].cantidad--;
+  async getCart() {
+    const { response, error } = await this.cartSvc.get();
+    this.iCart = response;
   }
-  deleteItem(index:number) {
-    this.dataItems.splice(index, 1);
 
-    if(this.dataItems.length==0){
-      this.isNoItems=true;
-      this.isSuccessBuy=false;
-      this.isEditItems=false;
-      this.isErrorBuy=false;
-    }
+  async updateCart(id:number,amount:number) {
+    const { response, error } = await this.cartSvc.update(id,amount);
+    this.getCart();
   }
+
+  async buyCart() {
+    const { response, error } = await this.cartSvc.buy();
+    var linkCheckout = response;
+    window.location.href = linkCheckout;
+  }
+
 
   editItems() {
     this.isEditItems=true;
@@ -92,52 +76,12 @@ export class CartPage implements OnInit {
   confirmEdit() {
     this.isEditItems=false;
   }
-  buyItems() {
-    this.isSuccessBuy=true;
-    this.isEditItems=false;
-    this.isNoItems=false;
-    this.isErrorBuy=false;
-  }
-  shopItems() {
-    this.isNoItems=true;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-    this.isErrorBuy=false;
-  }
-  errorItems() {
-    this.isErrorBuy=true;
-    this.isNoItems=false;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-  }
-  restartItems() {
-    this.isNoItems=false;
-    this.isSuccessBuy=false;
-    this.isEditItems=false;
-    this.isErrorBuy=false;
 
-    this.dataItems = [
-      {
-        servicio: '2x1 masajes drenantes',
-        ofertante: 'Fisioterapia Nicolás',
-        precio: 50,
-        cantidad: 1
-      },
-      {
-        servicio: 'Sesión doble masaje',
-        ofertante: 'Fisioterapia Nicolás',
-        precio: 44.99,
-        cantidad: 1
-      },
-      {
-        servicio: 'Masaje tradicional',
-        ofertante: 'Fisioterapia Nicolás',
-        precio: 30,
-        cantidad: 3
-      }
-    ]
-  }
 
+
+  goToBuscador() {
+    this.irA('menu/todas');
+  }
 
   public irA(p: string): void {
     this.router.navigate([p]);

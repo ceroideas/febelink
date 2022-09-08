@@ -1,0 +1,28 @@
+<div class="div-carrito-background">
+    
+  <div class="carrito-items position-relative">
+    <div class="close-compra" (click)="goToBuscador()">
+      <img src="assets/icon/svg/close.svg" class="compra-close-svg" />     
+    </div>
+    <div class="div-compra">
+      <div class="div-compra-svg">
+        <img src="assets/icon/svg/check-circle.svg" class="compra-check-svg" />                 
+      </div>
+      <div class="div-compra-title">
+        Compra realizada con éxito
+      </div>
+      <div class="div-compra-subtitle">
+        Pronto recibirás una confirmación en tu correo electrónico
+      </div>
+    </div>
+  </div>
+
+  <div class="carrito-buttons carrito-buttons-height-a">
+    <div class="carrito-button-primary" (click)="goToBuscador()">
+      Seguir comprando
+    </div>
+    <div class="carrito-button-secondary" (click)="goToHistory()">
+      Historial de compras
+    </div>
+  </div>
+</div>

@@ -43,9 +43,27 @@
 </div>
 
 <!--
+<div class="table-main-reactions">
+  <div (click)="react( $event )" class="react-left">
+    <img src="assets/icon/svg/heart.svg" class="react-left-svg" />{{ 'pages.posts.react' | translate }}
+  </div>
+  <div (click)="share( $event )" class="react-middle">
+    <img src="assets/icon/svg/share.svg" class="react-middle-svg" />{{ 'common.share' | translate }}
+  </div>
+  <div (click)="watch()" *ngIf="showSeePost" class="react-right-a">
+    <img src="assets/icon/svg/eye.svg" class="react-right-a-svg" />{{ 'pages.posts.see' | translate }}
+  </div>
+  <div class="react-right-b">
+    <app-donate-button *ngIf="!showSeePost"
+        [user]="post"
+      ></app-donate-button>
+  </div>
+</div>
+-->
+
+<!--
 <ion-grid class="marg-s10 marg-e10 no-paddingline line-t2">
   <ion-row class="pad-b5">
-  
     <ion-col [size]="showChat ? 3 : 4" class="no-padding align-center" (click)="react( $event )">
       <ion-row class="align-center vertical-content">
         <ion-icon class="font-30 pointer" [src]="reacts.img( this.post?.reacted )"></ion-icon>

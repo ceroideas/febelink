@@ -48,7 +48,7 @@ export class CommentComponent implements OnInit {
     private reportSvc: ReportService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {console.log(this.iComment)}
 
   /* ngOnChanges( changes: SimpleChanges ): void {
     if ( 'iAdvise' in changes) {
