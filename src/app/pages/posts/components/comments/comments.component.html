@@ -1,9 +1,7 @@
-<ion-grid class="marg-5 no-pad box-bw-r1-lln margin-bottom">
-  <!-- Comment -->
-  <ion-row class="marg-5 marg-s10 vertical-content">
-    <!-- Avatar -->
-    <ion-avatar class="no-margin marg-e5 wh-35">
-      <ion-img
+<div class="all-comments-main">
+  <div class="all-comments-user">
+    <ion-img
+        class="img-avatar-comment"
         [src]="
           iUser?.logo ||
           iUser?.avatar ||
@@ -11,68 +9,37 @@
         "
         appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
       ></ion-img>
-    </ion-avatar>
-
-    <ion-item class="marg-5 no-pad h-min-30 box-bw-r1-lln comment" lines="none">
-      <!-- Input -->
-      <ion-textarea
-        #inComment
-        class="marg-s10"
-        placeholder="{{ 'pages.posts.comment.placeholder' | translate }}"
-        inputmode="text"
-      ></ion-textarea>
-
-      <!-- Button Send -->
-      <ion-buttons end>
-        <ion-button
-          icon-only
-          class="no-padding marg-s10 wh-40"
-          shape="round"
-          color="primary"
-          (click)="comment(inComment.value)"
-        >
-          <ion-icon name="send-outline" color="white"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-  </ion-row>
-
-  <!-- Set Commetns Visible -->
-  <ion-row class="align-center" *ngIf="!isVisible && iComments?.length">
-    <em class="pointer font-12" (click)="showComments()">
-      <ion-label color="primary">{{ 'Show Comments' | translate }}</ion-label>
-    </em>
-  </ion-row>
-
-  <div
-    class="pad-b20 pad-t5 container"
-    *ngIf="userComments?.length > 0 || (iComments?.length > 0 && isVisible)"
-  >
-    <!-- Loading -->
-    <app-loading
-      *ngIf="isLoading"
-      message="common.labelSearching"
-    ></app-loading>
-
-    <ng-container *ngIf="!isLoading && isVisible">
-      <!-- Comments done by user from ion-input -->
-      <app-comment-component
-        *ngFor="let iComment of userComments"
-        [post]="post?.id"
-        [iComment]="iComment"
-        (OnDoEdit)="OnDoEdit($event)"
-        (OnDeleted)="OnDeleted($event)"
-      ></app-comment-component>
-
-      <!-- Comments from DBs -->
-      <app-comment-component
-        *ngFor="let iComment of iComments"
-        [post]="post?.id"
-        [iComment]="iComment"
-        (OnDoEdit)="OnDoEdit($event)"
-        (OnDeleted)="OnDeleted($event)"
-        (childSubmit)="childSubmit($event)"
-      ></app-comment-component>
-    </ng-container>
   </div>
-</ion-grid>
+  <div class="all-comments-input">
+    <ion-input #inComment type="text" placeholder="Dejar comentario" class="padding-input-12 textarea-comment" (keyup.enter)="comment(inComment.value)"></ion-input>
+  </div>
+</div>
+
+<ng-container *ngIf="userComments?.length > 0 || (iComments?.length > 0 && isVisible)">
+  <app-loading
+  *ngIf="isLoading"
+  message="common.labelSearching"
+  ></app-loading>
+
+  <ng-container *ngIf="!isLoading && isVisible">
+    <!-- Comments done by user from ion-input -->
+    <app-comment-component
+      *ngFor="let iComment of userComments"
+      [post]="post?.id"
+      [iComment]="iComment"
+      (OnDoEdit)="OnDoEdit($event)"
+      (OnDeleted)="OnDeleted($event)"
+    ></app-comment-component>
+  
+    <!-- Comments from DBs -->
+    <app-comment-component
+      *ngFor="let iComment of iComments"
+      [post]="post?.id"
+      [iComment]="iComment"
+      (OnDoEdit)="OnDoEdit($event)"
+      (OnDeleted)="OnDeleted($event)"
+      (childSubmit)="childSubmit($event)"
+    ></app-comment-component>
+  </ng-container>
+
+</ng-container>

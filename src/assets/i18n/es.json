@@ -588,12 +588,12 @@
       "moreFundsButton": "Comprar FLAU"
     },
     "posts": {
-      "see": "Ver Post",
+      "see": "Ver post",
       "react": "Reaccionar",
       "reacts": {
-        "like": "Es Util",
-        "disagreement": "No es Util",
-        "love": "Me Encanta",
+        "like": "Útil",
+        "disagreement": "No útil",
+        "love": "Me gusta",
         "useful": "Muy Util"
       },
 

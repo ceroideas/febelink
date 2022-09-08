@@ -34,6 +34,7 @@ export class AdviseCRUDPage implements OnInit {
   form: UntypedFormGroup;
   iFile: IFile = {};
   content: iWYSIWYG = {};
+  contentText:any;
 
   id: number;
   iAdvise: IAdviseFull;
@@ -154,6 +155,10 @@ export class AdviseCRUDPage implements OnInit {
         { value: this.iAdvise?.topic || '', disabled: disabled },
         Validators.required
       ),
+      content: new UntypedFormControl(
+        { value: this.iAdvise?.content || '', disabled: disabled },
+        Validators.required
+      ),
     });
   }
 
@@ -165,7 +170,9 @@ export class AdviseCRUDPage implements OnInit {
       summary: this.iAdvise?.summary || '',
     });
 
-    this.content.html = this.iAdvise?.content;
+    //this.content.html = this.iAdvise?.content;
+    this.topicSelected = this.topics[this.iAdvise?.topic];
+    this.contentText = this.iAdvise?.content;
     this.iFile.src = this.iAdvise?.media_url;
     this.iFile.ext = this.iAdvise?.media_ext;
   }
@@ -226,7 +233,7 @@ export class AdviseCRUDPage implements OnInit {
 
   /* On Share Advise */
   async shareAlert() {
-    if (!(await this.check())) return;
+    //if (!(await this.check())) return;
 
     if (
       await this.alertSvc.confirm({
@@ -245,7 +252,7 @@ export class AdviseCRUDPage implements OnInit {
     const { title, subtitle, summary, topic } = this.form.value;
 
     const opts: IAdviseFull = {
-      topic,
+      topic: topic.id,
       lang: this.lang?.langSelected?.id || 1,
 
       id_advise: this.id_reference,
@@ -253,7 +260,7 @@ export class AdviseCRUDPage implements OnInit {
       title: title,
       subtitle: subtitle,
       summary: summary,
-      content: this.content.html,
+      content: this.contentText,
 
       media: this.iFile?.file,
       media_name: this.iAdvise?.media_name,

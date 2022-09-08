@@ -221,7 +221,8 @@ const routes: Routes = [
   {
     path: 'servicios',
     loadChildren: () => import('./pages/servicios/servicios.module').then( m => m.ServiciosPageModule)
-  },  {
+  },
+  {
     path: 'user-data',
     loadChildren: () => import('./pages/user-data/user-data.module').then( m => m.UserDataPageModule)
   },
@@ -229,7 +230,18 @@ const routes: Routes = [
     path: 'user-data-personal',
     loadChildren: () => import('./pages/user-data-personal/user-data-personal.module').then( m => m.UserDataPersonalPageModule)
   },
-
+  {
+    path: 'cart-history',
+    loadChildren: () => import('./pages/cart-history/cart-history.module').then( m => m.CartHistoryPageModule)
+  },
+  {
+    path: 'cart/success',
+    loadChildren: () => import('./pages/cart-success/cart-success.module').then( m => m.CartSuccessPageModule)
+  },
+  {
+    path: 'cart/error',
+    loadChildren: () => import('./pages/cart-error/cart-error.module').then( m => m.CartErrorPageModule)
+  },
 
 
 ];

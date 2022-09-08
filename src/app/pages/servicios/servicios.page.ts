@@ -14,6 +14,9 @@ import { UserService } from 'src/app/services/user.service';
 import { MailService } from 'src/app/services/mail.service';
 import { ReportService } from 'src/app/services/report.service';
 import { IReport } from 'src/app/models/report.model';
+import { ServicesService } from './services/services.service';
+import { NgStyle } from '@angular/common';
+import { IServiceFull} from './models/services.model';
 
 @Component({
   selector: 'app-servicios',
@@ -23,21 +26,36 @@ import { IReport } from 'src/app/models/report.model';
 export class ServiciosPage implements OnInit {
 
   isSlideDrag:boolean=false;
-  dataServicios:any;
-  dataClientesCurso:any;
-  dataClientesFinalizados:any;
 
   isDisponibles:boolean=true;
   isCurso:boolean=false;
   isFinalizados:boolean=false;
   isNuevoServicio:boolean=false;
-  indexTerminarServicio:any;
+  indexTerminarServicio:number;
   indexTerminarServicioMobile:boolean=false;
   indexValorarServicio:boolean=false;
   finValorarServicio:boolean=false;
   servicioAdded:boolean=false;
 
   dragLogged:boolean=false;
+
+  unitTypes:any;
+  iProducts:any;
+  doUpdate:boolean=false;
+  editUpdate:number;
+  productIdTerminar:number;
+  cartIdTerminar:number;
+  isTemplate:boolean=false;
+
+  title:string;
+  description:string;
+  unitPrice:number;
+  unitType:number;
+  sector:number;
+
+  iProfessions:any;
+  iUserProfession:any;
+  ProfessionsMapped:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,96 +70,202 @@ export class ServiciosPage implements OnInit {
     private authSvc:AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public servicesSvc: ServicesService
   ) {
 
   }
 
 
   ngOnInit() {
-    this.dataServicios = [
-      {
-        tipo: 'disponible',
-        nombre: 'Masaje drenante',
-        descripcion: "Descripción del producto. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's.",
-        precio: 35,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev.png',
-        valoraciones: 50,
-        num_valoraciones: 10
-      },
-      {
-        tipo: 'disponible',
-        nombre: 'Masaje relajación',
-        descripcion: "Descripción del producto. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's.",
-        precio: 45,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev-2.png',
-        valoraciones: 40,
-        num_valoraciones: 10,
-        publicado: true
-      },
-      {
-        tipo: 'disponible',
-        nombre: 'Colocación de toldos',
-        descripcion: "Descripción del producto. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's.",
-        precio: 24,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev-3.png',
-        valoraciones: 45,
-        num_valoraciones: 10
-      },
-    ];
 
-    this.dataClientesCurso = [
-      {
-        nombre: 'Masaje drenante',
-        precio: 35,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev.png',
-        cliente: 'Miguel Fernández',
-        fecha: '20/08/2022',
-      },
-      {
-        nombre: 'Masaje drenante',
-        precio: 35,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev.png',
-        cliente: 'Mario Moreno',
-        fecha: '24/08/2022',
-      },
-      {
-        nombre: 'Masaje relajación',
-        precio: 45,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev-2.png',
-        cliente: 'Rodrigo Hernández',
-        fecha: '28/08/2022',
+    this.unitTypes = [
+      {id:1,name:"Día",shorthand:"día",lang:"ES"},
+      {id:2,name:"Mes",shorthand:"mes",lang:"ES"},
+      {id:3,name:"Año",shorthand:"año",lang:"ES"},
+      {id:4,name:"Unidad",shorthand:"ud.",lang:"ES"}
+    ];
+    this.getProducts();
+    this.getProfessions();
+  }
+
+  async getProducts() {
+    const { response, error } = await this.servicesSvc.get();
+    this.iProducts = response;
+  }
+
+  async getProfessions() {
+    const { response, error } = await this.servicesSvc.professions();
+    this.iProfessions = response;
+    this.getUserProfession();
+  }
+
+  async getUserProfession() {
+    const { response, error } = await this.servicesSvc.userProfession();
+    this.iUserProfession = response;
+    this.mapProfessions();
+  }
+
+  mapProfessions() {
+    this.ProfessionsMapped = this.iUserProfession.map((e,i)=>{
+      let temp = this.iProfessions.find(element=> element.id === e.subSectorId)
+      if(temp.name) {
+        e.name = temp.name;
       }
-    ];
+      return e;
+    });
+  }
 
-    this.dataClientesFinalizados = [
-      {
-        nombre: 'Masaje drenante',
-        precio: 35,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev.png',
-        cliente: 'Luis Fernández',
-        fecha: '18/08/2022',
-        valoracion: 4,
-        comentario: 'Buen cliente'
-      },
-      {
-        nombre: 'Masaje drenante',
-        precio: 35,
-        precio_por: 'mes',
-        img: 'assets/imgs/servicios-prev.png',
-        cliente: 'Gustavo Moreno',
-        fecha: '19/08/2022',
-        valoracion: 5,
-        comentario: 'Fantástico'
-      },
-    ];
+  selectNuevoServicio() {
+    this.isNuevoServicio=true;
+  }
+
+  async addNuevoServicio() {
+
+    var productCreate:IServiceFull = {
+      title: this.title,
+      description: this.description,
+      productUnitPrice: this.unitPrice,
+      unitTypeId: this.unitType,
+      subSectorId: this.sector
+    }
+
+    const { response, error } = await this.servicesSvc.create(productCreate);
+
+    this.getProducts();
+
+    this.isNuevoServicio=false;
+    this.servicioAdded=true;
+    this.isDisponibles=true;
+    this.isCurso=false;
+    this.isFinalizados=false;
+    this.title=null;
+    this.description=null;
+    this.unitPrice=null;
+    this.unitType=null;
+    this.sector=null;
+    this.isTemplate = false;
+
+  }
+
+  async selectEditarServicio(service:IServiceFull) {
+
+    this.title=service.title;
+    this.description=service.description;
+    this.unitPrice=service.productUnitPrice;
+    this.unitType=service.unitTypeId;
+    this.sector=service.subSectorId;
+
+    if(!service.isTemplate){
+      this.doUpdate = true;
+      this.editUpdate = service.productId;
+    }
+    else{
+      this.isTemplate = true;
+    }
+    this.isNuevoServicio=true;
+  }
+
+  async editServicio() {
+
+    var productEdit:IServiceFull = {
+      productId: this.editUpdate,
+      title: this.title,
+      description: this.description,
+      productUnitPrice: this.unitPrice,
+      unitTypeId: this.unitType,
+      subSectorId: this.sector
+    }
+
+    const { response, error } = await this.servicesSvc.update(productEdit);
+
+    this.getProducts();
+
+    this.isNuevoServicio=false;
+    this.isDisponibles=true;
+    this.isCurso=false;
+    this.isFinalizados=false;
+    this.doUpdate=false;
+    this.editUpdate=null;
+    this.title=null;
+    this.description=null;
+    this.unitPrice=null;
+    this.unitType=null;
+    this.sector=null;
+    this.isTemplate = false;
+  }
+
+  cancelNuevoServicio() {
+    this.isNuevoServicio=false;
+    this.isDisponibles=true;
+    this.isCurso=false;
+    this.isFinalizados=false;
+    this.doUpdate=false;
+    this.editUpdate=null;
+    this.title=null;
+    this.description=null;
+    this.unitPrice=null;
+    this.unitType=null;
+    this.sector=null;
+    this.isTemplate = false;
+  }
+
+
+  logDrag(event:any,index:number,product:number,cart:number){
+    let ratio = event.detail.ratio;
+    if(ratio<-11 && !this.dragLogged){
+      this.dragLogged=true;
+      this.terminarServicio(index,product,cart);
+    }
+  }
+  terminarServicio(index:number,product:number,cart:number) {
+    this.indexTerminarServicio=index;
+    this.indexTerminarServicioMobile=true;
+    this.productIdTerminar=product;
+    this.cartIdTerminar=cart;
+  }
+  cancelarServicio() {
+    this.indexTerminarServicio=null;
+    this.indexTerminarServicioMobile=false;
+    this.dragLogged=false;
+    this.productIdTerminar=null;
+    this.cartIdTerminar=null;
+  }
+  valorarServicio() {
+    this.indexValorarServicio=true;
+    this.indexTerminarServicioMobile=false;
+    this.dragLogged=false;
+  }
+  async aceptarValorarServicio() {
+
+    var productFinish:IServiceFull = {
+      cartId: this.cartIdTerminar,
+      productId: this.productIdTerminar
+    }
+
+    const { response, error } = await this.servicesSvc.finish(productFinish);
+
+    this.getProducts();
+
+    this.finValorarServicio=true;
+    this.indexValorarServicio=false;
+    this.indexTerminarServicioMobile=false;
+    this.indexTerminarServicio=null;
+    this.productIdTerminar=null;
+    this.cartIdTerminar=null;
+    this.isDisponibles=false;
+    this.isCurso=false;
+    this.isFinalizados=true;
+  }
+  cancelarValorarServicio() {
+    this.indexValorarServicio=false;
+    this.indexTerminarServicioMobile=false;
+    this.indexTerminarServicio=null;
+    this.productIdTerminar=null;
+    this.cartIdTerminar=null;
+  }
+  cerrarFinValorarServicio() {
+    this.finValorarServicio=false;
   }
 
   selectDisponibles() {
@@ -159,63 +283,11 @@ export class ServiciosPage implements OnInit {
     this.isCurso=false;
     this.isFinalizados=true;
   }
-  selectNuevoServicio() {
-    this.isNuevoServicio=true;
-  }
-  cancelNuevoServicio() {
-    this.isNuevoServicio=false;
-  }
-  addNuevoServicio() {
-    this.isNuevoServicio=false;
-    this.servicioAdded=true;
-    this.isDisponibles=true;
-    this.isCurso=false;
-    this.isFinalizados=false;
-  }
   closeServicioAdded() {
     this.servicioAdded=false;
     this.isDisponibles=true;
     this.isCurso=false;
     this.isFinalizados=false;
-  }
-  terminarServicio(index:any) {
-    this.indexTerminarServicio=index;
-    this.indexTerminarServicioMobile=true;
-  }
-  cancelarServicio() {
-    this.indexTerminarServicio='-';
-    this.indexTerminarServicioMobile=false;
-    this.dragLogged=false;
-  }
-  valorarServicio() {
-    this.indexValorarServicio=true;
-    this.indexTerminarServicioMobile=false;
-    this.dragLogged=false;
-  }
-  aceptarValorarServicio() {
-    this.finValorarServicio=true;
-    this.indexValorarServicio=false;
-    this.indexTerminarServicioMobile=false;
-    this.indexTerminarServicio='-';
-    this.isDisponibles=false;
-    this.isCurso=false;
-    this.isFinalizados=true;
-  }
-  cancelarValorarServicio() {
-    this.indexValorarServicio=false;
-    this.indexTerminarServicioMobile=false;
-    this.indexTerminarServicio='-';
-  }
-  cerrarFinValorarServicio() {
-    this.finValorarServicio=false;
-  }
-
-  logDrag(event:any,index:any){
-    let ratio = event.detail.ratio;
-    if(ratio<-11 && !this.dragLogged){
-      this.dragLogged=true;
-      this.terminarServicio(index);
-    }
   }
 
   public irA(p: string): void {

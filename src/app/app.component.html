@@ -100,7 +100,7 @@
           <div tabindex="0"></div>
           <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
           <ion-router-link class="ion-text-wrap color_ppal" href="#">
-            <ion-label class="ion-padding">{{ 'menu.pages.historialCompras' | translate }}</ion-label>
+            <ion-label class="ion-padding" (click)="goTo('cart-history')">{{ 'menu.pages.historialCompras' | translate }}</ion-label>
           </ion-router-link>
         </ion-item>
         <ion-item class="item_menu_margen" color="item" lines="none">

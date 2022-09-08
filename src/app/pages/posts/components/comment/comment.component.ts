@@ -36,6 +36,7 @@ export class CommentComponent implements OnInit {
   }> = new EventEmitter();
 
   dateFormatType = DateFormatType;
+  indexShowReply:any;
 
   constructor(
     private optsMenuSvc: OptsMenuSvc,
@@ -47,7 +48,7 @@ export class CommentComponent implements OnInit {
     private reportSvc: ReportService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {console.log(this.iComment)}
 
   /* ngOnChanges( changes: SimpleChanges ): void {
     if ( 'iAdvise' in changes) {
@@ -121,5 +122,10 @@ export class CommentComponent implements OnInit {
 
   comment(message: string | number) {
     this.childSubmit.emit({ message, parentId: this.iComment?.id });
+  }
+
+  showReply(index:any) {
+    this.indexShowReply="";
+    this.indexShowReply=index;
   }
 }

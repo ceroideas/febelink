@@ -17,6 +17,7 @@ export class LangBtnComponent implements OnInit {
   @Input() changeAppLang: boolean = true;
   @Input() disabled: boolean = false;
   @Input() initNull: boolean = false;
+  @Input() short: boolean = true;
   @Output() onLangSelected: EventEmitter<ILang> = new EventEmitter()
 
   constructor(

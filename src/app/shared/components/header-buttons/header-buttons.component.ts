@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { ApiService } from 'src/app/services/api.service';
 import { filter } from 'rxjs/operators';
 import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
+import {CartServiceShow} from '../../../services/cart.service';
 
 @Component({
   selector: 'app-header-buttons',
@@ -36,7 +37,8 @@ export class HeaderButtonsComponent implements OnInit {
     public popoverController: PopoverController,
     private translateService: TranslateService,
     private utilities: UtilitiesService,
-    private notificationsSvc: NotificationService
+    private notificationsSvc: NotificationService,
+    public cartServiceShow:CartServiceShow
   ) {}
 
   async ngOnInit() {

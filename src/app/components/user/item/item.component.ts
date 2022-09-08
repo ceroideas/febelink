@@ -1,3 +1,4 @@
+import { IUser } from 'src/app/models/user.model';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
