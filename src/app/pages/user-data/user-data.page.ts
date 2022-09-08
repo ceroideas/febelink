@@ -65,6 +65,10 @@ export class UserDataPage implements OnInit {
         this.password = "";
       }
 
+      if(this.username != null || this.description != null && this.password == ''){
+        this.password = "";
+      }
+
       if(this.passIgual){
         let datos = {
           "username": this.username,
