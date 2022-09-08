@@ -1,35 +1,4 @@
-<ion-header>
-  <ion-toolbar class="header_buttons" color="header">
-    <ion-buttons buttons-start slot="start">
-        <ion-menu-button class="desktop_menu_avatar">
-            <ion-img class="avatarmenu"
-              id="menuImg"
-              [src]="
-                currentUser?.logo !== null
-                  ? currentUser?.logo
-                  : 'https://api.febelink.com/storage/users/default.png'
-              "
-              (error)="onImgError($event)"
-              alt="Menu profile picture">
-          </ion-img>
-        </ion-menu-button>  
-        <ion-img *ngIf="perfil" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
-        <ion-img *ngIf="perfil" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
-    </ion-buttons>
-    <app-header-buttons class="buttons_flex" [perfil]="perfil" currentTab="1"></app-header-buttons>
-    <ion-buttons buttons-start slot="end">
-      <ion-img style="margin-left:5em;"
-      tappable 
-      src="assets/imgs/logo.png" 
-      alt="Febelink logo" 
-      (click)="irA('/' + homePage)"
-      class="ion-margin logo desktop"></ion-img> 
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
   <ion-grid *ngIf="searchService.show_detalle" style="width: 100%; height: 573px; background-color: white;">
     <ion-row style="display: flex; justify-content: space-around;" size="12" *ngIf="searchService.dataDesktopDetail">
       <ion-col size="4">
@@ -114,7 +83,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="12">
@@ -144,5 +112,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <app-footer></app-footer>
 </ion-content>
-<app-footer></app-footer>
