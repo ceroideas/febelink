@@ -40,6 +40,8 @@ export class AdvisesPage implements OnInit {
     activePage: number = 1;
     finishedSearch: boolean = false;
 
+    userNickSearch:string;
+
     topicSelected: ITopic;
     topics = [
         {id: null, name: 'Todos'},
@@ -157,6 +159,7 @@ export class AdvisesPage implements OnInit {
     async userClicked() {
         const user = await this.userFilterPop.show('posts/oracles/users');
         this.user.user = user;
+        this.userNickSearch = user.nick;
         this.clear2search();
     }
 

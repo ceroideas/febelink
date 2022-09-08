@@ -1,4 +1,4 @@
-<ion-button [class]="'w-full ' + ( clase || '' )" color="febelink" (click)="donate()" *ngIf="asButton" >
+<!--<ion-button [class]="'w-full ' + ( clase || '' )" color="febelink" (click)="donate()" *ngIf="asButton" >
   <img
     slot="start"
     density="ldpi"
@@ -17,4 +17,9 @@
   <ion-row class="align-center">
     <ion-label class="font-14 pointer">{{ 'common.labelDonate' | translate }}</ion-label>
   </ion-row>
-</ion-grid>
+</ion-grid>-->
+
+
+<div (click)="donate()">
+  <img src="assets/icon/svg/tip.svg" style="width:14px;margin-right:13px;position:relative;top:2px;" />Dar propina
+</div>

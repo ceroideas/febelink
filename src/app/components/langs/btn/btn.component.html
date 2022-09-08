@@ -1,5 +1,26 @@
+<div *ngIf="short" (click)="selectLang( $event )" class="button-lang">
+  <div class="button-lang-text">
+    {{langSelected?.country}}
+  </div>
+  <img src="assets/icon/svg/chevron-down.svg" class="button-lang-svg" />
+</div>
+
+<div *ngIf="!short" (click)="selectLang( $event )" class="button-lang button-full">
+  <div *ngIf="langSelected?.country" class="button-lang-text lang-cell">
+    {{langSelected?.country}}
+  </div>
+  <div *ngIf="!langSelected?.country" class="button-lang-text lang-cell">
+    Idioma
+  </div>
+  <div class="lang-cell-b">
+    <img src="assets/icon/svg/chevron-down.svg" class="button-lang-svg" />
+  </div>
+</div>
+
+<!--
 <ion-button class="desktop btn_idioma" size="small"  fill="clear" (click)="selectLang( $event )" >
   <img *ngIf="langSelected" slot="start" density="ldpi" src="assets/icon-flags/{{langSelected?.flag}}.png" width="30px" height="30px"/>
   <ion-label class="desktop idiomaMin">{{ langSelected?.language }}</ion-label><ion-label class="desktop idiomaMay">({{langSelected?.country}})</ion-label>
   <ion-img class="desktop icono_idioma" src="assets/icon-flags/flecha_idioma.svg"></ion-img>
 </ion-button>
+-->

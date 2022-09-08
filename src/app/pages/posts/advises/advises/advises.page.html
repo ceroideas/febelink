@@ -1,3 +1,4 @@
+<!-- <ion-header class="ion-no-border"> -->
 <ion-header>
   <ion-toolbar class="header_buttons" color="header">
     <ion-buttons buttons-start slot="start">
@@ -13,6 +14,14 @@
             alt="Menu profile picture">
         </ion-img>
       </ion-menu-button>  
+      <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+      <ion-img *ngIf="currentUser" class="ion-padding chat" size="small" src="assets/icon/svg/chat_header.svg"></ion-img>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+ <!--
+>>>>>>> 23c320deb7b55c3abcb1e8f22f8ab7fefa9a6298
+=======
       <ion-img *ngIf="curUser" class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
       <ion-img *ngIf="curUser" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
     </ion-buttons>  
@@ -27,6 +36,7 @@
     </ion-buttons>
   </ion-toolbar>
 <!--
+>>>>>>> adbfbe0d02f7badbaf5eca152ba1226a0af35e62
   <ion-toolbar color="light">
     <ion-grid class="no-padding">
      
@@ -71,6 +81,15 @@
           </ion-button>
         </ion-col>
       </ion-row>
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+      
+=======
+-->
+<!--
+=======
+>>>>>>> adbfbe0d02f7badbaf5eca152ba1226a0af35e62
       <ion-row [style]="showFilters ? '' : 'display: none;'">
         <ion-col
           size="3"
@@ -140,10 +159,24 @@
       </ion-row>
     
     </ion-grid>
+<<<<<<< HEAD
+  </ion-toolbar>
+=======
 
   </ion-toolbar>
 -->
-</ion-header>
+
+
+<div class="top-create-post">
+  <div class="top-create-post-left">
+    <div (click)="createPost()" class="top-create-post-left-inside">
+      Comparte tus noticias y comentarios
+    </div>
+  </div>
+  <div class="top-create-post-right">
+    <img src="assets/icon/svg/filter-post.svg" (click)="showFilters = !showFilters" class="top-create-post-svg" />
+  </div>
+</div>
 
 <ion-content class="padding-top pad-se">
   <!-- <h1>¡Bienvenido a la comunidad de Febelink!</h1> -->
@@ -188,4 +221,88 @@
     ></ion-label>
   </ion-item>
 </ion-content>
+
+
+<div *ngIf="showFilters" class="modal-back-background">
+  <div class="filter-content-background">
+    <div class="filter-content-padding">
+      <div class="modal-front-title">
+        Filtros
+      </div>
+      <div class="modal-add-name">
+        {{ 'common.labelTopic' | translate }}
+      </div>
+      <div class="modal-input-div">
+        <ion-item class="no-padding modal-add-price-select">
+            <ionic-selectable class="price-select" placeholder="Tema"
+            #topic
+            item-content
+            [(ngModel)]="topicSelected"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="topics"
+          >
+          </ionic-selectable>
+        </ion-item>
+      </div>
+      <div class="modal-add-name">
+        {{ 'common.labelLang' | translate }}
+      </div>
+      <div class="modal-input-div height-lang-button">
+        <app-lang-btn
+              #lang
+              [changeAppLang]="false"
+              [initNull]="true"
+              [short]="false"
+          ></app-lang-btn>
+      </div>
+      <div class="modal-add-name margin-bottom-title">
+        Entradas del oráculo
+      </div>
+      <div class="div-filter-check">
+        <ion-checkbox class="no-padding filter-check-a"
+            size="12"
+            size-sm="3"
+            [(ngModel)]="!myPosts" (ngModelChange)="myPosts = !$event"
+        ></ion-checkbox>
+          Todas
+      </div>
+      <div class="div-filter-check-b">
+        <ion-checkbox class="no-padding filter-check-a"
+            #chkMyPosts
+            size="12"
+            size-sm="3"
+            [(ngModel)]="myPosts"
+        ></ion-checkbox>
+          Solo mis post
+      </div>
+      
+      <div *ngIf="!myPosts" class="modal-add-name margin-bottom-title">
+        Búsqueda por usuario
+      </div>
+
+      <div *ngIf="!myPosts" class="filter-section-search" (click)="userClicked()">
+        <div class="filter-section-img">
+          <img src="assets/icon/svg/search-user.svg" class="filter-section-img-svg" />
+        </div>
+        <div *ngIf="!userNickSearch" class="filter-section-search-text">
+          Buscar usuario
+        </div>
+        <div *ngIf="userNickSearch" class="filter-section-search-text">
+          {{userNickSearch}}
+        </div>
+      </div>
+    </div>
+    
+    <div class="filter-section-bottom">
+      <div class="modal-button-primary-filter" (click)="clear2search();showFilters = !showFilters">
+        Aplicar
+      </div>
+      <div class="modal-button-secondary-filter" (click)="showFilters = !showFilters">
+        Cancelar
+      </div>
+    </div>
+  </div>
+</div>
+
 <app-footer></app-footer>

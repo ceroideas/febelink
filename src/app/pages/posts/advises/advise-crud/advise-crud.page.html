@@ -1,20 +1,12 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+  <ion-toolbar color="light">
+    <ion-buttons buttons-start slot="start">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title
-      >{{ 'pages.posts.advises.' + ( id ? 'edit' : 'create.title' ) | translate
-      }}</ion-title
-    >
-
-    <!-- Lang -->
-    <ion-buttons slot="end">
-      <app-lang-btn #lang [changeAppLang]="false"></app-lang-btn>
-    </ion-buttons>
+    <app-header-buttons [perfil]="curUser" currentTab="6"></app-header-buttons>
   </ion-toolbar>
-</ion-header>
+  </ion-header>
 
 <ion-content>
   <!-- Loading -->
@@ -24,10 +16,10 @@
     message="common.labelSearching"
   ></app-loading>
 
-  <!-- Form -->
+  <!-- Form
   <form [formGroup]="form" class="no-pad" *ngIf="!isLoading && form">
     <ion-grid class="no-pad pad-t10">
-      <!-- Topic -->
+      <!-- Topic 
       <ion-row class="col-flexed pad-5">
         <ion-label> {{ 'common.labelTopic' | translate }} </ion-label>
         <ion-select
@@ -41,44 +33,11 @@
         </ion-select>
       </ion-row>
 
-      <!-- Title -->
-      <ion-row class="pad-5" *ngIf="false">
-        <ion-input
-          class="box-bw-r1-lln font-20"
-          type="text"
-          formControlName="title"
-          [placeholder]="'pages.posts.advises.create.title' | translate"
-          maxlength="50"
-        ></ion-input>
-      </ion-row>
-
-      <!-- Subtitle -->
-      <ion-row class="marg-t10 pad-5" *ngIf="false">
-        <ion-input
-          class="box-bw-r1-lln font-16"
-          type="text"
-          formControlName="subtitle"
-          [placeholder]="'pages.posts.advises.create.subtitle' | translate"
-          maxlength="70"
-        ></ion-input>
-      </ion-row>
-
-      <!-- Summary -->
-      <ion-row class="marg-t10 pad-5" *ngIf="false">
-        <ion-textarea
-          class="hint box-bw-r1-lln"
-          type="text"
-          formControlName="summary"
-          [placeholder]="'pages.posts.advises.create.summary' | translate"
-          maxlength="120"
-        ></ion-textarea>
-      </ion-row>
-
-      <!-- Summary Referencing Post -->
+      <!-- Summary Referencing Post 
       <ion-row class="marg-t10" *ngIf="id_reference">
-        <!-- Loading -->
+        <!-- Loading 
         <ion-spinner class="marg-se marg-b5" *ngIf="!reference"></ion-spinner>
-        <!-- Remove Reference -->
+        <!-- Remove Reference
         <ion-icon
           *ngIf="reference"
           name="close-circle-outline"
@@ -86,7 +45,7 @@
           class="no-padding wh-30 shadow-light marg-t10 relativism pointer"
           (click)="id_reference = null; iAdvise.id_advise = null"
         ></ion-icon>
-        <!-- Reference -->
+        <!-- Reference
         <app-post-summary-component
           *ngIf="reference"
           class="w-full"
@@ -96,7 +55,7 @@
         ></app-post-summary-component>
       </ion-row>
 
-      <!-- WYSIWYG -->
+      <!-- WYSIWYG 
       <ion-row class="marg-t10 pad-5">
         <app-wysiwyg
           [html]="iAdvise?.content"
@@ -106,11 +65,11 @@
         ></app-wysiwyg>
       </ion-row>
 
-      <!-- Image | Video -->
+      <!-- Image | Video 
       <ion-row
         [class]="'marg-t10 marg-se wh-social-media media-pos' + ( iFile?.src ? '' : ' gone' )"
       >
-        <!-- Remove Image -->
+        <!-- Remove Image 
         <ion-button
           icon-only
           shape="round"
@@ -120,7 +79,7 @@
           <ion-icon name="trash-outline" color="primary"></ion-icon>
         </ion-button>
 
-        <!-- File Picker -->
+        <!-- File Picker 
         <app-file-picker
           #pick
           [iFile]="iFile"
@@ -128,20 +87,92 @@
         ></app-file-picker>
       </ion-row>
     </ion-grid>
-  </form>
+  </form>-->
 </ion-content>
 
+<!--
 <ion-footer no-border>
   <ion-toolbar class="tx-center">
-    <!-- Cancel Button -->
+    <!-- Cancel Button 
     <ion-button class="marg-e10" (click)="goHome()">
       {{ 'common.buttons.cancel' | translate}}
     </ion-button>
 
-    <!-- Share Advise | Post Button -->
+    <!-- Share Advise | Post Button 
     <ion-button class="marg-s10" (click)="shareAlert()">
       {{ 'pages.posts.advises.' + ( id ? 'editButton' : 'create.saveButton' ) |
       translate }}
     </ion-button>
   </ion-toolbar>
-</ion-footer>
+</ion-footer>-->
+
+
+
+<div class="modal-back-background">
+  <div class="modal-front-content-create">
+    
+    <div class="modal-front-padding">
+      <form [formGroup]="form" *ngIf="!isLoading && form">
+      <div class="modal-front-title">
+        Crear publicación
+      </div>
+      <div class="modal-add-name">
+        {{ 'common.labelTopic' | translate }}
+      </div>
+      <div class="modal-input-div">
+        <ion-item class="no-padding modal-add-price-select">
+            <ionic-selectable class="price-select" placeholder="Tema"
+            #topic
+            item-content
+            [(ngModel)]="topicSelected"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="topics"
+            formControlName="topic"
+          >
+          </ionic-selectable>
+        </ion-item>
+      </div>
+
+      <div class="modal-add-name">
+        Mensaje
+      </div>
+      <div class="modal-input-div">
+        <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>
+      </div>
+      <div class="modal-add-name margin-bottom-image">
+        Enlace
+      </div>
+      <div class="modal-input-div">
+        <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
+      </div>
+      <div class="modal-add-name margin-bottom-image">
+        Añadir imagen
+      </div>
+      <div class="subtitle-image">
+        Peso máximo de la imagen 3Mb.
+      </div>
+      <div class="div-add-image-select">
+        <img src="assets/icon/svg/plus-blue.svg" class="add-image-select" />
+      </div>
+  <!--
+      <div class="div-add-image-selected">
+        <img src="assets/imgs/preview2.png" class="add-image-selected" />
+        <div class="add-image-remove">
+          <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg" />
+        </div>
+      </div>-->
+    </form>
+    </div>
+    
+    <div class="modal-div-bottom">
+      <div class="modal-button-primary-filter" (click)="shareAlert()">
+        Publicar
+      </div>
+      <div class="modal-button-secondary-filter" (click)="goHome()">
+        Cancelar
+      </div>
+    </div>
+
+</div>
+

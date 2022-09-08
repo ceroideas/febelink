@@ -30,6 +30,7 @@ import { LoadingModule } from '../components/loading/loading.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgxLinkPreviewModule } from 'ngx-link-preview';
 import { CartComponent } from '../components/cart/cart.component';
+import { RatingComponent } from '../components/rating/rating.component';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import { CartComponent } from '../components/cart/cart.component';
         OptsMenuComponent,
         NumFloatComponent,
         CartComponent,
+        RatingComponent,
     ],
     imports: [
         CommonModule,
@@ -98,6 +100,7 @@ import { CartComponent } from '../components/cart/cart.component';
         IonicSelectableModule,
         NgxLinkPreviewModule,
         CartComponent,
+        RatingComponent,
     ]
 })
 export class SharedModule {}

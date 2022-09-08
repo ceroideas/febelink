@@ -223,12 +223,19 @@ const routes: Routes = [
     loadChildren: () => import('./pages/servicios/servicios.module').then( m => m.ServiciosPageModule)
   },
   {
-    path: 'detalle/:id',
-    loadChildren: () =>
-      import('./pages/detalle-busqueda/detalle-busqueda.module').then(
-        (m) => m.DetalleBusquedaPageModule
-      ),
+    path: 'cart-history',
+    loadChildren: () => import('./pages/cart-history/cart-history.module').then( m => m.CartHistoryPageModule)
   },
+  {
+    path: 'cart/success',
+    loadChildren: () => import('./pages/cart-success/cart-success.module').then( m => m.CartSuccessPageModule)
+  },
+  {
+    path: 'cart/error',
+    loadChildren: () => import('./pages/cart-error/cart-error.module').then( m => m.CartErrorPageModule)
+  },
+
+
 
 ];
 
@@ -250,3 +257,4 @@ export class AppRoutingModule {
     }*/
   }
 }
+
