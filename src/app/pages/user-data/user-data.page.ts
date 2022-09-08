@@ -40,8 +40,7 @@ export class UserDataPage implements OnInit {
     this.curUser = await this.sessionSvc.get();
   }
 
-  async onClickSubmit() {
-    console.log('Click submit');
+  async onClickSubmit() {;
     if (this.form.valid) {
       if(this.form.get('password').value == this.form.get('changePass').value){
         this.passIgual = true;

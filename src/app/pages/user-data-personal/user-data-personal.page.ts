@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/models/user.model';
 import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, NgForm } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
 import { UserDataPersonalService } from './Services/user-data-personal.services';
 
 @Component({
@@ -12,7 +12,6 @@ import { UserDataPersonalService } from './Services/user-data-personal.services'
 export class UserDataPersonalPage implements OnInit {
   curUser: IUser;
   form: UntypedFormGroup;
-  @ViewChild('profileForm') formulario: NgForm;
 
   constructor(public sessionSvc: UserSessionSvc, 
     private formBuilder: UntypedFormBuilder, private userDataPersonalService: UserDataPersonalService) { }
