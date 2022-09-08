@@ -16,6 +16,6 @@ export class UserDataService {
   }
 
   async updateBasicInfoUserData(userData: any): Promise<IHttpService> {
-    return this.http.post('user/update', JSON.stringify(userData));
+    return this.http.post('user/update', userData);
   }
 }

@@ -12,6 +12,15 @@ import { UserDataPersonalService } from './Services/user-data-personal.services'
 export class UserDataPersonalPage implements OnInit {
   curUser: IUser;
   form: UntypedFormGroup;
+  public name: string = null;
+  public dni: string = null;
+  public empresa: string = null;
+  public direccion: string = null;
+  public telefono: string = null;
+  public web: string = null;
+  public idioma: string = null;
+  public tarjetaCredito: string = null;
+  public numCuenta: string = null;
 
   constructor(public sessionSvc: UserSessionSvc, 
     private formBuilder: UntypedFormBuilder, private userDataPersonalService: UserDataPersonalService) { }
@@ -20,8 +29,8 @@ export class UserDataPersonalPage implements OnInit {
     this.userDataPersonalService.getUserInfo().then(
       (data) => {
         this.form = this.formBuilder.group({
-          name: data.response.username,
-          dni: [''],
+          name: data.response.name,
+          dni: data.response.ID,
           empresa: data.response.business,
           direccion: data.response.address,
           telefono: data.response.phoneNumber,
@@ -29,8 +38,6 @@ export class UserDataPersonalPage implements OnInit {
           idioma: data.response.lang,
           tarjeta_credito: data.response.creditCard,
           num_cuenta: data.response.bankAccountNumber,
-          password: [''],
-          aboutme:data.response.description
         });
       });
     this.getUser();
@@ -41,30 +48,38 @@ export class UserDataPersonalPage implements OnInit {
   }
 
   async onClickSubmit(){
+
+    this.name = this.form.get('name').value;
+    this.dni = this.form.get('dni').value;
+    this.empresa = this.form.get('empresa').value;
+    this.direccion = this.form.get('direccion').value;
+    this.telefono = this.form.get('telefono').value;
+    this.web = this.form.get('web').value;
+    this.idioma = this.form.get('idioma').value;
+    this.tarjetaCredito = this.form.get('tarjeta_credito').value;
+    this.numCuenta = this.form.get('num_cuenta').value;
+
     if (this.form.valid) {
       const datos = {
-        username: this.form.get('name').value,
-        business: this.form.get('empresa').value,
-        address: this.form.get('direccion').value,
-        phoneNumber: this.form.get('telefono').value,
-        web: this.form.get('web').value,
-        lang: this.form.get('idioma').value,
-        creditCard: this.form.get('tarjeta_credito').value,
-        bankAccountNumber: this.form.get('num_cuenta').value,
+        name: this.name,
+        ID: this.dni,
+        business: this.empresa,
+        address: this.direccion,
+        phoneNumber: this.telefono,
+        web: this.web,
+        lang: this.idioma,
+        creditCard: this.tarjetaCredito,
+        bankAccountNumber: this.numCuenta,
       }
 
       this.userDataPersonalService.updatePersonalDataUser(datos)
       .then(res =>{
-        console.log('Datos guardados con éxito : '+res);
+        //console.log('Datos guardados con éxito : '+res);
       })
       .catch(err =>{
-        console.log('Error al enviar los datos'+err);
+        //console.log('Error al enviar los datos'+err);
       })
     }
-  }
-
-  onSubmit(){
-    console.log('click onSubmit');
   }
 
 }

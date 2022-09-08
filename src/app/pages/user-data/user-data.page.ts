@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IUser} from 'src/app/models/user.model';
 import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {UntypedFormGroup, UntypedFormBuilder, Validators} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
 import {UserDataService} from './Services/user-data.service';
 
 @Component({
@@ -11,6 +11,11 @@ import {UserDataService} from './Services/user-data.service';
 })
 export class UserDataPage implements OnInit {
   curUser: IUser;
+  public username: string = null;
+  public password: string = null;
+  public repeatPass: string = null;
+  public description: string = null;
+
   form: UntypedFormGroup;
   public nameuser: string = '';
   public passIgual: boolean = true;
@@ -27,7 +32,7 @@ export class UserDataPage implements OnInit {
       (data) => {
         this.form = this.formBuilder.group({
           username: data.response.username,
-          changePass: [''],
+          repeatPass: [''],
           password: [''],
           description: data.response.description,
         });
@@ -40,28 +45,41 @@ export class UserDataPage implements OnInit {
     this.curUser = await this.sessionSvc.get();
   }
 
-  async onClickSubmit() {;
+  async onClickSubmit() {
+
+    this.username = this.form.get('username').value;
+    this.password = this.form.get('password').value;
+    this.repeatPass = this.form.get('repeatPass').value;
+    this.description = this.form.get('description').value;
+
     if (this.form.valid) {
-      if(this.form.get('password').value == this.form.get('changePass').value){
+      
+      if(this.password == this.repeatPass){
         this.passIgual = true;
       }else{
         this.passIgual = false;
       }
 
+
+      if(this.username != null && this.description != null && this.password == ''){
+        this.password = "";
+      }
+
       if(this.passIgual){
         let datos = {
-          "username": this.form.get('username').value,
-          "password": this.form.get('password').value,
-          "description": this.form.get('description').value
+          "username": this.username,
+          "password": this.password,
+          "description": this.description
         }
 
         this.userDataService.updateBasicInfoUserData(datos)
         .then(res => {
-          console.log('Datos guardados con éxito : '+res);
+          //console.log('Datos guardados con éxito : '+res);
         })
         .catch(err => {
-          console.log('Error al enviar los datos : '+err);
+          //console.log('Error al enviar los datos : '+err);
         })
+        
       }
       
     }
