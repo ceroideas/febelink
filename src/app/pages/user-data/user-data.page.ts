@@ -65,8 +65,11 @@ export class UserDataPage implements OnInit {
         this.password = "";
       }
 
-      if(this.username != null || this.description != null && this.password == ''){
-        this.password = "";
+      if(this.username != null || this.description != null){
+        if(this.password === ''){
+          this.password = "";
+        }
+        
       }
 
       if(this.passIgual){
@@ -83,7 +86,7 @@ export class UserDataPage implements OnInit {
         .catch(err => {
           //console.log('Error al enviar los datos : '+err);
         })
-        
+      
       }
       
     }
