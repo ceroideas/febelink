@@ -40,8 +40,7 @@
           <ion-img class="dot_notif_avatar" src="assets/icon/svg/dot_notif.svg"></ion-img>
           <ion-label class="ion-padding label_avatar">
             <ion-label class="menu-username">{{ currentUser?.nick ? currentUser?.nick : 'Juan Garrido' }}</ion-label>
-            <ion-label class="menu-editar pointer"
-                       (click)="goTo('menu/perfil')">{{ 'menu.labels.editarPerfil' | translate }}</ion-label>
+            <ion-label class="menu-editar pointer" (click)="goTo('user-data')">{{ 'menu.labels.editarPerfil' | translate }}</ion-label>   
           </ion-label>
           <ion-img size="small" src="assets/icon/svg/menu_cerrar.svg" alt="Cerrar menú"></ion-img>
         </ion-item>
@@ -50,7 +49,7 @@
       <ion-item class="menu item_menu_margen" color="item" routerLink="#" lines="none">
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_user.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal" href="#">
+        <ion-router-link class="ion-text-wrap color_ppal" (click)="goTo('user-data-personal')">
           <ion-label class="ion-padding">{{ 'menu.pages.datosPersonales' | translate }}</ion-label>
         </ion-router-link>
       </ion-item>
