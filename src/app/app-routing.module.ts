@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
+import {
+  PreloadAllModules,
+  Router,
+  RouterModule,
+  Routes,
+} from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
@@ -189,61 +194,101 @@ const routes: Routes = [
   },
   {
     path: 'success/:ref',
-    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+    loadChildren: () =>
+      import('./pages/success/success.module').then((m) => m.SuccessPageModule),
   },
   {
     path: 'success',
-    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
+    loadChildren: () =>
+      import('./pages/success/success.module').then((m) => m.SuccessPageModule),
   },
   /**
    * Email Verified from mailbox
    */
   {
     path: 'email-verified/:id',
-    loadChildren: () => import('./pages/email-verified/email-verified.module').then( m => m.EmailVerifiedPageModule)
+    loadChildren: () =>
+      import('./pages/email-verified/email-verified.module').then(
+        (m) => m.EmailVerifiedPageModule
+      ),
   },
   // If no id, redirect to home
   {
-    path: 'email-verified', redirectTo: environment.HOME_PAGE, pathMatch: 'full'
+    path: 'email-verified',
+    redirectTo: environment.HOME_PAGE,
+    pathMatch: 'full',
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminPageModule),
   },
   {
     path: 'posts',
-    loadChildren: () => import('./pages/posts/post.module').then( m => m.PostPageModule)
+    loadChildren: () =>
+      import('./pages/posts/post.module').then((m) => m.PostPageModule),
   },
   {
     path: 'cart',
-    loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule)
+    loadChildren: () =>
+      import('./pages/cart/cart.module').then((m) => m.CartPageModule),
   },
   {
     path: 'servicios',
-    loadChildren: () => import('./pages/servicios/servicios.module').then( m => m.ServiciosPageModule)
+    loadChildren: () =>
+      import('./pages/servicios/servicios.module').then(
+        (m) => m.ServiciosPageModule
+      ),
   },
   {
     path: 'user-data',
-    loadChildren: () => import('./pages/user-data/user-data.module').then( m => m.UserDataPageModule)
+    loadChildren: () =>
+      import('./pages/user-data/user-data.module').then(
+        (m) => m.UserDataPageModule
+      ),
   },
   {
     path: 'user-data-personal',
-    loadChildren: () => import('./pages/user-data-personal/user-data-personal.module').then( m => m.UserDataPersonalPageModule)
+    loadChildren: () =>
+      import('./pages/user-data-personal/user-data-personal.module').then(
+        (m) => m.UserDataPersonalPageModule
+      ),
   },
   {
     path: 'cart-history',
-    loadChildren: () => import('./pages/cart-history/cart-history.module').then( m => m.CartHistoryPageModule)
+    loadChildren: () =>
+      import('./pages/cart-history/cart-history.module').then(
+        (m) => m.CartHistoryPageModule
+      ),
   },
   {
     path: 'cart/success',
-    loadChildren: () => import('./pages/cart-success/cart-success.module').then( m => m.CartSuccessPageModule)
+    loadChildren: () =>
+      import('./pages/cart-success/cart-success.module').then(
+        (m) => m.CartSuccessPageModule
+      ),
   },
   {
     path: 'cart/error',
-    loadChildren: () => import('./pages/cart-error/cart-error.module').then( m => m.CartErrorPageModule)
+    loadChildren: () =>
+      import('./pages/cart-error/cart-error.module').then(
+        (m) => m.CartErrorPageModule
+      ),
   },
-
-
+  {
+    path: 'perfil-oraculo/:id',
+    loadChildren: () =>
+      import('./pages/perfil-oraculo/perfil-oraculo.module').then(
+        (m) => m.PerfilOraculoPageModule
+      ),
+  },
+  {
+    path: 'mis-publicaciones',
+    loadChildren: () =>
+      import('./pages/mis-publicaciones/mis-publicaciones.module').then(
+        (m) => m.MisPublicacionesPageModule
+      ),
+  },
 ];
 
 @NgModule({
@@ -253,10 +298,8 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {
-
   constructor(private router: Router) {
     /**
-     * To prevent 'Error: Cannot match any routes' when wrong url
      
     this.router.errorHandler = (error: any) => {
       // Redirect to Main Page | Home Page
