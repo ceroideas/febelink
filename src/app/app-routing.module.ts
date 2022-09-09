@@ -234,6 +234,15 @@ const routes: Routes = [
     path: 'cart/error',
     loadChildren: () => import('./pages/cart-error/cart-error.module').then(m => m.CartErrorPageModule)
   },
+  {
+    path: 'perfil-oraculo/:id',
+    loadChildren: () => import('./pages/perfil-oraculo/perfil-oraculo.module').then( m => m.PerfilOraculoPageModule)
+  },  {
+    path: 'mis-publicaciones',
+    loadChildren: () => import('./pages/mis-publicaciones/mis-publicaciones.module').then( m => m.MisPublicacionesPageModule)
+  },
+
+
 
 
 ];
