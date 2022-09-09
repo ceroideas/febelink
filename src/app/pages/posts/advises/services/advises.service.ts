@@ -7,6 +7,8 @@ import { IAdviseFull, IAdviseFilter, IAdvise } from '../models/advises.model';
 })
 export class AdviseService {
 
+  showCreatePost: boolean = false;
+
   constructor(
       private http: HttpService
   ) {}

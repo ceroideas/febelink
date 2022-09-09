@@ -32,11 +32,42 @@
   {{ iComment.comment }}
 </div>
 
+<div class="mobile">
+  <div class="table-reactions">
+    <!-- TODO React comment
+      <div (click)="react( $event )" style="cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;">
+      <img src="assets/icon/svg/heart.svg" style="width:14px;margin-right:13px;position:relative;top:2px;" />{{ 'pages.posts.react' | translate }}
+    </div>-->
+    <div (click)="share( $event )" class="share-reaction">
+      <img src="assets/icon/svg/share.svg" class="share-reaction-svg" />{{ 'common.share' | translate }}
+    </div>
+    <div (click)="showReply(iComment.id)" class="reply-reaction">
+      <img src="assets/icon/svg/reply.svg" class="reply-reaction-svg" />Responder
+    </div>
+  </div>
+</div>
+
+<div class="desktop">
+  <div class="table-reactions-b">
+    <!-- TODO React comment
+      <div (click)="react( $event )" style="cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;">
+      <img src="assets/icon/svg/heart.svg" style="width:14px;margin-right:13px;position:relative;top:2px;" />{{ 'pages.posts.react' | translate }}
+    </div>-->
+    <div (click)="share( $event )" class="share-reaction-b">
+      <img src="assets/icon/svg/share.svg" class="share-reaction-svg" />{{ 'common.share' | translate }}
+    </div>
+    <div (click)="showReply(iComment.id)" class="reply-reaction-b">
+      <img src="assets/icon/svg/reply.svg" class="reply-reaction-svg" />Responder
+    </div>
+  </div>
+</div>
+
+<!--
 <div class="table-reactions">
   <!-- TODO React comment
     <div (click)="react( $event )" style="cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;">
     <img src="assets/icon/svg/heart.svg" style="width:14px;margin-right:13px;position:relative;top:2px;" />{{ 'pages.posts.react' | translate }}
-  </div>-->
+  </div>
   <div (click)="share( $event )" class="share-reaction">
     <img src="assets/icon/svg/share.svg" class="share-reaction-svg" />{{ 'common.share' | translate }}
   </div>
@@ -44,6 +75,7 @@
     <img src="assets/icon/svg/reply.svg" class="reply-reaction-svg" />Responder
   </div>
 </div>
+-->
 
 <div *ngFor="let childComment of iComment?.childComments" class="list-replies">
   <div class="div-comment-main">
