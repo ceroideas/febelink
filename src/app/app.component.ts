@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
   @ViewChild(IonRouterOutlet, { static: false }) routerOutlets: IonRouterOutlet;
+  public visiblePro: boolean = false;
 
   public appPages = [
     // NOTE: Hidden for the time being until Stripe development is completed.
@@ -164,6 +165,10 @@ export class AppComponent implements OnInit, OnDestroy {
       // Update in storage
       this.utilities.saveUserData(userData);
     });
+  }
+
+  changeToProfesional(){
+    this.visiblePro = !this.visiblePro;
   }
 
   openCookieBanner() {
