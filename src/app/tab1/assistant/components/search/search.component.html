@@ -1,8 +1,6 @@
 <ion-grid [class]="'no-pad ' + (clase || '')">
   <!-- SearchBar -->
-  <div style="width:100%;">
-    <ion-row *ngIf="showSearchbar" size="12">
-      <ion-col size="6">
+    <ion-row *ngIf="showSearchbar">
         <!-- (ionBlur)="assistantSearchSvc.removeFocus()" -->
         <ion-searchbar style="margin-left: 40%;"
           class="searchbar"
@@ -14,9 +12,7 @@
           (keyup.enter)="OnEnterPress($event)"
           debounce="500"
         ></ion-searchbar>
-      </ion-col>
     </ion-row>
-  </div>
   <!-- Loading -->
   <!-- <app-loading [isLoading]="assistantSearchSvc.isLoading"></app-loading> -->
 

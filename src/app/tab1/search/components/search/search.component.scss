@@ -8,9 +8,53 @@ ion-content {
     --color:  #111928;
     --icon-color: #111928;
     --placeholder-color:  #6B7280;
-    height: 52px;
-    width: 23em;
+    margin-left: auto;
+    margin-right: auto;
+    
+    @media (min-width: 768px) {
+        width: 32em;
+        height: 5em;
+        --color: #fff;
+        --background: rgba(0, 0, 0, 0);
+        --border-radius: 8px;
+        --icon-color: #fff;
+        --placeholder-color: #fff;
+        border: 1px solid #fff;
+        border-radius: 40px;
+        background-color: rgba(0,0,0,0);
+      }
 }
+
+.sc-ion-searchbar-md-h{
+    box-shadow: none;
+}
+
+ion-search{
+    .searchbar-input .sc-ion-searchbar-md{
+        @media (min-width: 768px) {
+            box-shadow: none;
+        }
+    }
+}
+
+.tam_img_desktop_mini{
+    @media (min-width: 768px) {
+      height: 9em;
+      width: 100%;
+      border-radius: 8px;
+    }
+}
+
+.font_texto_18{
+@media (min-width: 768px) {
+    color: #111928;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+}
+
 
 ion-slides{
     --bullet-background-active:#1C64F2;
@@ -85,7 +129,8 @@ ion-img{
 .list_title_card{
     font-size: 24px; 
     color: #111928;
-    margin-left: 0.5em
+    margin-left: 0.5em;
+    font-weight: 600;
 }
 
 ion-slides{
@@ -153,7 +198,7 @@ ion-avatar{
 
 ion-grid{
     ion-segment{
-        margin-top: 3em;
+        margin-top: 1em;
         --ion-color-base:#1C64F2;
         font-size: 14px;
         ion-segment-button{
@@ -186,4 +231,8 @@ ion-slides {
 
 .margin_12{
     margin: 12px;
+    border-radius: 8px;
+    @media (min-width: 768px) {
+        margin: 0;
+    }   
 }

@@ -8,6 +8,7 @@ import { IKeywords } from '../models/search.model';
 export class SearchService {
 
   public visibleListas: boolean = true;
+  public listaSearchDesktop: boolean = false;
   private dataLists = null;
   private iKeyWords: IKeywords;
   public isLoading: boolean = false;
@@ -21,6 +22,7 @@ export class SearchService {
   search(text) {
     if(text != ''){
       this.visibleListas = false;
+      this.listaSearchDesktop = true;
       this.getDataListas()
       .then(res => {
         this.dataLists = res;
@@ -29,6 +31,7 @@ export class SearchService {
       }); 
     }else{
       this.visibleListas = true;
+      this.listaSearchDesktop = false;
     }
   }
 
@@ -42,20 +45,6 @@ export class SearchService {
           reject(error);
         });
     })
-  }
-
-  show_detalle_desktop(){
-    let id = 1;
-    this.show_imagen = false;
-    this.show_detalle = true;
-    this.getDetalle(id)
-    .then(detalle =>{
-        this.dataDesktopDetail = detalle;
-        console.log(this.dataDesktopDetail);
-    })
-    .catch(err =>{
-      console.log(err);
-    });
   }
 
   set(searchText: string) {

@@ -1,3 +1,12 @@
+.content-background {
+  --background: #F9FAFB;
+}
+@media (min-width: 768px) {
+  .content-background {
+      --background: #F7F7F5;
+  }
+}
+
 .icon_star{
     width: 14.87px;
     height: 14.24px;
@@ -10,6 +19,30 @@
     padding-right: 2em;
     padding-bottom: 2em;
     padding-top: 0em;
+}
+
+.tam_img_desktop_mini{
+  @media (min-width: 768px) {
+    height: 9em;
+    width: 100%;
+    border-radius: 8px;
+  }
+}
+
+.list_title_card{
+  font-size: 24px; 
+  color: #111928;
+  margin-left: 0.5em;
+  font-weight: 600;
+}
+
+.imagen_oferta{
+  @media (min-width: 768px) {
+    ion-img {
+      border-radius: 10px !important;
+      overflow: hidden;
+    }
+  }
 }
 
 ion-footer{
@@ -49,7 +82,10 @@ ion-footer{
     margin-top: 0;
 }
 .row_cantidad{
+  @media (min-width: 768px) {
     margin-top: 3.5em;
+  }
+  margin-top: 0.5em;
 }
 .item_cantidad{
     margin-left: -1em;
@@ -156,6 +192,9 @@ ion-footer{
   }
 
   .botonf1{
+    @media (min-width: 768px) {
+      height: 6em;
+    }
     --background:#1C64F2;
     --color:#FFFFFF;
     --border-radius:8px;
@@ -173,7 +212,28 @@ ion-footer{
     padding-top: 0px;
   }
 
+  .font_texto_18{
+    @media (min-width: 768px) {
+      color: #111928;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+    }  
+  }
+
+  .margin_top_btn{
+    @media (min-width: 768px) {
+      margin-top: -1.5em;
+    }
+  }
+
   .botonf2{
+    @media (min-width: 768px) {
+      height: 6em;
+      --border-color:#1C64F2;
+      --border-style: solid;
+      --border-width: 1px;
+    }
     --background:#FFFFFF;
     --color:#1C64F2;
     --border-radius:8px;

@@ -224,70 +224,80 @@
             </ion-card>
         </ion-list>
     </div>
-    <div class="desktop">
-        <ion-row style="margin-top: 5em; margin-left: 10em; margin-right: 10em; display: flex; justify-content: center; margin-top: 4em;" size="12">
-            <ion-col size="4">
-                <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>
-                <ion-list style="margin-right: 5em;" *ngIf="data">
-                    <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.recomendations">
-                        <ion-card-content class="ion-no-padding">
-                            <ion-item (click)="searchService.show_detalle_desktop()" lines="none" class="item_dropdown">
-                                <ion-avatar class="avatar_dropdown" slot="start">
-                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                                </ion-avatar>
-                                <ion-label class="content_item">
-                                    <p>
-                                        <span class="font_texto_18">{{data?.texto}}</span>
-                                    </p>
-                                    <p>
-                                        <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
-                                    </p>
-                                    <p class="ion-no-margin"> 
-                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                                        <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
-                                    </p>    
-                                    <span class="font_texto_14">{{data?.nombre}}</span>
-                                </ion-label>
-                            </ion-item>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-list>
+    <div style="margin-top: 10em;" class="desktop">
+        <ion-row *ngIf="!searchService.listaSearchDesktop" style="margin-top: 5em; margin-left: 10em; margin-right: 10em; display: flex; justify-content: center; margin-top: 4em;" size="12">
+            <ion-col size="4" *ngIf="data">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>   
+                <ion-row size="12" class="ion-margin" *ngFor="let data of data.data?.recomendations">
+                    <ion-col size="8">
+                        <ion-card class="ion-no-margin">
+                            <ion-card-content class="ion-no-padding">
+                                <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
+                                    <ion-avatar class="avatar_dropdown" slot="start">
+                                        <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                    </ion-avatar>
+                                    <ion-label class="content_item">
+                                        <p>
+                                            <span class="font_texto_18">{{data?.texto}}</span>
+                                        </p>
+                                        <p>
+                                            <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                        </p>
+                                        <p class="ion-no-margin"> 
+                                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                            <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                            <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                                        </p>    
+                                        <span class="font_texto_14">{{data?.nombre}}</span>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="4" *ngIf="data">
                 <ion-label class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label>
-                <ion-list style="margin-right: 5em;" *ngIf="data">
-                    <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.offersTop">
-                        <ion-card-content class="ion-no-padding">
-                            <ion-item lines="none" class="item_dropdown">
-                                <ion-avatar class="avatar_dropdown" slot="start">
-                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                                </ion-avatar>
-                                <ion-label class="content_item">
-                                    <p>
-                                        <span class="font_texto_18">{{data?.titulo}}</span>
-                                    </p>
-                                    <p>
-                                        <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
-                                    </p>
-                                    <p>
-                                        <span class="font_texto_14">{{data?.subtitulo}}</span>
-                                    </p>
-                                </ion-label>
-                            </ion-item>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-list>
+                <ion-row (click)="irA('/detalle/1')" size="12" class="ion-margin" *ngFor="let data of data.data?.offersTop">
+                    <ion-col size="8">
+                        <ion-card class="ion-no-margin">
+                            <ion-card-content class="ion-no-padding">
+                              <ion-grid size="12">
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 0; padding-bottom: 0; border-radius: 8px;" size="12">
+                                    <img class="tam_img_desktop_mini" src="./assets/imgs/{{data?.imagen}}"/>
+                                  </ion-col>
+                                </ion-row>
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 10px; padding-bottom: 0;" size="12">
+                                    <ion-label class="font_texto_18">{{data?.titulo}}</ion-label>
+                                  </ion-col>
+                                </ion-row>
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 5px; padding-bottom: 0;" size="12">
+                                    <ion-label class="style_font_item">{{data?.precio}}€<ion-label class="style_font_item_normal">/mes</ion-label></ion-label>
+                                  </ion-col>
+                                </ion-row>
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 0; padding-bottom: 0;" size="12">
+                                    <ion-label class="font_texto_14">{{data?.subtitulo}}</ion-label>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-grid>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="4" *ngIf="data">
                 <ion-label class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label>
-                <ion-list style="margin-right: 5em;" *ngIf="data">
-                    <ion-card style="border-radius: 8px;" class="margin_12" *ngFor="let data of data.data?.offersTop">
+                <ion-row size="12" class="ion-margin" *ngFor="let data of data.data?.recomendationsSearch">
+                    <ion-card class="ion-no-margin">
                         <ion-card-content class="ion-no-padding">
-                            <ion-item lines="none" class="item_dropdown">
+                            <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
                                 <ion-avatar class="avatar_dropdown" slot="start">
                                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                                 </ion-avatar>
@@ -311,7 +321,206 @@
                             </ion-item>
                         </ion-card-content>
                     </ion-card>
-                </ion-list>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row style="margin-top:-2%;" class="ion-no-margin" *ngIf="searchService.listaSearchDesktop">
+            <ion-grid class="ion-no-padding" *ngIf="getR()?.length == 0 and getOf()?.length == 0 and getL()?.length == 0">
+                <ion-row style="height: 191px; background-color:#6B7280; text-align: center;" size="12">
+                    <ion-col size="12">
+                        <p style="padding-top: 2%;">
+                            <ion-label style="color:#FFF; font-size: 32px; margin-top: 40%;">No encuentra resultados</ion-label>
+                        </p>
+                        <p>
+                            <ion-label style="color:#FFF; font-size: 18px; margin-top: 10px;">Intenta buscar por otras palabras clave</ion-label>
+                        </p>
+                    </ion-col>
+                </ion-row>
+                <ion-row style="margin-top:2em; margin-left: 10em; margin-right: 10em; display: flex; justify-content: center;" class="ion-padding">
+                    <ion-col size="4" *ngIf="data">
+                        <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>   
+                        <ion-row size="12" class="ion-margin" *ngFor="let data of data.data?.recomendations">
+                            <ion-col size="8">
+                                <ion-card class="ion-no-margin">
+                                    <ion-card-content class="ion-no-padding">
+                                        <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
+                                            <ion-avatar class="avatar_dropdown" slot="start">
+                                                <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                            </ion-avatar>
+                                            <ion-label class="content_item">
+                                                <p>
+                                                    <span class="font_texto_18">{{data?.texto}}</span>
+                                                </p>
+                                                <p>
+                                                    <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                                </p>
+                                                <p class="ion-no-margin"> 
+                                                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                    <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                                                </p>    
+                                                <span class="font_texto_14">{{data?.nombre}}</span>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-card-content>
+                                </ion-card>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                    <ion-col size="4" *ngIf="data">
+                        <ion-label class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label>
+                        <ion-row (click)="irA('/detalle/1')" size="12" class="ion-margin" *ngFor="let data of data.data?.offersTop">
+                            <ion-col size="8">
+                                <ion-card class="ion-no-margin">
+                                    <ion-card-content class="ion-no-padding">
+                                      <ion-grid size="12">
+                                        <ion-row size="12">
+                                          <ion-col style="padding-top: 0; padding-bottom: 0; border-radius: 8px;" size="12">
+                                            <img class="tam_img_desktop_mini" src="./assets/imgs/{{data?.imagen}}"/>
+                                          </ion-col>
+                                        </ion-row>
+                                        <ion-row size="12">
+                                          <ion-col style="padding-top: 10px; padding-bottom: 0;" size="12">
+                                            <ion-label class="font_texto_18">{{data?.titulo}}</ion-label>
+                                          </ion-col>
+                                        </ion-row>
+                                        <ion-row size="12">
+                                          <ion-col style="padding-top: 5px; padding-bottom: 0;" size="12">
+                                            <ion-label class="style_font_item">{{data?.precio}}€<ion-label class="style_font_item_normal">/mes</ion-label></ion-label>
+                                          </ion-col>
+                                        </ion-row>
+                                        <ion-row size="12">
+                                          <ion-col style="padding-top: 0; padding-bottom: 0;" size="12">
+                                            <ion-label class="font_texto_14">{{data?.subtitulo}}</ion-label>
+                                          </ion-col>
+                                        </ion-row>
+                                      </ion-grid>
+                                    </ion-card-content>
+                                </ion-card>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                    <ion-col size="4" *ngIf="data">
+                        <ion-label class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label>
+                        <ion-row size="12" class="ion-margin" *ngFor="let data of data.data?.recomendationsSearch">
+                            <ion-card class="ion-no-margin">
+                                <ion-card-content class="ion-no-padding">
+                                    <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
+                                        <ion-avatar class="avatar_dropdown" slot="start">
+                                            <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                        </ion-avatar>
+                                        <ion-label class="content_item">
+                                            <p>
+                                                <span class="font_texto_18">{{data?.texto}}</span>
+                                            </p>
+                                            <p>
+                                                <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                            </p>
+                                            <p class="ion-no-margin"> 
+                                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                                <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                                            </p>    
+                                            <span class="font_texto_14">{{data?.nombre}}</span>
+                                        </ion-label>
+                                    </ion-item>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-row>
+        <ion-row *ngIf="searchService.listaSearchDesktop" style="margin-top: 5em; margin-left: 10em; margin-right: 10em; display: flex; justify-content: center; margin-top: 4em;" size="12">               
+            <ion-col size="4" *ngIf="getR()?.length > 0">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>
+                <ion-row size="12" class="ion-margin" *ngFor="let data of getR()">
+                    <ion-card class="ion-no-margin">
+                        <ion-card-content class="ion-no-padding">
+                            <ion-item (click)="irA('/detalle/1')" class="item_dropdown" lines="none">
+                                <ion-avatar class="avatar_dropdown" slot="start">
+                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                </ion-avatar>
+                                <ion-label class="content_item">
+                                    <span class="font_texto_18">{{data?.texto}}</span> <span class="style_font_item">{{data?.precio}}€<span class="style_font_item_normal">/mes</span></span>
+                                    <p class="ion-no-margin"> 
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                    </p>    
+                                    <span class="font_texto_14">{{data?.nombre}}</span>
+                                </ion-label>   
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-row>
+            </ion-col>
+            <ion-col size="4" *ngIf="getOf()?.length > 0">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label>
+                <ion-row (click)="irA('/detalle/1')" size="12" class="ion-margin" *ngFor="let data of data.data?.offersTop">
+                    <ion-col size="8">
+                        <ion-card class="ion-no-margin">
+                            <ion-card-content class="ion-no-padding">
+                              <ion-grid size="12">
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 0; padding-bottom: 0; border-radius: 8px;" size="12">
+                                    <img class="tam_img_desktop_mini" src="./assets/imgs/{{data?.imagen}}"/>
+                                  </ion-col>
+                                </ion-row>
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 10px; padding-bottom: 0;" size="12">
+                                    <ion-label class="font_texto_18">{{data?.titulo}}</ion-label>
+                                  </ion-col>
+                                </ion-row>
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 5px; padding-bottom: 0;" size="12">
+                                    <ion-label class="style_font_item">{{data?.precio}}€<ion-label class="style_font_item_normal">/mes</ion-label></ion-label>
+                                  </ion-col>
+                                </ion-row>
+                                <ion-row size="12">
+                                  <ion-col style="padding-top: 0; padding-bottom: 0;" size="12">
+                                    <ion-label class="font_texto_14">{{data?.subtitulo}}</ion-label>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-grid>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col size="4" *ngIf="getL()?.length > 0">
+                <ion-label class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label>
+                <ion-row (click)="irA('/detalle/1')" size="12" class="ion-margin" *ngFor="let data of getL()">
+                    <ion-card class="ion-no-margin">
+                        <ion-card-content class="ion-no-padding" >
+                            <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
+                                <ion-avatar class="avatar_dropdown" slot="start">
+                                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                                </ion-avatar>
+                                <ion-label class="content_item">
+                                    <span class="font_texto_18">{{data?.texto}}</span>
+                                    <p class="ion-no-margin"> 
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+                                        <span class="font_valoraciones">({{data?.numVal}}) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                                    </p>    
+                                    <span class="font_texto_14">{{data?.nombre}}</span>
+                                </ion-label>
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-row>
             </ion-col>
         </ion-row>
     </div>

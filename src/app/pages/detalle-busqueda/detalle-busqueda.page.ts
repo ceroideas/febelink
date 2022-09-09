@@ -35,6 +35,13 @@ export class DetalleBusquedaPage implements OnInit {
     }).catch(err => {
         console.log(err);
     }); 
+
+    this.searchService.getData()
+    .then(res => {
+        this.data = res;
+    }).catch(err => {
+        console.log(err);
+    }); 
   }
 
   onSwiper([swiper]) {
