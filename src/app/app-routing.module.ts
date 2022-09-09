@@ -241,6 +241,10 @@ const routes: Routes = [
     path: 'mis-publicaciones',
     loadChildren: () => import('./pages/mis-publicaciones/mis-publicaciones.module').then( m => m.MisPublicacionesPageModule)
   },
+  {
+    path: 'suscripciones',
+    loadChildren: () => import('./pages/suscripciones/suscripciones.module').then( m => m.SuscripcionesPageModule)
+  },
 
 
 
