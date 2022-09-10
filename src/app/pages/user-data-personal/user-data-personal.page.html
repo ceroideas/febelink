@@ -15,7 +15,7 @@
         <div class="div-breadcrumbs-b">
           <div class="breadcrumbs-text-b">
             <span class="breadcrumbs-index-b">Inicio</span>
-            <img class="breadcrumbs-next-b" src="assets/icon/svg/chevron-right.svg" />
+            <img class="breadcrumbs-next-b" src="assets/icon/svg/chevron-right.svg"/>
             <span>Datos personales</span>
           </div>
         </div>
@@ -50,68 +50,76 @@
               <ion-row size="12">
                 <ion-col size="12">
                   <form *ngIf="form"
-                  #profileForm="ngForm" name="profileForm" id="profileForm"
-                  [formGroup]="form"
-                  (ngSubmit)="submitForm()">
-                  <ion-grid>
-                    <ion-row class="ion-padding">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Nombre y Apellidos</ion-label>
-                        <ion-input formControlName="name" placeholder="Nombre y Apellidos" type="text" class="text_label_form padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">DNI/NIF/NIE/CIF</ion-label>
-                        <ion-input formControlName="dni" placeholder="DNI/NIF/NIE/CIF" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Nombre de la empresa</ion-label>
-                        <ion-input formControlName="empresa" placeholder="Nombre de la empresa" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Dirección</ion-label>
-                        <ion-input formControlName="direccion" placeholder="Dirección" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Teléfono</ion-label>
-                        <ion-input formControlName="telefono" placeholder="Teléfono" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Web</ion-label>
-                        <ion-input formControlName="web" placeholder="Web" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Idioma</ion-label>
-                        <ion-select formControlName="idioma" value="Español" multiple="false" placeholder="Idioma">
-                          <ion-select-option value="es">Español</ion-select-option>
-                          <ion-select-option value="en">Inglés</ion-select-option>
-                        </ion-select>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Tarjeta de crédito</ion-label>
-                        <ion-input formControlName="tarjeta_credito" placeholder="Tarjeta de crédito" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row class="row_padding_top">
-                      <ion-col size="12">
-                        <ion-label class="text_label_form">Número de cuenta</ion-label>
-                        <ion-input formControlName="num_cuenta" placeholder="*************3033" type="text" class="padding-input-12 userform-input-mobile"></ion-input>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
+                        #profileForm="ngForm" name="profileForm" id="profileForm"
+                        [formGroup]="form"
+                        (ngSubmit)="submitForm()">
+                    <ion-grid>
+                      <ion-row class="ion-padding">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Nombre y Apellidos</ion-label>
+                          <ion-input formControlName="name" placeholder="Nombre y Apellidos" type="text"
+                                     class="text_label_form padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">DNI/NIF/NIE/CIF</ion-label>
+                          <ion-input formControlName="dni" placeholder="DNI/NIF/NIE/CIF" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Nombre de la empresa</ion-label>
+                          <ion-input formControlName="empresa" placeholder="Nombre de la empresa" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Dirección</ion-label>
+                          <ion-input formControlName="direccion" placeholder="Dirección" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Teléfono</ion-label>
+                          <ion-input formControlName="telefono" placeholder="Teléfono" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Web</ion-label>
+                          <ion-input formControlName="web" placeholder="Web" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Idioma</ion-label>
+                          <ion-select formControlName="idioma" value="Español" multiple="false" placeholder="Idioma">
+                            <ion-select-option value="es">Español</ion-select-option>
+                            <ion-select-option value="en">Inglés</ion-select-option>
+                          </ion-select>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Tarjeta de crédito</ion-label>
+                          <ion-input formControlName="tarjeta_credito" placeholder="Tarjeta de crédito" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row class="row_padding_top">
+                        <ion-col size="12">
+                          <ion-label class="text_label_form">Número de cuenta</ion-label>
+                          <ion-input formControlName="num_cuenta" placeholder="*************3033" type="text"
+                                     class="padding-input-12 userform-input-mobile"></ion-input>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
                   </form>
                 </ion-col>
               </ion-row>
@@ -123,84 +131,94 @@
     <ion-row class="desktop" size="12">
       <ion-grid>
         <form *ngIf="form"
-            #profileForm="ngForm" name="profileForm" id="profileForm"
-            [formGroup]="form"
-            (ngSubmit)="submitForm()">
-        <ion-row class="row_form" size="9">
-          <ion-col size="3">
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label class="text_label_form">Nombre y Apellidos</ion-label>
-                <ion-input formControlName="name" placeholder="Nombre y Apellidos" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label class="text_label_form">Nombre de la empresa</ion-label>
-                <ion-input formControlName="empresa" placeholder="Nombre de la empresa" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label class="text_label_form">Web</ion-label>
-                <ion-input formControlName="web" placeholder="Web" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>   
-          </ion-col>  
-          <ion-col size="3">
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label class="text_label_form">DNI/NIF/NIE/CIF</ion-label>
-                <ion-input formControlName="dni" placeholder="DNI/NIF/NIE/CIF" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>   
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label class="text_label_form">Dirección</ion-label>
-                <ion-input formControlName="direccion" placeholder="Dirección" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>   
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label class="text_label_form">Tarjeta de crédito</ion-label>
-                <ion-input formControlName="tarjeta_credito" placeholder="Tarjeta de crédito" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col size="2"> 
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label position="stacked" class="text_label_form">Idioma</ion-label>
-                <ion-select formControlName="idioma" value="Español" multiple="false" placeholder="Idioma">
-                  <ion-select-option value="es">Español</ion-select-option>
-                  <ion-select-option value="en">Inglés</ion-select-option>
-                </ion-select>
-              </ion-col>
-            </ion-row>
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label position="stacked" class="text_label_form">Teléfono</ion-label>
-                <ion-input formControlName="telefono" placeholder="Teléfono" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>
-            <ion-row class="row_padding_top">
-              <ion-col size="10">
-                <ion-label position="stacked" class="text_label_form">Número de cuenta</ion-label>
-                <ion-input formControlName="num_cuenta" placeholder="*************3033" type="text" class="padding-input-12 userform-input-desktop"></ion-input>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row> 
+              #profileForm="ngForm" name="profileForm" id="profileForm"
+              [formGroup]="form"
+              (ngSubmit)="submitForm()">
+          <ion-row class="row_form" size="9">
+            <ion-col size="3">
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label class="text_label_form">Nombre y Apellidos</ion-label>
+                  <ion-input formControlName="name" placeholder="Nombre y Apellidos" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label class="text_label_form">Nombre de la empresa</ion-label>
+                  <ion-input formControlName="empresa" placeholder="Nombre de la empresa" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label class="text_label_form">Web</ion-label>
+                  <ion-input formControlName="web" placeholder="Web" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="3">
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label class="text_label_form">DNI/NIF/NIE/CIF</ion-label>
+                  <ion-input formControlName="dni" placeholder="DNI/NIF/NIE/CIF" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label class="text_label_form">Dirección</ion-label>
+                  <ion-input formControlName="direccion" placeholder="Dirección" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label class="text_label_form">Tarjeta de crédito</ion-label>
+                  <ion-input formControlName="tarjeta_credito" placeholder="Tarjeta de crédito" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="2">
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label position="stacked" class="text_label_form">Idioma</ion-label>
+                  <ion-select formControlName="idioma" value="Español" multiple="false" placeholder="Idioma">
+                    <ion-select-option value="es">Español</ion-select-option>
+                    <ion-select-option value="en">Inglés</ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label position="stacked" class="text_label_form">Teléfono</ion-label>
+                  <ion-input formControlName="telefono" placeholder="Teléfono" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row class="row_padding_top">
+                <ion-col size="10">
+                  <ion-label position="stacked" class="text_label_form">Número de cuenta</ion-label>
+                  <ion-input formControlName="num_cuenta" placeholder="*************3033" type="text"
+                             class="padding-input-12 userform-input-desktop"></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
         </form>
       </ion-grid>
     </ion-row>
   </ion-grid>
+  <app-footer></app-footer>
 </ion-content>
 <ion-footer class="mobile">
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" form="form1" (click)="onClickSubmit()" type="submit">Guardar cambios</ion-button>
+        <ion-button expand class="botonf1" form="form1" (click)="onClickSubmit()" type="submit">Guardar cambios
+        </ion-button>
       </ion-row>
       <ion-row class="ion-padding paddingf2">
         <ion-button routerLink="/posts/oracles" expand class="botonf2" type="submit">Cancelar</ion-button>
@@ -208,4 +226,3 @@
     </ion-grid>
   </ion-toolbar>
 </ion-footer>
-<app-footer></app-footer>

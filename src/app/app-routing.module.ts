@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {
   PreloadAllModules,
   Router,
   RouterModule,
   Routes,
 } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'posts/oracles', pathMatch: 'full' },
+  {path: '', redirectTo: 'posts/oracles', pathMatch: 'full'},
   {
     path: 'menu',
     loadChildren: () =>
@@ -241,21 +241,21 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'user-data',
+    path: 'profile',
     loadChildren: () =>
       import('./pages/user-data/user-data.module').then(
         (m) => m.UserDataPageModule
       ),
   },
   {
-    path: 'user-data-personal',
+    path: 'profile/account',
     loadChildren: () =>
       import('./pages/user-data-personal/user-data-personal.module').then(
         (m) => m.UserDataPersonalPageModule
       ),
   },
   {
-    path: 'cart-history',
+    path: 'cart/history',
     loadChildren: () =>
       import('./pages/cart-history/cart-history.module').then(
         (m) => m.CartHistoryPageModule
@@ -283,7 +283,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'mis-publicaciones',
+    path: 'profile/public',
     loadChildren: () =>
       import('./pages/mis-publicaciones/mis-publicaciones.module').then(
         (m) => m.MisPublicacionesPageModule
@@ -297,17 +297,18 @@ const routes: Routes = [
       ),
   },
 ];
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}),
   ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {
   constructor(private router: Router) {
     /**
-     
-    this.router.errorHandler = (error: any) => {
+
+     this.router.errorHandler = (error: any) => {
       // Redirect to Main Page | Home Page
       this.router.navigate([ '/' + environment.HOME_PAGE ]);
     }*/
