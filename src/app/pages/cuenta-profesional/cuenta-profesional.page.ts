@@ -16,7 +16,7 @@ export class CuentaProfesionalPage implements OnInit {
 
   ngOnInit() {
     this.getTypeGeo();
-    this.getProfesiones();
+    //this.getProfesiones();
   }
 
   async changeCheck(){
@@ -46,7 +46,7 @@ export class CuentaProfesionalPage implements OnInit {
       console.log(err);
     })
   }
-
+/*
   search(query: any, geoId: number) {
     let select_geo = null;
     if (!query) { // revert back to the original array if no query
@@ -58,5 +58,5 @@ export class CuentaProfesionalPage implements OnInit {
       })
     }
   }
-
+*/
 }
