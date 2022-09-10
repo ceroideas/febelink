@@ -1,13 +1,3 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons buttons-start slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-
-    <app-header-buttons [perfil]="perfil"></app-header-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="content-background">
 
   <div class="desktop">
@@ -91,9 +81,7 @@
           Nombre del servicio
         </div>
         <div class="add-service-margin-input">
-          <ion-input *ngIf="isTemplate" disabled="true" [(ngModel)]="title" placeholder="Máximo 130 caracteres"
-                     class="padding-input-12 add-service-input"></ion-input>
-          <ion-input *ngIf="!isTemplate" [(ngModel)]="title" placeholder="Máximo 130 caracteres"
+          <ion-input [disabled]="isTemplate" [(ngModel)]="title" placeholder="Máximo 130 caracteres"
                      class="padding-input-12 add-service-input"></ion-input>
         </div>
         <div class="add-service-label-input">
@@ -138,7 +126,8 @@
         </div>
         <div>
           <ion-item class="no-padding add-service-select-item">
-            <ion-select [(ngModel)]="sector" class="add-service-select" placeholder="Profesiones" cancelText="Cancelar"
+            <ion-select [(ngModel)]="sector" [disabled]="isTemplate" class="add-service-select"
+                        placeholder="Profesiones" cancelText="Cancelar"
                         okText="Aceptar">
               <ion-select-option *ngFor="let sector of ProfessionsMapped"
                                  [value]="sector.subSectorId">{{sector.name}}</ion-select-option>

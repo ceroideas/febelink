@@ -147,7 +147,7 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () =>
-      import('./pages/chat/chat.module').then((m) => m.ChatPageModule),
+      import('./tab3/tab3.module').then((m) => m.Tab3PageModule),
   },
   {
     path: 'privacy-policy',
@@ -239,7 +239,7 @@ const routes: Routes = [
       import('./pages/cart/cart.module').then((m) => m.CartPageModule),
   },
   {
-    path: 'servicios',
+    path: 'services',
     loadChildren: () =>
       import('./pages/servicios/servicios.module').then(
         (m) => m.ServiciosPageModule
@@ -295,7 +295,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'suscripciones',
+    path: 'subscriptions',
     loadChildren: () =>
       import('./pages/suscripciones/suscripciones.module').then(
         (m) => m.SuscripcionesPageModule
