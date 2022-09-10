@@ -1,0 +1,174 @@
+.background-content {
+    --background: #F9FAFB;
+}
+
+.margin_left_breadcrumbs1{
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #374151;
+
+    @media (min-width: 768px) {
+    }
+}
+
+.label_orange{
+    margin-left: 2%;
+    margin-top: 3%;
+}
+
+ion-toggle{
+    --background-checked:#FF5A1F;
+    --background: #FFFFFF;
+    --handle-background:rgba(255, 90, 31, 0.6);
+    --handle-background-checked:#FFFFFF;
+    padding-top: 20%;
+}
+
+.searchBar{
+    --color: #111928;
+    --background: rgb(255, 255, 255, 1);
+    --border-radius: 8px;
+    --icon-color: #111928;
+    --placeholder-color: #fff;
+    padding: 0;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    --background-color: rgb(255, 255, 255, 1);
+}
+
+.searchbar-has-value{
+    border: 1px solid #1C64F2;
+}
+
+.p_text_grid{
+    color: #4B5563;
+    font-size: 16px;
+}
+
+.p_text_grid2{
+    color: #4B5563;
+    font-size: 14px;
+}
+
+.margin_top_2_orange{
+    margin-top: 2%;
+}
+.row_text_check{
+    background-color: rgba(255, 90, 31, 0.16); 
+    color:rgba(255, 90, 31, 1);
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 8px;
+    height: 3em;
+}
+
+.cuenta_text_label{
+    font-weight: 700;
+    font-size: 18px;
+    color: #111928;
+}
+
+.margin_top_row_3{
+    margin-top: 3%;
+}
+
+.imagen_logo_card{
+    width: 49px;
+    height: 49px;
+}
+
+.flex_imagen_start{
+    display: flex;
+    justify-content: start;
+}
+
+.title_ppal_row{
+    font-weight: 700;
+    font-size: 24px;
+    margin-left: 2%;
+
+    @media (min-width: 768px) {
+    }
+}
+
+.margin_left_breadcrumbs2{
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #374151;
+
+    @media (min-width: 768px) {
+    }
+}
+
+.botonf1{
+    --background:#1C64F2;
+    --color:#FFFFFF;
+    --border-radius:8px;
+    width: 100%;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 14px;
+    text-transform: none;
+  }
+  .paddingf1{
+    padding-bottom: 0px;
+  }
+
+  .paddingf2{
+    padding-top: 0px;
+  }
+
+  .botonf2{
+    --background:#FFFFFF;
+    --color: #1F2A37;
+    --border-radius:8px;
+    width: 100%;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+
+  .label_row_geodata{
+    color: #111928; 
+    font-size:16px;
+    font-weight: 400;
+  }
+
+  .div_pro_geo{
+    background-color:rgba(255, 228, 219, 1);
+    color:rgba(255, 90, 31, 1);
+    width: 45px;
+    height: 22px;
+    max-height: 22px;
+    max-width: 45px;
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .checkbox_geo{
+    --border-radius:8px; 
+    --border-color:#D1D5DB; 
+    --background:#F9FAFB;
+    --border-color-checked:rgba(28, 100, 242, 1);
+    margin-top: 13%;
+    --background-checked:#D1D5DB;
+  }
+
+  .label_pro_geo{
+    margin-top: 5%;
+  }
+
+  .label_2_row_geodata{
+    color: #6B7280;
+    font-size: 14px;
+    font-weight: 400;
+  }

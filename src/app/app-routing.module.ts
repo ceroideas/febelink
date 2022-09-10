@@ -233,7 +233,11 @@ const routes: Routes = [
   {
     path: 'cart/error',
     loadChildren: () => import('./pages/cart-error/cart-error.module').then(m => m.CartErrorPageModule)
+  },  {
+    path: 'cuenta-profesional',
+    loadChildren: () => import('./pages/cuenta-profesional/cuenta-profesional.module').then( m => m.CuentaProfesionalPageModule)
   },
+
 
 
 ];
