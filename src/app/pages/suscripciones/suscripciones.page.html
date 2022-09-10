@@ -1,0 +1,616 @@
+<ion-content class="background-content">
+
+  <!-- Mobile version -->
+  <div class="mobile">
+    <div class="div-main-back-button">
+      <div class="breadcrumbs-text">
+        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg" />
+        Inicio
+        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg" />
+        Mi suscripción
+      </div>
+    </div>
+
+    <div class="title-suscription">
+      Mi suscripción
+    </div>
+
+    <div *ngIf="!suscriptionChange" class="wrapper-content">
+      <div class="box-suscription">
+        <div class="box-title">
+          Suscripción Gratuita
+        </div>
+        <div class="box-price-a">
+          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Los usuarios de Febelink puede encontrar tu perfil por tu sector y localidad, valorarte y dejarte reseñas
+          </div>
+        </div>
+        <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+          Cambiar
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper">
+        <div class="box-title-b">
+          Suscripción<br>PLUS
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big">4,95€</span>/mes por Oferta
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="box-quantity">
+          Cantidad
+        </div>
+        <div class="padding-select">
+          <ion-item class="no-padding modal-add-price-select">
+            <ion-select class="price-select" placeholder="1" cancelText="Cancelar" okText="Aceptar">
+              <ion-select-option [value]="1">1</ion-select-option>
+              <ion-select-option [value]="2">2</ion-select-option>
+              <ion-select-option [value]="3">3</ion-select-option>
+              <ion-select-option [value]="4">4</ion-select-option>
+              <ion-select-option [value]="5">5</ion-select-option>
+              <ion-select-option [value]="6">6</ion-select-option>
+              <ion-select-option [value]="7">7</ion-select-option>
+              <ion-select-option [value]="8">8</ion-select-option>
+              <ion-select-option [value]="9">9</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+          Cambiar
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="suscriptionChange" class="wrapper-content">
+      <div class="box-suscription">
+        <div class="box-title-b">
+          Suscripción<br>PRO
+        </div>
+        <div class="table-offer">
+          <div class="table-offer-left">
+            <span class="box-price-b-big text-cross-line">29,95€</span>/mes
+          </div>
+          <div class="table-offer-right">
+            30 días gratis
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+          Seleccionar
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper">
+        <div class="box-title-b">
+          Suscripción<br>PLUS
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big">4,95€</span>/mes por Oferta
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="box-quantity">
+          Cantidad
+        </div>
+        <div class="padding-select">
+          <ion-item class="no-padding modal-add-price-select">
+            <ion-select class="price-select" placeholder="1" cancelText="Cancelar" okText="Aceptar">
+              <ion-select-option [value]="1">1</ion-select-option>
+              <ion-select-option [value]="2">2</ion-select-option>
+              <ion-select-option [value]="3">3</ion-select-option>
+              <ion-select-option [value]="4">4</ion-select-option>
+              <ion-select-option [value]="5">5</ion-select-option>
+              <ion-select-option [value]="6">6</ion-select-option>
+              <ion-select-option [value]="7">7</ion-select-option>
+              <ion-select-option [value]="8">8</ion-select-option>
+              <ion-select-option [value]="9">9</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+          Seleccionar
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper">
+        <div class="box-title-b">
+          Profesiones
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big text-cross-line">4,95€</span>/mes por profesión
+        </div>
+        <div class="box-offer">
+          Gratis
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="box-quantity">
+          Cantidad
+        </div>
+        <div class="padding-select">
+          <ion-item class="no-padding modal-add-price-select">
+            <ion-select class="price-select" placeholder="1" cancelText="Cancelar" okText="Aceptar">
+              <ion-select-option [value]="1">1</ion-select-option>
+              <ion-select-option [value]="2">2</ion-select-option>
+              <ion-select-option [value]="3">3</ion-select-option>
+              <ion-select-option [value]="4">4</ion-select-option>
+              <ion-select-option [value]="5">5</ion-select-option>
+              <ion-select-option [value]="6">6</ion-select-option>
+              <ion-select-option [value]="7">7</ion-select-option>
+              <ion-select-option [value]="8">8</ion-select-option>
+              <ion-select-option [value]="9">9</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+          Seleccionar
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper">
+        <div class="box-title-b">
+          Disponibilidad Geográfica
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big text-cross-line">19,95€</span>/mes
+        </div>
+        <div class="box-offer">
+          Gratis
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="box-quantity">
+          Alcance
+        </div>
+        <div class="padding-select">
+          <ion-item class="no-padding modal-add-price-select">
+            <ion-select class="price-select" placeholder="Nacional" cancelText="Cancelar" okText="Aceptar">
+              <ion-select-option value="Nacional">Nacional</ion-select-option>
+              <ion-select-option value="Internacional">Internacional</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+          Seleccionar
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+<!-- ------------------------ -->
+  <!-- Desktop version -->
+  <div class="desktop">
+    <div class="div-main-back-button-b">
+      <div class="breadcrumbs-text-b">
+        Inicio
+        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg-b" />
+        <span class="breadcrumbs-color-blue">Mi suscripción</span>
+      </div>
+    </div>
+
+    <div class="title-suscription-b">
+      Suscripción Gratuita
+    </div>
+
+    <div *ngIf="!suscriptionChange" style="display:block;width:100%;padding:0px 60px 24px 60px;">
+      <div class="box-suscription box-same-height">
+        <div class="box-title">
+          Suscripción Gratuita
+        </div>
+        <div class="box-price-a">
+          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Los usuarios de Febelink puede encontrar tu perfil por tu sector y localidad, valorarte y dejarte reseñas
+          </div>
+        </div>
+        <div class="position-bottom">
+          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+            Cambiar
+          </div>
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper-b box-same-height">
+        <div class="box-title-b">
+          Suscripción<br>PLUS
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big">4,95€</span>/mes por Oferta
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="position-bottom">
+          <div class="box-quantity">
+            Cantidad
+          </div>
+          <div class="padding-select">
+            <ion-item class="no-padding modal-add-price-select">
+              <ion-select class="price-select" placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                <ion-select-option [value]="1">1</ion-select-option>
+                <ion-select-option [value]="2">2</ion-select-option>
+                <ion-select-option [value]="3">3</ion-select-option>
+                <ion-select-option [value]="4">4</ion-select-option>
+                <ion-select-option [value]="5">5</ion-select-option>
+                <ion-select-option [value]="6">6</ion-select-option>
+                <ion-select-option [value]="7">7</ion-select-option>
+                <ion-select-option [value]="8">8</ion-select-option>
+                <ion-select-option [value]="9">9</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+            Cambiar
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div *ngIf="suscriptionChange" style="display:block;width:100%;padding:0px 60px 24px 60px;">
+      <div class="box-suscription box-same-height">
+        <div class="box-title-b">
+          Suscripción<br>PRO
+        </div>
+        <div class="table-offer">
+          <div class="table-offer-left">
+            <span class="box-price-b-big text-cross-line">29,95€</span>/mes
+          </div>
+          <div class="table-offer-right">
+            30 días gratis
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="position-bottom">
+          <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+            Seleccionar
+          </div>
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper-b box-same-height">
+        <div class="box-title-b">
+          Suscripción<br>PLUS
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big">4,95€</span>/mes por Oferta
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="position-bottom">
+          <div class="box-quantity">
+            Cantidad
+          </div>
+          <div class="padding-select">
+            <ion-item class="no-padding modal-add-price-select">
+              <ion-select class="price-select" placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                <ion-select-option [value]="1">1</ion-select-option>
+                <ion-select-option [value]="2">2</ion-select-option>
+                <ion-select-option [value]="3">3</ion-select-option>
+                <ion-select-option [value]="4">4</ion-select-option>
+                <ion-select-option [value]="5">5</ion-select-option>
+                <ion-select-option [value]="6">6</ion-select-option>
+                <ion-select-option [value]="7">7</ion-select-option>
+                <ion-select-option [value]="8">8</ion-select-option>
+                <ion-select-option [value]="9">9</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+            Seleccionar
+          </div>
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper-b box-same-height">
+        <div class="box-title-b">
+          Profesiones
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big text-cross-line">4,95€</span>/mes por profesión
+        </div>
+        <div class="box-offer">
+          Gratis
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="position-bottom">
+          <div class="box-quantity">
+            Cantidad
+          </div>
+          <div class="padding-select">
+            <ion-item class="no-padding modal-add-price-select">
+              <ion-select class="price-select" placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                <ion-select-option [value]="1">1</ion-select-option>
+                <ion-select-option [value]="2">2</ion-select-option>
+                <ion-select-option [value]="3">3</ion-select-option>
+                <ion-select-option [value]="4">4</ion-select-option>
+                <ion-select-option [value]="5">5</ion-select-option>
+                <ion-select-option [value]="6">6</ion-select-option>
+                <ion-select-option [value]="7">7</ion-select-option>
+                <ion-select-option [value]="8">8</ion-select-option>
+                <ion-select-option [value]="9">9</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+            Seleccionar
+          </div>
+        </div>
+      </div>
+
+      <div class="box-suscription border-wrapper-b box-same-height">
+        <div class="box-title-b">
+          Disponibilidad Geográfica
+        </div>
+        <div class="box-price-b">
+          <span class="box-price-b-big text-cross-line">19,95€</span>/mes
+        </div>
+        <div class="box-offer">
+          Gratis
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/card-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Everything you need to manage payments
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            No setup fees, monthly fees, or hidden fees
+          </div>
+        </div>
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/security-green.svg" class="table-cell-img" />
+          </div>
+          <div class="table-cell-right">
+            Comprehensive security and rigorous compliance
+          </div>
+        </div>
+        <div class="position-bottom">
+          <div class="box-quantity">
+            Alcance
+          </div>
+          <div class="padding-select">
+            <ion-item class="no-padding modal-add-price-select">
+              <ion-select class="price-select" placeholder="Nacional" cancelText="Cancelar" okText="Aceptar">
+                <ion-select-option value="Nacional">Nacional</ion-select-option>
+                <ion-select-option value="Internacional">Internacional</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div class="box-button-primary" (click)="suscriptionChange = !suscriptionChange">
+            Seleccionar
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</ion-content>
