@@ -5,6 +5,9 @@ ion-button {
     --padding-start: 0;
     --padding-end: 0;
 }
+.button-lang {
+    cursor:pointer;padding:12px;float:right;background: #FFFFFF;border: 1px solid #D1D5DB;border-radius: 8px;width: 75px;height: 42px;text-align:center;
+}
 .button-full {
     width:100%;display: table;background: #F9FAFB;
 }

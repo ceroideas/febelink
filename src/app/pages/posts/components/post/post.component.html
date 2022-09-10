@@ -1,3 +1,123 @@
+<div class="mobile">
+  <div class="div-main-post">
+    <div class="table-100">
+      <app-user-item
+            class="no-padding"
+            [id]="iAdvise?.uid"
+            [user]="iAdvise"
+            [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
+            [OnClickShowProfile]="true"
+          ></app-user-item>
+      <div class="cell-dots-top">
+        <div class="follower-mobile">
+          <app-follower-button
+              [user]="postUser"
+              [transparent]="true"
+            ></app-follower-button>
+        </div>
+        <img src="assets/icon/svg/menu-dots.svg" (click)="options($event)" class="cell-dots-top-svg" />
+      </div>
+    </div>
+    <div [innerHTML]="iAdvise.content" class="content-post post-content-main" [ngClass]="{'max-content-text' : showSeePost}"></div>
+    <div class="post-content-topic">#{{ topic }}</div>
+    <ion-img
+          class="content-post-img"
+          [src]="iAdvise.media_url"
+          *ngIf="
+            isPostVisible &&
+            iAdvise.media_url &&
+            fileSvc.isImage(iAdvise.media_ext)
+          "
+        ></ion-img>
+    <div class="post-main-reactions">
+      <div class="post-main-reactions-left">
+        <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
+        <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+      </div>
+      <div class="post-main-reactions-right">
+        <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
+        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+      </div>
+    </div>
+
+    <app-post-bottom-bar-component
+        *ngIf="isPostVisible"
+        [id]="id"
+        [post]="iAdvise"
+        [showSeePost]="showSeePost"
+      ></app-post-bottom-bar-component>
+
+
+    <app-comments-component
+    #comments
+    [post]="iAdvise"
+    [listComments]="listComments"
+    [isVisible]="areCommentsVisible"
+    (OnCommentsVisible)="isPostVisible = false"
+  ></app-comments-component>
+    
+  </div>
+</div>
+
+<div class="desktop">
+  <div class="div-main-post-b">
+    <div class="table-100">
+      <app-user-item
+            class="no-padding"
+            [id]="iAdvise?.uid"
+            [user]="iAdvise"
+            [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
+            [OnClickShowProfile]="true"
+          ></app-user-item>
+      <div class="cell-dots-top-b">
+        <app-follower-button
+              [user]="postUser"
+              [transparent]="true"
+            ></app-follower-button>
+      </div>
+    </div>
+    
+    <div [innerHTML]="iAdvise.content" class="content-post post-content-main" [ngClass]="{'max-content-text-b' : showSeePost}"></div>
+    <div class="post-content-topic">#{{ topic }}</div>
+    <ion-img
+          class="content-post-img"
+          [src]="iAdvise.media_url"
+          *ngIf="
+            isPostVisible &&
+            iAdvise.media_url &&
+            fileSvc.isImage(iAdvise.media_ext)
+          "
+        ></ion-img>
+    <div class="post-main-reactions-b">
+      <div class="post-main-reactions-left">
+        <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
+        <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+      </div>
+      <div class="post-main-reactions-right">
+        <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
+        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+      </div>
+    </div>
+
+    <app-post-bottom-bar-component
+        *ngIf="isPostVisible"
+        [id]="id"
+        [post]="iAdvise"
+        [showSeePost]="showSeePost"
+      ></app-post-bottom-bar-component>
+
+
+    <app-comments-component
+    #comments
+    [post]="iAdvise"
+    [listComments]="listComments"
+    [isVisible]="areCommentsVisible"
+    (OnCommentsVisible)="isPostVisible = false"
+  ></app-comments-component>
+    
+  </div>
+</div>
+<!--
 <div class="div-main-post">
   <div class="table-100">
     <app-user-item
@@ -53,7 +173,9 @@
   (OnCommentsVisible)="isPostVisible = false"
 ></app-comments-component>
   
+
 </div>
+-->
 
 <!--
 <div class="marg-se marg-b30 pad-tb-1 w-max-600 shadow-light post-box">

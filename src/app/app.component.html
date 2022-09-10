@@ -9,49 +9,73 @@
     type="overlay"
     (ionWillOpen)="onMenuOpen()"
     *ngIf="authenticationService.isAuthenticated()"
-    side="start">
+    side="start"
+  >
     <ion-avatar slot="start">
-      <ion-img class="ion-margin avatarmenu"
-               id="menuImg"
-               [src]="
-            currentUser?.logo !== null
-              ? currentUser?.logo
-              : 'https://api.febelink.com/storage/users/default.png'
-          "
-               (error)="onImgError($event)"
-               alt="Menu profile picture">
+      <ion-img
+        class="ion-margin avatarmenu"
+        id="menuImg"
+        [src]="
+          currentUser?.logo !== null
+            ? currentUser?.logo
+            : 'https://api.febelink.com/storage/users/default.png'
+        "
+        (error)="onImgError($event)"
+        alt="Menu profile picture"
+      >
       </ion-img>
     </ion-avatar>
     <ion-content id="menu-list">
-      <ion-toolbar color="header">
-        <ion-item class="item_menu_margen" lines="none">
-          <ion-avatar class="pos_avatar" slot="start">
-            <ion-img class="avatarmenu"
-                     id="menuImg"
-                     [src]="
-                currentUser?.logo !== null
-                  ? currentUser?.logo
-                  : 'https://api.febelink.com/storage/users/default.png'
-              "
-                     (error)="onImgError($event)"
-                     alt="Menu profile picture">
-            </ion-img>
-          </ion-avatar>
-          <ion-img class="dot_notif_avatar" src="assets/icon/svg/dot_notif.svg"></ion-img>
-          <ion-label class="ion-padding label_avatar">
-            <ion-label class="menu-username">{{ currentUser?.nick ? currentUser?.nick : 'Juan Garrido' }}</ion-label>
-            <ion-label class="menu-editar pointer"
-                       (click)="goTo('menu/perfil')">{{ 'menu.labels.editarPerfil' | translate }}</ion-label>
-          </ion-label>
-          <ion-img size="small" src="assets/icon/svg/menu_cerrar.svg" alt="Cerrar menú"></ion-img>
-        </ion-item>
-      </ion-toolbar>
+      <ion-item
+        class="item_menu_margen"
+        lines="none"
+        button
+        (click)="goTo('profile')"
+      >
+        <ion-avatar class="pos_avatar" slot="start">
+          <ion-img
+            class="avatarmenu"
+            id="menuImg"
+            [src]="
+              currentUser?.logo !== null
+                ? currentUser?.logo
+                : 'https://api.febelink.com/storage/users/default.png'
+            "
+            (error)="onImgError($event)"
+            alt="Menu profile picture"
+          >
+          </ion-img>
+        </ion-avatar>
+        <ion-img
+          class="dot_notif_avatar"
+          src="assets/icon/svg/dot_notif.svg"
+        ></ion-img>
+        <ion-label class="ion-padding label_avatar">
+          <ion-label class="menu-username">{{ currentUser?.nick }}</ion-label>
+          <ion-label class="menu-editar pointer">{{
+              'menu.labels.editarPerfil' | translate
+            }}</ion-label>
+        </ion-label>
+        <ion-img
+          size="small"
+          src="assets/icon/svg/menu_cerrar.svg"
+          alt="Cerrar menú"
+        ></ion-img>
+      </ion-item>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
-      <ion-item class="menu item_menu_margen" color="item" routerLink="#" lines="none">
+      <ion-item
+        class="menu item_menu_margen"
+        color="item"
+        button
+        (click)="goTo('profile/account')"
+        lines="none"
+      >
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_user.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal" href="#">
-          <ion-label class="ion-padding">{{ 'menu.pages.datosPersonales' | translate }}</ion-label>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.datosPersonales' | translate
+            }}</ion-label>
         </ion-router-link>
       </ion-item>
       <ion-button
@@ -59,97 +83,215 @@
         fill="clear"
         shape="round"
         (click)="goTo('admin')"
-        *ngIf="currentUser?.role_id === 3">
+        *ngIf="currentUser?.role_id === 3"
+      >
         Admin panel
       </ion-button>
-      <ion-toolbar id="menu-wallet-section">
-        <ion-item class="item_menu_margen" color="item" lines="none">
-          <div tabindex="0"></div>
-          <ion-img size="small" src="assets/icon/svg/menu_wallet.svg"></ion-img>
-          <ion-router-link (click)="goTo('wallet')" class="ion-text-wrap color_ppal">
-            <ion-label class="ion-padding">{{ 'menu.pages.wallet' | translate }}</ion-label>
-          </ion-router-link>
-        </ion-item>
-        <!-- Section options. -->
-        <ng-container class="ion-no-padding" *ngIf="showWallets">
-          <ion-grid class="ion-no-padding ion-text-wrap menu-currency-section">
-            <ion-row
-              *ngFor="let currency of userWallets"
-              class="span-crypto-currency vertical-content">
-              <ion-col size="3">
-                <img
-                  src="assets/icon/{{ currency.currency.toLowerCase() }}.png"
-                />
-              </ion-col>
-              <ion-col size="4" class="tx-start">
-                <ion-label>{{ currency.currency }}</ion-label>
-              </ion-col>
-              <ion-col size="5" class="tx-end">
-                <ion-label>{{
-                    {value: currency.amount} | splitNumber
-                  }}</ion-label>
-                <ion-label class="decimal">{{
-                    {value: currency.amount, returnDecimal: true} | splitNumber
-                  }}</ion-label>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ng-container>
-      </ion-toolbar>
-      <ion-toolbar>
-        <ion-item class="item_menu_margen" color="item" lines="none">
-          <div tabindex="0"></div>
-          <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
-          <ion-router-link class="ion-text-wrap color_ppal">
-            <ion-label class="ion-padding"
-                       (click)="goTo('cart/history')">{{ 'menu.pages.historialCompras' | translate }}</ion-label>
-          </ion-router-link>
-        </ion-item>
-        <ion-item class="item_menu_margen" color="item" lines="none">
-          <div tabindex="0"></div>
-          <ion-img size="small" src="assets/icon/svg/menu_publicacion.svg"></ion-img>
-          <ion-router-link class="ion-text-wrap color_ppal" href="#">
-            <ion-label class="ion-padding">{{ 'menu.pages.misPublicaciones' | translate }}</ion-label>
-          </ion-router-link>
-        </ion-item>
-      </ion-toolbar>
-      <ion-item routerLink="#" class="item_menu_margen pointer" color="item" lines="none">
+      <ion-item
+        class="item_menu_margen"
+        color="item"
+        lines="none"
+        button
+        (click)="goTo('wallet')"
+      >
         <div tabindex="0"></div>
-        <ion-img size="small" src="assets/icon/svg/menu_premium.svg"></ion-img>
-        <ion-label class="ion-padding">{{ 'menu.pages.cambioAPremium' | translate }}</ion-label>
+        <ion-img size="small" src="assets/icon/svg/menu_wallet.svg"></ion-img>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.wallet' | translate
+            }}</ion-label>
+        </ion-router-link>
+      </ion-item>
+      <!-- Section options. -->
+      <ng-container class="ion-no-padding" *ngIf="showWallets">
+        <ion-grid class="ion-no-padding ion-text-wrap menu-currency-section">
+          <ion-row
+            *ngFor="let currency of userWallets"
+            class="span-crypto-currency vertical-content"
+          >
+            <ion-col size="3">
+              <img
+                src="assets/icon/{{ currency.currency.toLowerCase() }}.png"
+              />
+            </ion-col>
+            <ion-col size="4" class="tx-start">
+              <ion-label>{{ currency.currency }}</ion-label>
+            </ion-col>
+            <ion-col size="5" class="tx-end">
+              <ion-label>{{
+                  {value: currency.amount} | splitNumber
+                }}</ion-label>
+              <ion-label class="decimal">{{
+                  {value: currency.amount, returnDecimal: true} | splitNumber
+                }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
+      <ion-item
+        class="item_menu_margen"
+        color="item"
+        lines="none"
+        button
+        (click)="goTo('cart/history')"
+      >
+        <div tabindex="0"></div>
+        <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.historialCompras' | translate
+            }}</ion-label>
+        </ion-router-link>
+      </ion-item>
+      <ion-item
+        class="item_menu_margen"
+        color="item"
+        lines="none"
+        button
+        (click)="goTo('profile/public')"
+      >
+        <div tabindex="0"></div>
+        <ion-img
+          size="small"
+          src="assets/icon/svg/menu_publicacion.svg"
+        ></ion-img>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.misPublicaciones' | translate
+            }}</ion-label>
+        </ion-router-link>
+      </ion-item>
+      <ion-grid *ngIf="visiblePro" style="height:10em;" class="ion-no-padding">
+        <ion-row class="ion-no-padding" size="12">
+          <ion-col class="ion-no-padding" size="12">
+            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+              <ion-grid size="12">
+                <ion-row class="padding_row_orange_menu" size="12">
+                  <ion-col size="1">
+                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_plan.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.plan' | translate }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+              <ion-grid size="12">
+                <ion-row class="padding_row_orange_menu" size="12">
+                  <ion-col size="1">
+                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_suscripcion.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.suscripcion' | translate }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+              <ion-grid size="12">
+                <ion-row class="padding_row_orange_menu" size="12">
+                  <ion-col size="1">
+                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_servicios.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.servicios' | translate }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu desktop">
+              <ion-grid size="12">
+                <ion-row class="padding_row_orange_menu" size="12">
+                  <ion-col size="1">
+                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_ofertas.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.ofertas' | translate }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+              <ion-grid size="12">
+                <ion-row class="padding_row_orange_menu" size="12">
+                  <ion-col size="1">
+                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_valoraciones.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size="11">
+                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.valoraciones' | translate }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-item (click)="changeToProfesional()"
+                [ngClass]="{'item_click': visiblePro, 'item_noMargin_click': !visiblePro }" color="item" lines="none">
+        <div tabindex="0"></div>
+        <ion-img *ngIf="visiblePro" size="small" src="assets/icon/svg/icono_cambio_cuenta_blue.svg"></ion-img>
+        <ion-img *ngIf="!visiblePro" size="small" src="assets/icon/svg/menu_premium.svg"></ion-img>
+        <ion-label style="color:#FF5A1F;" *ngIf="!visiblePro"
+                   class="ion-padding">{{ 'menu.pages.cambioAPremium' | translate }}</ion-label>
+        <ion-label style="color:#1C64F2;" *ngIf="visiblePro" class="ion-padding">Cambiar a cuenta usuario</ion-label>
       </ion-item>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
-      <ion-item class="menu item_menu_margen" color="item" lines="none">
+      <ion-item class="menu item_menu_margen" color="item" lines="none" button>
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_idioma.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal" href="#">
-          <ion-label class="ion-padding">{{ 'menu.pages.idioma' | translate }}</ion-label>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.idioma' | translate
+            }}</ion-label>
         </ion-router-link>
       </ion-item>
-      <ion-item class="item_menu_margen" color="item" lines="none">
+      <ion-item class="item_menu_margen" color="item" lines="none" button>
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_ayudar.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal" href="#">
-          <ion-label class="ion-padding">{{ 'menu.pages.ayuda' | translate }}</ion-label>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.ayuda' | translate
+            }}</ion-label>
         </ion-router-link>
       </ion-item>
-      <ion-item (click)="logout()" class="item_menu_margen pointer" color="item" lines="none">
+      <ion-item
+        class="item_menu_margen pointer"
+        color="item"
+        lines="none"
+        button
+        (click)="logout()"
+      >
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_salida.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal" href="#">
-          <ion-label class="ion-padding">{{ 'menu.pages.salir' | translate }}</ion-label>
+        <ion-router-link class="ion-text-wrap color_ppal">
+          <ion-label class="ion-padding">{{
+              'menu.pages.salir' | translate
+            }}</ion-label>
         </ion-router-link>
       </ion-item>
       <ion-item-divider class="legal desktop_no_visible"></ion-item-divider>
-      <ion-item class="desktop_no_visible" color="menuayuda" lines="none">
-        <ion-router-link class="ion-text-wrap color_ayuda" (click)="openUseConditions()">
+      <ion-item
+        class="desktop_no_visible"
+        color="menuayuda"
+        lines="none"
+        button
+        (click)="openUseConditions()"
+      >
+        <ion-router-link class="ion-text-wrap color_ayuda">
           <ion-label class="ion-no-padding ion-text-wrap">
             {{ 'common.legal.condsNterms' | translate }}
           </ion-label>
         </ion-router-link>
       </ion-item>
-      <ion-item class="desktop_no_visible" color="menuayuda" lines="none">
-        <ion-router-link class="ion-text-wrap color_ayuda" (click)="openPrivacyPolicy()">
+      <ion-item
+        class="desktop_no_visible"
+        color="menuayuda"
+        lines="none"
+        button
+        (click)="openPrivacyPolicy()"
+      >
+        <ion-router-link class="ion-text-wrap color_ayuda">
           <ion-label class="ion-no-padding ion-text-wrap">
             {{ 'common.legal.privacyPolicy' | translate }}
           </ion-label>
@@ -161,6 +303,28 @@
   <app-header></app-header>
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  <ion-tabs id="footer-nav-bar">
+    <ion-tab-bar slot="bottom" color="menuf">
+      <!-- Inicio -->
+      <ion-tab-button tab="search">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
+      </ion-tab-button>
+
+      <!-- Carrito -->
+      <ion-tab-button tab="cart">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
+      </ion-tab-button>
+
+      <!-- Oracles -->
+      <ion-tab-button tab="oracles">
+        <ion-icon name="eye-outline"></ion-icon>
+        <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 
   <app-cart></app-cart>
 </ion-app>

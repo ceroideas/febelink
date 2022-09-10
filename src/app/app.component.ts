@@ -32,6 +32,7 @@ import { environment } from 'src/environments/environment';
 const GENERAL_TITLE = 'Febelink | La red social de los profesionales';
 const GENERAL_DESC =
   'Febelink es la red social de los profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas.';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -43,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
   @ViewChild(IonRouterOutlet, { static: false }) routerOutlets: IonRouterOutlet;
+  public visiblePro: boolean = false;
 
   public appPages = [
     // NOTE: Hidden for the time being until Stripe development is completed.
@@ -115,7 +117,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.platform.ready().then(() => {
       this.setupLanguage();
       this.platform.backButton.subscribe(() => {
-        if (this.router.url === '' || this.router.url === '/posts/oracles') {
+        if (this.router.url === '' || this.router.url === '/oracles') {
           navigator['app'].exitApp();
         } else {
           this.navCtrl.back();
@@ -157,13 +159,19 @@ export class AppComponent implements OnInit, OnDestroy {
   async onMenuOpen() {
     (await this.api.getUserData()).subscribe((userData: IUser) => {
       // In case of error
-      if (!userData) return;
+      if (!userData) {
+        return;
+      }
 
       this.currentUser = userData;
 
       // Update in storage
       this.utilities.saveUserData(userData);
     });
+  }
+
+  changeToProfesional() {
+    this.visiblePro = !this.visiblePro;
   }
 
   openCookieBanner() {
@@ -237,7 +245,9 @@ export class AppComponent implements OnInit, OnDestroy {
               id = Number(id);
               setTimeout(() => {
                 const route: string[] = ['busqueda', id, name];
-                if (name) route.push(name);
+                if (name) {
+                  route.push(name);
+                }
                 this.router.navigate(route, {
                   queryParams: { id_demanda: id },
                 });
@@ -430,7 +440,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async getUserData() {
     this.currentUser = { ...(await this.utilities.getUserData()) };
-    if (this.currentUser) this.frogedSvc.set(this.currentUser);
+    if (this.currentUser) {
+      this.frogedSvc.set(this.currentUser);
+    }
   }
 
   async getUserSectorsAndSubsectors() {
