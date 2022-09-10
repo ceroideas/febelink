@@ -25,6 +25,20 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+@import 'swiper/css';
+
+@import "swiper/css/free-mode";
+@import "swiper/css/navigation";
+@import "swiper/css/thumbs";
+
+.swiper-button-prev{
+  display: none;
+}
+
+.swiper-button-next{
+  display: none !important;
+}
+
 ionic-selectable-modal {
   ion-header {
     ion-toolbar {

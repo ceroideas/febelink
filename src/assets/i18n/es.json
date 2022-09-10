@@ -243,6 +243,14 @@
       "ayuda": "Ayudar",
       "salir": "Cerrar sesión"
     },
+      "detalle": {
+        "servicio": "Servicio",
+        "valoracion": "valoraciones",
+        "cantidad": "Cantidad",
+        "comprar": "Comprar ahora",
+        "add": "Añadir al carrito",
+        "readmore": " Leer más"
+    },
     "labels": {
       "currentPlan": "Plan actual",
       "editarPerfil": "Editar perfil"
@@ -279,6 +287,18 @@
         "head": "Publicar nueva Búsqueda",
         "title": "Cancelar Búsqueda",
         "msg": "¿Confirmas que quieres abandonar esta búsqueda?"
+      },
+      "search": {
+        "resultado": "Resultados",
+        "oferta": "Ofertas",
+        "listado": "Listado",
+        "sin_resultado_tit": "Ningún resultado encontrado",
+        "sin_resultado_subtit": "Intenta buscar por otras palabras claves",
+        "valoraciones": "valoraciones",
+        "recomendaciones": "Recomendaciones",
+        "oferta_destacada": "Oferta destacada",
+        "basado_search": "Basado en tu búsqueda",
+        "search_prof": "Encuentra profesionales de confianza"
       }
     },
     "tab2": {
