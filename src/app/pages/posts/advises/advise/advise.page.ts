@@ -1,7 +1,7 @@
-import { AdviseService } from './../services/advises.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IAdviseFull } from '../models/advises.model';
+import {AdviseService} from './../services/advises.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {IAdviseFull} from '../models/advises.model';
 
 @Component({
   selector: 'app-post-advise',
@@ -10,52 +10,53 @@ import { IAdviseFull } from '../models/advises.model';
 })
 export class AdvisePage implements OnInit {
 
-  @Input() id: number
-  @Input() iAdvise: IAdviseFull
-  
-  isLoading: boolean = false
+  @Input() id: number;
+  @Input() iAdvise: IAdviseFull;
 
-  paramsQuery: any
-  paramsUrl: any
+  isLoading: boolean = false;
+
+  paramsQuery: any;
+  paramsUrl: any;
 
   constructor(
     private actRoute: ActivatedRoute
     , private router: Router
     , private adviseSvc: AdviseService
-  ) {}
+  ) {
+  }
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.paramsQuery = this.actRoute.snapshot.queryParamMap;
-    this.paramsUrl = this.actRoute.snapshot.params
+    this.paramsUrl = this.actRoute.snapshot.params;
 
-    if( this.paramsUrl?.id )
-      this.getPost( this.paramsUrl?.id )
+    if (this.paramsUrl?.id) {
+      this.getPost(this.paramsUrl?.id);
+    }
   }
 
   /* If has id -> editing post */
-  async getPost( id: number ) {
+  async getPost(id: number) {
     this.id = id;
     this.isLoading = true;
 
-    const { response, error } = await this.adviseSvc.get( id )
+    const {response, error} = await this.adviseSvc.get(id);
     /* if( error )
       this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' ) */
 
-    this.iAdvise = !response?.id ? null : response
+    this.iAdvise = !response?.id ? null : response;
 
     this.isLoading = false;
 
     // To Trigger Asynchronously Issue to Give Tokens by Views 
-    this.adviseSvc.issue( id )
+    this.adviseSvc.issue(id);
   }
 
   backButton() {
-    this.router.navigate(['posts/oracles']);
+    this.router.navigate(['oracles']);
   }
 
   newOne() {
-    this.router.navigate(['posts/oracle/create']);
+    this.router.navigate(['oracle/create']);
   }
 
 }

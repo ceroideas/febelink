@@ -4,28 +4,28 @@
 
 export const environment = {
   production: false,
-/*
-  baseWebUrl: 'https://api.febelink.com/',
-  API_URL: 'https://api.febelink.com/api/',
-  API_URL_AUTH: 'https://api.febelink.com/api/auth/',
-  
-  baseWebUrl: 'http://apitest.febelink.com/',
-  API_URL: 'http://apitest.febelink.com/api/',
-  API_URL_AUTH: 'http://apitest.febelink.com/api/auth/',
- */ 
+  /*
+    baseWebUrl: 'https://api.febelink.com/',
+    API_URL: 'https://api.febelink.com/api/',
+    API_URL_AUTH: 'https://api.febelink.com/api/auth/',
 
-  baseWebUrl: "http://localhost/",
-  API_URL: "http://localhost/api/",
-  API_URL_AUTH: "http://localhost/api/auth/",
+    baseWebUrl: 'http://apitest.febelink.com/',
+    API_URL: 'http://apitest.febelink.com/api/',
+    API_URL_AUTH: 'http://apitest.febelink.com/api/auth/',
+   */
+
+  baseWebUrl: 'http://localhost/',
+  API_URL: 'http://localhost/api/',
+  API_URL_AUTH: 'http://localhost/api/auth/',
 
 
   SOCKET_URL: 'https://febelink-chat.herokuapp.com/',
 
   WEB_CLIENT_ID:
-    "939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com",
-  FACEBOOK_ID: "895023747604792",
-  WEB_URL:'http://localhost/',
-  stripe_publick_key:'pk_test_9BatjAPV71ZLV0LLXxtvgMaT00zyRzltzM',
+    '939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com',
+  FACEBOOK_ID: '895023747604792',
+  WEB_URL: 'http://localhost/',
+  stripe_publick_key: 'pk_test_9BatjAPV71ZLV0LLXxtvgMaT00zyRzltzM',
 
   // GooglePlaces API
   G_PLACES_API_KEY: 'AIzaSyB-s7c6IF_G7k30a0kxWFgM21PDy_dSSCs',
@@ -36,9 +36,9 @@ export const environment = {
 
   // KYC Alice Token
   KYC_SELFIE: true,
-  
+
   // Initial Page
-  HOME_PAGE: 'posts/oracles'
+  HOME_PAGE: 'oracles'
 };
 
 /*
