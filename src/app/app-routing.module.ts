@@ -289,8 +289,14 @@ const routes: Routes = [
         (m) => m.MisPublicacionesPageModule
       ),
   },
+  {
+    path: 'suscripciones',
+    loadChildren: () =>
+      import('./pages/suscripciones/suscripciones.module').then(
+        (m) => m.SuscripcionesPageModule
+      ),
+  },
 ];
-
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
