@@ -1,165 +1,34 @@
-<ion-content>
-  <ion-grid fixed>
-    <ion-row class="ion-align-items-center">
-      <ion-col size-lg="10" offset-lg="1" size-md="10" offset-md="1">
-        <ion-item id="logo" *ngIf="!showCard" lines="none">
-          <img src="assets/imgs/logo.png" alt="Febelink logo"/>
-        </ion-item>
-
-        <h1>El buscador de servicios profesionales</h1>
-
-        <!-- Loading. -->
-        <div class="cargando-container" margin-top *ngIf="isLoading">
-          <ion-spinner></ion-spinner>
-          <p>{{ 'common.labelLoading' | translate }}</p>
-        </div>
-
-        <!-- Search engine. -->
-        <div class="content-filter" *ngIf="!isLoading">
-          <app-assistant-search
+<ion-content class="content-background">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12">
+        <ion-row size="12">
+          <ion-col size="12">
+            <img class="tam_imagen" *ngIf="searchService.show_imagen" src="assets/imgs/buscador_fondo.png"/>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row_buscador">
+          <ion-col size="12">
+            <ion-row class="ion-padding">
+              <ion-label *ngIf="searchService.show_imagen" class="text_buscador">{{ 'tabs.tab1.search.search_prof' | translate }}</ion-label>
+            </ion-row>
+            <ion-row size="12">
+              <app-search
               #search
+              class="app_search"
               clase="autocomplete"
-              (OnGotKeys)="OnGotKeys( $event )"
-              (OnEnter)="OnEnter()"
-          ></app-assistant-search>
-        </div>
+              *ngIf="!isLoading"
+            ></app-search>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="isLoading">
+          <ion-spinner></ion-spinner>
+          <ion-text>{{ 'common.labelLoading' | translate }}</ion-text>
+        </ion-row>
       </ion-col>
     </ion-row>
-    <div class="app-services">
-      <ion-row>
-        <div class="section-header">
-          <h3>¿Cómo funciona?</h3>
-          <p>Sólo 3 sencillos pasos</p>
-        </div>
-      </ion-row>
-      <ion-row class="flexed-row">
-        <section>
-          <img src="assets/imgs/home/services/service1.png" alt="service1"/>
-          <h3>Crea tu perfil de usuario</h3>
-          <br/>
-          <p>
-            Date de alta de forma rápida y sencilla con tan sólo un click en
-          </p>
-          <a id="registro" routerLink="/registro">
-            <ion-button
-              class="btn-header"
-              color="success"
-              fill="solid"
-              style="--border-radius: 4px"
-            >
-              <ion-icon slot="start" name="person"></ion-icon>
-              {{ 'menu.tabs.register' | translate }}
-            </ion-button>
-          </a>
-        </section>
-        <section>
-          <img src="assets/imgs/home/services/service2.png" alt="service2"/>
-          <h3>Publica tu búsqueda y recibe múltiples respuestas</h3>
-          <p>
-            Selecciona el límite de respuestas que quieres recibir o recibe
-            ofertas ilimitadas.
-          </p>
-        </section>
-        <section>
-          <img src="assets/imgs/home/services/service3.png" alt="service3"/>
-          <h3>Responde a otros usuarios, comparte y valora</h3>
-          <p>Colabora con la comunidad y recibe su apoyo.</p>
-        </section>
-      </ion-row>
-    </div>
-    <ion-item-divider></ion-item-divider>
-    <div class="app-whyUse">
-      <ion-row>
-        <div class="section-header">
-          <h3>
-            ¿Por qué usar
-            <img
-              class="image-aligned"
-              src="assets/imgs/logo.png"
-              alt="Febelink logo name"
-            />?
-          </h3>
-        </div>
-      </ion-row>
-      <ion-row class="flexed-row">
-        <section>
-          <img src="assets/imgs/home/whyUse/whyUse1.png" alt="whyUse1"/>
-          <h3>Date de alta gratis</h3>
-          <p class="pad-s5">
-            Encontrar los mejores profesionales de confianza. Encuentra el mejor
-            abogado, marmolista, carpintero, asesoría, informático y mucxho más.
-            Conseguir clientes en internet.
-          </p>
-        </section>
-        <section>
-          <img src="assets/imgs/home/whyUse/whyUse2.png" alt="whyUse2"/>
-          <h3>Tienes el control</h3>
-          <p class="pad-s5">
-            Tendrás en tu mano el poder de decisión. Elige al profesional que
-            mejor se ajuste a tus necesidades. Rápido y sencillo.
-          </p>
-        </section>
-        <section>
-          <img src="assets/imgs/home/whyUse/whyUse3.png" alt="whyUse3"/>
-          <h3>Rapidísimo</h3>
-          <p class="pad-s5">
-            Encontrar a tu profesional es más fácil que nunca. Obtén respuestas
-            de profesionales cercanos.
-          </p>
-        </section>
-      </ion-row>
-    </div>
-    <ion-item-divider></ion-item-divider>
-    <div class="downloads">
-      <ion-row>
-        <div class="section-header">
-          <h3>¡Descárgate la app!</h3>
-        </div>
-      </ion-row>
-      <ion-row class="flexed-row">
-        <section>
-          <p>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            Controla tu solicitud
-            donde y cuando quieras.
-          </p>
-          <p>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            Responde, Chatea y
-            obtén la información de los usuarios.
-          </p>
-          <p>
-            <ion-icon name="checkmark-outline"></ion-icon>
-            Recibe notificaciones
-            relacionadas con tu búsqueda o con tu sector.
-          </p>
-
-          <ion-row class="row-store">
-            <!-- Google Play Store icon -->
-            <ion-col size="12" size-sm="6" class="col-store">
-              <a [href]="googlestore">
-                <img
-                  src="assets/imgs/home/playstore.png"
-                  id="google-button"
-                  alt="PlayStore Link"
-                />
-              </a>
-            </ion-col>
-
-            <!-- App Store icon -->
-            <ion-col size="12" size-sm="6" class="col-store">
-              <a [href]="appstore">
-                <img
-                  src="assets/imgs/home/apple.svg"
-                  id="apple-button"
-                  alt="App Store Link"
-                />
-              </a>
-            </ion-col>
-          </ion-row>
-        </section>
-      </ion-row>
-    </div>
   </ion-grid>
   <app-footer></app-footer>
 </ion-content>

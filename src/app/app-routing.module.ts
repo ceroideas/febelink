@@ -296,6 +296,13 @@ const routes: Routes = [
         (m) => m.SuscripcionesPageModule
       ),
   },
+  {
+    path: 'detalle/:id',
+    loadChildren: () =>
+      import('./pages/detalle-busqueda/detalle-busqueda.module').then(
+        (m) => m.DetalleBusquedaPageModule
+      ),
+  },
 ];
 
 @NgModule({

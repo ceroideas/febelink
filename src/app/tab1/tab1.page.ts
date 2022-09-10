@@ -12,6 +12,11 @@ import { AssistantPopSvc } from './assistant/services/assistant.pop.service';
 import { AssistantSearchSvc } from './assistant/services/assistant-search.service';
 import { IKeywords } from './assistant/models/assistant.model';
 import { SubsectorService } from '../components/sectors/services/subsectores.service';
+import { SearchService } from './search/services/search.service';
+import SwiperCore, {Pagination, Thumbs} from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([Thumbs, Pagination]);
 
 @Component({
   selector: 'app-tab1',
@@ -25,6 +30,7 @@ export class Tab1Page {
   isLogin: any;
   cookies: string;
   filter_hidden: boolean;
+  thumbsSwiper: any;
 
   //SEARCH COMPONENT
   @ViewChild('search') searchComponent: AssistantSearchComponent;
@@ -50,7 +56,8 @@ export class Tab1Page {
     private activatedRoute: ActivatedRoute,
     private assistantPop: AssistantPopSvc,
     public assistantSearchSvc: AssistantSearchSvc,
-    private subsectorSvc: SubsectorService
+    private subsectorSvc: SubsectorService,
+    public searchService: SearchService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.obtenerPerfil();
@@ -227,5 +234,12 @@ export class Tab1Page {
           });
       });
     }
+  }
+
+  onSwiper([swiper]) {
+    console.log(swiper);
+  } 
+  onSlideChange() {
+    console.log('slide change');
   }
 }

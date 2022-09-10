@@ -241,7 +241,15 @@
       "cambioAPremium": "Switch to professional account",
       "idioma": "Idiom",
       "ayuda": "Help",
-      "salir": "Sign out"
+      "salir": "Sign out",
+      "detalle": {
+        "servicio": "Service",
+        "valoracion": "ratings",
+        "cantidad": "Quantity",
+        "comprar": "Buy now",
+        "add": "Add to cart",
+        "readmore": " Read more"
+      }
     },
     "labels": {
       "currentPlan": "Current plan",
@@ -278,6 +286,18 @@
         "head": "Publish new Search",
         "title": "Cancel Search",
         "msg": "Do you confirm that you want to leave this search?"
+      },
+      "search": {
+        "resultado": "Results",
+        "oferta": "Offers",
+        "listado": "List",
+        "sin_resultado_tit": "No results found",
+        "sin_resultado_subtit": "Try searching for other keywords",
+        "valoraciones": "ratings",
+        "recomendaciones": "Recommendations",
+        "oferta_destacada": "Featured Offer",
+        "basado_search": "Based on your search",
+        "search_prof": "Find trusted professionals"
       }
     },
     "tab2": {

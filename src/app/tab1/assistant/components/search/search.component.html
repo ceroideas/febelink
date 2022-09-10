@@ -1,19 +1,18 @@
 <ion-grid [class]="'no-pad ' + (clase || '')">
   <!-- SearchBar -->
-  <ion-row *ngIf="showSearchbar">
-    <!-- (ionBlur)="assistantSearchSvc.removeFocus()" -->
-    <ion-searchbar
-      class="searchbar"
-      placeholder="{{ 'common.publishPlaceholder' | translate }}"
-      [(ngModel)]="searchText"
-      (ionFocus)="assistantSearchSvc.addFocus()"
-      (ionChange)="assistantSearchSvc.search(searchText)"
-      (ionClear)="assistantSearchSvc.clearBtn()"
-      (keyup.enter)="OnEnterPress($event)"
-      debounce="500"
-    ></ion-searchbar>
-  </ion-row>
-
+    <ion-row *ngIf="showSearchbar">
+        <!-- (ionBlur)="assistantSearchSvc.removeFocus()" -->
+        <ion-searchbar style="margin-left: 40%;"
+          class="searchbar"
+          placeholder="{{ 'common.publishPlaceholder' | translate }}"
+          [(ngModel)]="searchText"
+          (ionFocus)="assistantSearchSvc.addFocus()"
+          (ionChange)="assistantSearchSvc.search(searchText)"
+          (ionClear)="assistantSearchSvc.clearBtn()"
+          (keyup.enter)="OnEnterPress($event)"
+          debounce="500"
+        ></ion-searchbar>
+    </ion-row>
   <!-- Loading -->
   <!-- <app-loading [isLoading]="assistantSearchSvc.isLoading"></app-loading> -->
 
