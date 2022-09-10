@@ -82,6 +82,7 @@
     "quill-emoji": "^0.2.0",
     "quill-mention": "^3.1.0",
     "rxjs": "^7.5.5",
+    "swiper": "^8.3.2",
     "ts-md5": "^1.2.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
