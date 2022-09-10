@@ -8,7 +8,7 @@ import {
 import {environment} from 'src/environments/environment';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'posts/oracles', pathMatch: 'full'},
+  {path: '', redirectTo: 'oracles', pathMatch: 'full'},
   {
     path: 'search',
     loadChildren: () =>
@@ -227,6 +227,11 @@ const routes: Routes = [
     path: 'oracles',
     loadChildren: () =>
       import('./pages/posts/advises/advise.module').then(m => m.AdvisePageModule),
+  },
+  {
+    path: 'posts',
+    loadChildren: () =>
+      import('./pages/posts/post.module').then((m) => m.PostPageModule),
   },
   {
     path: 'cart',

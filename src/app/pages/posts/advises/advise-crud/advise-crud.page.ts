@@ -1,24 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {iWYSIWYG} from 'src/app/components/wysiwyg/models/wysiwyg.model';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { IAdviseFull, ITopic } from '../models/advises.model';
-import { ActivatedRoute } from '@angular/router';
-import { FileService } from '../../../../components/file-picker/services/file.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { AdviseService } from '../services/advises.service';
-import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
-import { AlertSvc } from 'src/app/services/alert.service';
-import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
-import { LoadingSvc } from 'src/app/services/loading.service';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { IFile } from 'src/app/components/file-picker/models/file.model';
-import { UserService } from 'src/app/services/user.service';
-import { RouteSvc } from 'src/app/services/route.service';
+import {IAdviseFull, ITopic} from '../models/advises.model';
+import {ActivatedRoute} from '@angular/router';
+import {FileService} from '../../../../components/file-picker/services/file.service';
+import {ToastSvc} from 'src/app/services/toast.service';
+import {AdviseService} from '../services/advises.service';
+import {SectorsComponent} from 'src/app/components/sectors/sectors.component';
+import {AlertSvc} from 'src/app/services/alert.service';
+import {LangBtnComponent} from 'src/app/components/langs/btn/btn.component';
+import {LoadingSvc} from 'src/app/services/loading.service';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {IFile} from 'src/app/components/file-picker/models/file.model';
+import {UserService} from 'src/app/services/user.service';
+import {RouteSvc} from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -34,7 +34,7 @@ export class AdviseCRUDPage implements OnInit {
   form: UntypedFormGroup;
   iFile: IFile = {};
   content: iWYSIWYG = {};
-  contentText:any;
+  contentText: any;
 
   id: number;
   iAdvise: IAdviseFull;
@@ -49,31 +49,31 @@ export class AdviseCRUDPage implements OnInit {
 
   topicSelected: ITopic;
   topics = [
-    { id: null, name: 'Todos' },
-    { id: 1, name: 'Política' },
-    { id: 2, name: 'Música' },
-    { id: 3, name: 'Deportes' },
-    { id: 4, name: 'Moda y Belleza' },
-    { id: 5, name: 'Ocio' },
-    { id: 6, name: 'Arte y Cultura' },
-    { id: 7, name: 'Marketing' },
-    { id: 8, name: 'Negocios' },
-    { id: 9, name: 'Startups' },
-    { id: 10, name: 'Tecnología' },
-    { id: 11, name: 'Cine' },
-    { id: 12, name: 'Naturaleza' },
-    { id: 13, name: 'Ciencia' },
-    { id: 14, name: 'Economía y Finanzas' },
-    { id: 15, name: 'Anime y Manga' },
-    { id: 16, name: 'Noticias y Actualidad' },
-    { id: 17, name: 'Viajes' },
-    { id: 18, name: 'Hogar y Familia' },
-    { id: 19, name: 'Comida' },
-    { id: 20, name: 'Videojuegos' },
-    { id: 21, name: 'Salud' },
-    { id: 22, name: 'Criptomonedas' },
-    { id: 23, name: 'Animales' },
-    { id: 24, name: 'Historia' },
+    {id: null, name: 'Todos'},
+    {id: 1, name: 'Política'},
+    {id: 2, name: 'Música'},
+    {id: 3, name: 'Deportes'},
+    {id: 4, name: 'Moda y Belleza'},
+    {id: 5, name: 'Ocio'},
+    {id: 6, name: 'Arte y Cultura'},
+    {id: 7, name: 'Marketing'},
+    {id: 8, name: 'Negocios'},
+    {id: 9, name: 'Startups'},
+    {id: 10, name: 'Tecnología'},
+    {id: 11, name: 'Cine'},
+    {id: 12, name: 'Naturaleza'},
+    {id: 13, name: 'Ciencia'},
+    {id: 14, name: 'Economía y Finanzas'},
+    {id: 15, name: 'Anime y Manga'},
+    {id: 16, name: 'Noticias y Actualidad'},
+    {id: 17, name: 'Viajes'},
+    {id: 18, name: 'Hogar y Familia'},
+    {id: 19, name: 'Comida'},
+    {id: 20, name: 'Videojuegos'},
+    {id: 21, name: 'Salud'},
+    {id: 22, name: 'Criptomonedas'},
+    {id: 23, name: 'Animales'},
+    {id: 24, name: 'Historia'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
@@ -87,7 +87,8 @@ export class AdviseCRUDPage implements OnInit {
     private loadingSvc: LoadingSvc,
     private sessionSvc: UserSessionSvc,
     private userSvc: UserService
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     this.buildForm();
@@ -101,9 +102,12 @@ export class AdviseCRUDPage implements OnInit {
       return;
     }
 
-    if (this.paramsUrl?.id) this.getPost(this.paramsUrl?.id);
-    if (this.paramsQuery?.params?.id_reference)
+    if (this.paramsUrl?.id) {
+      this.getPost(this.paramsUrl?.id);
+    }
+    if (this.paramsQuery?.params?.id_reference) {
       this.getReference(this.paramsQuery?.params?.id_reference);
+    }
 
     this.hasVerifiedEmail = await this.userSvc.verifiedEmail();
   }
@@ -113,7 +117,7 @@ export class AdviseCRUDPage implements OnInit {
     this.isLoading = true;
 
     this.id = id;
-    const { response, error } = await this.adviseSvc.get(id);
+    const {response, error} = await this.adviseSvc.get(id);
     this.iAdvise = response;
     if (error || !(await this.sessionSvc.isUser(this.iAdvise?.uid))) {
       this.kickOff();
@@ -127,8 +131,10 @@ export class AdviseCRUDPage implements OnInit {
   /* If has id -> editing post */
   async getReference(id: number) {
     this.id_reference = id;
-    const { response, error } = await this.adviseSvc.get(id);
-    if (response) this.reference = response;
+    const {response, error} = await this.adviseSvc.get(id);
+    if (response) {
+      this.reference = response;
+    }
   }
 
   ionViewDidLeave() {
@@ -140,23 +146,23 @@ export class AdviseCRUDPage implements OnInit {
 
     this.form = this.formBuilder.group({
       title: new UntypedFormControl(
-        { value: this.iAdvise?.title || '', disabled: disabled },
+        {value: this.iAdvise?.title || '', disabled: disabled},
         Validators.required
       ),
       subtitle: new UntypedFormControl(
-        { value: this.iAdvise?.subtitle || '', disabled: disabled },
+        {value: this.iAdvise?.subtitle || '', disabled: disabled},
         Validators.required
       ),
       summary: new UntypedFormControl(
-        { value: this.iAdvise?.summary || '', disabled: disabled },
+        {value: this.iAdvise?.summary || '', disabled: disabled},
         Validators.required
       ),
       topic: new UntypedFormControl(
-        { value: this.iAdvise?.topic || '', disabled: disabled },
+        {value: this.iAdvise?.topic || '', disabled: disabled},
         Validators.required
       ),
       content: new UntypedFormControl(
-        { value: this.iAdvise?.content || '', disabled: disabled },
+        {value: this.iAdvise?.content || '', disabled: disabled},
         Validators.required
       ),
     });
@@ -205,12 +211,15 @@ export class AdviseCRUDPage implements OnInit {
 
   /* On Cancel */
   goHome(canceled: boolean = true) {
-    if (canceled) this.router.navigate(['posts/oracles']);
-    else this.router.navigateReload(['posts/oracles']);
+    if (canceled) {
+      this.router.navigate(['oracles']);
+    } else {
+      this.router.navigateReload(['oracles']);
+    }
   }
 
   async check(): Promise<boolean> {
-    const { title } = this.form.value;
+    const {title} = this.form.value;
 
     /* if( title.length < 4 ) {
       this.toastSvc.show( 'pages.posts.advises.create.error.title', true )
@@ -250,7 +259,7 @@ export class AdviseCRUDPage implements OnInit {
   async shareAdvise() {
     await this.loadingSvc.show();
 
-    const { title, subtitle, summary, topic } = this.form.value;
+    const {title, subtitle, summary, topic} = this.form.value;
 
     const opts: IAdviseFull = {
       topic: topic.id,
@@ -268,7 +277,7 @@ export class AdviseCRUDPage implements OnInit {
       media_ext: this.iAdvise?.media_ext,
     };
 
-    const { response, error } = !this.id
+    const {response, error} = !this.id
       ? await this.adviseSvc.create(opts)
       : await this.adviseSvc.update(this.id, opts);
 
@@ -280,7 +289,9 @@ export class AdviseCRUDPage implements OnInit {
         : response.message,
       true
     );
-    if (error) return;
+    if (error) {
+      return;
+    }
 
     // this.askNew()
     this.goHome(false);
