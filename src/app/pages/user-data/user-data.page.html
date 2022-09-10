@@ -88,13 +88,13 @@
                       <ion-label position="stacked" class="text_label_form">Contraseña</ion-label>
                       <ion-input formControlName="password" placeholder="Contraseña" type="password"
                                  class="padding-input-12 userform-input-mobile"></ion-input>
-                                 <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
+                      <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Repetir contraseña</ion-label>
                       <ion-input formControlName="repeatPass" placeholder="Repetir contraseña" type="password"
                                  class="padding-input-12 userform-input-mobile"></ion-input>
-                                 <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
+                      <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
                     </ion-item>
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Sobre mí</ion-label>
@@ -148,13 +148,13 @@
                 <ion-label position="stacked" class="text_label_form">Contraseña</ion-label>
                 <ion-input formControlName="password" placeholder="Contraseña" type="password"
                            class="padding-input-12 userform-input-desktop"></ion-input>
-                           <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
+                <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
               </ion-item>
               <ion-item lines="none">
                 <ion-label position="stacked" class="text_label_form">Repetir contraseña</ion-label>
                 <ion-input formControlName="repeatPass" placeholder="Repetir contraseña" type="password"
                            class="padding-input-12 userform-input-mobile"></ion-input>
-                           <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
+                <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
               </ion-item>
             </ion-col>
             <ion-col size="5">
@@ -170,6 +170,7 @@
       </ion-grid>
     </ion-row>
   </ion-grid>
+  <app-footer></app-footer>
 </ion-content>
 <ion-footer class="mobile">
   <ion-toolbar>
@@ -178,9 +179,8 @@
         <ion-button expand class="botonf1" (click)="onClickSubmit()" type="submit">Guardar cambios</ion-button>
       </ion-row>
       <ion-row class="ion-padding paddingf2">
-        <ion-button routerLink="/posts/oracles" expand class="botonf2" type="submit">Cancelar</ion-button>
+        <ion-button routerLink="/oracles" expand class="botonf2" type="submit">Cancelar</ion-button>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 </ion-footer>
-<app-footer></app-footer>
