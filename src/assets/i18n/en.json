@@ -204,7 +204,7 @@
 
     "follow": {
       "do": "Follow",
-      "cancel": "Unfollow",
+      "cancel": "Following",
       "create": {
         "done": "Followed Successfully",
         "error": "Error trying to Follow"
