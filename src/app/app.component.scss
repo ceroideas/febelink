@@ -153,3 +153,13 @@ ion-content {
 .menu_despliege {
   margin-left: 10px;
 }
+
+#menu-list ion-item {
+  background-color: white;
+}
+
+#footer-nav-bar {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}

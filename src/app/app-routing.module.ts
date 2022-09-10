@@ -10,9 +10,9 @@ import {environment} from 'src/environments/environment';
 const routes: Routes = [
   {path: '', redirectTo: 'posts/oracles', pathMatch: 'full'},
   {
-    path: 'menu',
+    path: 'search',
     loadChildren: () =>
-      import('./tabs/tabs.module').then((m) => m.TabsPageModule),
+      import('./tab1/tab1.module').then((m) => m.Tab1PageModule)
   },
   {
     path: 'user/:recommenderId',
@@ -224,9 +224,9 @@ const routes: Routes = [
       import('./admin/admin.module').then((m) => m.AdminPageModule),
   },
   {
-    path: 'posts',
+    path: 'oracles',
     loadChildren: () =>
-      import('./pages/posts/post.module').then((m) => m.PostPageModule),
+      import('./pages/posts/advises/advise.module').then(m => m.AdvisePageModule),
   },
   {
     path: 'cart',
