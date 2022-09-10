@@ -229,6 +229,11 @@ const routes: Routes = [
       import('./pages/posts/advises/advise.module').then(m => m.AdvisePageModule),
   },
   {
+    path: 'posts',
+    loadChildren: () =>
+      import('./pages/posts/post.module').then((m) => m.PostPageModule),
+  },
+  {
     path: 'cart',
     loadChildren: () =>
       import('./pages/cart/cart.module').then((m) => m.CartPageModule),
