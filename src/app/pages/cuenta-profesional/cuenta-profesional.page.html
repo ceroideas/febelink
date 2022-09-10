@@ -62,11 +62,20 @@
                 <ion-row class="flex_imagen_start margin_top_row_3" size="12">
                   <ion-col style="padding-top: 0px;" size="12">
                     <ion-searchbar 
-                     class="searchBar" animated="true"></ion-searchbar>
-                    
+                    (ionChange)="search($event.target.value)" class="searchBar" animated="true"></ion-searchbar>
+                    <ion-grid class="ion-no-padding" *ngIf="usersArrayFiltered" fixed="true">
+                      <ion-row *ngIf="usersArrayFiltered?.profesiones.length > 0">
+                        <ion-col class="ion-no-padding" size="12">
+                          <ion-item *ngFor="let user of usersArrayFiltered?.profesiones" lines="none">
+                            <ion-checkbox slot="start"></ion-checkbox>
+                            <ion-label class="text_user_profesion">{{user?.texto}}</ion-label>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
                   </ion-col>
                 </ion-row>
-                <div *ngIf="geoDatas">
+                <div [ngClass]="{'margin_top_menos_115': usersArrayFiltered?.profesiones.length > 0}" *ngIf="geoDatas">
                   <ion-row class="flex_imagen_start margin_top_row_3" size="12">
                     <ion-col size="12">
                       <ion-label class="cuenta_text_label">Disponibilidad geográfica</ion-label>
@@ -75,7 +84,7 @@
                   <ion-grid class="ion-no-margin" *ngFor="let geoData of geoDatas.geografia">
                     <ion-row class="flex_imagen_start" size="12">
                       <ion-col style="padding-left:0px;" size="1">
-                        <ion-checkbox class="checkbox_geo"></ion-checkbox>
+                        <ion-checkbox [ngClass]="{'checkbox_no_geo': searchText, 'checkbox_geo': !searchText}"></ion-checkbox>
                       </ion-col>
                       <ion-col style="padding-left:0px;" size="7">
                         <ion-label class="label_row_geodata">

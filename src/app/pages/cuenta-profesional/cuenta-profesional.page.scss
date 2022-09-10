@@ -154,7 +154,22 @@ ion-toggle{
     justify-content: center;
   }
 
+  .margin_top_menos_115{
+    margin-top: -115%;
+  }
+
+  .text_user_profesion{
+    font-weight: 500;
+    font-size: 14px;
+    color: #111928;
+  }
+
+  .checkbox_no_geo{
+    display: none;
+  }
+
   .checkbox_geo{
+    display: block;
     --border-radius:8px; 
     --border-color:#D1D5DB; 
     --background:#F9FAFB;

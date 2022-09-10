@@ -11,12 +11,13 @@ export class CuentaProfesionalPage implements OnInit {
   public geoDatas: any = null;
   public profesionalDatos: any = null;
   public usersArrayFiltered: any = null;
+  public searchText: boolean = false;
 
   constructor(private cuentaProfesionalService: CuentaProfesionalService) { }
 
   ngOnInit() {
     this.getTypeGeo();
-    //this.getProfesiones();
+    this.getProfesiones();
   }
 
   async changeCheck(){
@@ -46,17 +47,17 @@ export class CuentaProfesionalPage implements OnInit {
       console.log(err);
     })
   }
-/*
-  search(query: any, geoId: number) {
-    let select_geo = null;
-    if (!query) { // revert back to the original array if no query
-      this.usersArrayFiltered = this.profesionalDatos?.profesiones;
-    } else { // filter array by query
-      this.usersArrayFiltered = this.profesionalDatos?.profesiones.filter((profesion) => {
-        return profesion.texto.includes(query);
-        
-      })
-    }
+
+  search(query: any) {
+    if (query != '') {
+      this.usersArrayFiltered = this.profesionalDatos;
+      this.searchText = true;
+    }else{
+      this.usersArrayFiltered = null;
+      this.searchText = false;
+    } 
+
+    console.log(this.usersArrayFiltered);
   }
-*/
+
 }
