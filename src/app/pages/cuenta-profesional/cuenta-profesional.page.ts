@@ -14,6 +14,10 @@ export class CuentaProfesionalPage implements OnInit {
   public searchText: boolean = false;
   public checkMdodel:boolean = null;
 
+  public profesiones = [
+    "Fisioterapia", "Radiología"
+  ]
+
   constructor(private cuentaProfesionalService: CuentaProfesionalService) { }
 
   ngOnInit() {
