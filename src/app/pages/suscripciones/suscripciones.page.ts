@@ -39,6 +39,9 @@ export class SuscripcionesPage implements OnInit {
 
   suscriptionChange: boolean = false;
 
+  proUser: boolean = false;
+  subLoaded: boolean = false;
+
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -59,10 +62,23 @@ export class SuscripcionesPage implements OnInit {
   async getMySubscriptions() {
     const {response} = await this.subService.getMySubscriptions();
     this.subscriptions = response;
+    this.subLoaded = true;
+    if (this.subscriptions.find((e) => e.subscriptionName === 'sub-pro')) {
+      this.proUser = true;
+    }
   }
 
   async subscribe(subscriptionName, amount) {
     const {response} = await this.subService.getSubscriptionLink({subscriptionName, amount});
-    window.location.href = response;
+    if (typeof response === 'string') {
+      window.location.href = response;
+    } else {
+      await this.getMySubscriptions();
+      this.suscriptionChange = false;
+    }
+  }
+
+  findSubscription(searchTerm: string) {
+    return this.subscriptions.find((e) => e.subscriptionName.includes(searchTerm));
   }
 }
