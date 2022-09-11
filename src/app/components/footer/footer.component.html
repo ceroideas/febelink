@@ -7,7 +7,6 @@
             tappable
             src="assets/imgs/logo.png"
             alt="Febelink logo"
-            (click)="irA('/' + homePage)"
             class="ion-margin logo">
           </ion-img>
         </ion-col>
@@ -20,29 +19,29 @@
                     <ion-label color="texto-bold-footer">{{ 'menu.footer.company' | translate }}</ion-label>
                   </ion-item>
                   <ion-item routerLink="#" lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.about' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.premium' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.blog' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.affiliate' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.cupon' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                 </ion-list>
               </ion-col>
@@ -52,24 +51,24 @@
                     <ion-label color="texto-bold-footer">{{ 'menu.footer.support' | translate }}</ion-label>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.contact' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.conocimiento' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.premiumBis' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.sponsor' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                 </ion-list>
               </ion-col>
@@ -79,19 +78,19 @@
                     <ion-label color="texto-bold-footer">{{ 'menu.footer.legal' | translate }}</ion-label>
                   </ion-item>
                   <ion-item (click)="openLegalDisclaimer()" class="ion-no-padding" lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.privacy' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item (click)="termsModal()" class="ion-no-padding" lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">{{ 'menu.footer.terms' | translate }}</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                   <ion-item class="ion-no-padding" lines="none">
-                    <ion-router-link href="#">
+                    <div href="#">
                       <ion-label color="texto-gray-footer">EULA</ion-label>
-                    </ion-router-link>
+                    </div>
                   </ion-item>
                 </ion-list>
               </ion-col>

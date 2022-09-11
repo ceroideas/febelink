@@ -65,7 +65,7 @@ export class ServiciosPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private socialSharing: SocialSharing,
-    private platform: Platform,
+    public platform: Platform,
     private modalCtrl: ModalController,
     public popoverController: PopoverController,
     private router: Router,

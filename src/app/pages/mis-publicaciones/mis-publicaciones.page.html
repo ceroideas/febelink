@@ -1,8 +1,8 @@
 <ion-content class="background-content">
-  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
-    <ion-spinner></ion-spinner>
-    <p>Cargando...</p>
-  </div>
+  <!--  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>Cargando...</p>
+    </div>-->
 
   <!-- Mobile version -->
   <div class="mobile">
@@ -27,20 +27,20 @@
         </div>
       </div>
       <div class="info-user">
-        <div class="info-user-left">
-          <img
-            [src]="perfilpublico?.logo"
-            *ngIf="perfilpublico?.logo"
-            class="info-user-img"
-            (error)="perfilpublico.logo = null"
-          />
-          <img
-            src="user.img"
-            *ngIf="!perfilpublico?.logo"
-            class="info-user-img"
-            appImgErrorFallback
-          />
-        </div>
+        <!--        <div class="info-user-left">
+                  <img
+                    [src]="perfilpublico?.logo"
+                    *ngIf="perfilpublico?.logo"
+                    class="info-user-img"
+                    (error)="perfilpublico.logo = null"
+                  />
+                  <img
+                    src="user.img"
+                    *ngIf="!perfilpublico?.logo"
+                    class="info-user-img"
+                    appImgErrorFallback
+                  />
+                </div>-->
         <div class="info-user-right">
           {{user.description}}
         </div>
@@ -97,15 +97,15 @@
           </div>
           <div [innerHTML]="iAdvise.content" class="content-post post-content-main max-content-text"></div>
           <div class="post-content-topic">#{{ topics[iAdvise.topic]?.name }}</div>
-          <ion-img
-            class="content-post-img"
-            [src]="iAdvise.media_url"
-            *ngIf="
-                    isPostVisible &&
-                    iAdvise.media_url &&
-                    fileSvc.isImage(iAdvise.media_ext)
-                  "
-          ></ion-img>
+          <!--          <ion-img
+                      class="content-post-img"
+                      [src]="iAdvise.media_url"
+                      *ngIf="
+                              isPostVisible &&
+                              iAdvise.media_url &&
+                              fileSvc.isImage(iAdvise.media_ext)
+                            "
+                    ></ion-img>-->
           <div class="post-main-reactions">
             <div class="post-main-reactions-left">
               <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span
@@ -394,20 +394,20 @@
       <div class="table-100">
         <div class="header-content-top-left">
           <div class="table-100">
-            <div class="header-top-inside-left">
-              <img
-                [src]="perfilpublico?.logo"
-                *ngIf="perfilpublico?.logo"
-                class="header-top-img"
-                (error)="perfilpublico.logo = null"
-              />
-              <img
-                src="user.img"
-                *ngIf="!perfilpublico?.logo"
-                class="header-top-img"
-                appImgErrorFallback
-              />
-            </div>
+            <!--            <div class="header-top-inside-left">
+                          <img
+                            [src]="perfilpublico?.logo"
+                            *ngIf="perfilpublico?.logo"
+                            class="header-top-img"
+                            (error)="perfilpublico.logo = null"
+                          />
+                          <img
+                            src="user.img"
+                            *ngIf="!perfilpublico?.logo"
+                            class="header-top-img"
+                            appImgErrorFallback
+                          />
+                        </div>-->
             <div class="header-top-inside-right">
               <div class="header-top-title">
                 {{user.name}}
@@ -457,15 +457,15 @@
 
               <div [innerHTML]="iAdvise.content" class="content-post post-content-main max-content-text-b"></div>
               <div class="post-content-topic">#{{ topics[iAdvise.topic]?.name }}</div>
-              <ion-img
-                class="content-post-img"
-                [src]="iAdvise.media_url"
-                *ngIf="
-                    isPostVisible &&
-                    iAdvise.media_url &&
-                    fileSvc.isImage(iAdvise.media_ext)
-                  "
-              ></ion-img>
+              <!--              <ion-img
+                              class="content-post-img"
+                              [src]="iAdvise.media_url"
+                              *ngIf="
+                                  isPostVisible &&
+                                  iAdvise.media_url &&
+                                  fileSvc.isImage(iAdvise.media_ext)
+                                "
+                            ></ion-img>-->
               <div class="post-main-reactions-b">
                 <div class="post-main-reactions-left">
                   <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span

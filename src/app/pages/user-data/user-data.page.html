@@ -53,8 +53,8 @@
                   <ion-img class="avatarmenu"
                            id="menuImg"
                            [src]="
-                    currentUser?.logo !== null
-                      ? currentUser?.logo
+                    curUser?.logo !== null
+                      ? curUser?.logo
                       : 'https://api.febelink.com/storage/users/default.png'
                   "
                            (error)="onImgError($event)"
@@ -120,8 +120,8 @@
               <ion-img class="avatarmenu"
                        id="menuImg"
                        [src]="
-                currentUser?.logo !== null
-                  ? currentUser?.logo
+                curUser?.logo !== null
+                  ? curUser?.logo
                   : 'https://api.febelink.com/storage/users/default.png'
               "
                        (error)="onImgError($event)"

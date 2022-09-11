@@ -34,6 +34,8 @@ export class PerfilOraculoPage implements OnInit {
   isFeed: boolean = true;
   isRatings: boolean = false;
   isBest: boolean = false;
+  postUser;
+  post;
 
   topics = [
     {id: null, name: 'Todos'},

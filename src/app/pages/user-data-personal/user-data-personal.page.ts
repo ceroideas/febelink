@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { IUser } from 'src/app/models/user.model';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
-import { UserDataPersonalService } from './Services/user-data-personal.services';
+import {Component, OnInit} from '@angular/core';
+import {IUser} from 'src/app/models/user.model';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
+import {UserDataPersonalService} from './Services/user-data-personal.services';
 
 @Component({
   selector: 'app-user-data-personal',
@@ -22,8 +22,9 @@ export class UserDataPersonalPage implements OnInit {
   public tarjetaCredito: string = null;
   public numCuenta: string = null;
 
-  constructor(public sessionSvc: UserSessionSvc, 
-    private formBuilder: UntypedFormBuilder, private userDataPersonalService: UserDataPersonalService) { }
+  constructor(public sessionSvc: UserSessionSvc,
+              private formBuilder: UntypedFormBuilder, private userDataPersonalService: UserDataPersonalService) {
+  }
 
   ngOnInit() {
     this.userDataPersonalService.getUserInfo().then(
@@ -47,7 +48,7 @@ export class UserDataPersonalPage implements OnInit {
     this.curUser = await this.sessionSvc.get();
   }
 
-  async onClickSubmit(){
+  async onClickSubmit() {
 
     this.name = this.form.get('name').value;
     this.dni = this.form.get('dni').value;
@@ -70,16 +71,18 @@ export class UserDataPersonalPage implements OnInit {
         lang: this.idioma,
         creditCard: this.tarjetaCredito,
         bankAccountNumber: this.numCuenta,
-      }
+      };
 
       this.userDataPersonalService.updatePersonalDataUser(datos)
-      .then(res =>{
-        //console.log('Datos guardados con éxito : '+res);
-      })
-      .catch(err =>{
-        //console.log('Error al enviar los datos'+err);
-      })
+        .then(res => {
+          //console.log('Datos guardados con éxito : '+res);
+        })
+        .catch(err => {
+          //console.log('Error al enviar los datos'+err);
+        });
     }
   }
 
+  submitForm() {
+  }
 }

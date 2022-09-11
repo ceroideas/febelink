@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { CuentaProfesionalService } from './Services/cuentaProfesionalService.service';
+import {Component, OnInit} from '@angular/core';
+import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx';
+import {AlertController, ModalController, Platform, PopoverController} from '@ionic/angular';
+import {UtilitiesService} from '../../services/utilities.service';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
+import {UserService} from '../../services/user.service';
+import {MailService} from '../../services/mail.service';
+import {ReportService} from '../../services/report.service';
+import {ServicesService} from '../servicios/services/services.service';
 
 @Component({
   selector: 'app-cuenta-profesional',
@@ -8,65 +18,44 @@ import { CuentaProfesionalService } from './Services/cuentaProfesionalService.se
 })
 export class CuentaProfesionalPage implements OnInit {
   public checkProfesional: boolean = false;
-  public geoDatas: any = null;
   public profesionalDatos: any = null;
   public usersArrayFiltered: any = null;
   public searchText: boolean = false;
-  public checkMdodel:boolean = null;
+  public checkMdodel: boolean = null;
 
   public profesiones = [
-    "Fisioterapia", "Radiología"
-  ]
+    'Fisioterapia', 'Radiología'
+  ];
 
-  constructor(private cuentaProfesionalService: CuentaProfesionalService) { }
-
-  ngOnInit() {
-    this.getTypeGeo();
-    this.getProfesiones();
+  constructor(
+    private profAccountService: CuentaProfesionalService) {
   }
 
-  async changeCheck(){
+  ngOnInit() {
+  }
+
+  async changeCheck() {
     this.checkProfesional = !this.checkProfesional;
   }
 
-  getTypeGeo(){
-    let id = 1;
-    this.cuentaProfesionalService.getTypeGeo(id)
-    .then(res => {
-      this.geoDatas = res;
-      console.log(this.geoDatas);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
+  async searchProfession(filterTerm: string) {
+    if (filterTerm) {
+      const {response} = await this.profAccountService.getProfessionsByFilter(filterTerm);
+      if (response) {
+        this.usersArrayFiltered = this.profesionalDatos;
+        this.searchText = true;
+      }
 
-  getProfesiones(){
-    let id = 1;
-    this.cuentaProfesionalService.getProfesiones(id)
-    .then(res => {
-      this.profesionalDatos = res;
-      console.log(this.profesionalDatos);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  search(query: any) {
-    if (query != '') {
-      this.usersArrayFiltered = this.profesionalDatos;
-      this.searchText = true;
-    }else{
+    } else {
       this.usersArrayFiltered = null;
       this.searchText = false;
-    } 
+    }
 
     console.log(this.usersArrayFiltered);
   }
 
-  updatecheckMdodel(){
-console.log('checkModel : '+this.checkMdodel);
+  updatecheckMdodel() {
+    console.log('checkModel : ' + this.checkMdodel);
   }
 
 }

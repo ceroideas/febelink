@@ -7,17 +7,17 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { IOptsMenuButton } from 'src/app/components/opts-menu/models/opts-menu.model';
-import { OptsMenuSvc } from 'src/app/components/opts-menu/services/opts-menu.service';
-import { IReport } from 'src/app/models/report.model';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
-import { AlertSvc, IAlert } from 'src/app/services/alert.service';
-import { LoadingSvc } from 'src/app/services/loading.service';
-import { ReportService } from 'src/app/services/report.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { ICommentFull } from '../../advises/models/comment.model';
-import { CommentService } from '../../advises/services/comment.service';
+import {IOptsMenuButton} from 'src/app/components/opts-menu/models/opts-menu.model';
+import {OptsMenuSvc} from 'src/app/components/opts-menu/services/opts-menu.service';
+import {IReport} from 'src/app/models/report.model';
+import {DateFormatType} from 'src/app/pipes/date-format.pipe';
+import {AlertSvc, IAlert} from 'src/app/services/alert.service';
+import {LoadingSvc} from 'src/app/services/loading.service';
+import {ReportService} from 'src/app/services/report.service';
+import {ToastSvc} from 'src/app/services/toast.service';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {ICommentFull} from '../../advises/models/comment.model';
+import {CommentService} from '../../advises/services/comment.service';
 
 @Component({
   selector: 'app-comment-component',
@@ -36,7 +36,7 @@ export class CommentComponent implements OnInit {
   }> = new EventEmitter();
 
   dateFormatType = DateFormatType;
-  indexShowReply:any;
+  indexShowReply: any;
 
   constructor(
     private optsMenuSvc: OptsMenuSvc,
@@ -46,9 +46,12 @@ export class CommentComponent implements OnInit {
     private toastSvc: ToastSvc,
     private loadingSvc: LoadingSvc,
     private reportSvc: ReportService
-  ) {}
+  ) {
+  }
 
-  ngOnInit() {console.log(this.iComment)}
+  ngOnInit() {
+    console.log(this.iComment)
+  }
 
   /* ngOnChanges( changes: SimpleChanges ): void {
     if ( 'iAdvise' in changes) {
@@ -93,7 +96,7 @@ export class CommentComponent implements OnInit {
       } as IAlert)
     ) {
       await this.loadingSvc.show();
-      const { response, error } = await this.commentSvc.delete(
+      const {response, error} = await this.commentSvc.delete(
         this.post,
         this.iComment?.id
       );
@@ -121,11 +124,14 @@ export class CommentComponent implements OnInit {
   }
 
   comment(message: string | number) {
-    this.childSubmit.emit({ message, parentId: this.iComment?.id });
+    this.childSubmit.emit({message, parentId: this.iComment?.id});
   }
 
-  showReply(index:any) {
-    this.indexShowReply="";
-    this.indexShowReply=index;
+  showReply(index: any) {
+    this.indexShowReply = "";
+    this.indexShowReply = index;
+  }
+
+  share(event) {
   }
 }

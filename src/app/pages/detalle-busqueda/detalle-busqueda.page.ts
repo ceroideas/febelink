@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SearchService } from 'src/app/tab1/search/services/search.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SearchService} from 'src/app/tab1/search/services/search.service';
 import SwiperCore, {Pagination, Thumbs} from 'swiper';
 
 // install Swiper modules
@@ -16,7 +16,7 @@ export class DetalleBusquedaPage implements OnInit {
   public detalle: any;
   public data: any;
   thumbsSwiper: any;
-  
+
   slideOpts = {
     initialSlide: 1,
     effect: 'cards',
@@ -25,29 +25,35 @@ export class DetalleBusquedaPage implements OnInit {
     }
   };
 
-  constructor(public searchService: SearchService) { }
+  constructor(public searchService: SearchService, public router: Router) {
+  }
 
 
   ngOnInit() {
     this.searchService.getDetalle(this.detalle)
-    .then(res => {
+      .then(res => {
         this.detalle = res;
-    }).catch(err => {
-        console.log(err);
-    }); 
+      }).catch(err => {
+      console.log(err);
+    });
 
     this.searchService.getData()
-    .then(res => {
+      .then(res => {
         this.data = res;
-    }).catch(err => {
-        console.log(err);
-    }); 
+      }).catch(err => {
+      console.log(err);
+    });
   }
 
   onSwiper([swiper]) {
     console.log(swiper);
-  } 
+  }
+
   onSlideChange() {
     console.log('slide change');
+  }
+
+  public irA(p: string): void {
+    this.router.navigate([p]);
   }
 }

@@ -72,11 +72,11 @@
       >
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_user.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.datosPersonales' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <ion-button
         expand="block"
@@ -96,11 +96,11 @@
       >
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_wallet.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.wallet' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <!-- Section options. -->
       <ng-container class="ion-no-padding" *ngIf="showWallets">
@@ -137,11 +137,11 @@
       >
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.historialCompras' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <ion-item
         class="item_menu_margen"
@@ -155,16 +155,16 @@
           size="small"
           src="assets/icon/svg/menu_publicacion.svg"
         ></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.misPublicaciones' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
-      <ion-grid *ngIf="visiblePro" style="height:10em;" class="ion-no-padding">
+      <ion-grid *ngIf="visiblePro" class="ion-no-padding">
         <ion-row class="ion-no-padding" size="12">
           <ion-col class="ion-no-padding" size="12">
-            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+            <ion-item lines="none" class="ion-no-padding item_orange_menu" button (click)="goTo('professions')">
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
@@ -215,8 +215,8 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-item (click)="changeToProfesional()"
-                [ngClass]="{'item_click': visiblePro, 'item_noMargin_click': !visiblePro }" color="item" lines="none">
+      <ion-item [ngClass]="{'item_click': visiblePro, 'item_noMargin_click': !visiblePro }" color="item" lines="none"
+                button (click)="goTo('professions')">
         <div tabindex="0"></div>
         <ion-img *ngIf="visiblePro" size="small" src="assets/icon/svg/icono_cambio_cuenta_blue.svg"></ion-img>
         <ion-img *ngIf="!visiblePro" size="small" src="assets/icon/svg/menu_premium.svg"></ion-img>
@@ -225,23 +225,23 @@
         <ion-label style="color:#1C64F2;" *ngIf="visiblePro" class="ion-padding">Cambiar a cuenta usuario</ion-label>
       </ion-item>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
-      <ion-item class="menu item_menu_margen" color="item" lines="none" button>
+      <ion-item class="item_menu_margen" color="item" lines="none" button>
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_idioma.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.idioma' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <ion-item class="item_menu_margen" color="item" lines="none" button>
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_ayudar.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.ayuda' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <ion-item
         class="item_menu_margen pointer"
@@ -252,11 +252,11 @@
       >
         <div tabindex="0"></div>
         <ion-img size="small" src="assets/icon/svg/menu_salida.svg"></ion-img>
-        <ion-router-link class="ion-text-wrap color_ppal">
+        <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
               'menu.pages.salir' | translate
             }}</ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <ion-item-divider class="legal desktop_no_visible"></ion-item-divider>
       <ion-item
@@ -266,11 +266,11 @@
         button
         (click)="openUseConditions()"
       >
-        <ion-router-link class="ion-text-wrap color_ayuda">
+        <div class="ion-text-wrap color_ayuda">
           <ion-label class="ion-no-padding ion-text-wrap">
             {{ 'common.legal.condsNterms' | translate }}
           </ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
       <ion-item
         class="desktop_no_visible"
@@ -279,11 +279,11 @@
         button
         (click)="openPrivacyPolicy()"
       >
-        <ion-router-link class="ion-text-wrap color_ayuda">
+        <div class="ion-text-wrap color_ayuda">
           <ion-label class="ion-no-padding ion-text-wrap">
             {{ 'common.legal.privacyPolicy' | translate }}
           </ion-label>
-        </ion-router-link>
+        </div>
       </ion-item>
     </ion-content>
   </ion-menu>
