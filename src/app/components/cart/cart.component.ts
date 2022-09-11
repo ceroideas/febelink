@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
 
   async buyCart() {
     const {response, error} = await this.cartService.buy();
-    console.log(response);
+    window.location.href = response;
   }
 
   async emptyCart() {

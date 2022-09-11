@@ -292,27 +292,29 @@
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
-  <ion-tabs id="footer-nav-bar">
-    <ion-tab-bar slot="bottom" color="menuf">
-      <!-- Inicio -->
-      <ion-tab-button tab="search">
-        <ion-icon name="home-outline"></ion-icon>
-        <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
-      </ion-tab-button>
+  <ng-container id="secondary-content">
+    <ion-tabs id="footer-nav-bar">
+      <ion-tab-bar slot="bottom" color="menuf">
+        <!-- Inicio -->
+        <ion-tab-button tab="search">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
+        </ion-tab-button>
 
-      <!-- Carrito -->
-      <ion-tab-button tab="cart">
-        <ion-icon name="cart-outline"></ion-icon>
-        <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
-      </ion-tab-button>
+        <!-- Carrito -->
+        <ion-tab-button tab="cart">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
+        </ion-tab-button>
 
-      <!-- Oracles -->
-      <ion-tab-button tab="oracles">
-        <ion-icon name="eye-outline"></ion-icon>
-        <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+        <!-- Oracles -->
+        <ion-tab-button tab="oracles">
+          <ion-icon name="eye-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ng-container>
 
   <app-cart></app-cart>
 </ion-app>

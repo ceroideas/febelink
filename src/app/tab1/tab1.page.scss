@@ -1,74 +1,74 @@
-
 .content-background {
   --background: #F9FAFB;
 }
+
 @media (min-width: 768px) {
   .content-background {
-      --background: #F7F7F5;
+    --background: #F7F7F5;
   }
 }
 
-@media (min-width: 768px){
-  .logo{
-      width: 120px;
+@media (min-width: 768px) {
+  .logo {
+    width: 120px;
   }
 
-  .dot_notif_avatar{
+  .dot_notif_avatar {
     margin-left: -25px;
     z-index: 10;
     margin-top: -31px;
   }
 }
 
-.logo{
+.logo {
   object-fit: scale-down;
   margin-left: 10px;
   width: 120px;
 }
 
-.dot_notif_avatar{
+.dot_notif_avatar {
   margin-left: -31px;
   z-index: 10;
   margin-top: -29px;
 }
 
-.icon_star{
+.icon_star {
   width: 14.87px;
   height: 14.24px;
   display: inline-block;
   margin-left: 0.5em;
 }
 
-.content_item{
+.content_item {
   margin-left: -0.5em;
 }
 
-.label_cantidad{
-  font-weight: 600; 
-  font-size: 16px; 
-  margin-top: -0.3em; 
-  color:#111928;
+.label_cantidad {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: -0.3em;
+  color: #111928;
 }
 
-.item_cantidad_border{
-  border: 1px solid #D1D5DB; 
+.item_cantidad_border {
+  border: 1px solid #D1D5DB;
   border-radius: 8px;
 }
 
-.item_cantidad{
+.item_cantidad {
   margin-left: -1em;
 }
 
-.parrafo_val{
+.parrafo_val {
   margin-left: 5px;
   margin-top: 0;
 }
 
-.swiper-button-prev{
+.swiper-button-prev {
   display: none;
 }
 
-.swiper-button-next{
+.swiper-button-next {
   display: none;
 }
 
@@ -129,12 +129,13 @@
   opacity: 0.4;
 }
 
-.tam_img{
+.tam_img {
   height: 4em;
   width: 5em;
   border-radius: 8px;
 }
-.tam_img_normal{
+
+.tam_img_normal {
   border-radius: 8px;
 }
 
@@ -149,10 +150,10 @@
   object-fit: cover;
 }
 
-.botonf1{
-  --background:#1C64F2;
-  --color:#FFFFFF;
-  --border-radius:8px;
+.botonf1 {
+  --background: #1C64F2;
+  --color: #FFFFFF;
+  --border-radius: 8px;
   width: 12em;
   margin-left: 1em;
   margin-right: 1em;
@@ -161,10 +162,10 @@
   text-transform: capitalize;
 }
 
-.botonf2{
-  --background:#FFFFFF;
-  --color:#1C64F2;
-  --border-radius:8px;
+.botonf2 {
+  --background: #FFFFFF;
+  --color: #1C64F2;
+  --border-radius: 8px;
   border-color: #1C64F2 solid 1px;
   width: 12em;
   margin-left: 1em;
@@ -185,14 +186,14 @@ ion-header {
       padding-left: 3%;
       padding-right: 2.7%;
 
-      .buttons_flex{
+      .buttons_flex {
         display: flex;
         margin-left: 1em;
         width: 100%;
       }
 
-      .desktop_menu_avatar, .avatarmenu{
-        width:56px;
+      .desktop_menu_avatar, .avatarmenu {
+        width: 56px;
         height: 56px;
       }
     }
@@ -201,14 +202,13 @@ ion-header {
 
   ion-header {
     ion-toolbar {
-    @media (min-width: 820px) {
-      width: 100%;
-      padding-left: 3em;
-      padding-right: 3em;
+      @media (min-width: 820px) {
+        width: 100%;
+        padding-left: 3em;
+        padding-right: 3em;
+      }
     }
   }
-}
-
 
 
   #logo {
@@ -233,41 +233,41 @@ ion-header {
   }
 }
 
-  .tam_imagen{
-    @media (min-width: 768px) {
-      width: 100%;
-      height: 30em;
-    }
+.tam_imagen {
+  @media (min-width: 768px) {
+    width: 100%;
+    height: 30em;
   }
+}
 
-  .text_buscador{
-    color:#FFFFFF;
-    font-size: 25px;
-    font-weight: 700;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 0px;
+.text_buscador {
+  color: #FFFFFF;
+  font-size: 25px;
+  font-weight: 700;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 0px;
 
-    @media (min-width: 768px) {
-      font-size: 40px;
-      font-weight: 500;
-    }
+  @media (min-width: 768px) {
+    font-size: 40px;
+    font-weight: 500;
   }
+}
 
 
-.app_search{
+.app_search {
   width: 100%;
 }
 
-.row_buscador{
+.row_buscador {
   @media (min-width: 768px) {
     margin-top: -18em;
   }
   margin-top: -10em;
 }
 
-.menu_header{
-  margin-left:1em;
+.menu_header {
+  margin-left: 1em;
 }
 
 ion-content {
@@ -286,12 +286,12 @@ ion-content {
   }
 }
 
-.desktop_menu_avatar, .avatarmenu{
+.desktop_menu_avatar, .avatarmenu {
   width: 46px;
-  height: 46px;  
+  height: 46px;
 }
 
-.pos_menu{
+.pos_menu {
   z-index: -1;
   display: flex;
   margin-left: -13px;
@@ -299,7 +299,7 @@ ion-content {
   height: 20px;
 }
 
-.chat{
+.chat {
   margin-left: 10px;
 }
 
@@ -307,8 +307,8 @@ ion-thumbnail {
   width: 75px;
   height: 75px;
 }
- 
-.header_buttons{
+
+.header_buttons {
   padding-left: 1em;
 }
 
@@ -376,10 +376,11 @@ ion-icon {
 }
 
 .pad-s5 {
-  padding-left: 5px; --padding-start: 5px;
+  padding-left: 5px;
+  --padding-start: 5px;
 }
 
-.altura_imagen_ppl{
+.altura_imagen_ppl {
   height: 360px;
   width: 100%;
 }

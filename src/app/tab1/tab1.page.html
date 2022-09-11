@@ -1,4 +1,4 @@
-<ion-content class="content-background">
+<ion-content id="search-content" class="content-background">
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="12">
@@ -10,15 +10,16 @@
         <ion-row class="row_buscador">
           <ion-col size="12">
             <ion-row class="ion-padding">
-              <ion-label *ngIf="searchService.show_imagen" class="text_buscador">{{ 'tabs.tab1.search.search_prof' | translate }}</ion-label>
+              <ion-label *ngIf="searchService.show_imagen"
+                         class="text_buscador">{{ 'tabs.tab1.search.search_prof' | translate }}</ion-label>
             </ion-row>
             <ion-row size="12">
               <app-search
-              #search
-              class="app_search"
-              clase="autocomplete"
-              *ngIf="!isLoading"
-            ></app-search>
+                  #search
+                  class="app_search"
+                  clase="autocomplete"
+                  *ngIf="!isLoading"
+              ></app-search>
             </ion-row>
           </ion-col>
         </ion-row>

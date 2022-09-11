@@ -115,9 +115,6 @@ ion-content {
   margin-top: -26px;
 }
 
-#main-content, #footer-nav-bar {
-  margin-top: 5em;
-}
 
 .item_orange_menu {
   --background: rgba(255, 90, 31, 0.1);
@@ -153,8 +150,12 @@ ion-content {
   padding-right: 16px;
 }
 
+#main-content, #secondary-content {
+  margin-top: 5em;
+}
+
 @media (min-width: 768px) {
-  #main-content {
+  #main-content, #secondary-content {
     margin-top: 5em;
   }
 
