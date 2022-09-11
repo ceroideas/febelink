@@ -1,0 +1,28 @@
+{
+    "geografia": [
+        {
+            "id": "1",
+            "tipo": "Localidad",
+            "texto": "Texto explicando que es esta opción y cuales son los límietes",
+            "pro": false
+          },
+          {
+            "id": "2",
+            "tipo": "Provincial",
+            "texto": "Texto explicando que es esta opción y cuales son los límietes",
+            "pro": true
+          },
+          {
+            "id": "3",
+            "tipo": "Regional",
+            "texto": "Texto explicando que es esta opción y cuales son los límietes",
+            "pro": true
+          },
+          {
+            "id": "4",
+            "tipo": "Nacional",
+            "texto": "Texto explicando que es esta opción y cuales son los límietes",
+            "pro": true
+          }
+    ]
+}
