@@ -9,7 +9,7 @@
 
         <span *ngIf="isNuevoServicio" class="breadcrumbs-index-b" (click)="cancelNuevoServicio()">Mis servicios</span>
         <img *ngIf="isNuevoServicio" class="breadcrumbs-next-b" src="assets/icon/svg/chevron-right.svg"/>
-        <span *ngIf="isNuevoServicio">Nuevo servicio</span>
+        <span *ngIf="isNuevoServicio && numbServicesAvaliable > 0">Nuevo servicio</span>
       </div>
     </div>
   </div>
@@ -41,7 +41,8 @@
           </div>
 
           <div class="servicios-sections-cell-button">
-            <div class="servicios-sections-button-primary" (click)="selectNuevoServicio()">
+            <div *ngIf="numbServicesAvaliable > 0" class="servicios-sections-button-primary"
+                 (click)="selectNuevoServicio()">
               Nuevo servicio
             </div>
           </div>
@@ -54,7 +55,7 @@
     <div class="servicios-content-c">
       <div class="sections-add-service-left">
         <div class="sections-add-service-title">
-          Añadir nuevo servicio
+          {{!doUpdate ? 'Añadir nuevo' : 'Editar'}} servicio
         </div>
         <div class="sections-add-service-subtitle">
           Tus servicios creados se van a mostrar en la pestaña de ofertas de Febelink.
@@ -64,10 +65,10 @@
         <div class="sections-add-service-button-secondary" (click)="cancelNuevoServicio()">
           Cancelar
         </div>
-        <div *ngIf="!doUpdate" class="sections-add-service-button-primary" (click)="addNuevoServicio()">
+        <div *ngIf="!doUpdate && !isTemplate" class="sections-add-service-button-primary" (click)="addNuevoServicio()">
           Añadir ahora
         </div>
-        <div *ngIf="doUpdate" class="sections-add-service-button-primary" (click)="editServicio()">
+        <div *ngIf="doUpdate || isTemplate" class="sections-add-service-button-primary" (click)="editServicio()">
           Editar
         </div>
       </div>
@@ -104,6 +105,9 @@
               <div class="modal-add-price-euro">
                 €
               </div>
+            </div>
+            <div>
+              Gastos de gestión 10%.
             </div>
           </div>
           <div class="add-service-price-cell-right">
@@ -234,7 +238,8 @@
                 /{{unitTypes[finalizado.unitTypeId - 1].shorthand}}</ng-container>
             </div>
             <div class="servicios-item-date-b">
-              {{finalizado.serviceEndDate}}
+              -{{finalizado.productUnitPrice * 0.1 }}€ Gastos de gestión
+              <br> {{finalizado.serviceEndDate}}
             </div>
           </div>
         </div>
@@ -456,7 +461,9 @@
             {{finalizado.clientUsername}}
           </div>
           <div class="servicios-date">
-            {{finalizado.serviceEndDate}}
+            -{{finalizado.productUnitPrice * 0.1 }}€
+            <br> Gastos de gestión
+            <br> {{finalizado.serviceEndDate}}
           </div>
         </div>
       </div>
@@ -479,7 +486,7 @@
     </div>
   </ng-container>
 
-  <div class="mobile add-service-floating" (click)="selectNuevoServicio()">
+  <div *ngIf="numbServicesAvaliable > 0" class="mobile add-service-floating" (click)="selectNuevoServicio()">
     <img class="add-service-svg" src="assets/icon/svg/plus.svg"/>
   </div>
 
@@ -659,7 +666,7 @@
   <div class="modal-add-content">
     <div class="modal-add-content-wrapper">
       <div class="modal-front-title">
-        Añadir nuevo servicio
+        {{!doUpdate ? 'Añadir nuevo' : 'Editar'}} servicio
       </div>
       <div class="modal-add-subtitle">
         Tus servicios creados se van a mostrar en la pestaña de ofertas de Febelink.
@@ -668,9 +675,7 @@
         Nombre del servicio
       </div>
       <div class="modal-input-div">
-        <ion-input *ngIf="isTemplate" disabled="true" [(ngModel)]="title" placeholder="Nombre del servicio"
-                   class="padding-input-12 modal-add-name-input"></ion-input>
-        <ion-input *ngIf="!isTemplate" [(ngModel)]="title" placeholder="Nombre del servicio"
+        <ion-input [disabled]="isTemplate" [(ngModel)]="title" placeholder="Nombre del servicio"
                    class="padding-input-12 modal-add-name-input"></ion-input>
       </div>
       <div class="modal-add-description">
@@ -691,6 +696,9 @@
             <div class="modal-add-price-euro">
               €
             </div>
+          </div>
+          <div>
+            Gastos de gestión 10%.
           </div>
         </div>
         <div class="modal-add-separator-right">
@@ -713,7 +721,8 @@
       </div>
       <div class="modal-input-div">
         <ion-item class="no-padding modal-add-price-select">
-          <ion-select [(ngModel)]="sector" class="price-select" placeholder="Profesiones" cancelText="Cancelar"
+          <ion-select [(ngModel)]="sector" [disabled]="isTemplate" class="price-select" placeholder="Profesiones"
+                      cancelText="Cancelar"
                       okText="Aceptar">
             <ion-select-option *ngFor="let sector of ProfessionsMapped"
                                [value]="sector.subSectorId">{{sector.name}}</ion-select-option>
@@ -767,10 +776,10 @@
 
     </div>
     <div class="modal-add-bottom">
-      <div *ngIf="!doUpdate" class="modal-add-button-primary" (click)="addNuevoServicio()">
+      <div *ngIf="!doUpdate && !isTemplate" class="modal-add-button-primary" (click)="addNuevoServicio()">
         Añadir ahora
       </div>
-      <div *ngIf="doUpdate" class="modal-add-button-primary" (click)="editServicio()">
+      <div *ngIf="doUpdate || isTemplate" class="modal-add-button-primary" (click)="editServicio()">
         Editar
       </div>
       <div class="modal-add-button-secondary" (click)="cancelNuevoServicio()">

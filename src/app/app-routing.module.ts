@@ -281,7 +281,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'perfil-oraculo/:id',
+    path: 'user/detail/:id',
     loadChildren: () =>
       import('./pages/perfil-oraculo/perfil-oraculo.module').then(
         (m) => m.PerfilOraculoPageModule
@@ -308,6 +308,10 @@ const routes: Routes = [
         (m) => m.DetalleBusquedaPageModule
       ),
   },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications-log/notifications-log.module').then(m => m.NotificationsLogPageModule),
+  }
 ];
 
 @NgModule({

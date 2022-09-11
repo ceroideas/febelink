@@ -1,8 +1,8 @@
-import { IUser } from 'src/app/models/user.model';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { IUserItem } from '../models/user-item.model';
+import {IUser} from 'src/app/models/user.model';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {IUserItem} from '../models/user-item.model';
 
 @Component({
   selector: 'app-user-item',
@@ -10,7 +10,7 @@ import { IUserItem } from '../models/user-item.model';
   styleUrls: ['./item.component.scss'],
 })
 export class UserItemComponent implements OnInit {
-  
+
   @Input() id: number;
   @Input() user: IUserItem;
   @Input() subtitle: string;
@@ -19,28 +19,33 @@ export class UserItemComponent implements OnInit {
   @Input() clase: string;
   @Input() classImg: string;
   @Input() OnClickShowProfile: boolean = false;
-  @Output() onUserClick: EventEmitter<IUserItem> = new EventEmitter()
+  @Output() onUserClick: EventEmitter<IUserItem> = new EventEmitter();
 
   constructor(
-      private router: Router
+    private router: Router
     , private sessionSvc: UserSessionSvc
-  ) {}
-
-  async ngOnInit() {}
-
-   async userClick() {
-    if( this.OnClickShowProfile ) this.goToProfile()
-    this.onUserClick.emit( this.user );
+  ) {
   }
-  
+
+  async ngOnInit() {
+  }
+
+  async userClick() {
+    if (this.OnClickShowProfile) {
+      this.goToProfile();
+    }
+    this.onUserClick.emit(this.user);
+  }
+
   public async goToProfile() {
-    if( await this.sessionSvc.checkLogged() )
-      this.router.navigate([ 'perfil/' + this.id ], {
+    if (await this.sessionSvc.checkLogged()) {
+      this.router.navigate(['user/detail/' + this.id], {
         queryParams: {
           id_perfil: this.id
           , contacto: false
         },
       });
+    }
   }
 
   filterUsers() {

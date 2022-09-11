@@ -27,7 +27,8 @@
       <ion-grid>
         <ion-row class="margen_row">
           <ion-item (click)="irA('/chat')" class="ion-no-padding pointer" lines="none">
-            <ion-img class="desktop" src="assets/icon/svg/chat_header.svg"></ion-img>
+            <ion-img class="ion-padding-top ion-padding-left ion-padding-bottom"
+                     src="assets/icon/svg/chat_header.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu desktop">{{ 'menu.tabs.chat' | translate }}</ion-label>
           </ion-item>
           <ion-item (click)="cartServiceShow.isToggleCart = !cartServiceShow.isToggleCart"
@@ -43,6 +44,12 @@
           <ion-item (click)="irA('/search')" class="ion-no-padding desktop pointer" lines="none">
             <ion-img src="assets/icon/svg/home_icon.svg"></ion-img>
             <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.inicio' | translate }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="notifCount" (click)="irA('/notifications')" class="bell-menu" lines="none">
+            <ion-label class="ion-padding">
+              <ion-img class="ion-no-padding ion-no-margin" src="assets/icon/svg/bell.svg"></ion-img>
+            </ion-label>
+            <ion-badge color="primary" *ngIf="notifCount">{{notifCount}}</ion-badge>
           </ion-item>
         </ion-row>
       </ion-grid>

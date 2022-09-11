@@ -3,7 +3,7 @@ export interface IServiceFull {
   cartId?: number;
   title?: string;
   description?: string;
-  productUnitPrice?: number;
+  productUnitPrice?: number | string;
   unitTypeId?: number;
   subSectorId?: number;
   isTemplate?: number;
