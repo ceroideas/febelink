@@ -15,6 +15,10 @@ export class UserDataService {
     return this.http.get('user/info');
   }
 
+  async getUserDetail(userId: string): Promise<IHttpService> {
+    return this.http.get('user/detail/' + userId);
+  }
+
   async updateBasicInfoUserData(userData: any): Promise<IHttpService> {
     return this.http.post('user/update', userData);
   }

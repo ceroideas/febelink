@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ModalController, PopoverController, Platform, AlertController } from '@ionic/angular';
-import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
-import { GuidePage } from '../guide/guide.page';
-import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
-import { environment } from 'src/environments/environment';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { IUser } from 'src/app/models/user.model';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
-import { IReport } from 'src/app/models/report.model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ApiService} from 'src/app/services/api.service';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx';
+import {ModalController, PopoverController, Platform, AlertController} from '@ionic/angular';
+import {PublicarOpinionPage} from '../publicar-opinion/publicar-opinion.page';
+import {GuidePage} from '../guide/guide.page';
+import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
+import {environment} from 'src/environments/environment';
+import {UtilitiesService} from 'src/app/services/utilities.service';
+import {IUser} from 'src/app/models/user.model';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
+import {UserService} from 'src/app/services/user.service';
+import {MailService} from 'src/app/services/mail.service';
+import {ReportService} from 'src/app/services/report.service';
+import {IReport} from 'src/app/models/report.model';
 import {IAdviseFull, IAdviseFilter, ITopic} from '../posts/advises/models/advises.model';
 import {AdviseService} from '../posts/advises/services/advises.service';
+import {UserDataService} from '../user-data/Services/user-data.service';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -25,14 +26,14 @@ import {AdviseService} from '../posts/advises/services/advises.service';
 })
 export class PerfilOraculoPage implements OnInit {
 
-  idPerfil:any;
-  user:any;
+  idPerfil: any;
+  user: any;
   iAdvises: IAdviseFull[] = [];
-  ratings:any;
-  bests:any;
-  isFeed:boolean=true;
-  isRatings:boolean=false;
-  isBest:boolean=false;
+  ratings: any;
+  bests: any;
+  isFeed: boolean = true;
+  isRatings: boolean = false;
+  isBest: boolean = false;
 
   topics = [
     {id: null, name: 'Todos'},
@@ -71,11 +72,11 @@ export class PerfilOraculoPage implements OnInit {
     public alertController: AlertController,
     private utilities: UtilitiesService,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService,
-    public userSvc: UserService,
+    private authSvc: AuthenticationService,
     public mailSvc: MailService,
     public reportSvc: ReportService,
     private adviseSvc: AdviseService,
+    private userDataService: UserDataService
   ) {
 
     this.route.paramMap.subscribe((params) => {
@@ -85,82 +86,54 @@ export class PerfilOraculoPage implements OnInit {
 
   ngOnInit() {
     this.getFeed();
-    this.user = {
-      name: 'Manuel Díaz',
-      img: 'assets/imgs/4.jpg',
-      description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been lorem ipsum.Lorem Ipsum has been lorem Ipsum is simply.',
-      date: '12 April at 09.28 PM'
-    };
-    this.ratings = [
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 35,
-        rating: 5,
-        date: '20/08/2022',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text.'
-      },
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje relajante',
-        img: 'assets/imgs/4.jpg',
-        price: 25,
-        rating: 5,
-        date: '25/08/2022',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text.'
-      }
-    ];
-    this.bests = [
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 35,
-        rating: 5,
-        date: '20/08/2022'
-      },
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje relajante',
-        img: 'assets/imgs/4.jpg',
-        price: 25,
-        rating: 5,
-        date: '25/08/2022'
-      }
-    ];
+    this.getUserDetail();
+    this.ratings = [];
+    this.bests = [];
+  }
+
+  async getUserDetail() {
+    const {response} = await this.userDataService.getUserDetail(this.idPerfil);
+    if (response) {
+      this.user = {
+        name: response.username,
+        description: response.description,
+        date: '12 April at 09.28 PM' // ToDo: Remove this hardcoded value
+      };
+    }
   }
 
   async getFeed() {
-    var filters ={
-      topic:null,
-      sector:null,
-      subsector:null,
-      lang:null,
-      user:this.idPerfil,
-      hideContent:null,
-      activePage:null
-    }
+    var filters = {
+      activePage: 1,
+      keys: null,
+      topic: null,
+      sector: null,
+      subsector: null,
+      lang: null,
+      user: this.idPerfil,
+      hideContent: true,
+      content: null
+    };
     const {response, error} = await this.adviseSvc.list(filters);
-    this.iAdvises=response;
+    this.iAdvises = response;
   }
 
   showFeed() {
-    this.isFeed=true;
-    this.isRatings=false;
-    this.isBest=false;
+    this.isFeed = true;
+    this.isRatings = false;
+    this.isBest = false;
   }
 
   showRatings() {
-    this.isFeed=false;
-    this.isRatings=true;
-    this.isBest=false;
+    this.isFeed = false;
+    this.isRatings = true;
+    this.isBest = false;
   }
 
   showBest() {
-    this.isFeed=false;
-    this.isRatings=false;
-    this.isBest=true;
+    this.isFeed = false;
+    this.isRatings = false;
+    this.isBest = true;
   }
 
 }
