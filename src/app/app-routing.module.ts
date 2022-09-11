@@ -308,6 +308,10 @@ const routes: Routes = [
         (m) => m.DetalleBusquedaPageModule
       ),
   },
+  {
+    path: 'cuenta-profesional',
+    loadChildren: () => import('./pages/cuenta-profesional/cuenta-profesional.module').then( m => m.CuentaProfesionalPageModule)
+  },
 ];
 
 @NgModule({

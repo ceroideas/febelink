@@ -1,5 +1,5 @@
 <ion-content class="background-content">
-  <ion-grid>
+  <ion-grid class="mobile">
     <ion-row size="12">
       <ion-breadcrumbs mode="ios">
         <ion-breadcrumb href="#">
@@ -75,6 +75,20 @@
                     </ion-grid>
                   </ion-col>
                 </ion-row>
+                <ion-row size="12" [ngClass]="{'checkbox_no_geo': searchText, 'checkbox_geo_chip': !searchText}" *ngIf="geoDatas">
+                  <ion-col size="6">
+                    <ion-chip>
+                      <ion-label style="font-size:14px;">Fisioterapeuta</ion-label>
+                      <ion-icon name="close"></ion-icon>
+                    </ion-chip>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-chip>
+                      <ion-label style="font-size:14px;">Radiología</ion-label>
+                      <ion-icon name="close"></ion-icon>
+                    </ion-chip>
+                  </ion-col>
+                </ion-row>
                 <div [ngClass]="{'margin_top_menos_115': usersArrayFiltered?.profesiones.length > 0}" *ngIf="geoDatas">
                   <ion-row class="flex_imagen_start margin_top_row_3" size="12">
                     <ion-col size="12">
@@ -104,14 +118,154 @@
                         </ion-label>
                       </ion-col>
                     </ion-row>
-                  </ion-grid>
-                  
+                  </ion-grid>     
                 </div>
               </div>
             </ion-grid>
           </ion-card-content>
         </ion-card>
       </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="desktop">
+    <ion-row size="12">
+      <ion-breadcrumbs mode="ios">
+        <ion-breadcrumb href="#">
+          <ion-img size="small" src="assets/icon/svg/home.svg"></ion-img>
+          <ion-label class="margin_left_breadcrumbs1">Inicio</ion-label>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#">
+          <ion-label class="margin_left_breadcrumbs2">Tu plan</ion-label>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+    </ion-row>
+    <ion-row size="12">
+      <ion-col size="12">
+        <ion-label class="title_ppal_row">Tu plan</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="margin_top_row_3" size="12">
+      <ion-col size="4">
+        <ion-card class="ion-no-margin">
+          <ion-card-content>
+            <ion-grid>
+              <ion-row class="flex_imagen_start" size="12">
+                <ion-col size="2">
+                  <ion-img class="imagen_logo_card" src="assets/icon/svg/icon_logo_febelink.svg"></ion-img>
+                </ion-col>
+              </ion-row>
+              <ion-row class="flex_imagen_start" size="12">
+                <ion-col size="12">
+                  <ion-label class="cuenta_text_label">Cuenta usuario normal</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="flex_imagen_start" size="12">
+                <ion-col size="12">
+                  <p class="p_text_grid">
+                    Descripción del plan. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since...
+                  </p>
+                </ion-col>
+              </ion-row>        
+            </ion-grid>
+          </ion-card-content>
+        </ion-card> 
+        <ion-row class="flex_imagen_start row_text_check" size="12">
+          <ion-col class="margin_top_2_orange" size="9">
+            <ion-label class="label_orange">Activar cuenta profesional</ion-label>
+          </ion-col>
+          <ion-col class="margin_top_2_orange" size="2">
+            <ion-toggle (ionChange)="changeCheck()"></ion-toggle>
+          </ion-col>
+        </ion-row>  
+      </ion-col>
+      <ion-col size="4">
+        <ion-card *ngIf="checkProfesional" class="ion-margin">
+          <ion-card-content>
+              <ion-row class="flex_imagen_start margin_top_row_3" size="12">
+                <ion-col size="12">
+                  <ion-label class="cuenta_text_label">¿Cuál es tu profesión?</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="flex_imagen_start" size="12">
+                <ion-col style="padding-top: 0px;" size="12">
+                  <ion-label class="p_text_grid2">
+                    Los sectores ayudan a ubicarte y que los clientes te encuentren más fácil.
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="flex_imagen_start margin_top_row_3" size="12">
+                <ion-col style="padding-top: 0px;" size="12">
+                  <ion-searchbar 
+                  (ionChange)="search($event.target.value)" class="searchBar" animated="true"></ion-searchbar>
+                  <ion-grid class="ion-no-padding" *ngIf="usersArrayFiltered" fixed="true">
+                    <ion-row *ngIf="usersArrayFiltered?.profesiones.length > 0">
+                      <ion-col class="ion-no-padding" size="12">
+                        <ion-item *ngFor="let user of usersArrayFiltered?.profesiones" lines="none">
+                          <ion-checkbox slot="start"></ion-checkbox>
+                          <ion-label class="text_user_profesion">{{user?.texto}}</ion-label>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-col>
+              </ion-row>
+          </ion-card-content>
+        </ion-card>
+        <ion-grid [ngClass]="{'checkbox_no_geo': searchText, 'checkbox_geo_chip': !searchText}" *ngIf="geoDatas && checkProfesional">
+          <ion-row style="background-color:rgba(225, 239, 254, 1)" size="12">
+            <ion-col style="padding:1em;" size="11">
+              <ion-label style="color: #1E429F;">Fisioterapia</ion-label>
+            </ion-col>
+            <ion-col style="padding:1em;" size="1">
+              <ion-icon name="close"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row style="background-color:rgba(225, 239, 254, 1); margin-top: 1em;" size="12">
+            <ion-col style="padding:1em;" size="11">
+              <ion-label style="color: #1E429F;">Radiología</ion-label>
+              <ion-icon style="color:#1E429F;" name="close"></ion-icon>
+            </ion-col>
+            <ion-col style="padding:1em;" size="1">
+              <ion-icon name="close"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card *ngIf="checkProfesional && geoDatas" class="ion-margin">
+          <ion-card-content>
+            <ion-row class="flex_imagen_start margin_top_row_3" size="12">
+              <ion-col size="12">
+                <ion-label class="cuenta_text_label">Disponibilidad geográfica</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-grid class="ion-no-margin" *ngFor="let geoData of geoDatas.geografia">
+              <ion-row class="flex_imagen_start" size="12">
+                <ion-col style="padding-left:0px;" size="1">
+                  <ion-checkbox [ngClass]="{'checkbox_no_geo': searchText, 'checkbox_geo': !searchText}"></ion-checkbox>
+                </ion-col>
+                <ion-col style="padding-left:0px;" size="7">
+                  <ion-label class="label_row_geodata">
+                    {{geoData?.tipo}}
+                  </ion-label>
+                </ion-col>
+                <ion-col *ngIf="geoData?.pro" style="padding-left:0px;" size="4">
+                  <div class="div_pro_geo">
+                    <ion-label class="label_pro_geo">PRO</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row class="flex_imagen_start" size="12">
+                <ion-col class="ion-no-padding" size="12">
+                  <ion-label class="label_2_row_geodata">
+                    {{geoData?.texto}}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>   
+          </ion-card-content>
+        </ion-card>  
+      </ion-col>    
     </ion-row>
   </ion-grid>
 </ion-content>

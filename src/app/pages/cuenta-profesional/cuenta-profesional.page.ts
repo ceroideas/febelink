@@ -12,6 +12,7 @@ export class CuentaProfesionalPage implements OnInit {
   public profesionalDatos: any = null;
   public usersArrayFiltered: any = null;
   public searchText: boolean = false;
+  public checkMdodel:boolean = null;
 
   constructor(private cuentaProfesionalService: CuentaProfesionalService) { }
 
@@ -58,6 +59,10 @@ export class CuentaProfesionalPage implements OnInit {
     } 
 
     console.log(this.usersArrayFiltered);
+  }
+
+  updatecheckMdodel(){
+console.log('checkModel : '+this.checkMdodel);
   }
 
 }

@@ -25,6 +25,9 @@ ion-toggle{
     --handle-background:rgba(255, 90, 31, 0.6);
     --handle-background-checked:#FFFFFF;
     padding-top: 20%;
+    @media (min-width: 768px) {
+      padding-top: 8%;
+    }
 }
 
 .searchBar{
@@ -63,6 +66,10 @@ ion-toggle{
     font-size: 16px;
     border-radius: 8px;
     height: 3em;
+
+    @media (min-width: 768px) {
+      margin-top: 1em;
+    }
 }
 
 .cuenta_text_label{
@@ -72,6 +79,10 @@ ion-toggle{
 }
 
 .margin_top_row_3{
+  @media (min-width: 768px) {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
     margin-top: 3%;
 }
 
@@ -177,6 +188,19 @@ ion-toggle{
     margin-top: 13%;
     --background-checked:#D1D5DB;
   }
+
+  .checkbox_geo_chip{
+    margin-top: 0%;
+    --background:#E1EFFE;;
+    --color:#1E429F;
+    font-size:14px;
+
+    @media (min-width: 768px) {
+      width: 92%;
+    }
+  }
+
+
 
   .label_pro_geo{
     margin-top: 5%;
