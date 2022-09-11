@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ModalController, PopoverController, Platform, AlertController } from '@ionic/angular';
-import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
-import { GuidePage } from '../guide/guide.page';
-import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
-import { environment } from 'src/environments/environment';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { IUser } from 'src/app/models/user.model';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
-import { IReport } from 'src/app/models/report.model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ApiService} from 'src/app/services/api.service';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx';
+import {ModalController, PopoverController, Platform, AlertController} from '@ionic/angular';
+import {PublicarOpinionPage} from '../publicar-opinion/publicar-opinion.page';
+import {GuidePage} from '../guide/guide.page';
+import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
+import {environment} from 'src/environments/environment';
+import {UtilitiesService} from 'src/app/services/utilities.service';
+import {IUser} from 'src/app/models/user.model';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
+import {UserService} from 'src/app/services/user.service';
+import {MailService} from 'src/app/services/mail.service';
+import {ReportService} from 'src/app/services/report.service';
+import {IReport} from 'src/app/models/report.model';
 import {IAdviseFull, IAdviseFilter, ITopic} from '../posts/advises/models/advises.model';
 import {AdviseService} from '../posts/advises/services/advises.service';
+import {UserSessionSvc} from '../../services/user-session.service';
+import {UserDataService} from '../user-data/Services/user-data.service';
 
 @Component({
   selector: 'app-mis-publicaciones',
@@ -25,28 +27,28 @@ import {AdviseService} from '../posts/advises/services/advises.service';
 })
 export class MisPublicacionesPage implements OnInit {
 
-  idPerfil:any=2697;
-  user:any;
+  idPerfil: any = 208;
+  user: any;
   iAdvises: IAdviseFull[] = [];
-  ratings:any;
-  ratingsPending:any;
-  bests:any;
-  bestsChange:any;
-  isFeed:boolean=true;
-  isRatings:boolean=false;
-  isBest:boolean=false;
-  isRatingsDone:boolean=true;
-  isRatingsPending:boolean=true;
-  isBestList:boolean=true;
-  isBestAchieves:boolean=true;
-  isBestChange:boolean=false;
-  isBestChangeList:boolean=true;
-  selectedBest:number;
+  ratings: any;
+  ratingsPending: any;
+  bests: any;
+  bestsChange: any;
+  isFeed: boolean = true;
+  isRatings: boolean = false;
+  isBest: boolean = false;
+  isRatingsDone: boolean = true;
+  isRatingsPending: boolean = true;
+  isBestList: boolean = false;
+  isBestAchieves: boolean = true;
+  isBestChange: boolean = false;
+  isBestChangeList: boolean = true;
+  selectedBest: number;
 
-  isBestChanged:boolean=false;
-  isRatingSaved:boolean=false;
-  openRating:boolean=false;
-  indexRating:number=null;
+  isBestChanged: boolean = false;
+  isRatingSaved: boolean = false;
+  openRating: boolean = false;
+  indexRating: number = null;
 
   topics = [
     {id: null, name: 'Todos'},
@@ -85,123 +87,75 @@ export class MisPublicacionesPage implements OnInit {
     public alertController: AlertController,
     private utilities: UtilitiesService,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService,
     private adviseSvc: AdviseService,
+    private userDataService: UserDataService,
   ) {
 
   }
 
   ngOnInit() {
+    this.getUserInfo();
     this.getFeed();
-    this.user = {
-      name: 'Manuel Díaz',
-      img: 'assets/imgs/4.jpg',
-      description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been lorem ipsum.Lorem Ipsum has been lorem Ipsum is simply.'
-    };
-    this.ratings = [
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 35,
-        rating: 5,
-        date: '20/08/2022',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text.'
-      },
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje relajante',
-        img: 'assets/imgs/4.jpg',
-        price: 25,
-        rating: 5,
-        date: '25/08/2022',
-        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text. Lorem Ipsum has been lorem Ipsum is simply. Lorem Ipsum is simply dummy text.'
-      }
-    ];
-    this.ratingsPending = [
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 35
-      },
-      {
-        title: 'Manuela Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 353
-      }
-    ];
-    this.bests = {
-        title: 'Manuel Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 35,
-        rating: 5,
-        date: '20/08/2022'
+    this.ratings = [];
+    this.ratingsPending = [];
+    this.bests = {};
+    this.bestsChange = [];
+  }
+
+  async getUserInfo() {
+    const {response} = await this.userDataService.getUserInfo();
+    if (response) {
+      this.user = {
+        name: response?.username,
+        description: response.description
       };
-    this.bestsChange = [
-      {
-        title: 'Manuel Díaz',
-        service: 'Masaje contracturante',
-        img: 'assets/imgs/4.jpg',
-        price: 35,
-        rating: 5,
-        date: '20/08/2022'
-      },
-      {
-        title: 'Daniel Díaz',
-        service: 'Masaje relajante',
-        img: 'assets/imgs/4.jpg',
-        price: 30,
-        rating: 5,
-        date: '20/08/2022'
-      }
-    ];
+    }
   }
 
   async getFeed() {
-    var filters ={
-      topic:null,
-      sector:null,
-      subsector:null,
-      lang:null,
-      user:this.idPerfil,
-      hideContent:null,
-      activePage:null
-    }
+    var filters = {
+      activePage: 1,
+      keys: null,
+      topic: null,
+      sector: null,
+      subsector: null,
+      lang: null,
+      user: this.idPerfil,
+      hideContent: true,
+      content: null
+    };
     const {response, error} = await this.adviseSvc.list(filters);
-    this.iAdvises=response;
+    this.iAdvises = response;
   }
 
   showFeed() {
-    this.isFeed=true;
-    this.isRatings=false;
-    this.isBest=false;
+    this.isFeed = true;
+    this.isRatings = false;
+    this.isBest = false;
   }
 
   showRatings() {
-    this.isFeed=false;
-    this.isRatings=true;
-    this.isBest=false;
+    this.isFeed = false;
+    this.isRatings = true;
+    this.isBest = false;
   }
 
   showBest() {
-    this.isFeed=false;
-    this.isRatings=false;
-    this.isBest=true;
+    this.isFeed = false;
+    this.isRatings = false;
+    this.isBest = true;
   }
 
   createPost() {
     this.router.navigate(['posts/oracle/create']);
   }
 
-  doRating(index:number) {
-    this.indexRating=index;
-    this.openRating=true;
+  doRating(index: number) {
+    this.indexRating = index;
+    this.openRating = true;
   }
 
   saveRating() {
@@ -218,17 +172,17 @@ export class MisPublicacionesPage implements OnInit {
     this.ratings.push(rating);
     this.ratingsPending.splice(this.indexRating, 1);
 
-    this.isRatingSaved=true;
-    this.openRating=false;
-    this.indexRating=null;
+    this.isRatingSaved = true;
+    this.openRating = false;
+    this.indexRating = null;
   }
 
-  selectBest(index:number) {
-    this.selectedBest=index;
+  selectBest(index: number) {
+    this.selectedBest = index;
   }
 
   changeBest() {
-    if(this.selectedBest>=0){
+    if (this.selectedBest >= 0) {
       this.bests = {
         title: this.bestsChange[this.selectedBest].title,
         service: this.bestsChange[this.selectedBest].service,
@@ -238,9 +192,9 @@ export class MisPublicacionesPage implements OnInit {
         date: this.bestsChange[this.selectedBest].date
       };
 
-      this.isBestChanged=true;
-      this.isBestChange=false;
-      this.selectedBest=null;
+      this.isBestChanged = true;
+      this.isBestChange = false;
+      this.selectedBest = null;
     }
   }
 

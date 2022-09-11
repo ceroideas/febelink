@@ -1,18 +1,18 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
   PreloadAllModules,
   Router,
   RouterModule,
   Routes,
 } from '@angular/router';
-import {environment} from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'oracles', pathMatch: 'full'},
+  { path: '', redirectTo: 'oracles', pathMatch: 'full' },
   {
     path: 'search',
     loadChildren: () =>
-      import('./tab1/tab1.module').then((m) => m.Tab1PageModule)
+      import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
   },
   {
     path: 'user/:recommenderId',
@@ -147,7 +147,7 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () =>
-      import('./pages/chat/chat.module').then((m) => m.ChatPageModule),
+      import('./tab3/tab3.module').then((m) => m.Tab3PageModule),
   },
   {
     path: 'privacy-policy',
@@ -226,7 +226,9 @@ const routes: Routes = [
   {
     path: 'oracles',
     loadChildren: () =>
-      import('./pages/posts/advises/advise.module').then(m => m.AdvisePageModule),
+      import('./pages/posts/advises/advise.module').then(
+        (m) => m.AdvisePageModule
+      ),
   },
   {
     path: 'posts',
@@ -239,7 +241,7 @@ const routes: Routes = [
       import('./pages/cart/cart.module').then((m) => m.CartPageModule),
   },
   {
-    path: 'servicios',
+    path: 'services',
     loadChildren: () =>
       import('./pages/servicios/servicios.module').then(
         (m) => m.ServiciosPageModule
@@ -281,7 +283,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'perfil-oraculo/:id',
+    path: 'user/detail/:id',
     loadChildren: () =>
       import('./pages/perfil-oraculo/perfil-oraculo.module').then(
         (m) => m.PerfilOraculoPageModule
@@ -295,7 +297,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'suscripciones',
+    path: 'subscriptions',
     loadChildren: () =>
       import('./pages/suscripciones/suscripciones.module').then(
         (m) => m.SuscripcionesPageModule
@@ -309,14 +311,24 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'cuenta-profesional',
-    loadChildren: () => import('./pages/cuenta-profesional/cuenta-profesional.module').then( m => m.CuentaProfesionalPageModule)
+    path: 'notifications',
+    loadChildren: () =>
+      import('./pages/notifications-log/notifications-log.module').then(
+        (m) => m.NotificationsLogPageModule
+      ),
+  },
+  {
+    path: 'professions',
+    loadChildren: () =>
+      import('./pages/cuenta-profesional/cuenta-profesional.module').then(
+        (m) => m.CuentaProfesionalPageModule
+      ),
   },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],
 })

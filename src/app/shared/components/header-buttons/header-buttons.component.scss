@@ -1,89 +1,97 @@
-.header-buttons{
-    display: flex;
-    justify-content: space-between;
+.header-buttons {
+  display: flex;
+  justify-content: space-between;
 
-    @media (max-width: 768px){
-        ion-button{
-            margin: 0 !important;
-        }
-
-        .logo {
-            width: 100px !important;
-        }
+  @media (max-width: 768px) {
+    ion-button {
+      margin: 0 !important;
     }
 
-    .logo{
-        object-fit: scale-down;
-        margin-left: 10px;
-        width: 120px;
+    .logo {
+      width: 100px !important;
     }
+  }
+
+  .logo {
+    object-fit: scale-down;
+    margin-left: 10px;
+    width: 120px;
+  }
 }
 
 
-@media (min-width: 768px){
-    .logo{
-        padding: 1em;
-        width: 120px;
-    }
+@media (min-width: 768px) {
+  .logo {
+    padding: 1em;
+    width: 120px;
+  }
 
-    .logo_header{
-        width: 100%;
-        height: 100%;
-    }
+  .logo_header {
+    width: 100%;
+    height: 100%;
+  }
 
-    .icono_parte_ojo{
-        margin-left: -15px;
-    }
+  .icono_parte_ojo {
+    margin-left: -15px;
+  }
 
-    .label_icon_menu{
-        margin-left: -7px;
-    }
+  .label_icon_menu {
+    margin-left: -7px;
+  }
 
-    .desktop_no_visible{
-        display: none;
-    }
-    .img_desktop_menu{
-        margin-left: 1em;
-    }
+  .desktop_no_visible {
+    display: none;
+  }
+  .img_desktop_menu {
+    margin-left: 1em;
+  }
 
-    .margen_row{
-        margin-left: .5em;
-    }
+  .margen_row {
+    margin-left: .5em;
+  }
 }
 
-.img_desktop_menu{
-    margin-left: .5em
+.img_desktop_menu {
+  margin-left: .5em
 }
 
-.desktop_no_visible{
-    display: block;
+.desktop_no_visible {
+  display: block;
 }
 
-.right{
-    margin-left: 0em;
+.right {
+  margin-left: 0em;
 }
 
 ion-badge {
-    border-radius: 50%;
-    min-width: 20px;
+  border-radius: 50%;
+  min-width: 20px;
 
-    &.little-badge {
-        font-size: 11px;
-        min-width: 15px;
-        position: absolute;
-        right: -8px;
-    }
+  &.little-badge {
+    font-size: 11px;
+    min-width: 15px;
+    position: absolute;
+    right: -8px;
+  }
 }
 
-ion-button{
-    margin: 0 0;
+ion-button {
+  margin: 0 0;
 }
 
 
 .btn-header {
-    margin: 0 0;
+  margin: 0 0;
 }
 
 .active {
-    color: var(--ion-color-primary) !important;
+  color: var(--ion-color-primary) !important;
+}
+
+.bell-menu {
+  margin-left: -2em;
+
+  ion-label {
+    padding-right: 0;
+  }
 }

@@ -176,7 +176,7 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+            <ion-item lines="none" class="ion-no-padding item_orange_menu" button (click)="goTo('subscriptions')">
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
@@ -188,7 +188,7 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+            <ion-item lines="none" class="ion-no-padding item_orange_menu" button (click)="goTo('services')">
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
@@ -200,19 +200,7 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu desktop">
-              <ion-grid size="12">
-                <ion-row class="padding_row_orange_menu" size="12">
-                  <ion-col size="1">
-                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_ofertas.svg"></ion-img>
-                  </ion-col>
-                  <ion-col size="11">
-                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.ofertas' | translate }}</ion-label>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-            <ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
+            <!--<ion-item routerLink="/" lines="none" class="ion-no-padding item_orange_menu">
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
@@ -223,7 +211,7 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-            </ion-item>
+            </ion-item>-->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -304,27 +292,29 @@
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
-  <ion-tabs id="footer-nav-bar">
-    <ion-tab-bar slot="bottom" color="menuf">
-      <!-- Inicio -->
-      <ion-tab-button tab="search">
-        <ion-icon name="home-outline"></ion-icon>
-        <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
-      </ion-tab-button>
+  <ng-container id="secondary-content">
+    <ion-tabs id="footer-nav-bar">
+      <ion-tab-bar slot="bottom" color="menuf">
+        <!-- Inicio -->
+        <ion-tab-button tab="search">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
+        </ion-tab-button>
 
-      <!-- Carrito -->
-      <ion-tab-button tab="cart">
-        <ion-icon name="cart-outline"></ion-icon>
-        <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
-      </ion-tab-button>
+        <!-- Carrito -->
+        <ion-tab-button tab="cart">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
+        </ion-tab-button>
 
-      <!-- Oracles -->
-      <ion-tab-button tab="oracles">
-        <ion-icon name="eye-outline"></ion-icon>
-        <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+        <!-- Oracles -->
+        <ion-tab-button tab="oracles">
+          <ion-icon name="eye-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ng-container>
 
   <app-cart></app-cart>
 </ion-app>
