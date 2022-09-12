@@ -12,11 +12,15 @@ export class CuentaProfesionalService {
   ) {
   }
 
+  async getMyProfessions() {
+    return this.http.get('user/profession');
+  }
+
   async getProfessionsByFilter(filterTerm: string) {
     return this.http.post('collections/profession/filter', {filterTerm});
   }
 
-  async updateProfessions(professions: number[]) {
-    return this.http.put('user/profession', {professions});
+  async updateProfessions(professions: ProfessionType[]) {
+    return this.http.put('user/profession', {professions: JSON.stringify(professions)});
   }
 }

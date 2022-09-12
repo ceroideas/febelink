@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
+import {Subscription} from '../suscripciones/suscripciones.page';
+import {SubscriptionService} from '../suscripciones/Services/subscription.service';
 
 export interface ProfessionType {
   id: number;
@@ -19,20 +21,42 @@ export class CuentaProfesionalPage implements OnInit {
   public checkMdodel: boolean = null;
 
   professionList: ProfessionType[] = [];
-
-  public profesiones = [
-    'Fisioterapia', 'Radiología'
-  ];
+  numProfessionAvaliable: number = 1;
 
   constructor(
-    private profAccountService: CuentaProfesionalService) {
+    private profAccountService: CuentaProfesionalService, private subService: SubscriptionService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getMyProfessions();
   }
 
-  async changeCheck() {
-    this.checkProfesional = !this.checkProfesional;
+  async getMyProfessions() {
+    const {response} = await this.profAccountService.getMyProfessions();
+    if (response) {
+      response.map((e) => {
+        this.professionList.push({id: e.subSectorId, name: e.subSectorName});
+      });
+      // this.checkProfesional = this.professionList.length > 0;
+    }
+  }
+
+  async getNumProfessionAvaliables() {
+    const {response} = await this.subService.getMySubscriptions();
+    if (response) {
+      response.forEach((elem: Subscription) => {
+        if (elem.subscriptionName === 'sub-pro') {
+          this.numProfessionAvaliable += 1;
+        }
+        if (elem.subscriptionName === 'sub-prof') {
+          this.numProfessionAvaliable += elem.amount;
+        }
+      });
+    }
+  }
+
+  async changeCheck(checked: boolean) {
+    this.checkProfesional = checked;
   }
 
   async searchProfession(filterTerm: string) {
@@ -50,8 +74,15 @@ export class CuentaProfesionalPage implements OnInit {
     console.log(this.usersArrayFiltered);
   }
 
-  addToProfessionList(profession: ProfessionType) {
-    this.professionList.push(profession);
+  addToProfessionList(profession: ProfessionType, checked: boolean) {
+    if (checked && this.professionList.length <= this.numProfessionAvaliable) {
+      this.professionList.push(profession);
+    } else {
+      const index = this.professionList.indexOf(profession);
+      if (index >= 0) {
+        this.professionList.splice(index, 1);
+      }
+    }
   }
 
   removeOfProfessionList(profession: ProfessionType) {
@@ -66,6 +97,12 @@ export class CuentaProfesionalPage implements OnInit {
     this.professionList.forEach(elem => {
       adaptedPayload.push(elem.id);
     });
-    const {response} = await this.profAccountService.updateProfessions(adaptedPayload);
+    const {response} = await this.profAccountService.updateProfessions(this.professionList);
+  }
+
+  isInProfessionList(profession: ProfessionType): boolean {
+    return this.professionList.find(prof => {
+      return prof.id === profession.id && prof.name === profession.name;
+    }) != undefined;
   }
 }
