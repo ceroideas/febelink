@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {
   PreloadAllModules,
   Router,
   RouterModule,
   Routes,
 } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'oracles', pathMatch: 'full' },
+  {path: '', redirectTo: 'search', pathMatch: 'full'},
   {
     path: 'search',
     loadChildren: () =>
@@ -328,7 +328,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}),
   ],
   exports: [RouterModule],
 })
