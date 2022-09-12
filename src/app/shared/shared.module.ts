@@ -32,6 +32,8 @@ import {NgxLinkPreviewModule} from 'ngx-link-preview';
 import {CartComponent} from '../components/cart/cart.component';
 import {RatingComponent} from '../components/rating/rating.component';
 import {HeaderComponent} from '../components/header/header.component';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from '../app-routing.module';
 
 @NgModule({
   declarations: [

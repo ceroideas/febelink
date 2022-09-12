@@ -75,13 +75,14 @@ export class AdviseCRUDPage implements OnInit {
     {id: 23, name: 'Animales'},
     {id: 24, name: 'Historia'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
+  curUser;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     public mediaSvc: FileService,
     private actRoute: ActivatedRoute,
     private router: RouteSvc,
-    private adviseSvc: AdviseService,
+    public adviseSvc: AdviseService,
     private toastSvc: ToastSvc,
     private alertSvc: AlertSvc,
     private loadingSvc: LoadingSvc,

@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CuentaProfesionalService } from './Services/cuentaProfesionalService.service';
+import {Component, OnInit} from '@angular/core';
+import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
+
+export interface ProfessionType {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-cuenta-profesional',
@@ -8,65 +13,59 @@ import { CuentaProfesionalService } from './Services/cuentaProfesionalService.se
 })
 export class CuentaProfesionalPage implements OnInit {
   public checkProfesional: boolean = false;
-  public geoDatas: any = null;
   public profesionalDatos: any = null;
-  public usersArrayFiltered: any = null;
+  public usersArrayFiltered: ProfessionType[];
   public searchText: boolean = false;
-  public checkMdodel:boolean = null;
+  public checkMdodel: boolean = null;
+
+  professionList: ProfessionType[] = [];
 
   public profesiones = [
-    "Fisioterapia", "Radiología"
-  ]
+    'Fisioterapia', 'Radiología'
+  ];
 
-  constructor(private cuentaProfesionalService: CuentaProfesionalService) { }
-
-  ngOnInit() {
-    this.getTypeGeo();
-    this.getProfesiones();
+  constructor(
+    private profAccountService: CuentaProfesionalService) {
   }
 
-  async changeCheck(){
+  ngOnInit() {
+  }
+
+  async changeCheck() {
     this.checkProfesional = !this.checkProfesional;
   }
 
-  getTypeGeo(){
-    let id = 1;
-    this.cuentaProfesionalService.getTypeGeo(id)
-    .then(res => {
-      this.geoDatas = res;
-      console.log(this.geoDatas);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  getProfesiones(){
-    let id = 1;
-    this.cuentaProfesionalService.getProfesiones(id)
-    .then(res => {
-      this.profesionalDatos = res;
-      console.log(this.profesionalDatos);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  search(query: any) {
-    if (query != '') {
-      this.usersArrayFiltered = this.profesionalDatos;
-      this.searchText = true;
-    }else{
+  async searchProfession(filterTerm: string) {
+    if (filterTerm) {
+      const {response} = await this.profAccountService.getProfessionsByFilter(filterTerm);
+      if (response) {
+        this.usersArrayFiltered = response;
+        this.searchText = true;
+      }
+    } else {
       this.usersArrayFiltered = null;
       this.searchText = false;
-    } 
+    }
 
     console.log(this.usersArrayFiltered);
   }
 
-  updatecheckMdodel(){
-console.log('checkModel : '+this.checkMdodel);
+  addToProfessionList(profession: ProfessionType) {
+    this.professionList.push(profession);
   }
 
+  removeOfProfessionList(profession: ProfessionType) {
+    const index = this.professionList.indexOf(profession);
+    if (index !== -1) {
+      this.professionList.splice(index, 1);
+    }
+  }
+
+  async updateProfessions() {
+    const adaptedPayload: number[] = [];
+    this.professionList.forEach(elem => {
+      adaptedPayload.push(elem.id);
+    });
+    const {response} = await this.profAccountService.updateProfessions(adaptedPayload);
+  }
 }

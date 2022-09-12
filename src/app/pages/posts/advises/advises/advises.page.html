@@ -62,13 +62,13 @@
         message="common.labelSearching"
       ></app-loading>
     
-      <ion-refresher
+<!--      <ion-refresher
         slot="fixed"
         (ionRefresh)="clear2search( searchBar.value + '', $event )"
-      >
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-    
+          >-->
+
       <!-- Posts -->
       <app-post-component
         *ngFor="let advise of iAdvises"

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IKeywords } from '../models/search.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {IKeywords} from '../models/search.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,20 +16,20 @@ export class SearchService {
   public show_detalle: boolean = false;
   public dataDesktopDetail = null;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
   search(text) {
-    if(text != ''){
+    if (text != '') {
       this.visibleListas = false;
       this.listaSearchDesktop = true;
-      this.getDataListas()
+      /*this.getDataListas()
       .then(res => {
         this.dataLists = res;
       }).catch(err => {
           console.log(err);
-      }); 
-    }else{
+      });*/
+    } else {
       this.visibleListas = true;
       this.listaSearchDesktop = false;
     }
@@ -44,7 +44,7 @@ export class SearchService {
           console.log('Error al obtener los datos: ' + error);
           reject(error);
         });
-    })
+    });
   }
 
   set(searchText: string) {
@@ -55,47 +55,49 @@ export class SearchService {
     return new Promise((resolve, reject) => {
       this.http.get('assets/search_data_recom.json')
         .subscribe(data => {
-            resolve(data);
+          resolve(data);
         }, error => {
           console.log('Error al obtener los datos recomendados: ' + error);
           reject(error);
         });
-    })
-      
+    });
+
   }
 
-  async getDetalle(id: number){
+  async getDetalle(id: number) {
     return new Promise((resolve, reject) => {
       this.http.get('assets/search_detalle.json')
         .subscribe(data => {
-            resolve(data);
+          resolve(data);
         }, error => {
           console.log('Error al obtener los datos recomendados: ' + error);
           reject(error);
         });
-    })
-  }  
+    });
+  }
 
-  getResult(){
-    if(this.dataLists != null){
+  getResult() {
+    if (this.dataLists != null) {
       return this.dataLists.data.results;
     }
   }
 
-  getOffers(){
-    if(this.dataLists != null){
+  getOffers() {
+    if (this.dataLists != null) {
       return this.dataLists.data.offers;
     }
   }
 
-  getList(){
-    if(this.dataLists != null){
+  getList() {
+    if (this.dataLists != null) {
       return this.dataLists.data.list;
     }
   }
 
   searchText(text?: string): string {
-    if (text != undefined) this.iKeyWords.searchText = text;
+    if (text != undefined) {
+      this.iKeyWords.searchText = text;
+    }
     return this.iKeyWords?.searchText;
   }
 

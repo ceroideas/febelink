@@ -9,4 +9,12 @@ export class HeaderComponent {
 
   constructor() {
   }
+
+  currentUser;
+  perfil;
+  homePage;
+  onImgError;
+
+  irA(value) {
+  };
 }

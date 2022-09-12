@@ -53,43 +53,49 @@ export class UserDataPage implements OnInit {
     this.description = this.form.get('description').value;
 
     if (this.form.valid) {
-      
-      if(this.password == this.repeatPass){
+
+      if (this.password == this.repeatPass) {
         this.passIgual = true;
-      }else{
+      } else {
         this.passIgual = false;
       }
 
 
-      if(this.username != null && this.description != null && this.password == ''){
-        this.password = "";
+      if (this.username != null && this.description != null && this.password == '') {
+        this.password = '';
       }
 
-      if(this.username != null || this.description != null){
-        if(this.password === ''){
-          this.password = "";
+      if (this.username != null || this.description != null) {
+        if (this.password === '') {
+          this.password = '';
         }
-        
+
       }
 
-      if(this.passIgual){
+      if (this.passIgual) {
         let datos = {
-          "username": this.username,
-          "password": this.password,
-          "description": this.description
-        }
+          'username': this.username,
+          'password': this.password,
+          'description': this.description
+        };
 
         this.userDataService.updateBasicInfoUserData(datos)
-        .then(res => {
-          //console.log('Datos guardados con éxito : '+res);
-        })
-        .catch(err => {
-          //console.log('Error al enviar los datos : '+err);
-        })
-      
+          .then(res => {
+            //console.log('Datos guardados con éxito : '+res);
+          })
+          .catch(err => {
+            //console.log('Error al enviar los datos : '+err);
+          });
+
       }
-      
+
     }
   }
 
+  onImgError(event) {
+    event.target.src = 'https://api.febelink.com/storage/users/default.png';
+  }
+
+  submitForm() {
+  }
 }

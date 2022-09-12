@@ -130,7 +130,6 @@ ion-content {
 
 .item_click {
   @media (min-width: 768px) {
-    margin-top: 2em;
     margin-left: 0%;
   }
 }
@@ -191,6 +190,7 @@ ion-content {
 
 #footer-nav-bar {
   margin-top: 6em;
+  max-height: 88%;
 }
 
 @media (max-width: 768px) {
