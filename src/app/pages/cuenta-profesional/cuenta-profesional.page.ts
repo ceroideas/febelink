@@ -1,15 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {AlertController, ModalController, Platform, PopoverController} from '@ionic/angular';
-import {UtilitiesService} from '../../services/utilities.service';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from '../../services/authentication/authentication.service';
-import {UserService} from '../../services/user.service';
-import {MailService} from '../../services/mail.service';
-import {ReportService} from '../../services/report.service';
-import {ServicesService} from '../servicios/services/services.service';
+
+export interface ProfessionType {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-cuenta-profesional',
@@ -19,9 +14,11 @@ import {ServicesService} from '../servicios/services/services.service';
 export class CuentaProfesionalPage implements OnInit {
   public checkProfesional: boolean = false;
   public profesionalDatos: any = null;
-  public usersArrayFiltered: any = null;
+  public usersArrayFiltered: ProfessionType[];
   public searchText: boolean = false;
   public checkMdodel: boolean = null;
+
+  professionList: ProfessionType[] = [];
 
   public profesiones = [
     'Fisioterapia', 'Radiología'
@@ -42,10 +39,9 @@ export class CuentaProfesionalPage implements OnInit {
     if (filterTerm) {
       const {response} = await this.profAccountService.getProfessionsByFilter(filterTerm);
       if (response) {
-        this.usersArrayFiltered = this.profesionalDatos;
+        this.usersArrayFiltered = response;
         this.searchText = true;
       }
-
     } else {
       this.usersArrayFiltered = null;
       this.searchText = false;
@@ -54,8 +50,22 @@ export class CuentaProfesionalPage implements OnInit {
     console.log(this.usersArrayFiltered);
   }
 
-  updatecheckMdodel() {
-    console.log('checkModel : ' + this.checkMdodel);
+  addToProfessionList(profession: ProfessionType) {
+    this.professionList.push(profession);
   }
 
+  removeOfProfessionList(profession: ProfessionType) {
+    const index = this.professionList.indexOf(profession);
+    if (index !== -1) {
+      this.professionList.splice(index, 1);
+    }
+  }
+
+  async updateProfessions() {
+    const adaptedPayload: number[] = [];
+    this.professionList.forEach(elem => {
+      adaptedPayload.push(elem.id);
+    });
+    const {response} = await this.profAccountService.updateProfessions(adaptedPayload);
+  }
 }

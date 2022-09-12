@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
-import { SearchService } from '../../services/search.service';
-import { IKeywords } from '../../models/search.model';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {IonSlides} from '@ionic/angular';
+import {SearchService} from '../../services/search.service';
+import {IKeywords} from '../../models/search.model';
 
 
 @Component({
@@ -21,22 +21,22 @@ export class SearchComponent implements OnInit {
     initialSlide: 1,
     speed: 400
   };
-  
+
   constructor(public searchService: SearchService,
               private router: Router) {
-    this.type = "resultado";
+    this.type = 'resultado';
   }
 
   ngOnInit() {
-    this.searchService.getData()
+    /*this.searchService.getData()
     .then(res => {
         this.data = res;
     }).catch(err => {
         console.log(err);
-    }); 
+    }); */
   }
 
-  segmentChanged(event){
+  segmentChanged(event) {
     console.log(event);
   }
 
@@ -44,22 +44,22 @@ export class SearchComponent implements OnInit {
     this.router.navigate([p]);
   }
 
-  getR(){
+  getR() {
     return this.searchService.getResult();
   }
 
-  getOf(){
+  getOf() {
     return this.searchService.getOffers();
   }
 
-  getL(){
+  getL() {
     return this.searchService.getList();
   }
 
   text(text?: string): string {
-    if (text != undefined){
-        this.searchText = text;
-    } 
+    if (text != undefined) {
+      this.searchText = text;
+    }
     return this.searchText || '';
   }
 
