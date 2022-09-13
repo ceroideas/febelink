@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
 import {Subscription} from '../suscripciones/suscripciones.page';
 import {SubscriptionService} from '../suscripciones/Services/subscription.service';
+import {ToastSvc} from '../../services/toast.service';
 
 export interface ProfessionType {
   id: number;
@@ -24,7 +25,7 @@ export class CuentaProfesionalPage implements OnInit {
   numProfessionAvaliable: number = 1;
 
   constructor(
-    private profAccountService: CuentaProfesionalService, private subService: SubscriptionService) {
+    private profAccountService: CuentaProfesionalService, private subService: SubscriptionService, private toastSvc: ToastSvc) {
   }
 
   async ngOnInit() {
@@ -98,6 +99,9 @@ export class CuentaProfesionalPage implements OnInit {
       adaptedPayload.push(elem.id);
     });
     const {response} = await this.profAccountService.updateProfessions(this.professionList);
+    if (response) {
+      this.toastSvc.show('Profesiones actualizadas correctamente.');
+    }
   }
 
   isInProfessionList(profession: ProfessionType): boolean {

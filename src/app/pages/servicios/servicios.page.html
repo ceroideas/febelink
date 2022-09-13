@@ -41,7 +41,7 @@
           </div>
 
           <div class="servicios-sections-cell-button">
-            <div *ngIf="numbServicesAvaliable > 0" class="servicios-sections-button-primary"
+            <div class="servicios-sections-button-primary"
                  (click)="selectNuevoServicio()">
               Nuevo servicio
             </div>
@@ -486,7 +486,7 @@
     </div>
   </ng-container>
 
-  <div *ngIf="numbServicesAvaliable > 0" class="mobile add-service-floating" (click)="selectNuevoServicio()">
+  <div class="mobile add-service-floating" (click)="selectNuevoServicio()">
     <img class="add-service-svg" src="assets/icon/svg/plus.svg"/>
   </div>
 

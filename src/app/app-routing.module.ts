@@ -304,7 +304,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'detalle/:id',
+    path: 'product/detail/:id',
     loadChildren: () =>
       import('./pages/detalle-busqueda/detalle-busqueda.module').then(
         (m) => m.DetalleBusquedaPageModule

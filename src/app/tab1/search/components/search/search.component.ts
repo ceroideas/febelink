@@ -22,12 +22,22 @@ export class SearchComponent implements OnInit {
     speed: 400
   };
 
+  recommendations;
+  searchResponse;
+  unitTypes = [
+    {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
+    {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
+    {id: 3, name: 'Año', shorthand: 'año', lang: 'ES'},
+    {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'}
+  ]; // ToDo: Get this from the priceType Collection
+
   constructor(public searchService: SearchService,
               private router: Router) {
     this.type = 'resultado';
   }
 
   ngOnInit() {
+    this.getRecommendations();
     /*this.searchService.getData()
     .then(res => {
         this.data = res;
@@ -65,5 +75,21 @@ export class SearchComponent implements OnInit {
 
   clear() {
     this.searchText = '';
+  }
+
+  async getRecommendations() {
+    const {response} = await this.searchService.getRecommendations();
+    if (response) this.recommendations = response;
+  }
+
+  async search() {
+    const {response} = await this.searchService.getProfessionsByFilter(this.searchText);
+    if (response) {
+      const bestProfessionMatch = response[0];
+      if (bestProfessionMatch) {
+        const {response} = await this.searchService.search(bestProfessionMatch);
+        this.searchResponse = response;
+      }
+    }
   }
 }

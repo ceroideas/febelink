@@ -473,7 +473,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSector = sectors.filter((sector) => sector.id === sectorId).pop();
     this.userSubsector = subsectors
       .filter(
-        (subsector) => subsector.id === userSubsectorsIds[0].id_sub_sector
+        (subsector) => subsector.id === userSubsectorsIds[0]?.id_sub_sector
       )
       .pop();
   }

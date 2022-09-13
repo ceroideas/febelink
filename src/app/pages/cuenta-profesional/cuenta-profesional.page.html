@@ -82,8 +82,16 @@
                     </ion-grid>
                   </ion-col>
                 </ion-row>
+                <ion-row class="contact-menu" size="12" *ngIf="usersArrayFiltered.length === 0">
+                  <img src="assets/icon/svg/prof-menu-magnifier.svg">
+                  <p>
+                    ¿No encuentras tu profesión?
+                    <br>Te ayudamos
+                  </p>
+                  <a href="mailto:info@febelink.com" class="contact-button">Contactar</a>
+                </ion-row>
                 <ion-row size="12"
-                         [ngClass]="{'checkbox_no_geo': professionList.length === 0,
+                         [ngClass]="{'checkbox_no_geo': usersArrayFiltered.length === 0,
                          'checkbox_geo_chip': professionList.length > 0}">
                   <ion-col *ngFor="let professionType of professionList" size="6">
                     <ion-chip>
@@ -194,6 +202,14 @@
                   </ion-row>
                 </ion-grid>
               </ion-col>
+            </ion-row>
+            <ion-row class="contact-menu" size="12" *ngIf="usersArrayFiltered.length === 0">
+              <img src="assets/icon/svg/prof-menu-magnifier.svg">
+              <p>
+                ¿No encuentras tu profesión?
+                <br>Te ayudamos
+              </p>
+              <a href="mailto:info@febelink.com" class="contact-button">Contactar</a>
             </ion-row>
           </ion-card-content>
         </ion-card>

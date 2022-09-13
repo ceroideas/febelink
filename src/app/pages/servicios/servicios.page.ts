@@ -19,6 +19,7 @@ import {NgStyle} from '@angular/common';
 import {IServiceFull} from './models/services.model';
 import {SubscriptionService} from '../suscripciones/Services/subscription.service';
 import {Subscription} from '../suscripciones/suscripciones.page';
+import {ToastSvc} from '../../services/toast.service';
 
 @Component({
   selector: 'app-servicios',
@@ -77,7 +78,8 @@ export class ServiciosPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     public servicesSvc: ServicesService,
-    private subService: SubscriptionService
+    private subService: SubscriptionService,
+    private toastSvc: ToastSvc
   ) {
 
   }
@@ -143,7 +145,12 @@ export class ServiciosPage implements OnInit {
   }
 
   selectNuevoServicio() {
-    this.isNuevoServicio = true;
+    if (this.numbServicesAvaliable > 0) {
+      this.isNuevoServicio = true;
+    } else {
+      this.toastSvc.show('Cambia a Plan PRO o añade productos PLUS para poder crear ofertas activas adicionales.');
+    }
+
   }
 
   async addNuevoServicio() {
