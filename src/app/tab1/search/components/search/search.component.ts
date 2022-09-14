@@ -3,7 +3,13 @@ import {Router} from '@angular/router';
 import {IonSlides} from '@ionic/angular';
 import {SearchService} from '../../services/search.service';
 import {IKeywords} from '../../models/search.model';
+import {SearchProductCardType} from '../product-card/product-card.component';
 
+export interface SearchType {
+  services: SearchProductCardType[];
+  offers: SearchProductCardType[];
+  users: any; // ToDo: Add type here
+}
 
 @Component({
   selector: 'app-search',
@@ -23,7 +29,7 @@ export class SearchComponent implements OnInit {
   };
 
   recommendations;
-  searchResponse;
+  searchResponse: SearchType;
   unitTypes = [
     {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
     {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
@@ -79,7 +85,9 @@ export class SearchComponent implements OnInit {
 
   async getRecommendations() {
     const {response} = await this.searchService.getRecommendations();
-    if (response) this.recommendations = response;
+    if (response) {
+      this.recommendations = response;
+    }
   }
 
   async search() {

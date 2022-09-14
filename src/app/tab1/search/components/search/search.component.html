@@ -2,28 +2,27 @@
   <ion-row *ngIf="showSearchbar">
     <ion-searchbar
       id="search_scroll"
-      class="searchbar"
+      class="searchbar no-padding"
       placeholder="{{ 'common.publishPlaceholder' | translate }}"
       [(ngModel)]="searchText"
       (ionChange)="search()"
       debounce="500"
-      *ngIf="searchService.show_imagen"
     ></ion-searchbar>
   </ion-row>
   <div class="mobile">
     <ion-segment *ngIf="searchResponse" color="segment" style="margin-top: 3em" [(ngModel)]="type"
                  (ionChange)="segmentChanged($event)">
       <ion-segment-button value="resultado" selected>
-        <ion-label class="ion-text-capitalize">({{searchResponse?.services?.length}}
-          ) {{ 'tabs.tab1.search.resultado' | translate }}</ion-label>
+        <ion-label class="ion-text-capitalize">
+          {{searchResponse?.services?.length}} {{ 'tabs.tab1.search.resultado' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="oferta">
-        <ion-label class="ion-text-capitalize">({{searchResponse?.offers?.length}}
-          ) {{ 'tabs.tab1.search.oferta' | translate }}</ion-label>
+        <ion-label class="ion-text-capitalize">
+          {{searchResponse?.offers?.length}} {{ 'tabs.tab1.search.oferta' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button value="listado">
-        <ion-label class="ion-text-capitalize">({{searchResponse?.users?.length}}
-          ) {{ 'tabs.tab1.search.listado' | translate }}</ion-label>
+        <ion-label class="ion-text-capitalize">
+          {{searchResponse?.users?.length}} {{ 'tabs.tab1.search.listado' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
     <div class="keys-dropdown" *ngIf="searchResponse">
@@ -32,24 +31,7 @@
           <ion-card *ngIf="searchResponse?.services?.length > 0" class="ion-no-margin">
             <ion-card-content class="ion-no-padding">
               <ng-container *ngFor="let data of searchResponse.services">
-                <ion-item (click)="irA('/product/detail/' + data?.id)" class="item_dropdown" lines="none">
-                  <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                  </ion-avatar>
-                  <ion-label class="content_item">
-                    <span class="font_texto_18">{{data?.title}}</span> <span
-                    class="style_font_item">{{data?.unitPrice}}€<span
-                    class="style_font_item_normal">/{{unitTypes[data.unitTypeId - 1]?.shorthand}}</span></span>
-                    <p class="ion-no-margin">
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    </p>
-                    <span class="font_texto_14">{{data?.ownerUsername}}</span>
-                  </ion-label>
-                </ion-item>
+                <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
               </ng-container>
             </ion-card-content>
           </ion-card>
@@ -69,24 +51,7 @@
           <ion-card *ngIf="searchResponse?.offers?.length > 0" class="ion-no-margin">
             <ion-card-content class="ion-no-padding">
               <ng-container *ngFor="let data of searchResponse.offers">
-                <ion-item (click)="irA('/product/detail/' + data?.id)" lines="none" class="item_dropdown">
-                  <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                  </ion-avatar>
-                  <ion-label class="content_item">
-                    <span class="font_texto_18">{{data?.title}}</span> <span
-                    class="style_font_item">{{data?.unitPrice}}€<span
-                    class="style_font_item_normal">/{{unitTypes[data.unitTypeId - 1]?.shorthand}}</span></span>
-                    <p class="ion-no-margin">
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    </p>
-                    <span class="font_texto_14">{{data?.ownerUsername}}</span>
-                  </ion-label>
-                </ion-item>
+                <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
               </ng-container>
             </ion-card-content>
           </ion-card>
@@ -108,7 +73,9 @@
               <ng-container *ngFor="let data of searchResponse.users">
                 <ion-item (click)="irA('/user/detail/' + data?.publicUserId)" lines="none" class="item_dropdown">
                   <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                    <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_avatar.svg"
+                             class="default-avatar"></ion-img>
+                    <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
                   </ion-avatar>
                   <ion-label class="content_item">
                     <span class="font_texto_18">{{data?.username}}</span>
@@ -141,95 +108,58 @@
         </ion-list>
       </div>
     </div>
-    <ion-list class="list_search" *ngIf="recommendations && !searchText" mode="ios">
-      <ion-card class="ion-no-margin">
-        <ion-card-content class="ion-no-padding">
-          <div>
-            <ion-card class="margin_12">
-              <ion-card-header>
-                <ion-card-title
-                  class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="ion-no-padding">
-                <ng-container *ngFor="let data of recommendations?.recommendations">
-                  <ion-item (click)="irA('/product/detail/' + data?.id)" lines="none" class="item_dropdown">
-                    <ion-avatar class="avatar_dropdown" slot="start">
-                      <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                    </ion-avatar>
-                    <ion-label class="content_item">
-                      <span class="font_texto_18">{{data?.title}}</span> <span
-                      class="style_font_item">{{data?.unitPrice}}€<span
-                      class="style_font_item_normal">/{{unitTypes[data.unitTypeId - 1]?.shorthand}}</span></span>
-                      <p class="ion-no-margin">
-                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                        <span class="font_valoraciones">({{data?.votes}}
-                          ) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
-                      </p>
-                      <span class="font_texto_14">{{data?.ownerUsername}}</span>
-                    </ion-label>
-                  </ion-item>
-                </ng-container>
-              </ion-card-content>
-            </ion-card>
-          </div>
+    <ng-container class="list_search" *ngIf="recommendations && !searchText" mode="ios">
+      <ion-card class="recommendations" style="margin-top: 50px">
+        <ion-card-header>
+          <ion-card-title>{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ng-container *ngFor="let data of recommendations?.recommendations">
+            <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
+          </ng-container>
         </ion-card-content>
       </ion-card>
-      <ion-card>
+      <ion-card class="recommendations">
         <ion-card-header class="content_grid">
           <ion-card-title
             class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-card-title>
         </ion-card-header>
         <ion-card-content class="ion-no-padding">
-          <ion-slides class="list_slides" pager="true" [options]="slideOpts">
-            <ion-slide *ngFor="let data of recommendations?.specialOffer">
-              <ion-grid class="ion-text-left" (click)="irA('/product/detail/' + data?.id)">
-                <ion-row size="12" *ngIf="data?.imagen">
-                  <ion-card>
-                    <ion-card-header class="list_card_header">
-                      <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                    </ion-card-header>
-                  </ion-card>
-                </ion-row>
-                <ion-row size="12">
-                  <ion-col size="12">
-                    <ion-label class="list_label_18">{{data?.title}}</ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-row size="12">
-                  <ion-col size="12">
-                    <ion-label class="list_label_14">{{data?.description}}</ion-label>
-                  </ion-col>
-                </ion-row>
-                <ion-col size="12">
-                  <ion-row size="12" class="aux_padding_bottom">
-                    <ion-label class="list_label_14_claro">{{data?.texto}}</ion-label>
-                  </ion-row>
-                </ion-col>
-              </ion-grid>
+          <ion-slides pager="true" [options]="slideOpts">
+            <ion-slide *ngFor="let data of recommendations?.specialOffer"
+                       (click)="irA('/product/detail/' + data?.id)">
+              <div class="special-offer-image" slot="start">
+                <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_product.svg"
+                         class="default-avatar"></ion-img>
+                <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
+              </div>
+              <div>
+                <ion-label>{{data?.title}}</ion-label>
+                <ion-label>{{data?.description}}</ion-label>
+                <ion-label>{{data?.texto}}</ion-label>
+              </div>
             </ion-slide>
+            <div style=".clearfix"></div>
           </ion-slides>
         </ion-card-content>
       </ion-card>
-      <ion-card class="ion-no-margin">
+      <ion-card class="recommendations" *ngIf="false">
+        <ion-card-header>
+          <ion-card-title>{{ 'tabs.tab1.search.basado_search' | translate }}</ion-card-title>
+        </ion-card-header>
         <ion-card-content class="ion-no-padding">
           <div>
             <ion-card class="ion-margin">
-              <ion-card-header>
-                <ion-card-title
-                  class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-card-title>
-              </ion-card-header>
               <ion-card-content class="ion-no-padding">
                 <ng-container *ngFor="let data of recommendations?.users">
                   <ion-item (click)="irA('/user/detail/' + data?.publicUserId)" lines="none" class="item_dropdown">
                     <ion-avatar class="avatar" slot="start">
-                      <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                      <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_avatar.svg"
+                               class="default-avatar"></ion-img>
+                      <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
                     </ion-avatar>
                     <ion-label class="content_item">
-                      <ion-text class="font_texto_18">{{data?.titulo}}</ion-text>
+                      <ion-text class="font_texto_18">{{data?.username}}</ion-text>
                       <p class="ion-no-margin">
                         <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                         <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
@@ -247,7 +177,7 @@
           </div>
         </ion-card-content>
       </ion-card>
-    </ion-list>
+    </ng-container>
   </div>
   <div style="margin-top: 10em;" class="desktop">
     <ion-row *ngIf="searchResponse"
@@ -262,7 +192,9 @@
             <ion-card-content class="ion-no-padding">
               <ion-item (click)="irA('/product/detail/' + data.id)" class="item_dropdown" lines="none">
                 <ion-avatar class="avatar_dropdown" slot="start">
-                  <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                  <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_avatar.svg"
+                           class="default-avatar"></ion-img>
+                  <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
                 </ion-avatar>
                 <ion-label class="content_item">
                   <span class="font_texto_18">{{data?.title}}</span> <span
@@ -335,7 +267,9 @@
               <ion-card-content class="ion-no-padding">
                 <ion-item (click)="irA('/user/detail/' + data.id)" lines="none" class="item_dropdown">
                   <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img *ng="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                    <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_avatar.svg"
+                             class="default-avatar"></ion-img>
+                    <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
                   </ion-avatar>
                   <ion-label class="content_item">
                     <span class="font_texto_18">{{data?.username}}</span>
@@ -384,7 +318,9 @@
             <ion-card-content class="ion-no-padding">
               <ion-item (click)="irA('/product/detail/' + data.id)" class="item_dropdown" lines="none">
                 <ion-avatar class="avatar_dropdown" slot="start">
-                  <ion-img *ngIf="data?.imagen" src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                  <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_avatar.svg"
+                           class="default-avatar"></ion-img>
+                  <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
                 </ion-avatar>
                 <ion-label class="content_item">
                   <span class="font_texto_18">{{data?.title}}</span> <span
@@ -448,22 +384,24 @@
       <ion-col size="4">
         <ion-label class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label>
         <ion-row *ngIf="recommendations?.users?.length > 0" size="12" class="ion-margin list-panel">
-          <ng-container *ngFor="let data of getL()">
+          <ng-container *ngFor="let data of recommendations?.users">
             <ion-card class="ion-no-margin width-100">
               <ion-card-content class="ion-no-padding">
                 <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
                   <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
+                    <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_avatar.svg"
+                             class="default-avatar"></ion-img>
+                    <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
                   </ion-avatar>
                   <ion-label class="content_item">
-                    <span class="font_texto_18">{{data?.texto}}</span>
+                    <span class="font_texto_18">{{data?.username}}</span>
                     <p class="ion-no-margin">
                       <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                       <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                       <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                       <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
                       <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <span class="font_valoraciones">({{data?.numVal}}
+                      <span class="font_valoraciones">({{data?.votes}}
                         ) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
                     </p>
                     <span class="font_texto_14">{{data?.nombre}}</span>

@@ -242,11 +242,12 @@ ion-header {
 
 .text_buscador {
   color: #FFFFFF;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 700;
   margin-left: auto;
   margin-right: auto;
   padding-top: 0px;
+  line-height: 130%;
 
   @media (min-width: 768px) {
     font-size: 40px;
@@ -257,6 +258,7 @@ ion-header {
 
 .app_search {
   width: 100%;
+  padding: 0 12px;
 }
 
 .row_buscador {

@@ -54,7 +54,12 @@
       </ion-col>
       <ion-col size="4">
         <div style="margin-top: 5em;" class="ion-margin">
-          <swiper
+          <div class="product-image-desktop" slot="start">
+            <ion-img *ngIf="!detalle?.imagen" src="assets/icon/svg/default_product.svg"
+                     class="default-avatar"></ion-img>
+            <ion-img *ngIf="detalle?.imagen" [src]="'assets/imgs/' + detalle?.imagen"></ion-img>
+          </div>
+          <!--<swiper
             [spaceBetween]="10"
             [navigation]="true"
             [thumbs]="{ swiper: thumbsSwiper }">
@@ -84,7 +89,7 @@
             <ng-template swiperSlide>
               <img class="tam_img" src="./assets/imgs/bg2.jpg"/>
             </ng-template>
-          </swiper>
+          </swiper>-->
         </div>
       </ion-col>
     </ion-row>
@@ -227,8 +232,13 @@
     </ion-row>
     <ion-row size="12">
     </ion-row>
-    <div class="ion-margin parrafo_val">
-      <swiper
+    <div class="parrafo_val">
+      <div class="product-image" slot="start">
+        <ion-img *ngIf="!detalle?.imagen" src="assets/icon/svg/default_product.svg"
+                 class="default-avatar"></ion-img>
+        <ion-img *ngIf="detalle?.imagen" [src]="'assets/imgs/' + detalle?.imagen"></ion-img>
+      </div>
+      <!--<swiper
         [spaceBetween]="10"
         [navigation]="true"
         [thumbs]="{ swiper: thumbsSwiper }">
@@ -258,7 +268,7 @@
         <ng-template swiperSlide>
           <img class="tam_img" src="./assets/imgs/bg2.jpg"/>
         </ng-template>
-      </swiper>
+      </swiper>-->
     </div>
     <ion-row size="12" class="ion-margin parrafo_val">
       {{detalle?.description}}

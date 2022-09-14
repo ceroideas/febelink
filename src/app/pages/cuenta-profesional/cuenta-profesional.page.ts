@@ -30,6 +30,7 @@ export class CuentaProfesionalPage implements OnInit {
 
   async ngOnInit() {
     await this.getMyProfessions();
+    await this.getNumProfessionAvaliables();
   }
 
   async getMyProfessions() {
