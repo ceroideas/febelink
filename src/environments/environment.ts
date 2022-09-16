@@ -38,7 +38,7 @@ export const environment = {
   KYC_SELFIE: true,
 
   // Initial Page
-  HOME_PAGE: 'oracles'
+  HOME_PAGE: 'search'
 };
 
 /*

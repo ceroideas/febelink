@@ -69,7 +69,7 @@
           Añadir ahora
         </div>
         <div *ngIf="doUpdate || isTemplate" class="sections-add-service-button-primary" (click)="editServicio()">
-          Editar
+          Guardar cambios
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@
               </div>
             </div>
             <div>
-              Gastos de gestión 10%.
+              Gastos de gestión 0%.
             </div>
           </div>
           <div class="add-service-price-cell-right">
@@ -238,7 +238,7 @@
                 /{{unitTypes[finalizado.unitTypeId - 1].shorthand}}</ng-container>
             </div>
             <div class="servicios-item-date-b">
-              -{{finalizado.productUnitPrice * 0.1 }}€ Gastos de gestión
+              -{{finalizado.productUnitPrice * 0 }}€ Gastos de gestión
               <br> {{finalizado.serviceEndDate}}
             </div>
           </div>
@@ -461,7 +461,7 @@
             {{finalizado.clientUsername}}
           </div>
           <div class="servicios-date">
-            -{{finalizado.productUnitPrice * 0.1 }}€
+            -{{finalizado.productUnitPrice * 0 }}€
             <br> Gastos de gestión
             <br> {{finalizado.serviceEndDate}}
           </div>
@@ -698,7 +698,7 @@
             </div>
           </div>
           <div>
-            Gastos de gestión 10%.
+            Gastos de gestión 0%.
           </div>
         </div>
         <div class="modal-add-separator-right">
@@ -780,7 +780,7 @@
         Añadir ahora
       </div>
       <div *ngIf="doUpdate || isTemplate" class="modal-add-button-primary" (click)="editServicio()">
-        Editar
+        Guardar cambios
       </div>
       <div class="modal-add-button-secondary" (click)="cancelNuevoServicio()">
         Cancelar

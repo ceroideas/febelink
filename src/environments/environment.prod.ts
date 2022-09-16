@@ -17,5 +17,5 @@ export const environment = {
   // KYC Alice
   KYC_SELFIE: true,
   // Initial Page
-  HOME_PAGE: 'oracles'
+  HOME_PAGE: 'search'
 };
