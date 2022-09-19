@@ -93,8 +93,11 @@ export class SearchComponent implements OnInit {
   async search() {
     const {response} = await this.searchService.getProfessionsByFilter(this.searchText);
     if (response) {
-      const bestProfessionMatch = response[0];
-      if (bestProfessionMatch) {
+      const bestProfessionMatch: number[] = [];
+      response.forEach(elem => {
+        bestProfessionMatch.push(elem.id);
+      });
+      if (bestProfessionMatch.length > 0) {
         const {response} = await this.searchService.search(bestProfessionMatch);
         this.searchResponse = response;
       }

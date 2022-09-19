@@ -121,6 +121,34 @@ ion-thumbnail {
   height: 75px;
 }
 
-.header_buttons {
-  padding-left: 1em;
+.login-button {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 25px;
+  background: transparent;
+  border: 1px solid #1B80F8;
+  border-radius: 8px;
+  padding: 11px 15px;
+  color: #1B80F8;
+  font-weight: 500;
+  font-size: 17px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin-right: 90px;
+  }
+}
+
+.header-register-button {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 25px;
+  background: #1B80F8;
+  border: 1px solid #1B80F8;
+  border-radius: 8px;
+  padding: 11px 15px;
+  color: white;
+  font-weight: 500;
+  font-size: 17px;
+  text-align: center;
 }

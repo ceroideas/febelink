@@ -52,18 +52,16 @@
               <ion-row class="flex_content">
                 <ion-col size="3">
                   <ion-img class="avatarmenu"
-                           id="menuImg"
-                           [src]="
-                    curUser?.logo !== null
-                      ? curUser?.logo
-                      : 'https://api.febelink.com/storage/users/default.png'
-                  "
+                           [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
+                           (click)="filePicker.clicks()"
                            (error)="onImgError($event)"
                            alt="Menu profile picture">
                   </ion-img>
+                  <app-file-picker hidden #filePicker [iFile]="iFile"
+                                   (OnFile)="fileSelected($event)"></app-file-picker>
                 </ion-col>
               </ion-row>
-              <ion-row class="flex_content margin_05" size="12">
+              <ion-row class="flex_content margin_05" size="12" (click)="filePicker.clicks()">
                 <ion-col size="10" class="ion-text-center">
                   <ion-label class="text_label_blue">Cambiar foto de perfil</ion-label>
                 </ion-col>
@@ -78,8 +76,7 @@
               <ion-row size="12">
                 <ion-col size="12">
                   <form *ngIf="form"
-                        [formGroup]="form"
-                        (ngSubmit)="submitForm()">
+                        [formGroup]="form">
                     <ion-item lines="none">
                       <ion-label position="stacked" class="text_label_form">Usuario</ion-label>
                       <ion-input formControlName="username" placeholder="Usuario" type="text"
@@ -114,26 +111,21 @@
     <ion-row class="desktop" size="12">
       <ion-grid>
         <form *ngIf="form"
-              [formGroup]="form"
-              (ngSubmit)="submitForm()">
+              [formGroup]="form">
           <ion-row size="10">
             <ion-col size="2">
               <ion-img class="avatarmenu"
-                       id="menuImg"
-                       [src]="
-                curUser?.logo !== null
-                  ? curUser?.logo
-                  : 'https://api.febelink.com/storage/users/default.png'
-              "
+                       [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
+                       (click)="filePicker.clicks()"
                        (error)="onImgError($event)"
-                       alt="Menu profile picture">
+                       alt="Mi avatar">
               </ion-img>
-              <ion-row class="flex_content margin_05" size="12">
+              <ion-row class="flex_content margin_05" size="12" (click)="filePicker.clicks()">
                 <ion-col size="10" class="ion-text-center">
                   <ion-label class="text_label_blue">Cambiar foto de perfil</ion-label>
                 </ion-col>
               </ion-row>
-              <ion-row class="ion-no-margin flex_content" size="12">
+              <ion-row class="ion-no-margin flex_content" size="12" (click)="filePicker.clicks()">
                 <ion-col size="10" class="ion-text-center">
                   <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
                 </ion-col>

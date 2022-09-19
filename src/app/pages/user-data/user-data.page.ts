@@ -3,6 +3,8 @@ import {IUser} from 'src/app/models/user.model';
 import {UserSessionSvc} from 'src/app/services/user-session.service';
 import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
 import {UserDataService} from './Services/user-data.service';
+import {IFile} from '../../components/file-picker/models/file.model';
+import {ToastSvc} from '../../services/toast.service';
 
 @Component({
   selector: 'app-user-data',
@@ -10,7 +12,6 @@ import {UserDataService} from './Services/user-data.service';
   styleUrls: ['./user-data.page.scss'],
 })
 export class UserDataPage implements OnInit {
-  curUser: IUser;
   public username: string = null;
   public password: string = null;
   public repeatPass: string = null;
@@ -20,10 +21,14 @@ export class UserDataPage implements OnInit {
   public nameuser: string = '';
   public passIgual: boolean = true;
 
+  avatarUrl: string;
+  iFile: IFile;
+
   constructor(
     public sessionSvc: UserSessionSvc,
     private formBuilder: UntypedFormBuilder,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private toastSvc: ToastSvc
   ) {
   }
 
@@ -36,13 +41,8 @@ export class UserDataPage implements OnInit {
           password: [''],
           description: data.response.description,
         });
+        this.avatarUrl = data.response.avatarImageURL;
       });
-
-    this.getUser();
-  }
-
-  async getUser() {
-    this.curUser = await this.sessionSvc.get();
   }
 
   async onClickSubmit() {
@@ -76,19 +76,19 @@ export class UserDataPage implements OnInit {
         let datos = {
           'username': this.username,
           'password': this.password,
-          'description': this.description
+          'description': this.description,
+          'avatarImage': this.iFile?.file
         };
 
         this.userDataService.updateBasicInfoUserData(datos)
           .then(res => {
-            //console.log('Datos guardados con éxito : '+res);
+            this.toastSvc.show('Información actualizada correctamente.');
+            this.avatarUrl = res.response.avatarImageURL;
           })
           .catch(err => {
-            //console.log('Error al enviar los datos : '+err);
+            this.toastSvc.show('Ha ocurrido un error inesperado durante la actualización. Por favor inténtelo de nuevo.');
           });
-
       }
-
     }
   }
 
@@ -96,6 +96,7 @@ export class UserDataPage implements OnInit {
     event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
 
-  submitForm() {
+  fileSelected(file: IFile) {
+    this.iFile = file;
   }
 }

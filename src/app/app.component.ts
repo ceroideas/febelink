@@ -414,6 +414,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async logout() {
     this.storage.remove('userData').then(async () => {
+      this.currentUser = null;
       await this.menu.enable(false);
       this.api.refreshTabs();
       this.router.navigate(['login']);
