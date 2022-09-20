@@ -57,7 +57,7 @@
                              (error)="onImgError($event)">
                     </ion-img>
                   </ion-avatar>
-                  <app-file-picker hidden #filePicker [iFile]="iFile"
+                  <app-file-picker hidden #filePicker [iFile]="iFile" [pickType]="filePickType.IMAGE"
                                    (OnFile)="fileSelected($event)"></app-file-picker>
                 </ion-col>
               </ion-row>

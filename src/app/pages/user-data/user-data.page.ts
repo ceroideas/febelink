@@ -3,7 +3,7 @@ import {IUser} from 'src/app/models/user.model';
 import {UserSessionSvc} from 'src/app/services/user-session.service';
 import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
 import {UserDataService} from './Services/user-data.service';
-import {IFile} from '../../components/file-picker/models/file.model';
+import {FilePickType, IFile} from '../../components/file-picker/models/file.model';
 import {ToastSvc} from '../../services/toast.service';
 
 @Component({
@@ -23,6 +23,7 @@ export class UserDataPage implements OnInit {
 
   avatarUrl: string;
   iFile: IFile;
+  filePickType = FilePickType;
 
   constructor(
     public sessionSvc: UserSessionSvc,
