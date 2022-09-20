@@ -51,12 +51,12 @@
             <ion-grid fixed>
               <ion-row class="flex_content">
                 <ion-col size="3">
-                  <ion-img class="avatarmenu"
-                           [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
-                           (click)="filePicker.clicks()"
-                           (error)="onImgError($event)"
-                           alt="Menu profile picture">
-                  </ion-img>
+                  <ion-avatar class="avatarmenu" alt="Mi avatar">
+                    <ion-img [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
+                             (click)="filePicker.clicks()"
+                             (error)="onImgError($event)">
+                    </ion-img>
+                  </ion-avatar>
                   <app-file-picker hidden #filePicker [iFile]="iFile"
                                    (OnFile)="fileSelected($event)"></app-file-picker>
                 </ion-col>
@@ -114,12 +114,12 @@
               [formGroup]="form">
           <ion-row size="10">
             <ion-col size="2">
-              <ion-img class="avatarmenu"
-                       [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
-                       (click)="filePicker.clicks()"
-                       (error)="onImgError($event)"
-                       alt="Mi avatar">
-              </ion-img>
+              <ion-avatar class="avatarmenu" alt="Mi avatar">
+                <ion-img [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
+                         (click)="filePicker.clicks()"
+                         (error)="onImgError($event)">
+                </ion-img>
+              </ion-avatar>
               <ion-row class="flex_content margin_05" size="12" (click)="filePicker.clicks()">
                 <ion-col size="10" class="ion-text-center">
                   <ion-label class="text_label_blue">Cambiar foto de perfil</ion-label>

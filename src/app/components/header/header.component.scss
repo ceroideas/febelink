@@ -39,8 +39,8 @@ ion-header {
       }
 
       .desktop_menu_avatar, .avatarmenu {
-        width: 56px;
-        height: 56px;
+        width: 42px;
+        height: 42px;
       }
     }
   }
@@ -99,15 +99,23 @@ ion-content {
   }
 }
 
-.desktop_menu_avatar, .avatarmenu {
-  width: 46px;
-  height: 46px;
+.avatarmenu {
+  margin-left: 15px;
+
+  ion-avatar, ion-img {
+    width: 46px;
+    height: 46px;
+    margin: 8px;
+  }
+
+  ion-img {
+    margin: 0;
+  }
 }
 
 .pos_menu {
   z-index: -1;
   display: flex;
-  margin-left: -10px;
   width: 28px;
   height: 20px;
 }
