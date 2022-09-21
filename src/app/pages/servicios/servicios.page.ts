@@ -20,6 +20,7 @@ import {IServiceFull} from './models/services.model';
 import {SubscriptionService} from '../suscripciones/Services/subscription.service';
 import {Subscription} from '../suscripciones/suscripciones.page';
 import {ToastSvc} from '../../services/toast.service';
+import {FilePickType, IFile} from '../../components/file-picker/models/file.model';
 
 @Component({
   selector: 'app-servicios',
@@ -55,6 +56,7 @@ export class ServiciosPage implements OnInit {
   unitPrice: number | string;
   unitType: number;
   sector: number;
+  images: (string | IFile)[] = new Array(5);
 
   iProfessions: any;
   iUserProfession: any;
@@ -62,6 +64,8 @@ export class ServiciosPage implements OnInit {
 
   numbServicesAvaliable: number = 0;
 
+  iFile: IFile;
+  filePickType = FilePickType;
 
   constructor(
     private route: ActivatedRoute,
@@ -91,7 +95,14 @@ export class ServiciosPage implements OnInit {
       {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
       {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
       {id: 3, name: 'Año', shorthand: 'año', lang: 'ES'},
-      {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'}
+      {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'},
+      {id: 5, name: 'Hora', shorthand: 'hora', lang: 'ES'},
+      {id: 6, name: 'Consulta', shorthand: 'consulta', lang: 'ES'},
+      {id: 7, name: 'Sesión', shorthand: 'sesión', lang: 'ES'},
+      {id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES'},
+      {id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES'},
+      {id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES'},
+      {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'}
     ];
     this.getProducts();
     this.getProfessions();
@@ -160,9 +171,11 @@ export class ServiciosPage implements OnInit {
       description: this.description,
       productUnitPrice: this.unitPrice.toString().replace(/,/g, '.'),
       unitTypeId: this.unitType,
-      subSectorId: this.sector
+      subSectorId: this.sector,
+      images: this.images
     };
 
+    console.log('FILE: ', this.images);
     const {response, error} = await this.servicesSvc.create(productCreate);
 
     this.getProducts();
@@ -189,6 +202,9 @@ export class ServiciosPage implements OnInit {
     this.unitType = service.unitTypeId;
     this.sector = service.subSectorId;
     this.editUpdate = service.productId;
+    service.images.forEach((value, index) => {
+      this.images[index] = value;
+    });
 
     if (!service.isTemplate) {
       this.doUpdate = true;
@@ -206,7 +222,8 @@ export class ServiciosPage implements OnInit {
       description: this.description,
       productUnitPrice: this.unitPrice,
       unitTypeId: this.unitType,
-      subSectorId: this.sector
+      subSectorId: this.sector,
+      images: this.images
     };
 
     const {response, error} = await this.servicesSvc.update(productEdit);
@@ -240,6 +257,7 @@ export class ServiciosPage implements OnInit {
     this.unitType = null;
     this.sector = null;
     this.isTemplate = false;
+    this.images.fill(null);
   }
 
 
@@ -333,5 +351,13 @@ export class ServiciosPage implements OnInit {
 
   public irA(p: string): void {
     this.router.navigate([p]);
+  }
+
+  clearImageByIndex(index: number) {
+    this.images[index] = null;
+  }
+
+  fileSelected(iFile: IFile, index: number) {
+    this.images[index] = iFile;
   }
 }

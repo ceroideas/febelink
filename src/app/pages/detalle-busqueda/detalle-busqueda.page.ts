@@ -17,6 +17,7 @@ export class DetalleBusquedaPage implements OnInit {
   public detalle: any;
   public data: any;
   thumbsSwiper: any;
+  thumbsSwiper1: any;
 
   slideOpts = {
     initialSlide: 1,
@@ -32,7 +33,14 @@ export class DetalleBusquedaPage implements OnInit {
     {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
     {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
     {id: 3, name: 'Año', shorthand: 'año', lang: 'ES'},
-    {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'}
+    {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'},
+    {id: 5, name: 'Hora', shorthand: 'hora', lang: 'ES'},
+    {id: 6, name: 'Consulta', shorthand: 'consulta', lang: 'ES'},
+    {id: 7, name: 'Sesión', shorthand: 'sesión', lang: 'ES'},
+    {id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES'},
+    {id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES'},
+    {id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES'},
+    {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'}
   ]; // ToDo: Get this from the priceType Collection
 
   constructor(public searchService: SearchService, public router: Router, private route: ActivatedRoute, private cartService: CartService) {

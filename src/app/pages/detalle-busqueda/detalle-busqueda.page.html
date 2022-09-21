@@ -54,42 +54,31 @@
       </ion-col>
       <ion-col size="4">
         <div style="margin-top: 5em;" class="ion-margin">
-          <div class="product-image-desktop" slot="start">
-            <ion-img *ngIf="!detalle?.imagen" src="assets/icon/svg/default_product.svg"
-                     class="default-avatar"></ion-img>
-            <ion-img *ngIf="detalle?.imagen" [src]="'assets/imgs/' + detalle?.imagen"></ion-img>
+          <div *ngIf="detalle?.images?.length == 0" class="product-image-desktop" slot="start">
+            <ion-img src="assets/icon/svg/default_product.svg" class="default-avatar"></ion-img>
           </div>
-          <!--<swiper
-            [spaceBetween]="10"
-            [navigation]="true"
-            [thumbs]="{ swiper: thumbsSwiper }">
-            <ng-template swiperSlide>
-              <ion-img class="tam_img_normal" src="./assets/imgs/bg0.jpg"></ion-img>
-            </ng-template>
-            <ng-template swiperSlide>
-              <ion-img class="tam_img_normal" src="./assets/imgs/bg1.jpg"></ion-img>
-            </ng-template>
-            <ng-template swiperSlide>
-              <ion-img class="tam_img_normal" src="./assets/imgs/bg2.jpg"></ion-img>
-            </ng-template>
-          </swiper>
-          <swiper
-            (swiper)="thumbsSwiper = $event"
-            [spaceBetween]="10"
-            [slidesPerView]="4"
-            [freeMode]="true"
-            [watchSlidesProgress]="true"
-            class="mySwiper">
-            <ng-template swiperSlide>
-              <img class="tam_img" src="./assets/imgs/bg0.jpg"/>
-            </ng-template>
-            <ng-template swiperSlide>
-              <img class="tam_img" src="./assets/imgs/bg1.jpg"/>
-            </ng-template>
-            <ng-template swiperSlide>
-              <img class="tam_img" src="./assets/imgs/bg2.jpg"/>
-            </ng-template>
-          </swiper>-->
+          <ng-container *ngIf="detalle?.images?.length > 0">
+            <swiper [spaceBetween]="10"
+                    [navigation]="true"
+                    [thumbs]="{ swiper: thumbsSwiper }"
+            >
+              <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
+                <ion-img class="tam_img_normal" [src]="imageURL"></ion-img>
+              </ng-template>
+            </swiper>
+            <swiper
+              class="mySwiper"
+              (swiper)="thumbsSwiper = $event"
+              [spaceBetween]="10"
+              [slidesPerView]="5"
+              [freeMode]="true"
+              [watchSlidesProgress]="true"
+            >
+              <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
+                <img class="tam_img" [src]="imageURL"/>
+              </ng-template>
+            </swiper>
+          </ng-container>
         </div>
       </ion-col>
     </ion-row>
@@ -233,11 +222,31 @@
     <ion-row size="12">
     </ion-row>
     <div class="parrafo_val">
-      <div class="product-image" slot="start">
-        <ion-img *ngIf="!detalle?.imagen" src="assets/icon/svg/default_product.svg"
-                 class="default-avatar"></ion-img>
-        <ion-img *ngIf="detalle?.imagen" [src]="'assets/imgs/' + detalle?.imagen"></ion-img>
+      <div class="product-image" slot="start" *ngIf="detalle?.images?.length == 0">
+        <ion-img src="assets/icon/svg/default_product.svg" class="default-avatar"></ion-img>
       </div>
+      <ng-container *ngIf="detalle?.images?.length > 0">
+        <swiper [spaceBetween]="10"
+                [navigation]="true"
+                [thumbs]="{ swiper: thumbsSwiper1 }"
+        >
+          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
+            <ion-img class="tam_img_normal" [src]="imageURL"></ion-img>
+          </ng-template>
+        </swiper>
+        <swiper
+          class="mySwiper"
+          (swiper)="thumbsSwiper1 = $event"
+          [spaceBetween]="10"
+          [slidesPerView]="5"
+          [freeMode]="true"
+          [watchSlidesProgress]="true"
+        >
+          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
+            <img class="tam_img" [src]="imageURL"/>
+          </ng-template>
+        </swiper>
+      </ng-container>
       <!--<swiper
         [spaceBetween]="10"
         [navigation]="true"
