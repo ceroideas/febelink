@@ -3,13 +3,14 @@ import {Router} from '@angular/router';
 
 export interface SearchProductCardType {
   id: number;
-  imagen: string;
+  image: string;
   title: string;
   unitPrice: number;
   unitTypeId: number;
   avgRating: number;
   votes: number;
   ownerUsername: string;
+  description: string;
 }
 
 export interface PriceUnitType {

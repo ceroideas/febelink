@@ -1,17 +1,17 @@
 <ion-content class="content-background">
   <ion-grid class="desktop" *ngIf="detalle" style="width: 100%;">
     <ion-row style="display: flex; justify-content: space-around;" size="12">
-      <ion-col size="4">
-        <ion-row size="12" class="ion-margin parrafo_val">
+      <ion-col size="6" class="content-info">
+        <!--<ion-row size="12" class="ion-margin parrafo_val">
           <ion-breadcrumbs rel="-">
             <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
             <ion-breadcrumb href="#">Servicio</ion-breadcrumb>
           </ion-breadcrumbs>
+        </ion-row>-->
+        <ion-row class="product-title">
+          <ion-label>{{detalle?.title}}</ion-label>
         </ion-row>
-        <ion-row style="margin-top:3em;">
-          <ion-label style="font-size:32px;">{{detalle?.title}}</ion-label>
-        </ion-row>
-        <ion-row style="margin-top:1em;">
+        <ion-row class="product-rating">
           <ion-label class="content_item">
             <p class="ion-no-margin">
               <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
@@ -23,57 +23,66 @@
             </p>
           </ion-label>
         </ion-row>
-        <ion-row style="margin-top:1em;">
+        <ion-row class="product-owner" (click)="irA('/user/detail/' + detalle?.ownerId)">
+          <ion-avatar class="avatar_dropdown">
+            <ion-img *ngIf="!detalle?.ownerAvatar" src="assets/icon/svg/default_avatar.svg"
+                     class="default-avatar"></ion-img>
+            <ion-img *ngIf="detalle?.ownerAvatar" [src]="detalle?.ownerAvatar"></ion-img>
+          </ion-avatar>
+          <span>{{detalle?.ownerUsername}}</span>
+        </ion-row>
+        <ion-row class="product-description">
           <ion-label>{{detalle?.description}}</ion-label>
         </ion-row>
-        <ion-row style="margin-top:3em;">
-          <ion-label style="font-size:28px;">{{detalle?.productUnitPrice * productAmount}}
+        <ion-row class="product-price">
+          <ion-label>{{detalle?.productUnitPrice * productAmount}}
             €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label>
         </ion-row>
-        <ion-row style="margin-top:2em;">
-          <ion-col size="4">
-            <ion-item style="height: 3em;" class="item_cantidad_border">
-              <ion-label class="text_label_form">Cantidad</ion-label>
-              <ion-select [(ngModel)]="productAmount" multiple="false">
-                <ion-select-option value="2">1</ion-select-option>
-                <ion-select-option value="2">2</ion-select-option>
-                <ion-select-option value="3">3</ion-select-option>
-                <ion-select-option value="4">4</ion-select-option>
-              </ion-select>
-            </ion-item>
+        <ion-row class="buy-controllers">
+          <ion-col class="select-input">
+            <span class="amount-label">Cantidad</span>
+            <ion-select [(ngModel)]="productAmount" multiple="false">
+              <ion-select-option [value]="1">1</ion-select-option>
+              <ion-select-option [value]="2">2</ion-select-option>
+              <ion-select-option [value]="3">3</ion-select-option>
+              <ion-select-option [value]="4">4</ion-select-option>
+              <ion-select-option [value]="5">5</ion-select-option>
+              <ion-select-option [value]="6">6</ion-select-option>
+              <ion-select-option [value]="7">7</ion-select-option>
+              <ion-select-option [value]="8">8</ion-select-option>
+              <ion-select-option [value]="9">9</ion-select-option>
+            </ion-select>
           </ion-col>
-          <ion-col class="margin_top_btn" size="4">
-            <ion-button class="ion-padding btn_ppal botonf1" expand="block" (click)="buyNow()">Comprar ahora
-            </ion-button>
+          <ion-col class="buy-button" (click)="buyNow()">
+            <span>Comprar ahora</span>
           </ion-col>
-          <ion-col class="margin_top_btn" size="4">
-            <ion-button class="ion-padding btn_aux botonf2" expand="block" (click)="addToCart()">Añadir al carrito
-            </ion-button>
+          <ion-col class="add-cart-button" (click)="addToCart()">
+            <span>Añadir al carrito</span>
           </ion-col>
         </ion-row>
       </ion-col>
-      <ion-col size="4">
-        <div style="margin-top: 5em;" class="ion-margin">
+      <ion-col size="6" class="content-image">
+        <div>
           <div *ngIf="detalle?.images?.length == 0" class="product-image-desktop" slot="start">
             <ion-img src="assets/icon/svg/default_product.svg" class="default-avatar"></ion-img>
           </div>
           <ng-container *ngIf="detalle?.images?.length > 0">
-            <swiper [spaceBetween]="10"
+            <swiper class="product-image-desktop"
+                    slideActiveClass="product-image-desktop"
+                    [spaceBetween]="10"
                     [navigation]="true"
-                    [thumbs]="{ swiper: thumbsSwiper }"
-            >
+                    [thumbs]="{ swiper: thumbsSwiper }">
               <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-                <ion-img class="tam_img_normal" [src]="imageURL"></ion-img>
+                <ion-img [src]="imageURL"></ion-img>
               </ng-template>
             </swiper>
+            <!--              wrapperClass="gallery-thumbs"-->
             <swiper
               class="mySwiper"
               (swiper)="thumbsSwiper = $event"
-              [spaceBetween]="10"
-              [slidesPerView]="5"
+              [slidesPerView]="detalle?.images?.length"
               [freeMode]="true"
-              [watchSlidesProgress]="true"
-            >
+              [watchSlidesProgress]="true">
               <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
                 <img class="tam_img" [src]="imageURL"/>
               </ng-template>
@@ -193,14 +202,15 @@
       </ion-col>
     </ion-row>
   </div>
-  <ion-grid class="mobile" *ngIf="detalle" size="12">
-    <ion-row size="12" class="ion-margin parrafo_val">
+
+  <ion-grid class="mobile" style="padding: 12px" *ngIf="detalle" size="12">
+    <!--<ion-row size="12" class="ion-margin parrafo_val">
       <ion-img src="assets/icon/svg/icon_casa.svg"></ion-img>
       <ion-breadcrumbs rel="-">
         <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
         <ion-breadcrumb href="#">Servicio</ion-breadcrumb>
       </ion-breadcrumbs>
-    </ion-row>
+    </ion-row>-->
     <ion-row size="12">
       <ion-col size="10">
         <ion-text class="text_compartir">{{detalle?.title}}</ion-text>
@@ -219,9 +229,15 @@
         ({{detalle?.ratingAmount}}) valoraciones
       </p>
     </ion-row>
-    <ion-row size="12">
+    <ion-row class="product-owner" (click)="irA('/user/detail/' + detalle?.ownerId)">
+      <ion-avatar class="avatar_dropdown">
+        <ion-img *ngIf="!detalle?.ownerAvatar" src="assets/icon/svg/default_avatar.svg"
+                 class="default-avatar"></ion-img>
+        <ion-img *ngIf="detalle?.ownerAvatar" [src]="detalle?.ownerAvatar"></ion-img>
+      </ion-avatar>
+      <span>{{detalle?.ownerUsername}}</span>
     </ion-row>
-    <div class="parrafo_val">
+    <div>
       <div class="product-image" slot="start" *ngIf="detalle?.images?.length == 0">
         <ion-img src="assets/icon/svg/default_product.svg" class="default-avatar"></ion-img>
       </div>
@@ -237,8 +253,7 @@
         <swiper
           class="mySwiper"
           (swiper)="thumbsSwiper1 = $event"
-          [spaceBetween]="10"
-          [slidesPerView]="5"
+          [slidesPerView]="detalle?.images?.length"
           [freeMode]="true"
           [watchSlidesProgress]="true"
         >
@@ -279,25 +294,30 @@
         </ng-template>
       </swiper>-->
     </div>
-    <ion-row size="12" class="ion-margin parrafo_val">
+    <ion-row size="12" style="margin: 20px 0">
       {{detalle?.description}}
       <!--      <ion-text class="read_more">Leer más</ion-text>-->
     </ion-row>
-    <ion-row class="ion-margin parrafo_val" size="12">
-      <ion-col size="5">
-        <ion-label class="text_label_form" style="margin: 1em 0">Cantidad</ion-label>
+    <ion-row size="12" class="buy-controllers">
+      <ion-col class="select-input">
+        <ion-label class="amount-label">Cantidad</ion-label>
         <ion-item class="item_cantidad_border">
           <ion-select [(ngModel)]="productAmount" multiple="false">
-            <ion-select-option value="2">1</ion-select-option>
-            <ion-select-option value="2">2</ion-select-option>
-            <ion-select-option value="3">3</ion-select-option>
-            <ion-select-option value="4">4</ion-select-option>
+            <ion-select-option [value]="1">1</ion-select-option>
+            <ion-select-option [value]="2">2</ion-select-option>
+            <ion-select-option [value]="3">3</ion-select-option>
+            <ion-select-option [value]="4">4</ion-select-option>
+            <ion-select-option [value]="5">5</ion-select-option>
+            <ion-select-option [value]="6">6</ion-select-option>
+            <ion-select-option [value]="7">7</ion-select-option>
+            <ion-select-option [value]="8">8</ion-select-option>
+            <ion-select-option [value]="9">9</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col size="7">
-        <ion-row class="row_cantidad">
-          <ion-label style="margin-top: 1em" class="text_cantidad">{{detalle?.productUnitPrice * productAmount}}
+      <ion-col>
+        <ion-row class="product-price">
+          <ion-label>{{detalle?.productUnitPrice * productAmount}}
             €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label>
         </ion-row>
       </ion-col>

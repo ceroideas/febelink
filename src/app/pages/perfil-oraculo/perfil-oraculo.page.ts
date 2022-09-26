@@ -99,6 +99,8 @@ export class PerfilOraculoPage implements OnInit {
       this.user = {
         name: response.username,
         description: response.description,
+        email: response.email,
+        phoneNumber: response.phoneNumber,
         date: '12 April at 09.28 PM' // ToDo: Remove this hardcoded value
       };
     }

@@ -387,3 +387,13 @@ ion-icon {
   width: 100%;
 }
 
+.search-background {
+  width: 100%;
+  height: 333px;
+  left: 0px;
+  top: 91px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/assets/imgs/buscador_fondo.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: -21em;
+}

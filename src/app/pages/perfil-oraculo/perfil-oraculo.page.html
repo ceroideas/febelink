@@ -12,14 +12,14 @@
         <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg"/>
         Inicio
         <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
-        {{user.name}}
+        {{user?.name}}
       </div>
     </div>
 
     <div class="info-top">
       <div class="info-top-wrapper">
         <div class="info-top-left">
-          {{user.name}}
+          {{user?.name}}
           <div class="info-follower">
             <app-follower-button
               [user]="postUser"
@@ -32,23 +32,33 @@
         </div>
       </div>
       <div class="info-user">
-        <!--        <div class="info-user-left">
-                  <img
-                    [src]="perfilpublico?.logo"
-                    *ngIf="perfilpublico?.logo"
-                    class="info-user-img"
-                    (error)="perfilpublico.logo = null"
-                  />
-                  <img
-                    src="user.img"
-                    *ngIf="!perfilpublico?.logo"
-                    class="info-user-img"
-                    appImgErrorFallback
-                  />
-                </div>-->
-        <div class="info-user-right">
-          {{user.description}}
+        <div>
+          <a *ngIf="user?.email" [href]="'mailto:' + user?.email">{{user?.email}}</a>
         </div>
+        <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
+          <ion-icon name="call-outline"></ion-icon>
+          {{user?.phoneNumber}}
+        </div>
+        <div>
+          {{user?.description}}
+        </div>
+        <!--<div class="info-user-left">
+           <img
+            [src]="user?.logo"
+            *ngIf="user?.logo"
+            class="info-user-img"
+            (error)="user.logo = null"
+          />
+          <img
+            src="user.img"
+            *ngIf="!user?.logo"
+            class="info-user-img"
+            appImgErrorFallback
+          />
+        </div>
+        <div class="info-user-right">
+          {{user?.description}}
+        </div>-->
       </div>
       <div class="table-main-reactions">
         <div class="option-left">
@@ -265,7 +275,7 @@
         <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
         Oráculo
         <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
-        <span class="breadcrumbs-color-blue">{{user.name}}</span>
+        <span class="breadcrumbs-color-blue">{{user?.name}}</span>
       </div>
     </div>
 
@@ -289,13 +299,20 @@
                         </div>-->
             <div class="header-top-inside-right">
               <div class="header-top-title">
-                {{user.name}}
+                {{user?.name}}
               </div>
               <div class="header-top-subtitle">
-                {{user.date}}
+                {{user?.date}}
+              </div>
+              <div>
+                <a *ngIf="user?.email" [href]="'mailto:' + user?.email">{{user?.email}}</a>
+              </div>
+              <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
+                <ion-icon name="call-outline"></ion-icon>
+                {{user?.phoneNumber}}
               </div>
               <div class="header-top-description">
-                {{user.description}}
+                {{user?.description}}
               </div>
             </div>
           </div>

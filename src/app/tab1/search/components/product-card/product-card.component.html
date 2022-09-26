@@ -1,8 +1,8 @@
-<ion-item (click)="irA('/product/detail/' + data?.id)" lines="none" class="ion-no-padding search-product item_dropdown">
+<ion-item (click)="irA('/product/detail/' + data?.id)" lines="none" class="ion-no-padding search-product keys-dropdown">
   <div class="avatar_dropdown" slot="start">
-    <ion-img *ngIf="!data?.imagen" src="assets/icon/svg/default_product.svg"
+    <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
              class="default-avatar"></ion-img>
-    <ion-img *ngIf="data?.imagen" [src]="'assets/imgs/' + data?.imagen"></ion-img>
+    <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
   </div>
   <div class="info">
     <div>
