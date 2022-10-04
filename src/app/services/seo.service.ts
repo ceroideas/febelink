@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
-import { SEOFebelink } from '../models/seo.model';
-import { UtilitiesService } from './utilities.service';
+import {Injectable} from '@angular/core';
+import {Meta} from '@angular/platform-browser';
+import {SEOFebelink} from '../models/seo.model';
+import {UtilitiesService} from './utilities.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SeoService {
   seoDEFAULT: SEOFebelink = {
-    title: 'Febelink | La red social de los profesionales',
+    title: 'Febelink | Tienda de servicios',
     description:
-      'Febelink es la red social de los profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas',
-    image: 'http://test.febelink.com/assets/imgs/febelink-share-img.png',
+      'Febelink es el buscador de servicios profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas',
+    image: 'https://febelink.com/assets/imgs/febelink-share-img.png',
     url: 'febelink.com',
   };
   seoPrevoius: SEOFebelink = {
@@ -21,7 +21,8 @@ export class SeoService {
     url: this.seoDEFAULT.url,
   };
 
-  constructor(private meta: Meta, private utils: UtilitiesService) {}
+  constructor(private meta: Meta, private utils: UtilitiesService) {
+  }
 
   generateTags(seo: SEOFebelink) {
     // Guardo las tags anteriores en caso de que tenga que volver a asignarlas
@@ -32,26 +33,26 @@ export class SeoService {
 
     // this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     // this.meta.updateTag({ name: 'twitter:site', content: '@febelink' });
-    this.meta.updateTag({ name: 'twitter:title', content: seo.title });
+    this.meta.updateTag({name: 'twitter:title', content: seo.title});
     this.meta.updateTag({
       name: 'twitter:description',
       content: seo.description,
     });
-    this.meta.updateTag({ name: 'twitter:image', content: seo.image });
-    this.meta.updateTag({ name: 'twitter:image:src', content: seo.image });
+    this.meta.updateTag({name: 'twitter:image', content: seo.image});
+    this.meta.updateTag({name: 'twitter:image:src', content: seo.image});
 
-    this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:site_name', content: 'Febelink' });
-    this.meta.updateTag({ property: 'og:title', content: seo.title });
+    this.meta.updateTag({property: 'og:type', content: 'website'});
+    this.meta.updateTag({property: 'og:site_name', content: 'Febelink'});
+    this.meta.updateTag({property: 'og:title', content: seo.title});
     this.meta.updateTag({
       property: 'og:description',
       content: seo.description,
     });
-    this.meta.updateTag({ property: 'og:image', content: seo.image });
-    this.meta.updateTag({ property: 'og:image:url', content: seo.image });
-    this.meta.updateTag({ property: 'og:url', content: seo.url });
+    this.meta.updateTag({property: 'og:image', content: seo.image});
+    this.meta.updateTag({property: 'og:image:url', content: seo.image});
+    this.meta.updateTag({property: 'og:url', content: seo.url});
 
-    this.meta.updateTag({ name: 'description', content: seo.description });
+    this.meta.updateTag({name: 'description', content: seo.description});
 
     // this.meta.updateTag({ itemprop: 'name', content: title });
     // this.meta.updateTag({ itemprop: 'description', content: description });
@@ -76,6 +77,8 @@ export class SeoService {
 
   setPreviousTags() {
     // Si tiene tags previas, asigno dichas tags para volver a su valor por defecto
-    if (this.seoPrevoius) this.generateTags(this.seoPrevoius);
+    if (this.seoPrevoius) {
+      this.generateTags(this.seoPrevoius);
+    }
   }
 }

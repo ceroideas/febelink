@@ -31,9 +31,9 @@ import {ConsoleSvc} from './services/console.service';
 import {environment} from 'src/environments/environment';
 import {ServicesService} from './pages/servicios/services/services.service';
 
-const GENERAL_TITLE = 'Febelink | La red social de los profesionales';
+const GENERAL_TITLE = 'Febelink | Tienda de servicios';
 const GENERAL_DESC =
-  'Febelink es la red social de los profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas.';
+  'Febelink es el buscador de servicios profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas.';
 
 @Component({
   selector: 'app-root',

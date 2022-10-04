@@ -148,13 +148,19 @@
         <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
       </div>
       <div class="modal-add-name margin-bottom-image">
-        Añadir imagen
+        Añadir imagen o vídeo
       </div>
       <div class="subtitle-image">
-        Peso máximo de la imagen 3Mb.
+        Peso máximo 16Mb.
       </div>
-      <div class="div-add-image-select">
-        <img src="assets/icon/svg/plus-blue.svg" class="add-image-select" />
+      <app-file-picker hidden #filePicker [iFile]="iFile" [pickType]="filePickType.BOTH"
+                       (OnFile)="fileSelected($event)"></app-file-picker>
+      <div [ngClass]="iFile ? 'div-add-image-selected' : 'div-add-image-select'" (click)="filePicker.clicks()">
+        <img [src]="iFile?.src || iAdvise?.media_url || 'assets/icon/svg/plus-blue.svg'"
+             [ngClass]="iFile ? 'add-image-selected' : 'add-image-select'"/>
+        <div *ngIf="iFile" class="add-image-remove" (click)="removeFileSelected();$event.stopPropagation()">
+          <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg" />
+        </div>
       </div>
   <!--
       <div class="div-add-image-selected">
@@ -234,34 +240,18 @@
       </div>
       <div class="create-content-right">
         <div class="add-images-label">
-          <span class="add-images-label-title">Imágenes</span>Peso máximo 2MB. Máximo 5 imágenes
+          <span class="add-images-label-title">Imágenes y vídeos</span>Peso máximo 16MB. <!--Máximo 5 imágenes-->
         </div>
         <div class="width-100">
-          <div>
-            <!--
-            <div class="add-service-img-selected">
-              <img src="assets/imgs/servicios-prev-6.png" class="add-service-img" />
-              <div class="add-service-remove-div">
+            <app-file-picker hidden #filePickerDesktop [iFile]="iFile" [pickType]="filePickType.BOTH"
+                             (OnFile)="fileSelected($event)"></app-file-picker>
+            <div [ngClass]="iFile ? 'add-service-img-selected' : 'add-service-img-select'" (click)="filePickerDesktop.clicks()">
+              <img [src]="iFile?.src || iAdvise?.media_url || 'assets/icon/svg/plus-black.svg'"
+                   [ngClass]="iFile ? 'add-service-img' : 'add-service-img-select-svg'"/>
+              <div *ngIf="iFile" class="add-service-remove-div" (click)="removeFileSelected();$event.stopPropagation()">
                 <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
               </div>
             </div>
-            -->
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-          </div>
         </div>
       </div>
     </div>

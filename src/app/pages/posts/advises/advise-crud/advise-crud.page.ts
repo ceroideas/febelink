@@ -16,7 +16,7 @@ import {AlertSvc} from 'src/app/services/alert.service';
 import {LangBtnComponent} from 'src/app/components/langs/btn/btn.component';
 import {LoadingSvc} from 'src/app/services/loading.service';
 import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {IFile} from 'src/app/components/file-picker/models/file.model';
+import {FilePickType, IFile} from 'src/app/components/file-picker/models/file.model';
 import {UserService} from 'src/app/services/user.service';
 import {RouteSvc} from 'src/app/services/route.service';
 
@@ -31,8 +31,10 @@ export class AdviseCRUDPage implements OnInit {
 
   isLoading: boolean = false;
 
+  filePickType = FilePickType;
+
   form: UntypedFormGroup;
-  iFile: IFile = {};
+  iFile: IFile;
   content: iWYSIWYG = {};
   contentText: any;
 
@@ -87,7 +89,8 @@ export class AdviseCRUDPage implements OnInit {
     private alertSvc: AlertSvc,
     private loadingSvc: LoadingSvc,
     private sessionSvc: UserSessionSvc,
-    private userSvc: UserService
+    private userSvc: UserService,
+    public fileSvc: FileService
   ) {
   }
 
@@ -180,8 +183,7 @@ export class AdviseCRUDPage implements OnInit {
     //this.content.html = this.iAdvise?.content;
     this.topicSelected = this.topics[this.iAdvise?.topic];
     this.contentText = this.iAdvise?.content;
-    this.iFile.src = this.iAdvise?.media_url;
-    this.iFile.ext = this.iAdvise?.media_ext;
+    this.iFile = {src: this.iAdvise?.media_url, ext: this.iAdvise?.media_ext};
   }
 
   clear() {
@@ -198,6 +200,11 @@ export class AdviseCRUDPage implements OnInit {
       this.iAdvise.media_name = null;
       this.iAdvise.media_ext = null;
     }
+    console.log(file);
+  }
+
+  removeFileSelected() {
+    this.iFile = null;
   }
 
   wysiwygChange(content: iWYSIWYG) {
