@@ -324,6 +324,7 @@ const routes: Routes = [
         (m) => m.CuentaProfesionalPageModule
       ),
   },
+  {path: '**', redirectTo: 'search', pathMatch: 'full'},
 ];
 
 @NgModule({

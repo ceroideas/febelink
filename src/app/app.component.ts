@@ -1,5 +1,5 @@
 import {WalletService} from './services/wallet/wallet.service';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {
   Platform,
@@ -99,7 +99,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initializeApp();
     this.openCookieBanner();
-    this.getMyProfessions();
 
     this.titleService.setTitle(GENERAL_TITLE);
     this.metaService.addTags([
@@ -146,6 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('state', state);
         this.menu.enable(true);
         this.getUserInfo();
+        this.getMyProfessions();
         this.notificationSvc.getUnreadNotificationsCount();
         const serviceRequest: Observable<any> =
           await this.walletService.getBalanceByUserId();

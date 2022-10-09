@@ -320,5 +320,5 @@
     </ion-tabs>
   </ng-container>
 
-  <app-cart></app-cart>
+  <app-cart *ngIf="authenticationService.isAuthenticated()"></app-cart>
 </ion-app>
