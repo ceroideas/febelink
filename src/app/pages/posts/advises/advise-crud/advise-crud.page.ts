@@ -36,7 +36,6 @@ export class AdviseCRUDPage implements OnInit {
   form: UntypedFormGroup;
   iFile: IFile;
   content: iWYSIWYG = {};
-  contentText: any;
 
   id: number;
   iAdvise: IAdviseFull;
@@ -162,7 +161,9 @@ export class AdviseCRUDPage implements OnInit {
         Validators.required
       ),
       topic: new UntypedFormControl(
-        {value: this.iAdvise?.topic || '', disabled: disabled},
+        {
+          value: this.topics.find(elem => elem.id === this.iAdvise?.topic) || '', disabled: disabled
+        },
         Validators.required
       ),
       content: new UntypedFormControl(
@@ -180,10 +181,13 @@ export class AdviseCRUDPage implements OnInit {
       summary: this.iAdvise?.summary || '',
     });
 
-    //this.content.html = this.iAdvise?.content;
-    this.topicSelected = this.topics[this.iAdvise?.topic];
-    this.contentText = this.iAdvise?.content;
-    this.iFile = {src: this.iAdvise?.media_url, ext: this.iAdvise?.media_ext};
+    this.topicSelected = this.topics.find(elem =>
+      elem.id === this.iAdvise?.topic
+    );
+    this.content.html = this.iAdvise?.content;
+    if (this.iAdvise?.media_url && this.iAdvise?.media_ext) {
+      this.iFile = {src: this.iAdvise?.media_url, ext: this.iAdvise?.media_ext};
+    }
   }
 
   clear() {
@@ -200,7 +204,6 @@ export class AdviseCRUDPage implements OnInit {
       this.iAdvise.media_name = null;
       this.iAdvise.media_ext = null;
     }
-    console.log(file);
   }
 
   removeFileSelected() {
@@ -278,7 +281,7 @@ export class AdviseCRUDPage implements OnInit {
       title: title,
       subtitle: subtitle,
       summary: summary,
-      content: this.contentText,
+      content: this.content.html,
 
       media: this.iFile?.file,
       media_name: this.iAdvise?.media_name,

@@ -123,7 +123,7 @@ export class AdvisesPage implements OnInit {
   async getFilters(): Promise<IAdviseFilter> {
     const filters = {
       activePage: this.activePage,
-      keys: null, // this.filter || null,
+      keys: this.filter || null,
 
       topic: this.topicSelected?.id || null,
       sector: this.sectors?.sector || null,

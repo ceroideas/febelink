@@ -7,7 +7,6 @@ import {
   ViewEncapsulation,
   ViewChild, AfterViewInit,
 } from '@angular/core';
-import {Router} from '@angular/router';
 import {FileService} from 'src/app/components/file-picker/services/file.service';
 import {IOptsMenuButton} from 'src/app/components/opts-menu/models/opts-menu.model';
 import {OptsMenuSvc} from 'src/app/components/opts-menu/services/opts-menu.service';
@@ -24,6 +23,7 @@ import {environment} from 'src/environments/environment';
 import {IAdviseFull} from '../../advises/models/advises.model';
 import {AdviseService} from '../../advises/services/advises.service';
 import {Meta} from '@angular/platform-browser';
+import {RouteSvc} from '../../../../services/route.service';
 
 @Component({
   selector: 'app-post-component',
@@ -86,7 +86,7 @@ export class PostComponent implements OnInit, AfterViewInit {
     private alertSvc: AlertSvc,
     private toastSvc: ToastSvc,
     private loadingSvc: LoadingSvc,
-    private router: Router,
+    private router: RouteSvc,
     private seoSvc: SeoService,
     public fileSvc: FileService,
     private reportSvc: ReportService,
@@ -233,7 +233,7 @@ export class PostComponent implements OnInit, AfterViewInit {
       }
 
       this.toastSvc.show(response.message, true);
-      this.router.navigate([`posts/oracles`]);
+      this.router.navigateReload([`oracles`]);
     }
   }
 

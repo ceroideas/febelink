@@ -1,5 +1,4 @@
-<ion-card class="no-margin">
-  <quill-editor
+<quill-editor
     #quill
     trackChanges="all"
     [modules]="modules"
@@ -12,15 +11,14 @@
     (onEditorChanged)="changedEditor($event)"
     (onBlur)="blur($event)"
     ngDefaultControl
-  ></quill-editor>
-  <!-- <pre><code>{{ content?.html }}</code></pre>
-  <ion-label [innerHTML]="content?.html"></ion-label> -->
-  <ngx-link-preview
-    class="modern"
-    [apiRoute]="apiMetaTagUrl"
-    [getApiEndpoint$]="apiCallbackFn"
-    [links]="linksArray"
-    [showLinkUrl]="true"
-    [useHtmlLinkDefaultClickEvent]="true"
-  ></ngx-link-preview>
-</ion-card>
+></quill-editor>
+<!-- <pre><code>{{ content?.html }}</code></pre>
+<ion-label [innerHTML]="content?.html"></ion-label> -->
+<ngx-link-preview *ngIf="linksArray.length > 0"
+                  class="modern"
+                  [apiRoute]="apiMetaTagUrl"
+                  [getApiEndpoint$]="apiCallbackFn"
+                  [links]="linksArray"
+                  [showLinkUrl]="true"
+                  [useHtmlLinkDefaultClickEvent]="true"
+></ngx-link-preview>

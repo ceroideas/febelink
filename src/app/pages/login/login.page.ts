@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, ModalController, Platform } from '@ionic/angular';
-import { OlvidarContrasenaPage } from '../olvidar-contrasena/olvidar-contrasena.page';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { environment } from 'src/environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {UntypedFormGroup, UntypedFormBuilder, Validators} from '@angular/forms';
+import {ApiService} from 'src/app/services/api.service';
+import {UtilitiesService} from 'src/app/services/utilities.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoadingController, ModalController, Platform} from '@ionic/angular';
+import {OlvidarContrasenaPage} from '../olvidar-contrasena/olvidar-contrasena.page';
+import {ILang, ILangDEFAULTS} from 'src/app/models/langs.model';
+import {TranslateConfigService} from 'src/app/services/translate/translate-config.service';
+import {environment} from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,8 @@ export class LoginPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateConfigService,
     public platform: Platform
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.loginImplicito();
@@ -43,9 +44,9 @@ export class LoginPage implements OnInit {
   }
 
   async submitForm() {
-    this.utilities.showLoading();
+    // this.utilities.showLoading();
 
-    const lang = (<ILang>(
+    const lang = (<ILang> (
       await ILangDEFAULTS.getCurrentLang(this.translateService)
     )).lang;
 
@@ -102,17 +103,22 @@ export class LoginPage implements OnInit {
   /**
    * Open sign up page
    */
-   openRegistro() {
+  openRegistro() {
     const route = ['registro'];
-    if (this.redirect) route.push(this.redirect);
+    if (this.redirect) {
+      route.push(this.redirect);
+    }
     this.router.navigate(route);
   }
+
   /**
    * Open remember password page
    */
-   openPassRemember() {
+  openPassRemember() {
     const route = ['olvidar-contrasena'];
-    if (this.redirect) route.push(this.redirect);
+    if (this.redirect) {
+      route.push(this.redirect);
+    }
     this.router.navigate(route);
   }
 
