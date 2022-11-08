@@ -238,7 +238,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'user/detail/:id',
+    path: 'user/:username/detail/:id',
     loadChildren: () =>
       import('./pages/perfil-oraculo/perfil-oraculo.module').then(
         (m) => m.PerfilOraculoPageModule
@@ -259,7 +259,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'product/detail/:id',
+    path: 'product/:title/detail/:id',
     loadChildren: () =>
       import('./pages/detalle-busqueda/detalle-busqueda.module').then(
         (m) => m.DetalleBusquedaPageModule
