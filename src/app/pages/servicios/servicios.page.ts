@@ -62,7 +62,7 @@ export class ServiciosPage implements OnInit {
   iUserProfession: any;
   ProfessionsMapped: any;
 
-  numbServicesAvaliable: number = 0;
+  numbServicesAvaliable: number = 3;
 
   iFile: IFile;
   filePickType = FilePickType;
@@ -114,7 +114,7 @@ export class ServiciosPage implements OnInit {
     if (response) {
       response.forEach((elem: Subscription) => {
         if (elem.subscriptionName === 'sub-pro') {
-          this.numbServicesAvaliable += 1;
+          this.numbServicesAvaliable += 20;
         }
         if (elem.subscriptionName === 'sub-plus') {
           this.numbServicesAvaliable += elem.amount;

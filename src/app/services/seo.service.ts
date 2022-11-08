@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Meta} from '@angular/platform-browser';
 import {SEOFebelink} from '../models/seo.model';
 import {UtilitiesService} from './utilities.service';
+import {DOCUMENT} from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,10 @@ export class SeoService {
     url: this.seoDEFAULT.url,
   };
 
-  constructor(private meta: Meta, private utils: UtilitiesService) {
+  constructor(
+    private meta: Meta,
+    private utils: UtilitiesService,
+    @Inject(DOCUMENT) private dom) {
   }
 
   generateTags(seo: SEOFebelink) {
@@ -80,5 +84,12 @@ export class SeoService {
     if (this.seoPrevoius) {
       this.generateTags(this.seoPrevoius);
     }
+  }
+
+  addPageCanonical() {
+    let link: HTMLLinkElement = this.dom.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    this.dom.head.appendChild(link);
+    link.setAttribute('href', this.dom.URL);
   }
 }

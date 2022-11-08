@@ -22,7 +22,7 @@ export class CuentaProfesionalPage implements OnInit {
   public checkMdodel: boolean = null;
 
   professionList: ProfessionType[] = [];
-  numProfessionAvaliable: number = 1;
+  numProfessionAvaliable: number = 2;
 
   constructor(
     private profAccountService: CuentaProfesionalService, private subService: SubscriptionService, private toastSvc: ToastSvc) {
@@ -48,7 +48,7 @@ export class CuentaProfesionalPage implements OnInit {
     if (response) {
       response.forEach((elem: Subscription) => {
         if (elem.subscriptionName === 'sub-pro') {
-          this.numProfessionAvaliable += 1;
+          this.numProfessionAvaliable += 10;
         }
         if (elem.subscriptionName === 'sub-prof') {
           this.numProfessionAvaliable += elem.amount;
