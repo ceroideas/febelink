@@ -23,7 +23,7 @@
             </p>
           </ion-label>
         </ion-row>
-        <ion-row class="product-owner" (click)="irA('/user/detail/' + detalle?.ownerId)">
+        <ion-row class="product-owner" (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
           <ion-avatar class="avatar_dropdown">
             <ion-img *ngIf="!detalle?.ownerAvatar" src="assets/icon/svg/default_avatar.svg"
                      class="default-avatar"></ion-img>
@@ -229,7 +229,7 @@
         ({{detalle?.ratingAmount}}) valoraciones
       </p>
     </ion-row>
-    <ion-row class="product-owner" (click)="irA('/user/detail/' + detalle?.ownerId)">
+    <ion-row class="product-owner" (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
       <ion-avatar class="avatar_dropdown">
         <ion-img *ngIf="!detalle?.ownerAvatar" src="assets/icon/svg/default_avatar.svg"
                  class="default-avatar"></ion-img>
