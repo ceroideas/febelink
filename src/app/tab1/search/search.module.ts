@@ -7,6 +7,7 @@ import {ProductCardComponent} from './components/product-card/product-card.compo
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../../shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
+import {SearchCardComponent} from './components/search-card/search-card.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import {HttpClientModule} from '@angular/common/http';
     TranslateModule.forChild(),
   ],
   exports: [SearchComponent],
-  declarations: [SearchComponent, ProductCardComponent],
+  declarations: [SearchComponent, ProductCardComponent, SearchCardComponent],
   providers: []
 })
 export class SearchModule {

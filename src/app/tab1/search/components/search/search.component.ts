@@ -4,11 +4,13 @@ import {IonSlides} from '@ionic/angular';
 import {SearchService} from '../../services/search.service';
 import {IKeywords} from '../../models/search.model';
 import {SearchProductCardType} from '../product-card/product-card.component';
+import {SearchCardType} from '../search-card/search-card.component';
 
 export interface SearchType {
   services: SearchProductCardType[];
   offers: SearchProductCardType[];
-  users: any; // ToDo: Add type here
+  users: any; // ToDo: Add type here,
+  otherResults: SearchCardType[];
 }
 
 @Component({
@@ -104,8 +106,8 @@ export class SearchComponent implements OnInit {
       response.forEach(elem => {
         bestProfessionMatch.push(elem.id);
       });
-      if (bestProfessionMatch.length > 0) {
-        const {response} = await this.searchService.search(bestProfessionMatch);
+      if (bestProfessionMatch.length > 0 || this.searchText) {
+        const {response} = await this.searchService.search(this.searchText, bestProfessionMatch);
         this.searchResponse = response;
       }
     }

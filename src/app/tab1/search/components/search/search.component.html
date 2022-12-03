@@ -5,8 +5,9 @@
       class="searchbar no-padding"
       placeholder="{{ 'common.publishPlaceholder' | translate }}"
       [(ngModel)]="searchText"
-      (ionChange)="search()"
+      (keyup.enter)="search()"
       debounce="500"
+      style="--box-shadow: none"
     ></ion-searchbar>
   </ion-row>
   <div class="mobile">
@@ -28,13 +29,30 @@
     <div class="keys-dropdown" *ngIf="searchResponse">
       <div [ngSwitch]="type">
         <ng-container class="list_dropdown" *ngSwitchCase="'resultado'">
-          <ion-card *ngIf="searchResponse?.services?.length > 0" class="search-results">
-            <ion-card-content class="ion-no-padding">
-              <ng-container *ngFor="let data of searchResponse.services">
-                <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
-              </ng-container>
-            </ion-card-content>
-          </ion-card>
+          <ng-container *ngIf="searchResponse?.services?.length > 0">
+            <ion-card class="search-results">
+              <ion-card-content class="ion-no-padding">
+                <ng-container *ngFor="let data of searchResponse.services">
+                  <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
+                </ng-container>
+              </ion-card-content>
+            </ion-card>
+            <ng-container *ngIf="searchResponse?.otherResults?.length > 0">
+              <ion-card class="search-results">
+                <ion-card-header>
+                  <ion-card-title class="list_title_card">
+                    Resultados similares
+                  </ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="ion-no-padding">
+                  <ng-container *ngFor="let data of searchResponse.otherResults">
+                    <search-card [data]="data" [searchTerm]="searchText"></search-card>
+                  </ng-container>
+                </ion-card-content>
+              </ion-card>
+            </ng-container>
+          </ng-container>
+
           <ion-grid *ngIf="searchResponse?.services?.length == 0" class="list_empty_grid">
             <ion-row size="12" class="ion-justify-content-center">
               <ion-col size="3">
@@ -45,7 +63,22 @@
                 <p class="list_empty_p_14">{{ 'tabs.tab1.search.sin_resultado_subtit' | translate }}</p>
               </ion-col>
             </ion-row>
+            <ion-row *ngIf="searchResponse?.otherResults?.length > 0">
+              <ion-card class="search-results">
+                <ion-card-header>
+                  <ion-card-title class="list_title_card">
+                    Resultados similares
+                  </ion-card-title>
+                </ion-card-header>
+                <ion-card-content class="ion-no-padding">
+                  <ng-container *ngFor="let data of searchResponse.otherResults">
+                    <search-card [data]="data" [searchTerm]="searchText"></search-card>
+                  </ng-container>
+                </ion-card-content>
+              </ion-card>
+            </ion-row>
           </ion-grid>
+
         </ng-container>
         <ng-container class="list_dropdown" *ngSwitchCase="'oferta'">
           <ion-card *ngIf="searchResponse?.offers?.length > 0" class="offer-results">
@@ -110,18 +143,8 @@
         </ng-container>
       </div>
     </div>
-    <ng-container class="list_search" *ngIf="recommendations && !searchText" mode="ios">
-      <ion-card class="recommendations" style="margin-top: 50px">
-        <ion-card-header>
-          <ion-card-title>{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ng-container *ngFor="let data of recommendations?.recommendations">
-            <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
-          </ng-container>
-        </ion-card-content>
-      </ion-card>
-      <ion-card class="recommendations special-offer">
+    <ng-container class="list_search" *ngIf="recommendations && !searchResponse" mode="ios">
+      <ion-card style="margin-top: 50px" class="recommendations special-offer">
         <ion-card-header class="content_grid">
           <ion-card-title
             class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-card-title>
@@ -141,12 +164,22 @@
               <div class="special-offer-title">
                 <ion-label>{{data?.title}}</ion-label>
               </div>
-              <div class="special-offer-content">
+              <div class="special-offer-content-mobile">
                 <ion-label>{{data?.description}}</ion-label>
               </div>
               <div style="margin-top: 2em"></div>
             </ion-slide>
           </ion-slides>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="recommendations">
+        <ion-card-header>
+          <ion-card-title>{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ng-container *ngFor="let data of recommendations?.recommendations">
+            <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
+          </ng-container>
         </ion-card-content>
       </ion-card>
       <ion-card class="recommendations" *ngIf="false">
@@ -196,6 +229,17 @@
           <ion-card class="ion-no-margin width-100">
             <ion-card-content style="padding: 0 24px">
               <search-product-card [data]="data" [unitTypes]="unitTypes"></search-product-card>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+        <br/>
+        <ion-label class="list_title_card"><span style="color:#1B80F8">{{searchResponse?.otherResults?.length}}</span>
+          Resultados similares
+        </ion-label>
+        <ion-row size="12" class="list-panel" *ngFor="let data of searchResponse?.otherResults">
+          <ion-card class="ion-no-margin width-100">
+            <ion-card-content style="padding: 0 24px">
+              <search-card [data]="data" [searchTerm]="searchText"></search-card>
             </ion-card-content>
           </ion-card>
         </ion-row>
@@ -285,7 +329,7 @@
         </ion-row>
       </ion-grid>
     </ion-row>
-    <ion-row *ngIf="recommendations && !searchText" class="recommendations-desktop" size="12">
+    <ion-row *ngIf="recommendations && !searchResponse" class="recommendations-desktop" size="12">
       <ion-col *ngIf="recommendations?.recommendations?.length > 0">
         <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>
         <ion-row size="12" class="list-panel" *ngFor="let data of recommendations?.recommendations">
