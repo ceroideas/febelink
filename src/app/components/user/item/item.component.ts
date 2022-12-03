@@ -39,7 +39,7 @@ export class UserItemComponent implements OnInit {
 
   public async goToProfile() {
     if (await this.sessionSvc.checkLogged()) {
-      this.router.navigate(['user/detail/' + this.id], {
+      this.router.navigate(['user/' + this.user?.nick + '/detail/' + this.id], {
         queryParams: {
           id_perfil: this.id
           , contacto: false
