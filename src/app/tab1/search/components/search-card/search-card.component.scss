@@ -280,7 +280,6 @@ ion-slides {
     width: 100%;
 
     div:first-child {
-      display: flex;
 
       @media (min-width: 768px) {
         flex-direction: column;
@@ -311,5 +310,26 @@ ion-slides {
         }
       }
     }
+
+    .search-title {
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+    }
+
+    .search-description {
+      margin: 24px 0;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 4;
+    }
+
+    .search-button {
+      margin-left: 35px;
+    }
   }
 }
+
+

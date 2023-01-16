@@ -4,6 +4,7 @@ import {SearchService} from '../../services/search.service';
 import {ToastSvc} from '../../../../services/toast.service';
 
 export interface SearchCardType {
+  link: string;
   title: string;
   description: string;
   imageURL: string;
@@ -26,9 +27,10 @@ export class SearchCardComponent {
   }
 
   async sendSearchContactRequest() {
-    const {response, error} = await this.searchSvc.contact4Search(this.searchTerm, this.data.title, this.data.description);
+    const {response, error} = await this.searchSvc.contact4Search(this.searchTerm, this.data.link, this.data.title, this.data.description);
     if (response) {
-      await this.toastSvc.show('La solicitud de contacto ha sido enviada correctamente. ');
+      await this.toastSvc.show('La solicitud de contacto ha sido enviada correctamente. Los profesionales seleccionados se ' +
+        'pondrán en contacto contigo muy pronto.');
     }
     if (error) {
       await this.toastSvc.show('Ha ocurrido un error al enviar la solicitud. Por favor, inténtelo de nuevo y si el error ' +

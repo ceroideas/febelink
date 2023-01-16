@@ -1,15 +1,17 @@
-import {Injectable, Inject} from '@angular/core';
-import {Meta} from '@angular/platform-browser';
-import {SEOFebelink} from '../models/seo.model';
-import {UtilitiesService} from './utilities.service';
-import {DOCUMENT} from '@angular/common';
+import { Injectable, Inject } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
+import { SEOFebelink } from '../models/seo.model';
+import { UtilitiesService } from './utilities.service';
+import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SeoService {
   seoDEFAULT: SEOFebelink = {
-    title: 'Febelink | Tienda de servicios',
+    title: 'Febelink | El buscador de servicios profesionales',
     description:
       'Febelink es el buscador de servicios profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas',
     image: 'https://febelink.com/assets/imgs/febelink-share-img.png',
@@ -25,8 +27,9 @@ export class SeoService {
   constructor(
     private meta: Meta,
     private utils: UtilitiesService,
-    @Inject(DOCUMENT) private dom) {
-  }
+    @Inject(DOCUMENT) private dom,
+    private router: Router
+  ) {}
 
   generateTags(seo: SEOFebelink) {
     // Guardo las tags anteriores en caso de que tenga que volver a asignarlas
@@ -37,30 +40,32 @@ export class SeoService {
 
     // this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     // this.meta.updateTag({ name: 'twitter:site', content: '@febelink' });
-    this.meta.updateTag({name: 'twitter:title', content: seo.title});
+    this.meta.updateTag({ name: 'twitter:title', content: seo.title });
     this.meta.updateTag({
       name: 'twitter:description',
       content: seo.description,
     });
-    this.meta.updateTag({name: 'twitter:image', content: seo.image});
-    this.meta.updateTag({name: 'twitter:image:src', content: seo.image});
+    this.meta.updateTag({ name: 'twitter:image', content: seo.image });
+    this.meta.updateTag({ name: 'twitter:image:src', content: seo.image });
 
-    this.meta.updateTag({property: 'og:type', content: 'website'});
-    this.meta.updateTag({property: 'og:site_name', content: 'Febelink'});
-    this.meta.updateTag({property: 'og:title', content: seo.title});
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:site_name', content: 'Febelink' });
+    this.meta.updateTag({ property: 'og:title', content: seo.title });
     this.meta.updateTag({
       property: 'og:description',
       content: seo.description,
     });
-    this.meta.updateTag({property: 'og:image', content: seo.image});
-    this.meta.updateTag({property: 'og:image:url', content: seo.image});
-    this.meta.updateTag({property: 'og:url', content: seo.url});
+    this.meta.updateTag({ property: 'og:image', content: seo.image });
+    this.meta.updateTag({ property: 'og:image:url', content: seo.image });
+    this.meta.updateTag({ property: 'og:url', content: seo.url });
 
-    this.meta.updateTag({name: 'description', content: seo.description});
+    this.meta.updateTag({ name: 'description', content: seo.description });
 
     // this.meta.updateTag({ itemprop: 'name', content: title });
     // this.meta.updateTag({ itemprop: 'description', content: description });
     // this.meta.updateTag({ itemprop: 'image', content: image });
+
+    this.addPageCanonical();
   }
 
   getTags(): SEOFebelink {
@@ -90,6 +95,6 @@ export class SeoService {
     let link: HTMLLinkElement = this.dom.createElement('link');
     link.setAttribute('rel', 'canonical');
     this.dom.head.appendChild(link);
-    link.setAttribute('href', this.dom.URL);
+    link.setAttribute('href', window.location.href);
   }
 }

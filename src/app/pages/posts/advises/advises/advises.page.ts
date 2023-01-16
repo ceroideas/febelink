@@ -1,18 +1,19 @@
-import {Component, OnInit, ViewChild, HostListener} from '@angular/core';
-import {Params} from '@angular/router';
-import {LangBtnComponent} from 'src/app/components/langs/btn/btn.component';
-import {PaginationComponent} from 'src/app/components/pagination/pagination.component';
-import {SectorsComponent} from 'src/app/components/sectors/sectors.component';
-import {UserItemComponent} from 'src/app/components/user/item/item.component';
-import {UserFilterPopSvc} from 'src/app/components/user/services/user-filter.pop.service';
-import {ILang} from 'src/app/models/langs.model';
-import {IUser} from 'src/app/models/user.model';
-import {RouteSvc} from 'src/app/services/route.service';
-import {ToastSvc} from 'src/app/services/toast.service';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {IAdviseFull, IAdviseFilter, ITopic} from '../models/advises.model';
-import {AdviseService} from '../services/advises.service';
-import {IonInfiniteScroll} from '@ionic/angular';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Params } from '@angular/router';
+import { LangBtnComponent } from 'src/app/components/langs/btn/btn.component';
+import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
+import { SectorsComponent } from 'src/app/components/sectors/sectors.component';
+import { UserItemComponent } from 'src/app/components/user/item/item.component';
+import { UserFilterPopSvc } from 'src/app/components/user/services/user-filter.pop.service';
+import { ILang } from 'src/app/models/langs.model';
+import { IUser } from 'src/app/models/user.model';
+import { RouteSvc } from 'src/app/services/route.service';
+import { ToastSvc } from 'src/app/services/toast.service';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
+import { IAdviseFull, IAdviseFilter, ITopic } from '../models/advises.model';
+import { AdviseService } from '../services/advises.service';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-post-advises',
@@ -44,31 +45,31 @@ export class AdvisesPage implements OnInit {
 
   topicSelected: ITopic;
   topics = [
-    {id: null, name: 'Todos'},
-    {id: 1, name: 'Política'},
-    {id: 2, name: 'Música'},
-    {id: 3, name: 'Deportes'},
-    {id: 4, name: 'Moda y Belleza'},
-    {id: 5, name: 'Ocio'},
-    {id: 6, name: 'Arte y Cultura'},
-    {id: 7, name: 'Marketing'},
-    {id: 8, name: 'Negocios'},
-    {id: 9, name: 'Startups'},
-    {id: 10, name: 'Tecnología'},
-    {id: 11, name: 'Cine'},
-    {id: 12, name: 'Naturaleza'},
-    {id: 13, name: 'Ciencia'},
-    {id: 14, name: 'Economía y Finanzas'},
-    {id: 15, name: 'Anime y Manga'},
-    {id: 16, name: 'Noticias y Actualidad'},
-    {id: 17, name: 'Viajes'},
-    {id: 18, name: 'Hogar y Familia'},
-    {id: 19, name: 'Comida'},
-    {id: 20, name: 'Videojuegos'},
-    {id: 21, name: 'Salud'},
-    {id: 22, name: 'Criptomonedas'},
-    {id: 23, name: 'Animales'},
-    {id: 24, name: 'Historia'},
+    { id: null, name: 'Todos' },
+    { id: 1, name: 'Política' },
+    { id: 2, name: 'Música' },
+    { id: 3, name: 'Deportes' },
+    { id: 4, name: 'Moda y Belleza' },
+    { id: 5, name: 'Ocio' },
+    { id: 6, name: 'Arte y Cultura' },
+    { id: 7, name: 'Marketing' },
+    { id: 8, name: 'Negocios' },
+    { id: 9, name: 'Startups' },
+    { id: 10, name: 'Tecnología' },
+    { id: 11, name: 'Cine' },
+    { id: 12, name: 'Naturaleza' },
+    { id: 13, name: 'Ciencia' },
+    { id: 14, name: 'Economía y Finanzas' },
+    { id: 15, name: 'Anime y Manga' },
+    { id: 16, name: 'Noticias y Actualidad' },
+    { id: 17, name: 'Viajes' },
+    { id: 18, name: 'Hogar y Familia' },
+    { id: 19, name: 'Comida' },
+    { id: 20, name: 'Videojuegos' },
+    { id: 21, name: 'Salud' },
+    { id: 22, name: 'Criptomonedas' },
+    { id: 23, name: 'Animales' },
+    { id: 24, name: 'Historia' },
   ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
@@ -76,9 +77,9 @@ export class AdvisesPage implements OnInit {
     public adviseSvc: AdviseService,
     private toastSvc: ToastSvc,
     private userFilterPop: UserFilterPopSvc,
-    public sessionSvc: UserSessionSvc
-  ) {
-  }
+    public sessionSvc: UserSessionSvc,
+    private seoService: SeoService
+  ) {}
 
   ngOnInit() {
     // To refresh list on routing to this page
@@ -89,6 +90,7 @@ export class AdvisesPage implements OnInit {
       this.getUser();
     });
     this.clear2search();
+    this.seoService.generateTags(this.seoService.seoDEFAULT);
   }
 
   async getUser() {
@@ -99,7 +101,7 @@ export class AdvisesPage implements OnInit {
     console.log('buscando');
     this.filter = text != null ? text : this.filter;
 
-    const {response, error} = await this.adviseSvc.list(
+    const { response, error } = await this.adviseSvc.list(
       await this.getFilters()
     );
 
@@ -134,7 +136,7 @@ export class AdvisesPage implements OnInit {
         : this.uid || this.user?.user?.id || null,
       hideContent: true,
 
-      content: this.filter
+      content: this.filter,
     };
     this.activePage++;
 

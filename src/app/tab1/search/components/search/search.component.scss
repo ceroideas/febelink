@@ -303,6 +303,10 @@ ion-grid {
   margin-top: 4px;
   width: 100%;
   text-align: center;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
 }
 
 .special-offer-content-mobile {
@@ -316,6 +320,10 @@ ion-grid {
   text-align: center;
   max-height: 10em;
   overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
 }
 
 .special-offer-image {
@@ -349,4 +357,14 @@ ion-slides {
   font-size: 24px;
   line-height: 150%;
   color: #111928;
+}
+
+.more-other-results-button {
+  cursor: pointer;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #1C64F2;
 }

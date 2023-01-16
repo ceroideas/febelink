@@ -3,14 +3,12 @@
     <ion-img *ngIf="!data?.imageURL" src="assets/icon/svg/default_product.svg"
              class="default-avatar"></ion-img>
     <ion-img *ngIf="data?.imageURL" [src]="data?.imageURL"></ion-img>
-    <ion-button (click)="sendSearchContactRequest()">Contactar</ion-button>
   </div>
   <div class="info">
-    <div>
-      <div class="title">
-        {{data?.title}}
-      </div>
+    <div class="search-title">{{data?.title}}</div>
+    <div class="font_texto_14 search-description">{{data?.description}}</div>
+    <div class="search-button">
+      <ion-button (click)="sendSearchContactRequest()">Contactar</ion-button>
     </div>
-    <div class="font_texto_14">{{data?.description}}</div>
   </div>
 </ion-item>

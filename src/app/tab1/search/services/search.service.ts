@@ -106,8 +106,12 @@ export class SearchService {
     return this.http.post('product/search', {searchTerm, professions: JSON.stringify(professions)});
   }
 
-  async contact4Search(searchTerm: string, searchTitle: string, searchDescription: string) {
-    return this.http.post('product/search/contact', {searchTerm, searchTitle, searchDescription});
+  async searchMoreResults(searchTerm: string, searchIndex: number) {
+    return this.http.post('product/search/more', {searchTerm, searchIndex});
+  }
+
+  async contact4Search(searchTerm: string, link: string, searchTitle: string, searchDescription: string) {
+    return this.http.post('product/search/contact', {searchTerm, link, searchTitle, searchDescription});
   }
 
   async getProductDetail(productId: number) {
