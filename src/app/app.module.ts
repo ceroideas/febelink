@@ -62,7 +62,7 @@ const config: SocketIoConfig = {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
