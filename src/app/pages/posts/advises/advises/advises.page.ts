@@ -155,6 +155,8 @@ export class AdvisesPage implements OnInit {
   async createPost() {
     if (await this.sessionSvc.checkLogged()) {
       this.router.navigate(['posts/oracle/create']);
+    } else {
+      this.router.navigate(['registro']);
     }
   }
 

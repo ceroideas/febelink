@@ -31,9 +31,7 @@ export class SharePopoverComponent implements OnInit {
     this.url = this.navParams.get('url');
     this.title = this.navParams.get('title');
     this.desc = this.navParams.get('desc');
-    this.image =
-      this.navParams.get('image') ||
-      'https://febelink.com/about/febelinkweb/images/home/principal.png';
+    this.image = this.navParams.get('image'); // || 'https://febelink.com/about/febelinkweb/images/home/principal.png';
 
     /* console.log("TIITLE",this.title);
     console.log("DESC",this.desc);
@@ -103,7 +101,8 @@ export class SharePopoverComponent implements OnInit {
   }
 
   async referenceOracle() {
-    if (!(await this.sessionSvc.checkLogged())) return;
+    if (!(await this.sessionSvc.checkLogged()))
+      this.router.navigate(['registro']);
 
     if (this.id_oracle) {
       this.dismiss(false);

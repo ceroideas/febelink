@@ -16,74 +16,76 @@ import { IReactTypes, Reacts } from '../models/react-types.model';
   templateUrl: './bottom-bar.component.html',
   styleUrls: ['./bottom-bar.component.scss'],
 })
-export class PostBottomBarComponent implements OnInit
-{
-  @Input() id: number
-  @Input() post: IAdviseFull
-  @Input() comment: ICommentFull
-  @Input() showChat : boolean = false
-  @Input() showSeePost : boolean = false
+export class PostBottomBarComponent implements OnInit {
+  @Input() id: number;
+  @Input() post: IAdviseFull;
+  @Input() comment: ICommentFull;
+  @Input() showChat: boolean = false;
+  @Input() showSeePost: boolean = false;
 
-  user: IUser
-  dateFormatType = DateFormatType
-  reacts = Reacts
+  user: IUser;
+  dateFormatType = DateFormatType;
+  reacts = Reacts;
 
   constructor(
-      private router: Router
-    , private adviseSvc: AdviseService
-    , private shareSvc: ShareService
-    , private sessionSvc: UserSessionSvc
-    , private fileSvc: FileService
-    , private reacTypeSvc: ReactTypePopSvc
+    private router: Router,
+    private adviseSvc: AdviseService,
+    private shareSvc: ShareService,
+    private sessionSvc: UserSessionSvc,
+    private fileSvc: FileService,
+    private reacTypeSvc: ReactTypePopSvc
   ) {}
 
-  ngOnInit()
-  {
-    this.sessionSvc.get().then(( userData ) => this.user = userData )
+  ngOnInit() {
+    this.sessionSvc.get().then((userData) => (this.user = userData));
   }
 
-  async react( ev: any )
-  {
-    if( !( await this.sessionSvc.checkLogged() )) return
+  async react(ev: any) {
+    if (!(await this.sessionSvc.checkLogged())) {
+      this.router.navigate(['registro']);
+      return;
+    }
 
     // ToDo: select reaction from popover
-    const reactType: IReactTypes = await this.reacTypeSvc.show( ev )
+    const reactType: IReactTypes = await this.reacTypeSvc.show(ev);
 
     // No reaction selected || Same reaction selected
-    if( !reactType || reactType?.id == this.post.reacted ) return
+    if (!reactType || reactType?.id == this.post.reacted) return;
 
     // Add or Substract only if is not a positive reaction after a positive reaction
-    const reaction = reactType?.id + this.post.reacted > 1 ? 0
-        : reactType?.id < 1 ? -1 : +1
+    const reaction =
+      reactType?.id + this.post.reacted > 1 ? 0 : reactType?.id < 1 ? -1 : +1;
 
-    this.post.reacted = reactType.id
-    this.post.react_qant = ( this.post.react_qant || 0 ) + reaction
-    
-    this.adviseSvc.react( this.id, reactType?.id, this.post.reacted ? 1 : 0 )
+    this.post.reacted = reactType.id;
+    this.post.react_qant = (this.post.react_qant || 0) + reaction;
+
+    this.adviseSvc.react(this.id, reactType?.id, this.post.reacted ? 1 : 0);
   }
 
-  async share( ev: any )
-  {
-    if( await this.shareSvc.exec(
-        ev
-      , `posts/oracle/${this.id}`
-      , ( this.adviseSvc.extractTitle( this.post ) || '' ).replace(/<[^>]*>/g, '')
-      , ( this.adviseSvc.extractSummary( this.post ) || '' ).replace(/<[^>]*>/g, '')
-      , this.fileSvc.img2str( this.post?.media_url )
-      , this.post?.content || this.post.title ? this.id : null
-    )) {
-      this.post.shared = ( this.post?.shared || 0 ) + 1
-      this.adviseSvc.shared( this.id )
+  async share(ev: any) {
+    if (
+      await this.shareSvc.exec(
+        ev,
+        `posts/oracle/${this.id}`,
+        (this.adviseSvc.extractTitle(this.post) || '').replace(/<[^>]*>/g, ''),
+        (this.adviseSvc.extractSummary(this.post) || '').replace(
+          /<[^>]*>/g,
+          ''
+        ),
+        this.fileSvc.img2str(this.post?.media_url),
+        this.post?.content || this.post.title ? this.id : null
+      )
+    ) {
+      this.post.shared = (this.post?.shared || 0) + 1;
+      this.adviseSvc.shared(this.id);
     }
   }
 
-  async chat()
-  {
-    if( !( await this.sessionSvc.checkLogged() )) return
+  async chat() {
+    if (!(await this.sessionSvc.checkLogged())) return;
   }
 
-  watch()
-  {
-    this.router.navigate([ `posts/oracle/${this.id}` ]);
+  watch() {
+    this.router.navigate([`posts/oracle/${this.id}`]);
   }
 }
