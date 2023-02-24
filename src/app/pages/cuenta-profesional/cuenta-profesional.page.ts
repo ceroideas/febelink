@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
-import {Subscription} from '../suscripciones/suscripciones.page';
-import {SubscriptionService} from '../suscripciones/Services/subscription.service';
-import {ToastSvc} from '../../services/toast.service';
+import { Component, OnInit } from '@angular/core';
+import { CuentaProfesionalService } from './Services/cuenta-profesional.service';
+import { Subscription } from '../suscripciones/suscripciones.page';
+import { SubscriptionService } from '../suscripciones/Services/subscription.service';
+import { ToastSvc } from '../../services/toast.service';
 
 export interface ProfessionType {
   id: number;
@@ -25,8 +25,10 @@ export class CuentaProfesionalPage implements OnInit {
   numProfessionAvaliable: number = 2;
 
   constructor(
-    private profAccountService: CuentaProfesionalService, private subService: SubscriptionService, private toastSvc: ToastSvc) {
-  }
+    private profAccountService: CuentaProfesionalService,
+    private subService: SubscriptionService,
+    private toastSvc: ToastSvc
+  ) {}
 
   async ngOnInit() {
     await this.getMyProfessions();
@@ -34,17 +36,17 @@ export class CuentaProfesionalPage implements OnInit {
   }
 
   async getMyProfessions() {
-    const {response} = await this.profAccountService.getMyProfessions();
+    const { response } = await this.profAccountService.getMyProfessions();
     if (response) {
       response.map((e) => {
-        this.professionList.push({id: e.subSectorId, name: e.subSectorName});
+        this.professionList.push({ id: e.subSectorId, name: e.subSectorName });
       });
       // this.checkProfesional = this.professionList.length > 0;
     }
   }
 
   async getNumProfessionAvaliables() {
-    const {response} = await this.subService.getMySubscriptions();
+    const { response } = await this.subService.getMySubscriptions();
     if (response) {
       response.forEach((elem: Subscription) => {
         if (elem.subscriptionName === 'sub-pro') {
@@ -63,7 +65,9 @@ export class CuentaProfesionalPage implements OnInit {
 
   async searchProfession(filterTerm: string) {
     if (filterTerm) {
-      const {response} = await this.profAccountService.getProfessionsByFilter(filterTerm);
+      const { response } = await this.profAccountService.getProfessionsByFilter(
+        filterTerm
+      );
       if (response) {
         this.usersArrayFiltered = response;
         this.searchText = true;
@@ -96,18 +100,22 @@ export class CuentaProfesionalPage implements OnInit {
 
   async updateProfessions() {
     const adaptedPayload: number[] = [];
-    this.professionList.forEach(elem => {
+    this.professionList.forEach((elem) => {
       adaptedPayload.push(elem.id);
     });
-    const {response} = await this.profAccountService.updateProfessions(this.professionList);
+    const { response } = await this.profAccountService.updateProfessions(
+      this.professionList
+    );
     if (response) {
       this.toastSvc.show('Profesiones actualizadas correctamente.');
     }
   }
 
   isInProfessionList(profession: ProfessionType): boolean {
-    return this.professionList.find(prof => {
-      return prof.id === profession.id && prof.name === profession.name;
-    }) != undefined;
+    return (
+      this.professionList.find((prof) => {
+        return prof.id === profession.id && prof.name === profession.name;
+      }) != undefined
+    );
   }
 }
