@@ -50,7 +50,7 @@ import { PipesModule } from './pipes/pipes.module';
 import { File } from '@ionic-native/file/ngx';
 import { SharedModule } from './shared/shared.module';
 
-export function createTranslateLoader(http: HttpClient) {
+function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 

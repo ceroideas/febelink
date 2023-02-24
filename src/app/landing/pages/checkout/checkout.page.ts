@@ -1,14 +1,16 @@
-
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
 import {
-  StripeService,
-  Elements,
-  Element as StripeElement,
-  ElementsOptions
-} from 'ngx-stripe';
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { StripeService } from 'ngx-stripe';
+import {
+  StripeCardNumberElement,
+  StripeElements,
+  StripeElementsOptions,
+} from '@stripe/stripe-js';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
@@ -20,24 +22,25 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
-  elements: Elements;
-  card: StripeElement;
-  error:string = undefined;
+  elements: StripeElements;
+  card: StripeCardNumberElement;
+  error: string = undefined;
 
-  numTokens:number;
+  numTokens: number;
 
-  elementsOptions: ElementsOptions = {
-    locale: 'es'
+  elementsOptions: StripeElementsOptions = {
+    locale: 'es',
   };
 
   stripeTest: UntypedFormGroup;
 
-  constructor(private fb: UntypedFormBuilder
-    , private stripeSvc: StripeService
-    , private router: Router
-    , private api: ApiService
-    , private utils: UtilitiesService
-    ) {}
+  constructor(
+    private fb: UntypedFormBuilder,
+    private stripeSvc: StripeService,
+    private router: Router,
+    private api: ApiService,
+    private utils: UtilitiesService
+  ) {}
 
   ngOnInit() {
     const navExtras = this.router.getCurrentNavigation().extras.state;
@@ -48,7 +51,7 @@ export class CheckoutPage implements OnInit {
     }
 
     this.stripeTest = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
     });
 
     const elementStyles = {
@@ -58,7 +61,7 @@ export class CheckoutPage implements OnInit {
         fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
         fontSize: '16px',
         fontSmoothing: 'antialiased',
-  
+
         '::placeholder': {
           color: '#CFD7DF',
         },
@@ -68,66 +71,71 @@ export class CheckoutPage implements OnInit {
       },
       invalid: {
         color: '#E25950',
-  
+
         '::placeholder': {
           color: '#FFCCA5',
         },
       },
     };
 
-    this.stripeSvc.elements(this.elementsOptions).subscribe(elements => {
+    this.stripeSvc.elements(this.elementsOptions).subscribe((elements) => {
       this.elements = elements;
       if (!this.card) {
         this.card = elements.create('cardNumber', {
           style: elementStyles,
         });
         this.card.mount('#card-number');
-      
+
         var cardExpiry = elements.create('cardExpiry', {
           style: elementStyles,
         });
         cardExpiry.mount('#card-expiry');
-      
+
         var cardCvc = elements.create('cardCvc', {
           style: elementStyles,
         });
         cardCvc.mount('#card-cvc');
-        this.card.on('change', this.onCardChange)
+        this.card.on('change', this.onCardChange);
       }
     });
   }
 
-  onCardChange = ({error}) => {
+  onCardChange = ({ error }) => {
     // debugger
-    if(error){
+    if (error) {
       this.error = error?.message;
-      console.log('onCardChange', error)
+      console.log('onCardChange', error);
     } else {
       this.error = null;
     }
-  }
+  };
 
   async buy() {
     const name = this.stripeTest.get('name').value;
     // debugger;
     await this.utils.showLoading();
-    try{
-      this.stripeSvc.createToken(this.card, { name }).subscribe(async result => {
-        if (result.token) {
-          const formData = new FormData();
-          formData.append('stripeToken', result.token.id);
-          formData.append('amount', 5+'');
-          formData.append('userName', name);
-          const paymentObs:Observable<any> = await this.api._createData('buyTokens', formData);
-          const payment = await paymentObs.pipe(first()).toPromise();
-          this.utils.dismissLoading();
-          window.open(payment.receipt_url);
-        } else if (result.error) {
-          this.utils.dismissLoading();
-          console.log('Error', result.error.message);
-          this.error = result.error.message;
-        }
-      });
+    try {
+      this.stripeSvc
+        .createToken(this.card, { name })
+        .subscribe(async (result) => {
+          if (result.token) {
+            const formData = new FormData();
+            formData.append('stripeToken', result.token.id);
+            formData.append('amount', 5 + '');
+            formData.append('userName', name);
+            const paymentObs: Observable<any> = await this.api._createData(
+              'buyTokens',
+              formData
+            );
+            const payment = await paymentObs.pipe(first()).toPromise();
+            this.utils.dismissLoading();
+            window.open(payment.receipt_url);
+          } else if (result.error) {
+            this.utils.dismissLoading();
+            console.log('Error', result.error.message);
+            this.error = result.error.message;
+          }
+        });
     } catch (error) {
       this.utils.dismissLoading();
       this.error = error.message;

@@ -222,8 +222,8 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "app:build:development",
-              "serverTarget": "app:server:development"
+              "browserTarget": "app:build",
+              "serverTarget": "app:server"
             },
             "production": {
               "browserTarget": "app:build:production",
