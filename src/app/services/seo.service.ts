@@ -11,9 +11,9 @@ import { environment } from 'src/environments/environment';
 })
 export class SeoService {
   seoDEFAULT: SEOFebelink = {
-    title: 'Febelink | El buscador de servicios profesionales',
+    title: 'Febelink | El buscador universal de servicios profesionales',
     description:
-      'Febelink es el buscador de servicios profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas',
+      'Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.',
     image: 'https://febelink.com/assets/imgs/febelink-share-img.png',
     url: 'febelink.com',
   };

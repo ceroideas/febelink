@@ -35,7 +35,7 @@
     "clipboardErr": "Error al copiar al Portapapeles",
     "clipboardNone": "Sin Valores para copiar al Portapapeles",
     "share": "Compartir",
-    "slogan": "El buscador de servicios profesionales",
+    "slogan": "El buscador universal de servicios profesionales",
     "contactUs": "Contacta con Febelink",
     "contact": "Contacto",
     "labelSubsribe": "Suscribirse",
@@ -46,7 +46,7 @@
     "unavailable": "Función no disponible de momento",
     "yes": "Si",
     "no": "No",
-    "not-logged": "Para realizar esta accion necesitas estar Loguead@",
+    "not-logged": "Para realizar esta acción necesitas estar Loguead@",
     "developing": "Función en Desarrollo",
     "personal": {
       "accountname": "Nombre de Cuenta",
@@ -243,7 +243,7 @@
       "profile": "Perfil",
       "login": "Iniciar sesión",
       "share-febelink": "Comparte Febelink",
-      "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales.",
+      "share-msg": "Quiero compartir contigo Febelink, el buscador universal de servicios profesionales.",
       "register": "Regístrate"
     },
     "pages": {
@@ -487,6 +487,7 @@
     "wallet": {
       "title": "Mi Wallet",
       "public-key": "Clave Pública",
+      "private-key": "Clave Privada",
       "retained": "Tokens Retenidos",
       "release": "Fecha de Desbloqueo:",
       "transactions": "Transacciones recientes",
@@ -763,7 +764,7 @@
     "aboutUs": {
       "title": "SOBRE NOSOTROS",
       "story": "Nuestra Historia",
-      "description": "Febelink es el buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar a los profesionales y empresas que necesitan de forma más eficiente, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
+      "description": "Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.",
       "press": "PRENSA",
       "blog": "BLOG",
       "blogFebelink": "BLOG DE FEBELINK",
