@@ -1,9 +1,19 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {IonSlides} from '@ionic/angular';
-import {SearchService} from '../../services/search.service';
-import {IKeywords} from '../../models/search.model';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
+import { SearchService } from '../../services/search.service';
+import { IKeywords } from '../../models/search.model';
+import { SearchProductCardType } from '../product-card/product-card.component';
+import { SearchCardType } from '../search-card/search-card.component';
+import { AuthenticationService } from '../../../../services/authentication/authentication.service';
+import { SeoService } from 'src/app/services/seo.service';
 
+export interface SearchType {
+  services: SearchProductCardType[];
+  offers: SearchProductCardType[];
+  users: any; // ToDo: Add type here,
+  otherResults: SearchCardType[];
+}
 
 @Component({
   selector: 'app-search',
@@ -16,24 +26,45 @@ export class SearchComponent implements OnInit {
   public data: any;
   @Input() type: string = '';
 
-
   public slideOpts = {
     initialSlide: 1,
-    speed: 400
+    speed: 400,
   };
 
-  constructor(public searchService: SearchService,
-              private router: Router) {
+  recommendations;
+  searchResponse: SearchType;
+  unitTypes = [
+    { id: 1, name: 'Día', shorthand: 'día', lang: 'ES' },
+    { id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES' },
+    { id: 3, name: 'Año', shorthand: 'año', lang: 'ES' },
+    { id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES' },
+    { id: 5, name: 'Hora', shorthand: 'hora', lang: 'ES' },
+    { id: 6, name: 'Consulta', shorthand: 'consulta', lang: 'ES' },
+    { id: 7, name: 'Sesión', shorthand: 'sesión', lang: 'ES' },
+    { id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES' },
+    { id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES' },
+    { id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES' },
+    { id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES' },
+  ]; // ToDo: Get this from the priceType Collection
+
+  constructor(
+    public searchService: SearchService,
+    private router: Router,
+    public authenticationService: AuthenticationService,
+    private seoService: SeoService
+  ) {
     this.type = 'resultado';
   }
 
   ngOnInit() {
+    this.getRecommendations();
     /*this.searchService.getData()
     .then(res => {
         this.data = res;
     }).catch(err => {
         console.log(err);
     }); */
+    this.seoService.generateTags(this.seoService.seoDEFAULT);
   }
 
   segmentChanged(event) {
@@ -65,5 +96,58 @@ export class SearchComponent implements OnInit {
 
   clear() {
     this.searchText = '';
+  }
+
+  async getRecommendations() {
+    const { response } = await this.searchService.getRecommendations();
+    if (response) {
+      this.recommendations = response;
+
+      // ToDo: Temporal SHUFFLE results
+      let shuffledResults = this.recommendations?.specialOffer;
+      var m = shuffledResults.length,
+        t,
+        i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = shuffledResults[m];
+        shuffledResults[m] = shuffledResults[i];
+        shuffledResults[i] = t;
+      }
+
+      this.recommendations.specialOffer = shuffledResults;
+    }
+  }
+
+  async search() {
+    const { response } = await this.searchService.getProfessionsByFilter(
+      this.searchText
+    );
+    if (response) {
+      const bestProfessionMatch: number[] = [];
+      response.forEach((elem) => {
+        bestProfessionMatch.push(elem.id);
+      });
+      if (bestProfessionMatch.length > 0 || this.searchText) {
+        const { response } = await this.searchService.search(
+          this.searchText,
+          bestProfessionMatch
+        );
+        this.searchResponse = response;
+      }
+    }
+  }
+
+  async searchMoreResults() {
+    let otherResultAmount = this.searchResponse?.otherResults?.length;
+
+    if (otherResultAmount < 100 && this.searchText) {
+      const { response } = await this.searchService.searchMoreResults(
+        this.searchText,
+        otherResultAmount + 1
+      );
+      this.searchResponse.otherResults =
+        this.searchResponse.otherResults.concat(response);
+    }
   }
 }

@@ -1,9 +1,9 @@
-import { IUser } from 'src/app/models/user.model';
-import { Component, Input, OnInit } from '@angular/core';
-import { FollowerService } from '../services/follower.service';
-import { IFollower } from '../models/follower.model';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { ToastSvc } from 'src/app/services/toast.service';
+import {IUser} from 'src/app/models/user.model';
+import {Component, Input, OnInit} from '@angular/core';
+import {FollowerService} from '../services/follower.service';
+import {IFollower} from '../models/follower.model';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {ToastSvc} from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-follower-button',
@@ -12,80 +12,90 @@ import { ToastSvc } from 'src/app/services/toast.service';
 })
 export class FollowerButtonComponent implements OnInit {
 
-  @Input() user: IUser
-  @Input() clase: string
-  @Input() follower: IFollower
-  @Input() transparent: boolean = false
+  @Input() user: IUser;
+  @Input() clase: string;
+  @Input() follower: IFollower;
+  @Input() transparent: boolean = false;
 
-  isLoading: boolean = false
-  isLogged: boolean = null
+  isLoading: boolean = false;
+  isLogged: boolean = null;
 
   constructor(
     private userSessionSvc: UserSessionSvc,
     private followerSvc: FollowerService,
     private toastSvc: ToastSvc,
-  ) {}
-
-  ngOnInit()
-  {
-    this.get()
+  ) {
   }
 
-  async get()
-  {
-    if( this.isLogged == null ) this.isLogged = await this.userSessionSvc.isLogged()
-    if( !this.isLogged ) return
+  ngOnInit() {
+    this.get();
+  }
 
-    this.isLoading = true
+  async get() {
+    if (this.isLogged == null) {
+      this.isLogged = await this.userSessionSvc.isLogged();
+    }
+    if (!this.isLogged) {
+      return;
+    }
 
-    const { response, error } = await this.followerSvc.get(
+    this.isLoading = true;
+
+    const {response, error} = await this.followerSvc.get(
       await this.userSessionSvc.id(),
       this.user?.id
-    )
+    );
 
-    if( response ) this.follower = response
-    else this.follower = {
-      uid_follower: await this.userSessionSvc.id(),
-      uid_followed: this.user.id,
+    if (response) {
+      this.follower = response;
+    } else {
+      this.follower = {
+        uid_follower: await this.userSessionSvc.id(),
+        uid_followed: this.user?.id,
 
-      created_at: null,
-      canceled_at: null
-    } as IFollower
-    
-    this.isLoading = false
+        created_at: null,
+        canceled_at: null
+      } as IFollower;
+    }
+
+    this.isLoading = false;
   }
 
-  async toggleFollow()
-  {
+  async toggleFollow() {
     // Wait until previous process to finish
-    if( this.isLoading ) return
+    if (this.isLoading) {
+      return;
+    }
 
     // Can't follow themselves
-    if( await this.isSame() ) return
+    if (await this.isSame()) {
+      return;
+    }
 
-    this.isLoading = true
+    this.isLoading = true;
 
-    const { response, error } = await this.followerSvc.toggle( this.follower )
-    if( error ) this.toastSvc.show( error.message, true )
-    else this.follower = response?.follower || this.follower
+    const {response, error} = await this.followerSvc.toggle(this.follower);
+    if (error) {
+      this.toastSvc.show(error.message, true);
+    } else {
+      this.follower = response?.follower || this.follower;
+    }
 
-    this.isLoading = false
+    this.isLoading = false;
   }
 
-  isFollowing(): boolean
-  {
-    return this.follower?.created_at && !this.follower?.canceled_at
+  isFollowing(): boolean {
+    return this.follower?.created_at && !this.follower?.canceled_at;
   }
 
-  async isSame(): Promise<boolean>
-  {
-    return new Promise<boolean>( async resolve => {
-      if( await this.userSessionSvc.isUser( this.user.id )) {
-        this.toastSvc.show( 'common.follow.same', true )
-        resolve( true )
+  async isSame(): Promise<boolean> {
+    return new Promise<boolean>(async resolve => {
+      if (await this.userSessionSvc.isUser(this.user.id)) {
+        this.toastSvc.show('common.follow.same', true)
+        resolve(true)
       }
 
-      resolve( false )
+      resolve(false)
     })
   }
 }

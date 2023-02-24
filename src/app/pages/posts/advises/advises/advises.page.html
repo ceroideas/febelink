@@ -107,7 +107,7 @@
             Término
           </div>
           <div class="modal-input-div">
-            <ion-input type="text" placeholder="Término" class="padding-input-12 term-input"></ion-input>
+            <ion-input [(ngModel)]="filter" type="text" placeholder="Término" class="padding-input-12 term-input"></ion-input>
           </div>
           <div class="modal-add-name">
             {{ 'common.labelTopic' | translate }}
@@ -157,7 +157,7 @@
               Solo mis post
           </div>
           
-          <div *ngIf="!myPosts" class="modal-add-name margin-bottom-title">
+          <!--<div *ngIf="!myPosts" class="modal-add-name margin-bottom-title">
             Búsqueda por usuario
           </div>
     
@@ -171,7 +171,7 @@
             <div *ngIf="userNickSearch" class="filter-section-search-text">
               {{userNickSearch}}
             </div>
-          </div>
+          </div>-->
         </div>
         
         <div class="filter-section-bottom">
@@ -195,7 +195,7 @@
             Término
           </div>
           <div class="modal-input-div">
-            <ion-input type="text" placeholder="Término" class="padding-input-12 term-input"></ion-input>
+            <ion-input [(ngModel)]="filter" type="text" placeholder="Término" class="padding-input-12 term-input"></ion-input>
           </div>
           <div class="modal-add-name">
             {{ 'common.labelTopic' | translate }}
@@ -245,7 +245,7 @@
               Solo mis post
           </div>
           
-          <div *ngIf="!myPosts" class="modal-add-name margin-bottom-title">
+          <!--<div *ngIf="!myPosts" class="modal-add-name margin-bottom-title">
             Búsqueda por usuario
           </div>
     
@@ -259,7 +259,7 @@
             <div *ngIf="userNickSearch" class="filter-section-search-text">
               {{userNickSearch}}
             </div>
-          </div>
+          </div>-->
         </div>
         
         <div class="bottom-buttons-b">

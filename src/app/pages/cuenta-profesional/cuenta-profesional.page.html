@@ -7,13 +7,13 @@
           <ion-label class="margin_left_breadcrumbs1">Inicio</ion-label>
         </ion-breadcrumb>
         <ion-breadcrumb href="#">
-          <ion-label class="margin_left_breadcrumbs2">Tu plan</ion-label>
+          <ion-label class="margin_left_breadcrumbs2">Mis Profesiones</ion-label>
         </ion-breadcrumb>
       </ion-breadcrumbs>
     </ion-row>
     <ion-row size="12">
       <ion-col size="12">
-        <ion-label class="title_ppal_row">Tu plan</ion-label>
+        <ion-label class="title_ppal_row">Mis Profesiones</ion-label>
       </ion-col>
     </ion-row>
     <ion-row class="margin_top_row_3" size="12">
@@ -28,14 +28,14 @@
               </ion-row>
               <ion-row class="flex_imagen_start" size="12">
                 <ion-col size="12">
-                  <ion-label class="cuenta_text_label">Cuenta Usuario</ion-label>
+                  <ion-label class="cuenta_text_label">Cuenta Profesional</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row class="flex_imagen_start" size="12">
                 <ion-col size="12">
                   <p class="p_text_grid">
-                    Te damos la bienvenida a Febelink, el buscador de servicios profesionales donde vas a encontrar las
-                    soluciones a todo lo que necesitas.
+                    ¡Enhorabuena! Con la Cuenta Profesional los usuarios de Febelink pueden encontrarte por tu profesión
+                    y tu zona de trabajo.
                   </p>
                 </ion-col>
               </ion-row>
@@ -44,7 +44,8 @@
                   <ion-label class="label_orange">Activar cuenta profesional</ion-label>
                 </ion-col>
                 <ion-col class="margin_top_2_orange" size="2">
-                  <ion-toggle style="height: 14px; width: 36px" (ionChange)="changeCheck()"></ion-toggle>
+                  <ion-toggle style="height: 14px; width: 36px" #toggleMobile [checked]="professionList?.length > 0"
+                              (ionChange)="changeCheck(toggleMobile.checked)"></ion-toggle>
                 </ion-col>
               </ion-row>
               <div *ngIf="checkProfesional">
@@ -63,24 +64,39 @@
                 <ion-row class="flex_imagen_start margin_top_row_3" size="12">
                   <ion-col style="padding-top: 0px;" size="12">
                     <ion-searchbar
-                      (ionChange)="searchProfession($event.target.value)" class="searchBar"
+                      (ionChange)="searchProfession($event.target.value)" #searchBarMobile class="searchBar"
                       animated="true"></ion-searchbar>
                     <ion-grid class="ion-no-padding" *ngIf="usersArrayFiltered" fixed="true">
                       <ion-row *ngIf="usersArrayFiltered.length > 0">
-                        <ion-col class="ion-no-padding" size="12">
-                          <ion-item *ngFor="let user of usersArrayFiltered" lines="none">
-                            <ion-checkbox slot="start"></ion-checkbox>
-                            <ion-label class="text_user_profesion">{{user?.name}}</ion-label>
-                          </ion-item>
+                        <ion-col class="ion-no-padding" size="12" (clickOutside)="searchBarMobile.value = null">
+                          <ng-container *ngFor="let professionType of usersArrayFiltered" lines="none">
+                            <ion-item (click)="addToProfessionList(professionType, checkboxMobile.checked)">
+                              <ion-checkbox slot="start" #checkboxMobile
+                                            [disabled]="this.professionList.length >= this.numProfessionAvaliable"
+                                            [checked]="isInProfessionList(professionType)"></ion-checkbox>
+                              <ion-label class="text_user_profesion">{{professionType?.name}}</ion-label>
+                            </ion-item>
+                          </ng-container>
                         </ion-col>
                       </ion-row>
                     </ion-grid>
                   </ion-col>
                 </ion-row>
-                <ion-row size="12" [ngClass]="{'checkbox_no_geo': searchText, 'checkbox_geo_chip': !searchText}">
-                  <ion-col *ngFor="let profesion of profesiones" size="6">
+                <ion-row class="contact-menu" size="12" *ngIf="usersArrayFiltered?.length === 0">
+                  <img src="assets/icon/svg/prof-menu-magnifier.svg">
+                  <p>
+                    ¿No encuentras tu profesión?
+                    <br>Te ayudamos
+                  </p>
+                  <a href="mailto:info@febelink.com" class="contact-button">Contactar</a>
+                </ion-row>
+                <ion-row size="12"
+                         [ngClass]="{'checkbox_no_geo': usersArrayFiltered?.length === 0,
+                         'checkbox_geo_chip': professionList.length > 0}">
+                  <ion-col *ngFor="let professionType of professionList" size="6">
                     <ion-chip>
-                      <ion-label style="font-size:14px;">{{profesion}}</ion-label>
+                      <ion-label style="font-size:14px;">{{professionType.name}}</ion-label>
+                      <ion-icon name="close" (click)="removeOfProfessionList(professionType)"></ion-icon>
                     </ion-chip>
                   </ion-col>
                 </ion-row>
@@ -99,16 +115,16 @@
           <ion-label class="margin_left_breadcrumbs1">Inicio</ion-label>
         </ion-breadcrumb>
         <ion-breadcrumb href="#">
-          <ion-label class="margin_left_breadcrumbs2">Tu plan</ion-label>
+          <ion-label class="margin_left_breadcrumbs2">Mis Profesiones</ion-label>
         </ion-breadcrumb>
       </ion-breadcrumbs>
     </ion-row>
     <ion-row size="12">
       <ion-col size="10">
-        <ion-label class="title_ppal_row">Tu plan</ion-label>
+        <ion-label class="title_ppal_row">Mis Profesiones</ion-label>
       </ion-col>
       <ion-col size="2">
-        <div *ngIf="professionList.length > 0" class="servicios-sections-cell-button">
+        <div *ngIf="professionList?.length > 0" class="servicios-sections-cell-button">
           <div class="servicios-sections-button-primary" button (click)="updateProfessions()">
             Guardar cambios
           </div>
@@ -127,14 +143,14 @@
               </ion-row>
               <ion-row class="flex_imagen_start" size="12">
                 <ion-col size="12">
-                  <ion-label class="cuenta_text_label">Cuenta Usuario</ion-label>
+                  <ion-label class="cuenta_text_label">Cuenta Profesional</ion-label>
                 </ion-col>
               </ion-row>
               <ion-row class="flex_imagen_start" size="12">
                 <ion-col size="12">
                   <p class="p_text_grid">
-                    Te damos la bienvenida a Febelink, el buscador de servicios profesionales donde vas a encontrar las
-                    soluciones a todo lo que necesitas.
+                    ¡Enhorabuena! Con la Cuenta Profesional los usuarios de Febelink pueden encontrarte por tu profesión
+                    y tu zona de trabajo.
                   </p>
                 </ion-col>
               </ion-row>
@@ -146,7 +162,8 @@
             <ion-label class="label_orange">Activar cuenta profesional</ion-label>
           </ion-col>
           <ion-col class="margin_top_2_orange" size="2">
-            <ion-toggle style="height: 14px; width: 36px" (ionChange)="changeCheck()"></ion-toggle>
+            <ion-toggle style="height: 14px; width: 36px" #toggleDesktop [checked]="professionList?.length > 0"
+                        (ionChange)="changeCheck(toggleDesktop.checked)"></ion-toggle>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -168,14 +185,17 @@
             <ion-row class="flex_imagen_start margin_top_row_3" size="12">
               <ion-col style="padding-top: 0px;" size="12">
                 <ion-searchbar
-                  (ionChange)="searchProfession($event.target.value)" class="searchBar" animated="true"></ion-searchbar>
+                  (ionChange)="searchProfession($event.target.value)" class="searchBar" #searchBarDesktop
+                  animated="true"></ion-searchbar>
                 <ion-grid class="ion-no-padding" *ngIf="usersArrayFiltered" fixed="true">
-                  <ion-row *ngIf="usersArrayFiltered.length > 0">
-                    <ion-col class="ion-no-padding" size="12">
-                      <ng-container *ngFor="let user of usersArrayFiltered">
-                        <ion-item lines="none" (click)="addToProfessionList(user)">
-                          <ion-checkbox slot="start"></ion-checkbox>
-                          <ion-label class="text_user_profesion">{{user?.name}}</ion-label>
+                  <ion-row *ngIf="usersArrayFiltered?.length > 0">
+                    <ion-col class="ion-no-padding" size="12" (clickOutside)="searchBarDesktop.value = null">
+                      <ng-container *ngFor="let professionType of usersArrayFiltered">
+                        <ion-item lines="none" (click)="addToProfessionList(professionType, checkboxDesktop.checked)">
+                          <ion-checkbox slot="start" #checkboxDesktop
+                                        [disabled]="this.professionList.length >= this.numProfessionAvaliable"
+                                        [checked]="isInProfessionList(professionType)"></ion-checkbox>
+                          <ion-label class="text_user_profesion">{{professionType?.name}}</ion-label>
                         </ion-item>
                       </ng-container>
                     </ion-col>
@@ -183,18 +203,26 @@
                 </ion-grid>
               </ion-col>
             </ion-row>
+            <ion-row class="contact-menu" size="12" *ngIf="usersArrayFiltered?.length === 0">
+              <img src="assets/icon/svg/prof-menu-magnifier.svg">
+              <p>
+                ¿No encuentras tu profesión?
+                <br>Te ayudamos
+              </p>
+              <a href="mailto:info@febelink.com" class="contact-button">Contactar</a>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>
       <ion-col size="4">
         <ion-grid
-          [ngClass]="{'checkbox_no_geo': professionList.length === 0, 'checkbox_geo_chip': professionList.length > 0}">
+          [ngClass]="{'checkbox_no_geo': professionList?.length === 0, 'checkbox_geo_chip': professionList?.length > 0}">
           <ion-row *ngFor="let profesion of professionList"
                    style="background-color:rgba(225, 239, 254, 1); margin-top: 0.5em;" size="12">
-            <ion-col style="padding:1em;" size="11">
+            <ion-col style="padding:1em;" size="10">
               <ion-label style="color: #1E429F; margin-left: 1em">{{profesion.name}}</ion-label>
             </ion-col>
-            <ion-col style="padding:1em;" size="1">
+            <ion-col style="padding:1em;" size="2">
               <ion-icon name="close" (click)="removeOfProfessionList(profesion)"></ion-icon>
             </ion-col>
           </ion-row>
@@ -204,16 +232,17 @@
   </ion-grid>
   <app-footer></app-footer>
 </ion-content>
-<ion-footer *ngIf="checkProfesional" class="mobile">
+<ion-footer *ngIf="checkProfesional && professionList?.length > 0" class="mobile">
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" type="submit" [disabled]="professionList.length === 0" ]>
+        <ion-button class="botonf1" type="submit" [disabled]="professionList?.length === 0"
+                    (click)="updateProfessions()">
           Guardar cambios
         </ion-button>
       </ion-row>
       <ion-row class="ion-padding paddingf2">
-        <ion-button expand class="botonf2" type="submit">Cancelar</ion-button>
+        <ion-button class="botonf2" type="submit">Cancelar</ion-button>
       </ion-row>
     </ion-grid>
   </ion-toolbar>

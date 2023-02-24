@@ -1,0 +1,24 @@
+<ion-item (click)="irA('/product/' + data?.title + '/detail/' + data?.id)" lines="none"
+          class="ion-no-padding search-product keys-dropdown">
+  <div class="avatar_dropdown" slot="start">
+    <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
+             class="default-avatar"></ion-img>
+    <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
+  </div>
+  <div class="info">
+    <div>
+      <div class="title">
+        {{data?.title}}
+      </div>
+      <div class="price">
+        <span>{{data?.unitPrice}}€</span>
+        <span> / {{unitTypes[data.unitTypeId - 1]?.shorthand}}</span>
+      </div>
+    </div>
+    <div class="font_valoraciones">
+      <app-rating [rating]="3.5"></app-rating>
+      ({{data?.votes}} {{ 'tabs.tab1.search.valoraciones' | translate }})
+    </div>
+    <div class="font_texto_14">{{data?.ownerUsername}}</div>
+  </div>
+</ion-item>

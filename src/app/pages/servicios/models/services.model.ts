@@ -1,3 +1,5 @@
+import {IFile} from '../../../components/file-picker/models/file.model';
+
 export interface IServiceFull {
   productId?: number;
   cartId?: number;
@@ -7,4 +9,5 @@ export interface IServiceFull {
   unitTypeId?: number;
   subSectorId?: number;
   isTemplate?: number;
+  images?: (string | IFile)[];
 }

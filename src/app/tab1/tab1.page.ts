@@ -13,7 +13,11 @@ import { AssistantSearchSvc } from './assistant/services/assistant-search.servic
 import { IKeywords } from './assistant/models/assistant.model';
 import { SubsectorService } from '../components/sectors/services/subsectores.service';
 import { SearchService } from './search/services/search.service';
-import SwiperCore, {Pagination, Thumbs} from 'swiper';
+import SwiperCore, { Pagination, Thumbs } from 'swiper';
+import { SeoService } from '../services/seo.service';
+import { AuthenticationService } from '../services/authentication/authentication.service';
+import { UserService } from '../services/user.service';
+import { CuentaProfesionalService } from '../pages/cuenta-profesional/Services/cuenta-profesional.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
@@ -47,6 +51,8 @@ export class Tab1Page {
   googlestore: string = environment.GOOGLE_STORE;
   appstore: string = environment.APP_STORE;
 
+  userLogged: boolean = false;
+
   constructor(
     private api: ApiService,
     public platform: Platform,
@@ -57,9 +63,15 @@ export class Tab1Page {
     private assistantPop: AssistantPopSvc,
     public assistantSearchSvc: AssistantSearchSvc,
     private subsectorSvc: SubsectorService,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private seoService: SeoService,
+    private authenticationService: AuthenticationService,
+    private userSvc: UserService,
+    private profAccountService: CuentaProfesionalService
   ) {
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
+      this.userLogged = true;
+      console.log('this.userLogged', this.userLogged);
       this.obtenerPerfil();
     });
 
@@ -96,6 +108,8 @@ export class Tab1Page {
       this.isLoading = true;
       this.searchComponent.text(searchbar);
     }
+
+    this.seoService.addPageCanonical();
   }
 
   ionViewDidEnter() {
@@ -120,8 +134,9 @@ export class Tab1Page {
     await this.obtenerPerfil();
 
     // Select sector only if url path had value
-    if (this.isLoading && this.searchComponent.text())
+    if (this.isLoading && this.searchComponent.text()) {
       this.searchComponent.getSectorsByKeys();
+    }
   }
 
   async obtenerPerfil() {
@@ -238,8 +253,22 @@ export class Tab1Page {
 
   onSwiper([swiper]) {
     console.log(swiper);
-  } 
+  }
+
   onSlideChange() {
     console.log('slide change');
+  }
+
+  async navigateNewServices() {
+    let url = 'registro';
+    if (this.authenticationService.isAuthenticated()) {
+      const { response } = await this.profAccountService.getMyProfessions();
+      if (response?.length > 0) {
+        url = 'services';
+      } else {
+        url = 'professions';
+      }
+    }
+    this.router.navigate([url]);
   }
 }

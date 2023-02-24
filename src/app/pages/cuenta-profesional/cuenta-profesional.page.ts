@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CuentaProfesionalService} from './Services/cuentaProfesionalService.service';
+import { Component, OnInit } from '@angular/core';
+import { CuentaProfesionalService } from './Services/cuenta-profesional.service';
+import { Subscription } from '../suscripciones/suscripciones.page';
+import { SubscriptionService } from '../suscripciones/Services/subscription.service';
+import { ToastSvc } from '../../services/toast.service';
 
 export interface ProfessionType {
   id: number;
@@ -19,25 +22,52 @@ export class CuentaProfesionalPage implements OnInit {
   public checkMdodel: boolean = null;
 
   professionList: ProfessionType[] = [];
-
-  public profesiones = [
-    'Fisioterapia', 'Radiología'
-  ];
+  numProfessionAvaliable: number = 2;
 
   constructor(
-    private profAccountService: CuentaProfesionalService) {
+    private profAccountService: CuentaProfesionalService,
+    private subService: SubscriptionService,
+    private toastSvc: ToastSvc
+  ) {}
+
+  async ngOnInit() {
+    await this.getMyProfessions();
+    await this.getNumProfessionAvaliables();
   }
 
-  ngOnInit() {
+  async getMyProfessions() {
+    const { response } = await this.profAccountService.getMyProfessions();
+    if (response) {
+      response.map((e) => {
+        this.professionList.push({ id: e.subSectorId, name: e.subSectorName });
+      });
+      // this.checkProfesional = this.professionList.length > 0;
+    }
   }
 
-  async changeCheck() {
-    this.checkProfesional = !this.checkProfesional;
+  async getNumProfessionAvaliables() {
+    const { response } = await this.subService.getMySubscriptions();
+    if (response) {
+      response.forEach((elem: Subscription) => {
+        if (elem.subscriptionName === 'sub-pro') {
+          this.numProfessionAvaliable += 10;
+        }
+        if (elem.subscriptionName === 'sub-prof') {
+          this.numProfessionAvaliable += elem.amount;
+        }
+      });
+    }
+  }
+
+  async changeCheck(checked: boolean) {
+    this.checkProfesional = checked;
   }
 
   async searchProfession(filterTerm: string) {
     if (filterTerm) {
-      const {response} = await this.profAccountService.getProfessionsByFilter(filterTerm);
+      const { response } = await this.profAccountService.getProfessionsByFilter(
+        filterTerm
+      );
       if (response) {
         this.usersArrayFiltered = response;
         this.searchText = true;
@@ -50,8 +80,15 @@ export class CuentaProfesionalPage implements OnInit {
     console.log(this.usersArrayFiltered);
   }
 
-  addToProfessionList(profession: ProfessionType) {
-    this.professionList.push(profession);
+  addToProfessionList(profession: ProfessionType, checked: boolean) {
+    if (checked && this.professionList.length <= this.numProfessionAvaliable) {
+      this.professionList.push(profession);
+    } else {
+      const index = this.professionList.indexOf(profession);
+      if (index >= 0) {
+        this.professionList.splice(index, 1);
+      }
+    }
   }
 
   removeOfProfessionList(profession: ProfessionType) {
@@ -63,9 +100,22 @@ export class CuentaProfesionalPage implements OnInit {
 
   async updateProfessions() {
     const adaptedPayload: number[] = [];
-    this.professionList.forEach(elem => {
+    this.professionList.forEach((elem) => {
       adaptedPayload.push(elem.id);
     });
-    const {response} = await this.profAccountService.updateProfessions(adaptedPayload);
+    const { response } = await this.profAccountService.updateProfessions(
+      this.professionList
+    );
+    if (response) {
+      this.toastSvc.show('Profesiones actualizadas correctamente.');
+    }
+  }
+
+  isInProfessionList(profession: ProfessionType): boolean {
+    return (
+      this.professionList.find((prof) => {
+        return prof.id === profession.id && prof.name === profession.name;
+      }) != undefined
+    );
   }
 }

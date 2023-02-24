@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SocialAuthService } from 'angularx-social-login';
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
-} from 'angularx-social-login';
+  SocialAuthService,
+  SocialUser,
+} from '@abacritt/angularx-social-login';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Platform } from '@ionic/angular';
-import { SocialUser } from 'angularx-social-login';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -141,7 +141,12 @@ export class SocialLoginComponent {
   async auth(formData, firstLogin?: boolean) {
     await this.utilities.showLoading();
 
-    const authResponse = await this.api.login(formData, this.URL, firstLogin, this.redirect);
+    const authResponse = await this.api.login(
+      formData,
+      this.URL,
+      firstLogin,
+      this.redirect
+    );
 
     this.utilities.dismissLoading();
 

@@ -55,13 +55,14 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
       'emoji-shortname': true,
       'emoji-textarea': false,
       'emoji-toolbar': true,
-      toolbar: {
+      toolbar: false,
+      /*toolbar: {
         container: [
-          /* [{ 'font': [] }],
+          /!* [{ 'font': [] }],
         [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'align': [] }], */
-          ['bold' /* , 'italic', 'underline', 'strike' */], // toggled buttons
-          /* [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'align': [] }],
+          ['bold' , 'italic', 'underline', 'strike' ], // toggled buttons
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
 
         [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
 
@@ -71,21 +72,23 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
         [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
         [{ 'direction': 'rtl' }],                         // text direction
 
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], */
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-          ['link' /* , 'image', 'video' */], // link and image, video
+          ['link' , 'image', 'video' ], // link and image, video
           ['image'],
 
-          /* ['emoji'] */
+          ['emoji']
 
           ['clean'], // remove formatting button
-        ],
-        handlers: {
+        *!/],
+        /!*handlers: {
           image: () => {
-            if (this.OnImgClick) this.OnImgClick.emit();
+            if (this.OnImgClick) {
+              this.OnImgClick.emit();
+            }
           },
-        },
-      },
+        },*!/
+      },*/
     };
   }
 
@@ -100,7 +103,9 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterContentInit() {
-    if (this.html) this.contenido = this.html;
+    if (this.html) {
+      this.contenido = this.html;
+    }
   }
 
   ngAfterViewInit() {
@@ -113,8 +118,9 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ('html' in changes && this.quill)
+    if ('html' in changes && this.quill) {
       this.contenido = changes.html.currentValue || '';
+    }
   }
 
   ionViewDidLeave() {
@@ -136,19 +142,25 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
 
       this.loadLinks(this.content?.text);
 
-      if (this.OnChange) this.OnChange.emit(this.content);
+      if (this.OnChange) {
+        this.OnChange.emit(this.content);
+      }
     }
   }
 
   focus($event) {
-    if (this.OnFocus) this.OnFocus.emit();
+    if (this.OnFocus) {
+      this.OnFocus.emit();
+    }
 
     this.focused = true;
     this.blured = false;
   }
 
   blur($event) {
-    if (this.OnBlur) this.OnBlur.emit();
+    if (this.OnBlur) {
+      this.OnBlur.emit();
+    }
 
     this.focused = false;
     this.blured = true;
@@ -172,8 +184,9 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
 
   loadLinks(text: string) {
     this.linksArray = text.split(/[\s,]+|\.\s/).filter((splitedWord) => {
-      if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i))
+      if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)) {
         return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+      }
     });
   }
 }

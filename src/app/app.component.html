@@ -24,6 +24,10 @@
         alt="Menu profile picture"
       >
       </ion-img>
+      <ion-img
+        class="dot_notif_avatar"
+        src="assets/icon/svg/dot_notif.svg"
+      ></ion-img>
     </ion-avatar>
     <ion-content id="menu-list">
       <ion-item
@@ -45,11 +49,11 @@
             alt="Menu profile picture"
           >
           </ion-img>
+          <ion-img
+            class="dot_notif_avatar"
+            src="assets/icon/svg/dot_notif.svg"
+          ></ion-img>
         </ion-avatar>
-        <ion-img
-          class="dot_notif_avatar"
-          src="assets/icon/svg/dot_notif.svg"
-        ></ion-img>
         <ion-label class="ion-padding label_avatar">
           <ion-label class="menu-username">{{ currentUser?.nick }}</ion-label>
           <ion-label class="menu-editar pointer">{{
@@ -288,7 +292,7 @@
     </ion-content>
   </ion-menu>
 
-  <app-header></app-header>
+  <app-header [currentUser]="currentUser"></app-header>
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
@@ -316,5 +320,5 @@
     </ion-tabs>
   </ng-container>
 
-  <app-cart></app-cart>
+  <app-cart *ngIf="authenticationService.isAuthenticated()"></app-cart>
 </ion-app>

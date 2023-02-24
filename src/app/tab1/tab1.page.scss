@@ -242,28 +242,46 @@ ion-header {
 
 .text_buscador {
   color: #FFFFFF;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 700;
   margin-left: auto;
   margin-right: auto;
   padding-top: 0px;
+  line-height: 130%;
 
   @media (min-width: 768px) {
     font-size: 40px;
     font-weight: 500;
+    margin-bottom: 1em;
   }
 }
 
 
 .app_search {
   width: 100%;
+  padding: 0 12px;
 }
 
 .row_buscador {
-  @media (min-width: 768px) {
-    margin-top: -18em;
+  .service-bar {
+    flex-direction: row-reverse;
+    margin: 10px;
   }
-  margin-top: -10em;
+
+  @media (min-width: 768px) {
+    margin-top: -30em;
+
+    .service-bar {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-button {
+      margin: 1em auto 10em;
+      width: 20%;
+    }
+  }
+  margin-top: -14em;
 }
 
 .menu_header {
@@ -385,3 +403,13 @@ ion-icon {
   width: 100%;
 }
 
+.search-background {
+  width: 100%;
+  height: 333px;
+  left: 0px;
+  top: 91px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/assets/imgs/buscador_fondo.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: -21em;
+}

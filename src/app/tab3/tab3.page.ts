@@ -1,23 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   ModalController,
   IonItemSliding,
   AlertController,
 } from '@ionic/angular';
-import { ApiService } from '../services/api.service';
-import { UtilitiesService } from '../services/utilities.service';
-import { Router } from '@angular/router';
-import { InteriorOfertaPage } from '../pages/interior-oferta/interior-oferta.page';
-import { IOffer } from '../models/offer.model';
-import { IUser } from '../models/user.model';
-import { TranslateService } from '@ngx-translate/core';
-import { TermsPage } from '../pages/terms/terms.page';
-import { IFavorite } from '../models/favorite.model';
-import { EditarDemandaPage } from '../pages/editar-demanda/editar-demanda.page';
-import { GuidePage } from '../pages/guide/guide.page';
-import { NotificationService } from '../services/notification.service';
-import { NotifType } from '../models/notification';
-import { ISearch } from '../models/search.model';
+import {ApiService} from '../services/api.service';
+import {UtilitiesService} from '../services/utilities.service';
+import {Router} from '@angular/router';
+import {InteriorOfertaPage} from '../pages/interior-oferta/interior-oferta.page';
+import {IOffer} from '../models/offer.model';
+import {IUser} from '../models/user.model';
+import {TranslateService} from '@ngx-translate/core';
+import {TermsPage} from '../pages/terms/terms.page';
+import {IFavorite} from '../models/favorite.model';
+import {GuidePage} from '../pages/guide/guide.page';
+import {NotificationService} from '../services/notification.service';
+import {NotifType} from '../models/notification';
+import {ISearch} from '../models/search.model';
 
 @Component({
   selector: 'app-tab3',
@@ -29,7 +28,7 @@ export class Tab3Page implements OnInit {
   offers: IOffer[] = [];
   isLoading: boolean;
   currentUser: IUser = null;
-  unreadMessages:Map<number, number> = new Map();
+  unreadMessages: Map<number, number> = new Map();
 
   constructor(
     private modalCtrl: ModalController,
@@ -38,19 +37,20 @@ export class Tab3Page implements OnInit {
     private router: Router,
     private translateService: TranslateService,
     private alertCtrl: AlertController,
-    private notificationSvc:NotificationService
-  ) {}
+    private notificationSvc: NotificationService
+  ) {
+  }
 
 
   async ngOnInit(): Promise<void> {
-    await this.api.getUnreadMessages()
+    await this.api.getUnreadMessages();
     this.api.unreadChatMessages.subscribe(unreadMessages => {
       this.unreadMessages.clear();
       unreadMessages?.forEach(room => {
-        this.unreadMessages.set(+room.room_id, room.unread)
-      })
+        this.unreadMessages.set(+room.room_id, room.unread);
+      });
       // console.log("unreadNotificationsCount", this.unreadMessages);
-    })
+    });
   }
 
   async ionViewDidEnter() {
@@ -116,7 +116,7 @@ export class Tab3Page implements OnInit {
       (a: IOffer, b: IOffer) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
-    
+
     this.utilities.dismissLoading();
     this.isLoading = false;
   }
@@ -128,7 +128,7 @@ export class Tab3Page implements OnInit {
 
   async deleteOffer(offer: IOffer) {
     if (offer?.type === Type.Favorite) {
-      (await this.api.unFavouriteDemand({ id: offer.id })).subscribe(
+      (await this.api.unFavouriteDemand({id: offer.id})).subscribe(
         (result) => {
           this.utilities.showToast(
             this.translateService.instant('tabs.tab2.messageRemovedFavorite')
@@ -171,20 +171,23 @@ export class Tab3Page implements OnInit {
   async interiorOferta(oferta) {
     const interiorOfertaModal = await this.modalCtrl.create({
       component: InteriorOfertaPage,
-      componentProps: { oferta: oferta },
+      componentProps: {oferta: oferta},
     });
 
     await interiorOfertaModal.present();
-    const { data } = await interiorOfertaModal.onWillDismiss();
+    const {data} = await interiorOfertaModal.onWillDismiss();
     this.getOffers();
   }
 
   detalleDemanda(idDemanda, estado): void {
     let aceptada: boolean;
-    if (estado === 1) aceptada = true;
-    else aceptada = false;
+    if (estado === 1) {
+      aceptada = true;
+    } else {
+      aceptada = false;
+    }
     this.router.navigate(['busqueda/' + idDemanda], {
-      queryParams: { id_demanda: idDemanda, aceptada: aceptada },
+      queryParams: {id_demanda: idDemanda, aceptada: aceptada},
     });
   }
 
@@ -261,37 +264,49 @@ export class Tab3Page implements OnInit {
   }
 
   onClickSearchHandler(search: IOffer) {
-    if(!search) return;
+    if (!search) {
+      return;
+    }
     // debugger
-    switch(search.type){
-      case Type.Favorite: this.detalleDemanda(search?.id, 0); break;
-      case Type.MyOffer: this.detalleDemanda(search?.id_demanda, search?.estado); break;
-      case Type.PendingDemand: this.detalleDemanda(search['id'], search?.estado); break;
-      case Type.ReceivedOffer: this.interiorOferta(search); break;
+    switch (search.type) {
+      case Type.Favorite:
+        this.detalleDemanda(search?.id, 0);
+        break;
+      case Type.MyOffer:
+        this.detalleDemanda(search?.id_demanda, search?.estado);
+        break;
+      case Type.PendingDemand:
+        this.detalleDemanda(search['id'], search?.estado);
+        break;
+      case Type.ReceivedOffer:
+        this.interiorOferta(search);
+        break;
     }
   }
 
-  async editItem(search: IOffer) {
-    const editarModal = await this.modalCtrl.create({
-      component: EditarDemandaPage,
-      componentProps: { demanda: search },
-    });
+  /* async editItem(search: IOffer) {
+     const editarModal = await this.modalCtrl.create({
+       component: EditarDemandaPage,
+       componentProps: { demanda: search },
+     });
 
-    await editarModal.present();
+     await editarModal.present();
 
-    const { data } = await editarModal.onWillDismiss();
-  }
+     const { data } = await editarModal.onWillDismiss();
+   }*/
 
-  getUnreadMessages(offer: any):number {
-    if(!offer || !this.unreadMessages.size) return;
-    let roomId:number;
-    switch(offer.type){
+  getUnreadMessages(offer: any): number {
+    if (!offer || !this.unreadMessages.size) {
+      return;
+    }
+    let roomId: number;
+    switch (offer.type) {
       case Type.ReceivedOffer: {
-        roomId = +(offer.id_ofertante?.toString() + offer.id_demanda?.toString() + this.currentUser.id.toString())
+        roomId = +(offer.id_ofertante?.toString() + offer.id_demanda?.toString() + this.currentUser.id.toString());
         break;
       }
       case Type.MyOffer: {
-        roomId = +(this.currentUser.id.toString() + offer.id_demanda?.toString() + offer.id_demandante?.toString())
+        roomId = +(this.currentUser.id.toString() + offer.id_demanda?.toString() + offer.id_demandante?.toString());
         break;
       }
     }
@@ -300,18 +315,18 @@ export class Tab3Page implements OnInit {
     return num;
   }
 
-  setType(item:any[], type:Type):any {
+  setType(item: any[], type: Type): any {
     item.map(item => {
       item.type = type;
       return item;
-    })
+    });
 
     return item;
   }
 }
 
 enum Type {
-    MyOffer = 1
+  MyOffer = 1
   , ReceivedOffer = 2
   , Favorite = 3
   , PendingDemand = 4

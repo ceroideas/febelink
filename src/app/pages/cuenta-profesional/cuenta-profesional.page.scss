@@ -94,7 +94,7 @@ ion-toggle {
 
 .flex_imagen_start {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .title_ppal_row {
@@ -227,4 +227,25 @@ ion-toggle {
   color: #6B7280;
   font-size: 14px;
   font-weight: 400;
+}
+
+.contact-menu {
+  flex-direction: column;
+  text-align: center;
+
+  & > * {
+    margin-top: 1em;
+  }
+}
+
+.contact-button {
+  width: 50%;
+  margin: auto;
+  border: 1px solid #1C64F2;
+  border-radius: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  color: #1C64F2;
+  text-decoration: none;
+  cursor: pointer;
 }

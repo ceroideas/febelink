@@ -1,14 +1,18 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {
   PreloadAllModules,
   Router,
   RouterModule,
   Routes,
 } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'oracles', pathMatch: 'full' },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+  },
   {
     path: 'search',
     loadChildren: () =>
@@ -74,7 +78,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/guide/guide.module').then((m) => m.GuidePageModule),
   },
-  {
+  /*{
     path: 'busqueda/:id',
     loadChildren: () =>
       import('./pages/detalle-demanda/detalle-demanda.module').then(
@@ -87,56 +91,7 @@ const routes: Routes = [
       import('./pages/detalle-demanda/detalle-demanda.module').then(
         (m) => m.DetalleDemandaPageModule
       ),
-  },
-  {
-    path: 'busquedas',
-    loadChildren: () =>
-      import('./pages/busquedas/busquedas.module').then(
-        (m) => m.BusquedasPageModule
-      ),
-  },
-  {
-    path: 'editar-demanda',
-    loadChildren: () =>
-      import('./pages/editar-demanda/editar-demanda.module').then(
-        (m) => m.EditarDemandaPageModule
-      ),
-  },
-  {
-    path: 'publicar-demanda',
-    loadChildren: () =>
-      import('./pages/publicar-demanda/publicar-demanda.module').then(
-        (m) => m.PublicarDemandaPageModule
-      ),
-  },
-  {
-    path: 'suscribirse',
-    loadChildren: () =>
-      import('./pages/suscribirse/suscribirse.module').then(
-        (m) => m.SuscribirsePageModule
-      ),
-  },
-  {
-    path: 'interior-oferta',
-    loadChildren: () =>
-      import('./pages/interior-oferta/interior-oferta.module').then(
-        (m) => m.InteriorOfertaPageModule
-      ),
-  },
-  {
-    path: 'ofertantes',
-    loadChildren: () =>
-      import('./pages/ofertantes/ofertantes.module').then(
-        (m) => m.OfertantesPageModule
-      ),
-  },
-  {
-    path: 'publicar-opinion',
-    loadChildren: () =>
-      import('./pages/publicar-opinion/publicar-opinion.module').then(
-        (m) => m.PublicarOpinionPageModule
-      ),
-  },
+  },*/
   {
     path: 'acerca-de',
     loadChildren: () =>
@@ -283,7 +238,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'user/detail/:id',
+    path: 'user/:username/detail/:id',
     loadChildren: () =>
       import('./pages/perfil-oraculo/perfil-oraculo.module').then(
         (m) => m.PerfilOraculoPageModule
@@ -304,7 +259,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'detalle/:id',
+    path: 'product/:title/detail/:id',
     loadChildren: () =>
       import('./pages/detalle-busqueda/detalle-busqueda.module').then(
         (m) => m.DetalleBusquedaPageModule
@@ -324,11 +279,12 @@ const routes: Routes = [
         (m) => m.CuentaProfesionalPageModule
       ),
   },
+  {path: '**', redirectTo: 'search', pathMatch: 'full'},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabledBlocking' }),
   ],
   exports: [RouterModule],
 })

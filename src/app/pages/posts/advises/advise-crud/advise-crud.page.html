@@ -6,7 +6,7 @@
 
     <app-header-buttons [perfil]="curUser" currentTab="6"></app-header-buttons>
   </ion-toolbar>
-  </ion-header>
+</ion-header>
 
 <ion-content class="mobile">
   <!-- Loading -->
@@ -17,88 +17,88 @@
   ></app-loading>
 </ion-content>
 
-  <!-- Form
-  <form [formGroup]="form" class="no-pad" *ngIf="!isLoading && form">
-    <ion-grid class="no-pad pad-t10">
-      <!-- Topic 
-      <ion-row class="col-flexed pad-5">
-        <ion-label> {{ 'common.labelTopic' | translate }} </ion-label>
-        <ion-select
-          interface="popover"
-          formControlName="topic"
-          [(ngModel)]="topicSelected"
-        >
-          <ion-select-option *ngFor="let topic of topics" [value]="topic.id">
-            {{ topic.name }}
-          </ion-select-option>
-        </ion-select>
-      </ion-row>
-
-      <!-- Summary Referencing Post 
-      <ion-row class="marg-t10" *ngIf="id_reference">
-        <!-- Loading 
-        <ion-spinner class="marg-se marg-b5" *ngIf="!reference"></ion-spinner>
-        <!-- Remove Reference
-        <ion-icon
-          *ngIf="reference"
-          name="close-circle-outline"
-          color="primary"
-          class="no-padding wh-30 shadow-light marg-t10 relativism pointer"
-          (click)="id_reference = null; iAdvise.id_advise = null"
-        ></ion-icon>
-        <!-- Reference
-        <app-post-summary-component
-          *ngIf="reference"
-          class="w-full"
-          [id]="id_reference"
-          [iAdvise]="reference"
-          [watchOnClick]="false"
-        ></app-post-summary-component>
-      </ion-row>
-
-      <!-- WYSIWYG 
-      <ion-row class="marg-t10 pad-5">
-        <app-wysiwyg
-          [html]="iAdvise?.content"
-          [placeholder]="'pages.posts.advises.create.wysiwyg' | translate"
-          (OnChange)="wysiwygChange( $event )"
-          (OnImgClick)="pick.clicks()"
-        ></app-wysiwyg>
-      </ion-row>
-
-      <!-- Image | Video 
-      <ion-row
-        [class]="'marg-t10 marg-se wh-social-media media-pos' + ( iFile?.src ? '' : ' gone' )"
+<!-- Form
+<form [formGroup]="form" class="no-pad" *ngIf="!isLoading && form">
+  <ion-grid class="no-pad pad-t10">
+    Topic
+    <ion-row class="col-flexed pad-5">
+      <ion-label> {{ 'common.labelTopic' | translate }} </ion-label>
+      <ion-select
+        interface="popover"
+        formControlName="topic"
+        [(ngModel)]="topicSelected"
       >
-        <!-- Remove Image 
-        <ion-button
-          icon-only
-          shape="round"
-          class="no-padding wh-40 marg-t10 relativism"
-          (click)="fileSelected( null )"
-        >
-          <ion-icon name="trash-outline" color="primary"></ion-icon>
-        </ion-button>
+        <ion-select-option *ngFor="let topic of topics" [value]="topic.id">
+          {{ topic.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-row>
 
-        <!-- File Picker 
-        <app-file-picker
-          #pick
-          [iFile]="iFile"
-          (OnFile)="fileSelected( $event )"
-        ></app-file-picker>
-      </ion-row>
-    </ion-grid>
-  </form>-->
+    Summary Referencing Post
+    <ion-row class="marg-t10" *ngIf="id_reference">
+      Loading
+      <ion-spinner class="marg-se marg-b5" *ngIf="!reference"></ion-spinner>
+      Remove Reference
+      <ion-icon
+        *ngIf="reference"
+        name="close-circle-outline"
+        color="primary"
+        class="no-padding wh-30 shadow-light marg-t10 relativism pointer"
+        (click)="id_reference = null; iAdvise.id_advise = null"
+      ></ion-icon>
+      Reference
+      <app-post-summary-component
+        *ngIf="reference"
+        class="w-full"
+        [id]="id_reference"
+        [iAdvise]="reference"
+        [watchOnClick]="false"
+      ></app-post-summary-component>
+    </ion-row>
+
+    WYSIWYG
+    <ion-row class="marg-t10 pad-5">
+      <app-wysiwyg
+        [html]="iAdvise?.content"
+        [placeholder]="'pages.posts.advises.create.wysiwyg' | translate"
+        (OnChange)="wysiwygChange( $event )"
+        (OnImgClick)="pick.clicks()"
+      ></app-wysiwyg>
+    </ion-row>
+
+    Image | Video
+    <ion-row
+      [class]="'marg-t10 marg-se wh-social-media media-pos' + ( iFile?.src ? '' : ' gone' )"
+    >
+      Remove Image
+      <ion-button
+        icon-only
+        shape="round"
+        class="no-padding wh-40 marg-t10 relativism"
+        (click)="fileSelected( null )"
+      >
+        <ion-icon name="trash-outline" color="primary"></ion-icon>
+      </ion-button>
+
+      File Picker
+      <app-file-picker
+        #pick
+        [iFile]="iFile"
+        (OnFile)="fileSelected( $event )"
+      ></app-file-picker>
+    </ion-row>
+  </ion-grid>
+</form>-->
 
 <!--
 <ion-footer no-border>
   <ion-toolbar class="tx-center">
-    <!-- Cancel Button 
+    Cancel Button
     <ion-button class="marg-e10" (click)="goHome()">
       {{ 'common.buttons.cancel' | translate}}
     </ion-button>
 
-    <!-- Share Advise | Post Button 
+    Share Advise | Post Button
     <ion-button class="marg-s10" (click)="shareAlert()">
       {{ 'pages.posts.advises.' + ( id ? 'editButton' : 'create.saveButton' ) |
       translate }}
@@ -107,83 +107,96 @@
 </ion-footer>-->
 
 
-
 <div class="mobile">
-<div class="modal-back-background">
-  <div class="modal-front-content-create">
-    
-    <div class="modal-front-padding">
-      <form [formGroup]="form" *ngIf="!isLoading && form">
-      <div class="modal-front-title">
-        Crear publicación
-      </div>
-      <div class="modal-add-name">
-        {{ 'common.labelTopic' | translate }}
-      </div>
-      <div class="modal-input-div">
-        <ion-item class="no-padding modal-add-price-select">
-            <ionic-selectable class="price-select" placeholder="Tema"
-            #topic
-            item-content
-            [(ngModel)]="topicSelected"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="topics"
-            formControlName="topic"
-          >
-          </ionic-selectable>
-        </ion-item>
+  <div class="modal-back-background">
+    <div class="modal-front-content-create">
+
+      <div class="modal-front-padding">
+        <form [formGroup]="form" *ngIf="!isLoading && form">
+          <div class="modal-front-title">
+            Crear publicación
+          </div>
+          <div class="modal-add-name">
+            {{ 'common.labelTopic' | translate }}
+          </div>
+          <div class="modal-input-div">
+            <ion-item class="no-padding modal-add-price-select">
+              <ionic-selectable class="price-select" placeholder="Tema"
+                                #topic
+                                item-content
+                                [(ngModel)]="topicSelected"
+                                itemValueField="id"
+                                itemTextField="name"
+                                [items]="topics"
+                                formControlName="topic"
+              >
+              </ionic-selectable>
+            </ion-item>
+          </div>
+
+          <div class="modal-add-name">
+            Mensaje
+          </div>
+          <div class="modal-input-div">
+            <!--<ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6"
+                          class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>-->
+            <app-wysiwyg
+              [html]="iAdvise?.content"
+              [placeholder]="'Máximo 500 caracteres'"
+              (OnChange)="wysiwygChange( $event )"
+            ></app-wysiwyg>
+          </div>
+          <!--<div class="modal-add-name margin-bottom-image">
+            Enlace
+          </div>
+          <div class="modal-input-div">
+            <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
+          </div>-->
+          <div class="modal-add-name margin-bottom-image">
+            Añadir imagen o vídeo
+          </div>
+          <div class="subtitle-image">
+            Peso máximo 16Mb.
+          </div>
+          <app-file-picker hidden #filePicker [iFile]="iFile" [pickType]="filePickType.BOTH"
+                           (OnFile)="fileSelected($event)"></app-file-picker>
+          <div [ngClass]="iFile ? 'div-add-image-selected' : 'div-add-image-select'" (click)="filePicker.clicks()">
+            <img [src]="iFile?.src || iAdvise?.media_url || 'assets/icon/svg/plus-blue.svg'"
+                 [ngClass]="iFile ? 'add-image-selected' : 'add-image-select'"/>
+            <div *ngIf="iFile" class="add-image-remove" (click)="removeFileSelected();$event.stopPropagation()">
+              <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg"/>
+            </div>
+          </div>
+          <!--
+              <div class="div-add-image-selected">
+                <img src="assets/imgs/preview2.png" class="add-image-selected" />
+                <div class="add-image-remove">
+                  <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg" />
+                </div>
+              </div>-->
+        </form>
       </div>
 
-      <div class="modal-add-name">
-        Mensaje
-      </div>
-      <div class="modal-input-div">
-        <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>
-      </div>
-      <div class="modal-add-name margin-bottom-image">
-        Enlace
-      </div>
-      <div class="modal-input-div">
-        <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
-      </div>
-      <div class="modal-add-name margin-bottom-image">
-        Añadir imagen
-      </div>
-      <div class="subtitle-image">
-        Peso máximo de la imagen 3Mb.
-      </div>
-      <div class="div-add-image-select">
-        <img src="assets/icon/svg/plus-blue.svg" class="add-image-select" />
-      </div>
-  <!--
-      <div class="div-add-image-selected">
-        <img src="assets/imgs/preview2.png" class="add-image-selected" />
-        <div class="add-image-remove">
-          <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg" />
+      <div class="modal-div-bottom">
+        <div class="modal-button-primary-filter" (click)="shareAlert()">
+          Publicar
         </div>
-      </div>-->
-    </form>
-    </div>
-    
-    <div class="modal-div-bottom">
-      <div class="modal-button-primary-filter" (click)="shareAlert()">
-        Publicar
+        <div class="modal-button-secondary-filter" (click)="goHome()">
+          Cancelar
+        </div>
       </div>
-      <div class="modal-button-secondary-filter" (click)="goHome()">
-        Cancelar
-      </div>
-    </div>
 
-</div>
-</div>
+    </div>
+  </div>
 </div>
 
 
 <div class="desktop">
   <div class="modal-floating-create">
     <div class="breadcrumbs-create">
-      Inicio <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next" /> Oráculo <img src="assets/icon/svg/chevron-right.svg"class="breadcrumbs-next" /> <span class="color-blue">Crear publicación</span>
+      Inicio <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next"/> Oráculo <img
+      src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next"/> <span
+      class="color-blue">Crear publicación</span>
     </div>
     <div class="titles-create">
       <div class="titles-create-left">
@@ -192,79 +205,71 @@
         </div>
       </div>
       <div class="titles-create-right">
-        <div class="titles-create-button-secondary" (click)="adviseSvc.showCreatePost = !adviseSvc.showCreatePost">Cancelar</div>
+        <div class="titles-create-button-secondary" (click)="adviseSvc.showCreatePost = !adviseSvc.showCreatePost">
+          Cancelar
+        </div>
         <div class="titles-create-button-primary" (click)="shareAlert()">Publicar</div>
       </div>
     </div>
 
     <form [formGroup]="form" *ngIf="!isLoading && form">
-    <div class="table-100">
-      <div class="create-content-left">
-        <div class="modal-add-name-b">
-          {{ 'common.labelTopic' | translate }}
-        </div>
-        <div class="modal-input-div">
-          <ion-item class="no-padding modal-add-price-select">
+      <div class="table-100">
+        <div class="create-content-left">
+          <div class="modal-add-name-b">
+            {{ 'common.labelTopic' | translate }}
+          </div>
+          <div class="modal-input-div">
+            <ion-item class="no-padding modal-add-price-select">
               <ionic-selectable class="price-select" placeholder="Tema"
-              #topic
-              item-content
-              [(ngModel)]="topicSelected"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="topics"
-              formControlName="topic"
-            >
-            </ionic-selectable>
-          </ion-item>
+                                #topic
+                                item-content
+                                [(ngModel)]="topicSelected"
+                                itemValueField="id"
+                                itemTextField="name"
+                                [items]="topics"
+                                formControlName="topic"
+              >
+              </ionic-selectable>
+            </ion-item>
+          </div>
+          <!--<div class="modal-add-name-b padding-top-label">
+            Enlace
+          </div>
+          <div class="modal-input-div">
+            <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
+          </div>-->
         </div>
-        <div class="modal-add-name-b padding-top-label">
-          Enlace
+        <div class="create-content-middle">
+          <div class="modal-add-name-b">
+            Mensaje
+          </div>
+          <div class="modal-input-div">
+            <!--          <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>-->
+            <app-wysiwyg
+              [html]="iAdvise?.content"
+              [placeholder]="'Máximo 500 caracteres'"
+              (OnChange)="wysiwygChange( $event )"
+            ></app-wysiwyg>
+          </div>
         </div>
-        <div class="modal-input-div">
-          <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
-        </div>
-      </div>
-      <div class="create-content-middle">
-        <div class="modal-add-name-b">
-          Mensaje
-        </div>
-        <div class="modal-input-div">
-          <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>
-        </div>
-      </div>
-      <div class="create-content-right">
-        <div class="add-images-label">
-          <span class="add-images-label-title">Imágenes</span>Peso máximo 2MB. Máximo 5 imágenes
-        </div>
-        <div class="width-100">
-          <div>
-            <!--
-            <div class="add-service-img-selected">
-              <img src="assets/imgs/servicios-prev-6.png" class="add-service-img" />
-              <div class="add-service-remove-div">
-                <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
+        <div class="create-content-right">
+          <div class="add-images-label">
+            <span class="add-images-label-title">Imágenes y vídeos</span>Peso máximo 16MB. <!--Máximo 5 imágenes-->
+          </div>
+          <div class="width-100">
+            <app-file-picker hidden #filePickerDesktop [iFile]="iFile" [pickType]="filePickType.BOTH"
+                             (OnFile)="fileSelected($event)"></app-file-picker>
+            <div [ngClass]="iFile ? 'add-service-img-selected' : 'add-service-img-select'"
+                 (click)="filePickerDesktop.clicks()">
+              <img [src]="iFile?.src || iAdvise?.media_url || 'assets/icon/svg/plus-black.svg'"
+                   [ngClass]="iFile ? 'add-service-img' : 'add-service-img-select-svg'"/>
+              <div *ngIf="iFile" class="add-service-remove-div" (click)="removeFileSelected();$event.stopPropagation()">
+                <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg"/>
               </div>
-            </div>
-            -->
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
-            </div>
-            <div class="add-service-img-select">
-              <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg" />
             </div>
           </div>
         </div>
       </div>
-    </div>
     </form>
   </div>
 </div>

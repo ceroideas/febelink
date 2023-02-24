@@ -9,6 +9,7 @@ ion-header, ion-content, ion-footer {
 .avatarmenu {
   width: 56px;
   height: 56px;
+  object-fit: scale-down;
 }
 
 .pos_avatar {
@@ -111,8 +112,10 @@ ion-content {
   width: 12px;
   height: 12px;
   margin-left: -14px;
-  position: fixed;
   margin-top: -26px;
+  position: relative;
+  top: -2em;
+  left: 4em;
 }
 
 

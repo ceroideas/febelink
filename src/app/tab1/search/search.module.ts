@@ -1,20 +1,26 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
-import { SearchComponentsModule } from './components/components.module';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {IonicModule} from '@ionic/angular';
+import {TranslateModule} from '@ngx-translate/core';
+import {SearchComponent} from './components/search/search.component';
+import {ProductCardComponent} from './components/product-card/product-card.component';
+import {FormsModule} from '@angular/forms';
+import {SharedModule} from '../../shared/shared.module';
+import {HttpClientModule} from '@angular/common/http';
+import {SearchCardComponent} from './components/search-card/search-card.component';
 
 @NgModule({
   imports: [
-      CommonModule
-    , IonicModule
-    , TranslateModule.forChild(),
-    SearchComponentsModule,
+    SharedModule,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TranslateModule.forChild(),
   ],
-  exports: [
-      SearchComponentsModule
-  ],
-  declarations: [],
+  exports: [SearchComponent],
+  declarations: [SearchComponent, ProductCardComponent, SearchCardComponent],
   providers: []
 })
-export class SearchModule {}
+export class SearchModule {
+}

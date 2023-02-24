@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { SEOFebelink } from '../models/seo.model';
 import { UtilitiesService } from './utilities.service';
+import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SeoService {
   seoDEFAULT: SEOFebelink = {
-    title: 'Febelink | La red social de los profesionales',
+    title: 'Febelink | El buscador universal de servicios profesionales',
     description:
-      'Febelink es la red social de los profesionales, el sitio para compartir y encontrar servicios, y realizar pagos con criptomonedas',
-    image: 'http://test.febelink.com/assets/imgs/febelink-share-img.png',
+      'Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.',
+    image: 'https://febelink.com/assets/imgs/febelink-share-img.png',
     url: 'febelink.com',
   };
   seoPrevoius: SEOFebelink = {
@@ -21,7 +24,12 @@ export class SeoService {
     url: this.seoDEFAULT.url,
   };
 
-  constructor(private meta: Meta, private utils: UtilitiesService) {}
+  constructor(
+    private meta: Meta,
+    private utils: UtilitiesService,
+    @Inject(DOCUMENT) private dom,
+    private router: Router
+  ) {}
 
   generateTags(seo: SEOFebelink) {
     // Guardo las tags anteriores en caso de que tenga que volver a asignarlas
@@ -56,6 +64,8 @@ export class SeoService {
     // this.meta.updateTag({ itemprop: 'name', content: title });
     // this.meta.updateTag({ itemprop: 'description', content: description });
     // this.meta.updateTag({ itemprop: 'image', content: image });
+
+    this.addPageCanonical();
   }
 
   getTags(): SEOFebelink {
@@ -76,6 +86,15 @@ export class SeoService {
 
   setPreviousTags() {
     // Si tiene tags previas, asigno dichas tags para volver a su valor por defecto
-    if (this.seoPrevoius) this.generateTags(this.seoPrevoius);
+    if (this.seoPrevoius) {
+      this.generateTags(this.seoPrevoius);
+    }
+  }
+
+  addPageCanonical() {
+    let link: HTMLLinkElement = this.dom.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    this.dom.head.appendChild(link);
+    link.setAttribute('href', window.location.href);
   }
 }

@@ -1,24 +1,34 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {ModalController, PopoverController, Platform, AlertController} from '@ionic/angular';
-import {PublicarOpinionPage} from '../publicar-opinion/publicar-opinion.page';
-import {GuidePage} from '../guide/guide.page';
-import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
-import {environment} from 'src/environments/environment';
-import {UtilitiesService} from 'src/app/services/utilities.service';
-import {IUser} from 'src/app/models/user.model';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
-import {UserService} from 'src/app/services/user.service';
-import {MailService} from 'src/app/services/mail.service';
-import {ReportService} from 'src/app/services/report.service';
-import {IReport} from 'src/app/models/report.model';
-import {ServicesService} from './services/services.service';
-import {NgStyle} from '@angular/common';
-import {IServiceFull} from './models/services.model';
-import {SubscriptionService} from '../suscripciones/Services/subscription.service';
-import {Subscription} from '../suscripciones/suscripciones.page';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import {
+  ModalController,
+  PopoverController,
+  Platform,
+  AlertController,
+} from '@ionic/angular';
+import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
+import { GuidePage } from '../guide/guide.page';
+import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
+import { environment } from 'src/environments/environment';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { IUser } from 'src/app/models/user.model';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserService } from 'src/app/services/user.service';
+import { MailService } from 'src/app/services/mail.service';
+import { ReportService } from 'src/app/services/report.service';
+import { IReport } from 'src/app/models/report.model';
+import { ServicesService } from './services/services.service';
+import { NgStyle } from '@angular/common';
+import { IServiceFull } from './models/services.model';
+import { SubscriptionService } from '../suscripciones/Services/subscription.service';
+import { Subscription } from '../suscripciones/suscripciones.page';
+import { ToastSvc } from '../../services/toast.service';
+import {
+  FilePickType,
+  IFile,
+} from '../../components/file-picker/models/file.model';
 
 @Component({
   selector: 'app-servicios',
@@ -26,7 +36,6 @@ import {Subscription} from '../suscripciones/suscripciones.page';
   styleUrls: ['./servicios.page.scss'],
 })
 export class ServiciosPage implements OnInit {
-
   isSlideDrag: boolean = false;
 
   isDisponibles: boolean = true;
@@ -54,13 +63,16 @@ export class ServiciosPage implements OnInit {
   unitPrice: number | string;
   unitType: number;
   sector: number;
+  images: (string | IFile)[] = new Array(5);
 
   iProfessions: any;
   iUserProfession: any;
   ProfessionsMapped: any;
 
-  numbServicesAvaliable: number = 0;
+  numbServicesAvaliable: number = 3;
 
+  iFile: IFile;
+  filePickType = FilePickType;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,19 +89,23 @@ export class ServiciosPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     public servicesSvc: ServicesService,
-    private subService: SubscriptionService
-  ) {
-
-  }
-
+    private subService: SubscriptionService,
+    private toastSvc: ToastSvc
+  ) {}
 
   ngOnInit() {
-
     this.unitTypes = [
-      {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
-      {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
-      {id: 3, name: 'Año', shorthand: 'año', lang: 'ES'},
-      {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'}
+      { id: 1, name: 'Día', shorthand: 'día', lang: 'ES' },
+      { id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES' },
+      { id: 3, name: 'Año', shorthand: 'año', lang: 'ES' },
+      { id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES' },
+      { id: 5, name: 'Hora', shorthand: 'hora', lang: 'ES' },
+      { id: 6, name: 'Consulta', shorthand: 'consulta', lang: 'ES' },
+      { id: 7, name: 'Sesión', shorthand: 'sesión', lang: 'ES' },
+      { id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES' },
+      { id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES' },
+      { id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES' },
+      { id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES' },
     ];
     this.getProducts();
     this.getProfessions();
@@ -97,11 +113,11 @@ export class ServiciosPage implements OnInit {
   }
 
   async getNumServicesAvaliables() {
-    const {response} = await this.subService.getMySubscriptions();
+    const { response } = await this.subService.getMySubscriptions();
     if (response) {
       response.forEach((elem: Subscription) => {
         if (elem.subscriptionName === 'sub-pro') {
-          this.numbServicesAvaliable += 1;
+          this.numbServicesAvaliable += 20;
         }
         if (elem.subscriptionName === 'sub-plus') {
           this.numbServicesAvaliable += elem.amount;
@@ -111,7 +127,7 @@ export class ServiciosPage implements OnInit {
   }
 
   async getProducts() {
-    const {response, error} = await this.servicesSvc.get();
+    const { response, error } = await this.servicesSvc.get();
     this.iProducts = response;
     response?.available?.forEach((elem) => {
       if (!elem.isTemplate && elem.isPublished) {
@@ -121,20 +137,22 @@ export class ServiciosPage implements OnInit {
   }
 
   async getProfessions() {
-    const {response, error} = await this.servicesSvc.professions();
+    const { response, error } = await this.servicesSvc.professions();
     this.iProfessions = response;
     this.getUserProfession();
   }
 
   async getUserProfession() {
-    const {response, error} = await this.servicesSvc.userProfession();
+    const { response, error } = await this.servicesSvc.userProfession();
     this.iUserProfession = response;
     this.mapProfessions();
   }
 
   mapProfessions() {
     this.ProfessionsMapped = this.iUserProfession.map((e, i) => {
-      let temp = this.iProfessions.find(element => element.id === e.subSectorId);
+      let temp = this.iProfessions.find(
+        (element) => element.id === e.subSectorId
+      );
       if (temp.name) {
         e.name = temp.name;
       }
@@ -143,20 +161,27 @@ export class ServiciosPage implements OnInit {
   }
 
   selectNuevoServicio() {
-    this.isNuevoServicio = true;
+    if (this.numbServicesAvaliable > 0) {
+      this.isNuevoServicio = true;
+    } else {
+      this.toastSvc.show(
+        'Cambia a Plan PRO o añade productos PLUS para poder crear ofertas activas adicionales.'
+      );
+    }
   }
 
   async addNuevoServicio() {
-
     var productCreate: IServiceFull = {
       title: this.title,
       description: this.description,
       productUnitPrice: this.unitPrice.toString().replace(/,/g, '.'),
       unitTypeId: this.unitType,
-      subSectorId: this.sector
+      subSectorId: this.sector,
+      images: this.images,
     };
 
-    const {response, error} = await this.servicesSvc.create(productCreate);
+    console.log('FILE: ', this.images);
+    const { response, error } = await this.servicesSvc.create(productCreate);
 
     this.getProducts();
 
@@ -171,17 +196,18 @@ export class ServiciosPage implements OnInit {
     this.unitType = null;
     this.sector = null;
     this.isTemplate = false;
-
   }
 
   async selectEditarServicio(service: IServiceFull) {
-
     this.title = service.title;
     this.description = service.description;
     this.unitPrice = service.productUnitPrice;
     this.unitType = service.unitTypeId;
     this.sector = service.subSectorId;
     this.editUpdate = service.productId;
+    service.images.forEach((value, index) => {
+      this.images[index] = value;
+    });
 
     if (!service.isTemplate) {
       this.doUpdate = true;
@@ -192,17 +218,17 @@ export class ServiciosPage implements OnInit {
   }
 
   async editServicio() {
-
     var productEdit: IServiceFull = {
       productId: this.editUpdate,
       title: this.title,
       description: this.description,
       productUnitPrice: this.unitPrice,
       unitTypeId: this.unitType,
-      subSectorId: this.sector
+      subSectorId: this.sector,
+      images: this.images,
     };
 
-    const {response, error} = await this.servicesSvc.update(productEdit);
+    const { response, error } = await this.servicesSvc.update(productEdit);
 
     this.getProducts();
 
@@ -233,8 +259,8 @@ export class ServiciosPage implements OnInit {
     this.unitType = null;
     this.sector = null;
     this.isTemplate = false;
+    this.images.fill(null);
   }
-
 
   logDrag(event: any, index: number, product: number, cart: number) {
     let ratio = event.detail.ratio;
@@ -266,13 +292,12 @@ export class ServiciosPage implements OnInit {
   }
 
   async aceptarValorarServicio() {
-
     var productFinish: IServiceFull = {
       cartId: this.cartIdTerminar,
-      productId: this.productIdTerminar
+      productId: this.productIdTerminar,
     };
 
-    const {response, error} = await this.servicesSvc.finish(productFinish);
+    const { response, error } = await this.servicesSvc.finish(productFinish);
 
     this.getProducts();
 
@@ -326,5 +351,13 @@ export class ServiciosPage implements OnInit {
 
   public irA(p: string): void {
     this.router.navigate([p]);
+  }
+
+  clearImageByIndex(index: number) {
+    this.images[index] = null;
+  }
+
+  fileSelected(iFile: IFile, index: number) {
+    this.images[index] = iFile;
   }
 }

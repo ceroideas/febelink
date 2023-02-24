@@ -34,10 +34,12 @@ import {RatingComponent} from '../components/rating/rating.component';
 import {HeaderComponent} from '../components/header/header.component';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from '../app-routing.module';
+import {ClickOutsideDirective} from '../directives/click-outside.directive';
 
 @NgModule({
   declarations: [
     ImgErrorFallbackDirective,
+    ClickOutsideDirective,
     HeaderButtonsComponent,
     LangBtnComponent,
     LangPopComponent,
@@ -80,6 +82,7 @@ import {AppRoutingModule} from '../app-routing.module';
     IonicModule,
     PipesModule,
     ImgErrorFallbackDirective,
+    ClickOutsideDirective,
     HeaderButtonsComponent,
     LangBtnComponent,
     FooterComponent,

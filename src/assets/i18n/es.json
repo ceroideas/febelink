@@ -35,7 +35,7 @@
     "clipboardErr": "Error al copiar al Portapapeles",
     "clipboardNone": "Sin Valores para copiar al Portapapeles",
     "share": "Compartir",
-    "slogan": "El buscador de servicios profesionales",
+    "slogan": "El buscador universal de servicios profesionales",
     "contactUs": "Contacta con Febelink",
     "contact": "Contacto",
     "labelSubsribe": "Suscribirse",
@@ -46,9 +46,8 @@
     "unavailable": "Función no disponible de momento",
     "yes": "Si",
     "no": "No",
-    "not-logged": "Para realizar esta accion necesitas estar Loguead@",
+    "not-logged": "Para realizar esta acción necesitas estar Loguead@",
     "developing": "Función en Desarrollo",
-
     "personal": {
       "accountname": "Nombre de Cuenta",
       "surname": "Apellidos",
@@ -57,7 +56,6 @@
       "tel": "Teléfono",
       "id": "Documento de Identidad",
       "id_short": "Doc",
-
       "errors": {
         "name": "Rellena el nombre",
         "surname": "Rellena el apellido",
@@ -67,7 +65,6 @@
         "phone": "Introduce tu número de teléfono"
       }
     },
-
     "buttons": {
       "confirm": "Confirmar",
       "back": "Volver",
@@ -83,13 +80,11 @@
       "edit": "Editar",
       "delete": "Borrar"
     },
-
     "address": {
       "state": "Provincia",
       "locality": "Localidad",
       "address": "Dirección"
     },
-
     "timer": {
       "months": "MESS",
       "days": "DÍAS",
@@ -97,7 +92,6 @@
       "mins": "MINS",
       "secs": "SEGS"
     },
-
     "legal": {
       "privacyPolicy": "Política de Privacidad",
       "condsNterms": "Términos y Condiciones",
@@ -105,13 +99,11 @@
       "lastUpdate": "Última actualización",
       "rights": "Todos los derechos reservados. FEBELINK DIGITAL S.L."
     },
-
     "verif": {
       "which": {
         "email": "Email Verificado",
         "kyc": "Identidad Verificada"
       },
-
       "email": {
         "head": "Verificacion de Datos",
         "title": "Deberá validar su cuenta de email para poder disfrutar de funciones como: <ul><li>interactuar</li><li>publicar búsquedas</li><li>chatear</li> <li>valorar</li><li>entre otras..</li></ul>",
@@ -122,86 +114,109 @@
         "sent": "Verifica tu email",
         "message": "Checkea tu correo {{ email }}"
       },
-
       "buttons": {
         "now": "Verificar",
         "not-now": "Mas tarde"
       }
     },
-
     "two-fa": {
       "title": "Verificar Cuenta - 2FA",
       "message": "Escribe aquí el código de {{ length }} dígitos que hemos enviado a tu email",
       "type": "******",
       "expires": "Expirará en {{ min }} minutos",
-
       "generating": "Generando Código 2FA",
       "verifying": "Verificando Código 2FA",
       "re-send": "Reenviar código de verificación",
-
       "error": {
         "expired": "Su código ha expirado, por lo que se le ha enviado uno nuevo",
         "wrong": "Código incorrecto, intente nuevamente"
       }
     },
-
     "months": [
-      { "short": "Ene", "long": "Enero" },
-      { "short": "Feb", "long": "Febrero" },
-      { "short": "Mar", "long": "Marzo" },
-      { "short": "Abr", "long": "Abril" },
-      { "short": "May", "long": "Mayo" },
-      { "short": "Jun", "long": "Juni" },
-      { "short": "Jul", "long": "Julio" },
-      { "short": "Ago", "long": "Agosto" },
-      { "short": "Sep", "long": "Septiembre" },
-      { "short": "Oct", "long": "Octubre" },
-      { "short": "Nov", "long": "Noviembre" },
-      { "short": "Dic", "long": "Diciembre" }
+      {
+        "short": "Ene",
+        "long": "Enero"
+      },
+      {
+        "short": "Feb",
+        "long": "Febrero"
+      },
+      {
+        "short": "Mar",
+        "long": "Marzo"
+      },
+      {
+        "short": "Abr",
+        "long": "Abril"
+      },
+      {
+        "short": "May",
+        "long": "Mayo"
+      },
+      {
+        "short": "Jun",
+        "long": "Juni"
+      },
+      {
+        "short": "Jul",
+        "long": "Julio"
+      },
+      {
+        "short": "Ago",
+        "long": "Agosto"
+      },
+      {
+        "short": "Sep",
+        "long": "Septiembre"
+      },
+      {
+        "short": "Oct",
+        "long": "Octubre"
+      },
+      {
+        "short": "Nov",
+        "long": "Noviembre"
+      },
+      {
+        "short": "Dic",
+        "long": "Diciembre"
+      }
     ],
     "social": {
       "telegram": "Únete a la conversación del Chat de Telegram"
     },
-
     "mailTo": {
       "support": "soporte@febelink.com",
       "from": "De: ",
       "to": "A: ",
       "msg": "Mensaje: ",
-
       "report": {
         "title": "Denunciar",
         "msg": "Comentanos en detalle lo que está sucediendo"
       },
-
       "block": {
         "title": "Bloquear",
         "msg": "Comentanos en detalle lo que está sucediendo"
       },
-
       "error": {
         "minLength": "Debe detallar con un mínimo de 5 palabras"
       }
     },
-
     "users": {
       "no-items": "No hay usuarios con esos datos",
       "error": {
         "list": "Parece que hubo un error al mostrar el listado. Vuelve a intentar"
       }
     },
-
     "report": {
       "create": {
         "title": "Denunciar",
         "msg": "Comentanos en detalle lo que está sucediendo",
         "placeholder": "Escribe aqui tu reporte",
-
         "done": "Reporte enviado con exito! Analizaremos el tema a la brevedad",
         "error": "Error al intentar generar Reporte"
       }
     },
-
     "follow": {
       "do": "Seguir",
       "cancel": "Siguiendo",
@@ -228,7 +243,7 @@
       "profile": "Perfil",
       "login": "Iniciar sesión",
       "share-febelink": "Comparte Febelink",
-      "share-msg": "Quiero compartir contigo Febelink, el buscador de servicios profesionales.",
+      "share-msg": "Quiero compartir contigo Febelink, el buscador universal de servicios profesionales.",
       "register": "Regístrate"
     },
     "pages": {
@@ -239,7 +254,7 @@
       "historialCompras": "Historial de compras",
       "misPublicaciones": "Mis publicaciones",
       "cambioAPremium": "Cambiar a cuenta profesional",
-      "plan": "Mi plan",
+      "plan": "Mis profesiones",
       "suscripcion": "Mi suscripción",
       "servicios": "Mis servicios",
       "ofertas": "Mis ofertas",
@@ -248,33 +263,33 @@
       "ayuda": "Ayudar",
       "salir": "Cerrar sesión"
     },
-      "detalle": {
-        "servicio": "Servicio",
-        "valoracion": "valoraciones",
-        "cantidad": "Cantidad",
-        "comprar": "Comprar ahora",
-        "add": "Añadir al carrito",
-        "readmore": " Leer más"
+    "detalle": {
+      "servicio": "Servicio",
+      "valoracion": "valoraciones",
+      "cantidad": "Cantidad",
+      "comprar": "Comprar ahora",
+      "add": "Añadir al carrito",
+      "readmore": " Leer más"
     },
     "labels": {
       "currentPlan": "Plan actual",
       "editarPerfil": "Editar perfil"
     },
-    "footer":{
-      "company":"EMPRESA",
-      "about":"Acerca de",
-      "premium":"Premium",
-      "blog":"Blog",
-      "affiliate":"Programa afiliación",
+    "footer": {
+      "company": "EMPRESA",
+      "about": "Acerca de",
+      "premium": "Premium",
+      "blog": "Blog",
+      "affiliate": "Programa afiliación",
       "cupon": "Obtener cupón",
-      "support":"AYUDA Y SOPORTE",
-      "contact":"Contáctanos",
-      "conocimiento":"Centro de conocimiento",
-      "premiumBis":"Soporte Premium",
-      "sponsor":"Patrocinio",
-      "legal":"LEGAL",
-      "privacy":"Política Privacidad",
-      "terms":"Términos y condiciones",
+      "support": "AYUDA Y SOPORTE",
+      "contact": "Contáctanos",
+      "conocimiento": "Centro de conocimiento",
+      "premiumBis": "Soporte Premium",
+      "sponsor": "Patrocinio",
+      "legal": "LEGAL",
+      "privacy": "Política Privacidad",
+      "terms": "Términos y condiciones",
       "derechos": "Todos los derechos reservados."
     }
   },
@@ -348,36 +363,26 @@
         "title": "Error al editar los datos",
         "message": "Ocurrieron los siguientes errores: ",
         "messageChk": "Comprueba que todos los campos están introducidos.",
-
         "name": "El nombre tiene que tener al menos 3 caracteres",
-
         "passMatch": "Introduce correctamente la confirmación de contraseña",
-
         "mail": "El correo no es válido",
         "mailExists": "El email que has introducido ya existe",
         "mailEmpty": "El campo email no puede estar vacío",
-
         "phone": "El formato del teléfono no es correcto",
-
         "id": "El Documento de Identidad que has introducido no es válido",
         "idFormat": "El formato del Documento de Identidad no es correcto",
-
         "image": "Error al obtener imagen",
         "imageMaxSize": "Archivo demasiado grande, max. {{ max }}",
-
         "noFileSelected": "No has seleccionado archivo.",
         "noFileProvided": "No has provisto archivo",
-
         "limitSelectSectors_1": "Solo puedes seleccionar ",
         "limitSelectSectors_2": " sectores con tu suscripción actual"
       },
       "alerts": {
         "improve": "Mejora tu perfil",
-
         "chooseShare": "Elige donde quieres compartir",
         "shareInside": "Dentro de la aplicación",
         "shareOutside": "Fuera de la aplicación",
-
         "recommendation": "Pedir Recomendación",
         "mail": "Escribe el email de un usuario"
       },
@@ -428,7 +433,6 @@
       "button": "REGISTRARSE",
       "or": "Ó",
       "continueWith": "Continuar con ",
-
       "errors": {
         "title": "Error al registrarse",
         "list": "Ocurrieron los siguientes errores al registrarse: ",
@@ -446,16 +450,13 @@
       "register": "Crear cuenta",
       "logging": "Iniciando sesión...",
       "must": "Para poder disfrutar de esta sección primero tienes que haber Iniciado Sesión.<br><br>Para continuar, Logueate",
-
       "recover": {
         "title": "Recuperar contraseña",
         "subtitle": "Introduce el email para recuperar la contraseña"
       },
-
       "errors": {
         "title": "Error al iniciar sesión",
         "message": "Hubo un error al iniciar sesión. Inténtalo de nuevo más tarde",
-
         "data": "Los datos introducidos no son correctos",
         "email": "El formato del email introducido no es correcto"
       }
@@ -486,12 +487,11 @@
     "wallet": {
       "title": "Mi Wallet",
       "public-key": "Clave Pública",
+      "private-key": "Clave Privada",
       "retained": "Tokens Retenidos",
       "release": "Fecha de Desbloqueo:",
-
       "transactions": "Transacciones recientes",
       "no-transactions": "Sin transacciones recientes",
-
       "buy": {
         "title": "Comprar assets",
         "buy": "Cantidad a Comprar:",
@@ -513,13 +513,11 @@
         "title": "¿Por qué veo solo el saldo de algunas Monedas?",
         "message": "Se muestran los saldos en FLAU, BTC, XLM, EUR, USD. Si tienes otros saldos en tu Wallet no se mostrarán en esta ventana"
       },
-
       "send": {
         "title": "Enviar Tokens a",
         "addressee": "Destinatario",
         "total": "Saldo Total Restante",
         "button": "Enviar",
-
         "alert": {
           "title": "Aviso importante",
           "message": "Por tu seguridad, asegurate de revisar la información de la wallet a donde envias tus saldos, asi como el funcionamiento de la plataforma donde los envías.<br><br>Febelink no se hace responsable de aquellos saldos una vez esten fuera de su plataforma.<br><br>Estamos a tu disposicion para cualquier consulta en <a href=\"mailto:soporte@febelink.com\">soporte@febelink.com</a>"
@@ -548,35 +546,27 @@
       },
       "exchange": {
         "minnersFee": "Coste de transacción",
-
         "select-origin": "Seleccionar Moneda Origen",
         "select-destiny": "Seleccionar Moneda Destino",
-
         "sell_qant": "Cantidad",
         "sell_conv": "Conversion",
         "buy_qant": "Cantidad",
         "buy_conv": "Conversion",
-
         "create": "Ofertar",
         "edit": "Editar",
         "purchase": "Confirmar",
-
         "sell": "Vendes",
         "buy": "Recibes",
-
         "cant-switch": "Al haber seleccionado una oferta no puede hacer switch con los assets",
         "exceeds-sell": "La oferta no puede exceder la cantidad de venta",
         "exceeds-buy": "La oferta no puede exceder la cantidad de compra",
-
         "market-price": "Usar Precio de Mercado",
         "available": "Dispones: ",
-
         "title": {
           "exchange": "Publicar Orden",
           "offer": "Oferta Edita - "
         }
       },
-
       "error": {
         "missing-sell": "Debe seleccionar la Moneda a Vender",
         "missing-buy": "Debe seleccionar la Moneda a Comprar",
@@ -591,7 +581,6 @@
         "asset-not-available": "De momento esta moneda no está disponible para transacciones",
         "no-public": "Hasta que no tenga la Wallet Creada (Clave Publica asignada) no podrá realizar Compra de Tokens. Complete la información de su perfil para continuar"
       },
-
       "operations": [
         "Creación de Cuenta",
         "Envío de Pago a Cuenta",
@@ -607,9 +596,7 @@
         "Avanzado de Número de secuencia de cuenta",
         "Gestión de oferta de compra (bid) de un activo por otro"
       ],
-
       "trustline": "*Recuerda que debes aceptar el asset FLAU para establecer una linea de confianza en el sitio donde se encuentre la wallet que reciba este envio.",
-
       "moreFundsButton": "Comprar FLAU"
     },
     "posts": {
@@ -621,22 +608,17 @@
         "love": "Me gusta",
         "useful": "Muy Util"
       },
-
       "advises": {
         "title": "Oráculo",
         "my-posts": "Mis Posts",
-
         "see": "Ver mas posts",
         "see-user": "Ver mas posts del Usuario",
-
         "create": {
           "title": "Crear Publicación",
           "subtitle": "Subtitulo",
           "summary": "Resumen",
           "wysiwyg": "¿Qué quieres contar?",
-
           "done": "Oráculo creado exitosamente",
-
           "error": {
             "title": "El titulo no puede ser menor a 4 digitos",
             "content": "Debes indicar el contenido a publicar",
@@ -644,10 +626,8 @@
           },
           "saveButton": "Publicar"
         },
-
         "edit": "Editar Publicación",
         "editButton": "Guardar Cambios",
-
         "new": {
           "title": "Gran trabajo!",
           "msg": "Ahora, ¿te gustaria crear otro Oráculo?"
@@ -662,12 +642,10 @@
           "done": "Oráculo eliminado"
         },
         "share": "Compartir",
-
         "stats": {
           "qCreated": "Oráculos Creados:",
           "qReacts": "Reacciones a ellos:"
         },
-
         "error": {
           "search": "Hubo un error en la búsqueda, vuelve a intentarlo",
           "unauthorized": "No tienes permiso para editar este Oráculo",
@@ -676,7 +654,6 @@
           "no-items-filters": "Hasta aquí llegamos con estos filtros<br>¿Quieres publicar uno?<br>Clickea aqui"
         }
       },
-
       "comments": "Comentario/s",
       "comment": {
         "placeholder": "Comentar...",
@@ -716,7 +693,6 @@
       "title": "Información General\nSobre el Token",
       "detail": "El Token Áureo forma parte del ecosistema de la plataforma Febelink, ayudando a los usuarios a realizar sus transacciones de una forma más segura, sencilla, rápida y eficiente, contando además con muchos beneficios por uso, descuentos, y servicios exclusivos.",
       "subtitle": "Probablemente el token más usable del mundo",
-
       "discounts": "DESCUENTOS",
       "discountsDetail": "Con el token Áureo de Febelink obtienes automáticamente grandes descuentos en la plataforma, como en suscripciones Profesionales y Premium, y servicios gratuitos.",
       "exclusive": "PRODUCTOS EXCLUSIVOS",
@@ -788,7 +764,7 @@
     "aboutUs": {
       "title": "SOBRE NOSOTROS",
       "story": "Nuestra Historia",
-      "description": "Febelink es el buscador de servicios profesionales, una red social donde los usuarios publican sus búsquedas y el sistema envía las notificaciones a los profesionales relacionados con la actividad. Nuestro objetivo es ayudar a las personas a encontrar a los profesionales y empresas que necesitan de forma más eficiente, y ayudar a las empresas y profesionales a encontrar nuevos clientes.",
+      "description": "Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.",
       "press": "PRENSA",
       "blog": "BLOG",
       "blogFebelink": "BLOG DE FEBELINK",
@@ -858,7 +834,9 @@
             {
               "descript": "<strong>Teléfono de contacto: </strong>+34 952633297"
             },
-            { "descript": "<strong>CIF: </strong>B05367511" },
+            {
+              "descript": "<strong>CIF: </strong>B05367511"
+            },
             {
               "descript": "<strong>E-mail: </strong> <a href=\"mailto:info@febelink.com\">info@febelink.com</a>"
             }
@@ -1144,14 +1122,11 @@
         "error": "No se pudo eliminar"
       },
       "irreversible": " ESTA ACCIÓN NO ES REVERSIBLE",
-
       "purchase-date": "Fecha de Pago",
-
       "modal": {
         "header": "{{ CRUD }} tokens de usuario",
         "body": "¿Seguro que deseas {{ CRUD }} los tokens de {{name}}?{{ extra }}"
       },
-
       "loading": "Accion Desbilitada durante Carga",
       "error": {
         "some": "Ha habido un error",
@@ -1160,7 +1135,6 @@
         "retained": "No puedes modificar Tokens no retenidos"
       }
     },
-
     "create": "Añadir",
     "read": "Leer",
     "update": "Editar",
@@ -1202,7 +1176,6 @@
         "none": "No ha cargado un documento para validar",
         "frontFields": "No he podido corroborar ningun campo de la parte Frontal del documento",
         "backFields": "No he podido corroborar ningun campo de la parte Trasera del documento",
-
         "err": "Checkea que los siguientes campos del <b>Documento</b> no tengan problemas",
         "name": "Nombre",
         "surname": "Apellido",
@@ -1210,13 +1183,11 @@
         "legal_age": "Mayoria de Edad",
         "expire": "Fecha de Caducidad",
         "number": "Numero de Documento",
-
         "consistent": "Hay al menos 2 campos inconsistentes entre ambos lados del documento",
         "expected": "El tipo de Documento seleccionado y/o el país emisor no concuerdan con el Documento cargado"
       },
       "selfie": {
         "none": "No ha realizado la prueba de Selfie",
-
         "err": "Los errores con respecto a la <b>Selfie</b> son:",
         "is_real": "No ha pasado la prueba de suplantación ( imagenes impresas, videos en pantallas, mascaras, entre otras )",
         "face_match": "No se ha encontrado relacion entre la Selfie y la foto del documento"
@@ -1227,7 +1198,6 @@
         "head": "Completa el KYC",
         "msg": "Este paso sólo te llevará un momento y lo tienes que realizar una sola vez. Así tenemos un entorno más seguro para toda la comunidad"
       },
-
       "ios": {
         "tile": "Validacion de KYC en Fase Beta",
         "message": "Al encontrarse en Desarrollo para iOS, puede tener fallas. Si no puede terminar el proceso, continuelo desde el navegador en www.febelink.com"

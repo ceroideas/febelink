@@ -41,7 +41,7 @@
           </div>
 
           <div class="servicios-sections-cell-button">
-            <div *ngIf="numbServicesAvaliable > 0" class="servicios-sections-button-primary"
+            <div class="servicios-sections-button-primary"
                  (click)="selectNuevoServicio()">
               Nuevo servicio
             </div>
@@ -69,7 +69,7 @@
           Añadir ahora
         </div>
         <div *ngIf="doUpdate || isTemplate" class="sections-add-service-button-primary" (click)="editServicio()">
-          Editar
+          Guardar cambios
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@
               </div>
             </div>
             <div>
-              Gastos de gestión 10%.
+              Gastos de gestión 0%.
             </div>
           </div>
           <div class="add-service-price-cell-right">
@@ -147,7 +147,18 @@
         <div class="add-service-content-right-subtitle">
           Peso máximo 3 Mb. Máximo 5 imágenes.
         </div>
-        <div>
+        <ng-container *ngFor="let imageURL of images; let i = index">
+          <div [ngClass]="imageURL ? 'add-service-img-selected' : 'add-service-img-select'"
+               (click)="filePickerDesktop.clicks()">
+            <app-file-picker hidden #filePickerDesktop [iFile]="iFile" [pickType]="filePickType.IMAGE"
+                             (OnFile)="fileSelected($event, i)"></app-file-picker>
+            <img [src]="imageURL?.src || imageURL || 'assets/icon/svg/plus-blue.svg'"
+                 [ngClass]="imageURL ? 'add-service-img' : 'add-service-img-select-svg'"
+                 (click)="filePickerDesktop.clicks()"/>
+            <div class="add-service-remove-div" *ngIf="imageURL" (click)="clearImageByIndex(i)">
+              <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg"/>
+            </div>
+          </div>
           <!--
           <div class="add-service-img-selected">
             <img src="assets/imgs/servicios-prev-6.png" class="add-service-img" />
@@ -155,7 +166,6 @@
               <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
             </div>
           </div>
-          -->
           <div class="add-service-img-select">
             <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
           </div>
@@ -170,8 +180,8 @@
           </div>
           <div class="add-service-img-select">
             <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
-          </div>
-        </div>
+          </div>          -->
+        </ng-container>
       </div>
     </div>
   </div>
@@ -182,7 +192,7 @@
 
       <div *ngFor="let servicio of iProducts.available; let i = index" class="servicios-content-items-item">
         <div class="servicios-item-cell-img">
-          <img src="assets/imgs/servicios-prev.png" class="servicios-item-img"/>
+          <img [src]="servicio.images[0] || 'assets/icon/svg/default_product.svg'" class="servicios-item-img"/>
         </div>
         <div class="servicios-item-cell-text">
           <div *ngIf="servicio.isPublished" class="servicios-chip-publicado-b">Publicado</div>
@@ -238,7 +248,7 @@
                 /{{unitTypes[finalizado.unitTypeId - 1].shorthand}}</ng-container>
             </div>
             <div class="servicios-item-date-b">
-              -{{finalizado.productUnitPrice * 0.1 }}€ Gastos de gestión
+              -{{finalizado.productUnitPrice * 0 }}€ Gastos de gestión
               <br> {{finalizado.serviceEndDate}}
             </div>
           </div>
@@ -352,7 +362,7 @@
 
     <div *ngFor="let servicio of iProducts.available; let i = index" class="servicios-content-wrapper">
       <div class="servicios-left servicios-left-padding-a">
-        <img class="servicios-img" src="assets/imgs/servicios-prev.png"/>
+        <img class="servicios-img" [src]="servicio.images[0] || 'assets/icon/svg/default_product.svg'"/>
         <div class="servicios-edit" (click)="selectEditarServicio(servicio)">
           Editar
         </div>
@@ -461,7 +471,7 @@
             {{finalizado.clientUsername}}
           </div>
           <div class="servicios-date">
-            -{{finalizado.productUnitPrice * 0.1 }}€
+            -{{finalizado.productUnitPrice * 0 }}€
             <br> Gastos de gestión
             <br> {{finalizado.serviceEndDate}}
           </div>
@@ -486,7 +496,7 @@
     </div>
   </ng-container>
 
-  <div *ngIf="numbServicesAvaliable > 0" class="mobile add-service-floating" (click)="selectNuevoServicio()">
+  <div class="mobile add-service-floating" (click)="selectNuevoServicio()">
     <img class="add-service-svg" src="assets/icon/svg/plus.svg"/>
   </div>
 
@@ -698,7 +708,7 @@
             </div>
           </div>
           <div>
-            Gastos de gestión 10%.
+            Gastos de gestión 0%.
           </div>
         </div>
         <div class="modal-add-separator-right">
@@ -737,17 +747,19 @@
         Peso máximo de las imágenes 3 Mb (máximo 5 imágenes).
       </div>
       <div class="display-table-100">
-        <!--
-        <div class="table-cell-5">
-          <div class="div-add-image-selected">
-            <img src="assets/imgs/preview2.png" class="add-image-selected" />
-            <div class="add-image-remove">
-              <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg" />
+        <div class="table-cell-5" *ngFor="let imageURL of images; let i = index">
+          <div [ngClass]="imageURL ? 'div-add-image-selected' : 'div-add-image-select'" (click)="filePicker.clicks()">
+            <app-file-picker hidden #filePicker [iFile]="iFile" [pickType]="filePickType.IMAGE"
+                             (OnFile)="fileSelected($event, i)"></app-file-picker>
+            <img [src]="imageURL?.src || imageURL || 'assets/icon/svg/plus-blue.svg'"
+                 [ngClass]="imageURL ? 'add-image-selected' : 'add-image-select'"
+                 (click)="filePicker.clicks()"/>
+            <div class="add-image-remove" *ngIf="imageURL" (click)="clearImageByIndex(i)">
+              <img class="add-image-remove-svg" src="assets/icon/svg/close-white.svg"/>
             </div>
           </div>
         </div>
-        -->
-        <div class="table-cell-5">
+        <!--<div class="table-cell-5">
           <div class="div-add-image-select">
             <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
           </div>
@@ -766,12 +778,7 @@
           <div class="div-add-image-select">
             <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
           </div>
-        </div>
-        <div class="table-cell-5">
-          <div class="div-add-image-select">
-            <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
-          </div>
-        </div>
+        </div>-->
       </div>
 
     </div>
@@ -780,7 +787,7 @@
         Añadir ahora
       </div>
       <div *ngIf="doUpdate || isTemplate" class="modal-add-button-primary" (click)="editServicio()">
-        Editar
+        Guardar cambios
       </div>
       <div class="modal-add-button-secondary" (click)="cancelNuevoServicio()">
         Cancelar

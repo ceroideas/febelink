@@ -1,7 +1,8 @@
-import {AdviseService} from './../services/advises.service';
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IAdviseFull} from '../models/advises.model';
+import { SeoService } from 'src/app/services/seo.service';
+import { AdviseService } from './../services/advises.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IAdviseFull } from '../models/advises.model';
 
 @Component({
   selector: 'app-post-advise',
@@ -9,7 +10,6 @@ import {IAdviseFull} from '../models/advises.model';
   styleUrls: ['./advise.page.scss'],
 })
 export class AdvisePage implements OnInit {
-
   @Input() id: number;
   @Input() iAdvise: IAdviseFull;
 
@@ -19,11 +19,11 @@ export class AdvisePage implements OnInit {
   paramsUrl: any;
 
   constructor(
-    private actRoute: ActivatedRoute
-    , private router: Router
-    , private adviseSvc: AdviseService
-  ) {
-  }
+    private actRoute: ActivatedRoute,
+    private router: Router,
+    private adviseSvc: AdviseService,
+    private seoService: SeoService
+  ) {}
 
   ngOnInit() {
     this.paramsQuery = this.actRoute.snapshot.queryParamMap;
@@ -32,6 +32,12 @@ export class AdvisePage implements OnInit {
     if (this.paramsUrl?.id) {
       this.getPost(this.paramsUrl?.id);
     }
+
+    this.seoService.generateTags({
+      ...this.seoService.seoDEFAULT,
+      image: this.iAdvise?.media_url,
+      description: this.iAdvise?.content,
+    });
   }
 
   /* If has id -> editing post */
@@ -39,7 +45,7 @@ export class AdvisePage implements OnInit {
     this.id = id;
     this.isLoading = true;
 
-    const {response, error} = await this.adviseSvc.get(id);
+    const { response, error } = await this.adviseSvc.get(id);
     /* if( error )
       this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' ) */
 
@@ -47,7 +53,7 @@ export class AdvisePage implements OnInit {
 
     this.isLoading = false;
 
-    // To Trigger Asynchronously Issue to Give Tokens by Views 
+    // To Trigger Asynchronously Issue to Give Tokens by Views
     this.adviseSvc.issue(id);
   }
 
@@ -58,5 +64,4 @@ export class AdvisePage implements OnInit {
   newOne() {
     this.router.navigate(['oracle/create']);
   }
-
 }

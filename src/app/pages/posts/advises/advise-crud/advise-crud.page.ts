@@ -16,7 +16,7 @@ import {AlertSvc} from 'src/app/services/alert.service';
 import {LangBtnComponent} from 'src/app/components/langs/btn/btn.component';
 import {LoadingSvc} from 'src/app/services/loading.service';
 import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {IFile} from 'src/app/components/file-picker/models/file.model';
+import {FilePickType, IFile} from 'src/app/components/file-picker/models/file.model';
 import {UserService} from 'src/app/services/user.service';
 import {RouteSvc} from 'src/app/services/route.service';
 
@@ -31,10 +31,11 @@ export class AdviseCRUDPage implements OnInit {
 
   isLoading: boolean = false;
 
+  filePickType = FilePickType;
+
   form: UntypedFormGroup;
-  iFile: IFile = {};
+  iFile: IFile;
   content: iWYSIWYG = {};
-  contentText: any;
 
   id: number;
   iAdvise: IAdviseFull;
@@ -87,7 +88,8 @@ export class AdviseCRUDPage implements OnInit {
     private alertSvc: AlertSvc,
     private loadingSvc: LoadingSvc,
     private sessionSvc: UserSessionSvc,
-    private userSvc: UserService
+    private userSvc: UserService,
+    public fileSvc: FileService
   ) {
   }
 
@@ -159,7 +161,9 @@ export class AdviseCRUDPage implements OnInit {
         Validators.required
       ),
       topic: new UntypedFormControl(
-        {value: this.iAdvise?.topic || '', disabled: disabled},
+        {
+          value: this.topics.find(elem => elem.id === this.iAdvise?.topic) || '', disabled: disabled
+        },
         Validators.required
       ),
       content: new UntypedFormControl(
@@ -177,11 +181,13 @@ export class AdviseCRUDPage implements OnInit {
       summary: this.iAdvise?.summary || '',
     });
 
-    //this.content.html = this.iAdvise?.content;
-    this.topicSelected = this.topics[this.iAdvise?.topic];
-    this.contentText = this.iAdvise?.content;
-    this.iFile.src = this.iAdvise?.media_url;
-    this.iFile.ext = this.iAdvise?.media_ext;
+    this.topicSelected = this.topics.find(elem =>
+      elem.id === this.iAdvise?.topic
+    );
+    this.content.html = this.iAdvise?.content;
+    if (this.iAdvise?.media_url && this.iAdvise?.media_ext) {
+      this.iFile = {src: this.iAdvise?.media_url, ext: this.iAdvise?.media_ext};
+    }
   }
 
   clear() {
@@ -198,6 +204,10 @@ export class AdviseCRUDPage implements OnInit {
       this.iAdvise.media_name = null;
       this.iAdvise.media_ext = null;
     }
+  }
+
+  removeFileSelected() {
+    this.iFile = null;
   }
 
   wysiwygChange(content: iWYSIWYG) {
@@ -271,7 +281,7 @@ export class AdviseCRUDPage implements OnInit {
       title: title,
       subtitle: subtitle,
       summary: summary,
-      content: this.contentText,
+      content: this.content.html,
 
       media: this.iFile?.file,
       media_name: this.iAdvise?.media_name,

@@ -112,7 +112,7 @@ export class WalletPage {
   }
 
   public goBack(): void {
-    this.router.navigate([ '/' + environment.HOME_PAGE ]);
+    this.router.navigate(['/' + environment.HOME_PAGE]);
   }
 
   public async send() {
@@ -150,6 +150,7 @@ export class WalletPage {
 
   setVars(response) {
     this.walletParams.publicKey = response.publicKey;
+    this.walletParams.privateKey = response.privateKey;
     this.walletParams.userWallets = response.data;
     this.walletParams.retainedTks = response.retainedTks;
     this.walletParams.verified = response.verified;
@@ -164,6 +165,10 @@ export class WalletPage {
 
   async copyPublicKey() {
     this.clipboardSvc.copy(this.walletParams.publicKey);
+  }
+
+  async copyPrivateKey() {
+    this.clipboardSvc.copy(this.walletParams.privateKey);
   }
 
   async exchange(currency: CryptoCurrency) {

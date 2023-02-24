@@ -95,3 +95,16 @@ ion-button {
     padding-right: 0;
   }
 }
+
+@media (max-width: 768px) {
+  .bell-menu {
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+.header-notif-badge {
+  position: relative;
+  bottom: 11px;
+  right: 3px;
+}

@@ -22,6 +22,8 @@ import {CartServiceShow} from '../../../services/cart.service';
 export class HeaderButtonsComponent implements OnInit {
   @Input() perfil: IUser;
   @Input() currentTab: Tabs;
+  @Input() currentUser: IUser;
+  
   tabs = Tabs;
   notifCount: number;
   totalUnreadMessages: number;
