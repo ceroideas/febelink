@@ -13,10 +13,10 @@ import {
   EditorChangeSelection,
   QuillEditorComponent,
 } from 'ngx-quill';
-import {iWYSIWYG} from './models/wysiwyg.model';
+import { iWYSIWYG } from './models/wysiwyg.model';
 import 'quill-emoji/dist/quill-emoji.js';
-import {HttpClient} from '@angular/common/http';
-import {environment} from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-wysiwyg',
@@ -31,7 +31,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
   @Input() placeholder: string = '';
   @Input() readOnly: boolean = false;
 
-  @Input() styles: {} = {height: '200px'};
+  @Input() styles: {} = { height: '200px' };
   @Input() html: string;
   @Output() OnFocus: EventEmitter<any> = new EventEmitter();
   @Output() OnChange: EventEmitter<iWYSIWYG> = new EventEmitter();
@@ -100,8 +100,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
     }
   };
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterContentInit() {
     if (this.html) {
