@@ -19,7 +19,7 @@ import {
   OnboardingWelcome,
   DocumentStageConfig,
 } from 'aliceonboarding';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { environment } from 'src/environments/environment';
 
 @Component({

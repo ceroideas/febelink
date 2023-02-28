@@ -57,8 +57,8 @@
         <ion-label class="ion-padding label_avatar">
           <ion-label class="menu-username">{{ currentUser?.nick }}</ion-label>
           <ion-label class="menu-editar pointer">{{
-              'menu.labels.editarPerfil' | translate
-            }}</ion-label>
+            'menu.labels.editarPerfil' | translate
+          }}</ion-label>
         </ion-label>
         <ion-img
           size="small"
@@ -78,8 +78,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_user.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.datosPersonales' | translate
-            }}</ion-label>
+            'menu.pages.datosPersonales' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <ion-button
@@ -102,8 +102,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_wallet.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.wallet' | translate
-            }}</ion-label>
+            'menu.pages.wallet' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <!-- Section options. -->
@@ -123,11 +123,11 @@
             </ion-col>
             <ion-col size="5" class="tx-end">
               <ion-label>{{
-                  {value: currency.amount} | splitNumber
-                }}</ion-label>
+                { value: currency.amount } | splitNumber
+              }}</ion-label>
               <ion-label class="decimal">{{
-                  {value: currency.amount, returnDecimal: true} | splitNumber
-                }}</ion-label>
+                { value: currency.amount, returnDecimal: true } | splitNumber
+              }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -143,8 +143,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.historialCompras' | translate
-            }}</ion-label>
+            'menu.pages.historialCompras' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <ion-item
@@ -161,45 +161,75 @@
         ></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.misPublicaciones' | translate
-            }}</ion-label>
+            'menu.pages.misPublicaciones' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <ion-grid *ngIf="visiblePro" class="ion-no-padding">
         <ion-row class="ion-no-padding" size="12">
           <ion-col class="ion-no-padding" size="12">
-            <ion-item lines="none" class="ion-no-padding item_orange_menu" button (click)="goTo('professions')">
+            <ion-item
+              lines="none"
+              class="ion-no-padding item_orange_menu"
+              button
+              (click)="goTo('professions')"
+            >
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
-                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_plan.svg"></ion-img>
+                    <ion-img
+                      class="tam_icon_item"
+                      src="assets/icon/svg/icono_plan.svg"
+                    ></ion-img>
                   </ion-col>
                   <ion-col size="11">
-                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.plan' | translate }}</ion-label>
+                    <ion-label style="margin-left: 0.8em">{{
+                      'menu.pages.plan' | translate
+                    }}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item lines="none" class="ion-no-padding item_orange_menu" button (click)="goTo('subscriptions')">
+            <ion-item
+              lines="none"
+              class="ion-no-padding item_orange_menu"
+              button
+              (click)="goTo('subscriptions')"
+            >
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
-                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_suscripcion.svg"></ion-img>
+                    <ion-img
+                      class="tam_icon_item"
+                      src="assets/icon/svg/icono_suscripcion.svg"
+                    ></ion-img>
                   </ion-col>
                   <ion-col size="11">
-                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.suscripcion' | translate }}</ion-label>
+                    <ion-label style="margin-left: 0.8em">{{
+                      'menu.pages.suscripcion' | translate
+                    }}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item lines="none" class="ion-no-padding item_orange_menu" button (click)="goTo('services')">
+            <ion-item
+              lines="none"
+              class="ion-no-padding item_orange_menu"
+              button
+              (click)="goTo('services')"
+            >
               <ion-grid size="12">
                 <ion-row class="padding_row_orange_menu" size="12">
                   <ion-col size="1">
-                    <ion-img class="tam_icon_item" src="assets/icon/svg/icono_servicios.svg"></ion-img>
+                    <ion-img
+                      class="tam_icon_item"
+                      src="assets/icon/svg/icono_servicios.svg"
+                    ></ion-img>
                   </ion-col>
                   <ion-col size="11">
-                    <ion-label style="margin-left:0.8em;">{{ 'menu.pages.servicios' | translate }}</ion-label>
+                    <ion-label style="margin-left: 0.8em">{{
+                      'menu.pages.servicios' | translate
+                    }}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -219,14 +249,33 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-item [ngClass]="{'item_click': visiblePro, 'item_noMargin_click': !visiblePro }" color="item" lines="none"
-                button (click)="goTo('professions')">
+      <ion-item
+        [ngClass]="{ item_click: visiblePro, item_noMargin_click: !visiblePro }"
+        color="item"
+        lines="none"
+        button
+        (click)="goTo('professions')"
+      >
         <div tabindex="0"></div>
-        <ion-img *ngIf="visiblePro" size="small" src="assets/icon/svg/icono_cambio_cuenta_blue.svg"></ion-img>
-        <ion-img *ngIf="!visiblePro" size="small" src="assets/icon/svg/menu_premium.svg"></ion-img>
-        <ion-label style="color:#FF5A1F;" *ngIf="!visiblePro"
-                   class="ion-padding">{{ 'menu.pages.cambioAPremium' | translate }}</ion-label>
-        <ion-label style="color:#1C64F2;" *ngIf="visiblePro" class="ion-padding">Cambiar a cuenta usuario</ion-label>
+        <ion-img
+          *ngIf="visiblePro"
+          size="small"
+          src="assets/icon/svg/icono_cambio_cuenta_blue.svg"
+        ></ion-img>
+        <ion-img
+          *ngIf="!visiblePro"
+          size="small"
+          src="assets/icon/svg/menu_premium.svg"
+        ></ion-img>
+        <ion-label
+          style="color: #ff5a1f"
+          *ngIf="!visiblePro"
+          class="ion-padding"
+          >{{ 'menu.pages.cambioAPremium' | translate }}</ion-label
+        >
+        <ion-label style="color: #1c64f2" *ngIf="visiblePro" class="ion-padding"
+          >Cambiar a cuenta usuario</ion-label
+        >
       </ion-item>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
       <ion-item class="item_menu_margen" color="item" lines="none" button>
@@ -234,8 +283,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_idioma.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.idioma' | translate
-            }}</ion-label>
+            'menu.pages.idioma' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <ion-item class="item_menu_margen" color="item" lines="none" button>
@@ -243,8 +292,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_ayudar.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.ayuda' | translate
-            }}</ion-label>
+            'menu.pages.ayuda' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <ion-item
@@ -258,8 +307,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_salida.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-              'menu.pages.salir' | translate
-            }}</ion-label>
+            'menu.pages.salir' | translate
+          }}</ion-label>
         </div>
       </ion-item>
       <ion-item-divider class="legal desktop_no_visible"></ion-item-divider>

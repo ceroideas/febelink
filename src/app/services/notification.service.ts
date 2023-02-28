@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { NotifType } from '../models/notification';
 import { ApiService } from './api.service';
 import { UtilitiesService } from './utilities.service';
-import { Badge } from '@ionic-native/badge/ngx';
+import { Badge } from '@awesome-cordova-plugins/badge/ngx';
 
 @Injectable({
   providedIn: 'root',
@@ -63,32 +63,31 @@ export class NotificationService {
     const count: number = notifCount + totalUnreadMessages;
     this.badge.set(count).catch((err) => {
       if (count) {
-        this.utils.updateWebFavicon('favicon-notif')
-          .updateWebFavicon('favicon-notif', 192 )
+        this.utils
+          .updateWebFavicon('favicon-notif')
+          .updateWebFavicon('favicon-notif', 192)
           .updateWebFavicon('favicon-notif', 'apple');
       } else {
-        this.utils.updateWebFavicon('fav/icon-32x32' )
-          .updateWebFavicon('fav/icon-192x192', 192 )
-          .updateWebFavicon('fav/icon-180X180', 'apple' )
+        this.utils
+          .updateWebFavicon('fav/icon-32x32')
+          .updateWebFavicon('fav/icon-192x192', 192)
+          .updateWebFavicon('fav/icon-180X180', 'apple');
       }
     });
   }
 
-  titleNotification(
-    notifCount: number,
-    totalUnreadMessages: number
-  ) {
-    const count:number = notifCount + totalUnreadMessages;
+  titleNotification(notifCount: number, totalUnreadMessages: number) {
+    const count: number = notifCount + totalUnreadMessages;
 
     // Lo traigo al titulo que tiene asignado para a este añadirle el contador de notif
-    let title: string =  this.utils.getWebTitle();
+    let title: string = this.utils.getWebTitle();
 
     if (count) {
       // Para eliminar los contadores de notificaciones que pueda ya tener
       // y luego añadirlo ( para evitar `(1)(1) Title` )
       title = title.replace(/\([0-9]*\)/g, '');
 
-      this.utils.updateWebTitle( `(${count}) ` + title );
+      this.utils.updateWebTitle(`(${count}) ` + title);
     } else {
       this.utils.updateWebTitle(title);
     }

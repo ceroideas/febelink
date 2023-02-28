@@ -5,8 +5,11 @@ import {
   SocialAuthService,
   SocialUser,
 } from '@abacritt/angularx-social-login';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import {
+  Facebook,
+  FacebookLoginResponse,
+} from '@awesome-cordova-plugins/facebook/ngx';
+import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Platform } from '@ionic/angular';

@@ -1,20 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ApiService} from 'src/app/services/api.service';
-import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {ModalController, PopoverController, Platform, AlertController} from '@ionic/angular';
-import {PublicarOpinionPage} from '../publicar-opinion/publicar-opinion.page';
-import {GuidePage} from '../guide/guide.page';
-import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
-import {environment} from 'src/environments/environment';
-import {UtilitiesService} from 'src/app/services/utilities.service';
-import {IUser} from 'src/app/models/user.model';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
-import {UserService} from 'src/app/services/user.service';
-import {MailService} from 'src/app/services/mail.service';
-import {ReportService} from 'src/app/services/report.service';
-import {IReport} from 'src/app/models/report.model';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import {
+  ModalController,
+  PopoverController,
+  Platform,
+  AlertController,
+} from '@ionic/angular';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserService } from 'src/app/services/user.service';
+import { MailService } from 'src/app/services/mail.service';
+import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-cart-error',
@@ -22,7 +21,6 @@ import {IReport} from 'src/app/models/report.model';
   styleUrls: ['./cart-error.page.scss'],
 })
 export class CartErrorPage implements OnInit {
-
   bought: number;
 
   constructor(
@@ -40,12 +38,9 @@ export class CartErrorPage implements OnInit {
     public userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService
-  ) {
+  ) {}
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   goToBuscador() {
     this.irA('search');
@@ -58,5 +53,4 @@ export class CartErrorPage implements OnInit {
   public irA(p: string): void {
     this.router.navigate([p]);
   }
-
 }

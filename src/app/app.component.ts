@@ -1,9 +1,11 @@
 import { WalletService } from './services/wallet/wallet.service';
 import {
   Component,
+  Inject,
   OnChanges,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,11 +17,15 @@ import {
   MenuController,
   ModalController,
 } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
+import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
+import {
+  Push,
+  PushObject,
+  PushOptions,
+} from '@awesome-cordova-plugins/push/ngx';
 import { UtilitiesService } from './services/utilities.service';
 import { ApiService } from './services/api.service';
-import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { NavController } from '@ionic/angular';
 import { TranslateConfigService } from './services/translate/translate-config.service';
 import { Storage } from '@ionic/storage';
@@ -96,17 +102,19 @@ export class AppComponent implements OnInit, OnDestroy {
     private metaService: Meta,
     // private frogedSvc: FrogedService,
     private consoleSvc: ConsoleSvc,
-    private servicesSvc: ServicesService
+    private servicesSvc: ServicesService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.router.events.subscribe((e) => {
       /* To Know in SCSS which url is currently opened */
-      if (!isPlatformServer) document.body.dataset.url = location.href;
+      if (!isPlatformServer(this.platformId))
+        document.body.dataset.url = location.href;
     });
   }
 
   ngOnInit() {
     this.initializeApp();
-    if (!isPlatformServer) this.openCookieBanner();
+    if (!isPlatformServer(this.platformId)) this.openCookieBanner();
 
     this.titleService.setTitle(GENERAL_TITLE);
     this.metaService.addTags([
@@ -194,7 +202,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openCookieBanner() {
-    let cc = Window as any;
+    let cc = window as any;
     cc.cookieconsent?.initialise({
       palette: {
         popup: {

@@ -4,18 +4,17 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from 'src/app/services/api.service';
 import {
   ModalController,
-  NavParams,
   PopoverController,
   IonContent,
   Platform,
   NavController,
 } from '@ionic/angular';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
-import {AlertController} from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { IUser } from 'src/app/models/user.model';
 import { ISearch } from 'src/app/models/search.model';
@@ -46,9 +45,9 @@ export class DetalleDemandaPage implements OnInit {
   perfil: IUser = null;
   isLoading: boolean;
   showChat = false;
-  urlName:string;
-  
-  homePage: string = environment.HOME_PAGE
+  urlName: string;
+
+  homePage: string = environment.HOME_PAGE;
 
   constructor(
     private utilities: UtilitiesService,
@@ -64,9 +63,9 @@ export class DetalleDemandaPage implements OnInit {
     private storage: Storage,
     private navCtrl: NavController,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService,
-    private demanadaSvc:DemandaService,
-    private userSvc:UserService,
+    private authSvc: AuthenticationService,
+    private demanadaSvc: DemandaService,
+    private userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService
   ) {
@@ -82,11 +81,10 @@ export class DetalleDemandaPage implements OnInit {
         this.obtenerDemanda(params.get('id'));
         this.aceptada = data.params.aceptada;
         this.urlName = params.get('name');
-        
       });
     } else {
       this.aceptada = false;
-      this.demanda = this.checkDescrip( JSON.parse(data.params.demanda));
+      this.demanda = this.checkDescrip(JSON.parse(data.params.demanda));
       this.obtenerOfertasRelacionadas();
     }
   }
@@ -108,13 +106,12 @@ export class DetalleDemandaPage implements OnInit {
             !demanda.imagen.includes('http://') &&
             !demanda.imagen.includes('https://')
           )
-            demanda.imagen =
-            `${environment.baseWebUrl}storage/${demanda.imagen}`;
+            demanda.imagen = `${environment.baseWebUrl}storage/${demanda.imagen}`;
         }
-        this.demanda = this.checkDescrip( demanda );
+        this.demanda = this.checkDescrip(demanda);
         this.obtenerOfertasRelacionadas();
 
-        this.isCorrectSearch() 
+        this.isCorrectSearch();
       },
       (err) => {
         this.isLoading = false;
@@ -123,14 +120,20 @@ export class DetalleDemandaPage implements OnInit {
     );
   }
 
-  async isCorrectSearch(){
-    if(this.urlName){
-      const nameToUrlType:string = this.utilities.textToUrl(this.demanda.nombre);
-      if(nameToUrlType !== this.urlName){
+  async isCorrectSearch() {
+    if (this.urlName) {
+      const nameToUrlType: string = this.utilities.textToUrl(
+        this.demanda.nombre
+      );
+      if (nameToUrlType !== this.urlName) {
         const alert = await this.alertController.create({
-            header: this.translateService.instant('pages.demandDetails.alertNameDontMatch.header'),
-            message: this.translateService.instant('pages.demandDetails.alertNameDontMatch.message'),
-            buttons: ['Aceptar']
+          header: this.translateService.instant(
+            'pages.demandDetails.alertNameDontMatch.header'
+          ),
+          message: this.translateService.instant(
+            'pages.demandDetails.alertNameDontMatch.message'
+          ),
+          buttons: ['Aceptar'],
         });
         alert.present();
       }
@@ -154,8 +157,7 @@ export class DetalleDemandaPage implements OnInit {
               !demanda.imagen.includes('http://') &&
               !demanda.imagen.includes('https://')
             )
-              demanda.imagen =
-                `${environment.baseWebUrl}storage/${demanda.imagen}`;
+              demanda.imagen = `${environment.baseWebUrl}storage/${demanda.imagen}`;
           }
           demanda.valoracion = Number(demanda.valoracion);
         }
@@ -167,7 +169,7 @@ export class DetalleDemandaPage implements OnInit {
     );
   }
 
-  public handleImgError( ev: any ){
+  public handleImgError(ev: any) {
     this.demanda.imagen = null;
   }
 
@@ -176,15 +178,17 @@ export class DetalleDemandaPage implements OnInit {
    * @param demanda
    */
   public detalleDemanda(demanda): void {
-    this.demanda = this.checkDescrip( demanda );
+    this.demanda = this.checkDescrip(demanda);
     this.obtenerOfertasRelacionadas();
     this.content.scrollToTop(1500);
     //this.router.navigate(['detalle-demanda'],{ queryParams: { 'demanda': JSON.stringify(demanda), 'contacto': false  }});
   }
 
-  public checkDescrip( demanda: any ) : any {
-    demanda.descripcion = demanda.descripcion === null || demanda.descripcion.trim() === 'null' ?
-        '' : demanda.descripcion;
+  public checkDescrip(demanda: any): any {
+    demanda.descripcion =
+      demanda.descripcion === null || demanda.descripcion.trim() === 'null'
+        ? ''
+        : demanda.descripcion;
     return demanda;
   }
 
@@ -208,12 +212,17 @@ export class DetalleDemandaPage implements OnInit {
     if (desc.length > 50) {
       desc = desc.substring(0, 49) + '...';
     }
-    let message = '¿Conoces una solución para esta búsqueda?\n' + this.demanda.nombre + ': \n' + desc + ' \n-Febelink-\n';
+    let message =
+      '¿Conoces una solución para esta búsqueda?\n' +
+      this.demanda.nombre +
+      ': \n' +
+      desc +
+      ' \n-Febelink-\n';
 
     let image = null;
-    if(await this.isImage(this.demanda.imagen)){
+    if (await this.isImage(this.demanda.imagen)) {
       image = this.demanda.imagen;
-    } 
+    }
 
     if (this.platform.is('cordova')) {
       this.shareNative(url, message, image);
@@ -225,8 +234,7 @@ export class DetalleDemandaPage implements OnInit {
   /**
    * Share Android/iOS
    */
-  shareNative(url:string, message:string, image?:string) {
-
+  shareNative(url: string, message: string, image?: string) {
     this.socialSharing
       .share(message, message, image, url)
       .then((result) => {})
@@ -236,29 +244,28 @@ export class DetalleDemandaPage implements OnInit {
   /**
    * Share Web
    */
-  async shareWeb(ev: any, url:string, message:string, image?:string) {
-
+  async shareWeb(ev: any, url: string, message: string, image?: string) {
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url, title: message, desc:message, image },
+      componentProps: { url, title: message, desc: message, image },
     });
     return await popover.present();
   }
 
   /*
-  * Check if image exist
-  */
-  isImage(src):Promise<boolean> {
-    return new Promise(resolve => {
+   * Check if image exist
+   */
+  isImage(src): Promise<boolean> {
+    return new Promise((resolve) => {
       var image = new Image();
-      image.onerror = function() {
-          resolve(false);
+      image.onerror = function () {
+        resolve(false);
       };
-      image.onload = function() {
-          resolve(true);
+      image.onload = function () {
+        resolve(true);
       };
       image.src = src;
     });
@@ -285,7 +292,7 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   home() {
-    this.router.navigate([ this.homePage ]);
+    this.router.navigate([this.homePage]);
   }
 
   async openGuide() {
@@ -297,25 +304,24 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   goToChat() {
-
-    if(this.userSvc.checkUserDataComplete(this.perfil)){
-      this.storage.get('userData').then(user => {
+    if (this.userSvc.checkUserDataComplete(this.perfil)) {
+      this.storage.get('userData').then((user) => {
         if (user) {
           const roomId = `${user.id}${this.demanda.id}${this.demanda.id_demandante}`;
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                user_id: JSON.stringify(user.id),
-                user_name: JSON.stringify(user.nick),
-                person_name: JSON.stringify('Chat'),
-                person_id: JSON.stringify(this.demanda.id_demandante),
-                room_id: JSON.stringify(roomId),
-                create: JSON.stringify(user.id),
-                id_demandante: JSON.stringify(this.demanda.id_demandante),
-                demand_id: JSON.stringify(this.demanda.id),
-                search_title: JSON.stringify(this.demanda.nombre),
-              }
-            };
-            this.navCtrl.navigateForward('chat', navigationExtras);
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              user_id: JSON.stringify(user.id),
+              user_name: JSON.stringify(user.nick),
+              person_name: JSON.stringify('Chat'),
+              person_id: JSON.stringify(this.demanda.id_demandante),
+              room_id: JSON.stringify(roomId),
+              create: JSON.stringify(user.id),
+              id_demandante: JSON.stringify(this.demanda.id_demandante),
+              demand_id: JSON.stringify(this.demanda.id),
+              search_title: JSON.stringify(this.demanda.nombre),
+            },
+          };
+          this.navCtrl.navigateForward('chat', navigationExtras);
         }
       });
     }
@@ -323,18 +329,20 @@ export class DetalleDemandaPage implements OnInit {
 
   async viewChat() {
     if (this.perfil !== null) {
-        if (this.perfil.id == this.demanda.id_demandante) {
-            const alert = await this.alertController.create({
-                cssClass: 'my-custom-class',
-                header: 'Chat',
-                message: this.translateService.instant('pages.demandDetails.alertChat.message'),
-                buttons: ['Aceptar']
-            });
+      if (this.perfil.id == this.demanda.id_demandante) {
+        const alert = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: 'Chat',
+          message: this.translateService.instant(
+            'pages.demandDetails.alertChat.message'
+          ),
+          buttons: ['Aceptar'],
+        });
 
-            await alert.present();
-        } else {
-            this.goToChat();
-        }
+        await alert.present();
+      } else {
+        this.goToChat();
+      }
     } else {
       this.authSvc.userNeedsToRegister();
     }
@@ -346,7 +354,7 @@ export class DetalleDemandaPage implements OnInit {
 
   reportUser() {
     this.reportSvc.show({
-      demanda: this.demanda?.id
-    } as IReport )
+      demanda: this.demanda?.id,
+    } as IReport);
   }
 }
