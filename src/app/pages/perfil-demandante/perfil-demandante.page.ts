@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ModalController, PopoverController, Platform, AlertController } from '@ionic/angular';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import {
+  ModalController,
+  PopoverController,
+  Platform,
+  AlertController,
+} from '@ionic/angular';
 import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
 import { GuidePage } from '../guide/guide.page';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
@@ -29,12 +34,12 @@ export class PerfilDemandantePage implements OnInit {
   contacto: any;
   sinOpiniones: any;
   isLoading: boolean;
-  refreshTab:any;
+  refreshTab: any;
   isLogin: any;
   currentUser: IUser = null;
-  urlName:string;
+  urlName: string;
 
-  homePage: string = environment.HOME_PAGE
+  homePage: string = environment.HOME_PAGE;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +52,7 @@ export class PerfilDemandantePage implements OnInit {
     public alertController: AlertController,
     private utilities: UtilitiesService,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService,
+    private authSvc: AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService
@@ -70,7 +75,7 @@ export class PerfilDemandantePage implements OnInit {
       this.isLogin = data;
     });
     await this.utilities.getUserData().then((data) => {
-      this.currentUser = {...data};
+      this.currentUser = { ...data };
       if (this.currentUser) {
         if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
           //if(this.platform.is('cordova')){
@@ -102,8 +107,7 @@ export class PerfilDemandantePage implements OnInit {
             !this.perfilpublico.logo.includes('http://') &&
             !this.perfilpublico.logo.includes('https://')
           )
-            this.perfilpublico.logo =
-            `${environment.baseWebUrl}storage/${this.perfilpublico.logo}`;
+            this.perfilpublico.logo = `${environment.baseWebUrl}storage/${this.perfilpublico.logo}`;
         } else {
           this.perfilpublico.logo = '';
         }
@@ -112,7 +116,7 @@ export class PerfilDemandantePage implements OnInit {
         this.isLoading = false;
         this.opinionesPerfil();
         this.comprobarOpinion();
-        this.isCorrectSearch() 
+        this.isCorrectSearch();
       },
       (err) => {
         this.isLoading = false;
@@ -120,14 +124,20 @@ export class PerfilDemandantePage implements OnInit {
     );
   }
 
-  async isCorrectSearch(){
-    if(this.urlName){
-      const nameToUrlType:string = this.utilities.textToUrl(this.perfilpublico.nick);
-      if(nameToUrlType !== this.urlName){
+  async isCorrectSearch() {
+    if (this.urlName) {
+      const nameToUrlType: string = this.utilities.textToUrl(
+        this.perfilpublico.nick
+      );
+      if (nameToUrlType !== this.urlName) {
         const alert = await this.alertController.create({
-            header: this.translateService.instant('pages.perfilDemandante.alertNameDontMatch.header'),
-            message: this.translateService.instant('pages.perfilDemandante.alertNameDontMatch.message'),
-            buttons: ['Aceptar']
+          header: this.translateService.instant(
+            'pages.perfilDemandante.alertNameDontMatch.header'
+          ),
+          message: this.translateService.instant(
+            'pages.perfilDemandante.alertNameDontMatch.message'
+          ),
+          buttons: ['Aceptar'],
         });
         alert.present();
       }
@@ -152,29 +162,30 @@ export class PerfilDemandantePage implements OnInit {
       }
     );
   }
-  
+
   /**
    * `hasSubscription` is to show special fields. e.g.: link_url
    */
   hasSubscription: boolean = false;
   async checkHasSubscription() {
-    (await this.api.hasSubscription( this.id_perfil )).subscribe(async ( hasSubscription ) => {
-      this.hasSubscription = hasSubscription;
-    });
+    (await this.api.hasSubscription(this.id_perfil)).subscribe(
+      async (hasSubscription) => {
+        this.hasSubscription = hasSubscription;
+      }
+    );
   }
 
   public async shareProfile(ev: any): Promise<void> {
-
     let subject =
-    'Mira el perfil de ' + this.perfilpublico.nick + ' usuario de Febelink:';
+      'Mira el perfil de ' + this.perfilpublico.nick + ' usuario de Febelink:';
     const nameForUrl = this.utilities.textToUrl(this.perfilpublico.nick);
-    let url = `${environment.WEB_URL}perfil/${this.id_perfil}/${nameForUrl}`;//
+    let url = `${environment.WEB_URL}perfil/${this.id_perfil}/${nameForUrl}`; //
     let message = 'Febelink \n' + subject + ' \n';
 
     let image = null;
-    if(await this.isImage(this.perfilpublico.logo)){
+    if (await this.isImage(this.perfilpublico.logo)) {
       image = this.perfilpublico.logo;
-    } 
+    }
 
     if (this.platform.is('cordova')) {
       this.shareProfileNative(url, message, image);
@@ -186,41 +197,39 @@ export class PerfilDemandantePage implements OnInit {
   /**
    * Share Native ( Android/iOS)
    */
-  public shareProfileNative(url:string, message:string, image?:string) {
+  public shareProfileNative(url: string, message: string, image?: string) {
     this.socialSharing.share(message, message, image, url);
   }
 
   /**
    * Share Web
    */
-  async shareProfileWeb(ev: any, url:string, message:string, image?:string) {
-
+  async shareProfileWeb(ev: any, url: string, message: string, image?: string) {
     const popover = await this.popoverController.create({
       component: SharePopoverComponent,
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url, title: 'Febelink', desc: message, image  },
+      componentProps: { url, title: 'Febelink', desc: message, image },
     });
     return await popover.present();
   }
 
   /*
-  * Check if image exist
-  */
-  isImage(src):Promise<boolean> {
-    return new Promise(resolve => {
+   * Check if image exist
+   */
+  isImage(src): Promise<boolean> {
+    return new Promise((resolve) => {
       var image = new Image();
-      image.onerror = function() {
-          resolve(false);
+      image.onerror = function () {
+        resolve(false);
       };
-      image.onload = function() {
-          resolve(true);
+      image.onload = function () {
+        resolve(true);
       };
       image.src = src;
     });
   }
-
 
   /**
    * Modal para valorar el perfil
@@ -228,9 +237,8 @@ export class PerfilDemandantePage implements OnInit {
   async opinionModal() {
     console.log(this.currentUser.id);
     if (this.currentUser.id != undefined) {
-      
       // If User has main data completed
-      if(this.userSvc.checkUserDataComplete(this.currentUser)){
+      if (this.userSvc.checkUserDataComplete(this.currentUser)) {
         const publicarModal = await this.modalCtrl.create({
           component: PublicarOpinionPage,
           componentProps: { id_demandante: this.perfilpublico.id },
@@ -248,9 +256,8 @@ export class PerfilDemandantePage implements OnInit {
     }
   }
 
-
   home() {
-    this.router.navigate([ this.homePage ]);
+    this.router.navigate([this.homePage]);
   }
 
   public irA(p: string): void {
@@ -273,10 +280,9 @@ export class PerfilDemandantePage implements OnInit {
     return await guideModal.present();
   }
 
-  report()
-  {
+  report() {
     this.reportSvc.show({
-      perfil: this.perfilpublico?.id
-    } as IReport )
+      perfil: this.perfilpublico?.id,
+    } as IReport);
   }
 }

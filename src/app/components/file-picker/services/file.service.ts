@@ -1,6 +1,6 @@
 import { TranslateConfigService } from './../../../services/translate/translate-config.service';
 import { Injectable } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { Platform } from '@ionic/angular';
 import { FileMaxSize, FilePickType, IFile } from '../models/file.model';
 import { ToastSvc } from './../../../services/toast.service';
@@ -8,7 +8,7 @@ import {
   File as FileCordova,
   FileEntry,
   IFile as IFileNGX,
-} from '@ionic-native/file/ngx';
+} from '@awesome-cordova-plugins/file/ngx';
 
 @Injectable({
   providedIn: 'root',

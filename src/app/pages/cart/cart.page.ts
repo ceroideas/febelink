@@ -1,21 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ApiService} from 'src/app/services/api.service';
-import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {ModalController, PopoverController, Platform, AlertController} from '@ionic/angular';
-import {PublicarOpinionPage} from '../publicar-opinion/publicar-opinion.page';
-import {GuidePage} from '../guide/guide.page';
-import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
-import {environment} from 'src/environments/environment';
-import {UtilitiesService} from 'src/app/services/utilities.service';
-import {IUser} from 'src/app/models/user.model';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
-import {UserService} from 'src/app/services/user.service';
-import {MailService} from 'src/app/services/mail.service';
-import {ReportService} from 'src/app/services/report.service';
-import {IReport} from 'src/app/models/report.model';
-import {CartService} from './services/cart.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import {
+  ModalController,
+  PopoverController,
+  Platform,
+  AlertController,
+} from '@ionic/angular';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserService } from 'src/app/services/user.service';
+import { MailService } from 'src/app/services/mail.service';
+import { ReportService } from 'src/app/services/report.service';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -23,7 +22,6 @@ import {CartService} from './services/cart.service';
   styleUrls: ['./cart.page.scss'],
 })
 export class CartPage implements OnInit {
-
   isEditItems: boolean = false;
 
   iCart: any;
@@ -44,31 +42,27 @@ export class CartPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     public cartSvc: CartService
-  ) {
-
-  }
-
+  ) {}
 
   ngOnInit() {
     this.getCart();
   }
 
   async getCart() {
-    const {response, error} = await this.cartSvc.get();
+    const { response, error } = await this.cartSvc.get();
     this.iCart = response;
   }
 
   async updateCart(id: number, amount: number) {
-    const {response, error} = await this.cartSvc.update(id, amount);
+    const { response, error } = await this.cartSvc.update(id, amount);
     this.getCart();
   }
 
   async buyCart() {
-    const {response, error} = await this.cartSvc.buy();
+    const { response, error } = await this.cartSvc.buy();
     var linkCheckout = response;
     window.location.href = linkCheckout;
   }
-
 
   editItems() {
     this.isEditItems = true;
@@ -77,7 +71,6 @@ export class CartPage implements OnInit {
   confirmEdit() {
     this.isEditItems = false;
   }
-
 
   goToBuscador() {
     this.irA('search');

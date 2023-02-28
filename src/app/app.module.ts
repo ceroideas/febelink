@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,18 +12,18 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Push } from '@ionic-native/push/ngx';
+import { Push } from '@awesome-cordova-plugins/push/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { NgxStripeModule } from 'ngx-stripe';
-import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
 import { CookieService } from 'ngx-cookie-service';
-import { Facebook } from '@ionic-native/facebook/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Facebook } from '@awesome-cordova-plugins/facebook/ngx';
+import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
@@ -31,23 +31,23 @@ import {
   FacebookLoginProvider,
 } from '@abacritt/angularx-social-login';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { BrowserTab } from '@ionic-native/browser-tab/ngx';
-import { Badge } from '@ionic-native/badge/ngx';
+import { BrowserTab } from '@awesome-cordova-plugins/browser-tab/ngx';
+import { Badge } from '@awesome-cordova-plugins/badge/ngx';
 
 /* NGX Translate imports. */
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginPageModule } from './pages/login/login.module';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 // Quill WYSIWYG ( What You See Is What You Get )
 import { QuillModule } from 'ngx-quill';
 
-import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { Clipboard } from '@awesome-cordova-plugins/clipboard/ngx';
 import { PipesModule } from './pipes/pipes.module';
 
 // Cordova File
-import { File } from '@ionic-native/file/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 import { SharedModule } from './shared/shared.module';
 
 function createTranslateLoader(http: HttpClient) {
@@ -62,7 +62,7 @@ const config: SocketIoConfig = {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,

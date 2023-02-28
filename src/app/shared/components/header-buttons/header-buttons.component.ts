@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {ModalController, Platform, PopoverController} from '@ionic/angular';
-import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
-import {IUser} from 'src/app/models/user.model';
-import {GuidePage} from 'src/app/pages/guide/guide.page';
-import {environment} from 'src/environments/environment';
-import {TranslateService} from '@ngx-translate/core';
-import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {UtilitiesService} from 'src/app/services/utilities.service';
-import {NotificationService} from 'src/app/services/notification.service';
-import {ApiService} from 'src/app/services/api.service';
-import {filter} from 'rxjs/operators';
-import {YouTubePopComponent} from 'src/app/components/youtube/popover/pop.component';
-import {CartServiceShow} from '../../../services/cart.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalController, Platform, PopoverController } from '@ionic/angular';
+import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
+import { IUser } from 'src/app/models/user.model';
+import { GuidePage } from 'src/app/pages/guide/guide.page';
+import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { ApiService } from 'src/app/services/api.service';
+import { filter } from 'rxjs/operators';
+import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
+import { CartServiceShow } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-header-buttons',
@@ -23,7 +23,7 @@ export class HeaderButtonsComponent implements OnInit {
   @Input() perfil: IUser;
   @Input() currentTab: Tabs;
   @Input() currentUser: IUser;
-  
+
   tabs = Tabs;
   notifCount: number;
   totalUnreadMessages: number;
@@ -41,8 +41,7 @@ export class HeaderButtonsComponent implements OnInit {
     private utilities: UtilitiesService,
     private notificationsSvc: NotificationService,
     public cartServiceShow: CartServiceShow
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     //TODO: These subscribers are called multiple times because header component is in several pages. We should avoid this.
@@ -141,7 +140,7 @@ export class HeaderButtonsComponent implements OnInit {
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: {url, title: 'Febelink', desc: message, image},
+      componentProps: { url, title: 'Febelink', desc: message, image },
     });
     return await popover.present();
   }

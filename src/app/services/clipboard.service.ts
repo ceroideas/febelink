@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { Clipboard } from '@awesome-cordova-plugins/clipboard/ngx';
 import { Platform } from '@ionic/angular';
 import { ToastSvc } from './toast.service';
 
@@ -7,53 +7,54 @@ import { ToastSvc } from './toast.service';
   providedIn: 'root',
 })
 export class ClipboardSvc {
+  constructor(
+    private clipboard: Clipboard,
+    private toastSvc: ToastSvc,
+    private platform: Platform
+  ) {}
 
-    constructor(
-        private clipboard: Clipboard
-        , private toastSvc: ToastSvc
-        , private platform: Platform
-    ) {}
+  async copy(value, showToast = true) {
+    if (!value) {
+      this.toastSvc.show('common.clipboardNone', true);
+      return false;
+    }
 
-    async copy( value, showToast = true ) {
-        if( !value ) {
-          this.toastSvc.show( 'common.clipboardNone', true );
-          return false;
+    let success = true;
+
+    if (this.platform.is('cordova'))
+      // Native Android/iOS
+      this.clipboard.copy(value);
+    else {
+      // Web
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(value);
+        } catch (err) {
+          console.log('Error on Clipboard: ', err);
+          success = false;
         }
-    
-        let success = true;
-    
-        if ( this.platform.is( 'cordova' )) // Native Android/iOS
-          this.clipboard.copy( value );
-        else { // Web
-          if ( navigator.clipboard ) {
-            try {
-              await navigator.clipboard.writeText( value );
-            } catch ( err ) {
-              console.log( 'Error on Clipboard: ', err );
-              success = false;
-            }
-          } else {
-            var textArea = document.createElement("textarea");
-            textArea.value = value;
-            textArea.style.position = "fixed";  //avoid scrolling to bottom
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-    
-            try {
-              success = document.execCommand( 'copy' );
-            } catch (err) {
-              console.log( 'Error on Clipboard: ', err );
-              success = false;
-            }
-    
-            document.body.removeChild( textArea );
-          }
+      } else {
+        var textArea = document.createElement('textarea');
+        textArea.value = value;
+        textArea.style.position = 'fixed'; //avoid scrolling to bottom
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          success = document.execCommand('copy');
+        } catch (err) {
+          console.log('Error on Clipboard: ', err);
+          success = false;
         }
-    
-        if( showToast )
-          this.toastSvc.show( 'common.clipboard' + ( success ? '' : 'Err' ), true );
-    
-        return success;
+
+        document.body.removeChild(textArea);
       }
+    }
+
+    if (showToast)
+      this.toastSvc.show('common.clipboard' + (success ? '' : 'Err'), true);
+
+    return success;
+  }
 }

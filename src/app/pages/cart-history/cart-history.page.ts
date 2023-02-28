@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ModalController, PopoverController, Platform, AlertController } from '@ionic/angular';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import {
+  ModalController,
+  PopoverController,
+  Platform,
+  AlertController,
+} from '@ionic/angular';
 import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
 import { GuidePage } from '../guide/guide.page';
 import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
@@ -23,9 +28,8 @@ import { CartService } from '../cart/services/cart.service';
   styleUrls: ['./cart-history.page.scss'],
 })
 export class CartHistoryPage implements OnInit {
+  iCart: any;
 
-  iCart:any;
-  
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -37,27 +41,23 @@ export class CartHistoryPage implements OnInit {
     public alertController: AlertController,
     private utilities: UtilitiesService,
     private translateService: TranslateService,
-    private authSvc:AuthenticationService,
+    private authSvc: AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService,
     public cartSvc: CartService
-    ) { 
+  ) {}
 
-    }
+  ngOnInit() {
+    this.getHistoryCart();
+  }
 
-    ngOnInit() {
-      this.getHistoryCart();
-    }
-  
-    async getHistoryCart() {
-      const { response, error } = await this.cartSvc.history();
-      this.iCart = response;
-    }
-
+  async getHistoryCart() {
+    const { response, error } = await this.cartSvc.history();
+    this.iCart = response;
+  }
 
   public irA(p: string): void {
     this.router.navigate([p]);
   }
-
 }
