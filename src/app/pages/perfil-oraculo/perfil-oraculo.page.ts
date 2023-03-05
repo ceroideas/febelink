@@ -1,8 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PopoverController, AlertController } from '@ionic/angular';
+import { FileService } from 'src/app/components/file-picker/services/file.service';
 import { MailService } from 'src/app/services/mail.service';
 import { ReportService } from 'src/app/services/report.service';
+import { RouteSvc } from 'src/app/services/route.service';
+import { environment } from 'src/environments/environment';
 import { IAdviseFull } from '../posts/advises/models/advises.model';
 import { AdviseService } from '../posts/advises/services/advises.service';
 import { UserDataService } from '../user-data/Services/user-data.service';
@@ -23,6 +27,9 @@ export class PerfilOraculoPage implements OnInit {
   isBest: boolean = false;
   postUser;
   post;
+
+  apiMetaTagUrl: string = `${environment.baseWebUrl}api/auth/meta-tags`;
+  linksArray: string[] = [];
 
   topics = [
     { id: null, name: 'Todos' },
@@ -57,7 +64,10 @@ export class PerfilOraculoPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     private adviseSvc: AdviseService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private router: RouteSvc,
+    public fileSvc: FileService,
+    private http: HttpClient
   ) {
     this.route.paramMap.subscribe((params) => {
       this.idPerfil = params.get('id');
@@ -118,5 +128,17 @@ export class PerfilOraculoPage implements OnInit {
     this.isFeed = false;
     this.isRatings = false;
     this.isBest = true;
+  }
+
+  public apiCallbackFn = (route: string) => {
+    try {
+      return this.http.get(route);
+    } catch (error) {
+      console.log('ups', error);
+    }
+  };
+
+  navigateToPost(id: number) {
+    this.router.navigate([`posts/oracle/${id}`]);
   }
 }
