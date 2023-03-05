@@ -4,17 +4,19 @@
       <p>Cargando...</p>
     </div>-->
 
-
   <!-- Mobile version -->
   <div class="mobile">
-    <div class="div-main-back-button">
+    <!--     <div class="div-main-back-button">
       <div class="breadcrumbs-text">
-        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg"/>
+        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg" />
         Inicio
-        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
+        <img
+          src="assets/icon/svg/chevron-right.svg"
+          class="breadcrumbs-next-svg"
+        />
         {{user?.name}}
       </div>
-    </div>
+    </div> -->
 
     <div class="info-top">
       <div class="info-top-wrapper">
@@ -28,20 +30,20 @@
           </div>
         </div>
         <div class="info-top-right">
-          <img src="assets/icon/svg/menu-dots.svg" class="dots-svg"/>
+          <img src="assets/icon/svg/menu-dots.svg" class="dots-svg" />
         </div>
       </div>
       <div class="info-user">
         <div>
-          <a *ngIf="user?.email" [href]="'mailto:' + user?.email">{{user?.email}}</a>
+          <a *ngIf="user?.email" [href]="'mailto:' + user?.email"
+            >{{user?.email}}</a
+          >
         </div>
         <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
           <ion-icon name="call-outline"></ion-icon>
           {{user?.phoneNumber}}
         </div>
-        <div>
-          {{user?.description}}
-        </div>
+        <div>{{user?.description}}</div>
         <!--<div class="info-user-left">
            <img
             [src]="user?.logo"
@@ -62,15 +64,17 @@
       </div>
       <div class="table-main-reactions">
         <div class="option-left">
-          <app-donate-button
-            [user]="post"
-          ></app-donate-button>
+          <app-donate-button [user]="post"></app-donate-button>
         </div>
         <div class="option-middle">
-          <img src="assets/icon/svg/share.svg" class="option-middle-svg"/>{{ 'common.share' | translate }}
+          <img src="assets/icon/svg/share.svg" class="option-middle-svg" />{{
+          'common.share' | translate }}
         </div>
         <div class="option-right">
-          <img src="assets/icon/svg/star-outline.svg" class="option-right-svg"/>Valorar
+          <img
+            src="assets/icon/svg/star-outline.svg"
+            class="option-right-svg"
+          />Valorar
         </div>
       </div>
     </div>
@@ -80,17 +84,29 @@
     <div class="info-sections">
       <div class="info-sections-wrapper">
         <div class="info-sections-cell">
-          <div class="info-sections-text" [ngClass]="{'info-sections-selected' : isFeed}" (click)="showFeed()">
+          <div
+            class="info-sections-text"
+            [ngClass]="{'info-sections-selected' : isFeed}"
+            (click)="showFeed()"
+          >
             Feed
           </div>
         </div>
         <div class="info-sections-cell">
-          <div class="info-sections-text" [ngClass]="{'info-sections-selected' : isRatings}" (click)="showRatings()">
+          <div
+            class="info-sections-text"
+            [ngClass]="{'info-sections-selected' : isRatings}"
+            (click)="showRatings()"
+          >
             Valoraciones
           </div>
         </div>
         <div class="info-sections-cell">
-          <div class="info-sections-text" [ngClass]="{'info-sections-selected' : isBest}" (click)="showBest()">
+          <div
+            class="info-sections-text"
+            [ngClass]="{'info-sections-selected' : isBest}"
+            (click)="showBest()"
+          >
             The best
           </div>
         </div>
@@ -101,72 +117,36 @@
   <div class="mobile">
     <div *ngIf="iAdvises && isFeed">
       <div class="mobile">
-        <div *ngFor="let iAdvise of iAdvises" class="div-main-post">
-          <div class="table-100">
-            <div>
-              <div class="user-item-main">
-                <img src="https://api.febelink.com/storage/users/default.png" class="user-item-img-main"
-                     *ngIf="!iAdvise?.logo && !iAdvise?.avatar"/>
-                <ion-img class="user-item-img-main"
-                         [src]="iAdvise?.logo || iAdvise?.avatar"
-                         *ngIf="iAdvise?.logo || iAdvise?.avatar"
-                         appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
-                ></ion-img>
-              </div>
-              <div class="user-item-text">
-                <div class="user-item-text-name">
-                  {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' | translate)}} {{ iAdvise?.lastName }}
-                </div>
-                <div class="user-item-text-date">
-                  {{ iAdvise?.created_at }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div [innerHTML]="iAdvise.content" class="content-post post-content-main max-content-text"></div>
-          <div class="post-content-topic">#{{ topics[iAdvise.topic]?.name }}</div>
-          <!--          <ion-img
-                      class="content-post-img"
-                      [src]="iAdvise.media_url"
-                      *ngIf="
-                              isPostVisible &&
-                              iAdvise.media_url &&
-                              fileSvc.isImage(iAdvise.media_ext)
-                            "
-                    ></ion-img>-->
-          <div class="post-main-reactions">
-            <div class="post-main-reactions-left">
-              <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span
-              *ngIf="!(iAdvise.react_qant>0)">0 </span>
-              <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span
-              *ngIf="iAdvise.react_qant != 1">Reacciones</span>
-            </div>
-            <div class="post-main-reactions-right">
-              <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span
-              *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-              <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
-            </div>
-          </div>
-
-        </div>
+        <app-post-component
+          *ngFor="let advise of iAdvises"
+          [id]="advise.id"
+          [iAdvise]="advise"
+          [showLang]="true"
+          [showSeePost]="true"
+        ></app-post-component>
       </div>
 
       <div class="desktop">
-        <div *ngFor="let iAdvise of iAdvises" class="div-main-post-b">
+        <!-- <div *ngFor="let iAdvise of iAdvises" class="div-main-post-b">
           <div class="table-100">
             <div>
               <div class="user-item-main">
-                <img src="https://api.febelink.com/storage/users/default.png" *ngIf="!iAdvise?.logo && !iAdvise?.avatar"
-                     class="user-item-img-main-b"/>
-                <ion-img class="user-item-img-main-b"
-                         [src]="iAdvise?.logo || iAdvise?.avatar"
-                         *ngIf="iAdvise?.logo || iAdvise?.avatar"
-                         appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+                <img
+                  src="https://api.febelink.com/storage/users/default.png"
+                  *ngIf="!iAdvise?.logo && !iAdvise?.avatar"
+                  class="user-item-img-main-b"
+                />
+                <ion-img
+                  class="user-item-img-main-b"
+                  [src]="iAdvise?.logo || iAdvise?.avatar"
+                  *ngIf="iAdvise?.logo || iAdvise?.avatar"
+                  appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
                 ></ion-img>
               </div>
               <div class="user-item-text-b">
                 <div class="user-item-text-name-b">
-                  {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' | translate)}} {{ iAdvise?.lastName }}
+                  {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' |
+                  translate)}} {{ iAdvise?.lastName }}
                 </div>
                 <div class="user-item-text-date-b">
                   {{ iAdvise?.created_at }}
@@ -174,64 +154,62 @@
               </div>
             </div>
 
-            <div [innerHTML]="iAdvise.content" class="content-post post-content-main max-content-text-b"></div>
-            <div class="post-content-topic">#{{ topics[iAdvise.topic]?.name }}</div>
-            <!--            <ion-img
-                          class="content-post-img"
-                          [src]="iAdvise.media_url"
-                          *ngIf="
-                                isPostVisible &&
-                                iAdvise.media_url &&
-                                fileSvc.isImage(iAdvise.media_ext)
-                              "
-                        ></ion-img>-->
+            <div
+              [innerHTML]="iAdvise.content"
+              class="content-post post-content-main max-content-text-b"
+            ></div>
+            <div class="post-content-topic">
+              #{{ topics[iAdvise.topic]?.name }}
+            </div>
             <div class="post-main-reactions-b">
               <div class="post-main-reactions-left">
-                <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span
-                *ngIf="!(iAdvise.react_qant>0)">0 </span>
-                <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span
-                *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+                <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span
+                ><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
+                <span *ngIf="iAdvise.react_qant == 1">Reacción</span
+                ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
               </div>
               <div class="post-main-reactions-right">
-                <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span
-                *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-                <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+                <span *ngIf="iAdvise.comments_qant>0"
+                  >{{iAdvise.comments_qant}} </span
+                ><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
+                <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
+                ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
+        <app-post-component
+          *ngFor="let advise of iAdvises"
+          [id]="advise.id"
+          [iAdvise]="advise"
+          [showLang]="true"
+          [showSeePost]="true"
+        ></app-post-component>
       </div>
     </div>
 
     <div *ngIf="isRatings" class="wrapper-ratings">
-      <div *ngFor="let rating of ratings;let i = index" [ngClass]="{'content-separator-margin' : i>0}">
+      <div
+        *ngFor="let rating of ratings;let i = index"
+        [ngClass]="{'content-separator-margin' : i>0}"
+      >
         <div class="content-table-ratings">
           <div class="content-table-left">
-            <img src="{{rating.img}}" class="content-table-left-img"/>
+            <img src="{{rating.img}}" class="content-table-left-img" />
           </div>
           <div class="content-table-middle">
-            <div class="content-middle-title">
-              {{rating.title}}
-            </div>
-            <div class="content-middle-subtitle">
-              {{rating.service}}
-            </div>
+            <div class="content-middle-title">{{rating.title}}</div>
+            <div class="content-middle-subtitle">{{rating.service}}</div>
           </div>
-          <div class="content-table-right">
-            {{rating.price}}€
-          </div>
+          <div class="content-table-right">{{rating.price}}€</div>
         </div>
         <div class="content-table-second">
           <div class="content-table-rating">
             <app-rating [rating]="rating.rating"></app-rating>
           </div>
-          <div class="content-table-date">
-            {{rating.date}}
-          </div>
+          <div class="content-table-date">{{rating.date}}</div>
         </div>
-        <div class="content-table-description">
-          {{rating.description}}
-        </div>
+        <div class="content-table-description">{{rating.description}}</div>
       </div>
     </div>
 
@@ -239,45 +217,42 @@
       <div *ngFor="let best of bests" class="content-wrapper-best">
         <div class="content-table-ratings">
           <div class="content-table-left">
-            <img src="{{best.img}}" class="content-table-left-img"/>
+            <img src="{{best.img}}" class="content-table-left-img" />
           </div>
           <div class="content-table-middle">
-            <div class="content-middle-title">
-              {{best.title}}
-            </div>
-            <div class="content-middle-subtitle">
-              {{best.service}}
-            </div>
+            <div class="content-middle-title">{{best.title}}</div>
+            <div class="content-middle-subtitle">{{best.service}}</div>
           </div>
-          <div class="content-table-right">
-            {{best.price}}€
-          </div>
+          <div class="content-table-right">{{best.price}}€</div>
         </div>
         <div class="content-table-second">
           <div class="content-table-rating">
             <app-rating [rating]="best.rating"></app-rating>
           </div>
-          <div class="content-table-date">
-            {{best.date}}
-          </div>
+          <div class="content-table-date">{{best.date}}</div>
         </div>
       </div>
     </div>
   </div>
 
-
   <!-- --------------------------------- -->
   <!-- Desktop version -->
   <div class="desktop">
-    <div class="div-main-back-button-b">
+    <!--     <div class="div-main-back-button-b">
       <div class="breadcrumbs-text-b">
         Inicio
-        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
+        <img
+          src="assets/icon/svg/chevron-right.svg"
+          class="breadcrumbs-next-svg"
+        />
         Oráculo
-        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
+        <img
+          src="assets/icon/svg/chevron-right.svg"
+          class="breadcrumbs-next-svg"
+        />
         <span class="breadcrumbs-color-blue">{{user?.name}}</span>
       </div>
-    </div>
+    </div> -->
 
     <div class="header-content-top">
       <div class="table-100">
@@ -298,71 +273,75 @@
                           />
                         </div>-->
             <div class="header-top-inside-right">
-              <div class="header-top-title">
-                {{user?.name}}
-              </div>
-              <div class="header-top-subtitle">
-                {{user?.date}}
-              </div>
+              <div class="header-top-title">{{user?.name}}</div>
+              <div class="header-top-subtitle">{{user?.date}}</div>
               <div>
-                <a *ngIf="user?.email" [href]="'mailto:' + user?.email">{{user?.email}}</a>
+                <a *ngIf="user?.email" [href]="'mailto:' + user?.email"
+                  >{{user?.email}}</a
+                >
               </div>
               <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
                 <ion-icon name="call-outline"></ion-icon>
                 {{user?.phoneNumber}}
               </div>
-              <div class="header-top-description">
-                {{user?.description}}
-              </div>
+              <div class="header-top-description">{{user?.description}}</div>
             </div>
           </div>
         </div>
         <div class="header-content-top-right">
           <div class="block-action-top">
-            <img src="assets/icon/svg/donate-blue.svg" class="block-action-svg"/>Dar propina
+            <img
+              src="assets/icon/svg/donate-blue.svg"
+              class="block-action-svg"
+            />Dar propina
           </div>
           <div class="block-action-top">
-            <img src="assets/icon/svg/share-blue.svg" class="block-action-svg"/>Compartir
+            <img
+              src="assets/icon/svg/share-blue.svg"
+              class="block-action-svg"
+            />Compartir
           </div>
           <div class="block-action-top-b">
-            <img src="assets/icon/svg/star-blue.svg" class="block-action-svg"/>Valorar
+            <img
+              src="assets/icon/svg/star-blue.svg"
+              class="block-action-svg"
+            />Valorar
           </div>
           <div class="block-action-top-c">
-            <div class="block-button-secondary">
-              Volver
-            </div>
+            <div class="block-button-secondary">Volver</div>
           </div>
           <div class="block-action-top-d">
-            <div class="block-button-primary">
-              Seguir
-            </div>
+            <div class="block-button-primary">Seguir</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
   <div class="desktop desktop-content-padding">
     <div class="desktop-content-left">
       <div *ngIf="iAdvises">
-
         <div class="desktop">
-          <div *ngFor="let iAdvise of iAdvises" class="div-main-post-b">
+          <!-- <div *ngFor="let iAdvise of iAdvises" class="div-main-post-b">
             <div class="table-100">
               <div>
                 <div class="user-item-main">
-                  <img src="https://api.febelink.com/storage/users/default.png"
-                       *ngIf="!iAdvise?.logo && !iAdvise?.avatar" class="user-item-img-main-b"/>
-                  <ion-img class="user-item-img-main-b"
-                           [src]="iAdvise?.logo || iAdvise?.avatar"
-                           *ngIf="iAdvise?.logo || iAdvise?.avatar"
-                           appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+                  <img
+                    src="https://api.febelink.com/storage/users/default.png"
+                    *ngIf="!iAdvise?.logo && !iAdvise?.avatar"
+                    class="user-item-img-main-b"
+                  />
+                  <ion-img
+                    class="user-item-img-main-b"
+                    [src]="iAdvise?.logo || iAdvise?.avatar"
+                    *ngIf="iAdvise?.logo || iAdvise?.avatar"
+                    appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
                   ></ion-img>
                 </div>
                 <div class="user-item-text-b">
                   <div class="user-item-text-name-b">
-                    {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' | translate)}} {{ iAdvise?.lastName }}
+                    {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' |
+                    translate)}} {{ iAdvise?.lastName }}
                   </div>
                   <div class="user-item-text-date-b">
                     {{ iAdvise?.created_at }}
@@ -370,48 +349,61 @@
                 </div>
               </div>
 
-              <div [innerHTML]="iAdvise.content" class="content-post post-content-main max-content-text-b"></div>
-              <div class="post-content-topic">#{{ topics[iAdvise.topic]?.name }}</div>
-              <!--              <ion-img
-                              class="content-post-img"
-                              [src]="iAdvise.media_url"
-                              *ngIf="
-                                  isPostVisible &&
-                                  iAdvise.media_url &&
-                                  fileSvc.isImage(iAdvise.media_ext)
-                                "
-                            ></ion-img>-->
+              <div
+                [innerHTML]="iAdvise.content"
+                class="content-post post-content-main max-content-text-b"
+              ></div>
+              <div class="post-content-topic">
+                #{{ topics[iAdvise.topic]?.name }}
+              </div>
+        
               <div class="post-main-reactions-b">
                 <div class="post-main-reactions-left">
-                  <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span
-                  *ngIf="!(iAdvise.react_qant>0)">0 </span>
-                  <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span
-                  *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+                  <span *ngIf="iAdvise.react_qant>0"
+                    >{{iAdvise.react_qant}} </span
+                  ><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
+                  <span *ngIf="iAdvise.react_qant == 1">Reacción</span
+                  ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
                 </div>
                 <div class="post-main-reactions-right">
-                  <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span
-                  *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-                  <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+                  <span *ngIf="iAdvise.comments_qant>0"
+                    >{{iAdvise.comments_qant}} </span
+                  ><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
+                  <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
+                  ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
+          <app-post-component
+            *ngFor="let advise of iAdvises"
+            [id]="advise.id"
+            [iAdvise]="advise"
+            [showLang]="true"
+            [showSeePost]="true"
+          ></app-post-component>
         </div>
       </div>
     </div>
 
     <div class="desktop-content-right">
-
       <div class="info-sections-b">
         <div class="info-sections-wrapper-b">
           <div class="info-sections-cell-b">
-            <div class="info-sections-text-b" [ngClass]="{'info-sections-selected-b' : (isRatings || isFeed)}"
-                 (click)="showRatings()">
+            <div
+              class="info-sections-text-b"
+              [ngClass]="{'info-sections-selected-b' : (isRatings || isFeed)}"
+              (click)="showRatings()"
+            >
               Valoraciones
             </div>
           </div>
           <div class="info-sections-cell-b">
-            <div class="info-sections-text-b" [ngClass]="{'info-sections-selected-b' : isBest}" (click)="showBest()">
+            <div
+              class="info-sections-text-b"
+              [ngClass]="{'info-sections-selected-b' : isBest}"
+              (click)="showBest()"
+            >
               The best
             </div>
           </div>
@@ -419,34 +411,27 @@
       </div>
 
       <div *ngIf="isRatings || isFeed" class="wrapper-best-b">
-        <div *ngFor="let rating of ratings;let i = index" class="content-wrapper-best-b">
+        <div
+          *ngFor="let rating of ratings;let i = index"
+          class="content-wrapper-best-b"
+        >
           <div class="content-table-ratings">
             <div class="content-table-left">
-              <img src="{{rating.img}}" class="content-table-left-img"/>
+              <img src="{{rating.img}}" class="content-table-left-img" />
             </div>
             <div class="content-table-middle">
-              <div class="content-middle-title">
-                {{rating.title}}
-              </div>
-              <div class="content-middle-subtitle">
-                {{rating.service}}
-              </div>
+              <div class="content-middle-title">{{rating.title}}</div>
+              <div class="content-middle-subtitle">{{rating.service}}</div>
             </div>
-            <div class="content-table-right">
-              {{rating.price}}€
-            </div>
+            <div class="content-table-right">{{rating.price}}€</div>
           </div>
           <div class="content-table-second">
             <div class="content-table-rating">
               <app-rating [rating]="rating.rating"></app-rating>
             </div>
-            <div class="content-table-date">
-              {{rating.date}}
-            </div>
+            <div class="content-table-date">{{rating.date}}</div>
           </div>
-          <div class="content-table-description">
-            {{rating.description}}
-          </div>
+          <div class="content-table-description">{{rating.description}}</div>
         </div>
       </div>
 
@@ -454,31 +439,22 @@
         <div *ngFor="let best of bests" class="content-wrapper-best-b">
           <div class="content-table-ratings">
             <div class="content-table-left">
-              <img src="{{best.img}}" class="content-table-left-img"/>
+              <img src="{{best.img}}" class="content-table-left-img" />
             </div>
             <div class="content-table-middle">
-              <div class="content-middle-title">
-                {{best.title}}
-              </div>
-              <div class="content-middle-subtitle">
-                {{best.service}}
-              </div>
+              <div class="content-middle-title">{{best.title}}</div>
+              <div class="content-middle-subtitle">{{best.service}}</div>
             </div>
-            <div class="content-table-right">
-              {{best.price}}€
-            </div>
+            <div class="content-table-right">{{best.price}}€</div>
           </div>
           <div class="content-table-second">
             <div class="content-table-rating">
               <app-rating [rating]="best.rating"></app-rating>
             </div>
-            <div class="content-table-date">
-              {{best.date}}
-            </div>
+            <div class="content-table-date">{{best.date}}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </ion-content>

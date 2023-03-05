@@ -9,15 +9,17 @@ import { IonicModule } from '@ionic/angular';
 import { PerfilOraculoPageRoutingModule } from './perfil-oraculo-routing.module';
 
 import { PerfilOraculoPage } from './perfil-oraculo.page';
+import { PostComponentsModule } from '../posts/components/components.module';
 
 @NgModule({
   imports: [
-    SharedModule
-  , SharedPostModule
-  , FollowerButtonModule
-  , DonateButtonModule
-  , PerfilOraculoPageRoutingModule
+    SharedModule,
+    SharedPostModule,
+    FollowerButtonModule,
+    DonateButtonModule,
+    PerfilOraculoPageRoutingModule,
+    PostComponentsModule,
   ],
-  declarations: [PerfilOraculoPage]
+  declarations: [PerfilOraculoPage],
 })
 export class PerfilOraculoPageModule {}
