@@ -238,7 +238,7 @@
                 <ion-label>{{ data?.title }}</ion-label>
               </div>
               <div class="special-offer-content-mobile">
-                <ion-label>{{ data?.description }}</ion-label>
+                <ion-label [innerHtml]="data?.description"></ion-label>
               </div>
               <div style="margin-top: 2em"></div>
             </ion-slide>
@@ -410,7 +410,7 @@
                     >
                   </div>
                   <div class="special-offer-content">
-                    <ion-label>{{ data?.description }}</ion-label>
+                    <ion-label [innerHtml]="data?.description"></ion-label>
                   </div>
                   <div style="margin-top: 2em"></div>
                 </ion-card-content>
@@ -568,7 +568,7 @@
                     <ion-label>{{ data?.title }}</ion-label>
                   </div>
                   <div class="special-offer-content">
-                    <ion-label>{{ data?.description }}</ion-label>
+                    <ion-label [innerHtml]="data?.description"></ion-label>
                   </div>
                   <div style="margin-top: 2em"></div>
                 </ion-card-content>

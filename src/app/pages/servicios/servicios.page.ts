@@ -13,6 +13,7 @@ import {
   FilePickType,
   IFile,
 } from '../../components/file-picker/models/file.model';
+import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
 
 @Component({
   selector: 'app-servicios',
@@ -48,6 +49,8 @@ export class ServiciosPage implements OnInit {
   unitType: number;
   sector: number;
   images: (string | IFile)[] = new Array(5);
+
+  editorText: string;
 
   iProfessions: any;
   iUserProfession: any;
@@ -151,7 +154,7 @@ export class ServiciosPage implements OnInit {
   async addNuevoServicio() {
     var productCreate: IServiceFull = {
       title: this.title,
-      description: this.description,
+      description: this.editorText,
       productUnitPrice: this.unitPrice.toString().replace(/,/g, '.'),
       unitTypeId: this.unitType,
       subSectorId: this.sector,
@@ -199,7 +202,7 @@ export class ServiciosPage implements OnInit {
     var productEdit: IServiceFull = {
       productId: this.editUpdate,
       title: this.title,
-      description: this.description,
+      description: this.editorText,
       productUnitPrice: this.unitPrice,
       unitTypeId: this.unitType,
       subSectorId: this.sector,
@@ -337,5 +340,9 @@ export class ServiciosPage implements OnInit {
 
   fileSelected(iFile: IFile, index: number) {
     this.images[index] = iFile;
+  }
+
+  wysiwygChange(content: iWYSIWYG) {
+    this.editorText = content.html;
   }
 }
