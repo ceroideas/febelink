@@ -1,6 +1,6 @@
 <ion-content class="content-background">
-  <ion-grid class="desktop" *ngIf="detalle" style="width: 100%;">
-    <ion-row style="display: flex; justify-content: space-around;" size="12">
+  <ion-grid class="desktop" *ngIf="detalle" style="width: 100%">
+    <ion-row style="display: flex; justify-content: space-around" size="12">
       <ion-col size="6" class="content-info">
         <!--<ion-row size="12" class="ion-margin parrafo_val">
           <ion-breadcrumbs rel="-">
@@ -14,29 +14,55 @@
         <ion-row class="product-rating">
           <ion-label class="content_item">
             <p class="ion-no-margin">
-              <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-              <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-              <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-              <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-              <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+              <ion-img
+                class="icon_star"
+                src="assets/icon/svg/icon_star.svg"
+              ></ion-img>
+              <ion-img
+                class="icon_star"
+                src="assets/icon/svg/icon_star.svg"
+              ></ion-img>
+              <ion-img
+                class="icon_star"
+                src="assets/icon/svg/icon_star.svg"
+              ></ion-img>
+              <ion-img
+                class="icon_star"
+                src="assets/icon/svg/icon_star.svg"
+              ></ion-img>
+              <ion-img
+                class="icon_star"
+                src="assets/icon/svg/icon_star.svg"
+              ></ion-img>
               ({{detalle?.ratingAmount}}) valoraciones
             </p>
           </ion-label>
         </ion-row>
-        <ion-row class="product-owner" (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+        <ion-row
+          class="product-owner"
+          (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)"
+        >
           <ion-avatar class="avatar_dropdown">
-            <ion-img *ngIf="!detalle?.ownerAvatar" src="assets/icon/svg/default_avatar.svg"
-                     class="default-avatar"></ion-img>
-            <ion-img *ngIf="detalle?.ownerAvatar" [src]="detalle?.ownerAvatar"></ion-img>
+            <ion-img
+              *ngIf="!detalle?.ownerAvatar"
+              src="assets/icon/svg/default_avatar.svg"
+              class="default-avatar"
+            ></ion-img>
+            <ion-img
+              *ngIf="detalle?.ownerAvatar"
+              [src]="detalle?.ownerAvatar"
+            ></ion-img>
           </ion-avatar>
           <span>{{detalle?.ownerUsername}}</span>
         </ion-row>
         <ion-row class="product-description">
-          <ion-label>{{detalle?.description}}</ion-label>
+          <ion-label [innerHtml]="detalle?.description"></ion-label>
         </ion-row>
         <ion-row class="product-price">
-          <ion-label>{{detalle?.productUnitPrice * productAmount}}
-            €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label>
+          <ion-label
+            >{{detalle?.productUnitPrice * productAmount}}
+            €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label
+          >
         </ion-row>
         <ion-row class="buy-controllers">
           <ion-col class="select-input">
@@ -63,15 +89,24 @@
       </ion-col>
       <ion-col size="6" class="content-image">
         <div>
-          <div *ngIf="detalle?.images?.length == 0" class="product-image-desktop" slot="start">
-            <ion-img src="assets/icon/svg/default_product.svg" class="default-avatar"></ion-img>
+          <div
+            *ngIf="detalle?.images?.length == 0"
+            class="product-image-desktop"
+            slot="start"
+          >
+            <ion-img
+              src="assets/icon/svg/default_product.svg"
+              class="default-avatar"
+            ></ion-img>
           </div>
           <ng-container *ngIf="detalle?.images?.length > 0">
-            <swiper class="product-image-desktop"
-                    slideActiveClass="product-image-desktop"
-                    [spaceBetween]="10"
-                    [navigation]="true"
-                    [thumbs]="{ swiper: thumbsSwiper }">
+            <swiper
+              class="product-image-desktop"
+              slideActiveClass="product-image-desktop"
+              [spaceBetween]="10"
+              [navigation]="true"
+              [thumbs]="{ swiper: thumbsSwiper }"
+            >
               <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
                 <ion-img [src]="imageURL"></ion-img>
               </ng-template>
@@ -82,9 +117,10 @@
               (swiper)="thumbsSwiper = $event"
               [slidesPerView]="detalle?.images?.length"
               [freeMode]="true"
-              [watchSlidesProgress]="true">
+              [watchSlidesProgress]="true"
+            >
               <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-                <img class="tam_img" [src]="imageURL"/>
+                <img class="tam_img" [src]="imageURL" />
               </ng-template>
             </swiper>
           </ng-container>
@@ -94,15 +130,33 @@
   </ion-grid>
   <div class="desktop" *ngIf="false">
     <ion-row
-      style="margin-top: 5em; margin-left: 10em; margin-right: 10em; display: flex; justify-content: center; margin-top: 4em;"
-      size="12">
+      style="
+        margin-top: 5em;
+        margin-left: 10em;
+        margin-right: 10em;
+        display: flex;
+        justify-content: center;
+        margin-top: 4em;
+      "
+      size="12"
+    >
       <ion-col size="4" *ngIf="data && false">
-        <ion-label class="list_title_card">{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label>
-        <ion-row size="12" class="ion-margin" *ngFor="let data of data.data?.recomendations">
+        <ion-label class="list_title_card"
+          >{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label
+        >
+        <ion-row
+          size="12"
+          class="ion-margin"
+          *ngFor="let data of data.data?.recomendations"
+        >
           <ion-col size="8">
             <ion-card class="ion-no-margin">
               <ion-card-content class="ion-no-padding">
-                <ion-item (click)="irA('/detalle/1')" lines="none" class="item_dropdown">
+                <ion-item
+                  (click)="irA('/detalle/1')"
+                  lines="none"
+                  class="item_dropdown"
+                >
                   <ion-avatar class="avatar_dropdown" slot="start">
                     <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
                   </ion-avatar>
@@ -111,17 +165,37 @@
                       <span class="font_texto_18">{{data?.texto}}</span>
                     </p>
                     <p>
-                      <span class="style_font_item">{{data?.precio}}€<span
-                        class="style_font_item_normal">/mes</span></span>
+                      <span class="style_font_item"
+                        >{{data?.precio}}€<span class="style_font_item_normal"
+                          >/mes</span
+                        ></span
+                      >
                     </p>
                     <p class="ion-no-margin">
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                      <span class="font_valoraciones">({{data?.numVal}}
-                        ) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <span class="font_valoraciones"
+                        >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones'
+                        | translate }}</span
+                      >
                     </p>
                     <span class="font_texto_14">{{data?.nombre}}</span>
                   </ion-label>
@@ -132,32 +206,65 @@
         </ion-row>
       </ion-col>
       <ion-col size="4" *ngIf="data">
-        <ion-label class="list_title_card">{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label>
-        <ion-row (click)="irA('/detalle/1')" size="12" class="ion-margin" *ngFor="let data of data.data?.offersTop">
+        <ion-label class="list_title_card"
+          >{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label
+        >
+        <ion-row
+          (click)="irA('/detalle/1')"
+          size="12"
+          class="ion-margin"
+          *ngFor="let data of data.data?.offersTop"
+        >
           <ion-col size="8">
             <ion-card class="ion-no-margin">
               <ion-card-content class="ion-no-padding">
                 <ion-grid size="12">
                   <ion-row size="12">
-                    <ion-col style="padding-top: 0; padding-bottom: 0; border-radius: 8px;" size="12">
-                      <img class="tam_img_desktop_mini" src="./assets/imgs/{{data?.imagen}}"/>
+                    <ion-col
+                      style="
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        border-radius: 8px;
+                      "
+                      size="12"
+                    >
+                      <img
+                        class="tam_img_desktop_mini"
+                        src="./assets/imgs/{{data?.imagen}}"
+                      />
                     </ion-col>
                   </ion-row>
                   <ion-row size="12">
-                    <ion-col style="padding-top: 10px; padding-bottom: 0;" size="12">
-                      <ion-label class="font_texto_18">{{data?.titulo}}</ion-label>
+                    <ion-col
+                      style="padding-top: 10px; padding-bottom: 0"
+                      size="12"
+                    >
+                      <ion-label class="font_texto_18"
+                        >{{data?.titulo}}</ion-label
+                      >
                     </ion-col>
                   </ion-row>
                   <ion-row size="12">
-                    <ion-col style="padding-top: 5px; padding-bottom: 0;" size="12">
-                      <ion-label class="style_font_item">{{data?.precio}}€
-                        <ion-label class="style_font_item_normal">/mes</ion-label>
+                    <ion-col
+                      style="padding-top: 5px; padding-bottom: 0"
+                      size="12"
+                    >
+                      <ion-label class="style_font_item"
+                        >{{data?.precio}}€
+                        <ion-label class="style_font_item_normal"
+                          >/mes</ion-label
+                        >
                       </ion-label>
                     </ion-col>
                   </ion-row>
                   <ion-row size="12">
-                    <ion-col style="padding-top: 0; padding-bottom: 0;" size="12">
-                      <ion-label class="font_texto_14">{{data?.subtitulo}}</ion-label>
+                    <ion-col
+                      style="padding-top: 0; padding-bottom: 0"
+                      size="12"
+                    >
+                      <ion-label class="font_texto_14"
+                        >{{data?.subtitulo}}</ion-label
+                      >
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -167,9 +274,15 @@
         </ion-row>
       </ion-col>
       <ion-col size="4" *ngIf="data">
-        <ion-label class="list_title_card">{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label>
-        <ion-row (click)="irA('/detalle/1')" size="12" class="ion-margin"
-                 *ngFor="let data of data.data?.recomendationsSearch">
+        <ion-label class="list_title_card"
+          >{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label
+        >
+        <ion-row
+          (click)="irA('/detalle/1')"
+          size="12"
+          class="ion-margin"
+          *ngFor="let data of data.data?.recomendationsSearch"
+        >
           <ion-card class="ion-no-margin">
             <ion-card-content class="ion-no-padding">
               <ion-item lines="none" class="item_dropdown">
@@ -181,17 +294,37 @@
                     <span class="font_texto_18">{{data?.texto}}</span>
                   </p>
                   <p>
-                    <span class="style_font_item">{{data?.precio}}€<span
-                      class="style_font_item_normal">/mes</span></span>
+                    <span class="style_font_item"
+                      >{{data?.precio}}€<span class="style_font_item_normal"
+                        >/mes</span
+                      ></span
+                    >
                   </p>
                   <p class="ion-no-margin">
-                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-                    <span class="font_valoraciones">({{data?.numVal}}
-                      ) {{ 'tabs.tab1.search.valoraciones' | translate }}</span>
+                    <ion-img
+                      class="icon_star"
+                      src="assets/icon/svg/icon_star.svg"
+                    ></ion-img>
+                    <ion-img
+                      class="icon_star"
+                      src="assets/icon/svg/icon_star.svg"
+                    ></ion-img>
+                    <ion-img
+                      class="icon_star"
+                      src="assets/icon/svg/icon_star.svg"
+                    ></ion-img>
+                    <ion-img
+                      class="icon_star"
+                      src="assets/icon/svg/icon_star.svg"
+                    ></ion-img>
+                    <ion-img
+                      class="icon_star"
+                      src="assets/icon/svg/icon_star.svg"
+                    ></ion-img>
+                    <span class="font_valoraciones"
+                      >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones' |
+                      translate }}</span
+                    >
                   </p>
                   <span class="font_texto_14">{{data?.nombre}}</span>
                 </ion-label>
@@ -216,35 +349,70 @@
         <ion-text class="text_compartir">{{detalle?.title}}</ion-text>
       </ion-col>
       <ion-col size="2">
-        <ion-img class="icon_compartir" src="assets/icon/svg/icon_compartir.svg"></ion-img>
+        <ion-img
+          class="icon_compartir"
+          src="assets/icon/svg/icon_compartir.svg"
+        ></ion-img>
       </ion-col>
     </ion-row>
     <ion-row class="row_val" size="12">
       <p class="ion-margin parrafo_val_bis">
-        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
-        <ion-img class="icon_star" src="assets/icon/svg/icon_star.svg"></ion-img>
+        <ion-img
+          class="icon_star"
+          src="assets/icon/svg/icon_star.svg"
+        ></ion-img>
+        <ion-img
+          class="icon_star"
+          src="assets/icon/svg/icon_star.svg"
+        ></ion-img>
+        <ion-img
+          class="icon_star"
+          src="assets/icon/svg/icon_star.svg"
+        ></ion-img>
+        <ion-img
+          class="icon_star"
+          src="assets/icon/svg/icon_star.svg"
+        ></ion-img>
+        <ion-img
+          class="icon_star"
+          src="assets/icon/svg/icon_star.svg"
+        ></ion-img>
         ({{detalle?.ratingAmount}}) valoraciones
       </p>
     </ion-row>
-    <ion-row class="product-owner" (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+    <ion-row
+      class="product-owner"
+      (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)"
+    >
       <ion-avatar class="avatar_dropdown">
-        <ion-img *ngIf="!detalle?.ownerAvatar" src="assets/icon/svg/default_avatar.svg"
-                 class="default-avatar"></ion-img>
-        <ion-img *ngIf="detalle?.ownerAvatar" [src]="detalle?.ownerAvatar"></ion-img>
+        <ion-img
+          *ngIf="!detalle?.ownerAvatar"
+          src="assets/icon/svg/default_avatar.svg"
+          class="default-avatar"
+        ></ion-img>
+        <ion-img
+          *ngIf="detalle?.ownerAvatar"
+          [src]="detalle?.ownerAvatar"
+        ></ion-img>
       </ion-avatar>
       <span>{{detalle?.ownerUsername}}</span>
     </ion-row>
     <div>
-      <div class="product-image" slot="start" *ngIf="detalle?.images?.length == 0">
-        <ion-img src="assets/icon/svg/default_product.svg" class="default-avatar"></ion-img>
+      <div
+        class="product-image"
+        slot="start"
+        *ngIf="detalle?.images?.length == 0"
+      >
+        <ion-img
+          src="assets/icon/svg/default_product.svg"
+          class="default-avatar"
+        ></ion-img>
       </div>
       <ng-container *ngIf="detalle?.images?.length > 0">
-        <swiper [spaceBetween]="10"
-                [navigation]="true"
-                [thumbs]="{ swiper: thumbsSwiper1 }"
+        <swiper
+          [spaceBetween]="10"
+          [navigation]="true"
+          [thumbs]="{ swiper: thumbsSwiper1 }"
         >
           <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
             <ion-img class="tam_img_normal" [src]="imageURL"></ion-img>
@@ -258,7 +426,7 @@
           [watchSlidesProgress]="true"
         >
           <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-            <img class="tam_img" [src]="imageURL"/>
+            <img class="tam_img" [src]="imageURL" />
           </ng-template>
         </swiper>
       </ng-container>
@@ -294,8 +462,11 @@
         </ng-template>
       </swiper>-->
     </div>
-    <ion-row size="12" style="margin: 20px 0">
-      {{detalle?.description}}
+    <ion-row
+      size="12"
+      style="margin: 20px 0"
+      [innerHtml]="detalle?.description"
+    >
       <!--      <ion-text class="read_more">Leer más</ion-text>-->
     </ion-row>
     <ion-row size="12" class="buy-controllers">
@@ -317,8 +488,10 @@
       </ion-col>
       <ion-col>
         <ion-row class="product-price">
-          <ion-label>{{detalle?.productUnitPrice * productAmount}}
-            €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label>
+          <ion-label
+            >{{detalle?.productUnitPrice * productAmount}}
+            €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label
+          >
         </ion-row>
       </ion-col>
     </ion-row>
@@ -329,10 +502,14 @@
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" type="submit" (click)="buyNow()">Comprar ahora</ion-button>
+        <ion-button expand class="botonf1" type="submit" (click)="buyNow()"
+          >Comprar ahora</ion-button
+        >
       </ion-row>
       <ion-row class="ion-padding paddingf2">
-        <ion-button expand class="botonf2" type="submit" (click)="addToCart()">Añadir al carrito</ion-button>
+        <ion-button expand class="botonf2" type="submit" (click)="addToCart()"
+          >Añadir al carrito</ion-button
+        >
       </ion-row>
     </ion-grid>
   </ion-toolbar>
