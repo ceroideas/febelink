@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {
   ModalController,
   AlertController,
@@ -7,25 +7,25 @@ import {
   PopoverController,
   Platform,
 } from '@ionic/angular';
-import { ApiService } from '../services/api.service';
-import { UtilitiesService } from '../services/utilities.service';
-import { SuscribirsePage } from '../pages/suscribirse/suscribirse.page';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { Chart } from 'chart.js';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-import { Storage } from '@ionic/storage';
-import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
-import { environment } from 'src/environments/environment';
-import { TranslateConfigService } from '../services/translate/translate-config.service';
-import { GeoPlacesApi } from '../services/geoplaces.service';
-import { GeoPlacesModel } from '../models/geoplaces.model';
+import {ApiService} from '../services/api.service';
+import {UtilitiesService} from '../services/utilities.service';
+import {SuscribirsePage} from '../pages/suscribirse/suscribirse.page';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
+import {Chart} from 'chart.js';
+import {Camera, CameraOptions} from '@awesome-cordova-plugins/camera/ngx';
+import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
+import {Storage} from '@ionic/storage';
+import {SharePopoverComponent} from '../components/share-popover/share-popover.component';
+import {environment} from 'src/environments/environment';
+import {TranslateConfigService} from '../services/translate/translate-config.service';
+import {GeoPlacesApi} from '../services/geoplaces.service';
+import {GeoPlacesModel} from '../models/geoplaces.model';
 import {
   VerificationComponent,
   VerifWhich,
 } from '../components/verification/verification.component';
-import { KycPopSvc } from '../services/kyc/kyc.pop.service';
+import {KycPopSvc} from '../services/kyc/kyc.pop.service';
 
 @Component({
   selector: 'app-tab4',
@@ -33,8 +33,8 @@ import { KycPopSvc } from '../services/kyc/kyc.pop.service';
   styleUrls: ['tab4.page.scss'],
 })
 export class Tab4Page {
-  @ViewChild('barCanvas', { static: true }) barCanvas: ElementRef;
-  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild('barCanvas', {static: true}) barCanvas: ElementRef;
+  @ViewChild(IonContent, {static: false}) content: IonContent;
 
   verifWhich = VerifWhich;
 
@@ -115,25 +115,25 @@ export class Tab4Page {
       (!this.perfil?.doc_type
         ? ''
         : ' - ' +
-          this.translateService.instant(
-            'kyc.docTypes.' + this.perfil.doc_type
-          ));
+        this.translateService.instant(
+          'kyc.docTypes.' + this.perfil.doc_type
+        ));
   }
 
   //&& !this.inputpass1.trim().match(/[a-z]/i) && !this.inputpass1.trim().match(/\d/)
   showHidePassMessages() {
     if (
       (this.inputpass1
-        .trim()
-        .match(
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/
-        ) ||
+          .trim()
+          .match(
+            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/
+          ) ||
         this.inputpass1.trim().length <= 0) &&
       (this.inputpass2
-        .trim()
-        .match(
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/
-        ) ||
+          .trim()
+          .match(
+            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#%^*()_\-=+\[\]{};:,.?/]{8,}$/
+          ) ||
         this.inputpass2.trim().length <= 0)
     ) {
       document.getElementById('savebtn').removeAttribute('disabled');
@@ -175,12 +175,14 @@ export class Tab4Page {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
+
   hideShowPassword2() {
     this.passwordType2 = this.passwordType2 === 'text' ? 'password' : 'text';
     this.passwordIcon2 = this.passwordIcon2 === 'eye-off' ? 'eye' : 'eye-off';
   }
 
-  async ngOnInit() {}
+  async ngOnInit() {
+  }
 
   async ionViewWillEnter() {
     //await this.obtenerSectores();
@@ -227,7 +229,9 @@ export class Tab4Page {
     });
     this.form.get('sector').valueChanges.subscribe((id) => {
       if (Number(id) !== 0) {
-        if (value !== Number(id)) this.obtenerTodosSubSectores(Number(id));
+        if (value !== Number(id)) {
+          this.obtenerTodosSubSectores(Number(id));
+        }
         value = Number(id);
       }
     });
@@ -257,8 +261,9 @@ export class Tab4Page {
         if (
           !this.perfil.logo.includes('http://') &&
           !this.perfil.logo.includes('https://')
-        )
+        ) {
           this.perfil.logo = `${environment.baseWebUrl}storage/${this.perfil.logo}`;
+        }
       } else {
         this.perfil.logo = `${environment.baseWebUrl}storage/${this.perfil.avatar}`;
       }
@@ -283,8 +288,10 @@ export class Tab4Page {
         const direccion_mobile =
           this.elementRef.nativeElement.querySelector('#direccion_mobile');
         this.geoPlaces
-          .OnResponse((place: GeoPlacesModel) => {})
-          .OnError((err) => {})
+          .OnResponse((place: GeoPlacesModel) => {
+          })
+          .OnError((err) => {
+          })
           .init(direccion_desktop, direccion_mobile);
       });
       this.loading = false;
@@ -314,7 +321,9 @@ export class Tab4Page {
       if (this.barCanvas === null || this.barCanvas === undefined) {
         barCanvasNativeEl =
           this.elementRef.nativeElement.querySelector('#barCanvas');
-      } else barCanvasNativeEl = this.barCanvas.nativeElement;
+      } else {
+        barCanvasNativeEl = this.barCanvas.nativeElement;
+      }
 
       this.barChart = new Chart(barCanvasNativeEl, {
         type: 'horizontalBar',
@@ -359,7 +368,8 @@ export class Tab4Page {
   /**
    * Navegar a incio
    */
-  public irAInicio(): void {}
+  public irAInicio(): void {
+  }
 
   /**
    * Verify Email and KYC Data before submit
@@ -367,16 +377,21 @@ export class Tab4Page {
    */
   verifyToSubmit() {
     const onVerificationDone = (hasError: boolean, verifSent: boolean) => {
-      if (hasError) return;
+      if (hasError) {
+        return;
+      }
 
       if (verifSent)
         // Email controlled and saved on verification
+      {
         this.emailPrevio = this.form.get('email').value;
+      }
 
       this.submitForm();
     };
     this.verify(VerifWhich.Save, onVerificationDone);
   }
+
   /**
    * Metido a mano campos para enviarlos al servidor
    */
@@ -758,10 +773,10 @@ export class Tab4Page {
           this.translateService.instant(
             'tabs.tab4.errors.limitSelectSectors_1'
           ) +
-            this.subscription_details.max_families +
-            this.translateService.instant(
-              'tabs.tab4.errors.limitSelectSectors_2'
-            )
+          this.subscription_details.max_families +
+          this.translateService.instant(
+            'tabs.tab4.errors.limitSelectSectors_2'
+          )
         );
       }
     }
@@ -791,10 +806,10 @@ export class Tab4Page {
           this.translateService.instant(
             'tabs.tab4.errors.limitSelectSectors_1'
           ) +
-            this.subscription_details.max_subfamilies +
-            this.translateService.instant(
-              'tabs.tab4.errors.limitSelectSectors_2'
-            )
+          this.subscription_details.max_subfamilies +
+          this.translateService.instant(
+            'tabs.tab4.errors.limitSelectSectors_2'
+          )
         );
       }
     }
@@ -921,7 +936,9 @@ export class Tab4Page {
     await suscribirseModal.present();
     this.obtenerPerfil();
     suscribirseModal.onDidDismiss().then((response) => {
-      if (response?.data?.subscriptionChanged) this.loadSuscriptions();
+      if (response?.data?.subscriptionChanged) {
+        this.loadSuscriptions();
+      }
     });
   }
 
@@ -931,7 +948,7 @@ export class Tab4Page {
    */
   public detalleDemanda(demanda): void {
     this.router.navigate(['detalle-demanda'], {
-      queryParams: { demanda: JSON.stringify(demanda) },
+      queryParams: {demanda: JSON.stringify(demanda)},
     });
   }
 
@@ -1038,7 +1055,7 @@ export class Tab4Page {
       this.subsectores = subsectores;
       if (addToForm) {
         if (this.subsectores.length > 0) {
-          this.form.patchValue({ sub_sector: this.subsectores[0].id });
+          this.form.patchValue({sub_sector: this.subsectores[0].id});
         }
       }
     });
@@ -1057,7 +1074,7 @@ export class Tab4Page {
 
         if (addToForm) {
           if (this.subsectores.length > 0) {
-            this.form.patchValue({ sub_sector: this.subsectores[0].id });
+            this.form.patchValue({sub_sector: this.subsectores[0].id});
           }
         }
       });
@@ -1109,7 +1126,8 @@ export class Tab4Page {
       buttons: [
         {
           text: this.translateService.instant('common.buttons.cancel'),
-          handler: (data) => {},
+          handler: (data) => {
+          },
         },
         {
           text: this.translateService.instant('common.buttons.send'),
@@ -1135,7 +1153,7 @@ export class Tab4Page {
     let subject =
       this.perfil.nick +
       this.translateService.instant('tabs.tab4.errors.valorationFrom');
-    let url = 'https://febelink.com/perfil/' + this.perfil.reference;
+    let url = 'https://www.febelink.com/perfil/' + this.perfil.reference;
     let message = 'Febelink \n' + subject + ' \n';
 
     this.socialSharing.share(null, null, null, url);
@@ -1154,7 +1172,7 @@ export class Tab4Page {
     let subject =
       this.perfil.nick +
       this.translateService.instant('tabs.tab4.valuation.from');
-    let url = 'https://febelink.com/perfil/' + this.perfil.reference;
+    let url = 'https://www.febelink.com/perfil/' + this.perfil.reference;
     let message = 'Febelink \n' + subject + ' \n';
 
     const popover = await this.popoverController.create({
@@ -1162,7 +1180,7 @@ export class Tab4Page {
       event: ev,
       translucent: true,
       mode: 'ios',
-      componentProps: { url: url, title: '', desc: message },
+      componentProps: {url: url, title: '', desc: message},
     });
     return await popover.present();
   }
@@ -1224,8 +1242,11 @@ export class Tab4Page {
    * When input email changed, verify it
    */
   public emailChanged(email) {
-    if (this.hasEmailChanged(email)) this.emailVerified = false;
-    else this.emailVerified = this.isEmailVerified();
+    if (this.hasEmailChanged(email)) {
+      this.emailVerified = false;
+    } else {
+      this.emailVerified = this.isEmailVerified();
+    }
   }
 
   /**
@@ -1258,7 +1279,9 @@ export class Tab4Page {
     }
 
     if (!this.hasEmailChanged() && this.isEmailVerified()) {
-      if (onVerificationDone) onVerificationDone(false, true);
+      if (onVerificationDone) {
+        onVerificationDone(false, true);
+      }
       return;
     }
 
@@ -1279,7 +1302,9 @@ export class Tab4Page {
       const verifSent: boolean =
         data.role !== 'backdrop' && data.data?.verifSent;
 
-      if (onVerificationDone) onVerificationDone(hasError, verifSent);
+      if (onVerificationDone) {
+        onVerificationDone(hasError, verifSent);
+      }
     });
 
     await verif.present();

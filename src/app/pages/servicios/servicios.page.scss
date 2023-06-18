@@ -288,8 +288,9 @@
 }
 
 .servicios-item-cell-right {
-  display: table-cell;
+  display: flex;
   vertical-align: bottom;
+  justify-content: space-evenly;
 }
 
 .servicios-item-button-secondary-b {
@@ -1448,6 +1449,19 @@
   color: #1C64F2;
   width: max-content;
   margin-bottom: 8px;
+}
+
+.cancel-button {
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
+  padding: 8px 12px;
+  background: red;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #fff;
 }
 
 

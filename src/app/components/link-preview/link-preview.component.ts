@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import {DOCUMENT} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Observable, forkJoin} from 'rxjs';
 
 export interface Scraping {
   u?: string; // url
@@ -26,7 +27,7 @@ export class LinkPreviewComponent implements OnInit {
   private image: string =
     'https://tecnotril.com/wp-content/uploads/2019/04/placeholder-image.png';
 
-  @Input() url: string = 'https://febelink.com'; // Pagina ejemplo base
+  @Input() url: string = 'https://www.febelink.com'; // Pagina ejemplo base
   @Input() urls: Array<Scraping> = [
     {
       u: this.url,
@@ -39,15 +40,15 @@ export class LinkPreviewComponent implements OnInit {
   @Input() target: string = '_blank';
 
   /** Alternative API for Scrapping
-  private api: string = "http://api.linkpreview.net/?";
-  private keys: Array<string> = [
-    "5cd32a757565b4e17f2a258effb8ae350f8a8062d9a4c",
-    "5d04a893457c8c32e57398a4a3d95cb29ce12ae30e18f",
-    "5e24c8a55774042ec8f73f8d06c8cbe768098a3103ab3",
-    "5b54e80a65c77848ceaa4630331e8384950e09d392365",
-  ]
-  private param_url: string = 'q';
-  */
+   private api: string = "http://api.linkpreview.net/?";
+   private keys: Array<string> = [
+   "5cd32a757565b4e17f2a258effb8ae350f8a8062d9a4c",
+   "5d04a893457c8c32e57398a4a3d95cb29ce12ae30e18f",
+   "5e24c8a55774042ec8f73f8d06c8cbe768098a3103ab3",
+   "5b54e80a65c77848ceaa4630331e8384950e09d392365",
+   ]
+   private param_url: string = 'q';
+   */
   private api: string = 'https://api.embed.ly/1/oembed?';
   private keys: Array<string> = ['08b652e6b3ea11e0ae3f4040d3dc5c07'];
   private key_i: number = 0;
@@ -59,7 +60,11 @@ export class LinkPreviewComponent implements OnInit {
   private error: (error: any) => void;
   private complete: () => void;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+  }
 
   ngOnInit() {
     this.exec();
@@ -70,27 +75,37 @@ export class LinkPreviewComponent implements OnInit {
     this.urls =
       typeof urls !== 'string'
         ? urls
-        : [{ u: urls, t: this.title, d: this.description, i: this.image }];
+        : [{u: urls, t: this.title, d: this.description, i: this.image}];
     return this;
   }
+
   OnResponse(next?: (value: any) => void): LinkPreviewComponent {
     // Response Callback
-    if (!next) this.next = next;
+    if (!next) {
+      this.next = next;
+    }
 
     return this;
   }
+
   OnError(error?: (error: any) => void): LinkPreviewComponent {
     // Error Callback
-    if (!error) this.error = error;
+    if (!error) {
+      this.error = error;
+    }
 
     return this;
   }
+
   OnComplete(complete?: () => void): LinkPreviewComponent {
     // Complete Callback
-    if (!complete) this.complete = complete;
+    if (!complete) {
+      this.complete = complete;
+    }
 
     return this;
   }
+
   exec(
     next?: (value: any) => void,
     error?: (error: any) => void,
@@ -104,10 +119,16 @@ export class LinkPreviewComponent implements OnInit {
      * Hago un bucle por cada url para ir a consultar en paralelo
      * */
     this.urls.forEach((scraping) => {
-      if (scraping.t === '' || scraping.t === undefined) scraping.t = this.title;
-      if (scraping.d === '' || scraping.d === undefined) scraping.d = this.description;
-      if (scraping.i === '' || scraping.i === undefined) scraping.i = this.image;
-      
+      if (scraping.t === '' || scraping.t === undefined) {
+        scraping.t = this.title;
+      }
+      if (scraping.d === '' || scraping.d === undefined) {
+        scraping.d = this.description;
+      }
+      if (scraping.i === '' || scraping.i === undefined) {
+        scraping.i = this.image;
+      }
+
       // Almaceno los observables dentro de esta variable
       this.obs.push(this.http.get(this.fullUrl(scraping)));
     });
@@ -133,17 +154,30 @@ export class LinkPreviewComponent implements OnInit {
           let data = results[i];
 
           // seteo su info para que lo actualice en .html
-          this.urls[i].t = this.urls[i].t === null ? '' : ( data['title'] ? data['title'] : this.title );
-          this.urls[i].d = this.urls[i].d === null ? '' : ( data['description']
-            ? data['description']
-            : this.description );
-          this.urls[i].i = this.urls[i].i === null ? '' : ( data['thumbnail_url']
-            ? data['thumbnail_url']
-            : this.image );
+          this.urls[i].t =
+            this.urls[i].t === null
+              ? ''
+              : data['title']
+                ? data['title']
+                : this.title;
+          this.urls[i].d =
+            this.urls[i].d === null
+              ? ''
+              : data['description']
+                ? data['description']
+                : this.description;
+          this.urls[i].i =
+            this.urls[i].i === null
+              ? ''
+              : data['thumbnail_url']
+                ? data['thumbnail_url']
+                : this.image;
           // this.urls[ i ].i = data[ 'image' ] ? data[ 'image' ] : this.image;
 
           // En caso de tener callback lo llamo para decirle que terminé con esta info
-          if (this.next) this.next(data);
+          if (this.next) {
+            this.next(data);
+          }
         }
       },
       (err) => {
@@ -159,11 +193,15 @@ export class LinkPreviewComponent implements OnInit {
         }
 
         // En caso de tener callback lo llamo para decirle que tuve error
-        if (this.error) this.error(err);
+        if (this.error) {
+          this.error(err);
+        }
       },
       () => {
         // En caso de tener callback lo llamo para decirle que terminé
-        if (this.complete) this.complete();
+        if (this.complete) {
+          this.complete();
+        }
       }
     );
 
@@ -172,6 +210,6 @@ export class LinkPreviewComponent implements OnInit {
 
   // Lo agrego para que cuando lo clickeen abra en el target indicado ( e.g.: new tab )
   goTo(url: any) {
-    window.open(url, this.target);
+    this.document.defaultView.open(url, this.target);
   }
 }

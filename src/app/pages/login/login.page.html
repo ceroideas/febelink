@@ -1,8 +1,6 @@
 <ion-content>
-
   <!-- Desktop version -->
   <div class="desktop">
-
     <!--<div class="login-header-b">
       <div class="login-header-left">
         <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo-b" />
@@ -14,33 +12,42 @@
 
     <div class="login-content-b">
       <div class="login-wrapper-dark"></div>
-      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size"/>
+      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size" />
 
       <div class="login-content-floating">
-
         <div class="login-content-background">
           <form
             *ngIf="form"
             [formGroup]="form"
             (ngSubmit)="submitForm()"
-            (keyup.enter)="submitForm()">
-
+            (keyup.enter)="submitForm()"
+          >
             <div class="login-content-title">
               {{ 'pages.login.title' | translate }}
             </div>
-            <div class="login-label-input">
-              Correo electrónico
-            </div>
+            <div class="login-label-input">Correo electrónico</div>
             <div class="login-input-margin">
-              <ion-input type="email" formControlName="email" required placeholder="Correo electrónico"
-                         class="padding-input-12 login-input"></ion-input>
+              <ion-input
+                type="email"
+                formControlName="email"
+                required
+                placeholder="Correo electrónico"
+                class="padding-input-12 login-input"
+              ></ion-input>
             </div>
             <div class="login-label-input">
               {{ 'common.personal.pass' | translate }}
             </div>
             <div class="login-input-margin">
-              <ion-input type="password" (key.enter)="submitForm()" [type]="passwordType" formControlName="password"
-                         required placeholder="**********" class="padding-input-12 login-input"></ion-input>
+              <ion-input
+                type="password"
+                (key.enter)="submitForm()"
+                [type]="passwordType"
+                formControlName="password"
+                required
+                placeholder="**********"
+                class="padding-input-12 login-input"
+              ></ion-input>
             </div>
             <div class="login-options-table">
               <div class="login-options-left">
@@ -53,35 +60,39 @@
                 </div>
               </div>
             </div>
-            <button type="submit" [disabled]="!form.valid"
-                    class="login-button-connections login-button-back-a margin-bottom-button">
+            <button
+              type="submit"
+              [disabled]="!form.valid"
+              class="login-button-connections login-button-back-a margin-bottom-button"
+            >
               Iniciar sesión
             </button>
 
-            <social-login *ngIf="!platform.is('ios')" [redirect]="redirect"></social-login>
+            <social-login
+              *ngIf="!platform.is('ios')"
+              [redirect]="redirect"
+            ></social-login>
           </form>
         </div>
 
         <div class="login-content-background margin-top-content-bottom-b">
-          <div class="login-content-title-small">
-            Nuevo usuario?
-          </div>
-          <div class="login-button-connections login-button-back-d" (click)="openRegistro()">
+          <div class="login-content-title-small">Nuevo usuario?</div>
+          <div
+            class="login-button-connections login-button-back-d"
+            (click)="openRegistro()"
+          >
             {{ 'pages.login.register' | translate }}
           </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
 
   <!-- Mobile version -->
   <div class="mobile">
     <div class="login-header">
       <div class="login-header-left">
-        <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo"/>
+        <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo" />
       </div>
       <div class="login-header-right">
         <app-lang-btn></app-lang-btn>
@@ -89,7 +100,7 @@
     </div>
 
     <div class="login-img-back">
-      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size"/>
+      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size" />
     </div>
 
     <div class="login-content login-content-margin">
@@ -98,24 +109,34 @@
           *ngIf="form"
           [formGroup]="form"
           (ngSubmit)="submitForm()"
-          (keyup.enter)="submitForm()">
-
+          (keyup.enter)="submitForm()"
+        >
           <div class="login-content-title">
             {{ 'pages.login.title' | translate }}
           </div>
-          <div class="login-label-input">
-            Correo electrónico
-          </div>
+          <div class="login-label-input">Correo electrónico</div>
           <div class="login-input-margin">
-            <ion-input type="email" formControlName="email" required placeholder="Correo electrónico"
-                       class="padding-input-12 login-input"></ion-input>
+            <ion-input
+              type="email"
+              formControlName="email"
+              required
+              placeholder="Correo electrónico"
+              class="padding-input-12 login-input"
+            ></ion-input>
           </div>
           <div class="login-label-input">
             {{ 'common.personal.pass' | translate }}
           </div>
           <div class="login-input-margin">
-            <ion-input type="password" (key.enter)="submitForm()" [type]="passwordType" formControlName="password"
-                       required placeholder="**********" class="padding-input-12 login-input"></ion-input>
+            <ion-input
+              type="password"
+              (key.enter)="submitForm()"
+              [type]="passwordType"
+              formControlName="password"
+              required
+              placeholder="**********"
+              class="padding-input-12 login-input"
+            ></ion-input>
           </div>
           <div class="login-options-table">
             <div class="login-options-left">
@@ -128,29 +149,38 @@
               </div>
             </div>
           </div>
-          <button type="submit" [disabled]="!form.valid"
-                  class="login-button-connections login-button-back-a margin-bottom-button">
+          <button
+            type="submit"
+            [disabled]="!form.valid"
+            class="login-button-connections login-button-back-a margin-bottom-button"
+          >
             Iniciar sesión
           </button>
 
-          <social-login *ngIf="!platform.is('ios')" [redirect]="redirect"></social-login>
+          <social-login
+            *ngIf="!platform.is('ios')"
+            [redirect]="redirect"
+          ></social-login>
         </form>
       </div>
     </div>
 
     <div class="login-content-bottom">
       <div class="login-content-background">
-        <div class="login-content-title-small">
-          Nuevo usuario?
-        </div>
-        <div class="login-button-connections login-button-back-d" (click)="openRegistro()">
+        <div class="login-content-title-small">Nuevo usuario?</div>
+        <div
+          class="login-button-connections login-button-back-d"
+          (click)="openRegistro()"
+        >
           {{ 'pages.login.register' | translate }}
         </div>
       </div>
     </div>
 
     <div class="login-footer-contact">
-      <a href="mailto:info@febelink.com" class="a-reset">{{ 'common.contactUs' | translate }}</a>
+      <a href="mailto:info@febelink.com" class="a-reset"
+        >{{ 'common.contactUs' | translate }}</a
+      >
     </div>
   </div>
 </ion-content>

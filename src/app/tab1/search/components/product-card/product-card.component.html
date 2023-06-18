@@ -1,24 +1,28 @@
 <ion-item (click)="irA('/product/' + data?.title + '/detail/' + data?.id)" lines="none"
-          class="ion-no-padding search-product keys-dropdown">
-  <div class="avatar_dropdown" slot="start">
-    <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
-             class="default-avatar"></ion-img>
-    <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
+          class="ion-no-padding ion-no-margin search-product keys-dropdown">
+  <div class="product-view">
+    <div class="avatar_dropdown" slot="start">
+      <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
+               class="default-avatar"></ion-img>
+      <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
+    </div>
+    <div class="username">{{data?.ownerUsername}}</div>
+    <app-rating [rating]="0"></app-rating>
+    <div class="votes">({{data?.votes}} {{ 'tabs.tab1.search.valoraciones' | translate }})</div>
   </div>
-  <div class="info">
-    <div>
-      <div class="title">
-        {{data?.title}}
-      </div>
-      <div class="price">
-        <span>{{data?.unitPrice}}€</span>
-        <span> / {{unitTypes[data.unitTypeId - 1]?.shorthand}}</span>
-      </div>
+  <div class="product-info">
+    <div class="title">
+      {{data?.title}}
     </div>
-    <div class="font_valoraciones">
-      <app-rating [rating]="3.5"></app-rating>
-      ({{data?.votes}} {{ 'tabs.tab1.search.valoraciones' | translate }})
+    <div class="price">
+      {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
     </div>
-    <div class="font_texto_14">{{data?.ownerUsername}}</div>
+    <div
+      class="chat-button"
+      style="width: 100%"
+      (click)="createChat(data?.ownerUsername, data?.ownerUserId)"
+    >
+      Pedir presupuesto
+    </div>
   </div>
 </ion-item>

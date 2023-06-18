@@ -311,14 +311,14 @@
       "search": {
         "resultado": "Resultados",
         "oferta": "Ofertas",
-        "listado": "Listado",
+        "listado": "Profesionales",
         "sin_resultado_tit": "Ningún resultado encontrado",
         "sin_resultado_subtit": "Intenta buscar por otras palabras claves",
         "valoraciones": "valoraciones",
-        "recomendaciones": "Recomendaciones",
+        "recomendaciones": "Oferta destacada",
         "oferta_destacada": "Oferta destacada",
         "basado_search": "Basado en tu búsqueda",
-        "search_prof": "Encuentra profesionales de confianza"
+        "search_prof": "Encuentra servicios profesionales"
       }
     },
     "tab2": {

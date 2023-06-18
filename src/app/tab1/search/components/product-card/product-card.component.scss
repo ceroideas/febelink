@@ -123,7 +123,10 @@ ion-img {
   color: #111928;
 }
 
-.font_texto_14 {
+.username {
+  text-align: center;
+  margin: 5px 0;
+
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -200,7 +203,7 @@ ion-slides {
 
 div.avatar_dropdown {
   & {
-    margin-right: 16px;
+    margin: auto;
     width: 64px;
     height: 64px;
     background: #EDEDED;
@@ -271,40 +274,77 @@ ion-slides {
     }
   }
 
-  .info {
-    width: 100%;
+  .product-view, .product-info {
+    display: flex;
+    flex-direction: column;
+  }
 
-    div:first-child {
-      display: flex;
+  .product-view {
+    flex-basis: 33%;
 
-      @media (min-width: 768px) {
-        flex-direction: column;
-      }
+    @media (width > 768px) {
+      flex-basis: 17%;
+    }
 
-      .title {
-        max-height: 100px;
-        overflow: hidden;
-        flex-grow: 2;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 150%;
-        color: #111928;
-      }
+    .votes {
+      text-align: center;
+      margin: 5px 0;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 150%;
+      color: #374151;
+    }
+  }
 
-      .price {
-        @media (max-width: 768px) {
-          margin-left: 5px;
-          max-width: 35%;
-        }
+  .product-info {
+    flex-basis: 66%;
+    flex-grow: 2;
+    text-align: center;
+    padding-left: 15px;
 
-        span:first-child {
-          font-style: normal;
-          font-weight: 600;
-          font-size: 16px;
-          line-height: 150%;
-          color: #111928;
-        }
-      }
+    @media (width > 768px) {
+      flex-basis: 83%;
+    }
+
+    .title {
+      max-height: 100px;
+      overflow: hidden;
+      flex-grow: 2;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 150%;
+      color: #111928;
+    }
+
+    .price {
+      margin: 10px 0;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 150%;
+      color: #111928;
+    }
+
+    .chat-button {
+      cursor: pointer;
+      width: 100px;
+      text-align: center;
+      padding: 8px 12px;
+      background: #1B80F8;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      color: #fff;
     }
   }
 }
+
+ion-item {
+  --inner-padding-bottom: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-top: 0;
+}
+

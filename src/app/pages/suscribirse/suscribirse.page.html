@@ -38,68 +38,69 @@
 -->
 
 <ion-content class="ion-padding">
-        <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.id)"
-                  [class.selected]="selected == subs.id">
-                  <!-- {{subs | json}} -->
-            <ion-card-header>
-                <ion-card-title>
-                    <ion-icon name="checkbox-outline" *ngIf="selected == subs.id"></ion-icon>
-                    <ion-icon name="square-outline" *ngIf="selected != subs.id"></ion-icon>
-                    {{ subs.name }}
-                    <!-- <div *ngIf="subs.stripe_plan === 'febe-pro'" class="free-message-box">
-                        <span class="free-message">¡Disfruta de tus 15 días Premium gratis!</span>
-                    </div> -->
-                </ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
+    <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.id)"
+              [class.selected]="selected == subs.id">
+        <!-- {{subs | json}} -->
+        <ion-card-header>
+            <ion-card-title>
+                <ion-icon name="checkbox-outline" *ngIf="selected == subs.id"></ion-icon>
+                <ion-icon name="square-outline" *ngIf="selected != subs.id"></ion-icon>
+                {{ subs.name }}
+                <!-- <div *ngIf="subs.stripe_plan === 'febe-pro'" class="free-message-box">
+                    <span class="free-message">¡Disfruta de tus 15 días Premium gratis!</span>
+                </div> -->
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
 
-                <div >
-                    <div class="ion-text-center">
-                        <ion-text color="medium">
-                            <h5 style="font-size: 16px">{{subscriptionDetails.get(subs.stripe_plan)?.description}}</h5>
-                        </ion-text>
+            <div>
+                <div class="ion-text-center">
+                    <ion-text color="medium">
+                        <h5 style="font-size: 16px">{{subscriptionDetails.get(subs.stripe_plan)?.description}}</h5>
+                    </ion-text>
+                </div>
+                <div class="advantages" *ngFor="let advantage of subscriptionDetails.get(subs.stripe_plan)?.advantages">
+                    <div class="icon">
+                        <ion-icon name="checkmark-circle-sharp"></ion-icon>
                     </div>
-                    <div class="advantages" *ngFor="let advantage of subscriptionDetails.get(subs.stripe_plan)?.advantages">
-                        <div class="icon">
-                            <ion-icon name="checkmark-circle-sharp"></ion-icon>
-                        </div>
-                        <div class="info">
-                            <b>{{advantage.title}}</b>
-                            <p>{{advantage.description}}</p>
-                        </div>
+                    <div class="info">
+                        <b>{{advantage.title}}</b>
+                        <p>{{advantage.description}}</p>
                     </div>
                 </div>
-
-            </ion-card-content>
-        </ion-card>
-        
-        <ion-button (click)="paySubscription(selected)" expand="block" fill="clear" shape="round" [disabled]="selected===myCurrentPlan?.id">
-            Cambiar mi plan
-        </ion-button>
-        <!-- <ion-row style="width: 100%" class="hidden_ios">
-            <form action="/" method="post" id="payment-form" style="width: 100%">
-                <div class="form-row">
-                    <div id="card-element">
-
-                    </div>
-
-
-                    <div id="card-errors" role="alert"></div>
-                </div>
-                <div class="btn-container" *ngIf="selected!=null">
-
-                    <div class="btn-container">
-                        <ion-button color="primary" type="submit">Suscribirme</ion-button>
-                    </div>
-                </div>
-            </form>
-        </ion-row>
-        <ion-row style="width: 100%" class="hidden_md">
-            <div style="text-align: center;padding-top: 20px;width: 100%">
-                <a target="_blank" class="button_a"
-                   href="http://febelink.com/menu/suscription-browser/{{selected}}/{{perfil?.id}}">Suscribirme</a>
             </div>
-        </ion-row> -->
+
+        </ion-card-content>
+    </ion-card>
+
+    <ion-button (click)="paySubscription(selected)" expand="block" fill="clear" shape="round"
+                [disabled]="selected===myCurrentPlan?.id">
+        Cambiar mi plan
+    </ion-button>
+    <!-- <ion-row style="width: 100%" class="hidden_ios">
+        <form action="/" method="post" id="payment-form" style="width: 100%">
+            <div class="form-row">
+                <div id="card-element">
+
+                </div>
+
+
+                <div id="card-errors" role="alert"></div>
+            </div>
+            <div class="btn-container" *ngIf="selected!=null">
+
+                <div class="btn-container">
+                    <ion-button color="primary" type="submit">Suscribirme</ion-button>
+                </div>
+            </div>
+        </form>
+    </ion-row>
+    <ion-row style="width: 100%" class="hidden_md">
+        <div style="text-align: center;padding-top: 20px;width: 100%">
+            <a target="_blank" class="button_a"
+               href="http://www.febelink.com/menu/suscription-browser/{{selected}}/{{perfil?.id}}">Suscribirme</a>
+        </div>
+    </ion-row> -->
     <!-- <div *ngIf="subscription != null">
         <ion-card *ngFor="let subs of subscriptions" (click)="openStripe(subs.stripe_plan)"
                   [class.selected]="selected == subs.stripe_plan">

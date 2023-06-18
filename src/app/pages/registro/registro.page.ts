@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, Platform } from '@ionic/angular';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +28,8 @@ export class RegistroPage implements OnInit {
 
   redirect: string;
 
+  promoCode: string;
+
   constructor(
     public navCtrl: NavController,
     private formBuilder: UntypedFormBuilder,
@@ -41,6 +47,10 @@ export class RegistroPage implements OnInit {
    * Inicializamos el formulario
    */
   public ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.promoCode = params['code'];
+    });
+
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -127,6 +137,7 @@ export class RegistroPage implements OnInit {
         sub_sector: this.form.get('sub_sector').value,
         lang: lang,
         idRecommender,
+        promoCode: this.promoCode,
       };
 
       // console.log(registrationPayload);

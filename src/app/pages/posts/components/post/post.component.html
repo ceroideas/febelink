@@ -5,7 +5,7 @@
         class="no-padding"
         [id]="iAdvise?.uid"
         [user]="iAdvise"
-        [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
+        [subtitle]="iAdvise?.created_at | dateFormat : dateFormatType.DateTime"
         [OnClickShowProfile]="true"
       ></app-user-item>
       <div class="cell-dots-top">
@@ -15,12 +15,19 @@
             [transparent]="true"
           ></app-follower-button>
         </div>
-        <img src="assets/icon/svg/menu-dots.svg" (click)="options($event)" class="cell-dots-top-svg"/>
+        <img
+          src="assets/icon/svg/menu-dots.svg"
+          (click)="options($event)"
+          class="cell-dots-top-svg"
+        />
       </div>
     </div>
-    <div [innerHTML]="iAdvise.content" class="content-post post-content-main"
-         [ngClass]="{'max-content-text' : showSeePost}"></div>
-    <div class="post-content-topic">#{{ topic }}</div>
+    <div
+      [innerHTML]="iAdvise.content"
+      class="content-post post-content-main"
+      [ngClass]="{ 'max-content-text': showSeePost }"
+    ></div>
+    <!--<div class="post-content-topic">#{{ topic }}</div>-->
     <ion-row
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
@@ -30,6 +37,8 @@
       <ion-img
         class="h-social-media marg-se media"
         [src]="iAdvise.media_url"
+        [alt]="iAdvise.media_url"
+        [title]="iAdvise.media_url"
         *ngIf="
           isPostVisible &&
           iAdvise.media_url &&
@@ -59,13 +68,17 @@
     </ion-row>
     <div class="post-main-reactions">
       <div class="post-main-reactions-left">
-        <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
-        <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+        <span *ngIf="iAdvise.react_qant > 0">{{ iAdvise.react_qant }} </span
+        ><span *ngIf="!(iAdvise.react_qant > 0)">0 </span>
+        <span *ngIf="iAdvise.react_qant == 1">Reacción</span
+        ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
       </div>
       <div class="post-main-reactions-right">
-        <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span
-        *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+        <span *ngIf="iAdvise.comments_qant > 0"
+        >{{ iAdvise.comments_qant }} </span
+        ><span *ngIf="!(iAdvise.comments_qant > 0)">0 </span>
+        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
+        ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
       </div>
     </div>
 
@@ -76,7 +89,6 @@
       [showSeePost]="showSeePost"
     ></app-post-bottom-bar-component>
 
-
     <app-comments-component
         #comments
         [post]="iAdvise"
@@ -84,7 +96,6 @@
         [isVisible]="areCommentsVisible"
         (OnCommentsVisible)="isPostVisible = false"
     ></app-comments-component>
-
   </div>
 </div>
 
@@ -96,7 +107,7 @@
         style="width: 95%; display: block"
         [id]="iAdvise?.uid"
         [user]="iAdvise"
-        [subtitle]="iAdvise?.created_at | dateFormat: dateFormatType.DateTime"
+        [subtitle]="iAdvise?.created_at | dateFormat : dateFormatType.DateTime"
         [OnClickShowProfile]="true"
       ></app-user-item>
       <div class="cell-dots-top-b">
@@ -104,13 +115,20 @@
           [user]="postUser"
           [transparent]="true"
         ></app-follower-button>
-        <img src="assets/icon/svg/menu-dots.svg" (click)="options($event)" class="cell-dots-top-svg"/>
+        <img
+          src="assets/icon/svg/menu-dots.svg"
+          (click)="options($event)"
+          class="cell-dots-top-svg"
+        />
       </div>
     </div>
 
-    <div [innerHTML]="iAdvise.content" class="content-post post-content-main"
-         [ngClass]="{'max-content-text-b' : showSeePost}"></div>
-    <div class="post-content-topic">#{{ topic }}</div>
+    <div
+      [innerHTML]="iAdvise.content"
+      class="content-post post-content-main"
+      [ngClass]="{ 'max-content-text-b': showSeePost }"
+    ></div>
+    <!--<div class="post-content-topic">#{{ topic }}</div>-->
     <ion-row
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
@@ -120,6 +138,8 @@
       <ion-img
         class="h-social-media marg-se media"
         [src]="iAdvise.media_url"
+        [title]="iAdvise.media_url"
+        [alt]="iAdvise.media_url"
         *ngIf="
           isPostVisible &&
           iAdvise.media_url &&
@@ -149,13 +169,17 @@
     </ion-row>
     <div class="post-main-reactions-b">
       <div class="post-main-reactions-left">
-        <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
-        <span *ngIf="iAdvise.react_qant == 1">Reacción</span><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+        <span *ngIf="iAdvise.react_qant > 0">{{ iAdvise.react_qant }} </span
+        ><span *ngIf="!(iAdvise.react_qant > 0)">0 </span>
+        <span *ngIf="iAdvise.react_qant == 1">Reacción</span
+        ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
       </div>
       <div class="post-main-reactions-right">
-        <span *ngIf="iAdvise.comments_qant>0">{{iAdvise.comments_qant}} </span><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span><span
-        *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+        <span *ngIf="iAdvise.comments_qant > 0"
+        >{{ iAdvise.comments_qant }} </span
+        ><span *ngIf="!(iAdvise.comments_qant > 0)">0 </span>
+        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
+        ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
       </div>
     </div>
 
@@ -166,7 +190,6 @@
       [showSeePost]="showSeePost"
     ></app-post-bottom-bar-component>
 
-
     <app-comments-component
         #comments
         [post]="iAdvise"
@@ -174,6 +197,5 @@
         [isVisible]="areCommentsVisible"
         (OnCommentsVisible)="isPostVisible = false"
     ></app-comments-component>
-
   </div>
 </div>

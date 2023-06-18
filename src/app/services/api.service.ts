@@ -100,7 +100,9 @@ export class ApiService {
   async _getData(endpoint: string) {
     let token;
     await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
-      if (tokenInfo !== null) token = tokenInfo.access_token;
+      if (tokenInfo) {
+        token = tokenInfo.access_token;
+      }
     });
 
     const lang = await this.translateSvc.getLanguage();
@@ -741,6 +743,9 @@ export class ApiService {
     formData.append('role_id', '5');
     formData.append('idRecommender', params.idRecommender);
     formData.append('lang', params.lang);
+    if (params.promoCode) {
+      formData.append('promoCode', params.promoCode);
+    }
 
     return this.http.post(environment.API_URL_AUTH + 'signup', formData);
   }

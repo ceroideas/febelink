@@ -35,6 +35,7 @@
   color: #000000 !important;
   //border: 0.5px solid #49484c;
 }
+
 .other-message-date {
   background: #ffffff !important;
   border: 1px solid #dadada;
@@ -97,6 +98,8 @@ ion-menu-button {
 
 ion-footer {
   background: #000000 !important;
+  position: fixed;
+  bottom: 0;
 }
 
 .footer-md::before {

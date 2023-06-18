@@ -17,6 +17,7 @@ import {GuidePage} from '../pages/guide/guide.page';
 import {NotificationService} from '../services/notification.service';
 import {NotifType} from '../models/notification';
 import {ISearch} from '../models/search.model';
+import {ChatService} from '../services/chat.service';
 
 @Component({
   selector: 'app-tab3',
@@ -29,6 +30,7 @@ export class Tab3Page implements OnInit {
   isLoading: boolean;
   currentUser: IUser = null;
   unreadMessages: Map<number, number> = new Map();
+  rooms: [] = [];
 
   constructor(
     private modalCtrl: ModalController,
@@ -37,16 +39,19 @@ export class Tab3Page implements OnInit {
     private router: Router,
     private translateService: TranslateService,
     private alertCtrl: AlertController,
-    private notificationSvc: NotificationService
+    private notificationSvc: NotificationService,
+    private chatSVC: ChatService
   ) {
   }
 
-
   async ngOnInit(): Promise<void> {
+    const {response, error} = await this.chatSVC.getMyChatRooms();
+    this.rooms = response;
+
     await this.api.getUnreadMessages();
-    this.api.unreadChatMessages.subscribe(unreadMessages => {
+    this.api.unreadChatMessages.subscribe((unreadMessages) => {
       this.unreadMessages.clear();
-      unreadMessages?.forEach(room => {
+      unreadMessages?.forEach((room) => {
         this.unreadMessages.set(+room.room_id, room.unread);
       });
       // console.log("unreadNotificationsCount", this.unreadMessages);
@@ -69,10 +74,21 @@ export class Tab3Page implements OnInit {
   async getOffers() {
     this.utilities.showLoading();
     const [myOffers, offers, favorites, mySearchs] = await Promise.all([
-      this.setType(await (await this.api.misOfertas()).toPromise(), Type.MyOffer),
-      this.setType(await (await this.api.ofertasRecibidas()).toPromise(), Type.ReceivedOffer),
+      this.setType(
+        await (await this.api.misOfertas()).toPromise(),
+        Type.MyOffer
+      ),
+      this.setType(
+        await (await this.api.ofertasRecibidas()).toPromise(),
+        Type.ReceivedOffer
+      ),
       await (await this.api.getFavorites()).toPromise(),
-      this.setType(await (await this.api.obtenerDemandasDemandante(this.currentUser.id)).toPromise(), Type.PendingDemand),
+      this.setType(
+        await (
+          await this.api.obtenerDemandasDemandante(this.currentUser.id)
+        ).toPromise(),
+        Type.PendingDemand
+      ),
     ]);
     Object.values(favorites[0]).forEach((favorite: IOffer) => {
       favorite.type = Type.Favorite;
@@ -263,6 +279,12 @@ export class Tab3Page implements OnInit {
     await alert.present();
   }
 
+  navigateToChat(roomId: number, receiverId: number, receiverUsername: string) {
+    this.router.navigate(['chat/' + roomId], {
+      state: {receiverId, receiverUsername},
+    });
+  }
+
   onClickSearchHandler(search: IOffer) {
     if (!search) {
       return;
@@ -302,11 +324,19 @@ export class Tab3Page implements OnInit {
     let roomId: number;
     switch (offer.type) {
       case Type.ReceivedOffer: {
-        roomId = +(offer.id_ofertante?.toString() + offer.id_demanda?.toString() + this.currentUser.id.toString());
+        roomId = +(
+          offer.id_ofertante?.toString() +
+          offer.id_demanda?.toString() +
+          this.currentUser.id.toString()
+        );
         break;
       }
       case Type.MyOffer: {
-        roomId = +(this.currentUser.id.toString() + offer.id_demanda?.toString() + offer.id_demandante?.toString());
+        roomId = +(
+          this.currentUser.id.toString() +
+          offer.id_demanda?.toString() +
+          offer.id_demandante?.toString()
+        );
         break;
       }
     }
@@ -316,7 +346,7 @@ export class Tab3Page implements OnInit {
   }
 
   setType(item: any[], type: Type): any {
-    item.map(item => {
+    item.map((item) => {
       item.type = type;
       return item;
     });
@@ -326,8 +356,8 @@ export class Tab3Page implements OnInit {
 }
 
 enum Type {
-  MyOffer = 1
-  , ReceivedOffer = 2
-  , Favorite = 3
-  , PendingDemand = 4
+  MyOffer = 1,
+  ReceivedOffer = 2,
+  Favorite = 3,
+  PendingDemand = 4,
 }

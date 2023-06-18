@@ -3,26 +3,36 @@
     <ion-row>
       <ion-col size="12">
         <ion-row size="12">
-          <ion-col size="12">
-            <img class="tam_imagen" style="width: 100%" *ngIf="searchService.show_imagen"
-                 src="assets/imgs/buscador_fondo.png"/>
+          <ion-col size="12"
+                   style="background: rgba(0, 0, 0, 0.5);background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgb(33 24 92 / 73%));">
+            <img
+              class="tam_imagen"
+              style="width: 100%; opacity: 40%;"
+              *ngIf="searchService.show_imagen"
+              src="assets/imgs/buscador_fondo_desktop.png"
+            />
           </ion-col>
         </ion-row>
         <ion-row class="row_buscador">
           <ion-col size="12">
             <ion-row class="ion-padding" class="service-bar">
-              <ion-button (click)="navigateNewServices()" expand="block" class="service-button">Ofrece tus servicios
+              <ion-button
+                (click)="navigateNewServices()"
+                expand="block"
+                class="service-button"
+              >Ofrece tus servicios
               </ion-button>
-              <ion-label *ngIf="searchService.show_imagen"
-                         class="text_buscador">{{ 'tabs.tab1.search.search_prof' | translate }}</ion-label>
+              <ion-label *ngIf="searchService.show_imagen" class="text_buscador"
+              >{{ 'tabs.tab1.search.search_prof' | translate }}</ion-label
+              >
             </ion-row>
             <ion-row size="12">
-
               <app-search
                   #search
                   class="app_search"
                   clase="autocomplete"
                   *ngIf="!isLoading"
+                  [searchText]="searchTerm"
               ></app-search>
             </ion-row>
           </ion-col>

@@ -33,6 +33,11 @@ export class ServicesService {
     return this.http.post('product/finish', product);
   }
 
+  // To Cancel a Product
+  async cancel(product: IServiceFull): Promise<IHttpService> {
+    return this.http.post('product/cancel', product);
+  }
+
   // To Get All Professions
   async professions(): Promise<IHttpService> {
     return this.http.get('collections/profession');

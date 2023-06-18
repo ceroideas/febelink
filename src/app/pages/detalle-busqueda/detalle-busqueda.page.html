@@ -9,7 +9,7 @@
           </ion-breadcrumbs>
         </ion-row>-->
         <ion-row class="product-title">
-          <ion-label>{{detalle?.title}}</ion-label>
+          <ion-label><h1>{{detalle?.title}}</h1></ion-label>
         </ion-row>
         <ion-row class="product-rating">
           <ion-label class="content_item">
@@ -53,14 +53,14 @@
               [src]="detalle?.ownerAvatar"
             ></ion-img>
           </ion-avatar>
-          <span>{{detalle?.ownerUsername}}</span>
+          <span><h2>{{detalle?.ownerUsername}}</h2></span>
         </ion-row>
         <ion-row class="product-description">
           <ion-label [innerHtml]="detalle?.description"></ion-label>
         </ion-row>
         <ion-row class="product-price">
           <ion-label
-            >{{detalle?.productUnitPrice * productAmount}}
+          >{{detalle?.productUnitPrice * productAmount}}
             €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label
           >
         </ion-row>
@@ -85,6 +85,15 @@
           <ion-col class="add-cart-button" (click)="addToCart()">
             <span>Añadir al carrito</span>
           </ion-col>
+        </ion-row>
+        <ion-row class="guarantee" (click)="irA('/use-conditions')">
+          <ion-img
+            src="assets/imgs/guarantee.jpeg"></ion-img>
+          <div style="width: 70%; padding: 10px;">
+            <span>Con la garantía de Febelink.</span>
+            <br>
+            <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
+          </div>
         </ion-row>
       </ion-col>
       <ion-col size="6" class="content-image">
@@ -120,7 +129,7 @@
               [watchSlidesProgress]="true"
             >
               <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-                <img class="tam_img" [src]="imageURL" />
+                <img class="tam_img" [src]="imageURL"/>
               </ng-template>
             </swiper>
           </ng-container>
@@ -142,7 +151,7 @@
     >
       <ion-col size="4" *ngIf="data && false">
         <ion-label class="list_title_card"
-          >{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label
+        >{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label
         >
         <ion-row
           size="12"
@@ -166,9 +175,9 @@
                     </p>
                     <p>
                       <span class="style_font_item"
-                        >{{data?.precio}}€<span class="style_font_item_normal"
-                          >/mes</span
-                        ></span
+                      >{{data?.precio}}€<span class="style_font_item_normal"
+                      >/mes</span
+                      ></span
                       >
                     </p>
                     <p class="ion-no-margin">
@@ -193,8 +202,8 @@
                         src="assets/icon/svg/icon_star.svg"
                       ></ion-img>
                       <span class="font_valoraciones"
-                        >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones'
-                        | translate }}</span
+                      >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones'
+                          | translate }}</span
                       >
                     </p>
                     <span class="font_texto_14">{{data?.nombre}}</span>
@@ -207,7 +216,7 @@
       </ion-col>
       <ion-col size="4" *ngIf="data">
         <ion-label class="list_title_card"
-          >{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label
+        >{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label
         >
         <ion-row
           (click)="irA('/detalle/1')"
@@ -240,7 +249,7 @@
                       size="12"
                     >
                       <ion-label class="font_texto_18"
-                        >{{data?.titulo}}</ion-label
+                      >{{data?.titulo}}</ion-label
                       >
                     </ion-col>
                   </ion-row>
@@ -250,9 +259,10 @@
                       size="12"
                     >
                       <ion-label class="style_font_item"
-                        >{{data?.precio}}€
+                      >{{data?.precio}}€
                         <ion-label class="style_font_item_normal"
-                          >/mes</ion-label
+                        >/mes
+                        </ion-label
                         >
                       </ion-label>
                     </ion-col>
@@ -263,7 +273,7 @@
                       size="12"
                     >
                       <ion-label class="font_texto_14"
-                        >{{data?.subtitulo}}</ion-label
+                      >{{data?.subtitulo}}</ion-label
                       >
                     </ion-col>
                   </ion-row>
@@ -275,7 +285,7 @@
       </ion-col>
       <ion-col size="4" *ngIf="data">
         <ion-label class="list_title_card"
-          >{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label
+        >{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label
         >
         <ion-row
           (click)="irA('/detalle/1')"
@@ -295,9 +305,9 @@
                   </p>
                   <p>
                     <span class="style_font_item"
-                      >{{data?.precio}}€<span class="style_font_item_normal"
-                        >/mes</span
-                      ></span
+                    >{{data?.precio}}€<span class="style_font_item_normal"
+                    >/mes</span
+                    ></span
                     >
                   </p>
                   <p class="ion-no-margin">
@@ -322,8 +332,8 @@
                       src="assets/icon/svg/icon_star.svg"
                     ></ion-img>
                     <span class="font_valoraciones"
-                      >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones' |
-                      translate }}</span
+                    >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones' |
+                        translate }}</span
                     >
                   </p>
                   <span class="font_texto_14">{{data?.nombre}}</span>
@@ -346,7 +356,7 @@
     </ion-row>-->
     <ion-row size="12">
       <ion-col size="10">
-        <ion-text class="text_compartir">{{detalle?.title}}</ion-text>
+        <ion-text class="text_compartir"><h1>{{detalle?.title}}</h1></ion-text>
       </ion-col>
       <ion-col size="2">
         <ion-img
@@ -395,7 +405,7 @@
           [src]="detalle?.ownerAvatar"
         ></ion-img>
       </ion-avatar>
-      <span>{{detalle?.ownerUsername}}</span>
+      <span><h2>{{detalle?.ownerUsername}}</h2></span>
     </ion-row>
     <div>
       <div
@@ -426,7 +436,7 @@
           [watchSlidesProgress]="true"
         >
           <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-            <img class="tam_img" [src]="imageURL" />
+            <img class="tam_img" [src]="imageURL"/>
           </ng-template>
         </swiper>
       </ng-container>
@@ -462,13 +472,15 @@
         </ng-template>
       </swiper>-->
     </div>
-    <ion-row
-      size="12"
-      style="margin: 20px 0"
-      [innerHtml]="detalle?.description"
-    >
-      <!--      <ion-text class="read_more">Leer más</ion-text>-->
-    </ion-row>
+    <h3>
+      <ion-row
+        size="12"
+        style="margin: 20px 0"
+        [innerHtml]="detalle?.description"
+      >
+        <!--      <ion-text class="read_more">Leer más</ion-text>-->
+      </ion-row>
+    </h3>
     <ion-row size="12" class="buy-controllers">
       <ion-col class="select-input">
         <ion-label class="amount-label">Cantidad</ion-label>
@@ -489,11 +501,20 @@
       <ion-col>
         <ion-row class="product-price">
           <ion-label
-            >{{detalle?.productUnitPrice * productAmount}}
+          >{{detalle?.productUnitPrice * productAmount}}
             €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label
           >
         </ion-row>
       </ion-col>
+    </ion-row>
+    <ion-row class="guarantee" (click)="irA('/use-conditions')">
+      <ion-img
+        src="assets/imgs/guarantee.jpeg"></ion-img>
+      <div style="width: 85%; padding: 10px;">
+        <span>Con la garantía de Febelink.</span>
+        <br>
+        <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
+      </div>
     </ion-row>
   </ion-grid>
   <app-footer></app-footer>
@@ -503,12 +524,14 @@
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
         <ion-button expand class="botonf1" type="submit" (click)="buyNow()"
-          >Comprar ahora</ion-button
+        >Comprar ahora
+        </ion-button
         >
       </ion-row>
       <ion-row class="ion-padding paddingf2">
         <ion-button expand class="botonf2" type="submit" (click)="addToCart()"
-          >Añadir al carrito</ion-button
+        >Añadir al carrito
+        </ion-button
         >
       </ion-row>
     </ion-grid>

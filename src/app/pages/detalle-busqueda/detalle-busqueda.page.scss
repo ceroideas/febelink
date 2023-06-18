@@ -303,7 +303,7 @@ ion-footer {
   margin: 0;
 }
 
-.product-title {
+.product-title h1 {
   width: 100%;
 
   font-style: normal;
@@ -475,4 +475,28 @@ ion-avatar {
   transition-property: transform;
   box-sizing: content-box;
   margin: 48px 0;
+}
+
+.guarantee {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  @media(width >= 768px) {
+    cursor: pointer;
+    justify-content: flex-end;
+  }
+
+  @media(width < 767px) {
+    span {
+      width: 85%;
+    }
+  }
+
+  ion-img {
+    width: 3em;
+  }
+
+
 }

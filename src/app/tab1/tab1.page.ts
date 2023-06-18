@@ -1,33 +1,38 @@
-import { Component, ViewChild } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { Platform } from '@ionic/angular';
-import { UtilitiesService } from '../services/utilities.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { answerOptions } from 'src/utils/utils';
-import { IUser } from '../models/user.model';
-import { environment } from 'src/environments/environment';
-import { AssistantSearchComponent } from './assistant/components/search/search.component';
-import { AssistantPopSvc } from './assistant/services/assistant.pop.service';
-import { AssistantSearchSvc } from './assistant/services/assistant-search.service';
-import { IKeywords } from './assistant/models/assistant.model';
-import { SubsectorService } from '../components/sectors/services/subsectores.service';
-import { SearchService } from './search/services/search.service';
-import SwiperCore, { Pagination, Thumbs } from 'swiper';
-import { SeoService } from '../services/seo.service';
-import { AuthenticationService } from '../services/authentication/authentication.service';
-import { UserService } from '../services/user.service';
-import { CuentaProfesionalService } from '../pages/cuenta-profesional/Services/cuenta-profesional.service';
+import {Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
+import {ApiService} from '../services/api.service';
+import {Platform} from '@ionic/angular';
+import {UtilitiesService} from '../services/utilities.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {answerOptions} from 'src/utils/utils';
+import {IUser} from '../models/user.model';
+import {environment} from 'src/environments/environment';
+import {AssistantSearchComponent} from './assistant/components/search/search.component';
+import {AssistantPopSvc} from './assistant/services/assistant.pop.service';
+import {AssistantSearchSvc} from './assistant/services/assistant-search.service';
+import {IKeywords} from './assistant/models/assistant.model';
+import {SubsectorService} from '../components/sectors/services/subsectores.service';
+import {SearchService} from './search/services/search.service';
+import SwiperCore, {Pagination, Thumbs} from 'swiper';
+import {SeoService} from '../services/seo.service';
+import {AuthenticationService} from '../services/authentication/authentication.service';
+import {UserService} from '../services/user.service';
+import {CuentaProfesionalService} from '../pages/cuenta-profesional/Services/cuenta-profesional.service';
+import {SearchComponent} from './search/components/search/search.component';
+import {Meta, Title} from '@angular/platform-browser';
 
 // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
+
+const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
+const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit, AfterViewInit {
   currentYear = new Date().getFullYear();
   perfil: IUser = null;
   isLoading: boolean;
@@ -37,7 +42,9 @@ export class Tab1Page {
   thumbsSwiper: any;
 
   //SEARCH COMPONENT
-  @ViewChild('search') searchComponent: AssistantSearchComponent;
+  @ViewChild('search') searchComponent_OLD: AssistantSearchComponent; // ToDo: Refactor or remove this deprecated feature
+  @ViewChild(SearchComponent) searchComponent;
+
   openKeys: boolean = false;
   showCookies = false;
   refreshTab: any;
@@ -53,6 +60,8 @@ export class Tab1Page {
 
   userLogged: boolean = false;
 
+  searchTerm: string;
+
   constructor(
     private api: ApiService,
     public platform: Platform,
@@ -67,8 +76,14 @@ export class Tab1Page {
     private seoService: SeoService,
     private authenticationService: AuthenticationService,
     private userSvc: UserService,
-    private profAccountService: CuentaProfesionalService
+    private profAccountService: CuentaProfesionalService,
   ) {
+    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.searchTerm = params.get('searchTerm');
+    });
+
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.userLogged = true;
       console.log('this.userLogged', this.userLogged);
@@ -106,10 +121,14 @@ export class Tab1Page {
     const searchbar = this.activatedRoute.snapshot.paramMap.get('searchbar');
     if (searchbar) {
       this.isLoading = true;
-      this.searchComponent.text(searchbar);
+      this.searchComponent_OLD.text(searchbar);
     }
+  }
 
-    this.seoService.addPageCanonical();
+  ngAfterViewInit(): void {
+    if (this.searchTerm) {
+      this.searchComponent.search(this.searchTerm);
+    }
   }
 
   ionViewDidEnter() {
@@ -119,7 +138,7 @@ export class Tab1Page {
 
   ionViewDidLeave() {
     this.showCard = false;
-    this.searchComponent.clear();
+    this.searchComponent_OLD.clear();
   }
 
   checkUserFields(): boolean {
@@ -134,8 +153,8 @@ export class Tab1Page {
     await this.obtenerPerfil();
 
     // Select sector only if url path had value
-    if (this.isLoading && this.searchComponent.text()) {
-      this.searchComponent.getSectorsByKeys();
+    if (this.isLoading && this.searchComponent_OLD.text()) {
+      this.searchComponent_OLD.getSectorsByKeys();
     }
   }
 
@@ -170,13 +189,13 @@ export class Tab1Page {
   }
 
   OnGotKeys(data) {
-    this.assistantPop.show(this.perfil, this.searchComponent.get());
-    this.searchComponent.clear();
+    this.assistantPop.show(this.perfil, this.searchComponent_OLD.get());
+    this.searchComponent_OLD.clear();
   }
 
   OnEnter() {
-    this.assistantPop.show(this.perfil, this.searchComponent.get());
-    this.searchComponent.clear();
+    this.assistantPop.show(this.perfil, this.searchComponent_OLD.get());
+    this.searchComponent_OLD.clear();
   }
 
   async openCookies() {
@@ -235,13 +254,13 @@ export class Tab1Page {
                 this.perfil,
                 subsector
                   ? {
-                      ...editedKeywords,
-                      main: {
-                        ...editedKeywords.main,
-                        subsector_id: subsector.id,
-                        subsector_nombre: subsector.nombre,
-                      },
-                    }
+                    ...editedKeywords,
+                    main: {
+                      ...editedKeywords.main,
+                      subsector_id: subsector.id,
+                      subsector_nombre: subsector.nombre,
+                    },
+                  }
                   : editedKeywords,
                 localidad
               );
@@ -262,7 +281,7 @@ export class Tab1Page {
   async navigateNewServices() {
     let url = 'registro';
     if (this.authenticationService.isAuthenticated()) {
-      const { response } = await this.profAccountService.getMyProfessions();
+      const {response} = await this.profAccountService.getMyProfessions();
       if (response?.length > 0) {
         url = 'services';
       } else {

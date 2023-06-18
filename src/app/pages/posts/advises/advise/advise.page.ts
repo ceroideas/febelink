@@ -1,8 +1,10 @@
-import { SeoService } from 'src/app/services/seo.service';
-import { AdviseService } from './../services/advises.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IAdviseFull } from '../models/advises.model';
+import {SeoService} from 'src/app/services/seo.service';
+import {AdviseService} from './../services/advises.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {IAdviseFull} from '../models/advises.model';
+
+const GENERAL_TITLE = 'Feed Oráculo | Febelink ¿Qué necesitas?';
 
 @Component({
   selector: 'app-post-advise',
@@ -23,18 +25,19 @@ export class AdvisePage implements OnInit {
     private router: Router,
     private adviseSvc: AdviseService,
     private seoService: SeoService
-  ) {}
+  ) {
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.paramsQuery = this.actRoute.snapshot.queryParamMap;
     this.paramsUrl = this.actRoute.snapshot.params;
 
     if (this.paramsUrl?.id) {
-      this.getPost(this.paramsUrl?.id);
+      await this.getPost(this.paramsUrl?.id);
     }
 
     this.seoService.generateTags({
-      ...this.seoService.seoDEFAULT,
+      title: GENERAL_TITLE,
       image: this.iAdvise?.media_url,
       description: this.iAdvise?.content,
     });
@@ -45,7 +48,7 @@ export class AdvisePage implements OnInit {
     this.id = id;
     this.isLoading = true;
 
-    const { response, error } = await this.adviseSvc.get(id);
+    const {response, error} = await this.adviseSvc.get(id);
     /* if( error )
       this.toastSvc.show( error.message || error.msg || 'An error ocurred on getPost' ) */
 

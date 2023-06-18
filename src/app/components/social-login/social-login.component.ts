@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
@@ -14,6 +14,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'social-login',
@@ -33,7 +34,8 @@ export class SocialLoginComponent {
     private fb: Facebook,
     private googlePlus: GooglePlus,
     private utilities: UtilitiesService,
-    private api: ApiService
+    private api: ApiService,
+    @Inject(DOCUMENT) public document: Document
   ) {}
 
   /**
@@ -117,7 +119,7 @@ export class SocialLoginComponent {
    *
    */
   googlePlusLogin() {
-    this.googlePlus
+    /* this.googlePlus
       .login({
         webClientId: environment.WEB_CLIENT_ID,
         offline: true,
@@ -134,7 +136,7 @@ export class SocialLoginComponent {
       .catch((err) => {
         console.error(err);
         this.utilities.showToast('Error de conexión con el servidor');
-      });
+      }); */
   }
 
   /**

@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {SearchService} from '../../services/search.service';
 import {ToastSvc} from '../../../../services/toast.service';
+import {UtilitiesService} from '../../../../services/utilities.service';
 
 export interface SearchCardType {
   link: string;
@@ -19,7 +20,7 @@ export class SearchCardComponent {
   @Input() data: SearchCardType;
   @Input() searchTerm: string;
 
-  constructor(private router: Router, private searchSvc: SearchService, private toastSvc: ToastSvc) {
+  constructor(private router: Router, private searchSvc: SearchService, private toastSvc: ToastSvc, private utilities: UtilitiesService) {
   }
 
   irA(p: string): void {
@@ -31,6 +32,12 @@ export class SearchCardComponent {
     if (response) {
       await this.toastSvc.show('La solicitud de contacto ha sido enviada correctamente. Los profesionales seleccionados se ' +
         'pondrán en contacto contigo muy pronto.');
+
+      await this.utilities.getUserData().then((data) => {
+        if (!data) {
+          this.router.navigate(['/registro']);
+        }
+      });
     }
     if (error) {
       await this.toastSvc.show('Ha ocurrido un error al enviar la solicitud. Por favor, inténtelo de nuevo y si el error ' +
