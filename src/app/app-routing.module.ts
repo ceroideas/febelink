@@ -14,12 +14,12 @@ const routes: Routes = [
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
   },
   {
-    path: 'search',
+    path: 'listado',
     loadChildren: () =>
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
   },
   {
-    path: 'search/:searchTerm',
+    path: 'listado/:searchTerm',
     loadChildren: () =>
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
   },
@@ -292,7 +292,7 @@ const routes: Routes = [
         (m) => m.CuentaProfesionalPageModule
       ),
   },
-  {path: '**', redirectTo: 'search', pathMatch: 'full'},
+  {path: '**', redirectTo: 'listado', pathMatch: 'full'},
 ];
 
 @NgModule({

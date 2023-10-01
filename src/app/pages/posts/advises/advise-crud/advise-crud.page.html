@@ -133,7 +133,15 @@
               </ionic-selectable>
             </ion-item>
           </div>-->
-
+          <div class="modal-add-name">
+            Título
+          </div>
+          <div class="modal-input-div">
+            <input style="width: 100%;"
+                   formControlName="title"
+                   [placeholder]="'Máximo 100 caracteres'"
+            >
+          </div>
           <div class="modal-add-name">
             Mensaje
           </div>
@@ -239,6 +247,18 @@
                     <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
                   </div>&ndash;&gt;
                 </div>-->
+        <div class="create-content-middle">
+          <div class="modal-add-name-b">
+            Título
+          </div>
+          <div class="modal-input-div">
+            <!--          <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>-->
+            <input style="width: 100%;"
+                   formControlName="title"
+                   [placeholder]="'Máximo 100 caracteres'"
+            >
+          </div>
+        </div>
         <div class="create-content-middle">
           <div class="modal-add-name-b">
             Mensaje

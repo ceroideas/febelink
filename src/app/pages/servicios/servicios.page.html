@@ -291,6 +291,12 @@
                 Editar
               </div>
             </div>
+            <div class="servicios-item-cell-button">
+              <div class="servicios-item-button-secondary" (click)="removeProduct(servicio.productId)"
+                   style="background-color: red; border-color: red; color: white;">
+                Eliminar
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -497,6 +503,9 @@
         />
         <div class="servicios-edit" (click)="selectEditarServicio(servicio)">
           Editar
+        </div>
+        <div class="servicios-edit" style="color: red; margin-top: 1em;" (click)="removeProduct(servicio.productId)">
+          Eliminar
         </div>
       </div>
       <div class="servicios-right">

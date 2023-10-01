@@ -497,6 +497,17 @@ ion-avatar {
   ion-img {
     width: 3em;
   }
+}
 
-
+.chat-button {
+  cursor: pointer;
+  text-align: center;
+  padding: 8px 12px;
+  background: #1B80F8;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #fff;
+  margin-left: 1em;
 }

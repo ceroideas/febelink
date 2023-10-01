@@ -62,6 +62,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   searchTerm: string;
 
+  generalTitle = 'Encuentra servicios profesionales en tu ciudad';
+
   constructor(
     private api: ApiService,
     public platform: Platform,
@@ -81,7 +83,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
 
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.searchTerm = params.get('searchTerm');
+      this.searchTerm = params.get('searchTerm').replace(new RegExp('-', 'g'), ' ');
     });
 
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
@@ -289,5 +291,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
       }
     }
     this.router.navigate([url]);
+  }
+
+  changeGeneralTitle(newTitle: string) {
+    this.generalTitle = newTitle;
   }
 }

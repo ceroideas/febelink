@@ -31,40 +31,41 @@
     <ion-row
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
-      (click)="navigateToPost()"
     >
-      <!-- Image -->
-      <ion-img
-        class="h-social-media marg-se media"
-        [src]="iAdvise.media_url"
-        [alt]="iAdvise.media_url"
-        [title]="iAdvise.media_url"
-        *ngIf="
+      <a [routerLink]="'/posts/oracle/' + id ">
+        <!-- Image -->
+        <ion-img
+          class="h-social-media marg-se media"
+          [src]="iAdvise.media_url"
+          [alt]="iAdvise.media_url"
+          [title]="iAdvise.media_url"
+          *ngIf="
           isPostVisible &&
           iAdvise.media_url &&
           fileSvc.isImage(iAdvise.media_ext)
         "
-      ></ion-img>
+        ></ion-img>
 
-      <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
-      <video
-        playsinline
-        controls
-        *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
-        class="w-social-media h-social-media media-video media"
-        [src]="iAdvise.media_url + '#t=0.001'"
-        preload="metadata"
-      ></video>
+        <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+        <video
+          playsinline
+          controls
+          *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
+          class="w-social-media h-social-media media-video media"
+          [src]="iAdvise.media_url + '#t=0.001'"
+          preload="metadata"
+        ></video>
 
-      <ngx-link-preview
-        *ngIf="!iAdvise.media_url"
-        class="modern media"
-        [apiRoute]="apiMetaTagUrl"
-        [getApiEndpoint$]="apiCallbackFn"
-        [links]="linksArray"
-        [showLinkUrl]="true"
-        [useHtmlLinkDefaultClickEvent]="true"
-      ></ngx-link-preview>
+        <ngx-link-preview
+          *ngIf="!iAdvise.media_url"
+          class="modern media"
+          [apiRoute]="apiMetaTagUrl"
+          [getApiEndpoint$]="apiCallbackFn"
+          [links]="linksArray"
+          [showLinkUrl]="true"
+          [useHtmlLinkDefaultClickEvent]="true"
+        ></ngx-link-preview>
+      </a>
     </ion-row>
     <div class="post-main-reactions">
       <div class="post-main-reactions-left">
@@ -132,40 +133,41 @@
     <ion-row
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
-      (click)="navigateToPost()"
     >
-      <!-- Image -->
-      <ion-img
-        class="h-social-media marg-se media"
-        [src]="iAdvise.media_url"
-        [title]="iAdvise.media_url"
-        [alt]="iAdvise.media_url"
-        *ngIf="
+      <a [routerLink]="'/posts/oracle/' + id ">
+        <!-- Image -->
+        <ion-img
+          class="h-social-media marg-se media"
+          [src]="iAdvise.media_url"
+          [title]="iAdvise.media_url"
+          [alt]="iAdvise.media_url"
+          *ngIf="
           isPostVisible &&
           iAdvise.media_url &&
           fileSvc.isImage(iAdvise.media_ext)
         "
-      ></ion-img>
+        ></ion-img>
 
-      <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
-      <video
-        playsinline
-        controls
-        *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
-        class="w-social-media h-social-media media-video media"
-        [src]="iAdvise.media_url + '#t=0.001'"
-        preload="metadata"
-      ></video>
+        <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+        <video
+          playsinline
+          controls
+          *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
+          class="w-social-media h-social-media media-video media"
+          [src]="iAdvise.media_url + '#t=0.001'"
+          preload="metadata"
+        ></video>
 
-      <ngx-link-preview
-        *ngIf="!iAdvise.media_url"
-        class="modern media"
-        [apiRoute]="apiMetaTagUrl"
-        [getApiEndpoint$]="apiCallbackFn"
-        [links]="linksArray"
-        [showLinkUrl]="true"
-        [useHtmlLinkDefaultClickEvent]="true"
-      ></ngx-link-preview>
+        <ngx-link-preview
+          *ngIf="!iAdvise.media_url"
+          class="modern media"
+          [apiRoute]="apiMetaTagUrl"
+          [getApiEndpoint$]="apiCallbackFn"
+          [links]="linksArray"
+          [showLinkUrl]="true"
+          [useHtmlLinkDefaultClickEvent]="true"
+        ></ngx-link-preview>
+      </a>
     </ion-row>
     <div class="post-main-reactions-b">
       <div class="post-main-reactions-left">

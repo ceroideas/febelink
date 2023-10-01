@@ -98,7 +98,6 @@ ion-menu-button {
 
 ion-footer {
   background: #000000 !important;
-  position: fixed;
   bottom: 0;
 }
 
@@ -248,4 +247,8 @@ ion-grid {
 .loader_spinner_home_width {
   width: 40px;
   height: 40px;
+}
+
+#chat-section {
+  height: 88%;
 }

@@ -23,7 +23,7 @@
               >Ofrece tus servicios
               </ion-button>
               <ion-label *ngIf="searchService.show_imagen" class="text_buscador"
-              >{{ 'tabs.tab1.search.search_prof' | translate }}</ion-label
+              >{{ generalTitle }}</ion-label
               >
             </ion-row>
             <ion-row size="12">
@@ -33,6 +33,7 @@
                   clase="autocomplete"
                   *ngIf="!isLoading"
                   [searchText]="searchTerm"
+                  (generalTitle)="changeGeneralTitle($event)"
               ></app-search>
             </ion-row>
           </ion-col>

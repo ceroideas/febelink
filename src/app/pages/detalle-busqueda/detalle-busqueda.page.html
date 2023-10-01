@@ -1,3 +1,5 @@
+<partial-popup [displayToggle]="displayPartialSignUp"
+               (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup>
 <ion-content class="content-background">
   <ion-grid class="desktop" *ngIf="detalle" style="width: 100%">
     <ion-row style="display: flex; justify-content: space-around" size="12">
@@ -40,20 +42,29 @@
         </ion-row>
         <ion-row
           class="product-owner"
-          (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)"
         >
-          <ion-avatar class="avatar_dropdown">
-            <ion-img
-              *ngIf="!detalle?.ownerAvatar"
-              src="assets/icon/svg/default_avatar.svg"
-              class="default-avatar"
-            ></ion-img>
-            <ion-img
-              *ngIf="detalle?.ownerAvatar"
-              [src]="detalle?.ownerAvatar"
-            ></ion-img>
-          </ion-avatar>
-          <span><h2>{{detalle?.ownerUsername}}</h2></span>
+          <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+            <ion-avatar class="avatar_dropdown">
+              <ion-img
+                *ngIf="!detalle?.ownerAvatar"
+                src="assets/icon/svg/default_avatar.svg"
+                class="default-avatar"
+              ></ion-img>
+              <ion-img
+                *ngIf="detalle?.ownerAvatar"
+                [src]="detalle?.ownerAvatar"
+              ></ion-img>
+            </ion-avatar>
+          </div>
+          <span (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+            <h2>{{detalle?.ownerUsername}}</h2>
+          </span>
+          <div
+            class="chat-button"
+            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+          >
+            Iniciar Chat
+          </div>
         </ion-row>
         <ion-row class="product-description">
           <ion-label [innerHtml]="detalle?.description"></ion-label>
@@ -79,7 +90,9 @@
               <ion-select-option [value]="9">9</ion-select-option>
             </ion-select>
           </ion-col>
-          <ion-col class="buy-button" (click)="buyNow()">
+          <ion-col class="buy-button"
+                   (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
+            <!--          <ion-col class="buy-button" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
             <span>Comprar ahora</span>
           </ion-col>
           <ion-col class="add-cart-button" (click)="addToCart()">
@@ -392,20 +405,29 @@
     </ion-row>
     <ion-row
       class="product-owner"
-      (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)"
     >
-      <ion-avatar class="avatar_dropdown">
-        <ion-img
-          *ngIf="!detalle?.ownerAvatar"
-          src="assets/icon/svg/default_avatar.svg"
-          class="default-avatar"
-        ></ion-img>
-        <ion-img
-          *ngIf="detalle?.ownerAvatar"
-          [src]="detalle?.ownerAvatar"
-        ></ion-img>
-      </ion-avatar>
-      <span><h2>{{detalle?.ownerUsername}}</h2></span>
+      <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+        <ion-avatar class="avatar_dropdown">
+          <ion-img
+            *ngIf="!detalle?.ownerAvatar"
+            src="assets/icon/svg/default_avatar.svg"
+            class="default-avatar"
+          ></ion-img>
+          <ion-img
+            *ngIf="detalle?.ownerAvatar"
+            [src]="detalle?.ownerAvatar"
+          ></ion-img>
+        </ion-avatar>
+      </div>
+      <span (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+        <h2>{{detalle?.ownerUsername}}</h2>
+      </span>
+      <div
+        class="chat-button"
+        (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true :  createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+      >
+        Iniciar Chat
+      </div>
     </ion-row>
     <div>
       <div
@@ -523,8 +545,10 @@
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" type="submit" (click)="buyNow()"
-        >Comprar ahora
+        <ion-button expand class="botonf1" type="submit"
+                    (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
+          <!--        <ion-button expand class="botonf1" type="submit" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
+          Comprar ahora
         </ion-button
         >
       </ion-row>

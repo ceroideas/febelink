@@ -1,8 +1,9 @@
 import {NumberSymbol} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CartServiceShow} from '../../services/cart.service';
 import {CartService} from '../../pages/cart/services/cart.service';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,8 @@ export class CartComponent implements OnInit {
 
   iCart: any;
 
-  constructor(public cartServiceShow: CartServiceShow, private cartService: CartService, private route: ActivatedRoute, private router: Router) {
+  constructor(public cartServiceShow: CartServiceShow, private cartService: CartService, private route: ActivatedRoute,
+              private router: Router, private authenticationService: AuthenticationService, private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -21,8 +23,16 @@ export class CartComponent implements OnInit {
   }
 
   async getCart() {
-    const {response, error} = await this.cartService.get();
-    this.iCart = response;
+    if (this.authenticationService.isAuthenticated()) {
+      const {response, error} = await this.cartService.get();
+      this.iCart = response;
+    } else {
+      this.cartService.getActiveCart().subscribe((value) => {
+        this.iCart = value;
+        this.cdRef.detectChanges();
+        console.log('Carrito offline', this.iCart);
+      });
+    }
   }
 
   async updateCart(id: number, amount: number) {

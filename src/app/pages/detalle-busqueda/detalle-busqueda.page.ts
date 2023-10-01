@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SearchService} from 'src/app/tab1/search/services/search.service';
 import SwiperCore, {Pagination, Thumbs} from 'swiper';
 import {CartService} from '../cart/services/cart.service';
+import {ChatService} from '../../services/chat.service';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs]);
@@ -18,6 +20,8 @@ export class DetalleBusquedaPage implements OnInit {
   public data: any;
   thumbsSwiper: any;
   thumbsSwiper1: any;
+  displayPartialSignUp: boolean = false;
+  email: string;
 
   slideOpts = {
     initialSlide: 1,
@@ -40,10 +44,13 @@ export class DetalleBusquedaPage implements OnInit {
     {id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES'},
     {id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES'},
     {id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES'},
-    {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'}
+    {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'},
+    {id: 12, name: 'Donación', shorthand: 'donación', lang: 'ES'},
+    {id: 13, name: 'Presupuesto', shorthand: 'presupuesto', lang: 'ES'},
   ]; // ToDo: Get this from the priceType Collection
 
-  constructor(public searchService: SearchService, public router: Router, private route: ActivatedRoute, private cartService: CartService) {
+  constructor(public searchService: SearchService, public router: Router, private route: ActivatedRoute,
+              private cartService: CartService, private chatService: ChatService, public authService: AuthenticationService) {
     this.route.paramMap.subscribe((params) => {
       this.productId = params.get('id');
     });
@@ -62,8 +69,9 @@ export class DetalleBusquedaPage implements OnInit {
   }
 
   async addToCart() {
-    const {response} = await this.searchService.addProductToActiveCart(this.productId, this.productAmount);
+    const {response} = await this.cartService.addProductToActiveCart(this.productId, this.productAmount);
     if (response) {
+      await this.cartService.setActiveCart({items: [response]});
       this.irA('/cart');
     }
   }
@@ -73,11 +81,9 @@ export class DetalleBusquedaPage implements OnInit {
     window.location.href = response;
   }
 
-  async buyNow() {
-    const {response} = await this.searchService.addProductToActiveCart(this.productId, this.productAmount);
-    if (response) {
-      this.buy();
-    }
+  async buyNow(productId: number, productAmount: number) {
+    const {response} = await this.cartService.buyNow(productId, productAmount, this.email);
+    window.location.href = response;
   }
 
   onSwiper([swiper]) {
@@ -90,5 +96,23 @@ export class DetalleBusquedaPage implements OnInit {
 
   public irA(p: string): void {
     this.router.navigate([p]);
+  }
+
+  async createChat(ownerUsername: string, ownerUserId: number) {
+    const {response, error} = await this.chatService.createChat(
+      ownerUserId
+    );
+
+    if (response) {
+      // Send first comment
+
+      this.router.navigate([`chat/${response?.id}`], {
+        state: {receiverId: ownerUserId, receiverUsername: ownerUsername},
+      });
+    }
+
+    if (error) {
+      this.router.navigate([`chat`]);
+    }
   }
 }

@@ -3,6 +3,9 @@
         <app-menu></app-menu>
         <ion-router-outlet id="main"></ion-router-outlet>
     -->
+  <div id="advertisement" [style]="{'display': advertisement ? 'block' : 'none'}" (click)="closeAdvertisement();">
+    <img src="assets/imgs/advertisement.png" [routerLink]="'/registro'">
+  </div>
   <ion-menu
     class="pos_menu"
     contentId="main-content"
@@ -57,8 +60,8 @@
         <ion-label class="ion-padding label_avatar">
           <ion-label class="menu-username">{{ currentUser?.nick }}</ion-label>
           <ion-label class="menu-editar pointer">{{
-            'menu.labels.editarPerfil' | translate
-          }}</ion-label>
+              'menu.labels.editarPerfil' | translate
+            }}</ion-label>
         </ion-label>
         <ion-img
           size="small"
@@ -78,8 +81,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_user.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.datosPersonales' | translate
-          }}</ion-label>
+              'menu.pages.datosPersonales' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <ion-button
@@ -102,8 +105,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_wallet.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.wallet' | translate
-          }}</ion-label>
+              'menu.pages.wallet' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <!-- Section options. -->
@@ -123,11 +126,11 @@
             </ion-col>
             <ion-col size="5" class="tx-end">
               <ion-label>{{
-                { value: currency.amount } | splitNumber
-              }}</ion-label>
+                  {value: currency.amount} | splitNumber
+                }}</ion-label>
               <ion-label class="decimal">{{
-                { value: currency.amount, returnDecimal: true } | splitNumber
-              }}</ion-label>
+                  {value: currency.amount, returnDecimal: true} | splitNumber
+                }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -143,8 +146,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_compras.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.historialCompras' | translate
-          }}</ion-label>
+              'menu.pages.historialCompras' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <ion-item
@@ -161,8 +164,8 @@
         ></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.misPublicaciones' | translate
-          }}</ion-label>
+              'menu.pages.misPublicaciones' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <ion-grid *ngIf="visiblePro" class="ion-no-padding">
@@ -184,8 +187,8 @@
                   </ion-col>
                   <ion-col size="11">
                     <ion-label style="margin-left: 0.8em">{{
-                      'menu.pages.plan' | translate
-                    }}</ion-label>
+                        'menu.pages.plan' | translate
+                      }}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -206,8 +209,8 @@
                   </ion-col>
                   <ion-col size="11">
                     <ion-label style="margin-left: 0.8em">{{
-                      'menu.pages.suscripcion' | translate
-                    }}</ion-label>
+                        'menu.pages.suscripcion' | translate
+                      }}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -228,8 +231,8 @@
                   </ion-col>
                   <ion-col size="11">
                     <ion-label style="margin-left: 0.8em">{{
-                      'menu.pages.servicios' | translate
-                    }}</ion-label>
+                        'menu.pages.servicios' | translate
+                      }}</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -271,10 +274,11 @@
           style="color: #ff5a1f"
           *ngIf="!visiblePro"
           class="ion-padding"
-          >{{ 'menu.pages.cambioAPremium' | translate }}</ion-label
+        >{{ 'menu.pages.cambioAPremium' | translate }}</ion-label
         >
         <ion-label style="color: #1c64f2" *ngIf="visiblePro" class="ion-padding"
-          >Cambiar a cuenta usuario</ion-label
+        >Cambiar a cuenta usuario
+        </ion-label
         >
       </ion-item>
       <ion-item-divider class="desktop_no_visible"></ion-item-divider>
@@ -283,8 +287,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_idioma.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.idioma' | translate
-          }}</ion-label>
+              'menu.pages.idioma' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <ion-item class="item_menu_margen" color="item" lines="none" button>
@@ -292,8 +296,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_ayudar.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.ayuda' | translate
-          }}</ion-label>
+              'menu.pages.ayuda' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <ion-item
@@ -307,8 +311,8 @@
         <ion-img size="small" src="assets/icon/svg/menu_salida.svg"></ion-img>
         <div class="ion-text-wrap color_ppal">
           <ion-label class="ion-padding">{{
-            'menu.pages.salir' | translate
-          }}</ion-label>
+              'menu.pages.salir' | translate
+            }}</ion-label>
         </div>
       </ion-item>
       <ion-item-divider class="legal desktop_no_visible"></ion-item-divider>
@@ -349,7 +353,7 @@
     <ion-tabs id="footer-nav-bar">
       <ion-tab-bar slot="bottom" color="menuf">
         <!-- Inicio -->
-        <ion-tab-button tab="search">
+        <ion-tab-button tab="listado">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
         </ion-tab-button>
@@ -369,5 +373,5 @@
     </ion-tabs>
   </ng-container>
 
-  <app-cart *ngIf="authenticationService.isAuthenticated()"></app-cart>
+  <app-cart></app-cart>
 </ion-app>

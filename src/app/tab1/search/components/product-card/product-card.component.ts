@@ -55,4 +55,8 @@ export class ProductCardComponent {
       this.router.navigate([`chat`]);
     }
   }
+
+  removeBlankSpace(term: string): string {
+    return term.replace(new RegExp(' ', 'g'), '-');
+  }
 }

@@ -47,6 +47,7 @@ const GENERAL_DESC =
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  advertisement = false;
   currentYear = new Date().getFullYear();
   public userSubscription: any;
   lastTimeBackPress = 0;
@@ -108,6 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.displayAdvertisement();
     this.initializeApp();
     this.openCookieBanner();
 
@@ -117,11 +119,19 @@ export class AppComponent implements OnInit, OnDestroy {
     this.consoleSvc.warning();
   }
 
+  displayAdvertisement() {
+    if (!sessionStorage.getItem('advertisement')) {
+      setTimeout(() => {
+        this.advertisement = true;
+      }, 10000);
+    }
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.setupLanguage();
       this.platform.backButton.subscribe(() => {
-        if (this.router.url === '' || this.router.url === '/search') {
+        if (this.router.url === '' || this.router.url === '/listado') {
           navigator['app'].exitApp();
         } else {
           this.navCtrl.back();
@@ -523,5 +533,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async openUseConditions() {
     this.navegar('use-conditions');
+  }
+
+  closeAdvertisement() {
+    this.advertisement = false;
+
+    sessionStorage.setItem('advertisement', 'true');
   }
 }

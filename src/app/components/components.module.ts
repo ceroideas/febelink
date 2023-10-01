@@ -4,16 +4,18 @@ import {
   GoogleSigninButtonModule,
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
-import { GoogleSigninButtDirective } from './social-login/google-sign-in-button.directive';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { MenuComponent } from './menu/menu.component';
-import { CookiesComponent } from './cookies/cookies.component';
-import { SharePopoverComponent } from './share-popover/share-popover.component';
-import { SocialLoginComponent } from './social-login/social-login.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { environment } from 'src/environments/environment';
+import {GoogleSigninButtDirective} from './social-login/google-sign-in-button.directive';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {IonicModule} from '@ionic/angular';
+import {MenuComponent} from './menu/menu.component';
+import {CookiesComponent} from './cookies/cookies.component';
+import {SharePopoverComponent} from './share-popover/share-popover.component';
+import {SocialLoginComponent} from './social-login/social-login.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {environment} from 'src/environments/environment';
+import {PartialPopupComponent} from './partial-popup/partial-popup.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { environment } from 'src/environments/environment';
     SharePopoverComponent,
     SocialLoginComponent,
     GoogleSigninButtDirective,
+    PartialPopupComponent
   ],
   exports: [
     MenuComponent,
@@ -29,8 +32,10 @@ import { environment } from 'src/environments/environment';
     SharePopoverComponent,
     SocialLoginComponent,
     TranslateModule,
+    PartialPopupComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
     IonicModule,
     TranslateModule.forChild(),
@@ -55,4 +60,5 @@ import { environment } from 'src/environments/environment';
     },
   ],
 })
-export class ComponentsModule {}
+export class ComponentsModule {
+}

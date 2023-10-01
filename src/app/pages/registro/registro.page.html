@@ -34,11 +34,12 @@
               <ion-input formControlName="name" required type="text" placeholder="Nombre de cuenta"
                          class="padding-input-12 login-input"></ion-input>
             </div>
-            <div class="login-label-input">
+            <div class="login-label-input" *ngIf="!partialRegisterEmail">
               Correo electrónico
             </div>
-            <div class="login-input-margin">
-              <ion-input formControlName="email" required type="email" placeholder="Correo electrónico"
+            <div class="login-input-margin" *ngIf="!partialRegisterEmail">
+              <ion-input formControlName="email" [required]="!partialRegisterEmail" type="email"
+                         placeholder="Correo electrónico"
                          class="padding-input-12 login-input"></ion-input>
             </div>
             <div class="login-label-input">
@@ -64,7 +65,7 @@
               Registrarse
             </button>
 
-            <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>
+            <!--            <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>-->
           </form>
         </div>
 
@@ -114,11 +115,12 @@
             <ion-input formControlName="name" required type="text" placeholder="Nombre de cuenta"
                        class="padding-input-12 login-input"></ion-input>
           </div>
-          <div class="login-label-input">
+          <div class="login-label-input" *ngIf="!partialRegisterEmail">
             Correo electrónico
           </div>
-          <div class="login-input-margin">
-            <ion-input formControlName="email" required type="email" placeholder="Correo electrónico"
+          <div class="login-input-margin" *ngIf="!partialRegisterEmail">
+            <ion-input formControlName="email" [required]="!partialRegisterEmail" type="email"
+                       placeholder="Correo electrónico"
                        class="padding-input-12 login-input"></ion-input>
           </div>
           <div class="login-label-input">
@@ -144,7 +146,7 @@
             Registrarse
           </button>
 
-          <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>
+          <!--          <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>-->
         </form>
       </div>
     </div>

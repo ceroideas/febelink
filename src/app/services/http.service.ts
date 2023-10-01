@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { UtilitiesService } from './utilities.service';
-import { Router } from '@angular/router';
-import { TranslateConfigService } from './translate/translate-config.service';
+import {Injectable} from '@angular/core';
+import {Observable, of, throwError} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
+import {UtilitiesService} from './utilities.service';
+import {Router} from '@angular/router';
+import {TranslateConfigService} from './translate/translate-config.service';
 
 export interface IHttpService {
   response?: any;
@@ -23,7 +23,8 @@ export class HttpService {
     public utilities: UtilitiesService,
     private router: Router,
     private translateSvc: TranslateConfigService
-  ) {}
+  ) {
+  }
 
   private async getToken() {
     if (this.token) {
@@ -57,7 +58,7 @@ export class HttpService {
       this.http.post<any>(
         environment.API_URL_AUTH + endpoint,
         this.objToFromData(data),
-        { headers: await this.headers() }
+        {headers: await this.headers()}
       ),
       endpoint
     );
@@ -71,7 +72,7 @@ export class HttpService {
       this.http.put<any>(
         environment.API_URL_AUTH + endpoint,
         this.objToFromData(data),
-        { headers: await this.headers(), params: this.formDataToObj(data) }
+        {headers: await this.headers(), params: this.formDataToObj(data)}
       ),
       endpoint
     );
@@ -85,7 +86,7 @@ export class HttpService {
       this.http.patch<any>(
         environment.API_URL_AUTH + endpoint,
         this.objToFromData(data),
-        { headers: await this.headers(), params: this.formDataToObj(data) }
+        {headers: await this.headers(), params: this.formDataToObj(data)}
       ),
       endpoint
     );
@@ -114,7 +115,7 @@ export class HttpService {
   private async pipe(request: Observable<any>, endpoint: string) {
     return request.pipe(
       map((res: any) => {
-        return { response: res };
+        return {response: res};
       }),
       catchError((err: any, caught: Observable<any>) => {
         return this.handleError(err, caught, endpoint);
@@ -163,12 +164,12 @@ export class HttpService {
   private handleError(error: any, caught: Observable<any>, endpoint: string) {
     switch (error.status) {
       case 401: {
-        this.router.navigate(['login']);
+        this.router.navigate(['registro']);
         this.utilities.showToast('Sesión expirada');
         return throwError(error);
       }
       default: {
-        return of({ error: error });
+        return of({error: error});
       }
     }
   }

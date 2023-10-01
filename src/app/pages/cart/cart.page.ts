@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ApiService} from 'src/app/services/api.service';
+import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
 import {
   ModalController,
   PopoverController,
   Platform,
   AlertController,
 } from '@ionic/angular';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
-import { CartService } from './services/cart.service';
+import {UtilitiesService} from 'src/app/services/utilities.service';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
+import {UserService} from 'src/app/services/user.service';
+import {MailService} from 'src/app/services/mail.service';
+import {ReportService} from 'src/app/services/report.service';
+import {CartService} from './services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -41,25 +41,36 @@ export class CartPage implements OnInit {
     public userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService,
-    public cartSvc: CartService
-  ) {}
+    public cartSvc: CartService,
+    private authenticationService: AuthenticationService,
+    private cdRef: ChangeDetectorRef
+  ) {
+  }
 
   ngOnInit() {
     this.getCart();
   }
 
   async getCart() {
-    const { response, error } = await this.cartSvc.get();
-    this.iCart = response;
+    if (this.authenticationService.isAuthenticated()) {
+      const {response, error} = await this.cartSvc.get();
+      this.iCart = response;
+    } else {
+      this.cartSvc.getActiveCart().subscribe((value) => {
+        this.iCart = value;
+        this.cdRef.detectChanges();
+        console.log('Carrito offline', this.iCart);
+      });
+    }
   }
 
   async updateCart(id: number, amount: number) {
-    const { response, error } = await this.cartSvc.update(id, amount);
+    const {response, error} = await this.cartSvc.update(id, amount);
     this.getCart();
   }
 
   async buyCart() {
-    const { response, error } = await this.cartSvc.buy();
+    const {response, error} = await this.cartSvc.buy();
     var linkCheckout = response;
     window.location.href = linkCheckout;
   }

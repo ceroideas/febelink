@@ -93,6 +93,8 @@ export class ServiciosPage implements OnInit {
       {id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES'},
       {id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES'},
       {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'},
+      {id: 12, name: 'Donación', shorthand: 'donación', lang: 'ES'},
+      {id: 13, name: 'Presupuesto', shorthand: 'presupuesto', lang: 'ES'},
     ];
     this.getProducts();
     this.getProfessions();
@@ -380,5 +382,10 @@ export class ServiciosPage implements OnInit {
     this.cartId = cartId;
     this.productId = productId;
     this.cancelServiceModalToggle = !this.cancelServiceModalToggle;
+  }
+
+  async removeProduct(productId: string) {
+    await this.servicesSvc.removeProduct(productId);
+    this.getProducts();
   }
 }

@@ -207,10 +207,10 @@ export class ChatPage {
   }
 
   async sendMessage() {
-    if (this.message.length > 500) {
+    if (this.message.length > 1000) {
       this.presentAlert(
         'Máximo de caracteres permitidos',
-        'Has escrito más de 500 caracteres, mejor divídelo en varios mensajes.',
+        'Has escrito más de 1000 caracteres, mejor divídelo en varios mensajes.',
         'Aceptar'
       );
     } else {

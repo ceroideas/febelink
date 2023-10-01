@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {SharedModule} from '../../shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
 import {SearchCardComponent} from './components/search-card/search-card.component';
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {SearchCardComponent} from './components/search-card/search-card.componen
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     TranslateModule.forChild(),
   ],
   exports: [SearchComponent],

@@ -274,6 +274,13 @@ ion-slides {
     }
   }
 
+  a {
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+  }
+
   .product-view, .product-info {
     display: flex;
     flex-direction: column;
@@ -315,6 +322,7 @@ ion-slides {
       font-size: 18px;
       line-height: 150%;
       color: #111928;
+      padding: 1em 0;
     }
 
     .price {

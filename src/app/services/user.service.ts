@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-import { IUser } from '../models/user.model';
-import { ApiService } from './api.service';
-import { MailFnct, MailService } from './mail.service';
-import { ServicesService } from '../pages/servicios/services/services.service';
-import { AuthenticationService } from './authentication/authentication.service';
+import {Injectable} from '@angular/core';
+import {NavigationExtras, Router} from '@angular/router';
+import {IUser} from '../models/user.model';
+import {ApiService} from './api.service';
+import {MailFnct, MailService} from './mail.service';
+import {ServicesService} from '../pages/servicios/services/services.service';
+import {AuthenticationService} from './authentication/authentication.service';
+import {HttpService, IHttpService} from './http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class UserService {
     private api: ApiService,
     private mailSvc: MailService,
     private servicesSvc: ServicesService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private http: HttpService
   ) {
     if (this.authenticationService.isAuthenticated()) {
       console.log('UserService: User  is authenticated.');
@@ -27,7 +29,7 @@ export class UserService {
   }
 
   private async loadUserProfessions() {
-    const { response, error } = await this.servicesSvc.userProfession();
+    const {response, error} = await this.servicesSvc.userProfession();
     this.userProfessions = response;
   }
 
@@ -36,13 +38,16 @@ export class UserService {
   }
 
   async getUser() {
-    if (!this.userInfo) this.userInfo = await this.api.utilities.getUserData();
+    if (!this.userInfo) {
+      this.userInfo = await this.api.utilities.getUserData();
+    }
   }
 
   checkUserDataComplete(user: IUser) {
     // ToDo: control and replace with hasVerifiedMandatory()
-    if (user.dni && user.telefono && user.direccion && user.email_verified_at)
+    if (user.dni && user.telefono && user.direccion && user.email_verified_at) {
       return true;
+    }
 
     this.redir();
     return false;
@@ -88,9 +93,19 @@ export class UserService {
     return await (await this.api._getData('user/verif/kyc')).toPromise();
   }
 
+  // Partial Sign Up
+  async partialSignUp(email: string): Promise<IHttpService> {
+    return this.http.post('user/partialSignUp', {email});
+  }
+
+  // Finish partial Sign Up
+  async finishPartialSignUp(email: string, username: string, password: string): Promise<IHttpService> {
+    return this.http.post('user/partialSignUp/finish', {email, username, password});
+  }
+
   redir() {
     const navigationExtras: NavigationExtras = {
-      state: { msg: 'tabs.tab4.need-to-complete' },
+      state: {msg: 'tabs.tab4.need-to-complete'},
     };
     this.router.navigate(['menu', 'perfil'], navigationExtras);
   }
@@ -103,7 +118,7 @@ export class UserService {
       ),
       '',
       [
-        { text: this.api.translateSvc.instant('common.no'), role: 'cancel' },
+        {text: this.api.translateSvc.instant('common.no'), role: 'cancel'},
         {
           text: this.api.translateSvc.instant('common.yes'),
           handler: () => this.redir(),
