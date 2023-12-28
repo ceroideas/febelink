@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpService, IHttpService } from './http.service';
 
 export class ChatMessage {
   messageId: string;
@@ -29,14 +30,12 @@ export class UserInfo {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
-
   public events: EventEmitter<any> = new EventEmitter();
 
-  constructor( private http: HttpClient ) { }
-
+  constructor(private http: HttpClient, private httpSVC: HttpService) {}
 
   mockNewMsg(msg) {
     const mockMsg: ChatMessage = {
@@ -47,12 +46,12 @@ export class ChatService {
       toUserId: '140000198202211138',
       time: Date.now(),
       message: msg.message,
-      status: 'success'
+      status: 'success',
     };
 
     setTimeout(() => {
       this.events.emit(mockMsg);
-    }, Math.random() * 1800)
+    }, Math.random() * 1800);
   }
 
   chatReceived() {
@@ -61,28 +60,36 @@ export class ChatService {
 
   getMsgList(): Observable<ChatMessage[]> {
     const msgListUrl = './assets/mock/msg-list.json';
-    return this.http.get<any>(msgListUrl)
-    .pipe(map(response => response.array));
+    return this.http
+      .get<any>(msgListUrl)
+      .pipe(map((response) => response.array));
   }
 
   getPages(): Observable<Pages[]> {
     const pages = './assets/mock/pages.json';
-    return this.http.get<any>(pages)
-    .pipe(map(response => response.array));
+    return this.http.get<any>(pages).pipe(map((response) => response.array));
   }
 
   sendMsg(msg: ChatMessage) {
-    return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
-    .then(() => this.mockNewMsg(msg));
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(msg), Math.random() * 1000)
+    ).then(() => this.mockNewMsg(msg));
   }
 
   getUserInfo(): Promise<UserInfo> {
     const userInfo: UserInfo = {
       id: '140000198202211138',
       name: 'Luff',
-      avatar: './assets/user.jpg'
+      avatar: './assets/user.jpg',
     };
-    return new Promise(resolve => resolve(userInfo));
+    return new Promise((resolve) => resolve(userInfo));
   }
 
+  getMyChatRooms() {
+    return this.httpSVC.get('chat/list');
+  }
+
+  createChat(receiverId: number): Promise<IHttpService> {
+    return this.httpSVC.post('chat/create', { receiverId });
+  }
 }

@@ -1,0 +1,16 @@
+<div id="popup" [style]="{'display': displayToggle ? 'block' : 'none'}">
+  <div class="popup-content">
+    <span>Indica un email dónde enviarte la información</span>
+
+    <input [(ngModel)]="email">
+
+    <div class="popup-buttons">
+      <div class="cancel-signup-button" (click)="closePopUp()">
+        Cancelar
+      </div>
+      <div class="signup-button" (click)="signUp()">
+        Enviar
+      </div>
+    </div>
+  </div>
+</div>

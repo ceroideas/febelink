@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PopoverController, Platform, AlertController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
-import { ServicesService } from './services/services.service';
-import { IServiceFull } from './models/services.model';
-import { SubscriptionService } from '../suscripciones/Services/subscription.service';
-import { Subscription } from '../suscripciones/suscripciones.page';
-import { ToastSvc } from '../../services/toast.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {PopoverController, Platform, AlertController} from '@ionic/angular';
+import {UserService} from 'src/app/services/user.service';
+import {MailService} from 'src/app/services/mail.service';
+import {ReportService} from 'src/app/services/report.service';
+import {ServicesService} from './services/services.service';
+import {IServiceFull} from './models/services.model';
+import {SubscriptionService} from '../suscripciones/Services/subscription.service';
+import {Subscription} from '../suscripciones/suscripciones.page';
+import {ToastSvc} from '../../services/toast.service';
 import {
   FilePickType,
   IFile,
 } from '../../components/file-picker/models/file.model';
-import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
+import {iWYSIWYG} from 'src/app/components/wysiwyg/models/wysiwyg.model';
 
 @Component({
   selector: 'app-servicios',
@@ -21,6 +21,11 @@ import { iWYSIWYG } from 'src/app/components/wysiwyg/models/wysiwyg.model';
   styleUrls: ['./servicios.page.scss'],
 })
 export class ServiciosPage implements OnInit {
+  cancelServiceModalToggle = false;
+  finishServiceModalToggle = false;
+  cartId: number;
+  productId: number;
+
   isSlideDrag: boolean = false;
 
   isDisponibles: boolean = true;
@@ -71,22 +76,25 @@ export class ServiciosPage implements OnInit {
     public reportSvc: ReportService,
     public servicesSvc: ServicesService,
     private subService: SubscriptionService,
-    private toastSvc: ToastSvc
-  ) {}
+    private toastSvc: ToastSvc,
+  ) {
+  }
 
   ngOnInit() {
     this.unitTypes = [
-      { id: 1, name: 'Día', shorthand: 'día', lang: 'ES' },
-      { id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES' },
-      { id: 3, name: 'Año', shorthand: 'año', lang: 'ES' },
-      { id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES' },
-      { id: 5, name: 'Hora', shorthand: 'hora', lang: 'ES' },
-      { id: 6, name: 'Consulta', shorthand: 'consulta', lang: 'ES' },
-      { id: 7, name: 'Sesión', shorthand: 'sesión', lang: 'ES' },
-      { id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES' },
-      { id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES' },
-      { id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES' },
-      { id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES' },
+      {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
+      {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
+      {id: 3, name: 'Año', shorthand: 'año', lang: 'ES'},
+      {id: 4, name: 'Unidad', shorthand: 'ud.', lang: 'ES'},
+      {id: 5, name: 'Hora', shorthand: 'hora', lang: 'ES'},
+      {id: 6, name: 'Consulta', shorthand: 'consulta', lang: 'ES'},
+      {id: 7, name: 'Sesión', shorthand: 'sesión', lang: 'ES'},
+      {id: 8, name: 'Jornada', shorthand: 'jornada', lang: 'ES'},
+      {id: 9, name: 'Oferta', shorthand: 'oferta', lang: 'ES'},
+      {id: 10, name: 'Campaña', shorthand: 'campaña', lang: 'ES'},
+      {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'},
+      {id: 12, name: 'Donación', shorthand: 'donación', lang: 'ES'},
+      {id: 13, name: 'Presupuesto', shorthand: 'presupuesto', lang: 'ES'},
     ];
     this.getProducts();
     this.getProfessions();
@@ -94,7 +102,7 @@ export class ServiciosPage implements OnInit {
   }
 
   async getNumServicesAvaliables() {
-    const { response } = await this.subService.getMySubscriptions();
+    const {response} = await this.subService.getMySubscriptions();
     if (response) {
       response.forEach((elem: Subscription) => {
         if (elem.subscriptionName === 'sub-pro') {
@@ -108,7 +116,7 @@ export class ServiciosPage implements OnInit {
   }
 
   async getProducts() {
-    const { response, error } = await this.servicesSvc.get();
+    const {response, error} = await this.servicesSvc.get();
     this.iProducts = response;
     response?.available?.forEach((elem) => {
       if (!elem.isTemplate && elem.isPublished) {
@@ -118,13 +126,13 @@ export class ServiciosPage implements OnInit {
   }
 
   async getProfessions() {
-    const { response, error } = await this.servicesSvc.professions();
+    const {response, error} = await this.servicesSvc.professions();
     this.iProfessions = response;
     this.getUserProfession();
   }
 
   async getUserProfession() {
-    const { response, error } = await this.servicesSvc.userProfession();
+    const {response, error} = await this.servicesSvc.userProfession();
     this.iUserProfession = response;
     this.mapProfessions();
   }
@@ -161,8 +169,7 @@ export class ServiciosPage implements OnInit {
       images: this.images,
     };
 
-    console.log('FILE: ', this.images);
-    const { response, error } = await this.servicesSvc.create(productCreate);
+    const {response, error} = await this.servicesSvc.create(productCreate);
 
     this.getProducts();
 
@@ -209,7 +216,7 @@ export class ServiciosPage implements OnInit {
       images: this.images,
     };
 
-    const { response, error } = await this.servicesSvc.update(productEdit);
+    const {response, error} = await this.servicesSvc.update(productEdit);
 
     this.getProducts();
 
@@ -243,19 +250,25 @@ export class ServiciosPage implements OnInit {
     this.images.fill(null);
   }
 
-  logDrag(event: any, index: number, product: number, cart: number) {
+  logDrag(event: any, index: number, product: number, cart: number, cancel?: boolean) {
     let ratio = event.detail.ratio;
     if (ratio < -11 && !this.dragLogged) {
       this.dragLogged = true;
-      this.terminarServicio(index, product, cart);
+      if (cancel) {
+        this.cartId = cart;
+        this.productId = product;
+        this.cancelProduct();
+      } else {
+        this.terminarServicio(index, product, cart);
+      }
     }
   }
 
   terminarServicio(index: number, product: number, cart: number) {
     this.indexTerminarServicio = index;
     this.indexTerminarServicioMobile = true;
-    this.productIdTerminar = product;
-    this.cartIdTerminar = cart;
+    this.productId = product;
+    this.cartId = cart;
   }
 
   cancelarServicio() {
@@ -268,17 +281,17 @@ export class ServiciosPage implements OnInit {
 
   valorarServicio() {
     this.indexValorarServicio = true;
-    this.indexTerminarServicioMobile = false;
+    this.finishServiceModalToggle = false;
     this.dragLogged = false;
   }
 
   async aceptarValorarServicio() {
     var productFinish: IServiceFull = {
-      cartId: this.cartIdTerminar,
-      productId: this.productIdTerminar,
+      cartId: this.cartId,
+      productId: this.productId,
     };
 
-    const { response, error } = await this.servicesSvc.finish(productFinish);
+    const {response, error} = await this.servicesSvc.finish(productFinish);
 
     this.getProducts();
 
@@ -344,5 +357,35 @@ export class ServiciosPage implements OnInit {
 
   wysiwygChange(content: iWYSIWYG) {
     this.editorText = content.html;
+  }
+
+  async cancelProduct() {
+    const {response, error} = await this.servicesSvc.cancel({
+      cartId: this.cartId,
+      productId: this.productId,
+    });
+
+    this.toggleServiceModal();
+
+    if (response) {
+      this.getProducts();
+    }
+  }
+
+  toggleFinishModal(cartId?: number, productId?: number) {
+    this.cartId = cartId;
+    this.productId = productId;
+    this.finishServiceModalToggle = !this.finishServiceModalToggle;
+  }
+
+  toggleServiceModal(cartId?: number, productId?: number) {
+    this.cartId = cartId;
+    this.productId = productId;
+    this.cancelServiceModalToggle = !this.cancelServiceModalToggle;
+  }
+
+  async removeProduct(productId: string) {
+    await this.servicesSvc.removeProduct(productId);
+    this.getProducts();
   }
 }

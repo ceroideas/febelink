@@ -21,7 +21,7 @@ const routes: Routes = [
       },
 
       // Redirect Tabs when clicked
-      {path: 'search', redirectTo: '/search', pathMatch: 'prefix'},
+      {path: 'listado', redirectTo: '/listado', pathMatch: 'prefix'},
       {path: 'cart', redirectTo: '/cart', pathMatch: 'prefix'},
       {path: 'busquedas', redirectTo: '/menu/busquedas', pathMatch: 'prefix'},
       {path: 'ofertas', redirectTo: '/menu/ofertas', pathMatch: 'prefix'},

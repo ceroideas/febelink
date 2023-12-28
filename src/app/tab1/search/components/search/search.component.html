@@ -1,3 +1,5 @@
+<partial-popup [displayToggle]="displayPartialSignUp"
+               (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup>
 <ion-grid class="ion-no-padding">
   <ion-row *ngIf="showSearchbar">
     <ion-searchbar
@@ -14,7 +16,6 @@
     <ion-segment
       *ngIf="searchResponse"
       color="segment"
-      style="margin-top: 3em"
       [(ngModel)]="type"
       (ionChange)="segmentChanged($event)"
     >
@@ -23,16 +24,16 @@
           {{ 'tabs.tab1.search.resultado' | translate }}</ion-label
         >
       </ion-segment-button>
-      <ion-segment-button value="oferta">
-        <ion-label class="ion-text-capitalize">
-          {{ 'tabs.tab1.search.oferta' | translate }}</ion-label
-        >
-      </ion-segment-button>
-      <ion-segment-button value="listado">
+      <!--      <ion-segment-button value="oferta">
+              <ion-label class="ion-text-capitalize">
+                {{ 'tabs.tab1.search.oferta' | translate }}</ion-label
+              >
+            </ion-segment-button>-->
+      <!--<ion-segment-button value="listado">
         <ion-label class="ion-text-capitalize">
           {{ 'tabs.tab1.search.listado' | translate }}</ion-label
         >
-      </ion-segment-button>
+      </ion-segment-button>-->
     </ion-segment>
     <div class="keys-dropdown" *ngIf="searchResponse">
       <div [ngSwitch]="type">
@@ -44,6 +45,7 @@
                   <search-product-card
                     [data]="data"
                     [unitTypes]="unitTypes"
+                    (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
                   ></search-product-card>
                 </ng-container>
               </ion-card-content>
@@ -61,6 +63,7 @@
                   <search-card
                     [data]="data"
                     [searchTerm]="searchText"
+                    (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
                   ></search-card>
                 </ng-container>
                 <div
@@ -70,6 +73,8 @@
                 >
                   Ver más resultados
                 </div>
+
+                <p>{{metaDescription}}</p>
               </ion-card-content>
             </ion-card>
           </ng-container>
@@ -84,6 +89,7 @@
                 <search-product-card
                   [data]="data"
                   [unitTypes]="unitTypes"
+                  (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
                 ></search-product-card>
               </ng-container>
             </ion-card-content>
@@ -121,7 +127,7 @@
                   (click)="
                     irA(
                       '/user/' +
-                        data?.username +
+                        removeBlankSpace(data?.username) +
                         '/detail/' +
                         data?.publicUserId
                     )
@@ -201,19 +207,20 @@
     <ng-container
       class="list_search"
       *ngIf="
+        false &&
         recommendations &&
         !searchResponse &&
         authenticationService.isAuthenticated()
       "
       mode="ios"
     >
-      <ion-card style="margin-top: 50px" class="recommendations special-offer">
+      <ion-card style="margin-top: 50px" class="recommendations special-offer" *ngIf="false">
         <ion-card-header class="content_grid">
           <ion-card-title class="list_title_card">{{
-            'tabs.tab1.search.oferta_destacada' | translate
-          }}</ion-card-title>
+              'tabs.tab1.search.oferta_destacada' | translate
+            }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content class="ion-no-padding">
+        <!--<ion-card-content class="ion-no-padding">
           <ion-slides
             pager="true"
             [options]="slideOpts"
@@ -243,13 +250,21 @@
               <div style="margin-top: 2em"></div>
             </ion-slide>
           </ion-slides>
+        </ion-card-content>-->
+        <ion-card-content>
+          <ng-container *ngFor="let data of recommendations?.specialOffer">
+            <search-product-card
+              [data]="data"
+              [unitTypes]="unitTypes"
+            ></search-product-card>
+          </ng-container>
         </ion-card-content>
       </ion-card>
       <ion-card class="recommendations">
         <ion-card-header>
           <ion-card-title>{{
-            'tabs.tab1.search.recomendaciones' | translate
-          }}</ion-card-title>
+              'tabs.tab1.search.recomendaciones' | translate
+            }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ng-container *ngFor="let data of recommendations?.recommendations">
@@ -263,8 +278,8 @@
       <ion-card class="recommendations" *ngIf="false">
         <ion-card-header>
           <ion-card-title>{{
-            'tabs.tab1.search.basado_search' | translate
-          }}</ion-card-title>
+              'tabs.tab1.search.basado_search' | translate
+            }}</ion-card-title>
         </ion-card-header>
         <ion-card-content class="ion-no-padding">
           <div>
@@ -275,7 +290,7 @@
                     (click)="
                       irA(
                         '/user/' +
-                          data?.username +
+                          removeBlankSpace(data?.username) +
                           '/detail/' +
                           data?.publicUserId
                       )
@@ -296,8 +311,8 @@
                     </ion-avatar>
                     <ion-label class="content_item">
                       <ion-text class="font_texto_18">{{
-                        data?.username
-                      }}</ion-text>
+                          data?.username
+                        }}</ion-text>
                       <p class="ion-no-margin">
                         <ion-img
                           class="icon_star"
@@ -322,8 +337,8 @@
                       </p>
                       <h2 class="font_texto_18">{{ data?.subtitulotitulo }}</h2>
                       <ion-text class="font_texto_14">{{
-                        data?.texto
-                      }}</ion-text>
+                          data?.texto
+                        }}</ion-text>
                     </ion-label>
                   </ion-item>
                 </ng-container>
@@ -334,11 +349,11 @@
       </ion-card>
     </ng-container>
   </div>
-  <div style="margin-top: 10em" class="desktop">
+  <div style="margin-top: 5em;background: white;" class="desktop">
     <ion-row *ngIf="searchResponse" class="recommendations-desktop" size="12">
-      <ion-col>
+      <ion-col style="flex-basis: 60%">
         <ng-container *ngIf="searchResponse?.services?.length > 0">
-          <ion-label class="list_title_card"> Resultados </ion-label>
+          <h1 class="list_title_card">{{resultTitle}}</h1>
           <ion-row
             size="12"
             class="list-panel"
@@ -353,9 +368,9 @@
               </ion-card-content>
             </ion-card>
           </ion-row>
-          <br />
+          <br/>
         </ng-container>
-        <ion-label class="list_title_card"> Resultados similares </ion-label>
+        <ion-label class="list_title_card"> Resultados similares</ion-label>
         <ion-row
           size="12"
           class="list-panel"
@@ -378,49 +393,7 @@
         >
           Ver más resultados
         </div>
-      </ion-col>
-      <ion-col style="margin: 0 40px">
-        <ion-label class="list_title_card"> Ofertas </ion-label>
-        <ng-container *ngFor="let data of searchResponse?.offers">
-          <ion-row
-            (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
-            class="list-panel"
-          >
-            <ion-col size="12">
-              <ion-card class="ion-no-margin width-100">
-                <ion-card-content class="ion-padding">
-                  <div class="special-offer-image" slot="start">
-                    <ion-img
-                      *ngIf="!data?.image"
-                      src="assets/icon/svg/default_product.svg"
-                      class="default-avatar"
-                    ></ion-img>
-                    <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
-                  </div>
-                  <div class="special-offer-owner">
-                    <ion-label>{{ data?.ownerUsername }}</ion-label>
-                  </div>
-                  <div class="special-offer-title">
-                    <ion-label>{{ data?.title }}</ion-label>
-                  </div>
-                  <div class="price">
-                    <span>{{ data?.unitPrice }}€</span>
-                    <span>
-                      / {{ unitTypes[data.unitTypeId - 1]?.shorthand }}</span
-                    >
-                  </div>
-                  <div class="special-offer-content">
-                    <ion-label [innerHtml]="data?.description"></ion-label>
-                  </div>
-                  <div style="margin-top: 2em"></div>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ng-container>
-      </ion-col>
-      <ion-col>
-        <ion-label class="list_title_card"> Usuarios </ion-label>
+        <!--<ion-label class="list_title_card"> Profesionales</ion-label>
         <ion-row
           size="12"
           class="list-panel"
@@ -431,7 +404,7 @@
               <ion-item
                 (click)="
                   irA(
-                    '/user/' + data?.username + '/detail/' + data?.publicUserId
+                    '/user/' + removeBlankSpace(data?.username) + '/detail/' + data?.publicUserId
                   )
                 "
                 lines="none"
@@ -477,8 +450,62 @@
               </ion-item>
             </ion-card-content>
           </ion-card>
-        </ion-row>
+        </ion-row>-->
+        <p>{{metaDescription}}</p>
       </ion-col>
+      <ion-col id="location-links-desktop">
+        <div class="container" *ngIf="locationFilterLink.length > 0">
+          <h2>Los mejores profesionales en {{locationFilter}}</h2>
+          <ng-container *ngFor="let location of locationFilterLink">
+        <span><ion-icon name="location-outline"></ion-icon> <a
+          (click)="changeMetaFilter(location.sector, location.link)">{{location.title}}</a>
+        </span>
+          </ng-container>
+        </div>
+      </ion-col>
+      <!-- <ion-col style="margin: 0 40px">
+        <ion-label class="list_title_card"> Ofertas</ion-label>
+        <ng-container *ngFor="let data of searchResponse?.offers">
+          <ion-row
+            (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
+            class="list-panel"
+          >
+            <ion-col size="12">
+              <ion-card class="ion-no-margin width-100">
+                <ion-card-content class="ion-padding">
+                  <div class="special-offer-image" slot="start">
+                    <ion-img
+                      *ngIf="!data?.image"
+                      src="assets/icon/svg/default_product.svg"
+                      class="default-avatar"
+                    ></ion-img>
+                    <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
+                  </div>
+                  <div class="special-offer-owner">
+                    <ion-label>{{ data?.ownerUsername }}</ion-label>
+                  </div>
+                  <div class="special-offer-title">
+                    <ion-label>{{ data?.title }}</ion-label>
+                  </div>
+                  <div class="price">
+                    <span>{{ data?.unitPrice }}€</span>
+                    <span>
+                      / {{ unitTypes[data.unitTypeId - 1]?.shorthand }}</span
+                    >
+                  </div>
+                  <div class="special-offer-content">
+                    <ion-label [innerHtml]="data?.description"></ion-label>
+                  </div>
+                  <div style="margin-top: 2em"></div>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ion-col>-->
+    </ion-row>
+    <ion-row>
+
     </ion-row>
     <ion-row
       style="margin-top: -2%"
@@ -498,12 +525,12 @@
           <ion-col size="12">
             <p style="padding-top: 2%">
               <ion-label style="color: #fff; font-size: 32px; margin-top: 40%"
-                >No encuentra resultados
+              >No encuentra resultados
               </ion-label>
             </p>
             <p>
               <ion-label style="color: #fff; font-size: 18px; margin-top: 10px"
-                >Intenta buscar por otras palabras clave
+              >Intenta buscar por otras palabras clave
               </ion-label>
             </p>
           </ion-col>
@@ -512,6 +539,7 @@
     </ion-row>
     <ion-row
       *ngIf="
+        false &&
         recommendations &&
         !searchResponse &&
         authenticationService.isAuthenticated()
@@ -521,8 +549,8 @@
     >
       <ion-col *ngIf="recommendations?.recommendations?.length > 0">
         <ion-label class="list_title_card">{{
-          'tabs.tab1.search.recomendaciones' | translate
-        }}</ion-label>
+            'tabs.tab1.search.recomendaciones' | translate
+          }}</ion-label>
         <ion-row
           size="12"
           class="list-panel"
@@ -538,13 +566,13 @@
           </ion-card>
         </ion-row>
       </ion-col>
-      <ion-col
+      <!--<ion-col
         *ngIf="recommendations?.specialOffer?.length > 0"
         style="margin: 0 40px"
       >
         <ion-label class="list_title_card">{{
-          'tabs.tab1.search.oferta_destacada' | translate
-        }}</ion-label>
+            'tabs.tab1.search.oferta_destacada' | translate
+          }}</ion-label>
         <ng-container *ngFor="let data of recommendations?.specialOffer">
           <ion-row
             (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
@@ -576,71 +604,171 @@
             </ion-col>
           </ion-row>
         </ng-container>
-      </ion-col>
-      <ion-col>
-        <ion-label class="list_title_card">{{
-          'tabs.tab1.search.basado_search' | translate
-        }}</ion-label>
-        <ion-row
-          *ngIf="recommendations?.users?.length > 0"
-          size="12"
-          class="ion-margin list-panel"
-        >
-          <ng-container *ngFor="let data of recommendations?.users">
-            <ion-card class="ion-no-margin width-100">
-              <ion-card-content class="ion-no-padding">
-                <ion-item
-                  (click)="irA('/detalle/1')"
-                  lines="none"
-                  class="item_dropdown"
-                >
-                  <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img
-                      *ngIf="!data?.imagen"
-                      src="assets/icon/svg/default_avatar.svg"
-                      class="default-avatar"
-                    ></ion-img>
-                    <ion-img
-                      *ngIf="data?.imagen"
-                      [src]="'assets/imgs/' + data?.imagen"
-                    ></ion-img>
-                  </ion-avatar>
-                  <ion-label class="content_item">
-                    <span class="font_texto_18">{{ data?.username }}</span>
-                    <p class="ion-no-margin">
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <span class="font_valoraciones"
-                        >({{ data?.votes }} )
-                        {{ 'tabs.tab1.search.valoraciones' | translate }}</span
+      </ion-col>-->
+      <!--      <ion-col>
+              <ion-label class="list_title_card">{{
+                  'tabs.tab1.search.basado_search' | translate
+                }}</ion-label>
+              <ion-row
+                *ngIf="recommendations?.users?.length > 0"
+                size="12"
+                class="ion-margin list-panel"
+              >
+                <ng-container *ngFor="let data of recommendations?.users">
+                  <ion-card class="ion-no-margin width-100">
+                    <ion-card-content class="ion-no-padding">
+                      <ion-item
+                        (click)="irA('/detalle/1')"
+                        lines="none"
+                        class="item_dropdown"
                       >
-                    </p>
-                    <span class="font_texto_14">{{ data?.nombre }}</span>
-                  </ion-label>
-                </ion-item>
-              </ion-card-content>
-            </ion-card>
-          </ng-container>
-        </ion-row>
-      </ion-col>
+                        <ion-avatar class="avatar_dropdown" slot="start">
+                          <ion-img
+                            *ngIf="!data?.imagen"
+                            src="assets/icon/svg/default_avatar.svg"
+                            class="default-avatar"
+                          ></ion-img>
+                          <ion-img
+                            *ngIf="data?.imagen"
+                            [src]="'assets/imgs/' + data?.imagen"
+                          ></ion-img>
+                        </ion-avatar>
+                        <ion-label class="content_item">
+                          <span class="font_texto_18">{{ data?.username }}</span>
+                          <p class="ion-no-margin">
+                            <ion-img
+                              class="icon_star"
+                              src="assets/icon/svg/icon_star.svg"
+                            ></ion-img>
+                            <ion-img
+                              class="icon_star"
+                              src="assets/icon/svg/icon_star.svg"
+                            ></ion-img>
+                            <ion-img
+                              class="icon_star"
+                              src="assets/icon/svg/icon_star.svg"
+                            ></ion-img>
+                            <ion-img
+                              class="icon_star"
+                              src="assets/icon/svg/icon_star.svg"
+                            ></ion-img>
+                            <ion-img
+                              class="icon_star"
+                              src="assets/icon/svg/icon_star.svg"
+                            ></ion-img>
+                            <span class="font_valoraciones"
+                            >({{ data?.votes }} )
+                              {{ 'tabs.tab1.search.valoraciones' | translate }}</span
+                            >
+                          </p>
+                          <span class="font_texto_14">{{ data?.nombre }}</span>
+                        </ion-label>
+                      </ion-item>
+                    </ion-card-content>
+                  </ion-card>
+                </ng-container>
+              </ion-row>
+            </ion-col>-->
     </ion-row>
   </div>
+  <section id="location-links-mobile" class="mobile" *ngIf="locationFilterLink.length > 0">
+    <div class="container">
+      <h2>Los mejores profesionales en {{locationFilter}}</h2>
+      <ng-container *ngFor="let location of locationFilterLink">
+        <span><ion-icon name="location-outline"></ion-icon> <a
+          (click)="changeMetaFilter(location.sector, location.link)"
+          [href]="'/listado/' + location.link"
+        >{{location.title}}</a>
+        </span>
+      </ng-container>
+    </div>
+  </section>
+  <section id="all-services">
+    <h2>Todos los servicios profesionales en un mismo sitio</h2>
+    <div id="services-container">
+      <ng-container *ngFor="let service of services">
+        <a class="service" [routerLink]="'/listado/' + service.searchTerm">
+          <img [src]="service.icon">
+          <span>{{service.name}}</span>
+        </a>
+      </ng-container>
+    </div>
+  </section>
+  <section id="how-works">
+    <h2>¿Cómo funciona Febelink?</h2>
+    <p>Encuentra las ofertas de los mejores profesionales fácilmente</p>
+    <div id="how-works-container">
+      <div>
+        <span>
+          ¿Qué necesitas?
+        </span>
+        <p>Escribe en nuestro buscador inteligente o selecciona el servicio que necesitas. Ya sea el mejor abogado,
+          marmolista, carpintero, asesoría o informático. Así de fácil.
+        </p>
+      </div>
+      <div>
+        <span>
+          Compara ofertas y elige un profesional
+        </span>
+        <p>
+          Elige entre todos los servicios y las mejores ofertas. Incluso puedes chatear con los profesionales y pedir
+          presupuestos.
+        </p>
+      </div>
+      <div>
+        <span>
+          Compra y reserva tu oferta en el momento
+        </span>
+        <p>Aprovecha las oportunidades y disfruta de tu servicio tranquilamente.
+          Gracias a la garantía de Febelink tu compra está siempre protegida hasta que tú nos des la conformidad.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="sectors">
+    <h2>Los servicios profesionales más buscados</h2>
+    <div class="sector-container">
+      <ng-container *ngFor="let sector of sectors">
+        <a [routerLink]="'/listado/' + sector.link" [style.background-image]="'url(' + sector.imageURL + ')'">
+          <header>
+            <h3>{{sector.title}}</h3>
+          </header>
+        </a>
+      </ng-container>
+    </div>
+  </section>
+  <section id="best-prof-links">
+    <div class="container">
+      <h2>Los mejores profesionales de toda España están en Febelink</h2>
+      <div class="links">
+        <ng-container *ngFor="let location of locationLinks; trackBy: trackItem">
+        <span><ion-icon name="location-outline"></ion-icon> <a
+          (click)="changeFilter(location.title, location.link)"
+          [href]="'/listado/' + location.link"
+        >{{location.title}}</a>
+        </span>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+  <section id="oracle-section">
+    <div class="container">
+      <h2>Descubre los mejores consejos profesionales en el Oráculo</h2>
+      <p>Descubre y comparte valiosos consejos de servicios profesionales. Nuestra plataforma te conecta con contenido
+        experto en diversos campos, desde asesoría legal, consultoría financiera, consejos de salud, o sobre reformas
+        para el hogar. Obtén información clave y compártela con otros para tomar decisiones informadas para tu vida.
+      </p>
+      <a [routerLink]="'/oracles'" class="button">Descubrir consejos profesionales ahora</a>
+    </div>
+  </section>
+  <section id="benefits">
+    <div></div>
+    <div id="visor-container">
+      <h2>¿Eres un profesional en búsqueda de nuevos clientes?</h2>
+      <p>✓ Contacta con clientes que buscan tus servicios</p>
+      <p>✓ Recibe gratis los beneficios de nuestras soluciones de marketing digital</p>
+      <p>✓ Accede a beneficios extras a muy bajo costo</p>
+      <div class="button" [routerLink]="'/registro'">Regístrate ahora</div>
+    </div>
+  </section>
 </ion-grid>

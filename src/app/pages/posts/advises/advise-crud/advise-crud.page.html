@@ -116,7 +116,7 @@
           <div class="modal-front-title">
             Crear publicación
           </div>
-          <div class="modal-add-name">
+          <!--<div class="modal-add-name">
             {{ 'common.labelTopic' | translate }}
           </div>
           <div class="modal-input-div">
@@ -132,8 +132,16 @@
               >
               </ionic-selectable>
             </ion-item>
+          </div>-->
+          <div class="modal-add-name">
+            Título
           </div>
-
+          <div class="modal-input-div">
+            <input style="width: 100%;"
+                   formControlName="title"
+                   [placeholder]="'Máximo 100 caracteres'"
+            >
+          </div>
           <div class="modal-add-name">
             Mensaje
           </div>
@@ -142,7 +150,7 @@
                           class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>-->
             <app-wysiwyg
               [html]="iAdvise?.content"
-              [placeholder]="'Máximo 500 caracteres'"
+              [placeholder]="'Comparte tus mejores consejos y sugerencias. También puedes compartir ejemplos de trabajos realizados y acompañarlos con imágenes. ¡Que todos sepan lo que eres capaz de hacer!'"
               (OnChange)="wysiwygChange( $event )"
             ></app-wysiwyg>
           </div>
@@ -214,30 +222,42 @@
 
     <form [formGroup]="form" *ngIf="!isLoading && form">
       <div class="table-100">
-        <div class="create-content-left">
+        <!--        <div class="create-content-left">
+                  <div class="modal-add-name-b">
+                    {{ 'common.labelTopic' | translate }}
+                  </div>
+                  <div class="modal-input-div">
+                    <ion-item class="no-padding modal-add-price-select">
+                      <ionic-selectable class="price-select" placeholder="Tema"
+                                        #topic
+                                        item-content
+                                        [(ngModel)]="topicSelected"
+                                        itemValueField="id"
+                                        itemTextField="name"
+                                        [items]="topics"
+                                        formControlName="topic"
+                      >
+                      </ionic-selectable>
+                    </ion-item>
+                  </div>
+                  &lt;!&ndash;<div class="modal-add-name-b padding-top-label">
+                    Enlace
+                  </div>
+                  <div class="modal-input-div">
+                    <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
+                  </div>&ndash;&gt;
+                </div>-->
+        <div class="create-content-middle">
           <div class="modal-add-name-b">
-            {{ 'common.labelTopic' | translate }}
+            Título
           </div>
           <div class="modal-input-div">
-            <ion-item class="no-padding modal-add-price-select">
-              <ionic-selectable class="price-select" placeholder="Tema"
-                                #topic
-                                item-content
-                                [(ngModel)]="topicSelected"
-                                itemValueField="id"
-                                itemTextField="name"
-                                [items]="topics"
-                                formControlName="topic"
-              >
-              </ionic-selectable>
-            </ion-item>
+            <!--          <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>-->
+            <input style="width: 100%;"
+                   formControlName="title"
+                   [placeholder]="'Máximo 100 caracteres'"
+            >
           </div>
-          <!--<div class="modal-add-name-b padding-top-label">
-            Enlace
-          </div>
-          <div class="modal-input-div">
-            <ion-input placeholder="Enlace" class="padding-input-12 modal-add-name-input"></ion-input>
-          </div>-->
         </div>
         <div class="create-content-middle">
           <div class="modal-add-name-b">
@@ -247,7 +267,7 @@
             <!--          <ion-textarea formControlName="content" placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-add-description-input" [(ngModel)]="contentText"></ion-textarea>-->
             <app-wysiwyg
               [html]="iAdvise?.content"
-              [placeholder]="'Máximo 500 caracteres'"
+              [placeholder]="'Comparte tus mejores consejos y sugerencias. También puedes compartir ejemplos de trabajos realizados y acompañarlos con imágenes. ¡Que todos sepan lo que eres capaz de hacer!'"
               (OnChange)="wysiwygChange( $event )"
             ></app-wysiwyg>
           </div>

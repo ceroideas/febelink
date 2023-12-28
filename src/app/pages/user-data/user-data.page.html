@@ -1,7 +1,7 @@
 <ion-content class="content-background">
   <ion-grid class="ion-no-padding" size="12">
-    <ion-row size="12" class="row_grid">
-      <!-- Breadcrumb mobile -->
+    <!--<ion-row size="12" class="row_grid">
+      &lt;!&ndash; Breadcrumb mobile &ndash;&gt;
       <ion-breadcrumbs class="mobile" mode="ios">
         <ion-breadcrumb href="#">
           <ion-img class="mobile" src="assets/icon/svg/icono-casa.svg"></ion-img>
@@ -11,7 +11,7 @@
           <ion-label class="label_breadcrumb_02">Datos de usuario</ion-label>
         </ion-breadcrumb>
       </ion-breadcrumbs>
-      <!-- Breadcrumb desktop -->
+      &lt;!&ndash; Breadcrumb desktop &ndash;&gt;
       <div class="desktop">
         <div class="div-breadcrumbs-b">
           <div class="breadcrumbs-text-b">
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-    </ion-row>
+    </ion-row>-->
     <ion-row class="row_content" size="12">
       <ion-col class="mobile">
         <ion-label class="ion-padding text_label_content">Datos de usuario</ion-label>
@@ -70,6 +70,12 @@
                 <ion-col size="10" class="ion-text-center">
                   <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
                 </ion-col>
+              </ion-row>
+              <ion-row class="ion-no-margin flex_content" size="12">
+                <div class="servicios-sections-title-b" [routerLink]="'/profile/public'">
+                  <ion-button expand class="botoneditar">Ir a vista perfil público
+                  </ion-button>
+                </div>
               </ion-row>
             </ion-grid>
             <ion-grid size="12">
@@ -129,6 +135,12 @@
                 <ion-col size="10" class="ion-text-center">
                   <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
                 </ion-col>
+              </ion-row>
+              <ion-row size="12">
+                <div class="servicios-sections-title-b" style="width: 100%" [routerLink]="'/profile/public'">
+                  <ion-button expand class="botoneditar">Ir a vista perfil público
+                  </ion-button>
+                </div>
               </ion-row>
             </ion-col>
             <ion-col size="3">

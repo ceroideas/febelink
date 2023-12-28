@@ -14,7 +14,12 @@ const routes: Routes = [
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
   },
   {
-    path: 'search',
+    path: 'listado',
+    loadChildren: () =>
+      import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+  },
+  {
+    path: 'listado/:searchTerm',
     loadChildren: () =>
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
   },
@@ -22,6 +27,13 @@ const routes: Routes = [
     path: 'user/:recommenderId',
     loadChildren: () =>
       import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+  },
+  {
+    path: 'links',
+    loadChildren: () =>
+      import('./pages/links/links.module').then(
+        (m) => m.InterestingLinksPageModule
+      ),
   },
   {
     path: 'login',
@@ -103,6 +115,7 @@ const routes: Routes = [
     path: 'chat',
     loadChildren: () =>
       import('./tab3/tab3.module').then((m) => m.Tab3PageModule),
+    // import('./pages/chat/chat.module').then((m) => m.ChatPageModule),
   },
   {
     path: 'privacy-policy',
@@ -279,12 +292,15 @@ const routes: Routes = [
         (m) => m.CuentaProfesionalPageModule
       ),
   },
-  {path: '**', redirectTo: 'search', pathMatch: 'full'},
+  {path: '**', redirectTo: 'listado', pathMatch: 'full'},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabledBlocking' }),
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      initialNavigation: 'enabledBlocking',
+    }),
   ],
   exports: [RouterModule],
 })

@@ -1,117 +1,143 @@
 <ion-header>
-    <ion-header>
-        <div>
-            <ion-toolbar>
-                <div style="padding-right: 20px;display: flex">
+  <ion-header>
+    <div>
+      <ion-toolbar>
+        <div style="padding-right: 20px; display: flex">
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
 
-                    <ion-buttons slot="start">
-                        <ion-back-button></ion-back-button>
-                    </ion-buttons>
-
-                    <ion-title style="padding-left: 0px;">
-                        <ion-item>
-
-                            <ion-label>
-                                {{person_name}}
-                            </ion-label>
-
-                        </ion-item>
-                    </ion-title>
-                    <div *ngIf="view_finish" style="display: flex;">
-                    <ion-buttons *ngIf="user_id==create" slot="end" style="margin-left: 18px;" >
-                     <p *ngIf="finish_chat==false && this.userIdDemand === this.user_id" (click)="finishChat()">Cerrar chat</p>
-                     <p *ngIf="finish_chat==true" (click)="openChat()">Abrir chat</p>
-                    </ion-buttons>
-                    </div>
-                </div>
-            </ion-toolbar>
+          <ion-title style="padding-left: 0px">
+            <ion-item>
+              <ion-label> {{person_name}} </ion-label>
+            </ion-item>
+          </ion-title>
+          <div style="display: flex">
+            <ion-buttons
+              slot="end"
+              style="margin-left: 18px"
+            >
+              <p
+                *ngIf="!finish_chat"
+                (click)="finishChat()"
+              >
+                Bloquear usuario
+              </p>
+              <p *ngIf="finish_chat" (click)="openChat()">Abrir chat</p>
+            </ion-buttons>
+          </div>
         </div>
-    </ion-header>
+      </ion-toolbar>
+    </div>
+  </ion-header>
 </ion-header>
 
-<ion-content [scrollEvents]="true" #content>
-    <div *ngIf="empty_chat" class="body_loading_chat">
-
-        <div class="loader_spinner_home">
-            <h3>No hay mensajes en este chat</h3>
-        </div>
-
+<ion-content [scrollEvents]="true" #content id="chat-section">
+  <div *ngIf="messages.length === 0" class="body_loading_chat">
+    <div class="loader_spinner_home">
+      <h3>No hay mensajes en este chat</h3>
     </div>
+  </div>
 
-    <div *ngIf="!load_data" class="body_loading_chat">
-
-        <div class="loader_spinner_home">
-            <ion-spinner class="loader_spinner_home_width" name="crescent"></ion-spinner>
-        </div>
-
+  <div *ngIf="!load_data" class="body_loading_chat">
+    <div class="loader_spinner_home">
+      <ion-spinner
+        class="loader_spinner_home_width"
+        name="crescent"
+      ></ion-spinner>
     </div>
-    <ion-grid id="grid_chat">
-<!--        <ion-button *ngIf="exist_old_messages" (click)="loadOldMessages()" expand="block">-->
-<!--            Cargar mensajes anteriores-->
-<!--        </ion-button>-->
-        <ion-row *ngFor="let message of messages; let i = index">
+  </div>
+  <ion-grid id="grid_chat">
+    <!--        <ion-button *ngIf="exist_old_messages" (click)="loadOldMessages()" expand="block">-->
+    <!--            Cargar mensajes anteriores-->
+    <!--        </ion-button>-->
+    <ion-row *ngFor="let message of messages; let i = index">
+      <ion-col *ngIf="isDifferentDay(i)" size="12" class="day_event">
+        <div class="message other-message-date">
+          <div>
+            <p style="font-size: 14px !important">{{ getMessageDate(i) }}</p>
+          </div>
+        </div>
+      </ion-col>
 
-            <ion-col *ngIf="isDifferentDay(i)" size="12" class="day_event">
-                <div class="message other-message-date">
-                    <div>
-                        <p style="font-size: 14px!important;"> {{ getMessageDate(i) }}</p>
-                    </div>
-                </div>
-            </ion-col>
-
-                <ion-col *ngIf="message.user !== currentUser" size="12">
-                    <div class="message other-message">
-                        <div>
-                            <p>{{ message.msg }}   <span class="time_my">{{ message.createdAt}}</span></p>
-                        </div>
-                    </div>
-                </ion-col>
-                <ion-col *ngIf="message.user === currentUser" size="12">
-                    <div class="message my-message">
-                        <div>
-                            <p>{{ message.msg }}   <span class="time_my">{{ message.createdAt}}</span></p>
-                        </div>
-                    </div>
-                </ion-col>
-
-        </ion-row>
-    </ion-grid>
+      <ion-col *ngIf="message.user !== currentUser?.id" size="12">
+        <div class="message other-message">
+          <div>
+            <p>
+              {{ message.msg }}
+              <span class="time_my">{{ message.createdAt}}</span>
+            </p>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="message.user === currentUser?.id" size="12">
+        <div class="message my-message">
+          <div>
+            <p>
+              {{ message.msg }}
+              <span class="time_my">{{ message.createdAt}}</span>
+            </p>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer>
-    <ion-grid>
+  <ion-grid>
+    <div id="user_typing" style="display: none">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
 
-        <div id="user_typing" style="display: none">
-            <div class="spinner">
-                <div class="bounce1"></div>
-                <div class="bounce2"></div>
-                <div class="bounce3"></div>
-            </div>
-        </div>
+    <ion-row class="ion_row_message">
+      <ion-textarea
+        *ngIf="!finish_chat"
+        (ionChange)="scrollToBottomOnInitEnterMessage()"
+        (click)="scrollToBottomOnInitMessage()"
+        auto-grow="true"
+        rows="1"
+        class="ion_input_text textarea_message_chat"
+        #id_input_message
+        [(ngModel)]="message"
+        placeholder="Escribe un mensaje"
+      ></ion-textarea>
 
-        <ion-row class="ion_row_message">
+      <ion-textarea
+        *ngIf="finish_chat==true"
+        disabled="true"
+        (ionChange)="scrollToBottomOnInitEnterMessage()"
+        (click)="scrollToBottomOnInitMessage()"
+        auto-grow="true"
+        rows="1"
+        class="ion_input_text textarea_message_chat"
+        #id_input_message
+        [(ngModel)]="message"
+        placeholder="Chat bloqueado"
+      ></ion-textarea>
 
-            <ion-textarea *ngIf="finish_chat==false" (ionChange)="scrollToBottomOnInitEnterMessage()" (click)="scrollToBottomOnInitMessage()"
-                          auto-grow=true rows="1" class="ion_input_text textarea_message_chat" #id_input_message
-                          [(ngModel)]="message"
-                          placeholder="Escribe un mensaje"></ion-textarea>
-
-            <ion-textarea *ngIf="finish_chat==true" disabled="true" (ionChange)="scrollToBottomOnInitEnterMessage()" (click)="scrollToBottomOnInitMessage()"
-                          auto-grow=true rows="1" class="ion_input_text textarea_message_chat" #id_input_message
-                          [(ngModel)]="message"
-                          placeholder="Chat bloqueado"></ion-textarea>
-
-            <ion-button style="     border: 0.5px solid #ffffff;
-    background: #55abdd;
-    border-radius: 50px;
-    margin-left: 10px;" expand="block" fill="clear" [disabled]="message === ''" class="msg-btn"
-                        (click)="sendMessage()">
-                <ion-icon style="color: white;
-    font-size: 22px;
-    padding: 4px;" name="send-outline"></ion-icon>
-            </ion-button>
-
-        </ion-row>
-
-    </ion-grid>
+      <ion-button
+        style="
+          border: 0.5px solid #ffffff;
+          background: #55abdd;
+          border-radius: 50px;
+          margin-left: 10px;
+        "
+        expand="block"
+        fill="clear"
+        [disabled]="message === ''"
+        class="msg-btn"
+        (click)="sendMessage()"
+      >
+        <ion-icon
+          style="color: white; font-size: 22px; padding: 4px"
+          name="send-outline"
+        ></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Clipboard } from '@awesome-cordova-plugins/clipboard/ngx';
 import { Platform } from '@ionic/angular';
@@ -21,12 +22,12 @@ export class ClipboardSvc {
 
     let success = true;
 
-    if (this.platform.is('cordova'))
+    if (isPlatformBrowser && this.platform.is('cordova')) {
       // Native Android/iOS
       this.clipboard.copy(value);
-    else {
+    } else {
       // Web
-      if (navigator.clipboard) {
+      if (isPlatformBrowser && navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(value);
         } catch (err) {

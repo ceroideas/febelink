@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {IKeywords} from '../models/search.model';
 import {HttpService} from '../../../services/http.service';
 import {ProfessionType} from '../../../pages/cuenta-profesional/cuenta-profesional.page';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class SearchService {
   public show_imagen: boolean = true;
   public show_detalle: boolean = false;
   public dataDesktopDetail = null;
+
+  locationFilter: string;
+  metaLocationFilter: string;
 
   constructor(private http: HttpService) {
   }
@@ -36,6 +40,22 @@ export class SearchService {
 
   set(searchText: string) {
     this.searchText(searchText);
+  }
+
+  setLocationFilter(location: string) {
+    this.locationFilter = location;
+  }
+
+  getLocationFilter() {
+    return this.locationFilter;
+  }
+
+  setMetaLocationFilter(location: string) {
+    this.metaLocationFilter = location;
+  }
+
+  getMetaLocationFilter() {
+    return this.metaLocationFilter;
   }
 
   getData() {
@@ -110,15 +130,11 @@ export class SearchService {
     return this.http.post('product/search/more', {searchTerm, searchIndex});
   }
 
-  async contact4Search(searchTerm: string, link: string, searchTitle: string, searchDescription: string) {
-    return this.http.post('product/search/contact', {searchTerm, link, searchTitle, searchDescription});
+  async contact4Search(searchTerm: string, link: string, searchTitle: string, searchDescription: string, email?: string) {
+    return this.http.post('product/search/contact', {searchTerm, link, searchTitle, searchDescription, email});
   }
 
   async getProductDetail(productId: number) {
     return this.http.get('product/detail/' + productId);
-  }
-
-  async addProductToActiveCart(productId, productAmount) {
-    return this.http.post('cart/add', {productId, productAmount});
   }
 }

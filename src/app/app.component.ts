@@ -1,14 +1,6 @@
-import { WalletService } from './services/wallet/wallet.service';
-import {
-  Component,
-  Inject,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  PLATFORM_ID,
-  ViewChild,
-} from '@angular/core';
-import { Router } from '@angular/router';
+import {WalletService} from './services/wallet/wallet.service';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {
   Platform,
   AlertController,
@@ -17,32 +9,32 @@ import {
   MenuController,
   ModalController,
 } from '@ionic/angular';
-import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
+import {SplashScreen} from '@awesome-cordova-plugins/splash-screen/ngx';
 import {
   Push,
   PushObject,
   PushOptions,
 } from '@awesome-cordova-plugins/push/ngx';
-import { UtilitiesService } from './services/utilities.service';
-import { ApiService } from './services/api.service';
-import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
-import { NavController } from '@ionic/angular';
-import { TranslateConfigService } from './services/translate/translate-config.service';
-import { Storage } from '@ionic/storage';
-import { AuthenticationService } from './services/authentication/authentication.service';
-import { IUser } from './models/user.model';
-import { SuscribirsePage } from './pages/suscribirse/suscribirse.page';
-import { ISector, ISubSector } from './models/sector.model';
-import { NotificationService } from './services/notification.service';
-import { CryptoCurrency } from './models/wallet/currency.model';
-import { Observable } from 'rxjs';
-import { ILangDEFAULTS } from './models/langs.model';
-import { Meta, Title } from '@angular/platform-browser';
-import { FrogedService } from './services/froged.service';
-import { ConsoleSvc } from './services/console.service';
-import { environment } from 'src/environments/environment';
-import { ServicesService } from './pages/servicios/services/services.service';
-import { isPlatformServer } from '@angular/common';
+import {UtilitiesService} from './services/utilities.service';
+import {ApiService} from './services/api.service';
+import {Deeplinks} from '@awesome-cordova-plugins/deeplinks/ngx';
+import {NavController} from '@ionic/angular';
+import {TranslateConfigService} from './services/translate/translate-config.service';
+import {Storage} from '@ionic/storage';
+import {AuthenticationService} from './services/authentication/authentication.service';
+import {IUser} from './models/user.model';
+import {SuscribirsePage} from './pages/suscribirse/suscribirse.page';
+import {ISector, ISubSector} from './models/sector.model';
+import {NotificationService} from './services/notification.service';
+import {CryptoCurrency} from './models/wallet/currency.model';
+import {Observable} from 'rxjs';
+import {ILangDEFAULTS} from './models/langs.model';
+import {Meta, Title} from '@angular/platform-browser';
+// import { FrogedService } from './services/froged.service';
+import {ConsoleSvc} from './services/console.service';
+import {environment} from 'src/environments/environment';
+import {ServicesService} from './pages/servicios/services/services.service';
+import {DOCUMENT, Location} from '@angular/common';
 
 const GENERAL_TITLE =
   'Febelink | El buscador universal de servicios profesionales';
@@ -55,11 +47,12 @@ const GENERAL_DESC =
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  advertisement = false;
   currentYear = new Date().getFullYear();
   public userSubscription: any;
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
-  @ViewChild(IonRouterOutlet, { static: false }) routerOutlets: IonRouterOutlet;
+  @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
   public visiblePro: boolean = false;
 
   public appPages = [
@@ -103,28 +96,22 @@ export class AppComponent implements OnInit, OnDestroy {
     // private frogedSvc: FrogedService,
     private consoleSvc: ConsoleSvc,
     private servicesSvc: ServicesService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(DOCUMENT) private document: Document,
+    private location: Location
   ) {
+
     this.router.events.subscribe((e) => {
       /* To Know in SCSS which url is currently opened */
-      if (!isPlatformServer(this.platformId))
-        document.body.dataset.url = location.href;
+      if (this.document.body.dataset) {
+        this.document.body.dataset.url = this.location.path();
+      }
     });
   }
 
   ngOnInit() {
+    // this.displayAdvertisement();
     this.initializeApp();
-    if (!isPlatformServer(this.platformId)) this.openCookieBanner();
-
-    this.titleService.setTitle(GENERAL_TITLE);
-    this.metaService.addTags([
-      {
-        name: 'keywords',
-        content:
-          'Febelink, FEBELINK, Servicios, Profesionales, Buscador, Encontrar, Contratar, Proveedor',
-      },
-      { name: 'description', content: GENERAL_DESC },
-    ]);
+    this.openCookieBanner();
 
     // this.frogedSvc.track('public_key');
 
@@ -132,11 +119,19 @@ export class AppComponent implements OnInit, OnDestroy {
     this.consoleSvc.warning();
   }
 
+  displayAdvertisement() {
+    if (!sessionStorage.getItem('advertisement')) {
+      setTimeout(() => {
+        this.advertisement = true;
+      }, 10000);
+    }
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.setupLanguage();
       this.platform.backButton.subscribe(() => {
-        if (this.router.url === '' || this.router.url === '/search') {
+        if (this.router.url === '' || this.router.url === '/listado') {
           navigator['app'].exitApp();
         } else {
           this.navCtrl.back();
@@ -160,8 +155,9 @@ export class AppComponent implements OnInit, OnDestroy {
       if (state) {
         this.menu.enable(true);
         this.getUserInfo();
-        if (this.authenticationService.isAuthenticated())
+        if (this.authenticationService.isAuthenticated()) {
           this.getMyProfessions();
+        }
         this.notificationSvc.getUnreadNotificationsCount();
         const serviceRequest: Observable<any> =
           await this.walletService.getBalanceByUserId();
@@ -191,7 +187,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async getMyProfessions() {
-    const { response, error } = await this.servicesSvc.userProfession();
+    const {response, error} = await this.servicesSvc.userProfession();
     if (response && response.length > 0) {
       this.visiblePro = true;
     }
@@ -202,7 +198,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openCookieBanner() {
-    let cc = window as any;
+    let cc = this.document.defaultView as any;
     cc.cookieconsent?.initialise({
       palette: {
         popup: {
@@ -240,9 +236,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   backbutton() {
-    console.log('backbutton');
     document.addEventListener('backbutton', () => {
-      console.log('backbutton1');
       if (this.routerOutlets && this.routerOutlets.canGoBack()) {
         this.routerOutlets.pop();
       } else if (this.router.url === environment.HOME_PAGE) {
@@ -276,14 +270,14 @@ export class AppComponent implements OnInit, OnDestroy {
                   route.push(name);
                 }
                 this.router.navigate(route, {
-                  queryParams: { id_demanda: id },
+                  queryParams: {id_demanda: id},
                 });
               }, 500);
               break;
             }
             case 'perfil-demandante': {
               this.router.navigate(['perfil', id, name], {
-                queryParams: { id_perfil: id },
+                queryParams: {id_perfil: id},
               });
               break;
             }
@@ -294,7 +288,7 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         },
         (nomatch) => {
-          console.error("Got a deeplink that didn't match", nomatch);
+          console.error('Got a deeplink that didn\'t match', nomatch);
           const path = nomatch.$link.fragment;
           const id = path.substring(path.lastIndexOf('/') + 1, path.length);
           const route = path.substring(
@@ -304,13 +298,13 @@ export class AppComponent implements OnInit, OnDestroy {
           if (route === 'busqueda') {
             setTimeout(() => {
               this.router.navigate(['busqueda/' + id], {
-                queryParams: { id_demanda: Number(id) },
+                queryParams: {id_demanda: Number(id)},
               });
             }, 500);
           } else if (route === 'perfil-demandante') {
             setTimeout(() => {
               this.router.navigate(['perfil-demandante'], {
-                queryParams: { id_perfil: id },
+                queryParams: {id_perfil: id},
               });
             }, 500);
           }
@@ -368,7 +362,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (notification.additionalData.apiData.id) {
           let id = notification.additionalData.apiData.id;
           this.router.navigate(['perfil-demandante'], {
-            queryParams: { id_perfil: id, contacto: true },
+            queryParams: {id_perfil: id, contacto: true},
           });
         }
       }
@@ -410,7 +404,7 @@ export class AppComponent implements OnInit, OnDestroy {
           text: 'Ver perfil',
           handler: (data) => {
             this.router.navigate(['perfil-demandante'], {
-              queryParams: { id_perfil: id, contacto: true },
+              queryParams: {id_perfil: id, contacto: true},
             });
           },
         },
@@ -467,7 +461,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async getUserData() {
-    this.currentUser = { ...(await this.utilities.getUserData()) };
+    this.currentUser = {...(await this.utilities.getUserData())};
     /* if (this.currentUser) {
       this.frogedSvc.set(this.currentUser);
     } */
@@ -517,7 +511,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ).toPromise();
     this.userFeedback = [];
     result.opinions.forEach((opinion, index) => {
-      this.userFeedback.push({ count: opinion, type: result.types[index] });
+      this.userFeedback.push({count: opinion, type: result.types[index]});
     });
   }
 
@@ -539,5 +533,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async openUseConditions() {
     this.navegar('use-conditions');
+  }
+
+  closeAdvertisement() {
+    this.advertisement = false;
+
+    sessionStorage.setItem('advertisement', 'true');
   }
 }

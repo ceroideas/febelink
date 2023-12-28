@@ -30,11 +30,20 @@
           </div>
         </div>
         <div class="info-top-right">
-          <img src="assets/icon/svg/menu-dots.svg" class="dots-svg" />
+          <img src="assets/icon/svg/menu-dots.svg" class="dots-svg"/>
         </div>
       </div>
       <div class="info-user">
-        <div>
+        <div class="block-action-top-d" style="margin-bottom: 24px">
+          <div
+            class="block-button-primary"
+            style="width: 100%"
+            (click)="createChat()"
+          >
+            Iniciar Chat
+          </div>
+        </div>
+        <!-- <div>
           <a *ngIf="user?.email" [href]="'mailto:' + user?.email"
             >{{user?.email}}</a
           >
@@ -42,7 +51,7 @@
         <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
           <ion-icon name="call-outline"></ion-icon>
           {{user?.phoneNumber}}
-        </div>
+        </div> -->
         <div>{{user?.description}}</div>
         <!--<div class="info-user-left">
            <img
@@ -67,8 +76,8 @@
           <app-donate-button [user]="post"></app-donate-button>
         </div>
         <div class="option-middle">
-          <img src="assets/icon/svg/share.svg" class="option-middle-svg" />{{
-          'common.share' | translate }}
+          <img src="assets/icon/svg/share.svg" class="option-middle-svg"/>{{
+            'common.share' | translate }}
         </div>
         <div class="option-right">
           <img
@@ -195,7 +204,7 @@
       >
         <div class="content-table-ratings">
           <div class="content-table-left">
-            <img src="{{rating.img}}" class="content-table-left-img" />
+            <img src="{{rating.img}}" class="content-table-left-img"/>
           </div>
           <div class="content-table-middle">
             <div class="content-middle-title">{{rating.title}}</div>
@@ -217,7 +226,7 @@
       <div *ngFor="let best of bests" class="content-wrapper-best">
         <div class="content-table-ratings">
           <div class="content-table-left">
-            <img src="{{best.img}}" class="content-table-left-img" />
+            <img src="{{best.img}}" class="content-table-left-img"/>
           </div>
           <div class="content-table-middle">
             <div class="content-middle-title">{{best.title}}</div>
@@ -275,7 +284,16 @@
             <div class="header-top-inside-right">
               <div class="header-top-title">{{user?.name}}</div>
               <div class="header-top-subtitle">{{user?.date}}</div>
-              <div>
+              <div class="block-action-top-d" style="margin-bottom: 24px">
+                <div
+                  class="block-button-primary"
+                  style="width: 100%"
+                  (click)="createChat()"
+                >
+                  Iniciar Chat
+                </div>
+              </div>
+              <!-- <div>
                 <a *ngIf="user?.email" [href]="'mailto:' + user?.email"
                   >{{user?.email}}</a
                 >
@@ -283,7 +301,7 @@
               <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
                 <ion-icon name="call-outline"></ion-icon>
                 {{user?.phoneNumber}}
-              </div>
+              </div> -->
               <div class="header-top-description">{{user?.description}}</div>
             </div>
           </div>
@@ -307,7 +325,7 @@
               class="block-action-svg"
             />Valorar
           </div>
-          <div class="block-action-top-c">
+          <div class="block-action-top-c" (click)="backButton()">
             <div class="block-button-secondary">Volver</div>
           </div>
           <div class="block-action-top-d">
@@ -417,7 +435,7 @@
         >
           <div class="content-table-ratings">
             <div class="content-table-left">
-              <img src="{{rating.img}}" class="content-table-left-img" />
+              <img src="{{rating.img}}" class="content-table-left-img"/>
             </div>
             <div class="content-table-middle">
               <div class="content-middle-title">{{rating.title}}</div>
@@ -439,7 +457,7 @@
         <div *ngFor="let best of bests" class="content-wrapper-best-b">
           <div class="content-table-ratings">
             <div class="content-table-left">
-              <img src="{{best.img}}" class="content-table-left-img" />
+              <img src="{{best.img}}" class="content-table-left-img"/>
             </div>
             <div class="content-table-middle">
               <div class="content-middle-title">{{best.title}}</div>

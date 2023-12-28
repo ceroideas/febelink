@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, Platform } from '@ionic/angular';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
-import { UtilitiesService } from '../../services/utilities.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import {Component, OnInit} from '@angular/core';
+import {NavController, AlertController, Platform} from '@ionic/angular';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
+import {ApiService} from '../../services/api.service';
+import {UtilitiesService} from '../../services/utilities.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {ILang, ILangDEFAULTS} from 'src/app/models/langs.model';
+import {TranslateConfigService} from 'src/app/services/translate/translate-config.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-registro',
@@ -21,8 +26,11 @@ export class RegistroPage implements OnInit {
   passwordIcon = 'eye-off';
   passwordType2 = 'password';
   passwordIcon2 = 'eye-off';
+  partialRegisterEmail: string;
 
   redirect: string;
+
+  promoCode: string;
 
   constructor(
     public navCtrl: NavController,
@@ -34,21 +42,43 @@ export class RegistroPage implements OnInit {
     private cookSvc: CookieService,
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateConfigService,
-    public platform: Platform
-  ) {}
+    public platform: Platform,
+    private userService: UserService
+  ) {
+  }
 
   /**
    * Inicializamos el formulario
    */
   public ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      name: ['', Validators.required],
-      sector: [''],
-      sub_sector: [''],
-      privacyConditions: [null, Validators.requiredTrue],
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.promoCode = params?.code;
+      this.partialRegisterEmail = params?.email;
     });
+
+    let formValidators;
+
+    if (this.partialRegisterEmail) {
+      formValidators = {
+        password: ['', Validators.required],
+        name: ['', Validators.required],
+        sector: [''],
+        sub_sector: [''],
+        privacyConditions: [null, Validators.requiredTrue],
+      };
+    } else {
+      formValidators = {
+        email: ['', Validators.required],
+        password: ['', Validators.required],
+        name: ['', Validators.required],
+        sector: [''],
+        sub_sector: [''],
+        privacyConditions: [null, Validators.requiredTrue],
+      };
+    }
+
+    console.log('Validadores: ', formValidators);
+    this.form = this.formBuilder.group(formValidators);
 
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
 
@@ -79,7 +109,7 @@ export class RegistroPage implements OnInit {
   async obtenerSubSectores(idSector) {
     (await this.api.obtenerSubSectores(idSector)).subscribe((subsectores) => {
       this.subsectores = subsectores;
-      this.form.patchValue({ sub_sector: this.subsectores[0].id });
+      this.form.patchValue({sub_sector: this.subsectores[0].id});
     });
   }
 
@@ -89,7 +119,7 @@ export class RegistroPage implements OnInit {
    */
   public irA(p: string): void {
     // this.navCtrl.push(p, {}, { animate: false });
-    this.router.navigate([p], { queryParams: { animate: false } });
+    this.router.navigate([p], {queryParams: {animate: false}});
   }
 
   /**
@@ -110,73 +140,91 @@ export class RegistroPage implements OnInit {
   }
 
   async submitForm() {
+    console.log('Revisión: ', this.form.controls);
     if (this.form.valid) {
       await this.utilities.showLoading();
 
       const idRecommender: string = this.cookSvc.get('recommenderId');
-      const lang = (<ILang>(
+      const lang = ((
         await ILangDEFAULTS.getCurrentLang(this.translateService)
-      )).lang;
+      ) as ILang).lang;
 
       const registrationPayload = {
-        email: this.form.get('email').value,
+        ...(!this.partialRegisterEmail) && {email: this.form.get('email').value},
         password: this.form.get('password').value,
         password_confirmation: this.form.get('password').value,
         nick: this.form.get('name').value,
         sector: this.form.get('sector').value,
         sub_sector: this.form.get('sub_sector').value,
-        lang: lang,
+        lang,
         idRecommender,
+        promoCode: this.promoCode,
       };
 
-      // console.log(registrationPayload);
+      if (this.partialRegisterEmail) {
+        const {response, error} = await this.userService.finishPartialSignUp(
+          this.partialRegisterEmail, this.form.get('name').value, this.form.get('password').value);
 
-      this.api.registro(registrationPayload).subscribe(
-        (resp) => {
+        if (response) {
+          registrationPayload.email = this.partialRegisterEmail;
           this.loginBeforeRegister(registrationPayload);
-          this.utilities.dismissLoading();
-        },
-        (err) => {
-          this.utilities.dismissLoading();
-          // credenciales incorrectas
-          if (err.status === 422) {
-            const jsonError = err.error;
+        }
+        if (error) {
+          this.utilities.showAlert(
+            this.translateService.instant('pages.registro.errors.title'),
+            this.translateService.instant('pages.registro.errors.server')
+          );
+        }
 
-            let arrayErrores = [];
+        this.utilities.dismissLoading();
+      } else {
+        this.api.registro(registrationPayload).subscribe(
+          (resp) => {
+            this.loginBeforeRegister(registrationPayload);
+            this.utilities.dismissLoading();
+          },
+          (err) => {
+            this.utilities.dismissLoading();
+            // credenciales incorrectas
+            if (err.status === 422) {
+              const jsonError = err.error;
 
-            for (let key in jsonError.errors) {
-              arrayErrores.push(jsonError.errors[key]);
-            }
+              let arrayErrores = [];
 
-            // mergeamos los subarrays en uno solo
-            arrayErrores = [].concat.apply([], arrayErrores);
+              for (const key in jsonError.errors) {
+                arrayErrores.push(jsonError.errors[key]);
+              }
 
-            for (let i = 0; i < arrayErrores.length; i++) {
-              arrayErrores[i] = this.utilities.capitalizeFirstLetter(
-                arrayErrores[i]
+              // mergeamos los subarrays en uno solo
+              arrayErrores = [].concat.apply([], arrayErrores);
+
+              for (let i = 0; i < arrayErrores.length; i++) {
+                arrayErrores[i] = this.utilities.capitalizeFirstLetter(
+                  arrayErrores[i]
+                );
+              }
+
+              let cadenaErrores = `<ul>`;
+              for (const error of arrayErrores) {
+                cadenaErrores += `<li>${error}</li>`;
+              }
+              cadenaErrores += `</ul>`;
+
+              this.utilities.showAlert(
+                this.translateService.instant('pages.registro.errors.title'),
+                this.translateService.instant('pages.registro.errors.list') +
+                cadenaErrores
+              );
+            } else {
+              this.utilities.showAlert(
+                this.translateService.instant('pages.registro.errors.title'),
+                this.translateService.instant('pages.registro.errors.server')
               );
             }
-
-            let cadenaErrores = `<ul>`;
-            for (const error of arrayErrores) {
-              cadenaErrores += `<li>${error}</li>`;
-            }
-            cadenaErrores += `</ul>`;
-
-            this.utilities.showAlert(
-              this.translateService.instant('pages.registro.errors.title'),
-              this.translateService.instant('pages.registro.errors.list') +
-                cadenaErrores
-            );
-          } else {
-            this.utilities.showAlert(
-              this.translateService.instant('pages.registro.errors.title'),
-              this.translateService.instant('pages.registro.errors.server')
-            );
+            this.utilities.dismissLoading();
           }
-          this.utilities.dismissLoading();
-        }
-      );
+        );
+      }
     } else {
       if (
         this.form.value.privacyConditions === null ||

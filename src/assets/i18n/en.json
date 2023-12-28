@@ -48,7 +48,6 @@
     "no": "No",
     "not-logged": "To perform this action you need to be Logged",
     "developing": "Feature in Development",
-
     "personal": {
       "accountname": "Account Name",
       "surname": "Surnames",
@@ -57,7 +56,6 @@
       "tel": "Phone",
       "id": "Identity Document",
       "id_short": "Doc",
-
       "errors": {
         "name": "Fill in the name",
         "surname": "Fill in the surname",
@@ -67,7 +65,6 @@
         "phone": "Fill in your Phone Number"
       }
     },
-
     "buttons": {
       "confirm": "Confirm",
       "back": "Back",
@@ -83,13 +80,11 @@
       "edit": "Edit",
       "delete": "Delete"
     },
-
     "address": {
       "state": "Province",
       "locality": "Locality",
       "address": "Address"
     },
-
     "timer": {
       "months": "MONS",
       "days": "DAYS",
@@ -97,7 +92,6 @@
       "mins": "MINS",
       "secs": "SECS"
     },
-
     "legal": {
       "privacyPolicy": "Privacy Policy",
       "condsNterms": "Conditions and Terms",
@@ -105,13 +99,11 @@
       "lastUpdate": "Last update",
       "rights": "All rights reserved. FEBELINK DIGITAL S.L."
     },
-
     "verif": {
       "which": {
         "email": "Email Verificado",
         "kyc": "Identidad Verificada"
       },
-
       "email": {
         "head": "Data Verification",
         "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
@@ -122,86 +114,109 @@
         "sent": "Verify your email",
         "message": "Check your mailbox {{email}}"
       },
-
       "buttons": {
         "now": "Verify",
         "not-now": "Later"
       }
     },
-
     "two-fa": {
       "title": "Verify Account - 2FA",
       "message": "Write here the {{ length }}-digit code that we have sent to your email",
       "type": "******",
       "expires": "Will expire in {{ min }} minutes",
-
       "generating": "Generating 2FA Code",
       "verifying": "Verifying 2FA Code",
       "re-send": "Resend verification code",
-
       "error": {
         "expired": "Your code has expired, a new one has been sent to you",
         "wrong": "Wrong code, try again"
       }
     },
-
     "months": [
-      { "short": "Jan", "long": "January" },
-      { "short": "Feb", "long": "February" },
-      { "short": "Mar", "long": "March" },
-      { "short": "Apr", "long": "April" },
-      { "short": "May", "long": "May" },
-      { "short": "Jun", "long": "June" },
-      { "short": "Jul", "long": "July" },
-      { "short": "Ago", "long": "August" },
-      { "short": "Sep", "long": "September" },
-      { "short": "Oct", "long": "October" },
-      { "short": "Nov", "long": "November" },
-      { "short": "Dec", "long": "December" }
+      {
+        "short": "Jan",
+        "long": "January"
+      },
+      {
+        "short": "Feb",
+        "long": "February"
+      },
+      {
+        "short": "Mar",
+        "long": "March"
+      },
+      {
+        "short": "Apr",
+        "long": "April"
+      },
+      {
+        "short": "May",
+        "long": "May"
+      },
+      {
+        "short": "Jun",
+        "long": "June"
+      },
+      {
+        "short": "Jul",
+        "long": "July"
+      },
+      {
+        "short": "Ago",
+        "long": "August"
+      },
+      {
+        "short": "Sep",
+        "long": "September"
+      },
+      {
+        "short": "Oct",
+        "long": "October"
+      },
+      {
+        "short": "Nov",
+        "long": "November"
+      },
+      {
+        "short": "Dec",
+        "long": "December"
+      }
     ],
     "social": {
       "telegram": "Join the Chat conversation in Telegram"
     },
-
     "mailTo": {
       "support": "soporte@febelink.com",
       "from": "From: ",
       "to": "To: ",
       "msg": "Message: ",
-
       "report": {
         "title": "Report",
         "msg": "Tell us in detail what is happening"
       },
-
       "block": {
         "title": "Block",
         "msg": "Tell us in detail what is happening"
       },
-
       "error": {
         "minLength": "You must detail with a minimum of 5 words"
       }
     },
-
     "users": {
       "no-items": "There are no users with that data",
       "error": {
         "list": "It looks like there was an error displaying the list. Try again"
       }
     },
-
     "report": {
       "create": {
         "title": "Report",
         "msg": "Tell us in detail what is happening",
         "placeholder": "Write here your report",
-
         "done": "Report sent successfully! We will review the issue shortly",
         "error": "Error when trying to generate report"
       }
     },
-
     "follow": {
       "do": "Follow",
       "cancel": "Following",
@@ -295,7 +310,7 @@
       "search": {
         "resultado": "Results",
         "oferta": "Offers",
-        "listado": "List",
+        "listado": "Professionals",
         "sin_resultado_tit": "No results found",
         "sin_resultado_subtit": "Try searching for other keywords",
         "valoraciones": "ratings",
@@ -347,36 +362,26 @@
         "title": "Error editing data",
         "message": "The following errors occurred: ",
         "messageChk": "Check that all the fields are entered.",
-
         "name": "The name must be at least 3 characters long",
-
         "passMatch": "Enter the password confirmation correctly",
-
         "mail": "The email is not valid",
         "mailExists": "The email you have entered already exists",
         "mailEmpty": "The email field cannot be empty",
-
         "phone": "The phone's format is not correct",
-
         "id": "The Identity Document you have entered is not valid",
         "idFormat": "The format of Identity Document is not correct",
-
         "image": "Error getting image",
         "imageMaxSize": "File too large, max. {{ max }}",
-
         "noFileSelected": "No file selected.",
         "noFileProvided": "No file provided",
-
         "limitSelectSectors_1": "You can only select ",
         "limitSelectSectors_2": " sectors with your current subscription"
       },
       "alerts": {
         "improve": "Improve your profile",
-
         "chooseShare": "Choose where you want to share",
         "shareInside": "Within the app",
         "shareOutside": "Outside the app",
-
         "recommendation": "Ask for a recommendation",
         "mail": "Write the user's email"
       },
@@ -427,7 +432,6 @@
       "button": "REGISTER",
       "or": "OR",
       "continueWith": "Continue with ",
-
       "errors": {
         "title": "Registration failed",
         "list": "The following errors occurred when registering:",
@@ -445,16 +449,13 @@
       "register": "Create Account",
       "logging": "Logging in...",
       "must": "To be able to enjoy this section you must first be logged in.<br><br>To continue, Log in",
-
       "recover": {
         "title": "Recover password",
         "subtitle": "Enter the email to recover the password"
       },
-
       "errors": {
         "title": "Failed to login",
         "message": "There was an error logging in. Try again later",
-
         "data": "The data entered is not correct",
         "email": "The format of the email entered is not correct"
       }
@@ -488,10 +489,8 @@
       "private-key": "Private Key",
       "retained": "Retained Tokens",
       "release": "Release Date:",
-
       "transactions": "Recent transactions",
       "no-transactions": "No recent transactions",
-
       "buy": {
         "title": "Buy assets",
         "buy": "Quantity to Buy:",
@@ -503,7 +502,6 @@
         "total": "<b>Tokens Total</b> ( Current + Buy )",
         "button": "Purchase"
       },
-
       "purchase": {
         "title-success": "Congratulations!",
         "title-error": "Purchase Error",
@@ -514,13 +512,11 @@
         "title": "Why do I see only the balance of some Currencies?",
         "message": "Balances are shown in FLAU, BTC, XLM, EUR, USD. If you have other balances in your Wallet they will not be shown in this window"
       },
-
       "send": {
         "title": "Send Tokens to",
         "addressee": "Addressee",
         "total": "Total Remaining Balance",
         "button": "Send",
-
         "alert": {
           "title": "Important announcement",
           "message": "For your safety, make sure to review the information of the wallet where you send your balances, as well as the functioning of the platform where you send them.<br><br>Febelink is not responsible for those balances once they are outside its platform.<br><br>We are at your disposal for any questions at <a href=\"mailto:soporte@febelink.com\">support@febelink.com</a>"
@@ -531,7 +527,6 @@
         "no-user": "You have not selected user to tip",
         "same-user": "You can't tip yourself"
       },
-
       "balance": {
         "balance": "Balance",
         "retained": "Total Retained",
@@ -550,35 +545,27 @@
       },
       "exchange": {
         "minnersFee": "Transaction cost",
-
         "select-origin": "Select Origin Currency",
         "select-destiny": "Select Destination Currency",
-
         "sell_qant": "Quantity",
         "sell_conv": "Conversion",
         "buy_qant": "Quantity",
         "buy_conv": "Conversion",
-
         "create": "Offer",
         "edit": "Edit",
         "purchase": "Confirm",
-
         "sell": "Sell",
         "buy": "Receive",
-
         "cant-switch": "Having selected an offer you cannot switch with the assets",
         "exceeds-sell": "The Offer cannot exceed the sale amount",
         "exceeds-buy": "The Offer cannot exceed the buy amount",
-
         "market-price": "Use Market Price",
         "available": "Available: ",
-
         "title": {
           "exchange": "Publish Order",
           "offer": "Offer Edited - "
         }
       },
-
       "error": {
         "missing-sell": "You must select the Selling Currency",
         "missing-buy": "You must select the Buying Currency",
@@ -593,7 +580,6 @@
         "asset-not-available": "At the moment this Currency is not available for Transactions",
         "no-public": "Until you have the Wallet Created (assigned Public Key) you will not be able to purchase Tokens. Fill in your profile information to continue"
       },
-
       "operations": [
         "Account Creation",
         "Sending Payment to Account",
@@ -609,9 +595,7 @@
         "Advanced Account Sequence Number",
         "Management of offer to buy (bid) one asset for another"
       ],
-
       "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located.",
-
       "moreFundsButton": "Buy FLAU"
     },
     "posts": {
@@ -623,22 +607,17 @@
         "love": "Like it",
         "useful": "Useful"
       },
-
       "advises": {
         "title": "Oracle",
         "my-posts": "My Posts",
-
         "see": "Watch more Posts",
         "see-user": "Watch more posts of the User",
-
         "create": {
           "title": "Create Post",
           "subtitle": "Subtitle",
           "summary": "Summary",
           "wysiwyg": "What do you want to tell?",
-
           "done": "Oracle created successfully",
-
           "error": {
             "title": "The title cannot be less than 4 digits",
             "content": "You must indicate the content to publish",
@@ -648,7 +627,6 @@
         },
         "edit": "Edit Post",
         "editButton": "Save Changes",
-
         "new": {
           "title": "Great Job!",
           "msg": "Now, ¿would you like to create another Oracle?"
@@ -663,12 +641,10 @@
           "done": "Oracle deleted"
         },
         "share": "Share",
-
         "stats": {
           "qCreated": "Oracles Created:",
           "qReacts": "Reacts to these:"
         },
-
         "error": {
           "search": "There was an error in the search, please try again",
           "unauthorized": "You do not have permission to edit this Oracle",
@@ -677,7 +653,6 @@
           "no-items-filters": "Till here we've got with these filters<br>Do you want to publish one?<br>Click here"
         }
       },
-
       "comments": "Comment/s",
       "comment": {
         "placeholder": "Comment...",
@@ -717,7 +692,6 @@
       "title": "General information\nAbout the Token",
       "detail": "The Aureo Token is part of Febelink's platform ecosystem, helping users to carry out their transactions in a safer, simpler, faster and more efficient way, also having many benefits for use, discounts, and exclusive services.",
       "subtitle": "Probably the most usable token in the world",
-
       "discounts": "DISCOUNTS",
       "discountsDetail": "With Febelink's Aureo Token you automatically get great discounts on the platform, such as Professional and Premium subscriptions, and free services.",
       "exclusive": "EXCLUSIVE PRODUCTS",
@@ -856,8 +830,12 @@
             {
               "descript": "<strong>Registry information: </strong>Registro Mercantil de Málaga, Bulletin 86, Reference 216576, Volume 6031, Book 4938, Folio 74, Section 8, Sheet 160744, Inscription 1."
             },
-            { "descript": "<strong>Telephone contact: </strong>+34 952633297" },
-            { "descript": "<strong>CIF: </strong>B05367511" },
+            {
+              "descript": "<strong>Telephone contact: </strong>+34 952633297"
+            },
+            {
+              "descript": "<strong>CIF: </strong>B05367511"
+            },
             {
               "descript": "<strong>E-mail: </strong> <a href=\"mailto:info@febelink.com\">info@febelink.com</a>"
             }
@@ -1144,14 +1122,11 @@
         "error": "Could not delete"
       },
       "irreversible": " THIS ACTION IS NOT REVERSIBLE",
-
       "purchase-date": "Date of payment",
-
       "modal": {
         "header": "{{ CRUD }} user tokens",
         "body": "¿Are you sure you want to {{ CRUD }} tokens of {{name}}?{{ extra }}"
       },
-
       "loading": "Action Disabled during Loading",
       "error": {
         "some": "There was an error",
@@ -1160,7 +1135,6 @@
         "retained": "You can't modify not retained Tokens"
       }
     },
-
     "create": "Add",
     "read": "Read",
     "update": "Edit",
@@ -1202,7 +1176,6 @@
         "none": "You have not uploaded a document to validate",
         "frontFields": "I have not been able to corroborate any field in the Front side of the document",
         "backFields": "I have not been able to corroborate any field in the Back side of the document",
-
         "err": "Check that the following fields of the <b>Document</b> do not have problems",
         "name": "Name",
         "surname": "Surname",
@@ -1210,13 +1183,11 @@
         "legal_age": "Age of Majority",
         "expire": "Date of Expiry",
         "number": "Document Number",
-
         "consistent": "There are at least 2 inconsistent fields between both sides of the document",
         "expected": "The selected Document type and / or the issuing country do not match the uploaded Document"
       },
       "selfie": {
         "none": "You have not taken the Selfie test",
-
         "err": "The errors regarding the <b>Selfie</b> are:",
         "is_real": "It has not passed the impersonation test (printed images, videos on screens, masks, among others)",
         "face_match": "No relationship was found between the Selfie and the document photo"
@@ -1227,7 +1198,6 @@
         "head": "Complete the KYC",
         "msg": "This step will only take a moment and you have to do it only once. Thus we have a safer environment for the entire community"
       },
-
       "ios": {
         "tile": "KYC Validation in Beta Phase",
         "message": "Being in Development for iOS, it may have bugs. If you cannot finish the process, continue it from the browser at www.febelink.com"

@@ -12,7 +12,7 @@
     "labelNoElements": "No hay elementos para mostrar",
     "labelLoading": "Cargando...",
     "labelSearching": "Buscando...",
-    "publishPlaceholder": "¿Qué necesitas?",
+    "publishPlaceholder": "¿Qué necesitas? Ejemplo: asesores en Málaga",
     "searchPlaceholder": "Buscar publicación",
     "labelDescription": "Descripción",
     "cookies1": "Usamos cookies para ofrecerte la mejor experiencia posible. Al continuar, asumimos que estás de acuerdo con nuestra",
@@ -311,14 +311,14 @@
       "search": {
         "resultado": "Resultados",
         "oferta": "Ofertas",
-        "listado": "Listado",
+        "listado": "Profesionales",
         "sin_resultado_tit": "Ningún resultado encontrado",
         "sin_resultado_subtit": "Intenta buscar por otras palabras claves",
         "valoraciones": "valoraciones",
-        "recomendaciones": "Recomendaciones",
+        "recomendaciones": "Oferta destacada",
         "oferta_destacada": "Oferta destacada",
         "basado_search": "Basado en tu búsqueda",
-        "search_prof": "Encuentra profesionales de confianza"
+        "search_prof": "Encuentra servicios profesionales en tu ciudad"
       }
     },
     "tab2": {

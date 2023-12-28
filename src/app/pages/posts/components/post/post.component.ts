@@ -5,7 +5,8 @@ import {
   Input,
   SimpleChanges,
   ViewEncapsulation,
-  ViewChild, AfterViewInit,
+  ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import {FileService} from 'src/app/components/file-picker/services/file.service';
 import {IOptsMenuButton} from 'src/app/components/opts-menu/models/opts-menu.model';
@@ -91,18 +92,33 @@ export class PostComponent implements OnInit, AfterViewInit {
     public fileSvc: FileService,
     private reportSvc: ReportService,
     private http: HttpClient,
-    private metaService: Meta,
+    private metaService: Meta
   ) {
   }
 
   ngAfterViewInit(): void {
     if (this.iAdvise.media_url) {
-      this.metaService.updateTag({property: 'og:image', content: this.iAdvise.media_url});
-      this.metaService.updateTag({property: 'og:image:url', content: this.iAdvise.media_url});
+      this.metaService.updateTag({
+        property: 'og:image',
+        content: this.iAdvise.media_url,
+      });
+      this.metaService.updateTag({
+        property: 'og:image:url',
+        content: this.iAdvise.media_url,
+      });
     }
   }
 
   ngOnInit() {
+    this.metaService.updateTag({
+      property: 'og:image',
+      content: this.iAdvise?.media_url,
+    });
+    this.metaService.updateTag({
+      property: 'og:image:url',
+      content: this.iAdvise?.media_url,
+    });
+
     this.topic = this.topics.find((topic) => {
       return topic.id === this.iAdvise?.topic;
     }).name; // ToDo: Fetch this info from DB

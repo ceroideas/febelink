@@ -19,7 +19,7 @@ export const environment = {
   API_URL_AUTH: 'http://localhost/api/auth/',
 
 
-  SOCKET_URL: 'https://febelink-chat.herokuapp.com/',
+  SOCKET_URL: 'http://localhost:3425/',
 
   WEB_CLIENT_ID:
     '939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com',

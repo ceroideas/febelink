@@ -35,6 +35,7 @@
   color: #000000 !important;
   //border: 0.5px solid #49484c;
 }
+
 .other-message-date {
   background: #ffffff !important;
   border: 1px solid #dadada;
@@ -97,6 +98,7 @@ ion-menu-button {
 
 ion-footer {
   background: #000000 !important;
+  bottom: 0;
 }
 
 .footer-md::before {
@@ -245,4 +247,8 @@ ion-grid {
 .loader_spinner_home_width {
   width: 40px;
   height: 40px;
+}
+
+#chat-section {
+  height: 88%;
 }

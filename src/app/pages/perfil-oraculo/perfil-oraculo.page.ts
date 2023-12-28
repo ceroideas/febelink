@@ -1,15 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PopoverController, AlertController } from '@ionic/angular';
-import { FileService } from 'src/app/components/file-picker/services/file.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
-import { RouteSvc } from 'src/app/services/route.service';
-import { environment } from 'src/environments/environment';
-import { IAdviseFull } from '../posts/advises/models/advises.model';
-import { AdviseService } from '../posts/advises/services/advises.service';
-import { UserDataService } from '../user-data/Services/user-data.service';
+import {ChatService} from 'src/app/services/chat.service';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {PopoverController, AlertController} from '@ionic/angular';
+import {FileService} from 'src/app/components/file-picker/services/file.service';
+import {MailService} from 'src/app/services/mail.service';
+import {ReportService} from 'src/app/services/report.service';
+import {RouteSvc} from 'src/app/services/route.service';
+import {environment} from 'src/environments/environment';
+import {IAdviseFull} from '../posts/advises/models/advises.model';
+import {AdviseService} from '../posts/advises/services/advises.service';
+import {UserDataService} from '../user-data/Services/user-data.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -32,29 +34,29 @@ export class PerfilOraculoPage implements OnInit {
   linksArray: string[] = [];
 
   topics = [
-    { id: null, name: 'Todos' },
-    { id: 1, name: 'Política' },
-    { id: 2, name: 'Música' },
-    { id: 3, name: 'Deportes' },
-    { id: 4, name: 'Moda y Belleza' },
-    { id: 5, name: 'Ocio' },
-    { id: 6, name: 'Arte y Cultura' },
-    { id: 7, name: 'Marketing' },
-    { id: 8, name: 'Negocios' },
-    { id: 9, name: 'Startups' },
-    { id: 10, name: 'Tecnología' },
-    { id: 11, name: 'Cine' },
-    { id: 12, name: 'Naturaleza' },
-    { id: 13, name: 'Ciencia' },
-    { id: 14, name: 'Economía y Finanzas' },
-    { id: 15, name: 'Anime y Manga' },
-    { id: 16, name: 'Noticias y Actualidad' },
-    { id: 17, name: 'Viajes' },
-    { id: 18, name: 'Hogar y Familia' },
-    { id: 19, name: 'Comida' },
-    { id: 20, name: 'Videojuegos' },
-    { id: 21, name: 'Salud' },
-    { id: 22, name: 'Criptomonedas' },
+    {id: null, name: 'Todos'},
+    {id: 1, name: 'Política'},
+    {id: 2, name: 'Música'},
+    {id: 3, name: 'Deportes'},
+    {id: 4, name: 'Moda y Belleza'},
+    {id: 5, name: 'Ocio'},
+    {id: 6, name: 'Arte y Cultura'},
+    {id: 7, name: 'Marketing'},
+    {id: 8, name: 'Negocios'},
+    {id: 9, name: 'Startups'},
+    {id: 10, name: 'Tecnología'},
+    {id: 11, name: 'Cine'},
+    {id: 12, name: 'Naturaleza'},
+    {id: 13, name: 'Ciencia'},
+    {id: 14, name: 'Economía y Finanzas'},
+    {id: 15, name: 'Anime y Manga'},
+    {id: 16, name: 'Noticias y Actualidad'},
+    {id: 17, name: 'Viajes'},
+    {id: 18, name: 'Hogar y Familia'},
+    {id: 19, name: 'Comida'},
+    {id: 20, name: 'Videojuegos'},
+    {id: 21, name: 'Salud'},
+    {id: 22, name: 'Criptomonedas'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
 
   constructor(
@@ -67,7 +69,9 @@ export class PerfilOraculoPage implements OnInit {
     private userDataService: UserDataService,
     private router: RouteSvc,
     public fileSvc: FileService,
-    private http: HttpClient
+    private http: HttpClient,
+    private chatService: ChatService,
+    private location: Location
   ) {
     this.route.paramMap.subscribe((params) => {
       this.idPerfil = params.get('id');
@@ -82,7 +86,7 @@ export class PerfilOraculoPage implements OnInit {
   }
 
   async getUserDetail() {
-    const { response } = await this.userDataService.getUserDetail(
+    const {response} = await this.userDataService.getUserDetail(
       this.idPerfil
     );
     if (response) {
@@ -108,7 +112,7 @@ export class PerfilOraculoPage implements OnInit {
       hideContent: true,
       content: null,
     };
-    const { response, error } = await this.adviseSvc.list(filters);
+    const {response, error} = await this.adviseSvc.list(filters);
     this.iAdvises = response;
   }
 
@@ -140,5 +144,25 @@ export class PerfilOraculoPage implements OnInit {
 
   navigateToPost(id: number) {
     this.router.navigate([`posts/oracle/${id}`]);
+  }
+
+  async createChat() {
+    const {response, error} = await this.chatService.createChat(
+      this.idPerfil
+    );
+
+    if (response) {
+      this.router.navigate([`chat/${response?.id}`], {
+        state: {receiverId: this.idPerfil, receiverUsername: this.user.name},
+      });
+    }
+
+    if (error) {
+      this.router.navigate([`chat`]);
+    }
+  }
+
+  backButton() {
+    this.location.back();
   }
 }

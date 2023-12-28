@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
-import { NavParams, Platform, PopoverController } from '@ionic/angular';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import {Component, Inject, OnInit} from '@angular/core';
+import {Meta} from '@angular/platform-browser';
+import {Router} from '@angular/router';
+import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {NavParams, Platform, PopoverController} from '@ionic/angular';
+import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-share-popover',
@@ -26,12 +27,13 @@ export class SharePopoverComponent implements OnInit {
     private router: Router,
     private sessionSvc: UserSessionSvc,
     private platform: Platform,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.url = this.navParams.get('url');
     this.title = this.navParams.get('title');
     this.desc = this.navParams.get('desc');
-    this.image = this.navParams.get('image'); // || 'https://febelink.com/about/febelinkweb/images/home/principal.png';
+    this.image = this.navParams.get('image'); // || 'https://www.febelink.com/about/febelinkweb/images/home/principal.png';
 
     /* console.log("TIITLE",this.title);
     console.log("DESC",this.desc);
@@ -72,23 +74,27 @@ export class SharePopoverComponent implements OnInit {
   }
 
   shareFB() {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + this.url);
+    this.document.defaultView.open(
+      'https://www.facebook.com/sharer/sharer.php?u=' + this.url
+    );
     this.dismiss(true);
   }
 
   shareTwitter() {
-    window.open('https://twitter.com/intent/tweet?text=' + this.url);
+    this.document.defaultView.open(
+      'https://twitter.com/intent/tweet?text=' + this.url
+    );
     this.dismiss(true);
   }
 
   shareLinkedin() {
-    window.open(
+    this.document.defaultView.open(
       'https://linkedin.com/shareArticle?mini=true&url=' +
-        this.url +
-        '&title=' +
-        this.title +
-        '&summary=' +
-        this.desc
+      this.url +
+      '&title=' +
+      this.title +
+      '&summary=' +
+      this.desc
     );
     this.dismiss(true);
   }
@@ -101,19 +107,20 @@ export class SharePopoverComponent implements OnInit {
   }
 
   async referenceOracle() {
-    if (!(await this.sessionSvc.checkLogged()))
+    if (!(await this.sessionSvc.checkLogged())) {
       this.router.navigate(['registro']);
+    }
 
     if (this.id_oracle) {
       this.dismiss(false);
       this.router.navigate([`posts/oracle/create`], {
-        queryParams: { id_reference: this.id_oracle },
+        queryParams: {id_reference: this.id_oracle},
       });
     }
   }
 
   dismiss(shared: boolean) {
-    this.popCtrl.dismiss({ shared });
+    this.popCtrl.dismiss({shared});
   }
 }
 

@@ -238,7 +238,7 @@ ion-grid {
 .recommendations, .search-results, .offer-results, .user-results {
   border-radius: 8px;
   @media (max-width: 768px) {
-    margin: 16px 0 0;
+    margin: 20px 0 10px;
 
     ion-card-header {
       margin: 24px;
@@ -259,9 +259,24 @@ ion-grid {
 }
 
 .recommendations-desktop {
-  margin: 4em 10em 3em 10em;
+  width: 70%;
+  margin: 4em 0em 3em auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 3em;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  align-items: flex-start;
+
+  #location-links-desktop {
+    flex-basis: 30%;
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
 }
 
 .special-offer {
@@ -367,4 +382,282 @@ ion-slides {
   font-size: 14px;
   line-height: 150%;
   color: #1C64F2;
+}
+
+section {
+  background-color: white;
+  padding: 3em 0;
+
+  @media (width > 768px) {
+    padding: 3em;
+  }
+
+  h2 {
+    text-align: center;
+    line-height: 1.2em;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+}
+
+#all-services {
+  @media (width < 768px) {
+    margin-top: 1em;
+  }
+
+  #services-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: center;
+    margin: 4em 0px 0;
+
+    @media (width > 768px) {
+      margin: 3em auto;
+      width: 80%;
+    }
+
+    a.service {
+      width: 11em;
+      color: #2492c6;
+      border: 2px solid #2492c6;
+      border-radius: 25px;
+      text-align: center;
+      padding: 10px 5px 15px;
+      transition: all 0.3s ease-in-out;
+      font-size: 14px;
+
+      @media (width > 768px) {
+        width: 15em;
+      }
+
+      img {
+        height: 50px;
+        margin: 10px auto 5px;
+        display: block;
+      }
+    }
+  }
+}
+
+#how-works {
+  background-color: transparent;
+  background-image: radial-gradient(at center center, #01B5F1 0%, #114C80 100%);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+
+  #how-works-container {
+    display: flex;
+    width: 80%;
+    margin: 3em auto auto;
+    gap: 5em;
+    flex-direction: column;
+
+    @media (width > 768px) {
+      flex-direction: row;
+    }
+
+    div {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+
+    span {
+      display: block;
+      font-size: 1.5rem;
+      line-height: 1.3em;
+      font-weight: 700;
+    }
+
+    svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+#sectors {
+  .sector-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    gap: 1em;
+    margin: 4em auto;
+    justify-content: center;
+
+    a {
+      background-size: cover;
+      border-radius: 25px;
+      width: 300px;
+      height: 200px;
+      position: relative;
+
+      header {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 40%;
+        padding: 1em;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        text-align: center;
+        border-radius: 0 0 25px 25px;
+      }
+    }
+  }
+}
+
+#benefits {
+  background: black url("~src/assets/imgs/home/benefits-assistant.jpeg") no-repeat fixed;
+  color: white;
+  background-size: cover;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+
+  @media (width < 768px) {
+    padding: 3em 1.5em;
+  }
+
+  @media (width > 768px) {
+    div {
+      width: 50%;
+    }
+  }
+
+  #visor-container {
+    font-weight: 600;
+
+    h2 {
+      margin-bottom: 2em;
+    }
+
+    div.button {
+      background-color: white;
+      color: black;
+      text-transform: uppercase;
+      padding: 12px 80px 12px 80px;
+      margin: 2.5em auto;
+      cursor: pointer;
+    }
+
+    div.button:hover {
+      background-color: black;
+      color: white;
+    }
+  }
+}
+
+#best-prof-links {
+  display: flex;
+  flex-direction: column;
+
+  div.container {
+    margin: 0 auto;
+
+    @media (width > 768px) {
+      width: 40%;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+    h2 {
+      margin-bottom: 2em;
+
+      @media (width < 768px) {
+        font-size: 1.7rem;
+      }
+    }
+
+    .links {
+      width: 100%;
+      height: 60em;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: space-around;
+      justify-content: flex-start;
+
+      span {
+        display: flex;
+        margin: 5px auto;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+
+        ion-icon {
+          margin-right: 2px;
+          font-size: 1.2em;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+#location-links-mobile {
+  .container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#oracle-section {
+  text-align: center;
+  justify-content: center;
+  padding: 5em;
+
+  @media (width < 768px) {
+    padding: 3em 1.5em;
+  }
+
+  @media (width > 768px) {
+    div {
+      margin: 0 auto;
+      width: 50%;
+    }
+  }
+
+  .container {
+
+    h2 {
+      margin-bottom: 2em;
+    }
+
+    p {
+      margin-bottom: 5em;
+    }
+
+    a.button {
+      background-color: #5085ef;
+      color: white;
+      text-transform: uppercase;
+      padding: 12px 80px 12px 80px;
+      margin: 2.5em auto;
+      cursor: pointer;
+      text-decoration: none;
+
+      @media (width < 768px) {
+        display: block;
+        width: 100%;
+        padding: 0.2em;
+        margin: 2em 0;
+      }
+    }
+
+    a.button:hover {
+      background-color: white;
+      text-decoration: underline;
+      color: #3880ff;
+    }
+  }
 }

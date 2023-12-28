@@ -161,7 +161,7 @@
                   <ion-select-option
                     *ngFor="let unit of unitTypes"
                     [value]="unit.id"
-                    >{{unit.name}}</ion-select-option
+                  >{{unit.name}}</ion-select-option
                   >
                 </ion-select>
               </ion-item>
@@ -183,7 +183,7 @@
               <ion-select-option
                 *ngFor="let sector of ProfessionsMapped"
                 [value]="sector.subSectorId"
-                >{{sector.name}}</ion-select-option
+              >{{sector.name}}</ion-select-option
               >
             </ion-select>
           </ion-item>
@@ -224,7 +224,7 @@
           </div>
           <!--
           <div class="add-service-img-selected">
-            <img src="assets/imgs/servicios-prev-6.png" class="add-service-img" />
+            <img src="assets/icon/svg/default_product.svg" class="add-service-img" />
             <div class="add-service-remove-div">
               <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
             </div>
@@ -280,7 +280,7 @@
             <div class="servicios-item-price">
               {{servicio.productUnitPrice}}€
               <ng-container *ngIf="servicio.unitTypeId"
-                >/{{unitTypes[servicio.unitTypeId - 1].shorthand}}</ng-container
+              >/{{unitTypes[servicio.unitTypeId - 1].shorthand}}</ng-container
               >
             </div>
             <div class="servicios-item-cell-button">
@@ -289,6 +289,12 @@
                 (click)="selectEditarServicio(servicio)"
               >
                 Editar
+              </div>
+            </div>
+            <div class="servicios-item-cell-button">
+              <div class="servicios-item-button-secondary" (click)="removeProduct(servicio.productId)"
+                   style="background-color: red; border-color: red; color: white;">
+                Eliminar
               </div>
             </div>
           </div>
@@ -305,7 +311,7 @@
       >
         <div class="servicios-item-cell-img-b">
           <img
-            src="assets/imgs/servicios-prev.png"
+            [src]="finalizado.images[0] || 'assets/icon/svg/default_product.svg'"
             class="servicios-item-img-b"
           />
         </div>
@@ -321,12 +327,12 @@
               >
               <ng-container *ngIf="finalizado.unitTypeId">
                 /{{unitTypes[finalizado.unitTypeId -
-                1].shorthand}}</ng-container
+              1].shorthand}}</ng-container
               >
             </div>
             <div class="servicios-item-date-b">
               -{{finalizado.productUnitPrice * 0 }}€ Gastos de gestión
-              <br />
+              <br/>
               {{finalizado.serviceEndDate}}
             </div>
           </div>
@@ -344,7 +350,7 @@
         <div class="display-table-100">
           <div class="servicios-item-cell-img-b">
             <img
-              src="assets/imgs/servicios-prev.png"
+              [src]="curso.images[0] || 'assets/icon/svg/default_product.svg'"
               class="servicios-item-img-b"
             />
           </div>
@@ -360,13 +366,20 @@
                     {{curso.productUnitPrice}}€</span
                   >
                   <ng-container *ngIf="curso.unitTypeId"
-                    >/{{unitTypes[curso.unitTypeId -
-                    1].shorthand}}</ng-container
+                  >/{{unitTypes[curso.unitTypeId -
+                  1].shorthand}}</ng-container
                   >
                 </div>
                 <div class="servicios-item-date-b">{{curso.buyDate}}</div>
               </div>
               <div class="servicios-item-cell-right">
+                <div
+                  class="cancel-button"
+                  style="width:120px;"
+                  (click)="toggleServiceModal(curso.cartId, curso.productId)"
+                >
+                  Cancelar
+                </div>
                 <div
                   *ngIf="indexTerminarServicio!=i"
                   class="servicios-item-button-secondary-b"
@@ -384,7 +397,7 @@
             <div class="div-terminar-servicio-subtitle">
               Tienes en curso este servicio todavía. ¿Quieres realmente terminar
               el servicio?
-              <br />Si has terminado el servicio confirmalo y posteriormente
+              <br/>Si has terminado el servicio confirmalo y posteriormente
               podrás valorar al cliente.
             </div>
           </div>
@@ -399,7 +412,30 @@
               class="div-terminar-servicio-button-primary"
               (click)="valorarServicio()"
             >
-              Sí
+              Aceptar
+            </div>
+          </div>
+        </div>
+        <div *ngIf="cancelServiceModalToggle">
+          <div class="div-terminar-servicio">
+            <div class="div-terminar-servicio-title">Cancelar el servicio</div>
+            <div class="div-terminar-servicio-subtitle">
+              Tienes en curso este servicio. ¿Quieres realmente cancelar
+              el servicio?
+            </div>
+          </div>
+          <div class="div-terminar-servicio-buttons">
+            <div
+              class="div-terminar-servicio-button-secondary"
+              (click)="toggleServiceModal()"
+            >
+              Cancelar
+            </div>
+            <div
+              class="div-terminar-servicio-button-primary"
+              (click)="cancelProduct()"
+            >
+              Aceptar
             </div>
           </div>
         </div>
@@ -468,6 +504,9 @@
         <div class="servicios-edit" (click)="selectEditarServicio(servicio)">
           Editar
         </div>
+        <div class="servicios-edit" style="color: red; margin-top: 1em;" (click)="removeProduct(servicio.productId)">
+          Eliminar
+        </div>
       </div>
       <div class="servicios-right">
         <div *ngIf="servicio.isPublished" class="servicios-chip-publicado">
@@ -480,7 +519,7 @@
               {{servicio.productUnitPrice}}€</span
             >
             <ng-container *ngIf="servicio.unitTypeId"
-              >/{{unitTypes[servicio.unitTypeId - 1].shorthand}}</ng-container
+            >/{{unitTypes[servicio.unitTypeId - 1].shorthand}}</ng-container
             >
           </div>
         </div>
@@ -507,7 +546,7 @@
     >
       <div class="display-table-100">
         <div class="servicios-left servicios-left-padding-b">
-          <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
+          <img class="servicios-img" [src]="curso.images[0] || 'assets/icon/svg/default_product.svg'"/>
         </div>
         <div class="servicios-right">
           <div class="servicios-right-top-b">
@@ -517,18 +556,56 @@
                 {{curso.productUnitPrice}}€</span
               >
               <ng-container *ngIf="curso.unitTypeId"
-                >/{{unitTypes[curso.unitTypeId - 1].shorthand}}</ng-container
+              >/{{unitTypes[curso.unitTypeId - 1].shorthand}}</ng-container
               >
             </div>
           </div>
           <div class="display-table-100">
-            <div class="servicios-client">{{curso.clientUsername}}</div>
+            <div class="servicios-client"
+                 (click)="irA('/user/' + curso?.clientUsername + '/detail/' + curso?.clientUserId)">{{curso.clientUsername}}</div>
             <div class="servicios-date">{{curso.buyDate}}</div>
           </div>
         </div>
       </div>
 
-      <ion-item-sliding
+      <!--<ion-item-sliding
+        (ionDrag)="logDrag($event,i,curso.productId,curso.cartId, true)"
+        class="margin-slide"
+      >
+        <ion-item-options side="start">
+          <ion-item-option expandable class="slide-expandable">
+          </ion-item-option>
+        </ion-item-options>
+
+        <ion-item class="no-padding item-slide">
+          <div
+            class="div-item-slide"
+            [ngClass]="{'div-item-slide-ios' : platform.is('ios')}"
+          >
+            <div class="button-slide" style="background: red">
+              <img
+                class="button-slide-width"
+                src="assets/icon/svg/chevron-right-white.svg"
+              /><img
+              class="button-slide-width"
+              src="assets/icon/svg/chevron-right-white.svg"
+            /><img
+              class="button-slide-width"
+              src="assets/icon/svg/chevron-right-white.svg"
+            />
+            </div>
+            Desliza para cancelar
+          </div>
+        </ion-item>
+      </ion-item-sliding>-->
+      <div
+        class="cancel-button"
+        style="width: 100%; margin: 1em 0;"
+        (click)="toggleServiceModal(curso.cartId, curso.productId)"
+      >
+        Cancelar
+      </div>
+      <!--<ion-item-sliding
         (ionDrag)="logDrag($event,i,curso.productId,curso.cartId)"
         class="margin-slide"
       >
@@ -547,17 +624,24 @@
                 class="button-slide-width"
                 src="assets/icon/svg/chevron-right-white.svg"
               /><img
-                class="button-slide-width"
-                src="assets/icon/svg/chevron-right-white.svg"
-              /><img
-                class="button-slide-width"
-                src="assets/icon/svg/chevron-right-white.svg"
-              />
+              class="button-slide-width"
+              src="assets/icon/svg/chevron-right-white.svg"
+            /><img
+              class="button-slide-width"
+              src="assets/icon/svg/chevron-right-white.svg"
+            />
             </div>
             Desliza para terminar
           </div>
         </ion-item>
-      </ion-item-sliding>
+      </ion-item-sliding>-->
+      <div
+        class="cancel-button"
+        style="background: blue; width: 100%;"
+        (click)="toggleFinishModal(curso.cartId,curso.productId)"
+      >
+        Terminar
+      </div>
     </div>
   </div>
 
@@ -567,7 +651,7 @@
       class="servicios-content-wrapper"
     >
       <div class="servicios-left servicios-left-padding-b">
-        <img class="servicios-img" src="assets/imgs/servicios-prev.png" />
+        <img class="servicios-img" [src]="finalizado.images[0] || 'assets/icon/svg/default_product.svg'"/>
       </div>
       <div class="servicios-right">
         <div class="servicios-right-top-b">
@@ -585,8 +669,8 @@
           <div class="servicios-client">{{finalizado.clientUsername}}</div>
           <div class="servicios-date">
             -{{finalizado.productUnitPrice * 0 }}€
-            <br />
-            Gastos de gestión <br />
+            <br/>
+            Gastos de gestión <br/>
             {{finalizado.serviceEndDate}}
           </div>
         </div>
@@ -600,7 +684,7 @@
       class="mobile div-no-service"
     >
       <div class="div-no-service-svg">
-        <img src="assets/icon/svg/service.svg" class="no-service-svg" />
+        <img src="assets/icon/svg/service.svg" class="no-service-svg"/>
       </div>
       <div class="div-no-service-title">Ningún servicio disponible</div>
       <div class="div-no-service-subtitle">
@@ -610,7 +694,7 @@
   </ng-container>
 
   <div class="mobile add-service-floating" (click)="selectNuevoServicio()">
-    <img class="add-service-svg" src="assets/icon/svg/plus.svg" />
+    <img class="add-service-svg" src="assets/icon/svg/plus.svg"/>
   </div>
 </ion-content>
 
@@ -618,7 +702,7 @@
   <div class="modal-back-background">
     <div class="modal-front-content-b">
       <div class="modal-back-close" (click)="cancelarValorarServicio()">
-        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg" />
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
       </div>
       <div class="modal-front-title-b text-align-center">
         ¿Qué te ha parecido el cliente?
@@ -633,15 +717,15 @@
           class="modal-rating-star"
           src="assets/icon/svg/star-grey.svg"
         /><img
-          class="modal-rating-star"
-          src="assets/icon/svg/star-grey.svg"
-        /><img
-          class="modal-rating-star"
-          src="assets/icon/svg/star-grey.svg"
-        /><img
-          class="modal-rating-star"
-          src="assets/icon/svg/star-grey.svg"
-        /><img class="modal-rating-star" src="assets/icon/svg/star-grey.svg" />
+        class="modal-rating-star"
+        src="assets/icon/svg/star-grey.svg"
+      /><img
+        class="modal-rating-star"
+        src="assets/icon/svg/star-grey.svg"
+      /><img
+        class="modal-rating-star"
+        src="assets/icon/svg/star-grey.svg"
+      /><img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/>
       </div>
       <div class="modal-front-comment">Deja un comentario</div>
       <div class="modal-front-textarea-div">
@@ -665,7 +749,7 @@
   <div class="modal-back-background">
     <div class="modal-front-content-c">
       <div class="modal-back-close-b" (click)="cerrarFinValorarServicio()">
-        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg" />
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
       </div>
       <div class="modal-full-check">
         <img
@@ -687,7 +771,7 @@
   <div class="modal-back-background">
     <div class="modal-front-content-c">
       <div class="modal-back-close-b" (click)="closeServicioAdded()">
-        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg" />
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
       </div>
       <div class="modal-full-check">
         <img
@@ -704,18 +788,32 @@
   </div>
 </div>
 
-<div *ngIf="indexTerminarServicioMobile" class="mobile modal-back-background">
+<div *ngIf="cancelServiceModalToggle" class="mobile modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">Cancelar el servicio</div>
+    <div class="modal-front-subtitle modal-subtitle-margin-a">
+      Tienes en curso este servicio. ¿Quieres realmente cancelar el
+      servicio?
+    </div>
+    <div class="modal-button-primary" (click)="cancelProduct()">Aceptar</div>
+    <div class="modal-button-secondary" (click)="toggleServiceModal()">
+      Cancelar
+    </div>
+  </div>
+</div>
+
+<div *ngIf="finishServiceModalToggle" class="mobile modal-back-background">
   <div class="modal-front-content">
     <div class="modal-front-title">Terminar el servicio</div>
     <div class="modal-front-subtitle modal-subtitle-margin-a">
       Tienes en curso este servicio todavía. ¿Quieres realmente terminar el
       servicio?
-      <br /><br />
+      <br/><br/>
       Si has terminado el servicio confírmalo y posteriormente podrás valorar al
       cliente.
     </div>
-    <div class="modal-button-primary" (click)="valorarServicio()">Sí</div>
-    <div class="modal-button-secondary" (click)="cancelarServicio()">
+    <div class="modal-button-primary" (click)="valorarServicio()">Aceptar</div>
+    <div class="modal-button-secondary" (click)="toggleFinishModal()">
       Cancelar
     </div>
   </div>
@@ -728,16 +826,16 @@
       Valora el servicio siendo 5 estrellas la mayor puntuación.
     </div>
     <div class="modal-front-rating">
-      <img class="modal-rating-star" src="assets/icon/svg/star-grey.svg" /><img
-        class="modal-rating-star"
-        src="assets/icon/svg/star-grey.svg"
-      /><img
-        class="modal-rating-star"
-        src="assets/icon/svg/star-grey.svg"
-      /><img
-        class="modal-rating-star"
-        src="assets/icon/svg/star-grey.svg"
-      /><img class="modal-rating-star" src="assets/icon/svg/star-grey.svg" />
+      <img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/><img
+      class="modal-rating-star"
+      src="assets/icon/svg/star-grey.svg"
+    /><img
+      class="modal-rating-star"
+      src="assets/icon/svg/star-grey.svg"
+    /><img
+      class="modal-rating-star"
+      src="assets/icon/svg/star-grey.svg"
+    /><img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/>
     </div>
     <div class="modal-front-comment">Deja un comentario</div>
     <div class="modal-front-textarea-div">
@@ -758,7 +856,7 @@
 
 <div *ngIf="servicioAdded" class="mobile modal-background-full">
   <div class="modal-full-close" (click)="closeServicioAdded()">
-    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg" />
+    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
   </div>
   <div class="modal-full-content">
     <div class="modal-full-check">
@@ -782,7 +880,7 @@
 
 <div *ngIf="finValorarServicio" class="mobile modal-background-full">
   <div class="modal-full-close" (click)="cerrarFinValorarServicio()">
-    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg" />
+    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
   </div>
   <div class="modal-full-content">
     <div class="modal-full-check">
@@ -864,7 +962,7 @@
                 <ion-select-option
                   *ngFor="let unit of unitTypes"
                   [value]="unit.id"
-                  >{{unit.name}}</ion-select-option
+                >{{unit.name}}</ion-select-option
                 >
               </ion-select>
             </ion-item>
@@ -886,7 +984,7 @@
             <ion-select-option
               *ngFor="let sector of ProfessionsMapped"
               [value]="sector.subSectorId"
-              >{{sector.name}}</ion-select-option
+            >{{sector.name}}</ion-select-option
             >
           </ion-select>
         </ion-item>

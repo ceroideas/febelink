@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   ToastController,
   AlertController,
@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Clipboard } from '@awesome-cordova-plugins/clipboard/ngx';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,8 @@ export class UtilitiesService {
     private storage: Storage,
     private titleService: Title,
     public translateService: TranslateService,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   async showToast(message: string) {
@@ -317,7 +319,9 @@ export class UtilitiesService {
   }
 
   updateWebFavicon(icon: string, el: string | number = '32') {
-    const favIcon: HTMLLinkElement = document.querySelector('#favicon-' + el);
+    const favIcon: HTMLLinkElement = this.document.querySelector(
+      '#favicon-' + el
+    );
     favIcon.href = `assets/icon/${icon}.png`;
     return this;
   }

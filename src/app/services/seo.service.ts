@@ -1,10 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
-import { SEOFebelink } from '../models/seo.model';
-import { UtilitiesService } from './utilities.service';
-import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import {Injectable, Inject} from '@angular/core';
+import {Meta} from '@angular/platform-browser';
+import {SEOFebelink} from '../models/seo.model';
+import {UtilitiesService} from './utilities.service';
+import {DOCUMENT} from '@angular/common';
+import {Router} from '@angular/router';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +13,9 @@ export class SeoService {
   seoDEFAULT: SEOFebelink = {
     title: 'Febelink | El buscador universal de servicios profesionales',
     description:
-      'Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.',
-    image: 'https://febelink.com/assets/imgs/febelink-share-img.png',
-    url: 'febelink.com',
+      'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic',
+    image: 'https://www.febelink.com/assets/imgs/febelink-share-img.png',
+    url: 'www.febelink.com',
   };
   seoPrevoius: SEOFebelink = {
     title: this.seoDEFAULT.title,
@@ -29,43 +29,44 @@ export class SeoService {
     private utils: UtilitiesService,
     @Inject(DOCUMENT) private dom,
     private router: Router
-  ) {}
+  ) {
+  }
 
   generateTags(seo: SEOFebelink) {
     // Guardo las tags anteriores en caso de que tenga que volver a asignarlas
     this.seoPrevoius = this.getTags();
 
     // El titulo en la pestaña
-    this.utils.updateWebTitle(seo.title);
+    this.utils.updateWebTitle(seo.title || this.seoPrevoius.title);
 
     // this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     // this.meta.updateTag({ name: 'twitter:site', content: '@febelink' });
-    this.meta.updateTag({ name: 'twitter:title', content: seo.title });
+    this.meta.updateTag({name: 'twitter:title', content: seo.title || this.seoPrevoius.title});
     this.meta.updateTag({
       name: 'twitter:description',
-      content: seo.description,
+      content: seo.description || this.seoPrevoius.description,
     });
-    this.meta.updateTag({ name: 'twitter:image', content: seo.image });
-    this.meta.updateTag({ name: 'twitter:image:src', content: seo.image });
+    this.meta.updateTag({name: 'twitter:image', content: seo.image || this.seoPrevoius.image});
+    this.meta.updateTag({name: 'twitter:image:src', content: seo.image || this.seoPrevoius.image});
 
-    this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:site_name', content: 'Febelink' });
-    this.meta.updateTag({ property: 'og:title', content: seo.title });
+    this.meta.updateTag({property: 'og:type', content: 'website'});
+    this.meta.updateTag({property: 'og:site_name', content: 'Febelink'});
+    this.meta.updateTag({property: 'og:title', content: seo.title || this.seoPrevoius.title});
     this.meta.updateTag({
       property: 'og:description',
       content: seo.description,
     });
-    this.meta.updateTag({ property: 'og:image', content: seo.image });
-    this.meta.updateTag({ property: 'og:image:url', content: seo.image });
-    this.meta.updateTag({ property: 'og:url', content: seo.url });
+    this.meta.updateTag({property: 'og:image', content: seo.image || this.seoPrevoius.image});
+    this.meta.updateTag({property: 'og:image:url', content: seo.image || this.seoPrevoius.image});
+    this.meta.updateTag({property: 'og:url', content: seo.url || this.seoPrevoius.url});
 
-    this.meta.updateTag({ name: 'description', content: seo.description });
+    this.meta.updateTag({name: 'description', content: seo.description || this.seoPrevoius.description});
 
     // this.meta.updateTag({ itemprop: 'name', content: title });
     // this.meta.updateTag({ itemprop: 'description', content: description });
     // this.meta.updateTag({ itemprop: 'image', content: image });
 
-    this.addPageCanonical();
+    // this.addPageCanonical();
   }
 
   getTags(): SEOFebelink {
@@ -95,6 +96,9 @@ export class SeoService {
     let link: HTMLLinkElement = this.dom.createElement('link');
     link.setAttribute('rel', 'canonical');
     this.dom.head.appendChild(link);
-    link.setAttribute('href', window.location.href);
+    link.setAttribute(
+      'href',
+      environment.WEB_URL + this.router.url.substring(1)
+    );
   }
 }

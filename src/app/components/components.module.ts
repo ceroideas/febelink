@@ -1,30 +1,64 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { MenuComponent } from './menu/menu.component';
-import { CookiesComponent } from './cookies/cookies.component';
-import { SharePopoverComponent } from './share-popover/share-popover.component';
-import { SocialLoginComponent } from './social-login/social-login.component';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  GoogleSigninButtonModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
+import {GoogleSigninButtDirective} from './social-login/google-sign-in-button.directive';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {IonicModule} from '@ionic/angular';
+import {MenuComponent} from './menu/menu.component';
+import {CookiesComponent} from './cookies/cookies.component';
+import {SharePopoverComponent} from './share-popover/share-popover.component';
+import {SocialLoginComponent} from './social-login/social-login.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {environment} from 'src/environments/environment';
+import {PartialPopupComponent} from './partial-popup/partial-popup.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
-    declarations: [
-        MenuComponent,
-        CookiesComponent,
-        SharePopoverComponent,
-        SocialLoginComponent,
-    ],
-    exports: [
-        MenuComponent,
-        CookiesComponent,
-        SharePopoverComponent,
-        SocialLoginComponent,
-        TranslateModule
-    ],
-    imports: [
-        CommonModule,
-        IonicModule,
-        TranslateModule.forChild()
-    ]
+  declarations: [
+    MenuComponent,
+    CookiesComponent,
+    SharePopoverComponent,
+    SocialLoginComponent,
+    GoogleSigninButtDirective,
+    PartialPopupComponent
+  ],
+  exports: [
+    MenuComponent,
+    CookiesComponent,
+    SharePopoverComponent,
+    SocialLoginComponent,
+    TranslateModule,
+    PartialPopupComponent
+  ],
+  imports: [
+    FormsModule,
+    CommonModule,
+    IonicModule,
+    TranslateModule.forChild(),
+    GoogleSigninButtonModule,
+  ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(environment.WEB_CLIENT_ID),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
 })
-  export class ComponentsModule { }
+export class ComponentsModule {
+}
