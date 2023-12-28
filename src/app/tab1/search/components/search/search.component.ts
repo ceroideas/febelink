@@ -73,11 +73,11 @@ export class SearchComponent implements AfterViewInit {
     {title: 'Fontaneros', link: 'fontanero-en', imageURL: 'assets/imgs/home/sector-plumber.jpeg'},
     {title: 'Profesor particular', link: 'profesor-particular-en', imageURL: 'assets/imgs/home/sector-learning.jpeg'},
     {title: 'Fisioterapeutas', link: 'fisioterapeuta-en', imageURL: 'assets/imgs/home/sector-health.jpeg'},
-    {title: 'Podólogos', link: 'podólogos-en', imageURL: 'assets/imgs/home/sector-health.jpeg'},
+    {title: 'Podólogos', link: 'podólogos-en', imageURL: 'assets/imgs/home/foot-health.jpg'},
     {title: 'Mecánicos', link: 'taller-mecánico-en', imageURL: 'assets/imgs/home/sector-car.jpeg'},
     {title: 'Desarrolladores', link: 'empresa-de-programacion-y-desarrollo-en', imageURL: 'assets/imgs/home/sector-technology.jpeg'},
-    {title: 'Diseñador gráfico', link: 'empresa-de-diseño-grafico-en', imageURL: 'assets/imgs/home/sector-technology.jpeg'},
-    {title: 'Pintores', link: 'empresa-de-pintores-en', imageURL: 'assets/imgs/home/sector-plumber.jpeg'},
+    {title: 'Diseñador gráfico', link: 'empresa-de-diseño-grafico-en', imageURL: 'assets/imgs/home/ux-designer.jpg'},
+    {title: 'Pintores', link: 'empresa-de-pintores-en', imageURL: 'assets/imgs/home/painters.jpg'},
     {title: 'Cuidadores', link: 'empresa-de-cuidadores-en', imageURL: 'assets/imgs/home/sector-care.jpeg'},
   ];
 
@@ -134,19 +134,246 @@ export class SearchComponent implements AfterViewInit {
     {title: 'Vizcaya', link: 'servicios-profesionales-en-Vizcaya'},
     {title: 'Zamora', link: 'servicios-profesionales-en-Zamora'},
     {title: 'Zaragoza', link: 'servicios-profesionales-en-Zaragoza'},
+    {title: 'Palma de Mallorca', link: 'servicios-profesionales-en-mallorca'},
+    {title: 'Menorca', link: 'servicios-profesionales-en-menorca'},
+    {title: 'Ibiza', link: 'servicios-profesionales-en-ibiza'},
+    {title: 'Lanzarote', link: 'servicios-profesionales-en-lanzarote'},
+    {title: 'Fuerteventura', link: 'servicios-profesionales-en-fuerteventura'},
+    {title: 'Oviedo', link: 'servicios-profesionales-en-oviedo'},
+    {title: 'Gijón', link: 'servicios-profesionales-en-gijon'},
   ];
 
   locationFilterLink = [
-    {title: 'Asesor en Málaga', link: 'asesor-en-malaga', sector: 'Asesores'},
-    {title: 'Fontanero en Málaga', link: 'fontanero-en-malaga', sector: 'Fontaneros'},
-    {title: 'Servicio de limpieza en Málaga', link: 'servicio-de-limpieza-en-malaga', sector: 'Empresas de limpieza'},
-    {title: 'Electricista en Málaga', link: 'electricista-en-malaga', sector: 'Electricistas'},
-    {title: 'Clases particulares en Málaga', link: 'clases-particulares-en-malaga', sector: 'Clases particulares'},
-    {title: 'Entrenador personal en Málaga', link: 'entrenador-personal-en-malaga', sector: 'Entrenadores personales'},
-    {title: 'Traductor en Málaga', link: 'traductor-en-malaga', sector: 'Traductores'},
-    {title: 'Fotógrafo en Málaga', link: 'fotografo-en-malaga', sector: 'Fotógrafos'},
-    {title: 'Contable en Málaga', link: 'contable-en-malaga', sector: 'Contables'},
-    {title: 'Mudanza en Málaga', link: 'mudanza-en-malaga', sector: 'Mudanzas'},
+    {location: 'Málaga', title: 'Asesor en Málaga', link: 'asesor-en-malaga', sector: 'Asesores'},
+    {location: 'Málaga', title: 'Fontanero en Málaga', link: 'fontanero-en-malaga', sector: 'Fontaneros'},
+    {location: 'Málaga', title: 'Servicio de limpieza en Málaga', link: 'servicio-de-limpieza-en-malaga', sector: 'Empresas de limpieza'},
+    {location: 'Málaga', title: 'Electricista en Málaga', link: 'electricista-en-malaga', sector: 'Electricistas'},
+    {location: 'Málaga', title: 'Clases particulares en Málaga', link: 'clases-particulares-en-malaga', sector: 'Clases particulares'},
+    {location: 'Málaga', title: 'Entrenador personal en Málaga', link: 'entrenador-personal-en-malaga', sector: 'Entrenadores personales'},
+    {location: 'Málaga', title: 'Traductor en Málaga', link: 'traductor-en-malaga', sector: 'Traductores'},
+    {location: 'Málaga', title: 'Fotógrafo en Málaga', link: 'fotografo-en-malaga', sector: 'Fotógrafos'},
+    {location: 'Málaga', title: 'Contable en Málaga', link: 'contable-en-malaga', sector: 'Contables'},
+    {location: 'Málaga', title: 'Mudanza en Málaga', link: 'mudanza-en-malaga', sector: 'Mudanzas'},
+    {location: 'Madrid', title: 'Asesor en Madrid', link: 'asesor en madrid', sector: 'Asesores'},
+    {location: 'Madrid', title: 'Fontanero en Madrid', link: 'fontanero en madrid', sector: 'Fontaneros'},
+    {location: 'Madrid', title: 'Servicio de limpieza en Madrid', link: 'servicio de limpieza en madrid', sector: 'Empresas de limpieza'},
+    {location: 'Madrid', title: 'Electricista en Madrid', link: 'electricista en madrid', sector: 'Electricistas'},
+    {location: 'Madrid', title: 'Clases particulares en Madrid', link: 'clases particulares en madrid', sector: 'Clases particulares'},
+    {location: 'Madrid', title: 'Entrenador personal en Madrid', link: 'entrenador personal en madrid', sector: 'Entrenadores personales'},
+    {location: 'Madrid', title: 'Traductor en Madrid', link: 'traductor en madrid', sector: 'Traductores'},
+    {location: 'Madrid', title: 'Fotógrafo en Madrid', link: 'fotografo en madrid', sector: 'Fotógrafos'},
+    {location: 'Madrid', title: 'Contable en Madrid', link: 'contable en madrid', sector: 'Contables'},
+    {location: 'Madrid', title: 'Mudanza en Madrid', link: 'mudanza en madrid', sector: 'Mudanzas'},
+    {location: 'Sevilla', title: 'Asesor en Sevilla', link: 'asesor en sevilla', sector: 'Asesores'},
+    {location: 'Sevilla', title: 'Fontanero en Sevilla', link: 'fontanero en sevilla', sector: 'Fontaneros'},
+    {
+      location: 'Sevilla',
+      title: 'Servicio de limpieza en Sevilla',
+      link: 'servicio de limpieza en sevilla',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Sevilla', title: 'Electricista en Sevilla', link: 'electricista en sevilla', sector: 'Electricistas'},
+    {location: 'Sevilla', title: 'Clases particulares en Sevilla', link: 'clases particulares en sevilla', sector: 'Clases particulares'},
+    {
+      location: 'Sevilla',
+      title: 'Entrenador personal en Sevilla',
+      link: 'entrenador personal en sevilla',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Sevilla', title: 'Traductor en Sevilla', link: 'traductor en sevilla', sector: 'Traductores'},
+    {location: 'Sevilla', title: 'Fotógrafo en Sevilla', link: 'fotografo en sevilla', sector: 'Fotógrafos'},
+    {location: 'Sevilla', title: 'Contable en Sevilla', link: 'contable en sevilla', sector: 'Contables'},
+    {location: 'Sevilla', title: 'Mudanza en Sevilla', link: 'mudanza en sevilla', sector: 'Mudanzas'},
+    {location: 'Granada', title: 'Asesor en Granada', link: 'asesor en granada', sector: 'Asesores'},
+    {location: 'Granada', title: 'Fontanero en Granada', link: 'fontanero en granada', sector: 'Fontaneros'},
+    {
+      location: 'Granada',
+      title: 'Servicio de limpieza en Granada',
+      link: 'servicio de limpieza en granada',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Granada', title: 'Electricista en Granada', link: 'electricista en granada', sector: 'Electricistas'},
+    {location: 'Granada', title: 'Clases particulares en Granada', link: 'clases particulares en granada', sector: 'Clases particulares'},
+    {
+      location: 'Granada',
+      title: 'Entrenador personal en Granada',
+      link: 'entrenador personal en granada',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Granada', title: 'Traductor en Granada', link: 'traductor en granada', sector: 'Traductores'},
+    {location: 'Granada', title: 'Fotógrafo en Granada', link: 'fotografo en granada', sector: 'Fotógrafos'},
+    {location: 'Granada', title: 'Contable en Granada', link: 'contable en granada', sector: 'Contables'},
+    {location: 'Granada', title: 'Mudanza en Granada', link: 'mudanza en granada', sector: 'Mudanzas'},
+    {location: 'Jaén', title: 'Asesor en Jaén', link: 'asesor en jaen', sector: 'Asesores'},
+    {location: 'Jaén', title: 'Fontanero en Jaén', link: 'fontanero en jaen', sector: 'Fontaneros'},
+    {location: 'Jaén', title: 'Servicio de limpieza en Jaén', link: 'servicio de limpieza en jaen', sector: 'Empresas de limpieza'},
+    {location: 'Jaén', title: 'Electricista en Jaén', link: 'electricista en jaen', sector: 'Electricistas'},
+    {location: 'Jaén', title: 'Clases particulares en Jaén', link: 'clases particulares en jaen', sector: 'Clases particulares'},
+    {location: 'Jaén', title: 'Entrenador personal en Jaén', link: 'entrenador personal en jaen', sector: 'Entrenadores personales'},
+    {location: 'Jaén', title: 'Traductor en Jaén', link: 'traductor en jaen', sector: 'Traductores'},
+    {location: 'Jaén', title: 'Fotógrafo en Jaén', link: 'fotografo en jaen', sector: 'Fotógrafos'},
+    {location: 'Jaén', title: 'Contable en Jaén', link: 'contable en jaen', sector: 'Contables'},
+    {location: 'Jaén', title: 'Mudanza en Jaén', link: 'mudanza en jaen', sector: 'Mudanzas'},
+    {location: 'Córdoba', title: 'Asesor en Córdoba', link: 'asesor en cordoba', sector: 'Asesores'},
+    {location: 'Córdoba', title: 'Fontanero en Córdoba', link: 'fontanero en cordoba', sector: 'Fontaneros'},
+    {
+      location: 'Córdoba',
+      title: 'Servicio de limpieza en Córdoba',
+      link: 'servicio de limpieza en cordoba',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Córdoba', title: 'Electricista en Córdoba', link: 'electricista en cordoba', sector: 'Electricistas'},
+    {location: 'Córdoba', title: 'Clases particulares en Córdoba', link: 'clases particulares en cordoba', sector: 'Clases particulares'},
+    {
+      location: 'Córdoba',
+      title: 'Entrenador personal en Córdoba',
+      link: 'entrenador personal en cordoba',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Córdoba', title: 'Traductor en Córdoba', link: 'traductor en cordoba', sector: 'Traductores'},
+    {location: 'Córdoba', title: 'Fotógrafo en Córdoba', link: 'fotografo en cordoba', sector: 'Fotógrafos'},
+    {location: 'Córdoba', title: 'Contable en Córdoba', link: 'contable en cordoba', sector: 'Contables'},
+    {location: 'Córdoba', title: 'Mudanza en Córdoba', link: 'mudanza en cordoba', sector: 'Mudanzas'},
+    {location: 'Almería', title: 'Asesor en Almería', link: 'asesor en almeria', sector: 'Asesores'},
+    {location: 'Almería', title: 'Fontanero en Almería', link: 'fontanero en almeria', sector: 'Fontaneros'},
+    {
+      location: 'Almería',
+      title: 'Servicio de limpieza en Almería',
+      link: 'servicio de limpieza en almeria',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Almería', title: 'Electricista en Almería', link: 'electricista en almeria', sector: 'Electricistas'},
+    {location: 'Almería', title: 'Clases particulares en Almería', link: 'clases particulares en almeria', sector: 'Clases particulares'},
+    {
+      location: 'Almería',
+      title: 'Entrenador personal en Almería',
+      link: 'entrenador personal en almeria',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Almería', title: 'Traductor en Almería', link: 'traductor en almeria', sector: 'Traductores'},
+    {location: 'Almería', title: 'Fotógrafo en Almería', link: 'fotografo en almeria', sector: 'Fotógrafos'},
+    {location: 'Almería', title: 'Contable en Almería', link: 'contable en almeria', sector: 'Contables'},
+    {location: 'Almería', title: 'Mudanza en Almería', link: 'mudanza en almeria', sector: 'Mudanzas'},
+    {location: 'Huelva', title: 'Asesor en Huelva', link: 'asesor en huelva', sector: 'Asesores'},
+    {location: 'Huelva', title: 'Fontanero en Huelva', link: 'fontanero en huelva', sector: 'Fontaneros'},
+    {location: 'Huelva', title: 'Servicio de limpieza en Huelva', link: 'servicio de limpieza en huelva', sector: 'Empresas de limpieza'},
+    {location: 'Huelva', title: 'Electricista en Huelva', link: 'electricista en huelva', sector: 'Electricistas'},
+    {location: 'Huelva', title: 'Clases particulares en Huelva', link: 'clases particulares en huelva', sector: 'Clases particulares'},
+    {location: 'Huelva', title: 'Entrenador personal en Huelva', link: 'entrenador personal en huelva', sector: 'Entrenadores personales'},
+    {location: 'Huelva', title: 'Traductor en Huelva', link: 'traductor en huelva', sector: 'Traductores'},
+    {location: 'Huelva', title: 'Fotógrafo en Huelva', link: 'fotografo en huelva', sector: 'Fotógrafos'},
+    {location: 'Huelva', title: 'Contable en Huelva', link: 'contable en huelva', sector: 'Contables'},
+    {location: 'Huelva', title: 'Mudanza en Huelva', link: 'mudanza en huelva', sector: 'Mudanzas'},
+    {location: 'Cádiz', title: 'Asesor en Cádiz', link: 'asesor en cadiz', sector: 'Asesores'},
+    {location: 'Cádiz', title: 'Fontanero en Cádiz', link: 'fontanero en cadiz', sector: 'Fontaneros'},
+    {location: 'Cádiz', title: 'Servicio de limpieza en Cádiz', link: 'servicio de limpieza en cadiz', sector: 'Empresas de limpieza'},
+    {location: 'Cádiz', title: 'Electricista en Cádiz', link: 'electricista en cadiz', sector: 'Electricistas'},
+    {location: 'Cádiz', title: 'Clases particulares en Cádiz', link: 'clases particulares en cadiz', sector: 'Clases particulares'},
+    {location: 'Cádiz', title: 'Entrenador personal en Cádiz', link: 'entrenador personal en cadiz', sector: 'Entrenadores personales'},
+    {location: 'Cádiz', title: 'Traductor en Cádiz', link: 'traductor en cadiz', sector: 'Traductores'},
+    {location: 'Cádiz', title: 'Fotógrafo en Cádiz', link: 'fotografo en cadiz', sector: 'Fotógrafos'},
+    {location: 'Cádiz', title: 'Contable en Cádiz', link: 'contable en cadiz', sector: 'Contables'},
+    {location: 'Cádiz', title: 'Mudanza en Cádiz', link: 'mudanza en cadiz', sector: 'Mudanzas'},
+    {location: 'Torremolinos', title: 'Asesor en Torremolinos', link: 'asesor en torremolinos', sector: 'Asesores'},
+    {location: 'Torremolinos', title: 'Fontanero en Torremolinos', link: 'fontanero en torremolinos', sector: 'Fontaneros'},
+    {
+      location: 'Torremolinos',
+      title: 'Servicio de limpieza en Torremolinos',
+      link: 'servicio de limpieza en torremolinos',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Torremolinos', title: 'Electricista en Torremolinos', link: 'electricista en torremolinos', sector: 'Electricistas'},
+    {
+      location: 'Torremolinos',
+      title: 'Clases particulares en Torremolinos',
+      link: 'clases particulares en torremolinos',
+      sector: 'Clases particulares'
+    },
+    {
+      location: 'Torremolinos',
+      title: 'Entrenador personal en Torremolinos',
+      link: 'entrenador personal en torremolinos',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Torremolinos', title: 'Traductor en Torremolinos', link: 'traductor en torremolinos', sector: 'Traductores'},
+    {location: 'Torremolinos', title: 'Fotógrafo en Torremolinos', link: 'fotografo en torremolinos', sector: 'Fotógrafos'},
+    {location: 'Torremolinos', title: 'Contable en Torremolinos', link: 'contable en torremolinos', sector: 'Contables'},
+    {location: 'Torremolinos', title: 'Mudanza en Torremolinos', link: 'mudanza en torremolinos', sector: 'Mudanzas'},
+    {location: 'Fuengirola', title: 'Asesor en Fuengirola', link: 'asesor en fuengirola', sector: 'Asesores'},
+    {location: 'Fuengirola', title: 'Fontanero en Fuengirola', link: 'fontanero en fuengirola', sector: 'Fontaneros'},
+    {
+      location: 'Fuengirola',
+      title: 'Servicio de limpieza en Fuengirola',
+      link: 'servicio de limpieza en fuengirola',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Fuengirola', title: 'Electricista en Fuengirola', link: 'electricista en fuengirola', sector: 'Electricistas'},
+    {
+      location: 'Fuengirola',
+      title: 'Clases particulares en Fuengirola',
+      link: 'clases particulares en fuengirola',
+      sector: 'Clases particulares'
+    },
+    {
+      location: 'Fuengirola',
+      title: 'Entrenador personal en Fuengirola',
+      link: 'entrenador personal en fuengirola',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Fuengirola', title: 'Traductor en Fuengirola', link: 'traductor en fuengirola', sector: 'Traductores'},
+    {location: 'Fuengirola', title: 'Fotógrafo en Fuengirola', link: 'fotografo en fuengirola', sector: 'Fotógrafos'},
+    {location: 'Fuengirola', title: 'Contable en Fuengirola', link: 'contable en fuengirola', sector: 'Contables'},
+    {location: 'Fuengirola', title: 'Mudanza en Fuengirola', link: 'mudanza en fuengirola', sector: 'Mudanzas'},
+    {location: 'Marbella', title: 'Asesor en Marbella', link: 'asesor en marbella', sector: 'Asesores'},
+    {location: 'Marbella', title: 'Fontanero en Marbella', link: 'fontanero en marbella', sector: 'Fontaneros'},
+    {
+      location: 'Marbella',
+      title: 'Servicio de limpieza en Marbella',
+      link: 'servicio de limpieza en marbella',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Marbella', title: 'Electricista en Marbella', link: 'electricista en marbella', sector: 'Electricistas'},
+    {
+      location: 'Marbella',
+      title: 'Clases particulares en Marbella',
+      link: 'clases particulares en marbella',
+      sector: 'Clases particulares'
+    },
+    {
+      location: 'Marbella',
+      title: 'Entrenador personal en Marbella',
+      link: 'entrenador personal en marbella',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Marbella', title: 'Traductor en Marbella', link: 'traductor en marbella', sector: 'Traductores'},
+    {location: 'Marbella', title: 'Fotógrafo en Marbella', link: 'fotografo en marbella', sector: 'Fotógrafos'},
+    {location: 'Marbella', title: 'Contable en Marbella', link: 'contable en marbella', sector: 'Contables'},
+    {location: 'Marbella', title: 'Mudanza en Marbella', link: 'mudanza en marbella', sector: 'Mudanzas'},
+    {location: 'Benalmádena', title: 'Asesor en Benalmádena', link: 'asesor en benalmadena', sector: 'Asesores'},
+    {location: 'Benalmádena', title: 'Fontanero en Benalmádena', link: 'fontanero en benalmadena', sector: 'Fontaneros'},
+    {
+      location: 'Benalmádena',
+      title: 'Servicio de limpieza en Benalmádena',
+      link: 'servicio de limpieza en benalmadena',
+      sector: 'Empresas de limpieza'
+    },
+    {location: 'Benalmádena', title: 'Electricista en Benalmádena', link: 'electricista en benalmadena', sector: 'Electricistas'},
+    {
+      location: 'Benalmádena',
+      title: 'Clases particulares en Benalmádena',
+      link: 'clases particulares en benalmadena',
+      sector: 'Clases particulares'
+    },
+    {
+      location: 'Benalmádena',
+      title: 'Entrenador personal en Benalmádena',
+      link: 'entrenador personal en benalmadena',
+      sector: 'Entrenadores personales'
+    },
+    {location: 'Benalmádena', title: 'Traductor en Benalmádena', link: 'traductor en benalmadena', sector: 'Traductores'},
+    {location: 'Benalmádena', title: 'Fotógrafo en Benalmádena', link: 'fotografo en benalmadena', sector: 'Fotógrafos'},
+    {location: 'Benalmádena', title: 'Contable en Benalmádena', link: 'contable en benalmadena', sector: 'Contables'},
+    {location: 'Benalmádena', title: 'Mudanza en Benalmádena', link: 'mudanza en benalmadena', sector: 'Mudanzas'},
   ];
 
   metaFilterLink = [
@@ -236,12 +463,19 @@ export class SearchComponent implements AfterViewInit {
     this.services = this.services.sort((a, b) => 0.5 - Math.random());
     this.sectors = this.sectors.sort((a, b) => 0.5 - Math.random());
 
-    this.actRouter.params.subscribe(val => {
+    this.locationFilter = sessionStorage.getItem('locationFilter');
+    this.locationFilterLink = this.locationFilterLink.filter(link => link.location === this.locationFilter);
+    this.metaLocationFilter = sessionStorage.getItem('metaLocationFilter');
+    console.log(this.locationFilter, this.locationFilterLink, this.metaLocationFilter);
+
+    /*this.actRouter.params.subscribe(val => {
       this.locationFilter = this.searchService.getLocationFilter();
-    });
+      this.locationFilterLink = this.locationFilterLink.filter(link => link.location === this.locationFilter);
+      console.log(this.locationFilter, this.locationFilterLink);
+    });*/
 
     this.actRouter.params.subscribe(val => {
-      this.metaLocationFilter = this.searchService.getMetaLocationFilter();
+      // this.metaLocationFilter = this.searchService.getMetaLocationFilter();
       this.metaFilterLink.filter(item => {
         if (item.sector === this.metaLocationFilter) {
           this.title.setTitle(item.title);
@@ -254,6 +488,12 @@ export class SearchComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.locationFilter = sessionStorage.getItem('locationFilter');
+    this.locationFilterLink = this.locationFilterLink.filter(link => link.location === this.locationFilter);
+    this.metaLocationFilter = sessionStorage.getItem('metaLocationFilter');
+    console.log(this.locationFilter, this.locationFilterLink, this.metaLocationFilter);
+    this.cdRef.detectChanges();
+
     this.locationFilter = this.searchService.getLocationFilter();
     this.metaLocationFilter = this.searchService.getMetaLocationFilter();
     this.metaFilterLink.filter(item => {
@@ -366,11 +606,17 @@ export class SearchComponent implements AfterViewInit {
 
   async changeFilter(locationFilter: string, link: string) {
     await this.searchService.setLocationFilter(locationFilter);
+    sessionStorage.setItem('locationFilter', locationFilter);
     // this.irA('/listado/' + link);
   }
 
   async changeMetaFilter(metaFilter: string, link: string) {
     await this.searchService.setMetaLocationFilter(metaFilter);
+    sessionStorage.setItem('metaLocationFilter', metaFilter);
     // this.irA('/listado/' + link);
+  }
+
+  public trackItem(index: number, item: any) {
+    return item.trackId;
   }
 }

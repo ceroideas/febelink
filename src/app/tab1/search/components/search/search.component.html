@@ -454,7 +454,7 @@
         <p>{{metaDescription}}</p>
       </ion-col>
       <ion-col id="location-links-desktop">
-        <div class="container" *ngIf="locationFilter == 'Málaga'">
+        <div class="container" *ngIf="locationFilterLink.length > 0">
           <h2>Los mejores profesionales en {{locationFilter}}</h2>
           <ng-container *ngFor="let location of locationFilterLink">
         <span><ion-icon name="location-outline"></ion-icon> <a
@@ -671,7 +671,18 @@
             </ion-col>-->
     </ion-row>
   </div>
-
+  <section id="location-links-mobile" class="mobile" *ngIf="locationFilterLink.length > 0">
+    <div class="container">
+      <h2>Los mejores profesionales en {{locationFilter}}</h2>
+      <ng-container *ngFor="let location of locationFilterLink">
+        <span><ion-icon name="location-outline"></ion-icon> <a
+          (click)="changeMetaFilter(location.sector, location.link)"
+          [href]="'/listado/' + location.link"
+        >{{location.title}}</a>
+        </span>
+      </ng-container>
+    </div>
+  </section>
   <section id="all-services">
     <h2>Todos los servicios profesionales en un mismo sitio</h2>
     <div id="services-container">
@@ -729,13 +740,15 @@
   <section id="best-prof-links">
     <div class="container">
       <h2>Los mejores profesionales de toda España están en Febelink</h2>
-      <ng-container *ngFor="let location of locationLinks">
+      <div class="links">
+        <ng-container *ngFor="let location of locationLinks; trackBy: trackItem">
         <span><ion-icon name="location-outline"></ion-icon> <a
           (click)="changeFilter(location.title, location.link)"
           [href]="'/listado/' + location.link"
         >{{location.title}}</a>
         </span>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
   </section>
   <section id="oracle-section">
@@ -756,18 +769,6 @@
       <p>✓ Recibe gratis los beneficios de nuestras soluciones de marketing digital</p>
       <p>✓ Accede a beneficios extras a muy bajo costo</p>
       <div class="button" [routerLink]="'/registro'">Regístrate ahora</div>
-    </div>
-  </section>
-  <section id="location-links-mobile" class="mobile" *ngIf="locationFilter == 'Málaga'">
-    <div class="container">
-      <h2>Los mejores profesionales en {{locationFilter}}</h2>
-      <ng-container *ngFor="let location of locationFilterLink">
-        <span><ion-icon name="location-outline"></ion-icon> <a
-          (click)="changeMetaFilter(location.sector, location.link)"
-          [href]="'/listado/' + location.link"
-        >{{location.title}}</a>
-        </span>
-      </ng-container>
     </div>
   </section>
 </ion-grid>

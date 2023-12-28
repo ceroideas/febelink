@@ -83,7 +83,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
 
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.searchTerm = params.get('searchTerm').replace(new RegExp('-', 'g'), ' ');
+      this.searchTerm = params.get('searchTerm')?.replace(new RegExp('-', 'g'), ' ');
     });
 
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {

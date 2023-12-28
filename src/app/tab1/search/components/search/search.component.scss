@@ -570,24 +570,34 @@ section {
       }
     }
 
-    span {
+    .links {
+      width: 100%;
+      height: 60em;
       display: flex;
-      margin: 5px auto;
-      justify-content: center;
-      align-items: center;
-      font-weight: 500;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: space-around;
+      justify-content: flex-start;
 
-      ion-icon {
-        margin-right: 2px;
-        font-size: 1.2em;
-      }
+      span {
+        display: flex;
+        margin: 5px auto;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
 
-      a {
-        text-decoration: none;
-      }
+        ion-icon {
+          margin-right: 2px;
+          font-size: 1.2em;
+        }
 
-      a:hover {
-        text-decoration: underline;
+        a {
+          text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
