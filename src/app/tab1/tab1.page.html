@@ -10,6 +10,7 @@
               style="width: 100%; opacity: 40%;"
               *ngIf="searchService.show_imagen"
               src="assets/imgs/buscador_fondo_desktop.png"
+              alt="imagen buscador"
             />
           </ion-col>
         </ion-row>
@@ -22,9 +23,7 @@
                 class="service-button"
               >Ofrece tus servicios
               </ion-button>
-              <ion-label *ngIf="searchService.show_imagen" class="text_buscador"
-              >{{ generalTitle }}</ion-label
-              >
+              <h1 *ngIf="searchService.show_imagen" class="text_buscador">{{ generalTitle }}</h1>
             </ion-row>
             <ion-row size="12">
               <app-search

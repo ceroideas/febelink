@@ -8,7 +8,6 @@
       placeholder="{{ 'common.publishPlaceholder' | translate }}"
       [(ngModel)]="searchText"
       (keydown.enter)="search()"
-      debounce="500"
       style="--box-shadow: none"
     ></ion-searchbar>
   </ion-row>
@@ -353,7 +352,7 @@
     <ion-row *ngIf="searchResponse" class="recommendations-desktop" size="12">
       <ion-col style="flex-basis: 60%">
         <ng-container *ngIf="searchResponse?.services?.length > 0">
-          <h1 class="list_title_card">{{resultTitle}}</h1>
+          <h2 class="list_title_card">{{resultTitle}}</h2>
           <ion-row
             size="12"
             class="list-panel"
@@ -455,10 +454,14 @@
       </ion-col>
       <ion-col id="location-links-desktop">
         <div class="container" *ngIf="locationFilterLink.length > 0">
-          <h2>Los mejores profesionales en {{locationFilter}}</h2>
+          <h3>Los mejores profesionales en {{locationFilter}}</h3>
           <ng-container *ngFor="let location of locationFilterLink">
         <span><ion-icon name="location-outline"></ion-icon> <a
-          (click)="changeMetaFilter(location.sector, location.link)">{{location.title}}</a>
+          (click)="changeMetaFilter(location.sector, location.link)"
+          [href]="'/listado/' + location.link"
+        >
+          {{location.title}}
+        </a>
         </span>
           </ng-container>
         </div>

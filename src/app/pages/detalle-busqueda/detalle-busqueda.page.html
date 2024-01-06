@@ -53,11 +53,12 @@
               <ion-img
                 *ngIf="detalle?.ownerAvatar"
                 [src]="detalle?.ownerAvatar"
+                [alt]="detalle?.ownerUsername + ' avatar'"
               ></ion-img>
             </ion-avatar>
           </div>
-          <span (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
-            <h2>{{detalle?.ownerUsername}}</h2>
+          <span>
+            <h2><a [routerLink]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
           </span>
           <div
             class="chat-button"
@@ -101,7 +102,7 @@
         </ion-row>
         <ion-row class="guarantee" (click)="irA('/use-conditions')">
           <ion-img
-            src="assets/imgs/guarantee.jpeg"></ion-img>
+            src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
           <div style="width: 70%; padding: 10px;">
             <span>Con la garantía de Febelink.</span>
             <br>
@@ -130,7 +131,7 @@
               [thumbs]="{ swiper: thumbsSwiper }"
             >
               <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-                <ion-img [src]="imageURL"></ion-img>
+                <ion-img [src]="imageURL" [alt]="detalle?.title"></ion-img>
               </ng-template>
             </swiper>
             <!--              wrapperClass="gallery-thumbs"-->
@@ -531,7 +532,7 @@
     </ion-row>
     <ion-row class="guarantee" (click)="irA('/use-conditions')">
       <ion-img
-        src="assets/imgs/guarantee.jpeg"></ion-img>
+        src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
       <div style="width: 85%; padding: 10px;">
         <span>Con la garantía de Febelink.</span>
         <br>

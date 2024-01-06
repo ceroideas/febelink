@@ -62,7 +62,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   searchTerm: string;
 
-  generalTitle = 'Encuentra servicios profesionales en tu ciudad';
+  defaultTitle = 'Encuentra servicios profesionales en tu ciudad';
+  generalTitle = this.defaultTitle;
 
   constructor(
     private api: ApiService,
@@ -129,7 +130,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.searchTerm) {
-      this.searchComponent.search(this.searchTerm);
+      this.searchComponent.search(this.searchTerm, false);
     }
   }
 

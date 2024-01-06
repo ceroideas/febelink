@@ -336,6 +336,13 @@ ion-footer {
     font-size: 10px;
     margin-left: 5px;
   }
+
+  h2 {
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
 }
 
 .product-price {
