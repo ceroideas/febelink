@@ -94,7 +94,7 @@
           <ion-col class="buy-button"
                    (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
             <!--          <ion-col class="buy-button" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
-            <span>Comprar ahora</span>
+            <span>Solicitar ahora</span>
           </ion-col>
           <ion-col class="add-cart-button" (click)="addToCart()">
             <span>Añadir al carrito</span>
@@ -549,7 +549,7 @@
         <ion-button expand class="botonf1" type="submit"
                     (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
           <!--        <ion-button expand class="botonf1" type="submit" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
-          Comprar ahora
+          Solicitar ahora
         </ion-button
         >
       </ion-row>

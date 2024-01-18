@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,7 +10,7 @@ export class HeaderComponent {
 
   @Input() currentUser;
 
-  constructor(private router: Router,) {
+  constructor(private router: Router,  private location: Location) {
   }
 
   perfil;
@@ -18,6 +18,7 @@ export class HeaderComponent {
   onImgError;
 
   irA(value) {
-    this.router.navigate([value]);
+    window.location.href = value;
+    // this.router.navigate([value]);
   };
 }

@@ -227,7 +227,7 @@
           >
             <ion-slide
               *ngFor="let data of recommendations?.specialOffer"
-              (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
+              (click)="irA('/servicio/' + data?.title + '/detail/' + data?.id)"
             >
               <div class="special-offer-image" slot="start">
                 <ion-img
@@ -470,7 +470,7 @@
         <ion-label class="list_title_card"> Ofertas</ion-label>
         <ng-container *ngFor="let data of searchResponse?.offers">
           <ion-row
-            (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
+            (click)="irA('/servicio/' + data?.title + '/detail/' + data?.id)"
             class="list-panel"
           >
             <ion-col size="12">
@@ -578,7 +578,7 @@
           }}</ion-label>
         <ng-container *ngFor="let data of recommendations?.specialOffer">
           <ion-row
-            (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
+            (click)="irA('/servicio/' + data?.title + '/detail/' + data?.id)"
             class="list-panel"
           >
             <ion-col size="12">

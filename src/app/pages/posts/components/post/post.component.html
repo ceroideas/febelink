@@ -32,7 +32,7 @@
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
     >
-      <a [routerLink]="'/posts/oracle/' + id ">
+      <a (click)="watch()">
         <!-- Image -->
         <ion-img
           class="h-social-media marg-se media"
@@ -134,7 +134,7 @@
       class="marg-t10"
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
     >
-      <a [routerLink]="'/posts/oracle/' + id ">
+      <a (click)="watch()">
         <!-- Image -->
         <ion-img
           class="h-social-media marg-se media"

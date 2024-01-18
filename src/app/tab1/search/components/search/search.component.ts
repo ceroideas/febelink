@@ -1515,6 +1515,8 @@ export class SearchComponent implements AfterViewInit {
     private title: Title,
     private location: Location
   ) {
+
+    
     this.type = 'resultado';
     this.services = this.services.sort((a, b) => 0.5 - Math.random());
     this.sectors = this.sectors.sort((a, b) => 0.5 - Math.random());
@@ -1574,6 +1576,7 @@ export class SearchComponent implements AfterViewInit {
 
   segmentChanged(event) {
     console.log(event);
+ 
   }
 
   public irA(p: string): void {
@@ -1646,7 +1649,6 @@ export class SearchComponent implements AfterViewInit {
     const link = this.locationFilterLinkFull.find(item => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
     )
-
     if ( link ) {
       const metaLink = this.metaFilterLink.find(item => item.location === link.location && item.sector === link.sector);
       
@@ -1674,8 +1676,12 @@ export class SearchComponent implements AfterViewInit {
         }
       }
 
+     
       this.location.go(`listado/${link.link}`)
+     
     } else {
+
+      let searchText = this.searchText.replace(new RegExp(' ', 'g'), '-');
       // No link available
       this.title.setTitle(GENERAL_TITLE);
       this.generalTitle.emit('Encuentra servicios profesionales en tu ciudad');
@@ -1687,6 +1693,8 @@ export class SearchComponent implements AfterViewInit {
         this.changeFilter(null, null);
         this.changeMetaFilter(null, null);
       }
+
+      this.location.go(`listado/${searchText}`)
     }
   }
 

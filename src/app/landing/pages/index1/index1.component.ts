@@ -39,8 +39,8 @@ export class Index1Component implements OnInit {
 
   ngOnInit() {
     this.seoSvc.generateTags({
-          title: 'Febelink Token'
-        , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
+          title: 'Febelink token FLAU '
+        , description: 'El token FLAU de Febelink permite hacer transacciones sencillas y beneficios en las compras'
         , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
     })
   }

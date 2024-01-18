@@ -16,7 +16,7 @@ import {IonInfiniteScroll} from '@ionic/angular';
 import {SeoService} from 'src/app/services/seo.service';
 
 const GENERAL_TITLE = 'Feed Oráculo | Febelink ¿Qué necesitas?';
-
+const GENERAL_DESC = 'Trucos y consejos de servicios profesionales. El lugar donde compartir experiencias y soluciones';
 @Component({
   selector: 'app-post-advises',
   templateUrl: './advises.page.html',
@@ -85,6 +85,8 @@ export class AdvisesPage implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
     // To refresh list on routing to this page
     this.router.addListener((url: string, params: Params) => {
       if (['posts', '/posts/oracles', 'posts/oraculos'].includes(url)) {
@@ -93,7 +95,6 @@ export class AdvisesPage implements OnInit {
       this.getUser();
     });
     this.clear2search();
-    this.seoService.generateTags({title: GENERAL_TITLE});
   }
 
   async getUser() {
