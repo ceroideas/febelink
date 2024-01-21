@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+User-agent: *
+Disallow: /chat/
+Disallow: /professions/
+Disallow: /subscriptions/
+Disallow: /wallet/
+Disallow: /cart/
+Disallow: /services/
+Disallow: /notifications/
+Disallow: /privacy-policy/
+Disallow: /use-conditions/
+Sitemap: https://www.febelink.com/sitemap.xml
