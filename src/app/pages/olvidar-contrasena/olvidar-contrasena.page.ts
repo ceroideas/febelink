@@ -22,6 +22,8 @@ export class OlvidarContrasenaPage implements OnInit {
 
   redirect: string;
 
+  homePage;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
@@ -77,4 +79,8 @@ export class OlvidarContrasenaPage implements OnInit {
       this.utilities.dismissLoading();
     }
   }
+
+  irA(value) {
+    this.router.navigate([value]);
+  };
 }

@@ -17,10 +17,13 @@ const routes: Routes = [
 
   /* Read */
   , { path: ':id', component: AdvisePage }
-
+  , { path: ':id/:title', component: AdvisePage }
   /* Update | Edit | Delete */
   , { path: ':id/edit', component: AdviseCRUDPage }
+  , { path: ':id/:title/edit', component: AdviseCRUDPage }
   , { path: ':id/editar', component: AdviseCRUDPage }
+
+  
 ];
 
 @NgModule({

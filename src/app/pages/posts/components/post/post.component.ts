@@ -110,6 +110,8 @@ export class PostComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+ 
     this.metaService.updateTag({
       property: 'og:image',
       content: this.iAdvise?.media_url,
@@ -270,4 +272,14 @@ export class PostComponent implements OnInit, AfterViewInit {
       console.log('ups', error);
     }
   };
+
+  watch() {
+    let searchText = ''
+    if ( this.iAdvise.title == null || this.iAdvise.title == undefined || this.iAdvise.title == '' ) {
+      this.router.navigate([`posts/oracle/${this.id}`]);
+    }else{
+      searchText = this.iAdvise.title.replace(new RegExp(' ', 'g'), '-');
+      this.router.navigate([`posts/oracle/${this.id}/${this.iAdvise.title}`]);
+    }
+  }
 }

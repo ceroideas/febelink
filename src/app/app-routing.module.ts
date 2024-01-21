@@ -272,7 +272,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'product/:title/detail/:id',
+    path: 'servicio/:title/detail/:id',
     loadChildren: () =>
       import('./pages/detalle-busqueda/detalle-busqueda.module').then(
         (m) => m.DetalleBusquedaPageModule

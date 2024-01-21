@@ -13,6 +13,14 @@ import { ApiService } from 'src/app/services/api.service';
 import { filter } from 'rxjs/operators';
 import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
 import { CartServiceShow } from '../../../services/cart.service';
+import { SeoService } from 'src/app/services/seo.service';
+
+const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
+const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
+
+
+const GENERAL_TITLE_ORACULO = 'Feed Oráculo | Febelink ¿Qué necesitas?';
+const GENERAL_DESC_ORACULO = 'Trucos y consejos de servicios profesionales. El lugar donde compartir experiencias y soluciones';
 
 @Component({
   selector: 'app-header-buttons',
@@ -40,7 +48,8 @@ export class HeaderButtonsComponent implements OnInit {
     private translateService: TranslateService,
     private utilities: UtilitiesService,
     private notificationsSvc: NotificationService,
-    public cartServiceShow: CartServiceShow
+    public cartServiceShow: CartServiceShow,
+    private seoSvc: SeoService,
   ) {}
 
   async ngOnInit() {
@@ -97,16 +106,16 @@ export class HeaderButtonsComponent implements OnInit {
   }
 
   async irA(p: string): Promise<void> {
+
+    if (p === '/oracles') {
+      this.seoSvc.generateTags({title: GENERAL_TITLE_ORACULO, description: GENERAL_DESC_ORACULO});
+    } else  {
+      this.seoSvc.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+    }
+    
     this.router.navigate([p]);
 
-    // if (p === '/menu/perfil') {
-    //   if (!this.perfil) {
-    //     this.router.navigate(['login']);
-    //   } else {
-    //     this.router.navigate(['/menu/perfil']);
-    //   }
-    // } else {
-    // }
+   
   }
 
   async shareFebelink(ev: any) {

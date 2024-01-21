@@ -25,7 +25,7 @@ import {Meta, Title} from '@angular/platform-browser';
 SwiperCore.use([Thumbs, Pagination]);
 
 const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
-const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
+const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
 
 @Component({
   selector: 'app-tab1',
@@ -86,7 +86,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.searchTerm = params.get('searchTerm')?.replace(new RegExp('-', 'g'), ' ');
     });
-
+    
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.userLogged = true;
       console.log('this.userLogged', this.userLogged);
@@ -105,6 +105,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
+  
       const sector = params['sector'] !== 'null' ? params['sector'] : null;
       const servicio =
         params['servicio'] !== 'null' ? params['servicio'] : null;

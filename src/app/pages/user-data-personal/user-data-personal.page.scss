@@ -203,6 +203,10 @@ ion-header {
   padding-left: 16px;
   padding-bottom: 16px;
   padding-right: 16px;
+
+  &.item-credit-card{
+    display: none
+  }
 }
 
 .margin_05 {

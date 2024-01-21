@@ -1,0 +1,604 @@
+From 34133993fb81420f9292ead66f147e7ab12df0b5 Mon Sep 17 00:00:00 2001
+From: Noelia <noelia.dominguez@xiltec.es>
+Date: Thu, 18 Jan 2024 12:50:28 +0100
+Subject: [PATCH] feat: modificaciones y actualizaciones varias
+
+---
+ src/app/app-routing.module.ts                 |  2 +-
+ src/app/components/cart/cart.component.html   |  2 +-
+ .../components/header/header.component.html   |  2 +-
+ src/app/components/header/header.component.ts |  7 ++---
+ .../landing/pages/index1/index1.component.ts  |  4 +--
+ src/app/pages/cart/cart.page.html             |  2 +-
+ .../detalle-busqueda.page.html                |  4 +--
+ .../olvidar-contrasena.page.html              |  4 +--
+ .../olvidar-contrasena.page.scss              |  1 +
+ .../olvidar-contrasena.page.ts                |  6 +++++
+ .../posts/advises/advise-routing.module.ts    |  5 +++-
+ .../posts/advises/advises/advises.page.html   | 10 +++----
+ .../posts/advises/advises/advises.page.scss   |  9 ++++++-
+ .../posts/advises/advises/advises.page.ts     |  5 ++--
+ .../bottom-bar/bottom-bar.component.ts        |  8 +++++-
+ .../posts/components/post/post.component.html |  4 +--
+ .../posts/components/post/post.component.ts   | 12 +++++++++
+ .../user-data-personal.page.html              |  4 +--
+ .../user-data-personal.page.scss              |  4 +++
+ .../header-buttons.component.ts               | 27 ++++++++++++-------
+ .../product-card/product-card.component.html  |  2 +-
+ .../components/search/search.component.html   |  6 ++---
+ .../components/search/search.component.ts     | 10 ++++++-
+ src/app/tab1/tab1.page.ts                     |  5 ++--
+ src/assets/i18n/es.json                       |  2 +-
+ 25 files changed, 103 insertions(+), 44 deletions(-)
+
+diff --git a/src/app/app-routing.module.ts b/src/app/app-routing.module.ts
+index 5ebe3750..d9287a21 100644
+--- a/src/app/app-routing.module.ts
++++ b/src/app/app-routing.module.ts
+@@ -272,7 +272,7 @@ const routes: Routes = [
+       ),
+   },
+   {
+-    path: 'product/:title/detail/:id',
++    path: 'servicio/:title/detail/:id',
+     loadChildren: () =>
+       import('./pages/detalle-busqueda/detalle-busqueda.module').then(
+         (m) => m.DetalleBusquedaPageModule
+diff --git a/src/app/components/cart/cart.component.html b/src/app/components/cart/cart.component.html
+index 189d2ea7..abab921e 100644
+--- a/src/app/components/cart/cart.component.html
++++ b/src/app/components/cart/cart.component.html
+@@ -20,7 +20,7 @@
+           Vaciar carrito
+         </div>
+         <div class="top-content-buttons-primary" (click)="buyCart()">
+-          Comprar
++          Solicitar
+         </div>
+       </div>
+     </div>
+diff --git a/src/app/components/header/header.component.html b/src/app/components/header/header.component.html
+index 3a83e8f2..f81bf579 100644
+--- a/src/app/components/header/header.component.html
++++ b/src/app/components/header/header.component.html
+@@ -24,7 +24,7 @@
+       <ion-img tappable
+                src="assets/imgs/logo.png"
+                alt="Febelink logo"
+-               (click)="irA('/' + homePage)"
++               (click)="irA('/listado')"
+                class="ion-margin logo"></ion-img>
+     </ion-buttons>
+   </ion-toolbar>
+diff --git a/src/app/components/header/header.component.ts b/src/app/components/header/header.component.ts
+index ccca08ad..3babd17d 100644
+--- a/src/app/components/header/header.component.ts
++++ b/src/app/components/header/header.component.ts
+@@ -1,6 +1,6 @@
+ import {Component, Input, OnInit} from '@angular/core';
+ import {Router} from '@angular/router';
+-
++import { Location } from '@angular/common';
+ @Component({
+   selector: 'app-header',
+   templateUrl: './header.component.html',
+@@ -10,7 +10,7 @@ export class HeaderComponent {
+ 
+   @Input() currentUser;
+ 
+-  constructor(private router: Router,) {
++  constructor(private router: Router,  private location: Location) {
+   }
+ 
+   perfil;
+@@ -18,6 +18,7 @@ export class HeaderComponent {
+   onImgError;
+ 
+   irA(value) {
+-    this.router.navigate([value]);
++    window.location.href = value;
++    // this.router.navigate([value]);
+   };
+ }
+diff --git a/src/app/landing/pages/index1/index1.component.ts b/src/app/landing/pages/index1/index1.component.ts
+index 4b3d5e6b..264b5f24 100644
+--- a/src/app/landing/pages/index1/index1.component.ts
++++ b/src/app/landing/pages/index1/index1.component.ts
+@@ -39,8 +39,8 @@ export class Index1Component implements OnInit {
+ 
+   ngOnInit() {
+     this.seoSvc.generateTags({
+-          title: 'Febelink Token'
+-        , description: 'Apúntate a la Whitelist y accede a la venta pública del token Áureo de Febelink'
++          title: 'Febelink token FLAU '
++        , description: 'El token FLAU de Febelink permite hacer transacciones sencillas y beneficios en las compras'
+         , image: 'http://test.febelink.com/assets/imgs/token-share-img.png'
+     })
+   }
+diff --git a/src/app/pages/cart/cart.page.html b/src/app/pages/cart/cart.page.html
+index 957a8a4d..bcd4ad29 100644
+--- a/src/app/pages/cart/cart.page.html
++++ b/src/app/pages/cart/cart.page.html
+@@ -56,7 +56,7 @@
+ 
+       <div class="carrito-buttons carrito-buttons-height-a">
+         <div class="carrito-button-primary" (click)="buyCart()">
+-          Comprar
++          Solicitar
+         </div>
+         <div class="carrito-button-secondary" (click)="goToBuscador()">
+           Seguir comprando
+diff --git a/src/app/pages/detalle-busqueda/detalle-busqueda.page.html b/src/app/pages/detalle-busqueda/detalle-busqueda.page.html
+index 6c0f4d5f..2a0930b0 100644
+--- a/src/app/pages/detalle-busqueda/detalle-busqueda.page.html
++++ b/src/app/pages/detalle-busqueda/detalle-busqueda.page.html
+@@ -94,7 +94,7 @@
+           <ion-col class="buy-button"
+                    (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
+             <!--          <ion-col class="buy-button" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
+-            <span>Comprar ahora</span>
++            <span>Solicitar ahora</span>
+           </ion-col>
+           <ion-col class="add-cart-button" (click)="addToCart()">
+             <span>Añadir al carrito</span>
+@@ -549,7 +549,7 @@
+         <ion-button expand class="botonf1" type="submit"
+                     (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
+           <!--        <ion-button expand class="botonf1" type="submit" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
+-          Comprar ahora
++          Solicitar ahora
+         </ion-button
+         >
+       </ion-row>
+diff --git a/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.html b/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.html
+index 3960ad64..d10ace57 100644
+--- a/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.html
++++ b/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.html
+@@ -4,7 +4,7 @@
+ 
+     <div class="login-header-b">
+       <div class="login-header-left">
+-        <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo-b" />
++        <img src="assets/imgs/logo.png" alt="logo"    (click)="irA('/' + homePage)" class="login-header-logo-b" />
+       </div>
+       <div class="login-header-right">
+         <app-lang-btn></app-lang-btn>
+@@ -43,7 +43,7 @@
+   <div class="mobile">
+     <div class="login-header">
+       <div class="login-header-left">
+-        <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo" />
++        <img src="assets/imgs/logo.png"    (click)="irA('/' + homePage)" alt="logo" class="login-header-logo" />
+       </div>
+       <div class="login-header-right">
+         <app-lang-btn></app-lang-btn>
+diff --git a/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.scss b/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.scss
+index f4210789..5ab07474 100644
+--- a/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.scss
++++ b/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.scss
+@@ -37,6 +37,7 @@ ion-content {
+ }
+ .login-header-left {
+     display:table-cell;vertical-align:middle;text-align:left;
++    cursor: pointer;
+ }
+ .login-header-logo {
+     width:96px;margin-top:6px;
+diff --git a/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.ts b/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.ts
+index 142c3f3c..44aa8718 100644
+--- a/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.ts
++++ b/src/app/pages/olvidar-contrasena/olvidar-contrasena.page.ts
+@@ -22,6 +22,8 @@ export class OlvidarContrasenaPage implements OnInit {
+ 
+   redirect: string;
+ 
++  homePage;
++
+   constructor(
+     private formBuilder: UntypedFormBuilder,
+     private modalCtrl: ModalController,
+@@ -77,4 +79,8 @@ export class OlvidarContrasenaPage implements OnInit {
+       this.utilities.dismissLoading();
+     }
+   }
++
++  irA(value) {
++    this.router.navigate([value]);
++  };
+ }
+diff --git a/src/app/pages/posts/advises/advise-routing.module.ts b/src/app/pages/posts/advises/advise-routing.module.ts
+index fde42899..43e8a0cb 100644
+--- a/src/app/pages/posts/advises/advise-routing.module.ts
++++ b/src/app/pages/posts/advises/advise-routing.module.ts
+@@ -17,10 +17,13 @@ const routes: Routes = [
+ 
+   /* Read */
+   , { path: ':id', component: AdvisePage }
+-
++  , { path: ':id/:title', component: AdvisePage }
+   /* Update | Edit | Delete */
+   , { path: ':id/edit', component: AdviseCRUDPage }
++  , { path: ':id/:title/edit', component: AdviseCRUDPage }
+   , { path: ':id/editar', component: AdviseCRUDPage }
++
++  
+ ];
+ 
+ @NgModule({
+diff --git a/src/app/pages/posts/advises/advises/advises.page.html b/src/app/pages/posts/advises/advises/advises.page.html
+index da838ecf..263697df 100644
+--- a/src/app/pages/posts/advises/advises/advises.page.html
++++ b/src/app/pages/posts/advises/advises/advises.page.html
+@@ -2,9 +2,9 @@
+   <div class="mobile">
+     <div class="top-create-post">
+       <div class="top-create-post-left">
+-        <div (click)="createPost()" class="top-create-post-left-inside">
+-          Comparte tus noticias y comentarios
+-        </div>
++        <h1 class="top-create-post-left-inside">
++          Comparte tus trabajos, trucos y consejos
++        </h1>
+       </div>
+       <div class="top-create-post-right">
+         <img src="assets/icon/svg/filter-post.svg" (click)="showFilters = !showFilters" class="top-create-post-svg" />
+@@ -33,8 +33,8 @@
+     <div *ngIf="!adviseSvc.showCreatePost" class="desktop">
+       <div class="top-create-post-b">
+         <div class="top-create-post-left">
+-          <div (click)="adviseSvc.showCreatePost = !adviseSvc.showCreatePost" class="top-create-post-left-inside">
+-            Comparte tus noticias y comentarios
++          <div  class="top-create-post-left-inside">
++            Comparte tus trabajos, trucos y consejos
+           </div>
+         </div>
+         <div class="top-create-post-right-b">
+diff --git a/src/app/pages/posts/advises/advises/advises.page.scss b/src/app/pages/posts/advises/advises/advises.page.scss
+index ea1e901e..f6fe33ec 100644
+--- a/src/app/pages/posts/advises/advises/advises.page.scss
++++ b/src/app/pages/posts/advises/advises/advises.page.scss
+@@ -113,7 +113,14 @@
+     display:table-cell;vertical-align:middle;
+ }
+ .top-create-post-left-inside {
+-    cursor:pointer;background: #FFFFFF;border: 1px solid #D1D5DB;border-radius: 8px;padding: 12px 16px;width:100%;max-width:645px;font-weight: 400;font-size: 14px;line-height: 125%;color: #6B7280;
++    border-radius: 8px;
++    padding: 12px 16px;
++    width: 100%;
++    max-width: 645px;
++    font-weight: bold;
++    font-size: 1.2rem;
++    line-height: 125%;
++    color: #000000;
+ }
+ .top-create-post-right {
+     display:table-cell;vertical-align:middle;width:40px;text-align:right;
+diff --git a/src/app/pages/posts/advises/advises/advises.page.ts b/src/app/pages/posts/advises/advises/advises.page.ts
+index 4861c1c5..6e0b72f0 100644
+--- a/src/app/pages/posts/advises/advises/advises.page.ts
++++ b/src/app/pages/posts/advises/advises/advises.page.ts
+@@ -16,7 +16,7 @@ import {IonInfiniteScroll} from '@ionic/angular';
+ import {SeoService} from 'src/app/services/seo.service';
+ 
+ const GENERAL_TITLE = 'Feed Oráculo | Febelink ¿Qué necesitas?';
+-
++const GENERAL_DESC = 'Trucos y consejos de servicios profesionales. El lugar donde compartir experiencias y soluciones';
+ @Component({
+   selector: 'app-post-advises',
+   templateUrl: './advises.page.html',
+@@ -85,6 +85,8 @@ export class AdvisesPage implements OnInit {
+   }
+ 
+   ngOnInit() {
++    
++    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+     // To refresh list on routing to this page
+     this.router.addListener((url: string, params: Params) => {
+       if (['posts', '/posts/oracles', 'posts/oraculos'].includes(url)) {
+@@ -93,7 +95,6 @@ export class AdvisesPage implements OnInit {
+       this.getUser();
+     });
+     this.clear2search();
+-    this.seoService.generateTags({title: GENERAL_TITLE});
+   }
+ 
+   async getUser() {
+diff --git a/src/app/pages/posts/components/bottom-bar/bottom-bar.component.ts b/src/app/pages/posts/components/bottom-bar/bottom-bar.component.ts
+index a9575d32..422f10ce 100644
+--- a/src/app/pages/posts/components/bottom-bar/bottom-bar.component.ts
++++ b/src/app/pages/posts/components/bottom-bar/bottom-bar.component.ts
+@@ -86,6 +86,12 @@ export class PostBottomBarComponent implements OnInit {
+   }
+ 
+   watch() {
+-    this.router.navigate([`posts/oracle/${this.id}`]);
++    let searchText = ''
++    if ( this.post.title == null || this.post.title == undefined || this.post.title == '' ) {
++    }else{
++      searchText = this.post.title.replace(new RegExp(' ', 'g'), '-');
++    }
++   
++    this.router.navigate([`posts/oracle/${this.id}/${searchText}`]);
+   }
+ }
+diff --git a/src/app/pages/posts/components/post/post.component.html b/src/app/pages/posts/components/post/post.component.html
+index 0f0c400e..73099121 100644
+--- a/src/app/pages/posts/components/post/post.component.html
++++ b/src/app/pages/posts/components/post/post.component.html
+@@ -32,7 +32,7 @@
+       class="marg-t10"
+       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
+     >
+-      <a [routerLink]="'/posts/oracle/' + id ">
++      <a (click)="watch()">
+         <!-- Image -->
+         <ion-img
+           class="h-social-media marg-se media"
+@@ -134,7 +134,7 @@
+       class="marg-t10"
+       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
+     >
+-      <a [routerLink]="'/posts/oracle/' + id ">
++      <a (click)="watch()">
+         <!-- Image -->
+         <ion-img
+           class="h-social-media marg-se media"
+diff --git a/src/app/pages/posts/components/post/post.component.ts b/src/app/pages/posts/components/post/post.component.ts
+index 201c2f3b..c06c8335 100644
+--- a/src/app/pages/posts/components/post/post.component.ts
++++ b/src/app/pages/posts/components/post/post.component.ts
+@@ -110,6 +110,8 @@ export class PostComponent implements OnInit, AfterViewInit {
+   }
+ 
+   ngOnInit() {
++
++ 
+     this.metaService.updateTag({
+       property: 'og:image',
+       content: this.iAdvise?.media_url,
+@@ -270,4 +272,14 @@ export class PostComponent implements OnInit, AfterViewInit {
+       console.log('ups', error);
+     }
+   };
++
++  watch() {
++    let searchText = ''
++    if ( this.iAdvise.title == null || this.iAdvise.title == undefined || this.iAdvise.title == '' ) {
++      this.router.navigate([`posts/oracle/${this.id}`]);
++    }else{
++      searchText = this.iAdvise.title.replace(new RegExp(' ', 'g'), '-');
++      this.router.navigate([`posts/oracle/${this.id}/${this.iAdvise.title}`]);
++    }
++  }
+ }
+diff --git a/src/app/pages/user-data-personal/user-data-personal.page.html b/src/app/pages/user-data-personal/user-data-personal.page.html
+index c9b73280..98c2124a 100644
+--- a/src/app/pages/user-data-personal/user-data-personal.page.html
++++ b/src/app/pages/user-data-personal/user-data-personal.page.html
+@@ -106,7 +106,7 @@
+                           </ion-select>
+                         </ion-col>
+                       </ion-row>
+-                      <ion-row class="row_padding_top">
++                      <ion-row class="row_padding_top item-credit-card">
+                         <ion-col size="12">
+                           <ion-label class="text_label_form">Tarjeta de crédito</ion-label>
+                           <ion-input formControlName="tarjeta_credito" placeholder="Tarjeta de crédito" type="text"
+@@ -174,7 +174,7 @@
+                              class="padding-input-12 userform-input-desktop"></ion-input>
+                 </ion-col>
+               </ion-row>
+-              <ion-row class="row_padding_top">
++              <ion-row class="row_padding_top item-credit-card">
+                 <ion-col size="10">
+                   <ion-label class="text_label_form">Tarjeta de crédito</ion-label>
+                   <ion-input formControlName="tarjeta_credito" placeholder="Tarjeta de crédito" type="text"
+diff --git a/src/app/pages/user-data-personal/user-data-personal.page.scss b/src/app/pages/user-data-personal/user-data-personal.page.scss
+index 7aaeae31..0b24eff5 100644
+--- a/src/app/pages/user-data-personal/user-data-personal.page.scss
++++ b/src/app/pages/user-data-personal/user-data-personal.page.scss
+@@ -203,6 +203,10 @@ ion-header {
+   padding-left: 16px;
+   padding-bottom: 16px;
+   padding-right: 16px;
++
++  &.item-credit-card{
++    display: none
++  }
+ }
+ 
+ .margin_05 {
+diff --git a/src/app/shared/components/header-buttons/header-buttons.component.ts b/src/app/shared/components/header-buttons/header-buttons.component.ts
+index 31b9e2cd..ff77d641 100644
+--- a/src/app/shared/components/header-buttons/header-buttons.component.ts
++++ b/src/app/shared/components/header-buttons/header-buttons.component.ts
+@@ -13,6 +13,14 @@ import { ApiService } from 'src/app/services/api.service';
+ import { filter } from 'rxjs/operators';
+ import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
+ import { CartServiceShow } from '../../../services/cart.service';
++import { SeoService } from 'src/app/services/seo.service';
++
++const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
++const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
++
++
++const GENERAL_TITLE_ORACULO = 'Feed Oráculo | Febelink ¿Qué necesitas?';
++const GENERAL_DESC_ORACULO = 'Trucos y consejos de servicios profesionales. El lugar donde compartir experiencias y soluciones';
+ 
+ @Component({
+   selector: 'app-header-buttons',
+@@ -40,7 +48,8 @@ export class HeaderButtonsComponent implements OnInit {
+     private translateService: TranslateService,
+     private utilities: UtilitiesService,
+     private notificationsSvc: NotificationService,
+-    public cartServiceShow: CartServiceShow
++    public cartServiceShow: CartServiceShow,
++    private seoSvc: SeoService,
+   ) {}
+ 
+   async ngOnInit() {
+@@ -97,16 +106,16 @@ export class HeaderButtonsComponent implements OnInit {
+   }
+ 
+   async irA(p: string): Promise<void> {
++
++    if (p === '/oracles') {
++      this.seoSvc.generateTags({title: GENERAL_TITLE_ORACULO, description: GENERAL_DESC_ORACULO});
++    } else  {
++      this.seoSvc.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
++    }
++    
+     this.router.navigate([p]);
+ 
+-    // if (p === '/menu/perfil') {
+-    //   if (!this.perfil) {
+-    //     this.router.navigate(['login']);
+-    //   } else {
+-    //     this.router.navigate(['/menu/perfil']);
+-    //   }
+-    // } else {
+-    // }
++   
+   }
+ 
+   async shareFebelink(ev: any) {
+diff --git a/src/app/tab1/search/components/product-card/product-card.component.html b/src/app/tab1/search/components/product-card/product-card.component.html
+index 88a49501..8a479ede 100644
+--- a/src/app/tab1/search/components/product-card/product-card.component.html
++++ b/src/app/tab1/search/components/product-card/product-card.component.html
+@@ -1,6 +1,6 @@
+ <ion-item lines="none"
+           class="ion-no-padding ion-no-margin search-product keys-dropdown">
+-  <a [href]="'/product/' + removeBlankSpace(data?.title) + '/detail/' + data?.id">
++  <a [href]="'/servicio/' + removeBlankSpace(data?.title) + '/detail/' + data?.id">
+     <div class="product-view">
+       <div class="avatar_dropdown" slot="start">
+         <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
+diff --git a/src/app/tab1/search/components/search/search.component.html b/src/app/tab1/search/components/search/search.component.html
+index 43144cb7..0b29eefd 100644
+--- a/src/app/tab1/search/components/search/search.component.html
++++ b/src/app/tab1/search/components/search/search.component.html
+@@ -227,7 +227,7 @@
+           >
+             <ion-slide
+               *ngFor="let data of recommendations?.specialOffer"
+-              (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
++              (click)="irA('/servicio/' + data?.title + '/detail/' + data?.id)"
+             >
+               <div class="special-offer-image" slot="start">
+                 <ion-img
+@@ -470,7 +470,7 @@
+         <ion-label class="list_title_card"> Ofertas</ion-label>
+         <ng-container *ngFor="let data of searchResponse?.offers">
+           <ion-row
+-            (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
++            (click)="irA('/servicio/' + data?.title + '/detail/' + data?.id)"
+             class="list-panel"
+           >
+             <ion-col size="12">
+@@ -578,7 +578,7 @@
+           }}</ion-label>
+         <ng-container *ngFor="let data of recommendations?.specialOffer">
+           <ion-row
+-            (click)="irA('/product/' + data?.title + '/detail/' + data?.id)"
++            (click)="irA('/servicio/' + data?.title + '/detail/' + data?.id)"
+             class="list-panel"
+           >
+             <ion-col size="12">
+diff --git a/src/app/tab1/search/components/search/search.component.ts b/src/app/tab1/search/components/search/search.component.ts
+index d8e03de6..27399a8e 100644
+--- a/src/app/tab1/search/components/search/search.component.ts
++++ b/src/app/tab1/search/components/search/search.component.ts
+@@ -1515,6 +1515,8 @@ export class SearchComponent implements AfterViewInit {
+     private title: Title,
+     private location: Location
+   ) {
++
++    
+     this.type = 'resultado';
+     this.services = this.services.sort((a, b) => 0.5 - Math.random());
+     this.sectors = this.sectors.sort((a, b) => 0.5 - Math.random());
+@@ -1574,6 +1576,7 @@ export class SearchComponent implements AfterViewInit {
+ 
+   segmentChanged(event) {
+     console.log(event);
++ 
+   }
+ 
+   public irA(p: string): void {
+@@ -1646,7 +1649,6 @@ export class SearchComponent implements AfterViewInit {
+     const link = this.locationFilterLinkFull.find(item => 
+       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
+     )
+-
+     if ( link ) {
+       const metaLink = this.metaFilterLink.find(item => item.location === link.location && item.sector === link.sector);
+       
+@@ -1674,8 +1676,12 @@ export class SearchComponent implements AfterViewInit {
+         }
+       }
+ 
++     
+       this.location.go(`listado/${link.link}`)
++     
+     } else {
++
++      let searchText = this.searchText.replace(new RegExp(' ', 'g'), '-');
+       // No link available
+       this.title.setTitle(GENERAL_TITLE);
+       this.generalTitle.emit('Encuentra servicios profesionales en tu ciudad');
+@@ -1687,6 +1693,8 @@ export class SearchComponent implements AfterViewInit {
+         this.changeFilter(null, null);
+         this.changeMetaFilter(null, null);
+       }
++
++      this.location.go(`listado/${searchText}`)
+     }
+   }
+ 
+diff --git a/src/app/tab1/tab1.page.ts b/src/app/tab1/tab1.page.ts
+index 6deb4cd3..07fa44af 100644
+--- a/src/app/tab1/tab1.page.ts
++++ b/src/app/tab1/tab1.page.ts
+@@ -25,7 +25,7 @@ import {Meta, Title} from '@angular/platform-browser';
+ SwiperCore.use([Thumbs, Pagination]);
+ 
+ const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
+-const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
++const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
+ 
+ @Component({
+   selector: 'app-tab1',
+@@ -86,7 +86,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
+     this.activatedRoute.paramMap.subscribe((params) => {
+       this.searchTerm = params.get('searchTerm')?.replace(new RegExp('-', 'g'), ' ');
+     });
+-
++    
+     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
+       this.userLogged = true;
+       console.log('this.userLogged', this.userLogged);
+@@ -105,6 +105,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
+ 
+   ngOnInit() {
+     this.activatedRoute.queryParams.subscribe((params) => {
++  
+       const sector = params['sector'] !== 'null' ? params['sector'] : null;
+       const servicio =
+         params['servicio'] !== 'null' ? params['servicio'] : null;
+diff --git a/src/assets/i18n/es.json b/src/assets/i18n/es.json
+index 59385f07..6d1ffd2e 100644
+--- a/src/assets/i18n/es.json
++++ b/src/assets/i18n/es.json
+@@ -267,7 +267,7 @@
+       "servicio": "Servicio",
+       "valoracion": "valoraciones",
+       "cantidad": "Cantidad",
+-      "comprar": "Comprar ahora",
++      "comprar": "Solicitar ahora",
+       "add": "Añadir al carrito",
+       "readmore": " Leer más"
+     },
+-- 
+2.34.1
+

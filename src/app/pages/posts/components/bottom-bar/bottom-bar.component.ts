@@ -86,6 +86,12 @@ export class PostBottomBarComponent implements OnInit {
   }
 
   watch() {
-    this.router.navigate([`posts/oracle/${this.id}`]);
+    let searchText = ''
+    if ( this.post.title == null || this.post.title == undefined || this.post.title == '' ) {
+    }else{
+      searchText = this.post.title.replace(new RegExp(' ', 'g'), '-');
+    }
+   
+    this.router.navigate([`posts/oracle/${this.id}/${searchText}`]);
   }
 }
