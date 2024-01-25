@@ -228,6 +228,23 @@ export class AdviseCRUDPage implements OnInit {
       this.router.navigateReload(['oracles']);
     }
   }
+  removeAccents(inputString) {
+    // Normalize accented characters to their base form
+    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return normalizedString;
+  }
+  cancelEdit() {
+    this.adviseSvc.showCreatePost = !this.adviseSvc.showCreatePost;
+
+    let lower = ''
+    let searchText
+    searchText = this.iAdvise.title.replace(new RegExp(' ', 'g'), '-');
+    searchText= this.removeAccents(searchText)
+    lower = searchText.toLowerCase();
+      
+    this.router.navigate([`posts/oracle/${this.iAdvise.id}/`+ lower]);
+
+  }
 
   async check(): Promise<boolean> {
     const {title} = this.form.value;

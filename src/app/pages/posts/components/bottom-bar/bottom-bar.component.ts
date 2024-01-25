@@ -85,13 +85,22 @@ export class PostBottomBarComponent implements OnInit {
     if (!(await this.sessionSvc.checkLogged())) return;
   }
 
+  removeAccents(inputString) {
+    // Normalize accented characters to their base form
+    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return normalizedString;
+  }
   watch() {
     let searchText = ''
+    let lower
     if ( this.post.title == null || this.post.title == undefined || this.post.title == '' ) {
     }else{
       searchText = this.post.title.replace(new RegExp(' ', 'g'), '-');
+      searchText= this.removeAccents(searchText)
+
+      lower = searchText.toLowerCase();
     }
    
-    this.router.navigate([`posts/oracle/${this.id}/${searchText}`]);
+    this.router.navigate([`posts/oracle/${this.id}/${lower}`]);
   }
 }
