@@ -731,7 +731,7 @@
   <section id="sectors">
     <h2>Los servicios profesionales más buscados</h2>
     <div class="sector-container">
-      <ng-container *ngFor="let sector of sectors">
+      <ng-container *ngFor="let sector of filteredSectors">
         <a [routerLink]="'/listado/' + sector.link" [style.background-image]="'url(' + sector.imageURL + ')'">
           <header>
             <h3>{{sector.title}}</h3>
