@@ -223,8 +223,15 @@ export class PostComponent implements OnInit, AfterViewInit {
     this.optsMenuSvc.show(event, opts);
   }
 
+ 
   async edit() {
-    this.router.navigate([`posts/oracle/${this.id}/edit`], {
+    let searchText = ''
+    let lower = ''
+    searchText = this.iAdvise?.title.replace(new RegExp(' ', 'g'), '-');
+    searchText= this.removeAccents(searchText)
+
+    lower = searchText.toLowerCase();
+    this.router.navigate([`posts/oracle/${this.id}/${lower}/edit`], {
       queryParams: !this.iAdvise?.id_advise
         ? {}
         : {id_reference: this.iAdvise?.id_advise},
@@ -273,13 +280,23 @@ export class PostComponent implements OnInit, AfterViewInit {
     }
   };
 
+  removeAccents(inputString) {
+    // Normalize accented characters to their base form
+    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return normalizedString;
+  }
+ 
   watch() {
     let searchText = ''
     if ( this.iAdvise.title == null || this.iAdvise.title == undefined || this.iAdvise.title == '' ) {
       this.router.navigate([`posts/oracle/${this.id}`]);
     }else{
+      
       searchText = this.iAdvise.title.replace(new RegExp(' ', 'g'), '-');
-      this.router.navigate([`posts/oracle/${this.id}/${this.iAdvise.title}`]);
+      searchText= this.removeAccents(searchText)
+      let lower = searchText.toLowerCase();
+      
+      this.router.navigate([`posts/oracle/${this.id}/`+ lower]);
     }
   }
 }
