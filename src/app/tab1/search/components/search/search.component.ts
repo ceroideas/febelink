@@ -71,6 +71,7 @@ export class SearchComponent implements AfterViewInit {
     {name: 'Talleres', icon: 'assets/imgs/home/services-car.svg', searchTerm: 'taller-mecanico'},
   ];
 
+  filteredSectors = [];
   sectors = [
     {title: 'Reformas', link: 'reformas-en-españa', imageURL: 'assets/imgs/home/sector-reformas.jpeg', pageTitle: 'Ofertas de reformas en España', h1: 'Servicios de reformas en España', metaDescription: 'Servicios de reformas en España. Si necesitas servicios de asesoría, reformas, belleza, salud o formación, hay una solución para ti en Febelink'},
     {title: 'Limpieza', link: 'limpieza-en-espqña', imageURL: 'assets/imgs/home/sector-limpieza.jpeg', pageTitle: 'Ofertas de limpieza en España', h1: 'Servicios de limpieza en España', metaDescription: 'Servicios de limpieza en España. Si necesitas servicios de asesoría, reformas, belleza, salud o formación, hay una solución para ti en Febelink'},
@@ -1527,7 +1528,7 @@ export class SearchComponent implements AfterViewInit {
 
     this.type = 'resultado';
     this.services = this.services.sort((a, b) => 0.5 - Math.random());
-    this.sectors = this.sectors.sort((a, b) => 0.5 - Math.random());
+    this.filteredSectors = this.sectors.sort((a, b) => 0.5 - Math.random()).slice(0, 10);
 
     this.locationFilter = sessionStorage.getItem('locationFilter');
     this.locationFilterLink = this.locationFilterLinkFull.filter(link => link.location === this.locationFilter);
