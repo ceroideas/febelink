@@ -94,4 +94,14 @@ export class PostBottomBarComponent implements OnInit {
    
     this.router.navigate([`posts/oracle/${this.id}/${searchText}`]);
   }
+
+  getViewPostLink() {
+    let searchText = ''
+    if ( this.post.title == null || this.post.title == undefined || this.post.title == '' ) {
+    }else{
+      searchText = this.post.title.replace(new RegExp(' ', 'g'), '-');
+    }
+   
+    return `posts/oracle/${this.id}/${searchText}`;
+  }
 }

@@ -31,9 +31,9 @@
     <div (click)="share( $event )" class="react-middle-b">
       <img src="assets/icon/svg/share-blue.svg" class="react-middle-svg" />{{ 'common.share' | translate }}
     </div>
-    <div (click)="watch()" *ngIf="showSeePost" class="react-right-a-b">
+    <a *ngIf="showSeePost" class="react-right-a-b" [href]="getViewPostLink()">
       <img src="assets/icon/svg/eye-blue.svg" class="react-right-a-svg" />{{ 'pages.posts.see' | translate }}
-    </div>
+    </a>
     <div class="react-right-b-b">
       <app-donate-button *ngIf="!showSeePost"
           [user]="post"
