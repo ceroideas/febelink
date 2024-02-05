@@ -3,12 +3,12 @@
     <ion-back-button defaultHref="/admin"></ion-back-button> 
     Panel de Administrador 
     <span class="simbol">></span> 
-    <span class="span1">Gestion keyword - Sectores</span>
+    <span class="span1">Gestion keyword - Ubicaciones</span>
     <div class="button-add" (click)="showCreatekeyword = true"><i class="fa fa-plus"></i>Añadir</div>
   </div>
   <div class="buscador">
     <ion-searchbar
-      [placeholder]="'Gestionar termino de busqueda'"
+      [placeholder]="'Gestionar  busqueda de link'"
       inputmode="text"
       (keyup.enter)="search_filter($event)"
       (ionChange)="search_filter($event)"
@@ -30,25 +30,26 @@
       </div>
     
       <div class="scroll-inner">
-        <table id="tokensUsersTable"> 
+        <table id="tokensUsersTable">
           <tr>
-            <th style="width: 15%">Sector</th>
-            <th style="width:8%">Icono</th>
-            <th>Keywords</th>
+            <th style="width: 15%">Ubicacion</th>
+            <th>Link</th>
+            <th>Titulo de Pagina</th>
+            <th>Meta Descripcion</th>
             <th colspan="2" style="width: 10%">Acciones</th>
           </tr>
-          <tr *ngFor="let keys of sectorKeys">
+          <tr *ngFor="let keys of LocationKeys">
             <td [ngSwitch]="keys.isEdit">
-              <span *ngSwitchDefault>{{keys.nombre}}</span>
-            
-            </td>
-            <td [ngSwitch]="keys.isEdit" class="td_icon">
-           <img src="{{keys.icon}}">
-            
+              <span *ngSwitchDefault>{{keys.title}}</span>
             </td>
             <td [ngSwitch]="keys.isEdit">
-              <span *ngSwitchDefault>{{keys.search_term}}</span>
-             
+              <span *ngSwitchDefault>{{keys.link}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.page_title}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.meta_description}}</span>
             </td>
             <td class="edit">
               <ion-icon name="create-outline" (click)="showEdit(keys)"></ion-icon>
@@ -80,28 +81,40 @@
 </div>
 
 
+
+
 <!--  -->
 <div id="darkcreateKeywordController" *ngIf="showCreatekeyword"></div>
 <div id="createKeywordController" *ngIf="showCreatekeyword">
-  <div class="headerTitle">Sector</div>
-  <div class="headerSubTitle">Introduce un nombre y agregale una termino de busqueda e icono</div>
+  <div class="headerTitle">Crear Ubicacion</div>
+  <div class="headerSubTitle">Introduce una ubicacion y agregale un link</div>
   <div class="containerKeyWord">
     <div class="item-select">
-      <label>Nombre: *</label>
-      <input type="text" [(ngModel)]="keySector.nombre"  #newKeywordSector  >
+      <label>Ubicacion: *</label>
+      <input type="text" [(ngModel)]="keyLocation.title" #newKeywordLocation>
     </div>
     <div class="item-select">
-      <label>Termino de Busqueda: *</label>
-      <input type="text" [(ngModel)]="keySector.search_term"   #newKeywordValue >
+      <label>Keyword: *</label>
+      <input type="text" [(ngModel)]="keyLocation.link" #newKeywordValue>
     </div>
-    <div class="item-select">
-      <label>Icono: *</label>
-      <input type="text" [(ngModel)]="keySector.icon"   #newKeywordIcon >
+    <div class="item-select"  >
+      <label>Titulo de Pagina: *</label>
+      <input type="text" [(ngModel)]="keyLocation.page_title" #newKeywordPageLink>
+    </div>
+    <div class="item-select"  >
+      <label>Encabezado 1: *</label>
+      <input type="text" [(ngModel)]="keyLocation.h1"  #newKeywordH1>
+    </div>
+    <div class="item-select"  >
+      <label>Meta Descripcion 1: *</label>
+      <input type="text" [(ngModel)]="keyLocation.meta_description"  #newKeywordMeta>
     </div>
     <div class="buttons">
       <ion-button color="light" (click)="restoreData()">Cancelar</ion-button>
-      <ion-button color="primary" *ngIf="keySector.sector !== ''" (click)="edit(newKeywordSector.value, newKeywordValue.value,  newKeywordIcon.value);">Modificar</ion-button>
-      <ion-button color="success" *ngIf="keySector.sector == ''" (click)="create(newKeywordSector.value, newKeywordValue.value,  newKeywordIcon.value);">Añadir</ion-button>
+      <ion-button color="success" *ngIf="keyLocation.id === ''" (click)="create(newKeywordLocation.value, 
+        newKeywordValue.value, newKeywordH1.value, newKeywordPageLink.value, newKeywordMeta.value);">Añadir</ion-button>
+      <ion-button color="primary" *ngIf="keyLocation.id !== ''" (click)="edit(newKeywordLocation.value, 
+        newKeywordValue.value, newKeywordH1.value, newKeywordPageLink.value, newKeywordMeta.value);">Modificar</ion-button>
     </div>
   </div>
   

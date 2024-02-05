@@ -11,51 +11,94 @@ export class KeywordService {
   ) {
   }
 
-  public getSectorKeywords(activePage: number, filter?: string) {
-    const formData = new FormData();
-    formData.append('activePage', activePage + '');
-    if (filter) {
-      formData.append('filter', filter);
-    }
-    return this.http.post('admin/keyword/getSectorKeywords', formData);
+
+  // Read Data
+  public getData() {
+    return this.http.get('getData');
+  }
+
+  // Sector
+  public getSectorKeywords() {
+    return this.http.get('getSector');
   }
 
   public removeSectorKeyword(id: number) {
     if (id) {
-      return this.http.delete(`admin/keyword/sector/${id}`);
+      return this.http.delete(`admin/deleteSector/${id}`);
     }
   }
 
-  public addSectorKeyword(value: { sectorId: number, keyword: string }) {
-    return this.http.post('admin/keyword/addSectorKeyword', value);
+  public addSectorKeyword(value: { name: string, searchTerm: string, icon: string}) {
+    return this.http.post('admin/createSector', value);
   }
 
-  public updateSectorKeyword(value: { id: number, sectorId: number, keyword: string }) {
-    return this.http.post('admin/keyword/updateSectorKeyword', value);
+  public updateSectorKeyword(value: { sector: number, name: string, searchTerm: string, icon: string }) {
+    return this.http.post('admin/updateSector', value);
+  }
+
+  public getSubSectorAll() {
+    return this.http.get('getSubsectorAll');
+   
   }
 
   // SubSector
-
   public getSubSectorKeywords(activePage: number, filter?: string) {
-    const formData = new FormData();
-    formData.append('activePage', activePage + '');
-    if (filter) {
-      formData.append('filter', filter);
-    }
-    return this.http.post('admin/keyword/getSubSectorKeywords', formData);
+    return this.http.get('getSubsector/1');
   }
 
-  public addSubSectorKeyword(value: { subSectorId: number, keyword: string }) {
-    return this.http.post('admin/keyword/addSubSectorKeyword', value);
+  public addSubSectorKeyword(value: { sector: number,name: string, link: string , imageURL: string, h1: string,  pagetitle: string, metadescription: string}) {
+    return this.http.post('admin/createSubsector', value);
   }
 
-  public updateSubSectorKeyword(value: { id: number, subSectorId: number, keyword: string }) {
-    return this.http.post('admin/keyword/updateSubSectorKeyword', value);
+  public updateSubSectorKeyword(value: { sector: number, subsector: number, name: string, link: string , imageURL: string , h1: string,  pagetitle: string, metadescription: string}) {
+    return this.http.post('admin/updateSubsector', value);
   }
 
   public removeSubSectorKeyword(id: number) {
     if (id) {
-      return this.http.delete(`admin/keyword/sub-sector/${id}`);
+      return this.http.delete(`admin/deleteSubsector/${id}`);
+    }
+  }
+
+
+  // Ubicationes
+  public getLocationKeywords() {
+    return this.http.get('getLocation');
+  }
+
+  public addLocationKeyword(value: {  title: string, link: string , h1: string,  pagetitle: string, metadescription: string}) {
+    return this.http.post('admin/createLocations', value);
+  }
+
+  public updateLocationKeyword(value: {locations: number, title: string, link: string, h1: string,  pagetitle: string, metadescription: string }) {
+    return this.http.post('admin/updateLocations', value);
+  }
+
+  public removeLocationKeyword(id: number) {
+    if (id) {
+      return this.http.delete(`admin/deleteLocations/${id}`);
+    }
+  }
+
+
+
+
+  // Enlaces de ubicaciones
+  public getLinkLocationKeywords() {
+    return this.http.get('getLinkLocationsAll');
+  }
+
+  public addLinkLocationKeyword(value: { sector: number, locations: number, title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
+    return this.http.post('admin/createLinkLocations', value);
+  }
+
+  public updateLinkLocationKeyword(value: {linkLocations: number, sector: number, locations: number, title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
+    return this.http.post('admin/updateLinkLocations', value);
+  }
+
+  public removeLinkLocationKeyword(id: number) {
+    if (id) {
+      return this.http.delete(`admin/deleteLinkLocations/${id}`);
     }
   }
 }

@@ -84,12 +84,16 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
 
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.searchTerm = params.get('searchTerm')?.replace(new RegExp('-', 'g'), ' ');
+      if (params.get('searchTerm') !== null && params.get('searchTerm') !== undefined && params.get('searchTerm') !== "" ){
+        this.searchTerm = params.get('searchTerm')?.replace(new RegExp('-', 'g'), ' ');
+      } else {
+        sessionStorage.removeItem("locationFilter");
+        sessionStorage.removeItem("metaLocationFilter");      }
     });
     
     this.refreshTab = this.api.getUserLogged().subscribe((item) => {
       this.userLogged = true;
-      console.log('this.userLogged', this.userLogged);
+     
       this.obtenerPerfil();
     });
 
@@ -274,13 +278,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
     }
   }
 
-  onSwiper([swiper]) {
-    console.log(swiper);
-  }
+  onSwiper([swiper]) {}
 
-  onSlideChange() {
-    console.log('slide change');
-  }
+  onSlideChange() {}
 
   async navigateNewServices() {
     let url = 'registro';

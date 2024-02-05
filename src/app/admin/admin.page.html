@@ -1,17 +1,28 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/' + homePage "></ion-back-button>
-    </ion-buttons>
-    <ion-title>Panel de Administrador</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="title">
+  <ion-back-button [defaultHref]="'/' + homePage "></ion-back-button> Panel de Administrador
+</div>
+<div class="container-admin">
 
-<ion-content>
-  <ion-list style="max-width: 600px; margin:auto">
-    <ion-item [routerLink]="option.link" *ngFor="let option of options">
-      <ion-icon slot="start" [name]="option.icon"></ion-icon>
-      <ion-label>{{option.title}}</ion-label>
-    </ion-item>
-  </ion-list>
-</ion-content>
+  <div class="container-img">
+    <img src="assets/imgs/img2.png">
+  </div>
+  <div class="container-panel">
+    <ion-content>
+      <div class="grid-options" >
+        <div class="item-list" [routerLink]="option.link" *ngFor="let option of options">
+          <div class="box-icon">
+            <ion-icon slot="start" [name]="option.icon"></ion-icon>
+          </div>
+          <div class="label">
+            <div class="title-item">{{option.title}}</div>
+            <!-- <div class="subtitle-item">{{option.subtitle}}</div> -->
+          </div>
+          <div class="icon-redirect">
+            <i class="fa fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </div>
+</div>
+
