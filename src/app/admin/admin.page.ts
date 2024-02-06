@@ -9,9 +9,11 @@ import {environment} from 'src/environments/environment';
 export class AdminPage {
 
   options: Option[] = [
-    {title: 'Gestión de Reservas y Airdrops', icon: 'wallet-outline', link: 'tokens-users'},
-    {title: 'Gestión de Keywords - Sectores', icon: 'wallet-outline', link: 'keyword/sector'},
-    {title: 'Gestión de Keywords - Subsectores', icon: 'wallet-outline', link: 'keyword/sub-sector'},
+    {title: 'Reservas y Airdrops', icon: 'wallet-outline', link: 'tokens-users'},
+    {title: 'Sectores', icon: 'file-tray-outline', link: 'keyword/sector'},
+    {title: 'Subsectores', icon: 'file-tray-stacked-outline', link: 'keyword/sub-sector'},
+    {title: 'Ubicaciones', icon: 'location-outline', link: 'keyword/location'},
+    {title: 'Enlaces de ubicaciones', icon: 'link-outline', link: 'keyword/link-location'},
   ];
 
   homePage: string = environment.HOME_PAGE;

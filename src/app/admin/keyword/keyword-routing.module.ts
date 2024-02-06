@@ -3,6 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {SectorPage} from './sector/sector.page';
 import {SubSectorPage} from './subsector/subsector.page';
+import {LocationPage} from './location/location.page';
+import {LinkLocationPage} from './link-location/link-location.page';
 
 const routes: Routes = [
   {
@@ -11,6 +13,14 @@ const routes: Routes = [
   }, {
     path: 'sub-sector',
     component: SubSectorPage
+  }, 
+  {
+    path: 'location',
+    component: LocationPage
+  }, 
+  {
+    path: 'link-location',
+    component: LinkLocationPage
   }
 ];
 

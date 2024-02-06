@@ -7,9 +7,11 @@
       class="searchbar no-padding"
       placeholder="{{ 'common.publishPlaceholder' | translate }}"
       [(ngModel)]="searchText"
-      (keydown.enter)="search()"
       style="--box-shadow: none"
+      (keydown.enter)="search()"
     ></ion-searchbar>
+    <!-- (keydown.enter)="search()" -->
+
   </ion-row>
   <div class="mobile">
     <ion-segment
@@ -457,7 +459,7 @@
           <h3>Los mejores profesionales en {{locationFilter}}</h3>
           <ng-container *ngFor="let location of locationFilterLink">
         <span><ion-icon name="location-outline"></ion-icon> <a
-          (click)="changeMetaFilter(location.sector, location.link)"
+          (click)="changeMetaFilter(location.id_sector.name, location.link,  location.id)"
           [href]="'/listado/' + location.link"
         >
           {{location.title}}
@@ -679,10 +681,11 @@
       <h2>Los mejores profesionales en {{locationFilter}}</h2>
       <ng-container *ngFor="let location of locationFilterLink">
         <span><ion-icon name="location-outline"></ion-icon> <a
-          (click)="changeMetaFilter(location.sector, location.link)"
+          (click)="changeMetaFilter(location.id_sector.name, location.link,  location.id)"
           [href]="'/listado/' + location.link"
         >{{location.title}}</a>
         </span>
+        <!--  -->
       </ng-container>
     </div>
   </section>
@@ -690,9 +693,9 @@
     <h2>Todos los servicios profesionales en un mismo sitio</h2>
     <div id="services-container">
       <ng-container *ngFor="let service of services">
-        <a class="service" [routerLink]="'/listado/' + service.searchTerm">
+        <a class="service" (click)="changeTitles(service)" [routerLink]="'/listado/' + service.search_term">
           <img [src]="service.icon">
-          <span>{{service.name}}</span>
+          <span>{{service.nombre}}</span>
         </a>
       </ng-container>
     </div>
@@ -731,10 +734,11 @@
   <section id="sectors">
     <h2>Los servicios profesionales más buscados</h2>
     <div class="sector-container">
-      <ng-container *ngFor="let sector of filteredSectors">
-        <a [routerLink]="'/listado/' + sector.link" [style.background-image]="'url(' + sector.imageURL + ')'">
+      <ng-container *ngFor="let sector of sectors | slice:0:10">
+        <!--  -->
+        <a (click)="changeFilterImg(sector)" [routerLink]="'/listado/' + sector.link" [style.background-image]="'url(' + sector.imageURL + ')'">
           <header>
-            <h3>{{sector.title}}</h3>
+            <h3>{{sector.nombre}}</h3>
           </header>
         </a>
       </ng-container>

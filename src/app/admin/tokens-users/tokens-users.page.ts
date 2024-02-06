@@ -55,7 +55,7 @@ export class TokensUsersPage implements OnInit {
   }
 
   async create() {
-    if( this.isLoading ) { this.showToastLoading(); return; }
+    // if( this.isLoading ) { this.showToastLoading(); return; }
 
     const suscribirseModal = await this.modalCtrl.create({
       component: EditTokensComponent,

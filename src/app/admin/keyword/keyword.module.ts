@@ -13,6 +13,8 @@ import {ComponentsModule} from 'src/app/components/components.module';
 import {SectorPipe} from './pipes/sector.pipe';
 import {SubSectorPage} from './subsector/subsector.page';
 import {SubSectorPipe} from './pipes/subsector.pipe';
+import { LocationPage } from './location/location.page';
+import { LinkLocationPage } from './link-location/link-location.page';
 
 @NgModule({
   imports: [
@@ -21,11 +23,13 @@ import {SubSectorPipe} from './pipes/subsector.pipe';
     IonicModule,
     KeywordPageRoutingModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
   ],
   declarations: [
     SectorPage,
     SubSectorPage,
+    LocationPage,
+    LinkLocationPage,
     SectorPipe,
     SubSectorPipe
   ],

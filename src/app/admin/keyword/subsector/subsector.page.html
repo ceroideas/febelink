@@ -1,21 +1,106 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin"></ion-back-button>
-    </ion-buttons>
+<div class="container-general">
+  <div class="title">
+    <ion-back-button defaultHref="/admin"></ion-back-button> 
+    Panel de Administrador 
+    <span class="simbol">></span> 
+    <span class="span1">Gestion keyword - SubSectores</span>
+    <div class="button-add" (click)="showCreatekeyword = true"><i class="fa fa-plus"></i>Añadir</div>
+  </div>
+  <div class="buscador">
     <ion-searchbar
-      [placeholder]="'Buscar por palabra clave...'"
+      [placeholder]="'Gestionar  busqueda de link'"
       inputmode="text"
-      (keyup.enter)="search($event)"
-      (ionChange)="search($event)"
-      (ionClear)="search($event)"
+      (keyup.enter)="search_filter($event)"
+      (ionChange)="search_filter($event)"
+      (ionClear)="search_filter($event)"
       debounce="500"
     ></ion-searchbar>
-  </ion-toolbar>
+  </div>
 
-</ion-header>
+  <div class="container-admin">
+    <ion-content>
+    <!-- Loading -->
+    <div class="cargando-container" margin-top *ngIf="isLoading">
+      <ion-row>
+        <ion-spinner></ion-spinner>
+        <h4>{{ 'common.labelSearching' | translate }}</h4>
+      </ion-row>
+    </div>
 
-<div id="createKeywordController">
+    <div class="scroll-inner">
+      <table id="tokensUsersTable">
+        <tr>
+          <th style="width: 15%">Sector</th>
+          <th style="width: 15%">SubSector</th>
+          <th>Link</th>
+          <th>Encabezado h1</th>
+          <th>Titulo de Pagina</th>
+          <th>Meta Desripcion</th>
+          <th>Imagen</th>
+          <th colspan="2" style="width: 10%">Acciones</th>
+        </tr>
+        <tr *ngFor="let keys of subSectorKeys">
+          <td >
+            <span *ngIf="keys.id_sector == null">--</span>
+            <span  *ngIf="keys.id_sector !== null">{{keys.id_sector.name}}</span>
+          
+          </td>
+          <td >
+            <span >{{keys.nombre}}</span>
+          
+          </td>
+          <td >
+            <span >{{keys.link}}</span>
+           
+          </td>
+          <td >
+            <span>{{keys.h1}}</span>
+          
+          </td>
+          <td >
+            <span >{{keys.page_title}}</span>
+          
+          </td>
+          <td >
+            <span >{{keys.meta_description}}</span>
+          
+          </td>
+          <td >
+            <span >{{keys.imageURL}}</span>
+           
+          </td>
+         
+          <td class="edit">
+            <ion-icon name="create-outline" (click)="showEdit(keys)"></ion-icon>
+          </td>
+          <td class="delete">
+            <ion-icon
+              name="trash-outline"
+              (click)="delete(keys)"
+            ></ion-icon>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Pagination Bottom -->
+    <app-pagination
+      *ngIf="qPages > 1"
+      [qPages]="qPages"
+      [totalRecords]="totalRecords"
+      [recordsPerPage]="recordsPerPage"
+      [activePage]="activePage"
+      [disabled]="isLoading"
+      (onPageChange)="displayActivePage( $event )"
+    >
+    </app-pagination>
+    </ion-content>
+  </div>
+</div>
+  
+
+
+<!-- <div id="createKeywordController">
   <div>
     <label>Sector: </label>
     <select #newKeywordSubSector>
@@ -27,61 +112,57 @@
     <input type="text" #newKeywordValue>
   </div>
   <ion-button color="success" (click)="create(newKeywordSubSector.value, newKeywordValue.value)">Añadir</ion-button>
+</div> -->
+
+<div id="darkcreateKeywordController" *ngIf="showCreatekeyword"></div>
+<div id="createKeywordController" *ngIf="showCreatekeyword">
+  <div class="headerTitle">Subsector</div>
+  <div class="headerSubTitle">Introduce un nombre y agregale los datos necesarios</div>
+  <div class="containerKeyWord">
+
+    <div class="item-select">
+      <label>Elige un Sector: </label>
+
+      <select   [(ngModel)]="keySubSector.id_sector.id"  #newKeywordSector  >
+        <option >---</option>
+        <option *ngFor="let sector of sectors" [value]="sector.id">{{sector.nombre}}</option>
+      </select>
+    </div>
+
+    <div class="item-select" >
+      <label>Nombre: *</label>
+      <input type="text" [(ngModel)]="keySubSector.nombre" #newKeywordName>
+    </div>
+   
+    <div class="item-select">
+      <label>Link: *</label>
+      <input type="text" [(ngModel)]="keySubSector.link" #newKeywordLink>
+    </div>
+    <div class="item-select">
+      <label>Encabezado 1 *</label>
+      <input type="text" [(ngModel)]="keySubSector.h1" #newKeywordH1>
+    </div>
+    <div class="item-select">
+      <label>Titulo de Pagina *</label>
+      <input type="text" [(ngModel)]="keySubSector.page_title" #newKeywordPagetitle>
+    </div>
+    <div class="item-select">
+      <label>Meta Descripcion  *</label>
+      <input type="text" [(ngModel)]="keySubSector.meta_description" #newKeywordMetaDescription>
+    </div>
+    <div class="item-select">
+      <label>Escribe la direccion de la imagen: *</label>
+      <input type="text" [(ngModel)]="keySubSector.imageURL" #newKeywordImage>
+    </div>
+
+    <div class="buttons">
+      <ion-button color="light" (click)="restoreData()" >Cancelar</ion-button>
+      <ion-button color="success"  *ngIf="keySubSector.id == ''" 
+        (click)="create(newKeywordSector.value, newKeywordName.value,newKeywordLink.value,newKeywordImage.value,newKeywordH1.value,newKeywordPagetitle.value,newKeywordMetaDescription.value)">Añadir</ion-button>
+      <ion-button color="primary"  *ngIf="keySubSector.id !== ''"
+      (click)="edit(newKeywordSector.value, newKeywordName.value,newKeywordLink.value,newKeywordImage.value,newKeywordH1.value,newKeywordPagetitle.value,newKeywordMetaDescription.value)">
+      Modificar</ion-button>
+    </div>
+  </div>
+  
 </div>
-
-<ion-content>
-  <!-- Loading -->
-  <div class="cargando-container" margin-top *ngIf="isLoading">
-    <ion-row>
-      <ion-spinner></ion-spinner>
-      <h4>{{ 'common.labelSearching' | translate }}</h4>
-    </ion-row>
-  </div>
-
-  <div class="scroll-inner">
-    <table id="tokensUsersTable">
-      <tr>
-        <th style="width: 15%">SubSector</th>
-        <th>Keywords</th>
-        <th colspan="2" style="width: 10%">Acciones</th>
-      </tr>
-      <tr *ngFor="let keys of subSectorKeys">
-        <td [ngSwitch]="keys.isEdit">
-          <span *ngSwitchDefault>{{keys.sub_sector_id | subSector:subSectors}}</span>
-          <select *ngSwitchCase="true"
-                  [(ngModel)]="keys.sub_sector_id"
-                  (ngModelChange)="edit(keys)">
-            <option *ngFor="let subSector of subSectors" [value]="subSector.id">{{subSector.nombre}}</option>
-          </select>
-        </td>
-        <td [ngSwitch]="keys.isEdit">
-          <span *ngSwitchDefault>{{keys.key_name}}</span>
-          <input *ngSwitchCase="true" [(ngModel)]="keys.key_name"
-                 (focusout)="edit(keys)"
-                 (keyup.enter)="edit(keys)">
-        </td>
-        <td class="edit">
-          <ion-icon name="create-outline" (click)="keys.isEdit = !keys.isEdit"></ion-icon>
-        </td>
-        <td class="delete">
-          <ion-icon
-            name="trash-outline"
-            (click)="delete(keys)"
-          ></ion-icon>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- Pagination Bottom -->
-  <app-pagination
-    *ngIf="qPages > 1"
-    [qPages]="qPages"
-    [totalRecords]="totalRecords"
-    [recordsPerPage]="recordsPerPage"
-    [activePage]="activePage"
-    [disabled]="isLoading"
-    (onPageChange)="displayActivePage( $event )"
-  >
-  </app-pagination>
-</ion-content>

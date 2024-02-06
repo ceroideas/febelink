@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {AlertSvc} from 'src/app/services/alert.service';
 import {LoadingSvc} from 'src/app/services/loading.service';
 import {ToastSvc} from 'src/app/services/toast.service';
 import {KeywordService} from '../services/keyword.service';
 import {SectorService} from '../../../components/sectors/services/sectores.service';
-import {ISector} from '../../../models/sector.model';
+import {ISector, Sector} from '../../../models/sector.model';
 
 interface SectorKeys {
   id: number,
   sector_id: number,
   key_name: string,
+  nombre: string,
+  search_term: string,
+  icons: string,
   isEdit: boolean
 }
 
@@ -21,11 +24,35 @@ interface SectorKeys {
 
 export class SectorPage implements OnInit {
 
+  @ViewChild('newKeywordSector', { static: true }) newKeywordSector: ElementRef;
   isLoading: boolean = false;
   sectorKeys: SectorKeys[];
-  sectors: ISector[];
+  sectorKeys_filtered: SectorKeys[];
+  sectors: Sector[];
   filter: string;
 
+  showCreatekeyword: boolean = false;
+
+
+  icons = [
+    {path: 'assets/imgs/home/services-assistant.svg'},
+    {path: 'assets/imgs/home/services-sport.svg'},
+    {path: 'assets/imgs/home/services-beauty.svg'},
+    {path: 'assets/imgs/home/services-learning.svg'},
+    {path: 'assets/imgs/home/services-reforms.svg'},
+    {path: 'assets/imgs/home/services-entertainment.svg'},
+    {path: 'assets/imgs/home/services-development.svg'},
+    {path: 'assets/imgs/home/services-health.svg'},
+    {path: 'assets/imgs/home/services-lawyer.svg'},
+    {path: 'assets/imgs/home/services-car.svg'},
+  ]
+
+  keySector: any =  {
+    sector: '',
+    nombre: '',
+    search_term: '',
+    icon: '',
+  }
   constructor(
     public alertSvc: AlertSvc,
     public toastSvc: ToastSvc,
@@ -36,48 +63,119 @@ export class SectorPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.sectors = await this.sectorService.get();
+    // this.sectors = await this.sectorService.get();
     await this.search();
   }
 
 
   async search(event?: any) {
     this.isLoading = true;
-    this.filter = event?.target?.value || this.filter || '';
-    const {response} = await this.keywordService.getSectorKeywords(this.activePage, this.filter);
-    this.sectorKeys = response.items;
-    this.totalRecords = response.totalRecords;
-    this.recordsPerPage = response.limit;
-    this.qPages = response.qPages;
+    // this.filter = event?.target?.value || this.filter || '';
+    const {response} = await this.keywordService.getSectorKeywords();
+    this.sectorKeys = response;
+    this.sectorKeys_filtered = this.sectorKeys;
+  
+    // this.totalRecords = response.totalRecords;
+    // this.recordsPerPage = response.limit;
+    // this.qPages = response.qPages;
     this.isLoading = false;
+
+
   }
 
-  async create(sectorId: string, keyword: string) {
+  search_filter(event?: any){
+    this.sectorKeys = this.sectorKeys_filtered;
+    this.filter = event?.target?.value;
+    if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
+      this.sectorKeys = this.sectorKeys.filter((sector) => {
+        return sector.search_term.toLowerCase().includes(this.filter.toLowerCase());
+      })
+    } else {
+      this.sectorKeys = this.sectorKeys_filtered;
+    }
+  }
+
+  removeAccents(inputString) {
+    // Normalize accented characters to their base form
+    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return normalizedString;
+  }
+
+  async create(sector: string, keyword: string, icon: string) {
     if (this.isLoading) {
       this.showToastLoading();
       return;
-    } else if (sectorId && keyword) {
+    } else if (sector && keyword && icon) {
       try {
-        await this.keywordService.addSectorKeyword({sectorId: parseInt(sectorId), keyword});
+
+        let keywordParse;
+        keywordParse = keyword.replace(new RegExp(' ', 'g'), '-').toLowerCase();
+        keywordParse= this.removeAccents(keywordParse)
+        
+        await this.keywordService.addSectorKeyword({name: sector, searchTerm: keywordParse, icon: icon});
+        this.keySector = {};
         await this.search();
+        this.restoreData();
       } catch (e) {
         console.error(e);
+      }
+    } else {
+      if (!await this.alertSvc.confirm({
+        title: 'Formulario Incompleto',
+        msg: `Rellena todos los datos que son obligatorios`
+      })) {
+        return; // Cancel button
       }
     }
   }
 
-  async edit(keys: SectorKeys) {
+  async edit(sector: string, keyword: string , icon: string) {
     if (this.isLoading) {
       this.showToastLoading();
       return;
-    } else if (keys) {
+    } else if (sector && keyword && icon) {
       try {
-        await this.keywordService.updateSectorKeyword({id: keys.id, sectorId: keys.sector_id, keyword: keys.key_name});
+
+        let keywordParse;
+        keywordParse = keyword.replace(new RegExp(' ', 'g'), '-').toLowerCase();
+        keywordParse= this.removeAccents(keywordParse)
+
+        await this.keywordService.updateSectorKeyword({sector:this.keySector.id,  name: sector, searchTerm: keywordParse, icon:  icon});
+        this.keySector = {};
         await this.search();
+        this.restoreData();
       } catch (e) {
         console.error(e);
       }
+    } else {
+      if (!await this.alertSvc.confirm({
+        title: 'Formulario Incompleto',
+        msg: `Rellena todos los datos que son obligatorios`
+      })) {
+        return; // Cancel button
+      }
     }
+  }
+
+  async showEdit(keys: SectorKeys) {
+    this.keySector = JSON.parse(JSON.stringify(keys));
+    let searchText;
+    searchText = this.keySector.search_term.replace(new RegExp('-', 'g'), ' ').toLowerCase();
+    searchText= this.removeAccents(searchText)
+
+    this.keySector.search_term = searchText;
+    this.showCreatekeyword = true;
+
+  }
+
+  restoreData(){
+    this.keySector =  {
+      sector: '',
+      nombre: '',
+      search_term: '',
+      icon: '',
+    }
+    this.showCreatekeyword = false;
   }
 
   async delete(keys: SectorKeys) {
@@ -88,8 +186,8 @@ export class SectorPage implements OnInit {
 
     try {
       if (!await this.alertSvc.confirm({
-        title: 'Eliminar palabra clave',
-        msg: `¿Confirma que desea eliminar la palabra clave: '${keys.key_name}' ?`
+        title: 'Eliminar Sector',
+        msg: `¿Confirma que desea eliminar el Sector: '${keys.nombre}' ?`
       })) {
         return; // Cancel button
       }
@@ -99,7 +197,7 @@ export class SectorPage implements OnInit {
 
       await this.keywordService.removeSectorKeyword(keys.id);
 
-      await this.toastSvc.show(`La palabra clave '${keys.key_name}' ha sido eliminada con éxito.`, true);
+      await this.toastSvc.show(`el Sector '${keys.key_name}' ha sido eliminado con éxito.`, true);
       await this.loadingSvc.dismiss();
 
       await this.search();
@@ -112,6 +210,11 @@ export class SectorPage implements OnInit {
 
   showToastLoading() {
     this.toastSvc.show('admin.tokensUsers.loading', true);
+  }
+
+  selectIconSector(icon) {
+    this.icons.forEach((iconItem: { path: string; selected: boolean }) => iconItem.selected = false);
+    icon.selected = true;
   }
 
   /* Pagination */
