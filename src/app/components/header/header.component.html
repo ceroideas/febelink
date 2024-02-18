@@ -21,11 +21,14 @@
       <div *ngIf="!currentUser" class="header-register-button desktop" (click)="irA('/registro')">
         Regístrate
       </div>
-      <ion-img tappable
-               src="assets/imgs/logo.png"
-               alt="Febelink logo"
-               (click)="irA('/listado')"
-               class="ion-margin logo"></ion-img>
+      <!-- (click)="irA('/listado')" -->
+      <a  href="/listado">
+        <ion-img tappable
+        src="assets/imgs/logo.png"
+        alt="Febelink logo"
+        class="ion-margin logo"></ion-img>
+      </a>
+     
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

@@ -5,6 +5,8 @@ import SwiperCore, {Pagination, Thumbs} from 'swiper';
 import {CartService} from '../cart/services/cart.service';
 import {ChatService} from '../../services/chat.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
+import { AdviseService } from '../posts/advises/services/advises.service';
+import { UserDataService } from '../user-data/Services/user-data.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs]);
@@ -33,6 +35,9 @@ export class DetalleBusquedaPage implements OnInit {
 
   productId;
   productAmount = 1;
+  iAdvises: any = [];
+  othersView: any = [];
+  moreWorks: any = [];
   unitTypes = [
     {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
     {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
@@ -50,7 +55,9 @@ export class DetalleBusquedaPage implements OnInit {
   ]; // ToDo: Get this from the priceType Collection
 
   constructor(public searchService: SearchService, public router: Router, private route: ActivatedRoute,
-              private cartService: CartService, private chatService: ChatService, public authService: AuthenticationService) {
+              private cartService: CartService, private chatService: ChatService, public authService: AuthenticationService, 
+              private profileUser: UserDataService,
+              private adviseSvc: AdviseService) {
     this.route.paramMap.subscribe((params) => {
       this.productId = params.get('id');
     });
@@ -59,12 +66,55 @@ export class DetalleBusquedaPage implements OnInit {
 
   ngOnInit() {
     this.getProductDetail(this.productId);
+   
   }
 
   async getProductDetail(productId) {
     const {response} = await this.searchService.getProductDetail(productId);
     if (response) {
       this.detalle = response;
+      this.getFeed();
+      this.getOthersWork()
+      this.getProductUser()
+    }
+  }
+
+  async getFeed() {
+    var filters = {
+      activePage: 1,
+      keys: null,
+      topic: null,
+      sector: null,
+      subsector: null,
+      lang: null,
+      user: this.detalle.ownerId,
+      hideContent: true,
+      content: null,
+    };
+    const {response, error} = await this.adviseSvc.list(filters);
+    this.iAdvises = response;
+  }
+
+
+  async getProductUser() {
+    var user =  this.detalle.ownerId
+    
+    const {response, error} = await this.profileUser.getUserProduct(user);
+    if (!!response)
+    this.moreWorks = response.available;
+
+
+  }
+
+
+  getOthersWork(){
+    const othersViewData = JSON.parse(sessionStorage.getItem('searchResponse'));
+
+    if ( !!othersViewData ) {
+      let dataOthersService = othersViewData.services;
+      this.othersView = dataOthersService.filter(_data => _data.ownerUserId !== this.detalle.ownerId)
+    } else {
+   
     }
   }
 
@@ -113,6 +163,15 @@ export class DetalleBusquedaPage implements OnInit {
 
     if (error) {
       this.router.navigate([`chat`]);
+    }
+  }
+
+  removeBlankSpace(term: string): string {
+   
+    if ( term !== null){
+      return term.replace(new RegExp(' ', 'g'), '-');
+    } else {
+      return term
     }
   }
 }

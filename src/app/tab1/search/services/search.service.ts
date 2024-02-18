@@ -122,7 +122,7 @@ export class SearchService {
     return this.http.get('product/recommendations');
   }
 
-  async search(searchTerm: string, professions: number[]) {
+  async search(searchTerm: string = "", professions: number[]) {
     return this.http.post('product/search', {searchTerm, professions: JSON.stringify(professions)});
   }
 
