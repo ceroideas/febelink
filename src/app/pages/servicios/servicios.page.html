@@ -1,32 +1,6 @@
 <ion-content class="content-background">
-  <!--   <div class="desktop">
-    <div class="div-breadcrumbs-b">
-      <div class="breadcrumbs-text-b">
-        <span class="breadcrumbs-index-b">Inicio</span>
-        <img
-          class="breadcrumbs-next-b"
-          src="assets/icon/svg/chevron-right.svg"
-        />
-        <span *ngIf="!isNuevoServicio">Mis servicios</span>
-
-        <span
-          *ngIf="isNuevoServicio"
-          class="breadcrumbs-index-b"
-          (click)="cancelNuevoServicio()"
-          >Mis servicios</span
-        >
-        <img
-          *ngIf="isNuevoServicio"
-          class="breadcrumbs-next-b"
-          src="assets/icon/svg/chevron-right.svg"
-        />
-        <span *ngIf="isNuevoServicio && numbServicesAvaliable > 0"
-          >Nuevo servicio</span
-        >
-      </div>
-    </div>
-  </div> -->
-
+ 
+ 
   <div *ngIf="!isNuevoServicio" class="desktop">
     <div class="servicios-content-b">
       <div class="servicios-content-title-b">Mis servicios</div>
@@ -73,44 +47,221 @@
     </div>
   </div>
 
-  <div *ngIf="isNuevoServicio" class="desktop">
-    <div class="servicios-content-c">
-      <div class="sections-add-service-left">
-        <div class="sections-add-service-title">
-          {{!doUpdate ? 'Añadir nuevo' : 'Editar'}} servicio
-        </div>
-        <div class="sections-add-service-subtitle">
-          Tus servicios creados se van a mostrar en la pestaña de ofertas de
-          Febelink.
+  <div *ngIf="isNuevoServicio" >
+    <div class="page-new-services">
+      <div class="header-new-services">
+        <div class="sections-add-service-left">
+          <div class="sections-add-service-title">
+            {{!doUpdate ? 'Añadir nuevo' : 'Editar'}} servicio
+          </div>
+          <div class="sections-add-service-subtitle">
+            Tus servicios creados se van a mostrar en la pestaña de ofertas de
+            Febelink.
+          </div>
         </div>
       </div>
-      <div class="sections-add-service-right">
-        <div
-          class="sections-add-service-button-secondary"
-          (click)="cancelNuevoServicio()"
-        >
-          Cancelar
+      <div class="body-new-services">
+        <div class="item-new-services">
+          <div class="add-service-label-input" [ngClass]="{'error': error.title === true}">Nombre del servicio *</div>
+          <div class="add-service-margin-input">
+            <ion-input
+              [disabled]="isTemplate"
+              [(ngModel)]="title"
+              placeholder=""
+              class="padding-input-12 add-service-input"
+              (ionChange)="error.title = false"
+            ></ion-input>
+          </div>
+          <div class="title-pie">Máximo 130 caracteres</div>
         </div>
-        <div
-          *ngIf="!doUpdate && !isTemplate"
-          class="sections-add-service-button-primary"
-          (click)="addNuevoServicio()"
-        >
-          Añadir ahora
+
+        <div class="item-new-services">
+          <div class="add-service-label-input" [ngClass]="{'error': error.description === true}">Descripción *</div>
+          <div class="add-service-margin-input">
+          <app-wysiwyg
+            [html]="description"
+
+            [placeholder]="'Tip: intenta describir brevemente los beneficios del servicio y para quién está pensado; indica por ejemplo si es para ambos sexos y todas las edades'"
+            (OnChange)="error.description = false;wysiwygChange( $event )"
+            rows="6"
+          ></app-wysiwyg>
+          
         </div>
-        <div
-          *ngIf="doUpdate || isTemplate"
-          class="sections-add-service-button-primary"
-          (click)="editServicio()"
-        >
-          Guardar cambios
+          <div class="title-pie">Máximo 2800 caracteres</div>
+        </div>
+
+        <div class="item-new-services">
+          <div class="add-service-label-input" [ngClass]="{'error': error.whom === true}">A quien va dirigido *</div>
+          <div class="add-service-margin-input">
+          <app-wysiwyg
+            [html]="whom"
+            [placeholder]="'Tip: intenta describir brevemente a quien va dirigido este servicio'"
+            (OnChange)="error.whom = false;wysiwygChangeWhom( $event )"
+            rows="6"
+          ></app-wysiwyg>
+          
+        </div>
+          <div class="title-pie">Máximo 2800 caracteres</div>
+        </div>
+
+
+        <div class="item-new-services">
+          <div class="display-table-100 add-service-margin-input">
+            <div class="add-service-price-cell-left">
+              <div class="add-service-label-input">Precio *</div>
+              <div class="position-relative">
+                <ion-input
+                  [(ngModel)]="unitPrice"
+                  placeholder="00.00€"
+                  class="padding-input-12 add-service-input add-service-padding-end-input"
+                ></ion-input>
+                <div class="modal-add-price-euro">€</div>
+              </div>
+              <div class="title-pie">Máximo 2800 caracteres</div>
+            </div>
+            <div class="add-service-price-cell-right">
+              <div class="add-service-label-input" [ngClass]="{'error': error.unitType === true}">Precio por *</div>
+              <div>
+                <ion-item class="no-padding add-service-select-item">
+                  <ion-select
+                    [(ngModel)]="unitType"
+                    class="add-service-select"
+                    placeholder="Precio por"
+                    cancelText="Cancelar"
+                    okText="Aceptar"
+                  >
+                    <ion-select-option
+                      *ngFor="let unit of unitTypes"
+                      [value]="unit.id"
+                    >{{unit.name}}</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-new-services">
+          <div class="add-service-label-input" [ngClass]="{'error': error.sector === true}">Profesiones *</div>
+          <div>
+            <ion-item class="no-padding add-service-select-item">
+              <ion-select
+                [(ngModel)]="sector"
+                [disabled]="isTemplate"
+                class="add-service-select"
+                placeholder="Selecciona una Profesion"
+                cancelText="Cancelar"
+                okText="Aceptar"
+                (ionChange)="error.sector = false"
+              >
+                <ion-select-option
+                  *ngFor="let sector of ProfessionsMapped"
+                  [value]="sector.subSectorId"
+                >{{sector.name}}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="item-new-services">
+          <div class="add-service-label-input" [ngClass]="{'error': error.buttonName === true}">Texto Botón *</div>
+          <div>
+            <ion-item class="no-padding add-service-select-item">
+              <ion-select
+                [(ngModel)]="buttonName"
+                [disabled]="isTemplate"
+                class="add-service-select"
+                placeholder="Seleccionar"
+                cancelText="Cancelar"
+                okText="Aceptar"
+                (ionChange)="error.buttonName = false"
+              >
+                <ion-select-option
+                  *ngFor="let button of buttonNameMapped"
+                  [value]="button.id"
+                >{{button.name}}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="item-new-services">
+          <div class="add-service-label-input"  [ngClass]="{'error': error.images === true}">Imagenes *</div>
+          <div class="container-image">
+            <div class="container-file-add">
+              <div class="dashed-file-add" >
+                <ng-container>
+                  <div>
+                    <app-file-picker
+                      hidden
+                      #filePickerDesktop
+                      [iFile]="iFile"
+                      [pickType]="filePickType.IMAGE"
+                      (OnFile)="fileSelected($event)"
+                    ></app-file-picker>
+                    <div class="icon-add">
+                      <div class="picker" (click)=" error.images = false;filePickerDesktop.clicks()">
+                        <span>Click here </span>to upload or drop media image
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="visorPhotos" *ngIf="images.length > 0">
+                <div class="item-photo" *ngFor="let imageURL of images; let i = index">
+                  <img
+                    [src]="imageURL?.src || imageURL"
+                  /> 
+                  <div
+                    class="add-service-remove-div"
+                    *ngIf="imageURL"
+                    (click)="clearImageByIndex(imageURL)"
+                    >
+                    <img
+                      class="add-service-remove-svg"
+                      src="assets/icon/svg/close-white.svg"
+                    />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="butttonaddphotos" >
+              <div (click)="error.images = false;filePickerDesktop.clicks()">Añadir Fotos</div>
+            </div>
+            <div class="title-pie">Peso máximo 3 Mb. Máximo 6 imágenes.</div>
+           
+          </div>
+        </div>
+        <div class="sections-add-service-right">
+          <div
+            class="sections-add-service-button-secondary"
+            (click)="cancelNuevoServicio()"
+          >
+            Cancelar
+          </div>
+          <div
+            *ngIf="!doUpdate && !isTemplate"
+            class="sections-add-service-button-primary"
+            (click)="addNuevoServicio()"
+          >
+            Añadir ahora
+          </div>
+          <div
+            *ngIf="doUpdate || isTemplate"
+            class="sections-add-service-button-primary"
+            (click)="editServicio()"
+          >
+            Guardar
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div *ngIf="isNuevoServicio" class="desktop">
-    <div class="sections-add-service-content">
+    <!-- <div class="sections-add-service-content">
       <div class="sections-add-service-content-left">
         <div class="add-service-label-input">Nombre del servicio</div>
         <div class="add-service-margin-input">
@@ -129,9 +280,7 @@
             (OnChange)="wysiwygChange( $event )"
             rows="6"
           ></app-wysiwyg>
-          <!-- <ion-textarea [(ngModel)]="description"
-                        placeholder="Máximo 2800 caracteres.&#10;Tip: intenta describir brevemente los beneficios del servicio y para quién está pensado; indica por ejemplo si es para ambos sexos y todas las edades."
-                        rows="6" class="padding-input-12 add-service-input"></ion-textarea> -->
+          
         </div>
 
         <div class="display-table-100 add-service-margin-input">
@@ -222,31 +371,9 @@
               />
             </div>
           </div>
-          <!--
-          <div class="add-service-img-selected">
-            <img src="assets/icon/svg/default_product.svg" class="add-service-img" />
-            <div class="add-service-remove-div">
-              <img class="add-service-remove-svg" src="assets/icon/svg/close-white.svg" />
-            </div>
-          </div>
-          <div class="add-service-img-select">
-            <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
-          </div>
-          <div class="add-service-img-select">
-            <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
-          </div>
-          <div class="add-service-img-select">
-            <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
-          </div>
-          <div class="add-service-img-select">
-            <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
-          </div>
-          <div class="add-service-img-select">
-            <img class="add-service-img-select-svg" src="assets/icon/svg/plus-black.svg"/>
-          </div>          -->
         </ng-container>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div *ngIf="isDisponibles && !isNuevoServicio && iProducts" class="desktop">
@@ -443,16 +570,7 @@
     </div>
   </div>
 
-  <!--   <div class="mobile div-breadcrumbs">
-    <div class="breadcrumbs-text">
-      <img class="breadcrumbs-home-svg" src="assets/icon/svg/home.svg" />
-      <span class="breadcrumbs-index">Inicio</span>
-      <img class="breadcrumbs-next" src="assets/icon/svg/chevron-right.svg" />
-      Mis servicios
-    </div>
-  </div> -->
-
-  <div class="mobile servicios-content-title">Mis servicios</div>
+  <div  *ngIf="!isNuevoServicio" class="mobile servicios-content-title">Mis servicios</div>
 
   <ng-conteiner *ngIf="iProducts">
     <div
@@ -693,7 +811,7 @@
     </div>
   </ng-container>
 
-  <div class="mobile add-service-floating" (click)="selectNuevoServicio()">
+  <div class="mobile add-service-floating"  *ngIf="!isNuevoServicio" (click)="selectNuevoServicio()">
     <img class="add-service-svg" src="assets/icon/svg/plus.svg"/>
   </div>
 </ion-content>
@@ -787,6 +905,28 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="servicioError">
+  <div class="modal-back-background">
+    <div class="modal-front-content-c">
+      <div class="modal-back-close-b" (click)="closeServicioError()">
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+      </div>
+      <div class="modal-full-check">
+        <img
+          src="assets/icon/svg/close-circle.svg"
+          class="modal-full-check-svg"
+        />
+      </div>
+      <div class="modal-full-title-b">Error al crear el servicio</div>
+      <div class="modal-full-subtitle-b">
+        Debes rellenar los datos obligatorios para poder crearlo
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div *ngIf="cancelServiceModalToggle" class="mobile modal-back-background">
   <div class="modal-front-content">
@@ -901,172 +1041,3 @@
   </div>
 </div>
 
-<div *ngIf="isNuevoServicio" class="mobile modal-back-background">
-  <div class="modal-add-content">
-    <div class="modal-add-content-wrapper">
-      <div class="modal-front-title">
-        {{!doUpdate ? 'Añadir nuevo' : 'Editar'}} servicio
-      </div>
-      <div class="modal-add-subtitle">
-        Tus servicios creados se van a mostrar en la pestaña de ofertas de
-        Febelink.
-      </div>
-      <div class="modal-add-name">Nombre del servicio</div>
-      <div class="modal-input-div">
-        <ion-input
-          [disabled]="isTemplate"
-          [(ngModel)]="title"
-          placeholder="Nombre del servicio"
-          class="padding-input-12 modal-add-name-input"
-        ></ion-input>
-      </div>
-      <div class="modal-add-description">Descripción</div>
-      <div class="modal-input-div">
-        <app-wysiwyg
-          [html]="description"
-          [placeholder]="'Máximo 500 caracteres'"
-          (OnChange)="wysiwygChange( $event )"
-          rows="6"
-        ></app-wysiwyg>
-        <!--  <ion-textarea
-          [(ngModel)]="description"
-          placeholder="Máximo 500 caracteres"
-          rows="6"
-          class="no-padding modal-add-description-input"
-        ></ion-textarea> -->
-      </div>
-      <div class="modal-add-separator">
-        <div class="modal-add-separator-left">
-          <div class="modal-add-price">Precio</div>
-          <div class="position-relative">
-            <ion-input
-              [(ngModel)]="unitPrice"
-              placeholder="Precio"
-              class="padding-input-12 modal-add-price-input add-service-padding-end-input"
-            ></ion-input>
-            <div class="modal-add-price-euro">€</div>
-          </div>
-          <div>Gastos de gestión 0%.</div>
-        </div>
-        <div class="modal-add-separator-right">
-          <div class="modal-add-price">Precio por</div>
-          <div>
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select
-                [(ngModel)]="unitType"
-                class="price-select"
-                placeholder="Precio por"
-                cancelText="Cancelar"
-                okText="Aceptar"
-              >
-                <ion-select-option
-                  *ngFor="let unit of unitTypes"
-                  [value]="unit.id"
-                >{{unit.name}}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-add-name">Profesiones</div>
-      <div class="modal-input-div">
-        <ion-item class="no-padding modal-add-price-select">
-          <ion-select
-            [(ngModel)]="sector"
-            [disabled]="isTemplate"
-            class="price-select"
-            placeholder="Profesiones"
-            cancelText="Cancelar"
-            okText="Aceptar"
-          >
-            <ion-select-option
-              *ngFor="let sector of ProfessionsMapped"
-              [value]="sector.subSectorId"
-            >{{sector.name}}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
-      </div>
-
-      <div class="modal-add-images">Añadir imágenes</div>
-      <div class="modal-add-images-subtitle">
-        Peso máximo de las imágenes 3 Mb (máximo 5 imágenes).
-      </div>
-      <div class="display-table-100">
-        <div
-          class="table-cell-5"
-          *ngFor="let imageURL of images; let i = index"
-        >
-          <div
-            [ngClass]="imageURL ? 'div-add-image-selected' : 'div-add-image-select'"
-            (click)="filePicker.clicks()"
-          >
-            <app-file-picker
-              hidden
-              #filePicker
-              [iFile]="iFile"
-              [pickType]="filePickType.IMAGE"
-              (OnFile)="fileSelected($event, i)"
-            ></app-file-picker>
-            <img
-              [src]="imageURL?.src || imageURL || 'assets/icon/svg/plus-blue.svg'"
-              [ngClass]="imageURL ? 'add-image-selected' : 'add-image-select'"
-              (click)="filePicker.clicks()"
-            />
-            <div
-              class="add-image-remove"
-              *ngIf="imageURL"
-              (click)="clearImageByIndex(i)"
-            >
-              <img
-                class="add-image-remove-svg"
-                src="assets/icon/svg/close-white.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <!--<div class="table-cell-5">
-          <div class="div-add-image-select">
-            <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
-          </div>
-        </div>
-        <div class="table-cell-5">
-          <div class="div-add-image-select">
-            <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
-          </div>
-        </div>
-        <div class="table-cell-5">
-          <div class="div-add-image-select">
-            <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
-          </div>
-        </div>
-        <div class="table-cell-5">
-          <div class="div-add-image-select">
-            <img src="assets/icon/svg/plus-blue.svg" class="add-image-select"/>
-          </div>
-        </div>-->
-      </div>
-    </div>
-    <div class="modal-add-bottom">
-      <div
-        *ngIf="!doUpdate && !isTemplate"
-        class="modal-add-button-primary"
-        (click)="addNuevoServicio()"
-      >
-        Añadir ahora
-      </div>
-      <div
-        *ngIf="doUpdate || isTemplate"
-        class="modal-add-button-primary"
-        (click)="editServicio()"
-      >
-        Guardar cambios
-      </div>
-      <div class="modal-add-button-secondary" (click)="cancelNuevoServicio()">
-        Cancelar
-      </div>
-    </div>
-  </div>
-</div>

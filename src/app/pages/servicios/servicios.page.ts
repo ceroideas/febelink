@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PopoverController, Platform, AlertController} from '@ionic/angular';
 import {UserService} from 'src/app/services/user.service';
@@ -37,6 +37,7 @@ export class ServiciosPage implements OnInit {
   indexValorarServicio: boolean = false;
   finValorarServicio: boolean = false;
   servicioAdded: boolean = false;
+  servicioError: boolean = false;
 
   dragLogged: boolean = false;
 
@@ -50,21 +51,28 @@ export class ServiciosPage implements OnInit {
 
   title: string;
   description: string;
+  whom: string;
+  // buttonName: number;
   unitPrice: number | string;
   unitType: number;
   sector: number;
-  images: (string | IFile)[] = new Array(5);
+  buttonName: number;
+  images: (string | IFile)[] = [];
 
   editorText: string;
+  editorTextWhom: string;
 
   iProfessions: any;
   iUserProfession: any;
   ProfessionsMapped: any;
+  buttonNameMapped: any;
 
   numbServicesAvaliable: number = 3;
 
   iFile: IFile;
   filePickType = FilePickType;
+
+  error: any = {}
 
   constructor(
     public platform: Platform,
@@ -77,6 +85,7 @@ export class ServiciosPage implements OnInit {
     public servicesSvc: ServicesService,
     private subService: SubscriptionService,
     private toastSvc: ToastSvc,
+    public cref: ChangeDetectorRef
   ) {
   }
 
@@ -95,6 +104,13 @@ export class ServiciosPage implements OnInit {
       {id: 11, name: 'Porcentaje', shorthand: '%', lang: 'ES'},
       {id: 12, name: 'Donación', shorthand: 'donación', lang: 'ES'},
       {id: 13, name: 'Presupuesto', shorthand: 'presupuesto', lang: 'ES'},
+    ];
+
+    this.buttonNameMapped = [
+      {id: 1, name: 'Más Informacion'},
+      {id: 2, name: 'Pedir Presupuesto'},
+      {id: 3, name: 'Hacer una consulta'},
+      {id: 4, name: 'Comprar Ahora'},
     ];
     this.getProducts();
     this.getProfessions();
@@ -160,6 +176,19 @@ export class ServiciosPage implements OnInit {
   }
 
   async addNuevoServicio() {
+
+  if (this.unitPrice === undefined ) {
+    this.unitPrice = 0
+  }
+
+  if (  (this.title != undefined && this.title !== null) &&
+    (this.editorText != undefined && this.editorText !== null) &&
+    (this.editorTextWhom != undefined && this.editorTextWhom !== null) &&
+    (this.images.length != 0) &&
+    (this.unitType != undefined && this.unitType !== null) &&
+    (this.sector != undefined && this.sector !== null ) &&
+    (this.buttonName != undefined && this.buttonName !== null) ){
+     
     var productCreate: IServiceFull = {
       title: this.title,
       description: this.editorText,
@@ -167,6 +196,8 @@ export class ServiciosPage implements OnInit {
       unitTypeId: this.unitType,
       subSectorId: this.sector,
       images: this.images,
+      whom: this.editorTextWhom,
+      buttonName: this.buttonName,
     };
 
     const {response, error} = await this.servicesSvc.create(productCreate);
@@ -175,23 +206,36 @@ export class ServiciosPage implements OnInit {
 
     this.isNuevoServicio = false;
     this.servicioAdded = true;
+    this.servicioError = false;
     this.isDisponibles = true;
     this.isCurso = false;
     this.isFinalizados = false;
     this.title = null;
     this.description = null;
+    this.whom = null;
+    this.buttonName = null;
     this.unitPrice = null;
     this.unitType = null;
     this.sector = null;
     this.isTemplate = false;
+  } else {
+
+    this.servicioError = true;
+    this.servicioAdded = false;
+   
+    
+  }
+   
   }
 
   async selectEditarServicio(service: IServiceFull) {
     this.title = service.title;
     this.description = service.description;
+    this.whom = service.whom;
     this.unitPrice = service.productUnitPrice;
     this.unitType = service.unitTypeId;
     this.sector = service.subSectorId;
+    this.buttonName = service.buttonName;
     this.editUpdate = service.productId;
     service.images.forEach((value, index) => {
       this.images[index] = value;
@@ -214,6 +258,8 @@ export class ServiciosPage implements OnInit {
       unitTypeId: this.unitType,
       subSectorId: this.sector,
       images: this.images,
+      whom: this.editorTextWhom,
+      buttonName: this.buttonName,
     };
 
     const {response, error} = await this.servicesSvc.update(productEdit);
@@ -228,6 +274,8 @@ export class ServiciosPage implements OnInit {
     this.editUpdate = null;
     this.title = null;
     this.description = null;
+    this.buttonName = null;
+    this.whom = null;
     this.unitPrice = null;
     this.unitType = null;
     this.sector = null;
@@ -246,6 +294,8 @@ export class ServiciosPage implements OnInit {
     this.unitPrice = null;
     this.unitType = null;
     this.sector = null;
+    this.buttonName = null;
+    this.whom = null;
     this.isTemplate = false;
     this.images.fill(null);
   }
@@ -343,22 +393,40 @@ export class ServiciosPage implements OnInit {
     this.isFinalizados = false;
   }
 
+  closeServicioError(){
+    if (this.title == undefined || this.title === null) { this.error.title = true}
+    if (this.editorText == undefined || this.editorText === null) { this.error.description = true}
+    if (this.editorTextWhom == undefined || this.editorTextWhom === null) { this.error.whom = true}
+    if (this.images.length == 0) { this.error.images = true}
+    if (this.unitType === undefined || this.unitType === null) { this.error.unitType = true}
+    if (this.sector === undefined || this.sector === null) { this.error.sector = true}
+    if (this.buttonName === undefined || this.buttonName === null) { this.error.buttonName = true}
+    this.servicioError = false;
+  }
+
+  
+
   public irA(p: string): void {
     this.router.navigate([p]);
   }
 
-  clearImageByIndex(index: number) {
-    this.images[index] = null;
+  clearImageByIndex(index: IFile) {
+    this.images = this.images.filter(img=> img !== index)
+    this.cref.detectChanges()
   }
 
-  fileSelected(iFile: IFile, index: number) {
-    this.images[index] = iFile;
+  fileSelected(iFile: IFile) {
+    this.images.push( iFile)
   }
 
   wysiwygChange(content: iWYSIWYG) {
     this.editorText = content.html;
   }
 
+
+  wysiwygChangeWhom(content: iWYSIWYG) {
+    this.editorTextWhom = content.html;
+  }
   async cancelProduct() {
     const {response, error} = await this.servicesSvc.cancel({
       cartId: this.cartId,
@@ -371,6 +439,10 @@ export class ServiciosPage implements OnInit {
       this.getProducts();
     }
   }
+
+  // onSelectChange($event){
+  //   this.buttonName = $event.detail.value
+  // }
 
   toggleFinishModal(cartId?: number, productId?: number) {
     this.cartId = cartId;

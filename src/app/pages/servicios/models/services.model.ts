@@ -10,4 +10,7 @@ export interface IServiceFull {
   subSectorId?: number;
   isTemplate?: number;
   images?: (string | IFile)[];
+  whom?: string;
+  buttonName?: number;
+
 }

@@ -1706,8 +1706,14 @@ export class SearchComponent implements AfterViewInit {
           bestProfessionMatch
         );
         this.searchResponse = response;
+        sessionStorage.setItem('searchResponse',  JSON.stringify(response)  );
+
       }
+
+
+
     }
+
 
     const filterLink = this.locationFilterLinkFull.find(item => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
@@ -1721,7 +1727,6 @@ export class SearchComponent implements AfterViewInit {
    
 
     if ( filterLink ) {
-      console.log(this.IdMetaFilter)
       const metaLink = this.locationFilterLinkFull.find(item => item.locations_id.title === filterLink.locations_id.title 
         && item.id_sector.name === filterLink.id_sector.name && Number(item.id) === Number(this.IdMetaFilter));
      

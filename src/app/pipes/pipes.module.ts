@@ -5,6 +5,7 @@ import { DateFormatPipe } from './date-format.pipe';
 import { SplitNumberPipe } from './split-number.pipe';
 import { StringToNumberPipe } from './str-to-num.pipe';
 import { TypeofPipe } from './typeof.pipe';
+import { DateAgoPipe } from './date-ago.pipe';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { TypeofPipe } from './typeof.pipe';
         TypeofPipe,
         SplitNumberPipe,
         DateFormatPipe,
-        StringToNumberPipe
+        StringToNumberPipe,
+        DateAgoPipe
     ],
     imports: [],
     exports: [
@@ -22,7 +24,8 @@ import { TypeofPipe } from './typeof.pipe';
         TypeofPipe,
         SplitNumberPipe,
         DateFormatPipe,
-        StringToNumberPipe
+        StringToNumberPipe,
+        DateAgoPipe
     ]
 })
 export class PipesModule {}
