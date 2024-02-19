@@ -76,13 +76,14 @@
           </div>
           <div
             class="chat-button"
+            [ngSwitch]="detalle?.buttonName"
             (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
-            >
-            <span *ngIf="detalle?.buttonName === 1">Más Información</span>
-            <span *ngIf="detalle?.buttonName === 2">Pedir Presupuesto</span>
-            <span *ngIf="detalle?.buttonName === 3">Hacer consulta</span>
-            <span *ngIf="detalle?.buttonName === 4">Comprar ahora</span>
-            <span *ngIf="detalle?.buttonName === undefined ||  detalle?.buttonName === undefined ">Más Información</span>
+          >
+            <span *ngSwitchCase="1">Más Información</span>
+            <span *ngSwitchCase="2">Pedir Presupuesto</span>
+            <span *ngSwitchCase="3">Hacer consulta</span>
+            <span *ngSwitchCase="4">Comprar ahora</span>
+            <span *ngSwitchDefault>Más Información</span>
           </div>
            
         </div>
@@ -235,7 +236,7 @@
         </div>
   
         <!--To whom-->
-        <div class="section-towhom" *ngIf="detalle?.whom !== undefined">
+        <div class="section-towhom" *ngIf="!!detalle?.whom">
           <ion-row class="towhom-title">
             <ion-label>
               <!-- <h1>{{detalle?.towhom}}</h1> -->
@@ -525,13 +526,14 @@
     <div class="button-price">
       <div
         class="chat-button"
+        [ngSwitch]="detalle?.buttonName"
         (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
-        >
-        <span *ngIf="detalle?.buttonName === 1">Más Información</span>
-        <span *ngIf="detalle?.buttonName === 2">Pedir Presupuesto</span>
-        <span *ngIf="detalle?.buttonName === 3">Hacer consulta</span>
-        <span *ngIf="detalle?.buttonName === 4">Comprar ahora</span>
-        <span *ngIf="detalle?.buttonName === undefined ||  detalle?.buttonName === undefined ">Más Información</span>
+      >
+        <span *ngSwitchCase="1">Más Información</span>
+        <span *ngSwitchCase="2">Pedir Presupuesto</span>
+        <span *ngSwitchCase="3">Hacer consulta</span>
+        <span *ngSwitchCase="4">Comprar ahora</span>
+        <span *ngSwitchDefault>Más Información</span>
       </div>
 
       
