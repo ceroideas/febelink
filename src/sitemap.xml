@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://www.febelink.com/</loc>
-        <lastmod>2024-09-01T14:52:05+01:00</lastmod>
-        <priority>1.0</priority>
-    </url>
-    <url>
         <loc>https://www.febelink.com/token</loc>
         <lastmod>2024-09-01T14:52:05+01:00</lastmod>
         <priority>1.0</priority>
@@ -191,11 +186,6 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://www.febelink.com/listado/servicios-profesionales-en-navarra</loc>
-       <lastmod>2024-09-01T14:52:05+01:00</lastmod>
-        <priority>1.0</priority>
-    </url>
-    <url>
         <loc>https://www.febelink.com/listado/servicios-profesionales-en-ourense</loc>
         <lastmod>2024-09-01T14:52:05+01:00</lastmod>
         <priority>1.0</priority>
@@ -208,6 +198,11 @@
     <url>
         <loc>https://www.febelink.com/listado/servicios-profesionales-en-palencia</loc>
         <lastmod>2024-09-01T14:52:05+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.febelink.com/listado/servicios-profesionales-en-pamplona</loc>
+       <lastmod>2024-24-02T14:52:05+01:00</lastmod>
         <priority>1.0</priority>
     </url>
     <url>
@@ -276,8 +271,8 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://https://www.febelink.com/listado/asesores</loc>
-        <lastmod>2024-09-01T14:52:05+01:00</lastmod>
+        <loc>https://www.febelink.com/listado/asesores</loc>
+        <lastmod>2024-24-02T14:52:05+01:00</lastmod>
         <priority>1.0</priority>
     </url>
     <url>
@@ -286,8 +281,8 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://www.febelink.com/listado/limpieza</loc>
-        <lastmod>2024-09-01T14:52:05+01:00</lastmod>
+        <loc>https://www.febelink.com/listado/servicio-de-limpieza</loc>
+        <lastmod>2024-24-02T14:52:05+01:00</lastmod>
         <priority>1.0</priority>
     </url>
     <url>
@@ -360,7 +355,16 @@
         <lastmod>2024-09-01T14:52:05+01:00</lastmod>
         <priority>1.0</priority>
     </url>
-
+    <url>
+        <loc>https://www.febelink.com/listado/belleza-y-estetica</loc>
+        <lastmod>2024-24-02T14:52:05+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.febelink.com/listado/marketing</loc>
+        <lastmod>2024-24-02T14:52:05+01:00</lastmod>
+        <priority>1.0</priority>
+    </url>
 
 </urlset>
 
