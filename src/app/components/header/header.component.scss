@@ -107,6 +107,9 @@ ion-content {
 
 .avatarmenu {
   margin-left: 15px;
+  width: fit-content;
+  color: black;
+  --background-hover: transparent;
 
   ion-avatar, ion-img {
     width: 46px;
@@ -116,7 +119,9 @@ ion-content {
 
   ion-img {
     object-fit: scale-down;
-    margin: 0;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 7px;
   }
 }
 
@@ -223,10 +228,6 @@ ion-thumbnail {
             }
           }
         }
-    
-        @media (max-width: 950px) {
-          right: 25px;
-        }
       }
 
 			.containerHeader{
@@ -284,20 +285,20 @@ ion-thumbnail {
                 height: 100%;
                 background-color: #000000;
               }
-
-              @media (max-width: 700px) {
-                width: 140px;
-                height: auto;
-                left: 20px;
-                object-fit: contain;
-              }
-
               @media (max-width: 1310px) {
                 width: 140px;
                 height: auto;
                 left: 12px;
                 object-fit: contain;
               }
+              @media (max-width: 700px) {
+                width: 100px !important;
+                height: auto;
+                left: 27px !important;
+                object-fit: contain;
+              }
+
+             
             }
           }
         }
@@ -327,7 +328,7 @@ ion-thumbnail {
             padding-top: 0px;
   
             &.mobile{
-              top: 35px;
+              top: 22px;
             }
           }
           
@@ -380,20 +381,16 @@ ion-thumbnail {
                 border: 1px solid #ffff;
                 border-radius: 10px;
                 padding: 5px 18px !important;
-                border-radius: 9883px;
                 gap: 11px;
                 color: white;
 
                 background: #104CBA;
                 border: navajowhite;
                 height: 38px;
-                border-radius: 10px;
               }
             
               &.logged{
                 padding: 2px 2px !important;
-                border-radius: 9883px;
-                background: white;
                 img{
                   width: 32px;
                   height: 32px;
@@ -408,9 +405,6 @@ ion-thumbnail {
         &.reduced{
           height: 100px;
           transform: translateY(-50px);
-          @media (max-width: 950px) {
-            right: 25px;
-          }
         }
 			}
     }
@@ -466,4 +460,12 @@ ion-thumbnail {
   img{
     border-radius: 1000px;
   }
+}
+
+
+.ion-menu-button{
+  width: 98px;
+}
+ion-image{
+  margin-right: 17px;
 }

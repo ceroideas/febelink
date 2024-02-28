@@ -104,28 +104,36 @@
     </div>
     
     <div class="center-search" *ngIf="!load">
-      <div class="title-results" *ngIf="searchResponse.offers?.length == 0" >Resultados Similares</div>
-      <div class="title-results" *ngIf="searchResponse.offers?.length > 0">Resultados</div>
-      <div class="container-capsule-results">
-        <div  *ngIf="searchResponse.offers?.length > 0">
-          <div *ngFor="let data of searchResponse?.offers
-          "  >
-            <search-product-card
-              [data]="data"
-              [unitTypes]="unitTypes" (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
-            ></search-product-card> 
-          </div>
-        </div>
-        <div  *ngIf="searchResponse.offers?.length === 0">
-          <div *ngFor="let data of searchResponse?.otherResults"  >
-            <search-card
-              [data]="data"
-              [searchTerm]="searchText"
-              (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
-            ></search-card>
+      <div class="offers" *ngIf="searchResponse.offers?.length > 0">
+        <div class="title-results" >Resultados</div>
+        <div class="container-capsule-results">
+          <div  *ngIf="searchResponse.offers?.length > 0">
+            <div *ngFor="let data of searchResponse?.offers
+            "  >
+              <search-product-card
+                [data]="data"
+                [unitTypes]="unitTypes" (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
+              ></search-product-card> 
+            </div>
           </div>
         </div>
       </div>
+
+      <div>
+        <div class="title-results"  >Resultados Similares</div>
+        <div class="container-capsule-results">
+          <div  >
+            <div *ngFor="let data of searchResponse?.otherResults"  >
+              <search-card
+                [data]="data"
+                [searchTerm]="searchText"
+                (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
+              ></search-card>
+            </div>
+          </div>
+        </div>
+      </div>
+   
     </div>
 
 
