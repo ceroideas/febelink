@@ -1,0 +1,299 @@
+:host{
+  background: #FAFAFA;
+  width: 100%;
+  height: 100%;
+
+  .container-general{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    column-gap: 12px;
+    max-width: 100%;
+    height: 100%;
+    background: #FAFAFA;
+    margin: auto;
+    width: 1440px;
+     
+   
+      .title{
+        width: 100%;
+        text-align: center;
+        height: 68px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 1rem;
+        line-height: 1em;
+        background: #FAFAFA;
+        color: #777;
+        position: relative;
+        margin: auto;
+        max-width: 1440px;
+        .simbol{
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        .span1{
+          font-weight: 600;
+          color: #333
+        }
+        .button-add{
+          position: absolute;
+          right: 50px;
+          background: #2492c6;
+          color: #fff;
+          padding: 8px 16px;
+          font-weight: bold;
+          border-radius: 1000px;
+          font-size: .9rem;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          cursor: pointer;
+
+          i{
+            margin-right: 10px;
+          }
+        }
+      }
+      .buscador{
+        width: 100%;
+        margin: auto;
+        height: 68px;
+        border-bottom: 1px solid #ddd;
+        max-width: 1440px;
+
+        ion-searchbar{
+          border: none !important;
+          box-shadow: none !important;
+
+          ::ng-deep{
+            input{
+              border: none !important;
+              background: #fff !important;
+              box-shadow: 0 22px 40px #b3bcc930!important;
+            }
+          }
+        }
+        
+      }
+      .container-admin{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        column-gap: 12px;
+        max-width: 100%;
+        height: 100%;
+        background: #FAFAFA;
+        margin: auto;
+        width: 1440px;
+      .cargando-container {
+        text-align: center;
+        margin-top: 10px;
+        
+        ion-row {
+          display: -webkit-flex;
+          display: -moz-flex;
+          display: -ms-flexbox;
+          display: flex;
+          align-items: center;
+          -webkit-align-items: center;
+          justify-content: center;
+          -webkit-justify-content: center;
+          flex-direction: row;
+          -webkit-flex-direction: row;
+      
+          ion-spinner {
+            margin-right: 20px;
+          }
+        }
+      }
+      .scroll-inner{
+        background: #FAFAFA;
+      }
+      ion-content{
+          --background: #FAFAFA;
+      }
+     
+      
+      #tokensUsersTable {
+        margin: 10px;
+        border-collapse: collapse;
+        width: 100%;
+        
+        td, th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even){background-color: #f2f2f2;}
+        
+        tr:hover {background-color: #ddd;}
+        
+        th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: center;
+          background-color: var(--ion-color-primary);
+          color: white;
+        }
+
+        .balance {
+          text-align: center;
+          color: var(--ion-color-febelink);
+        }
+
+        .edit {
+            text-align: center;
+            color: var(--ion-color-success);
+        }
+
+        .delete {
+            text-align: center;
+            color: var(--ion-color-danger);
+        }
+
+        ion-icon{
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .reduct { max-width: 120px; }
+        .obs { max-height: 50px; overflow: hidden; }
+      }
+      // Scrollbar Override
+      .scroll-inner {
+        overflow-y: hidden;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: transparentize(#ccc, 0.7);
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background: transparentize(#ccc, 0.5);
+          box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+        }
+      }
+    }
+  }
+  #createKeywordController {
+    width: 40%;
+    background-color: #fff;
+    color: #000;
+    justify-content: space-around;
+    background: #fff!important;
+    box-shadow: 0 22px 40px #b3bcc930!important;
+    position: fixed;
+    width: 47%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+    padding: 16px 0;
+    border-radius: 10px;
+    max-height: 95%;
+    overflow: auto;
+
+    .headerTitle{
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding-top: 10px;
+      padding: 0 29px;
+      color: #0e4a87;
+    }
+    .headerSubTitle{
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-weight: normal;
+      font-size: 1rem;
+      padding-top: 10px;
+      padding: 0 29px;
+      margin-bottom: 27px;
+      color: #416a95;
+    }
+    .containerKeyWord{
+      width: 100%;
+      height: calc(100% - 81px);
+
+      .item-select{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 90%;
+        flex-direction: column;
+        margin: auto;
+        height: 82px;
+        gap: 10px;
+        margin-bottom: 14px;
+
+        label{
+          font-weight: bold;
+          font-size: 1rem;
+        }
+
+        select{
+          height: 39px;
+          border: 1px solid lightgrey;
+          background: none;
+          padding: 0 10px;
+          border-radius: 5px;
+        }
+        input{
+          height: 39px;
+          border: none;
+          border-bottom: 1px solid lightgrey;
+          background: none;
+          padding: 0 10px;
+          border-radius: 5px;
+          width: 98%;
+
+        }
+      }
+      .buttons{
+        
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: auto 25px 8px auto;
+        column-gap: 10px;
+
+      }
+    }
+  }
+ //**** add keyword *****//
+ #darkcreateKeywordController{
+  background: #00000052;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+}
+
+}
+

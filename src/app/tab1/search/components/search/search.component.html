@@ -352,7 +352,22 @@
   </div>
   <div style="margin-top: 5em;background: white;" class="desktop">
     <ion-row *ngIf="searchResponse" class="recommendations-desktop" size="12">
-      <ion-col style="flex-basis: 60%">
+      <ion-col id="location-links-desktop">
+        <div class="container" *ngIf="cities.length > 0">
+          <h3>Los mejores profesionales de {{locationFilter}} en Madrid</h3>
+          <ng-container *ngFor="let city of cities">
+          <span><ion-icon name="location-outline"></ion-icon> <a
+            (click)="changeMetaFilterCity(city.sector_id.name, city.link,  city.locations_id.id, city.id)"
+            [href]="'/listado/' + city.link"
+          >
+          <!-- -->
+          {{city.title}}
+        </a>
+        </span>
+          </ng-container>
+        </div>
+      </ion-col>
+      <ion-col style="flex-basis:20%">
         <ng-container *ngIf="searchResponse?.services?.length > 0">
           <h2 class="list_title_card">{{resultTitle}}</h2>
           <ion-row
@@ -462,6 +477,7 @@
           (click)="changeMetaFilter(location.id_sector.name, location.link,  location.id)"
           [href]="'/listado/' + location.link"
         >
+        <!-- -->
           {{location.title}}
         </a>
         </span>

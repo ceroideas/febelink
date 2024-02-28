@@ -1,0 +1,155 @@
+<ion-card>
+  <ion-card-content id="searchCard">
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <!-- Offers Number to Receive -->
+      <ion-list class="ion-no-padding" lines="none">
+        <!-- Title -->
+        <ion-label
+          ><b class="searchQuestionLabel replyLimit">
+            {{ 'tabs.tab1.labelAnswers' | translate }}
+          </b>
+        </ion-label>
+        <ion-radio-group formControlName="ofertas_restantes">
+          <!-- Options -->
+          <ion-item *ngFor="let answer of answerOptions" class="stars">
+            <ion-label>{{ answer.text }}</ion-label>
+            <ion-radio
+              [slot]="platform.width() >= 576 ? 'start' : ''"
+              [value]="answer.value"
+            ></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+      <ion-item-divider></ion-item-divider>
+
+      <!-- Description -->
+      <ion-item>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            {{ 'tabs.tab1.labelDescription' | translate }}
+          </b>
+        </ion-label>
+        <ion-textarea
+          autoGroup="true"
+          rows="6"
+          cols="20"
+          formControlName="descripcion"
+        ></ion-textarea>
+      </ion-item>
+
+      <!-- Image -->
+      <ion-item lines="none" class="pointer" (click)="pick.clicks()">
+        <!-- Label -->
+        <ion-label class="searchQuestionLabel"
+          ><b>
+            {{ 'tabs.tab1.labelPhoto' | translate }}
+          </b>
+          <img
+            src="assets/imgs/photo.png"
+            alt="searchImageIcon"
+            class="placeholder"
+            width="125"
+            height="125"
+          />
+        </ion-label>
+        <!-- Img Button -->
+        <!-- <ion-buttons slot="start" class="ion-no-margin">
+          <ion-button
+            icon-only
+            color="primary"
+            class="no-shadow no-padding wh-35 br-rad-30"
+          >
+            <ion-icon name="image-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons> -->
+      </ion-item>
+
+      <!-- File Picker -->
+      <app-file-picker
+        #pick
+        (OnFile)="fileSelected($event)"
+        [classes]="iFile ? '' : 'invisible'"
+      ></app-file-picker>
+
+      <ion-item-divider></ion-item-divider>
+
+      <ion-item>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Opcional) ¿Desea limitar la búsqueda a una localidad?
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="localidad"
+          [(ngModel)]="localidad"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="!perfil">
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Requerido) ¿Qué nombre quieres asociar a la publicación?
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="name"
+          [(ngModel)]="name"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+        <ion-item-divider></ion-item-divider>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Requerido) ¿En qué dirección email quieres recibir las
+            notificaciones?
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="email"
+          [(ngModel)]="email"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+        <ion-item-divider></ion-item-divider>
+        <ion-label position="floating">
+          <b class="searchQuestionLabel">
+            (Requerido) Introduzca una contraseña con la que podrás consultar o
+            editar tus publicaciones
+          </b>
+        </ion-label>
+        <ion-input
+          rows="6"
+          cols="20"
+          ngDefaultControl
+          name="passw"
+          type="password"
+          [(ngModel)]="password"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Buttons -->
+      <ion-item lines="none">
+        <!-- Submit -->
+        <ion-button fill="transparent" (click)="cancel()" class="marg-se">
+          {{ 'common.buttons.cancel' | translate }}
+        </ion-button>
+
+        <!-- Submit -->
+        <ion-button type="submit" color="primary" class="marg-se">
+          {{ 'tabs.tab1.buttonSend' | translate }}
+        </ion-button>
+      </ion-item>
+    </form>
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,204 @@
+<div>
+  <div class="page-new-services">
+    <div class="header-new-services">
+      <div class="sections-add-service-left">
+        <div class="sections-add-service-title">
+          Lo Buscamos por ti
+        </div>
+        <div class="sections-add-service-subtitle">
+          A veces la búsqueda de un servicio profesional es un problema difícil de solucionar. Requiere mucho tiempo y esfuerzo, preguntando, llamando y mandando mensajes. Nosotros lo buscamos por ti y lo ponemos en contacto contigo para que tú sólo tengas que seleccionar el que más te guste y disfrutar del servicio.
+        </div>
+      </div>
+    </div>
+    <div class="body-new-services">
+      <div class="item-new-services">
+        <div class="add-service-label-input" [ngClass]="{'error': error.title === true}">Titulo de Búsqueda *</div>
+        <div class="add-service-margin-input">
+          <ion-input
+            [disabled]="isTemplate"
+            [(ngModel)]="title"
+            placeholder=""
+            class="padding-input-12 add-service-input"
+            (ionChange)="error.title = false"
+          ></ion-input>
+        </div>
+        <div class="title-pie">Máximo 130 caracteres</div>
+      </div>
+
+      <div class="item-new-services">
+        <div class="add-service-label-input" [ngClass]="{'error': error.description === true}">Descripción ampliada*</div>
+        <div class="add-service-margin-input">
+        <app-wysiwyg
+          [html]="description"
+
+          [placeholder]="'Tip: intenta describir brevemente los beneficios del servicio y para quién está pensado; indica por ejemplo si es para ambos sexos y todas las edades'"
+          (OnChange)="error.description = false;wysiwygChange( $event )"
+          rows="6"
+        ></app-wysiwyg>
+        
+      </div>
+        <div class="title-pie">Máximo 2800 caracteres</div>
+      </div>
+
+      <div class="item-new-services">
+        <div class="add-service-label-input" [ngClass]="{'error': error.location === true}">Localidad *</div>
+        <div class="add-service-margin-input">
+          <!-- <ion-input
+            [disabled]="isTemplate"
+            [(ngModel)]="location"
+            placeholder=""
+            class="padding-input-12 add-service-input"
+            (ionChange)="error.location = false"
+          ></ion-input> -->
+          <ion-select label="Default label" [(ngModel)]="selectedValue" (ionChange)="onSelectChange($event)" placeholder="Selecciona una localizacion">
+            <ion-select-option value="{{location.id}}" *ngFor="let location of locations">{{location.title}}</ion-select-option>
+         
+          </ion-select>
+        </div>
+        <div class="title-pie"></div>
+      </div>
+
+     
+      <div class="item-new-services">
+        <div class="add-service-label-input"  [ngClass]="{'error': error.images === true}">Imagenes *</div>
+        <div class="container-image">
+          <div class="container-file-add">
+            <div class="dashed-file-add" >
+              <ng-container>
+                <div>
+                  <app-file-picker
+                    hidden
+                    #filePickerDesktop
+                    [iFile]="iFile"
+                    [pickType]="filePickType.IMAGE"
+                    (OnFile)="fileSelected($event)"
+                  ></app-file-picker>
+                  <div class="icon-add">
+                    <div class="picker" (click)=" error.images = false;filePickerDesktop.clicks()">
+                      <span>Click here </span>to upload or drop media image
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="visorPhotos" *ngIf="images.length > 0">
+              <div class="item-photo" *ngFor="let imageURL of images; let i = index">
+                <img
+                  [src]="imageURL?.src"
+                /> 
+                <div
+                  class="add-service-remove-div"
+                  *ngIf="imageURL"
+                  (click)="clearImageByIndex(imageURL)"
+                  >
+                  <img
+                    class="add-service-remove-svg"
+                    src="assets/icon/svg/close-white.svg"
+                  />
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="butttonaddphotos" >
+            <div (click)="error.images = false;filePickerDesktop.clicks()">Añadir Fotos</div>
+          </div>
+          <div class="title-pie">Peso máximo 3 Mb. Máximo 6 imágenes.</div>
+         
+        </div>
+      </div>
+
+
+      <div class="item-new-services">
+        <div class="add-service-label-input" [ngClass]="{'error': error.name === true}">Nombre *</div>
+        <div class="add-service-margin-input">
+          <ion-input
+            [disabled]="isTemplate"
+            [(ngModel)]="name"
+            placeholder=""
+            class="padding-input-12 add-service-input"
+            (ionChange)="error.name = false"
+          ></ion-input>
+        </div>
+        <div class="title-pie">Máximo 130 caracteres</div>
+      </div>
+
+
+      <div class="item-new-services">
+        <div class="add-service-label-input" [ngClass]="{'error': error.email === true}">Email *</div>
+        <div class="add-service-margin-input">
+          <ion-input
+            [disabled]="isTemplate"
+            [(ngModel)]="email"
+            placeholder=""
+            class="padding-input-12 add-service-input"
+            (ionChange)="error.email = false"
+          ></ion-input>
+        </div>
+        <div class="title-pie"></div>
+      </div>
+
+      <div class="item-new-services">
+        <div class="add-service-label-input" [ngClass]="{'error': error.phone === true}">Telefono *</div>
+        <div class="add-service-margin-input">
+          <ion-input
+            [disabled]="isTemplate"
+            [(ngModel)]="phone"
+            placeholder=""
+            class="padding-input-12 add-service-input"
+            (ionChange)="error.phone = false"
+          ></ion-input>
+        </div>
+        <div class="title-pie"></div>
+      </div>
+      <div class="sections-add-service-right">
+        <div
+          class="sections-add-service-button-secondary"
+          (click)="cancelNuevoServicio()"
+        >
+          Cancelar
+        </div>
+        <div
+          class="sections-add-service-button-primary"
+          (click)="sendServicio()"
+        >
+          Enviar
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<div *ngIf="servicioAdded" class="  modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">Peticion Enviada</div>
+    <div class="modal-front-subtitle modal-subtitle-margin-a">
+      Se ha enviado tu peticion de servicio al destinatario
+    </div>
+    <div class="modal-button-primary" (click)="closeSearch()">Aceptar</div>
+  
+  </div>
+</div>
+
+<div *ngIf="servicioError">
+  <div class="modal-back-background">
+    <div class="modal-front-content-c">
+      <div class="modal-back-close-b" (click)="closeServicioError()">
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+      </div>
+      <div class="modal-full-check">
+        <img
+          src="assets/icon/svg/close-circle.svg"
+          class="modal-full-check-svg"
+        />
+      </div>
+      <div class="modal-full-title-b">Error al enviar el formulario</div>
+      <div class="modal-full-subtitle-b">
+        Debes rellenar los datos obligatorios para poder enviarlo
+      </div>
+    </div>
+  </div>
+</div>

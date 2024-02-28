@@ -5,7 +5,7 @@ import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { Tab1Page } from './tab1.page';
-import { SearchModule } from './search/search.module';
+// import { SearchModule } from './search/search.module';
 import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { SwiperModule } from 'swiper/angular';
     ComponentsModule,
     IonicSelectableModule,
     Tab1PageRoutingModule,
-    SearchModule,
+    // SearchModule,
     SwiperModule
   ],
   declarations: [Tab1Page],

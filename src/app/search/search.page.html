@@ -1,0 +1,174 @@
+<!-- HEADER  -->
+<div class="layer-home">
+  <div class="header-search">
+    <div class="titles">
+      <div class="title-search" *ngIf="!h1Title">
+        Ofertas de servicios profesionales en  
+        <span *ngIf="locationSelected !== undefined && locationSelected !== null">{{ locationSelected.title}}</span> 
+        <span *ngIf="locationSelected == undefined || locationSelected == null">España</span> 
+      </div>
+      <h1 class="title-search" *ngIf="h1Title">{{ h1Title }}</h1>
+      <div class="subtitle-search">Miles de ofertas de trabajo en todos los sectores  te están esperando.</div>
+    </div>
+    <div class="search-capsule">
+      <div class="capsule">
+        <div class="terms">
+          <ion-searchbar
+            id="search_scroll"
+            class="searchbar no-padding"
+            placeholder="{{ 'common.publishPlaceholder' | translate }}"
+            [(ngModel)]="searchText2"
+            style="--box-shadow: none"
+            (keydown.enter)="search2()"
+          ></ion-searchbar>
+        </div>
+        <div class="button-terms" (click)="search2()">Buscar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-selects" *ngIf="locationFilterLink?.length !== 0">
+
+      <div class="content-select">
+        <div class="subtitle-select">Busca por Profesionales</div>
+        <select>
+          <option>--</option>
+          <option *ngFor="let profession of locationFilterLink">{{profession.title}}</option>
+        </select>
+        <i></i>
+      </div>
+
+
+      <!-- <div class="content-select">
+        <div class="subtitle-search">Profesionales</div>
+        <select>
+          <option *ngFor="let profession of locationFilterLink" >{{profession.title}}</option>
+        </select>
+        <i></i>
+      </div> -->
+
+      
+    </div>
+
+  <div class="container-search">
+    <div class="left-search" *ngIf="locationFilterLink?.length !== 0">
+      <div class="title-left">Profesionales</div>
+      <div class="container-profession">
+        <a (click)="selectProfession(profession)"  
+          *ngFor="let profession of locationFilterLink" 
+          [href]="'/listado/' + profession.link"  >
+          <div class="item-profession" 
+            [ngClass]="{'selected': profession.link === searchText}"
+            (click)="selectProfession(profession)"
+           >
+            <i class="far fa-circle" *ngIf="profession.link !== searchText"></i>
+            <i class="far fa-dot-circle"  *ngIf="profession.link === searchText"></i>
+            {{profession.title}}
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="left-search" *ngIf="sectors?.length !== 0 && locationFilterLink?.length == 0">
+      <div class="title-left">Profesionales</div>
+      <div class="container-profession">
+        <a (click)="selectProfession(profession)"  
+          *ngFor="let profession of sectors" 
+          [href]="'/listado/' + profession.link"  >
+          <div class="item-profession" *ngIf="profession.imageURL !== ''"
+            [ngClass]="{'selected': profession.link === searchText}"
+            (click)="changeTitles(profession)"
+           >
+            <i class="far fa-circle" *ngIf="profession.link !== searchText"></i>
+            <i class="far fa-dot-circle"  *ngIf="profession.link === searchText"></i>
+            {{profession.nombre}}
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="center-search" *ngIf="load">
+      <div class="title-results">Resultados</div>
+
+      <div class="container-capsule-results">
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+        <search-product-card [skeleton]="true"></search-product-card> 
+      </div>
+    </div>
+    
+    <div class="center-search" *ngIf="!load">
+      <div class="title-results" *ngIf="searchResponse.offers?.length == 0" >Resultados Similares</div>
+      <div class="title-results" *ngIf="searchResponse.offers?.length > 0">Resultados</div>
+      <div class="container-capsule-results">
+        <div  *ngIf="searchResponse.offers?.length > 0">
+          <div *ngFor="let data of searchResponse?.offers
+          "  >
+            <search-product-card
+              [data]="data"
+              [unitTypes]="unitTypes" (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
+            ></search-product-card> 
+          </div>
+        </div>
+        <div  *ngIf="searchResponse.offers?.length === 0">
+          <div *ngFor="let data of searchResponse?.otherResults"  >
+            <search-card
+              [data]="data"
+              [searchTerm]="searchText"
+              (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
+            ></search-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="right-search">
+      <div class="capsule-city" *ngIf=" cities?.length == 0 && locationFilterLink?.length === 0">
+        <div class="title-foryou">Lo mejores profesionales en España</div>
+        <div class="container-search-for-you">
+          <div class="item-profession" *ngFor="let locaion of locations">
+            <a (click)="changeMetaProvince(locaion)"  
+            [href]="'/search/' + locaion.link"  >
+            {{locaion.title}}
+          </a>
+            
+          </div>
+        </div>
+      </div>
+
+
+      <div class="capsule-city" *ngIf="cities?.length > 0 ">
+        <div class="title-foryou">Lo mejores profesionales de {{metaLocationFilter}} en tu ciudad</div>
+        <div class="container-search-for-you">
+          <div class="item-profession"  *ngFor="let city of cities">
+            {{city.title}}
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="search-for-you">
+        <div class="title-foryou">🚀 Lo buscamos por ti</div>
+        <div class="container-search-for-you">
+          <div class="texts">
+            ¿No encuentras lo que buscas?
+            <br>
+            <br>
+            Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
+            Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
+          </div>
+          <div class="button">Buscar</div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

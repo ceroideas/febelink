@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="header">
     <ion-buttons *ngIf="currentUser" buttons-start slot="start">
       <ion-menu-button class="avatarmenu">
@@ -21,11 +21,64 @@
       <div *ngIf="!currentUser" class="header-register-button desktop" (click)="irA('/registro')">
         Regístrate
       </div>
-      <ion-img tappable
-               src="assets/imgs/logo.png"
-               alt="Febelink logo"
-               (click)="irA('/listado')"
-               class="ion-margin logo"></ion-img>
+      <a  href="/listado">
+        <ion-img tappable
+        src="assets/imgs/logo.png"
+        alt="Febelink logo"
+        class="ion-margin logo"></ion-img>
+      </a>
+     
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+
+<header>
+  <div  class="headerlogo" [ngClass]="{'detached': detached }">
+    <div class="containerHeader">
+      <div  class="left">
+        <a href="/">
+          <img  *ngIf="detached" src="assets/imgs/logo.png" alt="Logo Febelink"/>
+          <img  *ngIf="!detached " src="assets/imgs/logo.png" alt="Logo Febelink"/>
+        </a>
+      </div>
+      <!-- MENU DESKTOP -->
+      <div  class="right"  >
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " href="/">Home</a></div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " [href]="'/oracles'" >Oraculo</a></div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " >Carrito</a></div>
+        <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div>
+        <div  class="menu secondary user" *ngIf="currentUser" [ngClass]="{'detached': detached}" >
+        </div>
+        <div  class="menu secondary"[ngClass]="{'detached': detached}" >
+          <div class="item login " *ngIf="currentUser === undefined" (click)="irA('/login')" >
+            <i  class="fas fa-user-circle "></i> Acceder
+          </div>
+          <div class="item logged" *ngIf="currentUser !== undefined">
+            <!-- <img *ngIf="user.user_metadata.avatar_url !== null && user.user_metadata.avatar_url !== undefined" [src]="user.user_metadata.avatar_url"/>  -->
+            <img src="assets/img/sinfoto.jpeg"/> 
+          </div>
+          
+        </div>
+      </div>
+      <!-- MENU -->
+      <!-- <div class="menu-shadow" *ngIf="mobileMenu" (click)="closeMenu()" @inOutFade></div>
+      <div class="menulayer" *ngIf="mobileMenu" @inOutMenu>
+        <app-menu (closeRequest)="closeMenu()"></app-menu>
+      </div> -->
+  
+      <!-- BOTON MENU MOVIL -->
+      <div class="right mobile" 
+        [@inFadeTranslate]="!detached && !reduced" 
+        [ngClass]="{'detached': detached  , 'reduced': reduced}"
+        >
+        <ion-buttons *ngIf="currentUser" buttons-start slot="start">
+          <ion-menu-button class="avatarmenu">
+            <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
+          </ion-menu-button>
+        </ion-buttons>
+      </div>
+    </div>
+  </div>
+</header>
+

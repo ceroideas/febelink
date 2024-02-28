@@ -15,6 +15,8 @@ import {SubSectorPage} from './subsector/subsector.page';
 import {SubSectorPipe} from './pipes/subsector.pipe';
 import { LocationPage } from './location/location.page';
 import { LinkLocationPage } from './link-location/link-location.page';
+import { CityPage } from './city/city.page';
+import { LinkCityPage } from './link-city/link-city.page';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { LinkLocationPage } from './link-location/link-location.page';
     SectorPage,
     SubSectorPage,
     LocationPage,
+    CityPage,
+    LinkCityPage,
     LinkLocationPage,
     SectorPipe,
     SubSectorPipe

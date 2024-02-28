@@ -7,21 +7,21 @@ import {
 } from '@angular/router';
 import {environment} from 'src/environments/environment';
 
+import { Tab1Page } from './tab1/tab1.page';
+import { SearchPage } from './search/search.page';
+
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+    component: Tab1Page
   },
   {
     path: 'listado',
-    loadChildren: () =>
-      import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+    component: SearchPage
   },
   {
     path: 'listado/:searchTerm',
-    loadChildren: () =>
-      import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
+    component: SearchPage
   },
   {
     path: 'user/:recommenderId',
@@ -35,6 +35,25 @@ const routes: Routes = [
         (m) => m.InterestingLinksPageModule
       ),
   },
+  {
+    path: 'search',
+    component: SearchPage
+  },
+  {
+    path: 'search/:searchTerm',
+    component: SearchPage
+  },
+  {
+    path: 'searchforyou',
+    loadChildren: () => 
+      import('./pages/lo-buscamos-por-ti/lo-buscamos-por-ti.module').then((m) => m.LoBuscamosPorTiPageModule),
+  },
+  {
+    path: 'createPassword',
+    loadChildren: () =>
+      import('./pages/update-password/update-password.module').then((m) => m.UpdatePasswordPageModule),
+  },
+  
   {
     path: 'login',
     loadChildren: () =>
@@ -292,7 +311,7 @@ const routes: Routes = [
         (m) => m.CuentaProfesionalPageModule
       ),
   },
-  {path: '**', redirectTo: 'listado', pathMatch: 'full'},
+  {path: '**', redirectTo: '/', pathMatch: 'full'},
 ];
 
 @NgModule({

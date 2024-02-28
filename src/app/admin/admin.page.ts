@@ -14,6 +14,8 @@ export class AdminPage {
     {title: 'Subsectores', icon: 'file-tray-stacked-outline', link: 'keyword/sub-sector'},
     {title: 'Ubicaciones', icon: 'location-outline', link: 'keyword/location'},
     {title: 'Enlaces de ubicaciones', icon: 'link-outline', link: 'keyword/link-location'},
+    {title: 'Ciudades', icon: 'location-outline', link: 'keyword/city'},
+    {title: 'Enlaces de ciudades', icon: 'link-outline', link: 'keyword/link-city'},
   ];
 
   homePage: string = environment.HOME_PAGE;

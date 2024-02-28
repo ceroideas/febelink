@@ -1,4 +1,4 @@
-<ion-content id="search-content" class="content-background">
+<!-- <ion-content id="search-content" class="content-background">
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="12">
@@ -46,4 +46,216 @@
     </ion-row>
   </ion-grid>
   <app-footer></app-footer>
-</ion-content>
+</ion-content> -->
+
+
+<!-- HEADER  -->
+<div id="search-content" class="layer-home">
+  <div class="layer-img-header">
+    <div class="header-shadow"></div>
+    <!-- <div class="eclipse"></div>
+    <div class="eclipse2"></div> -->
+     <img 
+      class="wallpaper-header" 
+      [src]="'assets/imgs/buscador_fondo_desktop.png'" 
+      alt="Febelink en portada" 
+      [class.loaded]="isIntroImageLoaded"
+      (load)="onIntroImageLoaded()"
+    />
+    
+    <div class="eslogan section1">
+      <h1 class="title1">Encuentra servicios profesionales en tu ciudad.</h1>
+    </div>
+    <div class="optionsheader">
+      <div  (click)="navigateNewServices()">Ofrece tus servicios</div>
+      <!-- <div (click)="navigateSearchServices()" class="sinborder">Lo buscamos por ti</div> -->
+    </div>
+   
+  
+    <div class="search-capsule">
+      <div class="item-search">
+        <!-- <div class="item-search-location">
+          <div class="title-search">Lugar</div>
+          <div class="result-search" *ngIf="locationSearch ==''">¿Que ciudad prefieres?</div>
+          <div class="result-search"  *ngIf="locationSearch !==''"></div>
+        </div> -->
+        <div class="item-search-terms">
+          <!-- <div class="title-search">Termino de Busqueda</div> -->
+          <div class="result-search">
+            <ion-searchbar
+            id="search_scroll"
+            class="searchbar no-padding"
+            placeholder="{{ 'common.publishPlaceholder' | translate }}"
+            [(ngModel)]="searchTerm"
+            style="--box-shadow: none"
+            (keydown.enter)="search()"
+          ></ion-searchbar>
+          </div>
+        </div>
+      </div>
+      <div class="button-search" (click)="search()">
+        <div>
+          <i class="fa fa-search"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="section2">
+    <h2 class="title-section">Todos los servicios profesionales en un mismo sitio
+      <!-- <div class="show-total"  [routerLink]="'/search'">Mostrar Todos <i class="fa fa-arrow-right"></i></div> -->
+    </h2>
+    <div class="container-section">
+      <div class="grid-container">
+        <div *ngFor="let sector of sectors">
+          <div  class="grid-item">
+            <a class="link" (click)="changeSectorFilter(sector)" [href]="'/listado/' + sector.link"  >
+              <div class="icon">
+                <img src="{{sector.imageURL}}"/>
+              </div>
+              <div class="text">
+                <div class="text-top">{{sector.nombre}}</div>
+                <!-- <div class="text-down">000 Publicaciones</div> -->
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section3">
+    <h2 class="title-section">Cómo funciona Febelink</h2>
+    <h3 class="title-subsection">Descubre los servicios profesionales más buscados, ofrecidos con excelencia y satisfacción garantizada.</h3>
+    <div class="container-section">
+      <div class="grid-container">
+        <img class="vector1" src="assets/imgs/vector5.png"/>
+        <img class="vector2" src="assets/imgs/vector6.png"/>
+        <div class="grid-item">
+          <div class="icon-howdoesitwork"><i class="fas fa-bars"></i></div>
+          <div class="texts-howdoesitwork">
+            <div class="title-howdoesitwork">¿Qué necesitas?</div>
+            <div class="description-howdoesitwork">Escribe en nuestro buscador inteligente o selecciona el servicio que necesitas.<br> Ya sea el mejor abogado, marmolista, carpintero, asesoría o informático. Así de fácil.</div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="icon-howdoesitwork center"><i class="fas fa-search"></i></div>
+          <div class="texts-howdoesitwork">
+            <div class="title-howdoesitwork">Compara ofertas y elige un profesional</div>
+            <div class="description-howdoesitwork">Elige entre todos los servicios y las mejores ofertas.<br> Incluso puedes chatear con los profesionales y pedir presupuestos.</div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="icon-howdoesitwork right"><i class="fas fa-cart-shopping"></i></div>
+          <div class="texts-howdoesitwork">
+            <div class="title-howdoesitwork">Compra y reserva tu oferta en el momento</div>
+            <div class="description-howdoesitwork">Aprovecha las oportunidades y disfruta de tu servicio tranquilamente. Gracias a la garantía de Febelink tu compra está siempre protegida hasta que tú nos des la conformidad.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section4">
+    <div class="container-section4">
+      <h2 class="title-section">Los mejores profesionales de toda España están en Febelink</h2>
+      <h3 class="title-subsection">Febelink reúne a los mejores profesionales de toda España, destacando por su experiencia y dedicación incomparables.</h3>
+      <div class="container-section">
+        <div class="grid-container">
+          <div class="grid-item" *ngFor="let location of locations">
+            <a
+            (click)="changeLocation(location)"
+            [href]="'/listado/' + location.link"
+          >
+            <div class="icon"><i class="fas fa-building"></i></div>
+            <div class="text">
+              {{location.title}}
+            </div>
+          </a>
+           
+          </div>
+         
+          <!-- Add more grid items as needed -->
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+  <div class="section5">
+    <img class="imgBackground" src="assets/imgs/8410.png"/>
+    <div class="container-section5">
+      <div class="item-left">
+        <h2 class="title-section">Descubre los mejores consejos profesionales en el Oráculo</h2>
+      <div class="title-subsection">Descubre y comparte valiosos consejos de servicios profesionales. Nuestra plataforma te conecta con contenido experto en diversos campos, desde asesoría legal, consultoría financiera, consejos de salud, o sobre reformas para el hogar. 
+       <br>  <br>Obtén información clave y compártela con otros para tomar decisiones informadas para tu vida.</div>
+      <div class="buttons"  [routerLink]="'/oracles'" >Descrubre mas.</div>
+      </div>
+      <div class="item-right">
+        <img src="assets/imgs/rightside.png"/>
+      </div>
+    </div>
+  </div>
+
+
+  <section id="benefits">
+    <div class="leftvisor"></div>
+    <div id="visor-container">
+      <h2>¿Eres un profesional en búsqueda de nuevos clientes?</h2>
+      <p>✓ Contacta con clientes que buscan tus servicios</p>
+      <p>✓ Recibe gratis los beneficios de nuestras soluciones de marketing digital</p>
+      <p>✓ Accede a beneficios extras a muy bajo costo</p>
+      <div class="button" [routerLink]="'/registro'">Regístrate ahora</div>
+    </div>
+  </section>
+
+
+  <div class="section6">
+    <div class="accordion">
+      <h1>
+        <img src="assets/imgs/FAQ1.png"/>
+      </h1>
+      <div class="accordion-item">
+          <input type="checkbox" id="accordion1">
+          <label for="accordion1" class="accordion-item-title"><span class="icon"></span>¿Cuánto cuesta usar Febelink?</label>
+          <div class="accordion-item-desc">Febelink es gratuito, y no tiene coste por uso ni comisiones para los usuarios.</div>
+      </div>
+  
+      <div class="accordion-item">
+          <input type="checkbox" id="accordion2">
+          <label for="accordion2" class="accordion-item-title"><span class="icon"></span>¿Cómo funciona Febelink?</label>
+          <div class="accordion-item-desc">Febelink es muy sencillo. Tan sólo tienes que buscar lo que necesitas, comparar entre los mejores profesionales, y elegir el servicio que más te guste.</div>
+      </div>
+  
+      <div class="accordion-item">
+          <input type="checkbox" id="accordion3">
+          <label for="accordion3" class="accordion-item-title"><span class="icon"></span>Qué garantías tiene Febelink?</label>
+          <div class="accordion-item-desc">Febelink ofrece su Garantía de Satisfacción, ya que es el usuario quien decide cuándo el servicio está terminado, y libera el pago para el Profesional.</div>
+      </div>
+  
+      <div class="accordion-item">
+          <input type="checkbox" id="accordion4">
+          <label for="accordion4" class="accordion-item-title"><span class="icon"></span>¿Cuántos servicios tiene Febelink?</label>
+          <div class="accordion-item-desc">Febelink cuenta con más de 200 tipos de profesionales de todo tipo de sectores y preparados para darte el mejor servicio. Reformas, asesores, formación, limpieza, belleza y estética, entrenadores, mudanzas, y muchos más.</div>
+      </div>
+  
+      <div class="accordion-item">
+          <input type="checkbox" id="accordion5">
+          <label for="accordion5" class="accordion-item-title"><span class="icon"></span>¿Cuándo puedo realizar los servicios de Febelink?</label>
+          <div class="accordion-item-desc">Febelink ofrece el contacto directo y automático entre el usuario y el profesional seleccionado, desde el mismo momento de la selección y en tiempo real.
+          </div>
+      </div>
+
+      <div class="accordion-item">
+        <input type="checkbox" id="accordion6">
+        <label for="accordion6" class="accordion-item-title"><span class="icon"></span>¿Puedo contactar con los Profesionales antes de contratar un servicio en Febelink?</label>
+        <div class="accordion-item-desc">Sí, en Febelink puedes contactar y chatear con los profesionales antes de contratar tus servicios para hacer tus consultas, y además sin exponer tus datos personales. Protección para que nadie te moleste.
+        </div>
+    </div>
+  
+  </div>
+  </div>
+  <app-footer></app-footer>
+
+</div>

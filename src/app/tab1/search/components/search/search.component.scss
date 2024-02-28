@@ -259,8 +259,8 @@ ion-grid {
 }
 
 .recommendations-desktop {
-  width: 70%;
-  margin: 4em 0em 3em auto;
+  width: 100%;
+  // margin: 4em 0em 3em auto;
   display: flex;
   justify-content: flex-end;
   gap: 3em;
@@ -269,7 +269,7 @@ ion-grid {
   align-items: flex-start;
 
   #location-links-desktop {
-    flex-basis: 30%;
+    flex-basis: 20%;
 
     .container {
       display: flex;

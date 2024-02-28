@@ -1,4 +1,4 @@
-import {Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef} from '@angular/core';
 import {ApiService} from '../services/api.service';
 import {Platform} from '@ionic/angular';
 import {UtilitiesService} from '../services/utilities.service';
@@ -18,8 +18,9 @@ import {SeoService} from '../services/seo.service';
 import {AuthenticationService} from '../services/authentication/authentication.service';
 import {UserService} from '../services/user.service';
 import {CuentaProfesionalService} from '../pages/cuenta-profesional/Services/cuenta-profesional.service';
-import {SearchComponent} from './search/components/search/search.component';
+// import {SearchComponent} from './search/components/search/search.component';
 import {Meta, Title} from '@angular/platform-browser';
+import { KeywordService } from '../admin/keyword/services/keyword.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
@@ -43,7 +44,6 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   //SEARCH COMPONENT
   @ViewChild('search') searchComponent_OLD: AssistantSearchComponent; // ToDo: Refactor or remove this deprecated feature
-  @ViewChild(SearchComponent) searchComponent;
 
   openKeys: boolean = false;
   showCookies = false;
@@ -65,6 +65,20 @@ export class Tab1Page implements OnInit, AfterViewInit {
   defaultTitle = 'Encuentra servicios profesionales en tu ciudad';
   generalTitle = this.defaultTitle;
 
+  isIntroImageLoaded: boolean = false;
+
+  locationSearch: string = ''
+  termSearch: string = ''
+  services = [];
+
+  sectors = [ ];
+  locations = [];
+  locationLinks = [ ];
+  locationFilterLink: any[] = [];
+  locationFilterLinkFull = [ ];
+
+  metaFilterLink = [];
+  cities= [];
   constructor(
     private api: ApiService,
     public platform: Platform,
@@ -80,7 +94,12 @@ export class Tab1Page implements OnInit, AfterViewInit {
     private authenticationService: AuthenticationService,
     private userSvc: UserService,
     private profAccountService: CuentaProfesionalService,
+    private cdRef : ChangeDetectorRef,
+    private keywordService: KeywordService,
   ) {
+
+    this.leerDatos()
+
     this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
 
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -135,10 +154,25 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.searchTerm) {
-      this.searchComponent.search(this.searchTerm, false);
+      // this.searchPage.search(this.searchTerm, false);
     }
   }
 
+
+  search(){
+
+    sessionStorage.removeItem("sectorFilter");
+    sessionStorage.removeItem("locationFilter"); 
+    sessionStorage.removeItem("locationSelected"); 
+
+    if (this.searchTerm) {
+    // You can construct the URL for the new route with the parameters
+      const targetRoute = `/search/${this.searchTerm}`;
+
+      // Use the Router to navigate to the new route
+      this.router.navigate([targetRoute]);
+    }
+  }
   ionViewDidEnter() {
     this.loadData();
     this.recomendation();
@@ -148,6 +182,72 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.showCard = false;
     this.searchComponent_OLD.clear();
   }
+
+
+ async leerDatos(){
+
+    await this.readData()
+
+    this.cdRef.detectChanges();
+  }
+  
+  async readData() {
+    const seoData = sessionStorage.getItem('seoData');
+
+    if ( !!seoData ) {
+      const response = JSON.parse(seoData);
+      this.services = response.sector.sort((a, b) => 0.5 - Math.random());
+      this.sectors = response.subsector;
+      this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
+      this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
+
+      this.locations = response.locations;
+      this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+      this.locationFilterLinkFull = response.linklocations;
+
+      this.fetchData();
+    } else {
+      await this.fetchData();
+      this.services = this.services.sort((a, b) => 0.5 - Math.random());
+
+      
+      this.sectors = this.sectors;
+      this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
+      this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
+    }
+
+
+
+  }
+
+
+  async readDataCity(id) {
+    const {response} = await this.keywordService.getLinkCitysLocation(id)
+    this.cities = response;
+  }
+
+  async readDataCityLocationSector(id, sector) {
+    const {response} = await this.keywordService.getLinkCitysLocationSector(id, sector)
+    this.cities = response;
+  }
+
+  async fetchData() {
+    const {response} = await this.keywordService.getData();
+    this.services = response.sector.sort((a, b) => 0.5 - Math.random());
+
+    this.sectors = response.subsector;
+    this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
+    this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
+
+
+    this.locations = response.locations;
+
+    this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+    this.locationFilterLinkFull = response.linklocations;
+
+    sessionStorage.setItem('seoData', JSON.stringify(response));
+  }
+
 
   checkUserFields(): boolean {
     return (
@@ -226,6 +326,8 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.router.navigate([ruta]);
   }
 
+  gotoSearch() {}
+
   private recomendation() {
     const recommenderId: string =
       this.activatedRoute.snapshot.paramMap.get('recommenderId');
@@ -294,8 +396,42 @@ export class Tab1Page implements OnInit, AfterViewInit {
     }
     this.router.navigate([url]);
   }
+  async navigateSearchServices() {
+    let url  = 'searchforyou';
+    this.router.navigate([url]);
+  }
 
   changeGeneralTitle(newTitle: string) {
     this.generalTitle = newTitle;
+  }
+
+
+
+
+  async changeLocation(location:any) {
+    sessionStorage.removeItem("sectorFilter");
+    sessionStorage.setItem('locationFilter', JSON.stringify(location.title));
+    sessionStorage.setItem('locationSelected', JSON.stringify(location));
+
+  }
+
+
+
+
+  async changeSectorFilter(sectorFilter: any) {
+    sessionStorage.removeItem("sectorFilter");
+    sessionStorage.removeItem("locationFilter"); 
+    sessionStorage.removeItem("locationSelected"); 
+   
+ 
+    await this.searchService.setSectorFilter(sectorFilter.nombre);
+    sessionStorage.setItem('sectorFilter', sectorFilter.nombre);
+  }
+
+
+  /**NUEVO */
+  onIntroImageLoaded() {
+    this.isIntroImageLoaded = true;
+    this.cdRef.detectChanges();
   }
 }

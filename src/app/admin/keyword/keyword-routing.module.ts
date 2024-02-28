@@ -5,6 +5,8 @@ import {SectorPage} from './sector/sector.page';
 import {SubSectorPage} from './subsector/subsector.page';
 import {LocationPage} from './location/location.page';
 import {LinkLocationPage} from './link-location/link-location.page';
+import { CityPage } from './city/city.page';
+import { LinkCityPage } from './link-city/link-city.page';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     path: 'link-location',
     component: LinkLocationPage
+  },
+  {
+    path: 'city',
+    component: CityPage
+  }, 
+  {
+    path: 'link-city',
+    component: LinkCityPage
   }
 ];
 

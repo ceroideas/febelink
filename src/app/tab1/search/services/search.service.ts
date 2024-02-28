@@ -21,6 +21,7 @@ export class SearchService {
 
   locationFilter: string;
   metaLocationFilter: string;
+  sectorFilter: string;
 
   constructor(private http: HttpService) {
   }
@@ -46,6 +47,13 @@ export class SearchService {
     this.locationFilter = location;
   }
 
+  setSectorFilter(sector: string) {
+    this.sectorFilter = sector;
+  }
+
+  getSectorFilter() {
+    return this.sectorFilter;
+  }
   getLocationFilter() {
     return this.locationFilter;
   }

@@ -1,0 +1,85 @@
+<!-- <ion-item lines="none"
+          class="ion-no-padding ion-no-margin search-product keys-dropdown">
+  <a [href]="'/servicio/' + removeBlankSpace(data?.title) + '/detail/' + data?.id">
+    
+    <div class="product-view">
+      
+      <div class="avatar_dropdown" slot="start">
+        <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
+                 class="default-avatar"></ion-img>
+        <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
+      </div>
+      
+      <div class="username">{{data?.ownerUsername}}</div>
+      <app-rating [rating]="0"></app-rating>
+      
+      <div class="votes">({{data?.votes}} {{ 'tabs.tab1.search.valoraciones' }})</div>
+    </div>
+    
+    <div class="product-info">
+      
+      <div class="title">
+        {{data?.title}}
+      </div>
+      
+      <div class="price">
+        {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
+      </div>
+      
+      <div
+        class="chat-button"
+        style="width: 100%"
+        (click)="createChat(data?.ownerUsername, data?.ownerUserId)"
+      >
+        Pide precio gratis
+      </div>
+    </div>
+  </a>
+</ion-item> -->
+<div class="slider-item skeleton" *ngIf="skeleton">
+  <div class="animation-card_image">
+    <ngx-skeleton-loader count="1" appearance="circle" />
+  </div>
+  <div class="animation-card_content">
+    <div class="username">
+      <ngx-skeleton-loader count="1" appearance="line" />
+    </div>
+
+      <h4 class="animation-card_content_title title-2">
+        <ngx-skeleton-loader count="1" appearance="line" />
+      </h4>
+      <div class="votes">
+        <ngx-skeleton-loader count="1" appearance="line" />
+      </div>  
+      <div class="bottom">
+        <div class="price skeleton">
+          <ngx-skeleton-loader count="1" appearance="line" />
+        </div>
+      </div>
+  </div>
+</div>
+
+<a [href]="'/servicio/' + removeBlankSpace(data?.title) + '/detail/' + data?.id" *ngIf="!skeleton">
+  <div class="slider-item">
+    
+      <div class="animation-card_image">
+          <img *ngIf="!data?.image" rc="assets/icon/svg/default_product.svg" alt="">
+          <img *ngIf="data?.image" [src]="data?.image"  alt="">
+      </div>
+      <div class="animation-card_content">
+        <div class="username">{{data?.ownerUsername}}</div>
+
+          <h4 class="animation-card_content_title title-2">{{data?.title}}</h4>
+          <div class="votes">({{data?.votes}} Valoraciones)</div>  
+          <div class="bottom">
+            <div class="price">
+              {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
+            </div>
+            <button (click)="createChat(data?.ownerUsername, data?.ownerUserId)"
+            >
+              Pide precio gratis
+            </button>
+          </div>
+      </div>
+  </div>
+</a>

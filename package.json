@@ -80,6 +80,7 @@
     "ngx-link-preview": "^1.1.6",
     "ngx-owl-carousel-o": "^15.0.0",
     "ngx-quill": "^20.0.1",
+    "ngx-skeleton-loader": "^7.0.0",
     "ngx-socket-io": "^4.4.0",
     "ngx-stripe": "^15.2.0",
     "phonegap-plugin-multidex": "^1.0.0",
