@@ -347,10 +347,12 @@
 
   <app-header [currentUser]="currentUser"></app-header>
 
+  <div class="header-space"></div>
+
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
   <ng-container id="secondary-content">
-    <ion-tabs id="footer-nav-bar">
+    <ion-tabs id="footer-nav-bar" [ngClass]="{'safe-header': !onHome}">
       <ion-tab-bar slot="bottom" color="menuf">
         <!-- Inicio -->
         <ion-tab-button tab="listado">

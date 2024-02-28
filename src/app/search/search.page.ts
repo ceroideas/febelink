@@ -177,7 +177,6 @@ export class SearchPage implements AfterViewInit {
 
     });
 
-    
     this.search()
     this.cdRef.detectChanges();
   }

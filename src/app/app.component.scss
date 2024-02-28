@@ -6,6 +6,21 @@ ion-header, ion-content, ion-footer {
   font-weight: 400;
 }
 
+.header-space {
+  width: 100%;
+  height: 70px;
+}
+
+ion-app {
+  background-color: white;
+
+  ion-tabs {
+    &.safe-header {
+      padding-top: 60px;
+    }
+  }
+}
+
 .avatarmenu {
   width: 56px;
   height: 56px;

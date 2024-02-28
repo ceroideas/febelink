@@ -1,6 +1,6 @@
 import {WalletService} from './services/wallet/wallet.service';
 import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {
   Platform,
   AlertController,
@@ -74,6 +74,8 @@ export class AppComponent implements OnInit, OnDestroy {
   userFeedback = [];
   userWallets: CryptoCurrency[] = [];
 
+  onHome: boolean = true;
+
   constructor(
     public platform: Platform,
     private splashScreen: SplashScreen,
@@ -105,6 +107,10 @@ export class AppComponent implements OnInit, OnDestroy {
       if (this.document.body.dataset) {
         this.document.body.dataset.url = this.location.path();
       }
+
+      if ( e instanceof NavigationEnd ) {
+        this.onHome = e.url === '/';
+      } 
     });
   }
 
