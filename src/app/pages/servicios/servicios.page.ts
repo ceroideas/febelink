@@ -177,11 +177,6 @@ export class ServiciosPage implements OnInit {
 
   async addNuevoServicio() {
 
-  console.log(this.title)
-  console.log(this.unitType)
-  console.log(this.sector)
-  console.log(this.buttonName)
-
   if (this.unitPrice === undefined ) {
     this.unitPrice = 0
   }

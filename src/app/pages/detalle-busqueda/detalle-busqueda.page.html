@@ -1,49 +1,100 @@
-<partial-popup [displayToggle]="displayPartialSignUp"
-               (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup>
-<ion-content class="content-background">
-  <ion-grid class="desktop" *ngIf="detalle" style="width: 100%">
-    <ion-row style="display: flex; justify-content: space-around" size="12">
-      <ion-col size="6" class="content-info">
-        <!--<ion-row size="12" class="ion-margin parrafo_val">
-          <ion-breadcrumbs rel="-">
-            <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
-            <ion-breadcrumb href="#">Servicio</ion-breadcrumb>
-          </ion-breadcrumbs>
-        </ion-row>-->
-        <ion-row class="product-title">
-          <ion-label><h1>{{detalle?.title}}</h1></ion-label>
-        </ion-row>
-        <ion-row class="product-rating">
-          <ion-label class="content_item">
-            <p class="ion-no-margin">
-              <ion-img
-                class="icon_star"
-                src="assets/icon/svg/icon_star.svg"
-              ></ion-img>
-              <ion-img
-                class="icon_star"
-                src="assets/icon/svg/icon_star.svg"
-              ></ion-img>
-              <ion-img
-                class="icon_star"
-                src="assets/icon/svg/icon_star.svg"
-              ></ion-img>
-              <ion-img
-                class="icon_star"
-                src="assets/icon/svg/icon_star.svg"
-              ></ion-img>
-              <ion-img
-                class="icon_star"
-                src="assets/icon/svg/icon_star.svg"
-              ></ion-img>
-              ({{detalle?.ratingAmount}}) valoraciones
-            </p>
-          </ion-label>
-        </ion-row>
-        <ion-row
-          class="product-owner"
+<div class="container-general">
+  <div class="container-detail-search">
+    <div class="containter-left">
+      <ng-container *ngIf="detalle?.images?.length > 0">
+        <swiper
+          class="product-image-desktop"
+          slideActiveClass="product-image-desktop"
+          [spaceBetween]="10"
+          [navigation]="true"
+          [thumbs]="{ swiper: thumbsSwiper }"
         >
-          <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
+            <ion-img [src]="imageURL" [alt]="detalle?.title"></ion-img>
+          </ng-template>
+        </swiper>
+        <!--              wrapperClass="gallery-thumbs"-->
+        <swiper
+          *ngIf="detalle?.images?.length > 1"
+          class="mySwiper"
+          (swiper)="thumbsSwiper = $event"
+          [slidesPerView]="detalle?.images?.length"
+          [freeMode]="true"
+          [watchSlidesProgress]="true"
+        >
+          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
+            <img class="tam_img" [src]="imageURL"/>
+          </ng-template>
+        </swiper>
+      </ng-container>
+
+
+      <div class="capsule-price">
+        <div class="price">
+          <div class="number-price"><ion-label
+            >{{detalle?.productUnitPrice * productAmount}}
+              €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+            ></div>
+          <div class="capsule-quantity">
+            <div>Cantidad </div>
+            <div class="line"> </div>
+            <div class="result">
+              <ion-item class="item_cantidad_border">
+                <ion-select [(ngModel)]="productAmount" multiple="false">
+                  <ion-select-option [value]="1">1</ion-select-option>
+                  <ion-select-option [value]="2">2</ion-select-option>
+                  <ion-select-option [value]="3">3</ion-select-option>
+                  <ion-select-option [value]="4">4</ion-select-option>
+                  <ion-select-option [value]="5">5</ion-select-option>
+                  <ion-select-option [value]="6">6</ion-select-option>
+                  <ion-select-option [value]="7">7</ion-select-option>
+                  <ion-select-option [value]="8">8</ion-select-option>
+                  <ion-select-option [value]="9">9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="icon"><i class="fa fa-chevron-down"></i></div>
+
+           
+          </div>
+        </div>
+        <ion-row class="guarantee" (click)="irA('/use-conditions')">
+          <ion-img
+            src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
+          <div style="width: calc(100% - 4em - 12px); padding: 10px;    color: #000;">
+            <span>Con la garantía de Febelink.</span>
+            <br>
+            <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
+          </div>
+        </ion-row>
+        <div class="button-price">
+          <div
+            class="follow-button"
+            (click)="addToCart()"
+            >
+            Añadir Carrito
+          </div>
+          <div
+            class="chat-button"
+            [ngSwitch]="detalle?.buttonName"
+            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
+          >
+            <span *ngSwitchCase="1">Más Información</span>
+            <span *ngSwitchCase="2">Pedir Presupuesto</span>
+            <span *ngSwitchCase="3">Hacer consulta</span>
+            <span *ngSwitchCase="4">Comprar ahora</span>
+            <span *ngSwitchDefault>Más Información</span>
+          </div>
+           
+        </div>
+      </div>
+    </div>
+    <div class="containter-right">
+  
+      <div class="section-perfil">
+        <!--AVATAR SECTION-->
+        <div class="line-avatar">
+          <div class="avatar" (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
             <ion-avatar class="avatar_dropdown">
               <ion-img
                 *ngIf="!detalle?.ownerAvatar"
@@ -57,28 +108,405 @@
               ></ion-img>
             </ion-avatar>
           </div>
-          <span>
-            <h2><a [routerLink]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
-          </span>
-          <div
-            class="chat-button"
-            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
-          >
-            Iniciar Chat
+          <div class="name-avatar">
+            <div class="name">
+              <h2><a [routerLink]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
+            </div>
+            <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)" class="button-perfil">Ver Perfil</div>
           </div>
-        </ion-row>
-        <ion-row class="product-description">
+          <div class="buttons-avatar">
+            <div
+              class="chat-button buttondesktop"
+              (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+              >
+              Iniciar Chat
+            </div>
+            <div
+              class="follow-button buttondesktop"
+              >
+             Seguir
+            </div>
+          </div>
+        </div>
+  
+        <!--TITLE SECTION-->
+        <div class="section-title">
+          <ion-row class="product-title">
+            <ion-label><h1>{{detalle?.title}}</h1></ion-label>
+          </ion-row>
+          <ion-row class="product-rating">
+            <ion-label class="content_item">
+              <div class="ion-no-margin list-stars-rating">
+                <div class="stars">
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                </div>
+              
+                <div class="detail-rating">
+                  ({{detalle?.ratingAmount}}) valoraciones
+                </div>
+              </div>
+            </ion-label>
+          </ion-row>
+        </div>
+  
+        <!--DESCRIPTION-->
+        <div class="section-description">
           <ion-label [innerHtml]="detalle?.description"></ion-label>
-        </ion-row>
-        <ion-row class="product-price">
-          <ion-label
-          >{{detalle?.productUnitPrice * productAmount}}
-            €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label
-          >
-        </ion-row>
-        <ion-row class="buy-controllers">
-          <ion-col class="select-input">
-            <span class="amount-label">Cantidad</span>
+        </div>
+  
+        <!--OTHERS VIEW-->
+        <div class="section-others-view" *ngIf="othersView.length  > 0">
+          <ion-row class="others-view-title">
+            <ion-label>
+              <!-- <h1>{{detalle?.othersview}}</h1> -->
+              <h1>Otros usuarios también vieron</h1>
+            </ion-label>
+          </ion-row>
+  
+          <div class="grid-others-view">
+            <div class="item-others" 
+              *ngFor="let other of othersView |  slice: 0:4">
+              <a [href]="'/servicio/' + removeBlankSpace(other?.title) + '/detail/' + other?.id">
+                <div class="avatar-view">
+                  <div class="img-avatar">
+                    <img src="{{other.image}}"/>
+                  </div>
+                  <div class="name-avatar">
+                    <div class="name-other">{{other.ownerUsername}}</div>
+                    <div class="profession-other">{{other.title}}</div>
+                  </div>
+                </div>
+                <div class="description-view">
+                  <ion-label [innerHtml]="other.description"></ion-label>
+                </div>
+                <div class="rating-view">
+                  <div class="ion-no-margin list-stars-rating">
+                    <div class="stars">
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                      <ion-img
+                        class="icon_star"
+                        src="assets/icon/svg/icon_star.svg"
+                      ></ion-img>
+                    </div>
+                  
+                    <div class="detail-rating">
+                      ({{other.avgRating}}) valoraciones
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+           
+          
+          </div>
+        </div>
+  
+        <!--To whom-->
+        <div class="section-towhom" *ngIf="!!detalle?.whom">
+          <ion-row class="towhom-title">
+            <ion-label>
+              <!-- <h1>{{detalle?.towhom}}</h1> -->
+              <h1>A quien va dirigido</h1>
+            </ion-label>
+          </ion-row>
+          <ion-row class="towhom-description">
+            <ion-label [innerHtml]="detalle?.whom"></ion-label>
+          </ion-row>
+        </div>
+  
+        <!--MORE WORK THIS PROFESIONAL-->
+        <div class="section-more-work" *ngIf="moreWorks.length">
+          <ion-row class="more-work-title">
+            <ion-label>
+              <h1>Más servicios de este profesional</h1>
+            </ion-label>
+          </ion-row>
+  
+          <div class="grid-more-work">
+            
+            <div class="item-more" 
+              
+              *ngFor="let more of moreWorks">
+              <a [href]="'/servicio/' + removeBlankSpace(more?.title) + '/detail/' + more?.productId">
+                <div class="name-work">
+                  <div>{{more.title}}</div>
+                </div>
+                <div class="description-more">
+                  <ion-label [innerHtml]="more.description"></ion-label>
+                </div>
+                <div class="more-view">
+                  Mostrar  <i class="fa fa-chevron-right"></i>
+                </div>
+              </a>
+            </div>
+         
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+ 
+  <!--RESEÑAS-->
+  <!-- <div class="reviews">
+    <ion-row class="reviews-title">
+      <ion-label><h1>Reseñas</h1></ion-label>
+    </ion-row>
+    <div class="container-reviews">
+      <div class="item-reviews">
+        <div class="avatar-view">
+          <div class="img-avatar">
+            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
+          </div>
+          <div class="name-avatar">
+            <div class="name-other">Jerome Bell</div>
+            <div class="rating-view">
+              <div class="ion-no-margin list-stars-rating">
+                <div class="stars">
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                </div>
+              
+                <div class="detail-rating">
+                  (123) valoraciones
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="description-view">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </div>
+      </div>
+      <div class="item-reviews">
+        <div class="avatar-view">
+          <div class="img-avatar">
+            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
+          </div>
+          <div class="name-avatar">
+            <div class="name-other">Jerome Bell</div>
+            <div class="rating-view">
+              <div class="ion-no-margin list-stars-rating">
+                <div class="stars">
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                </div>
+              
+                <div class="detail-rating">
+                  (123) valoraciones
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="description-view">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </div>
+      </div>
+      <div class="item-reviews">
+        <div class="avatar-view">
+          <div class="img-avatar">
+            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
+          </div>
+          <div class="name-avatar">
+            <div class="name-other">Jerome Bell</div>
+            <div class="rating-view">
+              <div class="ion-no-margin list-stars-rating">
+                <div class="stars">
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                </div>
+              
+                <div class="detail-rating">
+                  (123) valoraciones
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="description-view">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </div>
+      </div>
+      <div class="item-reviews">
+        <div class="avatar-view">
+          <div class="img-avatar">
+            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
+          </div>
+          <div class="name-avatar">
+            <div class="name-other">Jerome Bell</div>
+            <div class="rating-view">
+              <div class="ion-no-margin list-stars-rating">
+                <div class="stars">
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                </div>
+              
+                <div class="detail-rating">
+                  (123) valoraciones
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="description-view">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!--ORACULO-->
+  <div class="oracle" *ngIf="iAdvises.length > 0">
+    <ion-row class="oracle-title">
+      <ion-label><h1>Contenidos en Oráculo</h1></ion-label>
+    </ion-row>
+    <div class="container-oracle" >
+
+      <div class="item-oracle" *ngFor="let oracle of iAdvises |  slice: 0:4">
+        <a [href]="'posts/oracle/'+ oracle?.id +'/'+ removeBlankSpace(oracle?.title)">
+          <div class="media">
+            <img src="{{oracle.media_url}}" onerror="this.style.display = 'none'"/>
+          </div>     
+          <div class="data">       
+            <div class="name-work">
+              <div>{{oracle.title}}</div>
+            </div>
+            <div class="description-more">
+              <ion-label [innerHtml]="oracle.content"></ion-label>
+            </div>
+            <div class="date">{{oracle.created_at | dateAgo}}</div>
+          </div>
+        </a>
+      </div>
+     
+    </div>
+  </div>
+
+
+  <div class="capsule-price-mobile">
+    <div class="price">
+      <div class="number-price">
+        <ion-label
+        >{{detalle?.productUnitPrice * productAmount}}
+          €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+        >
+      </div>
+      <div class="capsule-quantity">
+        <div>Cantidad </div>
+        <div class="line"> </div>
+        <div class="result">
+          <ion-item class="item_cantidad_border">
             <ion-select [(ngModel)]="productAmount" multiple="false">
               <ion-select-option [value]="1">1</ion-select-option>
               <ion-select-option [value]="2">2</ion-select-option>
@@ -90,475 +518,26 @@
               <ion-select-option [value]="8">8</ion-select-option>
               <ion-select-option [value]="9">9</ion-select-option>
             </ion-select>
-          </ion-col>
-          <ion-col class="buy-button"
-                   (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
-            <!--          <ion-col class="buy-button" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
-            <span>Solicitar ahora</span>
-          </ion-col>
-          <ion-col class="add-cart-button" (click)="addToCart()">
-            <span>Añadir al carrito</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="guarantee" (click)="irA('/use-conditions')">
-          <ion-img
-            src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
-          <div style="width: 70%; padding: 10px;">
-            <span>Con la garantía de Febelink.</span>
-            <br>
-            <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
-          </div>
-        </ion-row>
-      </ion-col>
-      <ion-col size="6" class="content-image">
-        <div>
-          <div
-            *ngIf="detalle?.images?.length == 0"
-            class="product-image-desktop"
-            slot="start"
-          >
-            <ion-img
-              src="assets/icon/svg/default_product.svg"
-              class="default-avatar"
-            ></ion-img>
-          </div>
-          <ng-container *ngIf="detalle?.images?.length > 0">
-            <swiper
-              class="product-image-desktop"
-              slideActiveClass="product-image-desktop"
-              [spaceBetween]="10"
-              [navigation]="true"
-              [thumbs]="{ swiper: thumbsSwiper }"
-            >
-              <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-                <ion-img [src]="imageURL" [alt]="detalle?.title"></ion-img>
-              </ng-template>
-            </swiper>
-            <!--              wrapperClass="gallery-thumbs"-->
-            <swiper
-              class="mySwiper"
-              (swiper)="thumbsSwiper = $event"
-              [slidesPerView]="detalle?.images?.length"
-              [freeMode]="true"
-              [watchSlidesProgress]="true"
-            >
-              <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-                <img class="tam_img" [src]="imageURL"/>
-              </ng-template>
-            </swiper>
-          </ng-container>
+          </ion-item>
         </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <div class="desktop" *ngIf="false">
-    <ion-row
-      style="
-        margin-top: 5em;
-        margin-left: 10em;
-        margin-right: 10em;
-        display: flex;
-        justify-content: center;
-        margin-top: 4em;
-      "
-      size="12"
-    >
-      <ion-col size="4" *ngIf="data && false">
-        <ion-label class="list_title_card"
-        >{{ 'tabs.tab1.search.recomendaciones' | translate }}</ion-label
-        >
-        <ion-row
-          size="12"
-          class="ion-margin"
-          *ngFor="let data of data.data?.recomendations"
-        >
-          <ion-col size="8">
-            <ion-card class="ion-no-margin">
-              <ion-card-content class="ion-no-padding">
-                <ion-item
-                  (click)="irA('/detalle/1')"
-                  lines="none"
-                  class="item_dropdown"
-                >
-                  <ion-avatar class="avatar_dropdown" slot="start">
-                    <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                  </ion-avatar>
-                  <ion-label class="content_item">
-                    <p>
-                      <span class="font_texto_18">{{data?.texto}}</span>
-                    </p>
-                    <p>
-                      <span class="style_font_item"
-                      >{{data?.precio}}€<span class="style_font_item_normal"
-                      >/mes</span
-                      ></span
-                      >
-                    </p>
-                    <p class="ion-no-margin">
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <span class="font_valoraciones"
-                      >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones'
-                          | translate }}</span
-                      >
-                    </p>
-                    <span class="font_texto_14">{{data?.nombre}}</span>
-                  </ion-label>
-                </ion-item>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="4" *ngIf="data">
-        <ion-label class="list_title_card"
-        >{{ 'tabs.tab1.search.oferta_destacada' | translate }}</ion-label
-        >
-        <ion-row
-          (click)="irA('/detalle/1')"
-          size="12"
-          class="ion-margin"
-          *ngFor="let data of data.data?.offersTop"
-        >
-          <ion-col size="8">
-            <ion-card class="ion-no-margin">
-              <ion-card-content class="ion-no-padding">
-                <ion-grid size="12">
-                  <ion-row size="12">
-                    <ion-col
-                      style="
-                        padding-top: 0;
-                        padding-bottom: 0;
-                        border-radius: 8px;
-                      "
-                      size="12"
-                    >
-                      <img
-                        class="tam_img_desktop_mini"
-                        src="./assets/imgs/{{data?.imagen}}"
-                      />
-                    </ion-col>
-                  </ion-row>
-                  <ion-row size="12">
-                    <ion-col
-                      style="padding-top: 10px; padding-bottom: 0"
-                      size="12"
-                    >
-                      <ion-label class="font_texto_18"
-                      >{{data?.titulo}}</ion-label
-                      >
-                    </ion-col>
-                  </ion-row>
-                  <ion-row size="12">
-                    <ion-col
-                      style="padding-top: 5px; padding-bottom: 0"
-                      size="12"
-                    >
-                      <ion-label class="style_font_item"
-                      >{{data?.precio}}€
-                        <ion-label class="style_font_item_normal"
-                        >/mes
-                        </ion-label
-                        >
-                      </ion-label>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row size="12">
-                    <ion-col
-                      style="padding-top: 0; padding-bottom: 0"
-                      size="12"
-                    >
-                      <ion-label class="font_texto_14"
-                      >{{data?.subtitulo}}</ion-label
-                      >
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="4" *ngIf="data">
-        <ion-label class="list_title_card"
-        >{{ 'tabs.tab1.search.basado_search' | translate }}</ion-label
-        >
-        <ion-row
-          (click)="irA('/detalle/1')"
-          size="12"
-          class="ion-margin"
-          *ngFor="let data of data.data?.recomendationsSearch"
-        >
-          <ion-card class="ion-no-margin">
-            <ion-card-content class="ion-no-padding">
-              <ion-item lines="none" class="item_dropdown">
-                <ion-avatar class="avatar_dropdown" slot="start">
-                  <ion-img src="./assets/imgs/{{data?.imagen}}"></ion-img>
-                </ion-avatar>
-                <ion-label class="content_item">
-                  <p>
-                    <span class="font_texto_18">{{data?.texto}}</span>
-                  </p>
-                  <p>
-                    <span class="style_font_item"
-                    >{{data?.precio}}€<span class="style_font_item_normal"
-                    >/mes</span
-                    ></span
-                    >
-                  </p>
-                  <p class="ion-no-margin">
-                    <ion-img
-                      class="icon_star"
-                      src="assets/icon/svg/icon_star.svg"
-                    ></ion-img>
-                    <ion-img
-                      class="icon_star"
-                      src="assets/icon/svg/icon_star.svg"
-                    ></ion-img>
-                    <ion-img
-                      class="icon_star"
-                      src="assets/icon/svg/icon_star.svg"
-                    ></ion-img>
-                    <ion-img
-                      class="icon_star"
-                      src="assets/icon/svg/icon_star.svg"
-                    ></ion-img>
-                    <ion-img
-                      class="icon_star"
-                      src="assets/icon/svg/icon_star.svg"
-                    ></ion-img>
-                    <span class="font_valoraciones"
-                    >({{data?.numVal}} ) {{ 'tabs.tab1.search.valoraciones' |
-                        translate }}</span
-                    >
-                  </p>
-                  <span class="font_texto_14">{{data?.nombre}}</span>
-                </ion-label>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </div>
-
-  <ion-grid class="mobile" style="padding: 12px" *ngIf="detalle" size="12">
-    <!--<ion-row size="12" class="ion-margin parrafo_val">
-      <ion-img src="assets/icon/svg/icon_casa.svg"></ion-img>
-      <ion-breadcrumbs rel="-">
-        <ion-breadcrumb href="/menu/todas">{{ 'menu.tabs.inicio' | translate }}</ion-breadcrumb>
-        <ion-breadcrumb href="#">Servicio</ion-breadcrumb>
-      </ion-breadcrumbs>
-    </ion-row>-->
-    <ion-row size="12">
-      <ion-col size="10">
-        <ion-text class="text_compartir"><h1>{{detalle?.title}}</h1></ion-text>
-      </ion-col>
-      <ion-col size="2">
-        <ion-img
-          class="icon_compartir"
-          src="assets/icon/svg/icon_compartir.svg"
-        ></ion-img>
-      </ion-col>
-    </ion-row>
-    <ion-row class="row_val" size="12">
-      <p class="ion-margin parrafo_val_bis">
-        <ion-img
-          class="icon_star"
-          src="assets/icon/svg/icon_star.svg"
-        ></ion-img>
-        <ion-img
-          class="icon_star"
-          src="assets/icon/svg/icon_star.svg"
-        ></ion-img>
-        <ion-img
-          class="icon_star"
-          src="assets/icon/svg/icon_star.svg"
-        ></ion-img>
-        <ion-img
-          class="icon_star"
-          src="assets/icon/svg/icon_star.svg"
-        ></ion-img>
-        <ion-img
-          class="icon_star"
-          src="assets/icon/svg/icon_star.svg"
-        ></ion-img>
-        ({{detalle?.ratingAmount}}) valoraciones
-      </p>
-    </ion-row>
-    <ion-row
-      class="product-owner"
-    >
-      <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
-        <ion-avatar class="avatar_dropdown">
-          <ion-img
-            *ngIf="!detalle?.ownerAvatar"
-            src="assets/icon/svg/default_avatar.svg"
-            class="default-avatar"
-          ></ion-img>
-          <ion-img
-            *ngIf="detalle?.ownerAvatar"
-            [src]="detalle?.ownerAvatar"
-          ></ion-img>
-        </ion-avatar>
+        <div class="icon"><i class="fa fa-chevron-down"></i></div>
       </div>
-      <span (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
-        <h2>{{detalle?.ownerUsername}}</h2>
-      </span>
+    </div>
+    <div class="button-price">
       <div
         class="chat-button"
-        (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true :  createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+        [ngSwitch]="detalle?.buttonName"
+        (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
       >
-        Iniciar Chat
+        <span *ngSwitchCase="1">Más Información</span>
+        <span *ngSwitchCase="2">Pedir Presupuesto</span>
+        <span *ngSwitchCase="3">Hacer consulta</span>
+        <span *ngSwitchCase="4">Comprar ahora</span>
+        <span *ngSwitchDefault>Más Información</span>
       </div>
-    </ion-row>
-    <div>
-      <div
-        class="product-image"
-        slot="start"
-        *ngIf="detalle?.images?.length == 0"
-      >
-        <ion-img
-          src="assets/icon/svg/default_product.svg"
-          class="default-avatar"
-        ></ion-img>
-      </div>
-      <ng-container *ngIf="detalle?.images?.length > 0">
-        <swiper
-          [spaceBetween]="10"
-          [navigation]="true"
-          [thumbs]="{ swiper: thumbsSwiper1 }"
-        >
-          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-            <ion-img class="tam_img_normal" [src]="imageURL"></ion-img>
-          </ng-template>
-        </swiper>
-        <swiper
-          class="mySwiper"
-          (swiper)="thumbsSwiper1 = $event"
-          [slidesPerView]="detalle?.images?.length"
-          [freeMode]="true"
-          [watchSlidesProgress]="true"
-        >
-          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-            <img class="tam_img" [src]="imageURL"/>
-          </ng-template>
-        </swiper>
-      </ng-container>
-      <!--<swiper
-        [spaceBetween]="10"
-        [navigation]="true"
-        [thumbs]="{ swiper: thumbsSwiper }">
-        <ng-template swiperSlide>
-          <ion-img src="./assets/imgs/bg0.jpg"></ion-img>
-        </ng-template>
-        <ng-template swiperSlide>
-          <ion-img src="./assets/imgs/bg1.jpg"></ion-img>
-        </ng-template>
-        <ng-template swiperSlide>
-          <ion-img src="./assets/imgs/bg2.jpg"></ion-img>
-        </ng-template>
-      </swiper>
-      <swiper
-        (swiper)="thumbsSwiper = $event"
-        [spaceBetween]="10"
-        [slidesPerView]="4"
-        [freeMode]="true"
-        [watchSlidesProgress]="true"
-        class="mySwiper">
-        <ng-template swiperSlide>
-          <img class="tam_img" src="./assets/imgs/bg0.jpg"/>
-        </ng-template>
-        <ng-template swiperSlide>
-          <img class="tam_img" src="./assets/imgs/bg1.jpg"/>
-        </ng-template>
-        <ng-template swiperSlide>
-          <img class="tam_img" src="./assets/imgs/bg2.jpg"/>
-        </ng-template>
-      </swiper>-->
+
+      
     </div>
-    <h3>
-      <ion-row
-        size="12"
-        style="margin: 20px 0"
-        [innerHtml]="detalle?.description"
-      >
-        <!--      <ion-text class="read_more">Leer más</ion-text>-->
-      </ion-row>
-    </h3>
-    <ion-row size="12" class="buy-controllers">
-      <ion-col class="select-input">
-        <ion-label class="amount-label">Cantidad</ion-label>
-        <ion-item class="item_cantidad_border">
-          <ion-select [(ngModel)]="productAmount" multiple="false">
-            <ion-select-option [value]="1">1</ion-select-option>
-            <ion-select-option [value]="2">2</ion-select-option>
-            <ion-select-option [value]="3">3</ion-select-option>
-            <ion-select-option [value]="4">4</ion-select-option>
-            <ion-select-option [value]="5">5</ion-select-option>
-            <ion-select-option [value]="6">6</ion-select-option>
-            <ion-select-option [value]="7">7</ion-select-option>
-            <ion-select-option [value]="8">8</ion-select-option>
-            <ion-select-option [value]="9">9</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-row class="product-price">
-          <ion-label
-          >{{detalle?.productUnitPrice * productAmount}}
-            €/{{unitTypes[detalle.unitTypeId - 1]?.shorthand}}</ion-label
-          >
-        </ion-row>
-      </ion-col>
-    </ion-row>
-    <ion-row class="guarantee" (click)="irA('/use-conditions')">
-      <ion-img
-        src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
-      <div style="width: 85%; padding: 10px;">
-        <span>Con la garantía de Febelink.</span>
-        <br>
-        <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
-      </div>
-    </ion-row>
-  </ion-grid>
+  </div>
   <app-footer></app-footer>
-</ion-content>
-<ion-footer class="mobile">
-  <ion-toolbar>
-    <ion-grid fixed>
-      <ion-row class="ion-padding paddingf1">
-        <ion-button expand class="botonf1" type="submit"
-                    (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)">
-          <!--        <ion-button expand class="botonf1" type="submit" (click)="!authService.isAuthenticated() && !email ? irA('/registro') : buyNow(productId, productAmount)">-->
-          Solicitar ahora
-        </ion-button
-        >
-      </ion-row>
-      <ion-row class="ion-padding paddingf2">
-        <ion-button expand class="botonf2" type="submit" (click)="addToCart()"
-        >Añadir al carrito
-        </ion-button
-        >
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-</ion-footer>
+</div>

@@ -863,6 +863,7 @@
             margin-top: 40px;
             margin-left: 17%;
             cursor: pointer;
+            text-decoration: none;
           }
   
         }
@@ -1022,7 +1023,8 @@
           text-align: left;
         }
     
-        div.button {
+        .button {
+          display: block;
           background-color: white;
           color: black;
           text-transform: uppercase;
@@ -1032,10 +1034,10 @@
           margin-top: 41px;
           width: 258px;
           border-radius: 101px;
-          margin-left: 0;
+          text-decoration: none;
         }
     
-        div.button:hover {
+        .button:hover {
           background-color: black;
           color: white;
         }

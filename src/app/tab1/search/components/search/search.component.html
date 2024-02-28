@@ -708,7 +708,7 @@
   <section id="all-services">
     <h2>Todos los servicios profesionales en un mismo sitio</h2>
     <div id="services-container">
-      <ng-container *ngFor="let service of services">
+      <ng-container *ngFor="let service of services | slice:0:10">
         <a class="service" (click)="changeTitles(service)" [routerLink]="'/listado/' + service.search_term">
           <img [src]="service.icon">
           <span>{{service.nombre}}</span>

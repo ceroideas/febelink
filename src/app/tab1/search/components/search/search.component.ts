@@ -111,8 +111,6 @@ export class SearchComponent implements AfterViewInit {
 
     this.type = 'resultado';
     
-
-
     this.locationFilter = sessionStorage.getItem('locationFilter');
     this.cityFilter = sessionStorage.getItem('cityFilter');
     this.locationFilterLink = this.locationFilterLinkFull.filter(link => link.locations_id.title === this.locationFilter);
@@ -185,8 +183,12 @@ export class SearchComponent implements AfterViewInit {
 
     if ( !!seoData ) {
       const response = JSON.parse(seoData);
-      this.services = response.sector.sort((a, b) => 0.5 - Math.random());
-      this.sectors = response.subsector.sort((a, b) => 0.5 - Math.random());
+      this.services = response.sector
+        .filter(item => !!item.icon)
+        .sort((a, b) => 0.5 - Math.random());
+      this.sectors = response.subsector
+        .filter(item => !!item.imageURL)
+        .sort((a, b) => 0.5 - Math.random());
       this.locations = response.locations;
       this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
       this.locationFilterLinkFull = response.linklocations;
@@ -212,8 +214,12 @@ export class SearchComponent implements AfterViewInit {
 
   async fetchData() {
     const {response} = await this.keywordService.getData();
-    this.services = response.sector.sort((a, b) => 0.5 - Math.random());
-    this.sectors = response.subsector.sort((a, b) => 0.5 - Math.random());
+    this.services = response.sector
+      .filter(item => !!item.icon)
+      .sort((a, b) => 0.5 - Math.random());
+    this.sectors = response.subsector
+      .filter(item => !!item.imageURL)
+      .sort((a, b) => 0.5 - Math.random());
     this.locations = response.locations;
 
     this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
@@ -293,7 +299,11 @@ export class SearchComponent implements AfterViewInit {
         sessionStorage.setItem('searchResponse',  JSON.stringify(response)  );
 
       }
+
+
+
     }
+
 
     const filterLink = this.locationFilterLinkFull.find(item => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()

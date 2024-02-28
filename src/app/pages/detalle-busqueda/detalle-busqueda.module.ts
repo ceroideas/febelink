@@ -10,6 +10,8 @@ import {DetalleBusquedaPage} from './detalle-busqueda.page';
 import {SwiperModule} from 'swiper/angular';
 import {ComponentsModule} from '../../components/components.module';
 
+import { PipesModule } from 'src/app/pipes/pipes.module';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import {ComponentsModule} from '../../components/components.module';
     DetalleBusquedaPageRoutingModule,
     SharedModule,
     SwiperModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [DetalleBusquedaPage]
 })

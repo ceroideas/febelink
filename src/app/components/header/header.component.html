@@ -69,7 +69,6 @@
   
       <!-- BOTON MENU MOVIL -->
       <div class="right mobile" 
-        [@inFadeTranslate]="!detached && !reduced" 
         [ngClass]="{'detached': detached  , 'reduced': reduced}"
         >
         <ion-buttons *ngIf="currentUser" buttons-start slot="start">

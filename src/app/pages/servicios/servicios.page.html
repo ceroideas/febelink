@@ -213,7 +213,7 @@
               <div class="visorPhotos" *ngIf="images.length > 0">
                 <div class="item-photo" *ngFor="let imageURL of images; let i = index">
                   <img
-                    [src]="imageURL?.src"
+                    [src]="imageURL?.src || imageURL"
                   /> 
                   <div
                     class="add-service-remove-div"
