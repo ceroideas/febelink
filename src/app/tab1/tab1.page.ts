@@ -384,22 +384,6 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   onSlideChange() {}
 
-  async navigateNewServices() {
-    let url = 'registro';
-    if (this.authenticationService.isAuthenticated()) {
-      const {response} = await this.profAccountService.getMyProfessions();
-      if (response?.length > 0) {
-        url = 'services';
-      } else {
-        url = 'professions';
-      }
-    }
-    this.router.navigate([url]);
-  }
-  async navigateSearchServices() {
-    let url  = 'searchforyou';
-    this.router.navigate([url]);
-  }
 
   changeGeneralTitle(newTitle: string) {
     this.generalTitle = newTitle;

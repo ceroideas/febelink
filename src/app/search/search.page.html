@@ -2,13 +2,13 @@
 <div class="layer-home">
   <div class="header-search">
     <div class="titles">
-      <div class="title-search" *ngIf="!h1Title">
+      <h1 class="title-search" *ngIf="!h1Title">
         Ofertas de servicios profesionales en  
         <span *ngIf="locationSelected !== undefined && locationSelected !== null">{{ locationSelected.title}}</span> 
         <span *ngIf="locationSelected == undefined || locationSelected == null">España</span> 
-      </div>
+      </h1>
       <h1 class="title-search" *ngIf="h1Title">{{ h1Title }}</h1>
-      <div class="subtitle-search">Miles de ofertas de trabajo en todos los sectores  te están esperando.</div>
+      <p class="subtitle-search">Miles de ofertas de trabajo en todos los sectores  te están esperando.</p>
     </div>
     <div class="search-capsule">
       <div class="capsule">
@@ -143,7 +143,7 @@
         <div class="container-search-for-you">
           <div class="item-profession" *ngFor="let locaion of locations">
             <a (click)="changeMetaProvince(locaion)"  
-            [href]="'/search/' + locaion.link"  >
+            [href]="'/listado/' + locaion.link"  >
             {{locaion.title}}
           </a>
             
@@ -162,19 +162,19 @@
       </div>
 
 
-      <!-- <div class="search-for-you">
-        <div class="title-foryou">🚀 Lo buscamos por ti</div>
+      <div class="search-for-you">
+        <h3 class="title-foryou">🚀 Lo buscamos por ti</h3>
         <div class="container-search-for-you">
-          <div class="texts">
+          <p class="texts">
             ¿No encuentras lo que buscas?
             <br>
             <br>
             Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
             Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
-          </div>
-          <div class="button">Buscar</div>
+          </p>
+          <a href="/lo-buscamos-por-ti" class="button">Buscar</a>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

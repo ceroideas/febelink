@@ -24,7 +24,7 @@
       flex-direction: column;
       position: relative;
      
-      padding: 150px 20px 83px;
+      padding: 80px 20px 80px;
       background-color: white;
 
       @media (max-width: 791px) {
@@ -328,6 +328,7 @@
               color: #fff;
               font-weight: bold;
               border-radius: 8px;
+              text-decoration: none;
             }
           }
         }

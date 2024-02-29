@@ -12,7 +12,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {ILang, ILangDEFAULTS} from 'src/app/models/langs.model';
 import {TranslateConfigService} from 'src/app/services/translate/translate-config.service';
 import {UserService} from '../../services/user.service';
-
 @Component({
   selector: 'app-update-password',
   templateUrl: './update-password.page.html',
@@ -27,11 +26,9 @@ export class UpdatePasswordPage implements OnInit {
   passwordType2 = 'password';
   passwordIcon2 = 'eye-off';
   partialRegisterEmail: string;
-
   redirect: string;
-
   promoCode: string;
-
+  token: string;
   constructor(
     public navCtrl: NavController,
     private formBuilder: UntypedFormBuilder,
@@ -45,30 +42,44 @@ export class UpdatePasswordPage implements OnInit {
     public platform: Platform,
     private userService: UserService
   ) {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.token = params.get('token')
+    });
   }
-
   /**
    * Inicializamos el formulario
    */
   public ngOnInit(): void {
-   
-  }
+    this.form = this.formBuilder.group({
+      password: ['', Validators.required],
+    });
 
+
+    this.verifiedToken()
+  }
   hideShowPassword() {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
-  
-  
-
-  async submitForm() {
-    // this.api.login(formData, 'login', true, this.redirect).subscribe((res) => {
-    //   this.utilities.dismissLoading();
-    // });
+  async verifiedToken() {
+    await this.api.verifiedChangePassword(this.token).subscribe(data=>{
+      let dataParse = String(data).replace(/\s/g, "")
+      if(Number(dataParse) !== 1){
+        window.location.href = '/login'
+      }
+    });
   }
 
- 
-
   
+  async submitForm() {
+    let data ={
+      token : this.token,
+      password: this.form.value.password
+    }
+
+    await this.api.updatePasswornd(data).subscribe(data=>{
+     window.location.href = '/'
+    });
+  }
 }

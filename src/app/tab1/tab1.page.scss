@@ -19,7 +19,10 @@
       position: relative;
       background:linear-gradient(to top, rgb(255, 255, 255), rgb(141 176 215)); 
       margin-bottom: 102px;
-
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 50px;
       
       @media  (max-width: 772px) {
         height: 472px;
@@ -76,69 +79,66 @@
           height: 472px;
         }
       }
-      .optionsheader{
+      // .optionsheader{
 
-        position: absolute;
-        bottom: 0;
-        z-index: 1;
-        display: flex;
-        width: 400px;
-        bottom: 31px;
-        right: 40px;
-        justify-content: end;
+      //   position: absolute;
+      //   bottom: 0;
+      //   z-index: 1;
+      //   display: flex;
+      //   width: 400px;
+      //   bottom: 31px;
+      //   right: 40px;
+      //   justify-content: end;
 
-        @media  (max-width: 780px) {
-          width: 74%;
-          bottom: 31px;
-          right: -3px;
-        }
-        @media  (max-width: 480px) {
-          width: 98%;
-          bottom: 31px;
-          right: 0;
-          left: 0;
-          margin: auto;
-        }
-        @media  (max-width: 380px) {
-          width: 91%;
-          bottom: 31px;
-          right: 0;
-          left: 0;
-          margin: auto;
-        }
-        div{
-          width: 50%;
-          // border-right: 1px solid #a5b9dd;
-          color: #153b7e;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-weight: bold;
-          cursor: pointer;
+      //   @media  (max-width: 780px) {
+      //     width: 74%;
+      //     bottom: 31px;
+      //     right: -3px;
+      //   }
+      //   @media  (max-width: 480px) {
+      //     width: 98%;
+      //     bottom: 31px;
+      //     right: 0;
+      //     left: 0;
+      //     margin: auto;
+      //   }
+      //   @media  (max-width: 380px) {
+      //     width: 91%;
+      //     bottom: 31px;
+      //     right: 0;
+      //     left: 0;
+      //     margin: auto;
+      //   }
+      //   div{
+      //     width: 50%;
+      //     // border-right: 1px solid #a5b9dd;
+      //     color: #153b7e;
+      //     display: flex;
+      //     justify-content: center;
+      //     align-items: center;
+      //     font-weight: bold;
+      //     cursor: pointer;
 
-          &.sinborder{
-            border:none
-          }
+      //     &.sinborder{
+      //       border:none
+      //     }
           
-        }
+      //   }
 
-      }
-      .eslogan{
-        POSITION: ABSOLUTE;
+      // }
+      .eslogan {
+        position: relative;
         z-index: 1;
-        left: 0;
-        right: 0;
         display: flex;
         justify-content: center;
         flex-direction: column;
-        margin: auto;
+        margin: 0 auto;
         text-align: center;
-        top: 150px;
-     
+        margin-top: 50px;
   
-        @media screen and (max-width: 700px) {
-          top: 94px;
-        }
+        // @media screen and (max-width: 700px) {
+        //   top: 94px;
+        // }
         .title1{
           // color: #4072A8;
           color: #00328E;
@@ -174,25 +174,21 @@
           }
         }
       }
-      .search-capsule{
+      .search-capsule {
         width: 50%;
         height: 60px;
         background-color: #fff;
-        POSITION: ABSOLUTE;
+        position: relative;
         z-index: 1;
-        left: 0;
-        right: 0;
         display: flex;
         justify-content: center;
-        margin: auto;
+        margin: 0 auto;
         text-align: center;
-        top: 428px;
         border-radius: 1029px;
         border: 1px solid #d2ddef;
         padding-right: 5px;
 
         @media screen and (max-width: 772px) {
-          top: 272px; 
           width: 84%;
         }
 
@@ -271,6 +267,27 @@
             border-radius: 1000px;
             cursor: pointer;
           }
+        }
+      }
+      .search-for-you {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+
+        .hint {
+          color: black;
+        }
+        .link {
+          background-color: #104cba;
+          color: white;
+          text-decoration: none;
+          padding: 10px 16px;
+          border-radius: 10px;
+          font-weight: bold;
         }
       }
     }

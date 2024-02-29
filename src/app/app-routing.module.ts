@@ -9,6 +9,8 @@ import {environment} from 'src/environments/environment';
 
 import { Tab1Page } from './tab1/tab1.page';
 import { SearchPage } from './search/search.page';
+import { LoBuscamosPorTiPage } from './pages/lo-buscamos-por-ti/lo-buscamos-por-ti.page';
+import { UpdatePasswordPage } from './pages/update-password/update-password.page';
 
 const routes: Routes = [
   {
@@ -44,14 +46,16 @@ const routes: Routes = [
     component: SearchPage
   },
   {
-    path: 'searchforyou',
-    loadChildren: () => 
-      import('./pages/lo-buscamos-por-ti/lo-buscamos-por-ti.module').then((m) => m.LoBuscamosPorTiPageModule),
+    path: 'lo-buscamos-por-ti',
+    component: LoBuscamosPorTiPage
+    // loadChildren: () => 
+      // import('./pages/lo-buscamos-por-ti/lo-buscamos-por-ti.module').then((m) => m.LoBuscamosPorTiPageModule),
   },
   {
-    path: 'createPassword',
-    loadChildren: () =>
-      import('./pages/update-password/update-password.module').then((m) => m.UpdatePasswordPageModule),
+    path: 'createPassword/:token',
+    component: UpdatePasswordPage
+    // loadChildren: () =>
+      // import('./pages/update-password/update-password.module').then((m) => m.UpdatePasswordPageModule),
   },
   
   {

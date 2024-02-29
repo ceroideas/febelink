@@ -1,18 +1,21 @@
-<div>
+<div class="container-search">
   <div class="page-new-services">
     <div class="header-new-services">
       <div class="sections-add-service-left">
-        <div class="sections-add-service-title">
-          Lo Buscamos por ti
-        </div>
-        <div class="sections-add-service-subtitle">
+        <h1 class="sections-add-service-title">
+          Lo buscamos por ti
+        </h1>
+
+        <p class="sections-add-service-subtitle">
           A veces la búsqueda de un servicio profesional es un problema difícil de solucionar. Requiere mucho tiempo y esfuerzo, preguntando, llamando y mandando mensajes. Nosotros lo buscamos por ti y lo ponemos en contacto contigo para que tú sólo tengas que seleccionar el que más te guste y disfrutar del servicio.
-        </div>
+        </p>
+
+        <img class="header-image" src="assets/imgs/find.png" />
       </div>
     </div>
     <div class="body-new-services">
       <div class="item-new-services">
-        <div class="add-service-label-input" [ngClass]="{'error': error.title === true}">Titulo de Búsqueda *</div>
+        <div class="add-service-label-input" [ngClass]="{'error': error.title === true}">Título de búsqueda *</div>
         <div class="add-service-margin-input">
           <ion-input
             [disabled]="isTemplate"
@@ -60,7 +63,7 @@
 
      
       <div class="item-new-services">
-        <div class="add-service-label-input"  [ngClass]="{'error': error.images === true}">Imagenes *</div>
+        <div class="add-service-label-input"  [ngClass]="{'error': error.images === true}">Imagenes </div>
         <div class="container-image">
           <div class="container-file-add">
             <div class="dashed-file-add" >
@@ -71,7 +74,7 @@
                     #filePickerDesktop
                     [iFile]="iFile"
                     [pickType]="filePickType.IMAGE"
-                    (OnFile)="fileSelected($event)"
+                    (OnFile)="images.length <= 4 ? fileSelected($event): null"
                   ></app-file-picker>
                   <div class="icon-add">
                     <div class="picker" (click)=" error.images = false;filePickerDesktop.clicks()">
@@ -101,7 +104,7 @@
             </div>
           </div>
 
-          <div class="butttonaddphotos" >
+          <div class="butttonaddphotos" *ngIf="images.length <= 4">
             <div (click)="error.images = false;filePickerDesktop.clicks()">Añadir Fotos</div>
           </div>
           <div class="title-pie">Peso máximo 3 Mb. Máximo 6 imágenes.</div>
@@ -110,7 +113,7 @@
       </div>
 
 
-      <div class="item-new-services">
+      <div class="item-new-services" *ngIf="currentUser === null || currentUser.email === undefined">
         <div class="add-service-label-input" [ngClass]="{'error': error.name === true}">Nombre *</div>
         <div class="add-service-margin-input">
           <ion-input
@@ -125,7 +128,7 @@
       </div>
 
 
-      <div class="item-new-services">
+      <div class="item-new-services" *ngIf="currentUser.email === null || currentUser.email === undefined">
         <div class="add-service-label-input" [ngClass]="{'error': error.email === true}">Email *</div>
         <div class="add-service-margin-input">
           <ion-input
@@ -139,7 +142,7 @@
         <div class="title-pie"></div>
       </div>
 
-      <div class="item-new-services">
+      <div class="item-new-services" *ngIf="currentUser === null || currentUser.email === undefined">
         <div class="add-service-label-input" [ngClass]="{'error': error.phone === true}">Telefono *</div>
         <div class="add-service-margin-input">
           <ion-input
@@ -169,16 +172,30 @@
       </div>
     </div>
   </div>
-  
+  <app-footer></app-footer>
 </div>
 
 <div *ngIf="servicioAdded" class="  modal-back-background">
   <div class="modal-front-content">
-    <div class="modal-front-title">Peticion Enviada</div>
+    <div class="modal-front-title">Petición Enviada</div>
     <div class="modal-front-subtitle modal-subtitle-margin-a">
-      Se ha enviado tu peticion de servicio al destinatario
+      Se ha enviado tu petición de servicio al destinatario
+      <p>
+        Pronto nos pondremos en contacto contigo.</p>
     </div>
     <div class="modal-button-primary" (click)="closeSearch()">Aceptar</div>
+  
+  </div>
+</div>
+
+
+<div *ngIf="loadSend" class="  modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title center">Enviando Petición</div>
+    <div class="modal-front-subtitle center">Estamos procesando tu solicitud. Por favor, ten en cuenta que esto puede tardar unos segundos mientras trabajamos para brindarte la mejor experiencia. Agradecemos tu paciencia y comprensión.</div>
+    <div class="modal-front-subtitle sinmargin center">
+     <img src="assets/imgs/login_loading.gif" alt="loading" style="width: 100px; height: 100px;"/>
+    </div>
   
   </div>
 </div>

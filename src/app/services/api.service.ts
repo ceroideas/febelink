@@ -27,6 +27,35 @@ export class ApiService {
     public translateSvc: TranslateConfigService
   ) {}
 
+  verifiedChangePassword(token) {
+    const formData = new FormData();
+    formData.append('token', token);
+    // return this._createData('update/register', formData);
+    return this.http.post(environment.API_URL_AUTH + 'verifiedChangePassword', formData).pipe(
+      map((res: any) => {
+        return res;
+      }),
+      catchError((err: any, caught: Observable<any>) => {
+        return this.handleError(err, caught, '');
+      })
+    );;
+  }
+
+  updatePasswornd(params) {
+    const formData = new FormData();
+    formData.append('token', params.token);
+    formData.append('password', params.password);
+    console.log(params)
+    // return this._createData('update/register', formData);
+    return this.http.post(environment.API_URL_AUTH + 'update/register', formData).pipe(
+      map((res: any) => {
+        return res;
+      }),
+      catchError((err: any, caught: Observable<any>) => {
+        return this.handleError(err, caught, '');
+      })
+    );;
+  }
   login(
     params,
     endpoint,
