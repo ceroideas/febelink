@@ -1,310 +1,41 @@
-<ion-content class="background-content">
-  <!--  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
-      <ion-spinner></ion-spinner>
-      <p>Cargando...</p>
-    </div>-->
 
-  <!-- Mobile version -->
-  <div class="mobile">
-    <!--     <div class="div-main-back-button">
-      <div class="breadcrumbs-text">
-        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg" />
-        Inicio
-        <img
-          src="assets/icon/svg/chevron-right.svg"
-          class="breadcrumbs-next-svg"
-        />
-        {{user?.name}}
-      </div>
-    </div> -->
 
-    <div class="info-top">
-      <div class="info-top-wrapper">
-        <div class="info-top-left">
+<div id="search-content" class="container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  <div class="container-detail-search">
+     <!--AVATAR SECTION-->
+    <div class="containter-left">
+      <ng-container>
+       <div class="card">
+        <div class="image-profile">
+          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null" src="{{user?.avatar}}"/>
+          <img *ngIf="user?.avatar === undefined || user?.avatar ==null" src="assets/imgs/bg1.jpg"/>
+        </div>
+        <div class="name-profile">
           {{user?.name}}
-          <div class="info-follower">
-            <app-follower-button
-              [user]="postUser"
-              [transparent]="true"
-            ></app-follower-button>
+        </div>
+        <div class="subname-profile">
+          {{user?.email}}
+        </div>
+        <div class="social-profile">
+          <div class="social-item">
+            <i class="fa fa-facebook"></i>
+          </div>
+          <div class="social-item">
+            <i class="fa fa-twitter"></i>
+          </div>
+          <div class="social-item">
+            <i class="fa fa-instagram"></i>
           </div>
         </div>
-        <div class="info-top-right">
-          <img src="assets/icon/svg/menu-dots.svg" class="dots-svg"/>
-        </div>
-      </div>
-      <div class="info-user">
-        <div class="block-action-top-d" style="margin-bottom: 24px">
-          <div
-            class="block-button-primary"
-            style="width: 100%"
-            (click)="createChat()"
-          >
-            Iniciar Chat
-          </div>
-        </div>
-        <!-- <div>
-          <a *ngIf="user?.email" [href]="'mailto:' + user?.email"
-            >{{user?.email}}</a
-          >
-        </div>
-        <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
-          <ion-icon name="call-outline"></ion-icon>
-          {{user?.phoneNumber}}
-        </div> -->
-        <div>{{user?.description}}</div>
-        <!--<div class="info-user-left">
-           <img
-            [src]="user?.logo"
-            *ngIf="user?.logo"
-            class="info-user-img"
-            (error)="user.logo = null"
-          />
-          <img
-            src="user.img"
-            *ngIf="!user?.logo"
-            class="info-user-img"
-            appImgErrorFallback
-          />
-        </div>
-        <div class="info-user-right">
+        <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
           {{user?.description}}
-        </div>-->
-      </div>
-      <div class="table-main-reactions">
-        <div class="option-left">
-          <app-donate-button [user]="post"></app-donate-button>
         </div>
-        <div class="option-middle">
-          <img src="assets/icon/svg/share.svg" class="option-middle-svg"/>{{
-            'common.share' | translate }}
-        </div>
-        <div class="option-right">
-          <img
-            src="assets/icon/svg/star-outline.svg"
-            class="option-right-svg"
-          />Valorar
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mobile">
-    <div class="info-sections">
-      <div class="info-sections-wrapper">
-        <div class="info-sections-cell">
-          <div
-            class="info-sections-text"
-            [ngClass]="{'info-sections-selected' : isFeed}"
-            (click)="showFeed()"
-          >
-            Feed
-          </div>
-        </div>
-        <div class="info-sections-cell">
-          <div
-            class="info-sections-text"
-            [ngClass]="{'info-sections-selected' : isRatings}"
-            (click)="showRatings()"
-          >
-            Valoraciones
-          </div>
-        </div>
-        <div class="info-sections-cell">
-          <div
-            class="info-sections-text"
-            [ngClass]="{'info-sections-selected' : isBest}"
-            (click)="showBest()"
-          >
-            The best
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mobile">
-    <div *ngIf="iAdvises && isFeed">
-      <div class="mobile">
-        <app-post-component
-          *ngFor="let advise of iAdvises"
-          [id]="advise.id"
-          [iAdvise]="advise"
-          [showLang]="true"
-          [showSeePost]="true"
-        ></app-post-component>
-      </div>
-
-      <div class="desktop">
-        <!-- <div *ngFor="let iAdvise of iAdvises" class="div-main-post-b">
-          <div class="table-100">
-            <div>
-              <div class="user-item-main">
-                <img
-                  src="https://api.febelink.com/storage/users/default.png"
-                  *ngIf="!iAdvise?.logo && !iAdvise?.avatar"
-                  class="user-item-img-main-b"
-                />
-                <ion-img
-                  class="user-item-img-main-b"
-                  [src]="iAdvise?.logo || iAdvise?.avatar"
-                  *ngIf="iAdvise?.logo || iAdvise?.avatar"
-                  appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
-                ></ion-img>
-              </div>
-              <div class="user-item-text-b">
-                <div class="user-item-text-name-b">
-                  {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' |
-                  translate)}} {{ iAdvise?.lastName }}
-                </div>
-                <div class="user-item-text-date-b">
-                  {{ iAdvise?.created_at }}
-                </div>
-              </div>
-            </div>
-
-            <div
-              [innerHTML]="iAdvise.content"
-              class="content-post post-content-main max-content-text-b"
-            ></div>
-            <div class="post-content-topic">
-              #{{ topics[iAdvise.topic]?.name }}
-            </div>
-            <div class="post-main-reactions-b">
-              <div class="post-main-reactions-left">
-                <span *ngIf="iAdvise.react_qant>0">{{iAdvise.react_qant}} </span
-                ><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
-                <span *ngIf="iAdvise.react_qant == 1">Reacción</span
-                ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
-              </div>
-              <div class="post-main-reactions-right">
-                <span *ngIf="iAdvise.comments_qant>0"
-                  >{{iAdvise.comments_qant}} </span
-                ><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-                <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
-                ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <app-post-component
-          *ngFor="let advise of iAdvises"
-          [id]="advise.id"
-          [iAdvise]="advise"
-          [showLang]="true"
-          [showSeePost]="true"
-        ></app-post-component>
-      </div>
-    </div>
-
-    <div *ngIf="isRatings" class="wrapper-ratings">
-      <div
-        *ngFor="let rating of ratings;let i = index"
-        [ngClass]="{'content-separator-margin' : i>0}"
-      >
-        <div class="content-table-ratings">
-          <div class="content-table-left">
-            <img src="{{rating.img}}" class="content-table-left-img"/>
-          </div>
-          <div class="content-table-middle">
-            <div class="content-middle-title">{{rating.title}}</div>
-            <div class="content-middle-subtitle">{{rating.service}}</div>
-          </div>
-          <div class="content-table-right">{{rating.price}}€</div>
-        </div>
-        <div class="content-table-second">
-          <div class="content-table-rating">
-            <app-rating [rating]="rating.rating"></app-rating>
-          </div>
-          <div class="content-table-date">{{rating.date}}</div>
-        </div>
-        <div class="content-table-description">{{rating.description}}</div>
-      </div>
-    </div>
-
-    <div *ngIf="isBest" class="wrapper-best">
-      <div *ngFor="let best of bests" class="content-wrapper-best">
-        <div class="content-table-ratings">
-          <div class="content-table-left">
-            <img src="{{best.img}}" class="content-table-left-img"/>
-          </div>
-          <div class="content-table-middle">
-            <div class="content-middle-title">{{best.title}}</div>
-            <div class="content-middle-subtitle">{{best.service}}</div>
-          </div>
-          <div class="content-table-right">{{best.price}}€</div>
-        </div>
-        <div class="content-table-second">
-          <div class="content-table-rating">
-            <app-rating [rating]="best.rating"></app-rating>
-          </div>
-          <div class="content-table-date">{{best.date}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- --------------------------------- -->
-  <!-- Desktop version -->
-  <div class="desktop">
-    <!--     <div class="div-main-back-button-b">
-      <div class="breadcrumbs-text-b">
-        Inicio
-        <img
-          src="assets/icon/svg/chevron-right.svg"
-          class="breadcrumbs-next-svg"
-        />
-        Oráculo
-        <img
-          src="assets/icon/svg/chevron-right.svg"
-          class="breadcrumbs-next-svg"
-        />
-        <span class="breadcrumbs-color-blue">{{user?.name}}</span>
-      </div>
-    </div> -->
-
-    <div class="header-content-top">
-      <div class="table-100">
-        <div class="header-content-top-left">
-          <div class="table-100">
-            <!--            <div class="header-top-inside-left">
-                          <img
-                            [src]="perfilpublico?.logo"
-                            *ngIf="perfilpublico?.logo"
-                            class="header-top-img"
-                            (error)="perfilpublico.logo = null"
-                          />
-                          <img
-                            src="user.img"
-                            *ngIf="!perfilpublico?.logo"
-                            class="header-top-img"
-                            appImgErrorFallback
-                          />
-                        </div>-->
-            <div class="header-top-inside-right">
-              <div class="header-top-title">{{user?.name}}</div>
-              <div class="header-top-subtitle">{{user?.date}}</div>
-              <div class="block-action-top-d" style="margin-bottom: 24px">
-                <div
-                  class="block-button-primary"
-                  style="width: 100%"
-                  (click)="createChat()"
-                >
-                  Iniciar Chat
-                </div>
-              </div>
-              <!-- <div>
-                <a *ngIf="user?.email" [href]="'mailto:' + user?.email"
-                  >{{user?.email}}</a
-                >
-              </div>
-              <div style="margin: 20px 0" *ngIf="user?.phoneNumber">
-                <ion-icon name="call-outline"></ion-icon>
-                {{user?.phoneNumber}}
-              </div> -->
-              <div class="header-top-description">{{user?.description}}</div>
-            </div>
-          </div>
+        <div class="buttons-profile">
+          <div class="item-button">Seguir</div>
+          <div class="item-button chat" (click)="createChat()">Iniciar Chat</div>
         </div>
         <div class="header-content-top-right">
           <div class="block-action-top">
@@ -319,160 +50,70 @@
               class="block-action-svg"
             />Compartir
           </div>
-          <div class="block-action-top-b">
+          <div class="block-action-top">
             <img
               src="assets/icon/svg/star-blue.svg"
               class="block-action-svg"
             />Valorar
           </div>
-          <div class="block-action-top-c" (click)="backButton()">
-            <div class="block-button-secondary">Volver</div>
-          </div>
-          <div class="block-action-top-d">
-            <div class="block-button-primary">Seguir</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="desktop desktop-content-padding">
-    <div class="desktop-content-left">
-      <div *ngIf="iAdvises">
-        <div class="desktop">
-          <!-- <div *ngFor="let iAdvise of iAdvises" class="div-main-post-b">
-            <div class="table-100">
-              <div>
-                <div class="user-item-main">
-                  <img
-                    src="https://api.febelink.com/storage/users/default.png"
-                    *ngIf="!iAdvise?.logo && !iAdvise?.avatar"
-                    class="user-item-img-main-b"
-                  />
-                  <ion-img
-                    class="user-item-img-main-b"
-                    [src]="iAdvise?.logo || iAdvise?.avatar"
-                    *ngIf="iAdvise?.logo || iAdvise?.avatar"
-                    appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
-                  ></ion-img>
-                </div>
-                <div class="user-item-text-b">
-                  <div class="user-item-text-name-b">
-                    {{ iAdvise?.name || iAdvise?.nick || ('common.labelUser' |
-                    translate)}} {{ iAdvise?.lastName }}
-                  </div>
-                  <div class="user-item-text-date-b">
-                    {{ iAdvise?.created_at }}
-                  </div>
-                </div>
-              </div>
-
-              <div
-                [innerHTML]="iAdvise.content"
-                class="content-post post-content-main max-content-text-b"
-              ></div>
-              <div class="post-content-topic">
-                #{{ topics[iAdvise.topic]?.name }}
-              </div>
         
-              <div class="post-main-reactions-b">
-                <div class="post-main-reactions-left">
-                  <span *ngIf="iAdvise.react_qant>0"
-                    >{{iAdvise.react_qant}} </span
-                  ><span *ngIf="!(iAdvise.react_qant>0)">0 </span>
-                  <span *ngIf="iAdvise.react_qant == 1">Reacción</span
-                  ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
-                </div>
-                <div class="post-main-reactions-right">
-                  <span *ngIf="iAdvise.comments_qant>0"
-                    >{{iAdvise.comments_qant}} </span
-                  ><span *ngIf="!(iAdvise.comments_qant>0)">0 </span>
-                  <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
-                  ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <app-post-component
-            *ngFor="let advise of iAdvises"
-            [id]="advise.id"
-            [iAdvise]="advise"
-            [showLang]="true"
-            [showSeePost]="true"
-          ></app-post-component>
         </div>
       </div>
+      </ng-container>
+
     </div>
-
-    <div class="desktop-content-right">
-      <div class="info-sections-b">
-        <div class="info-sections-wrapper-b">
-          <div class="info-sections-cell-b">
-            <div
-              class="info-sections-text-b"
-              [ngClass]="{'info-sections-selected-b' : (isRatings || isFeed)}"
-              (click)="showRatings()"
-            >
-              Valoraciones
-            </div>
+    <div class="containter-right">
+      <!--ORACULO-->
+      <div class="section-perfil">
+        <div class="oracle" *ngIf="iAdvises.length > 0">
+          <ion-row class="oracle-title">
+            <ion-label><h1 class="title-oracle">Publicaciones en Oráculo</h1></ion-label>
+            <ion-label><p class="subtitle-oracle">Explora las Últimas Novedades: Mantente al día con sus publicaciones más recientes y descubre sus contenidos exclusivos</p></ion-label>
+          </ion-row>
+          <div class="container-oracle" >
+            <app-post-model2-component
+              *ngFor="let advise of iAdvises"
+              [id]="advise.id"
+              [iAdvise]="advise"
+              [showLang]="true"
+              [showSeePost]="true"
+            ></app-post-model2-component>
+           
           </div>
-          <div class="info-sections-cell-b">
-            <div
-              class="info-sections-text-b"
-              [ngClass]="{'info-sections-selected-b' : isBest}"
-              (click)="showBest()"
-            >
-              The best
+        </div>
+
+        <!--SERVICIOS-->
+        <div class="section-more-work" [ngClass]="{'sinmargen': iAdvises.length === 0}" *ngIf="moreWorks.length">
+          <ion-row class="more-work-title">
+            <ion-label><h1 class="title-oracle">Servicios de este profesional</h1></ion-label>
+          </ion-row>
+  
+          <div class="grid-more-work">
+            
+            <div class="item-more" 
+              
+              *ngFor="let more of moreWorks">
+              <a [href]="'/servicio/' + removeBlankSpace(more?.title) + '/detail/' + more?.productId">
+                <div class="name-work">
+                  <div>{{more.title}}</div>
+                </div>
+                <div class="description-more">
+                  <ion-label [innerHtml]="more.description"></ion-label>
+                </div>
+                <div class="more-view">
+                  Mostrar  <i class="fa fa-chevron-right"></i>
+                </div>
+              </a>
             </div>
+         
           </div>
         </div>
       </div>
 
-      <div *ngIf="isRatings || isFeed" class="wrapper-best-b">
-        <div
-          *ngFor="let rating of ratings;let i = index"
-          class="content-wrapper-best-b"
-        >
-          <div class="content-table-ratings">
-            <div class="content-table-left">
-              <img src="{{rating.img}}" class="content-table-left-img"/>
-            </div>
-            <div class="content-table-middle">
-              <div class="content-middle-title">{{rating.title}}</div>
-              <div class="content-middle-subtitle">{{rating.service}}</div>
-            </div>
-            <div class="content-table-right">{{rating.price}}€</div>
-          </div>
-          <div class="content-table-second">
-            <div class="content-table-rating">
-              <app-rating [rating]="rating.rating"></app-rating>
-            </div>
-            <div class="content-table-date">{{rating.date}}</div>
-          </div>
-          <div class="content-table-description">{{rating.description}}</div>
-        </div>
-      </div>
-
-      <div *ngIf="isBest" class="wrapper-best-b">
-        <div *ngFor="let best of bests" class="content-wrapper-best-b">
-          <div class="content-table-ratings">
-            <div class="content-table-left">
-              <img src="{{best.img}}" class="content-table-left-img"/>
-            </div>
-            <div class="content-table-middle">
-              <div class="content-middle-title">{{best.title}}</div>
-              <div class="content-middle-subtitle">{{best.service}}</div>
-            </div>
-            <div class="content-table-right">{{best.price}}€</div>
-          </div>
-          <div class="content-table-second">
-            <div class="content-table-rating">
-              <app-rating [rating]="best.rating"></app-rating>
-            </div>
-            <div class="content-table-date">{{best.date}}</div>
-          </div>
-        </div>
-      </div>
+       <!--SERVICIOS-->
     </div>
   </div>
-</ion-content>
+
+  <app-footer></app-footer>
+
+</div>

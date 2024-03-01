@@ -70,6 +70,8 @@ export class DetalleBusquedaPage implements OnInit {
   }
 
   async getProductDetail(productId) {
+    const othersViewData = JSON.parse(sessionStorage.getItem('searchResponse'));
+    sessionStorage.setItem('productId', productId)
     const {response} = await this.searchService.getProductDetail(productId);
     if (response) {
       this.detalle = response;
@@ -102,7 +104,6 @@ export class DetalleBusquedaPage implements OnInit {
     const {response, error} = await this.profileUser.getUserProduct(user);
     if (!!response)
     this.moreWorks = response.available;
-
 
   }
 

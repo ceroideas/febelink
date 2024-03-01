@@ -12,6 +12,7 @@ import {IAdviseFull} from '../posts/advises/models/advises.model';
 import {AdviseService} from '../posts/advises/services/advises.service';
 import {UserDataService} from '../user-data/Services/user-data.service';
 import {Location} from '@angular/common';
+import { SearchService } from 'src/app/tab1/search/services/search.service';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -29,7 +30,7 @@ export class PerfilOraculoPage implements OnInit {
   isBest: boolean = false;
   postUser;
   post;
-
+  moreWorks: any = [];
   apiMetaTagUrl: string = `${environment.baseWebUrl}api/auth/meta-tags`;
   linksArray: string[] = [];
 
@@ -58,7 +59,7 @@ export class PerfilOraculoPage implements OnInit {
     {id: 21, name: 'Salud'},
     {id: 22, name: 'Criptomonedas'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
-
+  public detalle: any;
   constructor(
     private route: ActivatedRoute,
     public popoverController: PopoverController,
@@ -71,7 +72,9 @@ export class PerfilOraculoPage implements OnInit {
     public fileSvc: FileService,
     private http: HttpClient,
     private chatService: ChatService,
-    private location: Location
+    private location: Location,
+    private profileUser: UserDataService,
+    private searchService: SearchService
   ) {
     this.route.paramMap.subscribe((params) => {
       this.idPerfil = params.get('id');
@@ -81,6 +84,8 @@ export class PerfilOraculoPage implements OnInit {
   ngOnInit() {
     this.getFeed();
     this.getUserDetail();
+    this.getProductDetail()
+    this.getProductUser()
     this.ratings = [];
     this.bests = [];
   }
@@ -90,6 +95,7 @@ export class PerfilOraculoPage implements OnInit {
       this.idPerfil
     );
     if (response) {
+      
       this.user = {
         name: response.username,
         description: response.description,
@@ -98,6 +104,34 @@ export class PerfilOraculoPage implements OnInit {
         date: '12 April at 09.28 PM', // ToDo: Remove this hardcoded value
       };
     }
+  }
+
+ 
+
+
+  async getProductUser() {
+
+    
+    const user = JSON.parse(sessionStorage.getItem('productId'));
+    
+    const {response, error} = await this.profileUser.getUserProduct(this.idPerfil);
+    if (!!response)
+    this.moreWorks = response.available;
+
+
+
+  }
+
+
+  async getProductDetail() {
+    const user = JSON.parse(sessionStorage.getItem('productId'));
+    const {response} =  await this.searchService.getProductDetail(user);
+    if (response) {
+      this.detalle = response;
+      this.user.avatar = response.ownerAvatar
+    }
+
+    console.log(this.user.avatar)
   }
 
   async getFeed() {
@@ -116,6 +150,14 @@ export class PerfilOraculoPage implements OnInit {
     this.iAdvises = response;
   }
 
+  removeBlankSpace(term: string): string {
+   
+    if ( term !== null){
+      return term.replace(new RegExp(' ', 'g'), '-');
+    } else {
+      return term
+    }
+  }
   showFeed() {
     this.isFeed = true;
     this.isRatings = false;

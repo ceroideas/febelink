@@ -29,8 +29,8 @@ export class HeaderComponent {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const urlParts = event.url.split('/'); // Split the URL
-
-        if (event.url !== "/listado" && event.url !== "/") {
+     
+        if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('user')) {
           this.detachBlock = true;
           this.detached = true;
         } else {
