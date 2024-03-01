@@ -54,7 +54,6 @@
             <i  class="fas fa-user-circle "></i> Acceder
           </div>
           <div class="item logged" *ngIf="currentUser !== undefined">
-            
             <ion-menu-button class="avatarmenu">
               <ion-img [src]="currentUser?.logo || 'https://api.febelink.com/storage/users/default.png'"
                    (error)="onImgError($event)"
@@ -63,9 +62,7 @@
               <i class="fa fa-bars"></i>
 
             </ion-menu-button>
-           
           </div>
-          
         </div>
       </div>
       <!-- MENU -->
@@ -88,6 +85,11 @@
                    alt="Menu profile picture">
               </ion-img>
               <i class="fa fa-bars"></i>
+          </ion-menu-button>
+        </ion-buttons>
+        <ion-buttons *ngIf="!currentUser" buttons-start slot="start">
+          <ion-menu-button class="avatarmenu"  (click)="irA('/login')">
+            <i class="fa fa-bars"></i>
           </ion-menu-button>
         </ion-buttons>
       </div>
