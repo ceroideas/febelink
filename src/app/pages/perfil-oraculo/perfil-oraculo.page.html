@@ -19,7 +19,7 @@
         <div class="subname-profile">
           {{user?.email}}
         </div>
-        <div class="social-profile">
+        <!-- <div class="social-profile">
           <div class="social-item">
             <i class="fa fa-facebook"></i>
           </div>
@@ -29,7 +29,7 @@
           <div class="social-item">
             <i class="fa fa-instagram"></i>
           </div>
-        </div>
+        </div> -->
         <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
           {{user?.description}}
         </div>
@@ -67,7 +67,7 @@
       <div class="section-perfil">
         <div class="oracle" *ngIf="iAdvises.length > 0">
           <ion-row class="oracle-title">
-            <ion-label><h1 class="title-oracle">Publicaciones en Oráculo</h1></ion-label>
+            <ion-label><span class="title-oracle">Publicaciones en Oráculo</span></ion-label>
             <ion-label><p class="subtitle-oracle">Explora las Últimas Novedades: Mantente al día con sus publicaciones más recientes y descubre sus contenidos exclusivos</p></ion-label>
           </ion-row>
           <div class="container-oracle" >
@@ -85,7 +85,7 @@
         <!--SERVICIOS-->
         <div class="section-more-work" [ngClass]="{'sinmargen': iAdvises.length === 0}" *ngIf="moreWorks.length">
           <ion-row class="more-work-title">
-            <ion-label><h1 class="title-oracle">Servicios de este profesional</h1></ion-label>
+            <ion-label><span class="title-oracle">Servicios de este profesional</span></ion-label>
           </ion-row>
   
           <div class="grid-more-work">

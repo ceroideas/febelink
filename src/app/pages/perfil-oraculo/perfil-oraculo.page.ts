@@ -132,8 +132,6 @@ export class PerfilOraculoPage implements OnInit {
       this.detalle = response;
       this.user.avatar = response.ownerAvatar 
     }
-
-    console.log(this.user.avatar)
   }
 
   async getFeed() {

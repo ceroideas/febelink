@@ -112,9 +112,6 @@ export class AppComponent implements OnInit, OnDestroy {
         const urlParts = e.url.split('/');
      
         this.onHome = (e.url === '/' || urlParts.includes('user'));
-
-        console.log(urlParts.includes('user'))
-        console.log(this.onHome)
       } 
     });
   }

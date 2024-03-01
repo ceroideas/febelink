@@ -129,10 +129,9 @@
                     font-size: 15px;
                     width: 100%;
                     margin: auto;
-                    text-align: justify;
                     font-family: DM Sans;
                     color: #6f6c90;
-                    FONT-WEIGHT: 300;
+                    font-weight: normal;
                     line-height: 26px;
                     margin-bottom: 30px;
                 }
@@ -224,13 +223,17 @@
               }
               .title-oracle{
                 font-weight: bold;
+                color: black;
+                margin-bottom: 10px;
+                font-size: 1.2rem;
+                display: block;
                }
               .section-perfil{
               
                .subtitle-oracle{
                 font-size: 16px;
                 line-height: 24px;
-                margin-bottom: 50px
+                margin-bottom: 20px;
                }
               }
       
