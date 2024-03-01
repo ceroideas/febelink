@@ -1,0 +1,267 @@
+.title img, .subtitle img, .summary img {
+  width: 100%;
+  --width: 100%;
+  max-width: 100%;
+  height: 25vh;
+  --height: 25vh;
+  max-height: 25vh;
+  object-fit: cover;
+}
+
+.media {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.content img {
+  object-fit: scale-down;
+  height: auto;
+}
+
+.title, .subtitle, .summary {
+  p {
+    display: inline;
+  }
+}
+
+.comment {
+  width: calc(100% - 40px - 5px - 10px);
+}
+
+.modern, .word-wrap, .modern > * {
+  margin: 0.3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.text-data {
+  width: 100% !important;
+
+  .description {
+    max-height: inherit !important;
+  }
+}
+
+.post-box {
+  padding: 1px 0 0 1px;
+}
+
+
+.content-post p {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+h2 {
+  margin-top: 18px;
+  font-size: 16px;
+  margin: 0;
+}
+.content-post-img::part(image) {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.modal-back-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(107, 114, 128, 0.7);
+  z-index: 2147483646;
+}
+
+.modal-front-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 12px 12px 0px 0px;
+  padding: 27px 20px;
+}
+
+.modal-front-title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
+  color: #111928;
+  margin-bottom: 4px;
+}
+
+.modal-front-subtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #111928;
+}
+
+.modal-subtitle-margin-a {
+  margin-bottom: 38px;
+}
+
+.modal-subtitle-margin-b {
+  margin-bottom: 27px;
+}
+
+.modal-button-primary {
+  margin-bottom: 8px;
+  margin-left: 16px;
+  margin-right: 16px;
+  cursor: pointer;
+  background: #1C64F2;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+}
+
+.modal-button-secondary {
+  cursor: pointer;
+  margin-left: 16px;
+  margin-right: 16px;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: #1F2A37;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+}
+
+.div-main-post {
+  width: 100%;
+  padding: 16px 12px;
+  margin-bottom: 16px;
+  background: #FFFFFF;    
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px #00000014;
+}
+
+.div-main-post-b2 {
+  width: 100%;
+    /* max-width: 806px; */
+    margin: 20px auto 40px;
+    padding: 17px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    // box-shadow: 0 0 24px #0000000a;
+    box-shadow: #0000001a 0 12px 48px;
+    background: rgb(255,255,255);
+}
+
+.table-100 {
+  display: table;
+  width: 100%;
+}
+
+.follower-mobile {
+  display: inline-block;
+  padding-right: 12px;
+  vertical-align: middle;
+  top: 3px;
+  position: relative;
+}
+
+.cell-dots-top {
+  display: table-cell;
+  vertical-align: top;
+  padding-right: 8px;
+  text-align: right;
+}
+
+.cell-dots-top-b {
+    display: flex;
+    width: 9%;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.cell-dots-top-svg {
+  cursor: pointer;
+  width: 4px;
+  margin-top: 6px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.post-content-main {
+  padding-top: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #111928;
+}
+
+.post-content-main-b {
+  padding-top: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #111928;
+}
+
+.post-content-topic {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #1C64F2;
+  margin-bottom: 16px;
+}
+
+.post-main-reactions {
+  margin: 16px 0px;
+  padding: 4px 0px;
+  width: 100%;
+  display: table;
+  border-top: 1px solid #E5E7EB;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.post-main-reactions-b {
+  margin: 16px 0px;
+  padding: 4px 0px;
+  width: 100%;
+  display: table;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.post-main-reactions-left {
+  display: table-cell;
+  text-align: left;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #4B5563;
+}
+
+.post-main-reactions-right {
+  display: table-cell;
+  text-align: right;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #4B5563;
+}
+
+.max-content-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+}
+
+.max-content-text-b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}

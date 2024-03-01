@@ -13,6 +13,7 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentsComponent } from './comments/comments.component';
 import { SharedPostModule } from '../shared-post.module';
 import { DonateButtonModule } from 'src/app/components/donate/donate-button.module';
+import { PostModel2Component } from './post-model2/post-model2.component';
 
 @NgModule({
     imports: [
@@ -39,12 +40,14 @@ import { DonateButtonModule } from 'src/app/components/donate/donate-button.modu
 
       , PostBottomBarComponent
       , PostComponent
+      , PostModel2Component
       , CommentComponent
       , CommentsComponent
     ],
     declarations: [
         PostBottomBarComponent
       , PostComponent
+      , PostModel2Component
       , CommentComponent
       , CommentsComponent
     ],

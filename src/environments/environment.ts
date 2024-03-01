@@ -4,23 +4,23 @@
 
 export const environment = {
   production: false,
-  /*
-    baseWebUrl: 'https://api.febelink.com/',
-    API_URL: 'https://api.febelink.com/api/',
-    API_URL_AUTH: 'https://api.febelink.com/api/auth/',
-
+  
+    // baseWebUrl: 'https://api.febelink.com/',
+    // API_URL: 'https://api.febelink.com/api/',
+    // API_URL_AUTH: 'https://api.febelink.com/api/auth/',
+/*
     baseWebUrl: 'http://apitest.febelink.com/',
     API_URL: 'http://apitest.febelink.com/api/',
     API_URL_AUTH: 'http://apitest.febelink.com/api/auth/',
    */
 
-  baseWebUrl: 'http://localhost/',
-  API_URL: 'http://localhost/api/',
-  API_URL_AUTH: 'http://localhost/api/auth/',
+  // baseWebUrl: 'http://localhost/',
+  // API_URL: 'http://localhost/api/',
+  // API_URL_AUTH: 'http://localhost/api/auth/',
 
-  // baseWebUrl: 'http://192.168.0.31/',
-  // API_URL: 'http://192.168.0.31/api/',
-  // API_URL_AUTH: 'http://192.168.0.31/api/auth/',
+  baseWebUrl: 'http://192.168.0.31/',
+  API_URL: 'http://192.168.0.31/api/',
+  API_URL_AUTH: 'http://192.168.0.31/api/auth/',
 
 
   SOCKET_URL: 'http://localhost:3425/',
