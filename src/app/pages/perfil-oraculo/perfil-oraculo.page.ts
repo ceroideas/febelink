@@ -81,6 +81,8 @@ export class PerfilOraculoPage implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+  }
   ngOnInit() {
     this.getFeed();
     this.getUserDetail();
@@ -128,7 +130,7 @@ export class PerfilOraculoPage implements OnInit {
     const {response} =  await this.searchService.getProductDetail(user);
     if (response) {
       this.detalle = response;
-      this.user.avatar = response.ownerAvatar
+      this.user.avatar = response.ownerAvatar 
     }
 
     console.log(this.user.avatar)
