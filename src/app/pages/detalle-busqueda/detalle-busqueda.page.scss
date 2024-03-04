@@ -369,7 +369,7 @@
             display:none
           }
           .price{
-            height: 100px;
+            height: 34px;
             display: flex;
             width: 100%;
             justify-content: space-between;
@@ -593,6 +593,10 @@
             color: #fff;
             font-weight: bold;
             cursor: pointer;
+            a{
+              color: #fff;
+              text-decoration: none;
+            }
           
           }
           .whatsapp-button{
