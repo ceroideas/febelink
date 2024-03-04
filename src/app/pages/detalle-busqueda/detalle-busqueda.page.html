@@ -173,6 +173,19 @@
           <ion-label [innerHtml]="detalle?.description"></ion-label>
         </div>
   
+         <!--To whom-->
+         <div class="section-towhom" *ngIf="!!detalle?.whom">
+          <ion-row class="towhom-title">
+            <ion-label>
+              <!-- <h1>{{detalle?.towhom}}</h1> -->
+              <h1>A quien va dirigido</h1>
+            </ion-label>
+          </ion-row>
+          <ion-row class="towhom-description">
+            <ion-label [innerHtml]="detalle?.whom"></ion-label>
+          </ion-row>
+        </div>
+
         <!--OTHERS VIEW-->
         <div class="section-others-view" *ngIf="othersView.length  > 0">
           <ion-row class="others-view-title">
@@ -233,19 +246,6 @@
            
           
           </div>
-        </div>
-  
-        <!--To whom-->
-        <div class="section-towhom" *ngIf="!!detalle?.whom">
-          <ion-row class="towhom-title">
-            <ion-label>
-              <!-- <h1>{{detalle?.towhom}}</h1> -->
-              <h1>A quien va dirigido</h1>
-            </ion-label>
-          </ion-row>
-          <ion-row class="towhom-description">
-            <ion-label [innerHtml]="detalle?.whom"></ion-label>
-          </ion-row>
         </div>
   
         <!--MORE WORK THIS PROFESIONAL-->

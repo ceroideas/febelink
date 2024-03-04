@@ -48,7 +48,7 @@
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " [href]="'/oracles'" >Oraculo</a></div>
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " >Carrito</a></div>
         <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div>
-        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " (click)="navigateNewServices()">Ofrece tus servicios</a></div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
         <div  class="menu secondary"[ngClass]="{'detached': detached}" >
           <div class="item login " *ngIf="currentUser === undefined" (click)="irA('/login')" >
             <i  class="fas fa-user-circle "></i> Acceder
