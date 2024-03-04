@@ -30,7 +30,8 @@
 
 
       <div class="capsule-price">
-        <div class="price">
+        <div >
+          <div class="price">
           <div class="number-price"><ion-label
             >{{detalle?.productUnitPrice * productAmount}}
               €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
@@ -55,7 +56,14 @@
             </div>
             <div class="icon"><i class="fa fa-chevron-down"></i></div>
 
+            
            
+          </div>
+        </div>
+        <div
+            class="flau"
+            >
+            Pagar con FLAU
           </div>
         </div>
         <ion-row class="guarantee" (click)="irA('/use-conditions')">
@@ -87,6 +95,7 @@
           </div>
            
         </div>
+      
       </div>
     </div>
     <div class="containter-right">
@@ -114,7 +123,7 @@
             </div>
             <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)" class="button-perfil">Ver Perfil</div>
           </div>
-          <div class="buttons-avatar">
+          <div class="buttons-avatar buttondesktop">
             <div
               class="chat-button buttondesktop"
               (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
@@ -122,12 +131,50 @@
               Iniciar Chat
             </div>
             <div
+            class="chat-button buttondesktop"
+            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            >
+            <a title="Contacto telefónico" 
+              aria-label="Chat on WhatsApp" 
+              href="https://wa.me/{{user?.phone}}" 
+              class="badge">
+              Whatsapp
+          </a>
+            
+          </div>
+            <div
               class="follow-button buttondesktop"
               >
              Seguir
             </div>
           </div>
         </div>
+        <div class="user-detail">{{user?.description}}</div>
+        <div class="buttons-mobileavatar buttonmobile">
+          <div
+            class="chat-button buttonmobile"
+            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            >
+            Iniciar Chat
+          </div>
+          <div
+          class="chat-button buttonmobile"
+          (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+          >
+          <a title="Contacto telefónico" 
+            aria-label="Chat on WhatsApp" 
+            href="https://wa.me/{{user?.phone}}" 
+            class="badge">
+            Whatsapp
+          </a>
+        </div>
+          <div
+            class="follow-button buttonmobile"
+            >
+           Seguir
+          </div>
+        </div>
+      
   
         <!--TITLE SECTION-->
         <div class="section-title">
@@ -535,7 +582,11 @@
         <span *ngSwitchCase="4">Comprar ahora</span>
         <span *ngSwitchDefault>Más Información</span>
       </div>
-
+      <div
+      class="flau"
+      >
+      Pagar con FLAU
+    </div>
       
     </div>
   </div>

@@ -155,6 +155,12 @@
   font-size: 14px;
   line-height: 150%;
   color: #1C64F2;
+
+  &.disabled {
+    // background: #E5E7EB;
+    border: 1px solid #E5E7EB;
+    color: #9CA3AF;
+  }
 }
 
 .box-price-b {
@@ -315,7 +321,9 @@
   vertical-align: middle;
   position: relative;
 }
-
+.box-height2 {
+  height: 264px;
+}
 .position-bottom {
   position: absolute;
   bottom: 16px;

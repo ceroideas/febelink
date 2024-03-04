@@ -32,7 +32,7 @@ export class DetalleBusquedaPage implements OnInit {
       // ...
     }
   };
-
+  user: any ={}
   productId;
   productAmount = 1;
   iAdvises: any = [];
@@ -78,6 +78,7 @@ export class DetalleBusquedaPage implements OnInit {
       this.getFeed();
       this.getOthersWork()
       this.getProductUser()
+      this.getDetailUser()
     }
   }
 
@@ -107,7 +108,20 @@ export class DetalleBusquedaPage implements OnInit {
 
   }
 
+  async getDetailUser() {
+    const {response} = await this.profileUser.getUserDetail(
+      this.detalle.ownerId
+    );
+    if (response) {
+      
+      this.user = {
+        description: response.description,
+        phoneNumber: response.phoneNumber,
+      };
+    }
 
+    console.log(this.user)
+  }
   getOthersWork(){
     const othersViewData = JSON.parse(sessionStorage.getItem('searchResponse'));
 

@@ -83,6 +83,7 @@
     height: 300px;
     margin-left: auto;
     margin-right: auto;
+    z-index: 0;
   }
 
   .swiper-slide {
@@ -192,14 +193,12 @@
       }
      
       .price{
-        height: 50px;
+        height: 36px;
         display: flex;
         width: 100%;
-        justify-content: center;
-        /* margin-bottom: 16px; */
-        flex-direction: column;
-        height: 100%;
-        gap: 12px;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        align-items: flex-start;
         .number-price{
           display: flex;
           justify-content: flex-start;
@@ -236,18 +235,33 @@
         justify-content: flex-end;
         align-items: center;
         width: 100%;
+        flex-direction: column;
 
         .chat-button{
           width: 88%;
-          height: 42px;
+          height: 32px;
           display: flex;
           justify-content: center;
           align-items: center;
-          background: #0147ff;
-          border-radius: 102px;
+          background: #3575E2;
+          border-radius: 8px;
           color: #fff;
           font-weight: 700;
           cursor: pointer;
+        }
+        .flau{
+          width: 88%;
+          height: 32px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #9ebdf1;
+          border-radius: 8px;
+          color: #fff;
+          font-weight: 700;
+          cursor: pointer;
+          opacity: .5;
+          margin-top: 10px;
         }
       }
     }
@@ -323,11 +337,28 @@
           }
         }
 
+        .flau{
+          
+          width: 159px;
+          height: 43px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #cfcfcf;
+          border-radius: 12px;
+          color: #ffffff;
+          font-weight: 700;
+          cursor: pointer;
+          margin: 24px 0 0 auto;
+          background: #3575E2;
+          opacity: 0.4;
+
+        }
         .capsule-price{
           box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
           background-color: #fff;
           width: 93%;
-          height: 262px;
+          height: 308px;
           padding: 18px;
           margin-top: 34px;
           border-radius: 13px;
@@ -338,11 +369,12 @@
             display:none
           }
           .price{
-            height: 50px;
+            height: 100px;
             display: flex;
             width: 100%;
             justify-content: space-between;
             margin-bottom: 16px;
+            align-items: flex-start;
             .number-price{
                 display: flex;
                 justify-content: center;
@@ -404,7 +436,7 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              background: #0147ff;
+              background: #3575E2;
               border-radius: 12px;
               color: #fff;
               font-weight: bold;
@@ -416,9 +448,9 @@
               display: flex;
               justify-content: center;
               align-items: center;
-              border: 1px solid  #0147ff;
+              border: 1px solid  #3575E2;
               border-radius: 12px;
-              color: #0147ff;
+              color: #3575E2;
               font-weight: bold;
               cursor: pointer;
             }
@@ -485,26 +517,34 @@
                 height: 24px;
                 font-size: .9rem;
                 align-items: center;
+                cursor: pointer;
               }
             }
             .buttons-avatar{
               display: flex;
               justify-content: flex-end;
-              align-items: center;
+              align-items: flex-start;
               column-gap: 10px;
               width: calc(100% - 300px);
-
+              @media (max-width: 780px) {
+                display: none;
+              }
               .chat-button{
                 width: 116px;
                 height: 50px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background: #0147ff;
+                background: #3575E2;
                 border-radius: 12px;
                 color: #fff;
                 font-weight: bold;
                 cursor: pointer;
+
+                a{
+                  color: #fff;
+                  text-decoration: none;
+                }
                 @media only screen and (max-width: 780px) {
                   display: none;
                 }
@@ -515,9 +555,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border: 1px solid  #0147ff;
+                border: 1px solid  #3575E2;
                 border-radius: 12px;
-                color: #0147ff;
+                color: #3575E2;
                 font-weight: bold;
                 cursor: pointer;
                 @media only screen and (max-width: 780px) {
@@ -527,7 +567,65 @@
             }
           }
         }
-
+        .user-detail{
+          font-size: 16px;
+          margin-bottom: 33px;
+          margin-top: 13px;
+        }
+        .buttons-mobileavatar{
+          display: none;
+          justify-content: flex-end;
+          align-items: center;
+          column-gap: 10px;
+          width: 100%;
+          margin-top: 35px;
+          @media only screen and (max-width: 780px) {
+            display: flex;
+          }
+          .chat-button{
+            width: 116px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #3575E2;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+          
+          }
+          .whatsapp-button{
+            width: 116px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #3575E2;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            a{
+              color: #fff;
+              text-decoration: none;
+            }
+          
+          }
+          .follow-button{
+            width: 89px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid  #3575E2;
+            border-radius: 12px;
+            color: #3575E2;
+            font-weight: bold;
+            cursor: pointer;
+           
+          }
+        }
         .section-title{
           margin-top: 30px;
 
