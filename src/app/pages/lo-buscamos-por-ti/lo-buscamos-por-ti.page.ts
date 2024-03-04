@@ -26,6 +26,7 @@ export class LoBuscamosPorTiPage implements OnInit {
 
   servicioAdded: boolean = false;
   servicioError: boolean = false;
+  servicioAddedOther: boolean = false;
   loadSend: boolean = false;
   title: string;
   description: string;
@@ -129,7 +130,7 @@ export class LoBuscamosPorTiPage implements OnInit {
         (this.editorText != undefined && this.editorText !== null) && 
         (this.name != undefined && this.name !== null) &&
         (this.email != undefined && this.email !== null ) &&
-        (this.selectedValue != undefined && this.selectedValue !== null ) &&
+        // (this.selectedValue != undefined && this.selectedValue !== null ) &&
         (this.phone != undefined && this.phone !== null) ){
         this.loadSend = true
 
@@ -224,7 +225,12 @@ export class LoBuscamosPorTiPage implements OnInit {
   }
   closeServicioError(){
     this.servicioAdded = false;
+    this.servicioAddedOther = false;
     this.servicioError = false;
+  }
+
+  goToHome(){
+    this.router.navigate(['/']);
   }
 
 }

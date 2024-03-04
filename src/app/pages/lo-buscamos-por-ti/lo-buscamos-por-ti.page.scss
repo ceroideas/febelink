@@ -635,7 +635,7 @@
  
  .modal-front-title-b {
    font-weight: 600;
-   font-size: 18px;
+   font-size: 25px;
    line-height: 150%;
    color: #111928;
    margin-bottom: 4px;
@@ -643,6 +643,14 @@
  
  .modal-subtitle-margin-b {
    margin-bottom: 27px;
+ }
+ .container-buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div{
+    width: 50% !important;
+  }
  }
  
  .modal-button-primary-b {
@@ -1051,7 +1059,7 @@
  
  .modal-front-title {
    font-weight: 700;
-   font-size: 20px;
+   font-size: 25px;
    line-height: 150%;
    color: #111928;
    margin-bottom: 4px;
@@ -1061,7 +1069,7 @@
  
  .modal-front-subtitle {
    font-weight: 400;
-   font-size: 14px;
+   font-size: 18px;
    line-height: 150%;
    color: #111928;
  }

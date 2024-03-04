@@ -9,7 +9,7 @@
 }
 
 .media {
-  width: 100%;
+  width: 160px;
   border-radius: 16px;
 }
 
@@ -23,7 +23,11 @@
     display: inline;
   }
 }
-
+.h-social-media, .wh-social-media {
+  height: auto !important;
+  /* --height: 360px; */
+  max-height: 360px !important;
+}
 .comment {
   width: calc(100% - 40px - 5px - 10px);
 }

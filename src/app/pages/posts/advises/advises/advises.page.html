@@ -1,5 +1,5 @@
 <!-- <ion-header class="ion-no-border"> -->
-  <div class="mobile">
+  <div class="mobile layer-mobile">
     <div class="top-create-post">
       <div class="top-create-post-left">
         <h1 class="top-create-post-left-inside">
@@ -8,6 +8,14 @@
       </div>
       <div class="top-create-post-right">
         <img src="assets/icon/svg/filter-post.svg" (click)="showFilters = !showFilters" class="top-create-post-svg" />
+      </div>
+    </div>
+    <div class="top-create-post-right-b">
+      <div class="create-post-button-secondary" (click)="showFilters = !showFilters">
+        Filtros <img src="assets/icon/svg/filter-blue.svg" class="create-post-svg-b" />
+      </div>
+      <div class="create-post-button-primary" (click)="adviseSvc.showCreatePost = !adviseSvc.showCreatePost">
+        Nueva entrada
       </div>
     </div>
   </div>

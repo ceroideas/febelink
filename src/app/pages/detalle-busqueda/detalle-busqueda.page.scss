@@ -294,18 +294,18 @@
         .product-image-desktop {
             border-radius: 8px;
             width: 92%;
-            height: 268px;
+            height: fit-content;
             background: #EDEDED;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 44px;
+            margin-bottom: 24px;
             margin-left: 0;
                 
             @media only screen and (max-width: 1000px) {
               width: 100%;
               border-radius: 0;
-              height: 255px;
+              height: fit-content;
             }
           ion-image{
             ::ng-deep{
