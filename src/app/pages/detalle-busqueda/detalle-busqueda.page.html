@@ -137,8 +137,9 @@
           
             >
             <a title="Contacto telefónico" 
+              *ngIf="user?.phoneNumber"
               aria-label="Chat on WhatsApp" 
-              href="https://wa.me/{{user?.phone}}" 
+              href="https://wa.me/{{user?.phoneNumber}}" 
               class="badge">
               Whatsapp
           </a>
