@@ -50,7 +50,7 @@
             margin-bottom: 100px;
 
             /* Media query for screens with a maximum width of 600px */
-            @media only screen and (max-width: 1290px) {
+            @media only screen and (max-width: 1000px) {
               display: flex;
               flex-direction: column;
               padding: 38px 54px 0;
@@ -72,7 +72,7 @@
               position: sticky;
               top: 110px;
       
-              @media only screen and (max-width: 1290px) {
+              @media only screen and (max-width: 1000px) {
                 width: 100%;
                 margin-bottom: 46px;
                 position: relative;
@@ -121,6 +121,11 @@
                 padding: 0 25px;
                 margin: auto;
     
+
+                 
+                @media only screen and (max-width: 1270px) {
+                  padding: 0 10px;
+                }
                 .image-profile{
                     height: 200px;
                     display: flex;
@@ -146,16 +151,19 @@
                     font-size: 16px;
                 }
                 .subname-profile{
-                    text-align: center;
-                    font-family: "DM Sans";
-                    font-weight: 700;
-                    color: #3880ff;
-                    height: 26px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 16px;
-                    margin-bottom: 19px;
+                  text-align: center;
+                  font-family: DM Sans;
+                  font-weight: 700;
+                  color: #3880ff;
+                  height: 26px;
+                  display: block;
+                  justify-content: center;
+                  align-items: center;
+                  font-size: 16px;
+                  margin-bottom: 19px;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  overflow: hidden;
                 }
                 .description-profile{
                     font-size: 15px;
@@ -235,6 +243,11 @@
                         border-radius: 8px;
                         cursor: pointer;
                         font-size: 15px;
+
+                        @media only screen and (max-width: 1270px) {
+                          font-size: 13px;
+                        }
+                        
                         &.chat{
                             background: #3575E2;
                             color: #fff;
@@ -248,7 +261,7 @@
               width: 70%;
               height: 100%;
               
-              @media only screen and (max-width: 1290px) {
+              @media only screen and (max-width: 1000px) {
                 width: 100%;
                     padding: 0px 14px;
               }
@@ -410,7 +423,7 @@
                     a{
                       text-decoration: none;
                     }
-                    // @media only screen and (max-width: 1290px) {
+                    // @media only screen and (max-width: 1000px) {
                     //   width: 239px;
                     // }
       
@@ -428,7 +441,7 @@
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        @media only screen and (max-width: 1290px) {
+                        @media only screen and (max-width: 1000px) {
                           height: 38px;
                         }
                       
