@@ -158,4 +158,30 @@ export class KeywordService {
       return this.http.delete(`admin/deleteLinkCitys/${id}`);
     }
   }
+
+
+
+
+
+
+
+  // Enlaces de footer
+  public getLinkFooterKeywords() {
+    return this.http.get('getLinks');
+  }
+  
+  public addLinkFooterKeyword(value: {title: string, link: string}) {
+    return this.http.post('createLinks', value);
+  }
+
+  public updateLinkFooterKeyword(value: {footer: number, title: string, link: string}) {
+    return this.http.post('updateLinks', value);
+  }
+
+  public removeLinkFooterKeyword(id: number) {
+    if (id) {
+      return this.http.delete(`deleteLinks/${id}`);
+    }
+  }
+
 }
