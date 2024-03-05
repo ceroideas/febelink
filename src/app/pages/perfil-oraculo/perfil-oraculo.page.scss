@@ -251,6 +251,11 @@
                         &.chat{
                             background: #3575E2;
                             color: #fff;
+
+                            a{
+                              text-decoration: none;
+                              color: #fff
+                            }
                         };
                     }
                 
