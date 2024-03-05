@@ -79,6 +79,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   metaFilterLink = [];
   cities= [];
+  footerLinks= [ ];
   constructor(
     private api: ApiService,
     public platform: Platform,
@@ -200,6 +201,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
       this.sectors = response.subsector;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
       this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
+      this.footerLinks =  this.footerLinks;
 
       this.locations = response.locations;
       this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
@@ -216,6 +218,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
       this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
     }
 
+
+
+  
 
 
   }
@@ -239,7 +244,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
     this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
 
-
+    sessionStorage.setItem('linksfooter', response.links);
     this.locations = response.locations;
 
     this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));

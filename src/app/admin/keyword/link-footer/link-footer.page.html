@@ -83,12 +83,12 @@
   <div class="containerKeyWord">
    
     <div class="item-select"   >
-      <label>Titulo de pagina: *</label>
-      <input type="text" [(ngModel)]="keyLinkFooter.page_title" #newKeywordPageLink>
+      <label>Titulo : *</label>
+      <input type="text" [(ngModel)]="keyLinkFooter.title" #newKeywordPageLink>
     </div>
     
     <div class="item-select"  >
-      <label>Keyword: *</label>
+      <label>Enlace: *</label>
       <input type="text" [(ngModel)]="keyLinkFooter.link" #newKeywordLink>
     </div>
   
@@ -99,10 +99,10 @@
         newKeywordPageLink.value, 
        newKeywordLink.value
       ); ">Añadir</ion-button>
-      <!-- <ion-button color="primary" *ngIf="keyLinkFooter.id !== ''" (click)="edit(
+      <ion-button color="primary" *ngIf="keyLinkFooter.id !== ''" (click)="edit(
         newKeywordPageLink.value, 
-        newKeywordLink.value,
-      ); ">Modificar</ion-button> -->
+        newKeywordLink.value
+      ); ">Modificar</ion-button>
 
     </div>
   </div>

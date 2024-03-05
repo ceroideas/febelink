@@ -51,25 +51,29 @@ ion-router-link {
   border-bottom: 1px solid #ddd;
 }
 .link-footer{
-  
   box-sizing: content-box;
   margin: 0 auto;
   max-width: 65.5rem;
   padding: 3rem 0.75rem;
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(30%,1fr));
-  gap: 20px;
+  gap: 10px;
   padding: 20px;
+  display: flex;
+  /* justify-content: center; */
+  flex-wrap: wrap;
 
   div{
-    padding: 20px;
+    padding: 12px;
     text-align: center;
-    width: 100%;
+    width: 31.3%;
+    float: left;
 
     a{
       color: #0d33a4;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
     }
   }
 }

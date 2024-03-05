@@ -1,7 +1,7 @@
 <ion-footer id="footer-desktop" class="ion-no-border ion-text-center desktop">
- <section class="sectionLink">
+ <section class="sectionLink" *ngIf="footerLinks.length > 0">
   <div class="link-footer">
-    <div><a href="">ssss</a></div>
+    <div *ngFor="let link of footerLinks"><a href="{{link.link}}">{{link.title}}</a></div>
   </div>
  </section>
  
