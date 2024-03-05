@@ -22,6 +22,7 @@ export class FooterComponent {
     await TermsModal.present();
   }
 
+  
   async openLegalDisclaimer() {
     const TermsModal = await this.modalCtrl.create({
       component: LegalDisclaimerPage,

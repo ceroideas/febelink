@@ -44,6 +44,35 @@ ion-router-link {
   color: #6B7280;
 }
 
+
+.sectionLink{
+  padding-bottom: 2rem;
+  border-top: 2px solid #deeaff;
+  border-bottom: 1px solid #ddd;
+}
+.link-footer{
+  
+  box-sizing: content-box;
+  margin: 0 auto;
+  max-width: 65.5rem;
+  padding: 3rem 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(30%,1fr));
+  gap: 20px;
+  padding: 20px;
+
+  div{
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+
+    a{
+      color: #0d33a4;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}
 #footer-desktop {
   border-top: 1px solid #ebebeb;
   background-color: white;

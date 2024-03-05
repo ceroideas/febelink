@@ -171,16 +171,16 @@ export class KeywordService {
   }
   
   public addLinkFooterKeyword(value: {title: string, link: string}) {
-    return this.http.post('createLinks', value);
+    return this.http.post('admin/createLinks', value);
   }
 
   public updateLinkFooterKeyword(value: {footer: number, title: string, link: string}) {
-    return this.http.post('updateLinks', value);
+    return this.http.post('admin/updateLinks', value);
   }
 
   public removeLinkFooterKeyword(id: number) {
     if (id) {
-      return this.http.delete(`deleteLinks/${id}`);
+      return this.http.delete(`admin/deleteLinks/${id}`);
     }
   }
 
