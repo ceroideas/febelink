@@ -18,6 +18,10 @@ const routes: Routes = [
     component: Tab1Page
   },
   {
+    path: 'home',
+    component: Tab1Page
+  },
+  {
     path: 'listado',
     component: SearchPage
   },

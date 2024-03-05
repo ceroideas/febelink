@@ -295,7 +295,7 @@ ion-thumbnail {
               @media (max-width: 700px) {
                 width: 100px !important;
                 height: auto;
-                left: 27px !important;
+                left: 3px!important;
                 object-fit: contain;
               }
 
@@ -388,6 +388,24 @@ ion-thumbnail {
                 background: #104CBA;
                 border: navajowhite;
                 height: 38px;
+                @media (max-width: 700px) {
+                  border: 1px solid white;
+                  border-radius: 10px;
+                  padding: 0 8px!important;
+                  gap: 11px;
+                  color: #fff;
+                  background: #104CBA;
+                  border: navajowhite;
+                  height: 45px;
+                  width: 105px;
+                  font-size: 13px;
+                  text-align: center;
+
+                  &.sinlogged{
+                    margin-right: -25px;
+                  }
+                }
+               
               }
             
               &.logged{

@@ -196,24 +196,23 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
     if ( !!seoData ) {
       const response = JSON.parse(seoData);
-      this.services = response.sector.sort((a, b) => 0.5 - Math.random());
+      this.services = response.sector;
       this.sectors = response.subsector;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-      this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
+      this.sectors.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       this.locations = response.locations;
-      this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+      this.locationLinks = response.locations
       this.locationFilterLinkFull = response.linklocations;
 
       this.fetchData();
     } else {
       await this.fetchData();
-      this.services = this.services.sort((a, b) => 0.5 - Math.random());
+      this.services = this.services;
 
-      
       this.sectors = this.sectors;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-      this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
+      this.sectors.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
 
 
@@ -233,16 +232,15 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   async fetchData() {
     const {response} = await this.keywordService.getData();
-    this.services = response.sector.sort((a, b) => 0.5 - Math.random());
+    this.services = response.sector;
 
     this.sectors = response.subsector;
     this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-    this.sectors =  this.sectors.sort((a, b) => 0.5 - Math.random());
-
+    this.sectors.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
     this.locations = response.locations;
 
-    this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+    this.locationLinks = response.locations
     this.locationFilterLinkFull = response.linklocations;
 
     sessionStorage.setItem('seoData', JSON.stringify(response));

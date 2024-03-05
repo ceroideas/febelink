@@ -30,33 +30,43 @@
 
 
       <div class="capsule-price">
-        <div class="price">
-          <div class="number-price"><ion-label
-            >{{detalle?.productUnitPrice * productAmount}}
-              €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
-            ></div>
-          <div class="capsule-quantity">
-            <div>Cantidad </div>
-            <div class="line"> </div>
-            <div class="result">
-              <ion-item class="item_cantidad_border">
-                <ion-select [(ngModel)]="productAmount" multiple="false">
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div class="icon"><i class="fa fa-chevron-down"></i></div>
-
-           
+        <div >
+          <div class="price">
+            <div class="number-price"><ion-label
+              >{{detalle?.productUnitPrice * productAmount}}
+                €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+              ></div>
+              <div class="capsuleline">
+                <div class="capsule-quantity">
+                  <div class="namequantity">Cantidad </div>
+                  <div class="line"> </div>
+                  <div class="result">
+                    <ion-item class="item_cantidad_border">
+                      <ion-select [(ngModel)]="productAmount" multiple="false">
+                        <ion-select-option [value]="1">1</ion-select-option>
+                        <ion-select-option [value]="2">2</ion-select-option>
+                        <ion-select-option [value]="3">3</ion-select-option>
+                        <ion-select-option [value]="4">4</ion-select-option>
+                        <ion-select-option [value]="5">5</ion-select-option>
+                        <ion-select-option [value]="6">6</ion-select-option>
+                        <ion-select-option [value]="7">7</ion-select-option>
+                        <ion-select-option [value]="8">8</ion-select-option>
+                        <ion-select-option [value]="9">9</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </div>
+                  <div class="icon"><i class="fa fa-chevron-down"></i></div>
+                
+                </div>
+                <div
+            class="flau"
+            >
+            Pagar con FLAU
           </div>
+              </div>
+            
+        </div>
+        
         </div>
         <ion-row class="guarantee" (click)="irA('/use-conditions')">
           <ion-img
@@ -87,6 +97,7 @@
           </div>
            
         </div>
+      
       </div>
     </div>
     <div class="containter-right">
@@ -114,7 +125,7 @@
             </div>
             <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)" class="button-perfil">Ver Perfil</div>
           </div>
-          <div class="buttons-avatar">
+          <div class="buttons-avatar buttondesktop">
             <div
               class="chat-button buttondesktop"
               (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
@@ -122,12 +133,50 @@
               Iniciar Chat
             </div>
             <div
+            class="chat-button buttondesktop"
+          
+            >
+            <a title="Contacto telefónico" 
+              aria-label="Chat on WhatsApp" 
+              href="https://wa.me/{{user?.phone}}" 
+              class="badge">
+              Whatsapp
+          </a>
+            
+          </div>
+            <div
               class="follow-button buttondesktop"
               >
              Seguir
             </div>
           </div>
         </div>
+        <div class="user-detail">{{user?.description}}</div>
+        <div class="buttons-mobileavatar buttonmobile">
+          <div
+            class="chat-button buttonmobile"
+            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            >
+            Iniciar Chat
+          </div>
+          <div
+          class="chat-button buttonmobile"
+          (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+          >
+          <a title="Contacto telefónico" 
+            aria-label="Chat on WhatsApp" 
+            href="https://wa.me/{{user?.phone}}" 
+            class="badge">
+            Whatsapp
+          </a>
+        </div>
+          <div
+            class="follow-button buttonmobile"
+            >
+           Seguir
+          </div>
+        </div>
+      
   
         <!--TITLE SECTION-->
         <div class="section-title">
@@ -173,6 +222,19 @@
           <ion-label [innerHtml]="detalle?.description"></ion-label>
         </div>
   
+         <!--To whom-->
+         <div class="section-towhom" *ngIf="!!detalle?.whom">
+          <ion-row class="towhom-title">
+            <ion-label>
+              <!-- <h1>{{detalle?.towhom}}</h1> -->
+              <h1>A quien va dirigido</h1>
+            </ion-label>
+          </ion-row>
+          <ion-row class="towhom-description">
+            <ion-label [innerHtml]="detalle?.whom"></ion-label>
+          </ion-row>
+        </div>
+
         <!--OTHERS VIEW-->
         <div class="section-others-view" *ngIf="othersView.length  > 0">
           <ion-row class="others-view-title">
@@ -233,19 +295,6 @@
            
           
           </div>
-        </div>
-  
-        <!--To whom-->
-        <div class="section-towhom" *ngIf="!!detalle?.whom">
-          <ion-row class="towhom-title">
-            <ion-label>
-              <!-- <h1>{{detalle?.towhom}}</h1> -->
-              <h1>A quien va dirigido</h1>
-            </ion-label>
-          </ion-row>
-          <ion-row class="towhom-description">
-            <ion-label [innerHtml]="detalle?.whom"></ion-label>
-          </ion-row>
         </div>
   
         <!--MORE WORK THIS PROFESIONAL-->
@@ -535,7 +584,11 @@
         <span *ngSwitchCase="4">Comprar ahora</span>
         <span *ngSwitchDefault>Más Información</span>
       </div>
-
+      <div
+      class="flau"
+      >
+      Pagar con FLAU
+    </div>
       
     </div>
   </div>

@@ -128,6 +128,19 @@
 .top-create-post-svg {
     cursor:pointer;width:20px;position:relative;top:3px;
 }
+.layer-mobile{
+    background: #F9FAFB;
+}
+.top-create-post-right-c {
+    display: flex;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    background: #F9FAFB;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
 .top-create-post-right-b {
     display:table-cell;vertical-align:middle;text-align:right;
 }
