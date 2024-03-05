@@ -199,7 +199,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
       this.services = response.sector;
       this.sectors = response.subsector;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-      this.sectors =   this.sectors
+      this.sectors.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       this.locations = response.locations;
       this.locationLinks = response.locations
@@ -212,7 +212,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
       this.sectors = this.sectors;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-      this.sectors =   this.sectors
+      this.sectors.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
 
 
@@ -236,8 +236,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
     this.sectors = response.subsector;
     this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-    this.sectors =  this.sectors
-
+    this.sectors.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
     this.locations = response.locations;
 
