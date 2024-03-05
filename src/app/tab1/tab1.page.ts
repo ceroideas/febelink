@@ -199,10 +199,10 @@ export class Tab1Page implements OnInit, AfterViewInit {
       this.services = response.sector;
       this.sectors = response.subsector;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-      this.sectors =   this.sectors.sort((a,b) => a.title.localeCompare(b.title));;
+      this.sectors =   this.sectors
 
       this.locations = response.locations;
-      this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+      this.locationLinks = response.locations
       this.locationFilterLinkFull = response.linklocations;
 
       this.fetchData();
@@ -210,10 +210,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
       await this.fetchData();
       this.services = this.services;
 
-      
       this.sectors = this.sectors;
       this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-      this.sectors =   this.sectors.sort((a,b) => a.title.localeCompare(b.title));;
+      this.sectors =   this.sectors
     }
 
 
@@ -237,12 +236,12 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
     this.sectors = response.subsector;
     this.sectors = this.sectors.filter(_se => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
-    this.sectors =  this.sectors.sort((a,b) => a.title.localeCompare(b.title));;
+    this.sectors =  this.sectors
 
 
     this.locations = response.locations;
 
-    this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+    this.locationLinks = response.locations
     this.locationFilterLinkFull = response.linklocations;
 
     sessionStorage.setItem('seoData', JSON.stringify(response));
