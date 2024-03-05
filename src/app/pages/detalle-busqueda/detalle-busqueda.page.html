@@ -32,39 +32,41 @@
       <div class="capsule-price">
         <div >
           <div class="price">
-          <div class="number-price"><ion-label
-            >{{detalle?.productUnitPrice * productAmount}}
-              €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
-            ></div>
-          <div class="capsule-quantity">
-            <div>Cantidad </div>
-            <div class="line"> </div>
-            <div class="result">
-              <ion-item class="item_cantidad_border">
-                <ion-select [(ngModel)]="productAmount" multiple="false">
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div class="icon"><i class="fa fa-chevron-down"></i></div>
-
-            
-           
-          </div>
-        </div>
-        <div
+            <div class="number-price"><ion-label
+              >{{detalle?.productUnitPrice * productAmount}}
+                €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+              ></div>
+              <div class="capsuleline">
+                <div class="capsule-quantity">
+                  <div class="namequantity">Cantidad </div>
+                  <div class="line"> </div>
+                  <div class="result">
+                    <ion-item class="item_cantidad_border">
+                      <ion-select [(ngModel)]="productAmount" multiple="false">
+                        <ion-select-option [value]="1">1</ion-select-option>
+                        <ion-select-option [value]="2">2</ion-select-option>
+                        <ion-select-option [value]="3">3</ion-select-option>
+                        <ion-select-option [value]="4">4</ion-select-option>
+                        <ion-select-option [value]="5">5</ion-select-option>
+                        <ion-select-option [value]="6">6</ion-select-option>
+                        <ion-select-option [value]="7">7</ion-select-option>
+                        <ion-select-option [value]="8">8</ion-select-option>
+                        <ion-select-option [value]="9">9</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </div>
+                  <div class="icon"><i class="fa fa-chevron-down"></i></div>
+                
+                </div>
+                <div
             class="flau"
             >
             Pagar con FLAU
           </div>
+              </div>
+            
+        </div>
+        
         </div>
         <ion-row class="guarantee" (click)="irA('/use-conditions')">
           <ion-img
@@ -132,7 +134,7 @@
             </div>
             <div
             class="chat-button buttondesktop"
-            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+          
             >
             <a title="Contacto telefónico" 
               aria-label="Chat on WhatsApp" 

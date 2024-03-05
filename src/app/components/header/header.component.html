@@ -75,7 +75,7 @@
       <div class="right mobile" 
         [ngClass]="{'detached': detached  , 'reduced': reduced}"
         >
-
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a   [ngClass]="{'sinlogged': currentUser }"class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
      
         <ion-buttons *ngIf="currentUser" buttons-start slot="start">
           <ion-menu-button class="avatarmenu">

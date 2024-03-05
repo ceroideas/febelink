@@ -188,7 +188,7 @@
       position: fixed;
       bottom: 0;
 
-      @media only screen and (max-width: 1000px) {
+      @media only screen and (max-width: 1030px) {
         display: flex;
       }
      
@@ -199,6 +199,7 @@
         justify-content: space-between;
         margin-bottom: 16px;
         align-items: flex-start;
+        flex-direction: column;
         .number-price{
           display: flex;
           justify-content: flex-start;
@@ -215,6 +216,23 @@
           display: flex;
           justify-content: space-around;
           align-items: center;
+
+
+          
+          @media only screen and (max-width: 1000px) {
+            width: 158px;
+
+            .namequantity{
+              font-size: 15px;
+            }
+            .number-price{
+              ion-label{
+                font-size: 15px;
+              }
+             
+            }
+          }
+         
 
           .line{
             height: 20px;
@@ -248,6 +266,8 @@
           color: #fff;
           font-weight: 700;
           cursor: pointer;
+
+         
         }
         .flau{
           width: 88%;
@@ -337,23 +357,6 @@
           }
         }
 
-        .flau{
-          
-          width: 159px;
-          height: 43px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border: 1px solid #cfcfcf;
-          border-radius: 12px;
-          color: #ffffff;
-          font-weight: 700;
-          cursor: pointer;
-          margin: 24px 0 0 auto;
-          background: #3575E2;
-          opacity: 0.4;
-
-        }
         .capsule-price{
           box-shadow: 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
           background-color: #fff;
@@ -369,12 +372,14 @@
             display:none
           }
           .price{
-            height: 34px;
+            height: 80px;
             display: flex;
             width: 100%;
             justify-content: space-between;
             margin-bottom: 16px;
             align-items: flex-start;
+            gap: 17px;
+            flex-direction: column;
             .number-price{
                 display: flex;
                 justify-content: center;
@@ -383,44 +388,53 @@
                 font-size: 25px;
                 color:#000;
             }
-            .capsule-quantity{
-              border: 0.95px solid #C1C1C1;
-              width: 196px;
-              padding: 0px,15.15px,0px,15.15px;
-              border-radius: 7.57px;
-              height: 43px;
+            .capsuleline{
               display: flex;
-              justify-content: space-around;
+              
+    justify-content: space-between;
+              width: 100%;
               align-items: center;
-              cursor: pointer;
-              .line{
-                height: 20px;
-                width: 1px;
-                background: #d1d1d1;
+              .capsule-quantity{
+                border: 0.95px solid #C1C1C1;
+                width: 196px;
+                padding: 0px,15.15px,0px,15.15px;
+                border-radius: 7.57px;
+                height: 43px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                cursor: pointer;
+                .line{
+                  height: 20px;
+                  width: 1px;
+                  background: #d1d1d1;
+                }
+                .icon{
+                  font-size: 12px;
+                }
+                .result{
+                  font-weight: bold;
+                  color:#000;
+                }
               }
-              .icon{
-                font-size: 12px;
-              }
-              .result{
-                font-weight: bold;
-                color:#000;
-              }
-            }
-          }
-          .guarantee {
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
-            flex-direction: row;
-            margin-bottom: 16px;
-            cursor: pointer;
-            justify-content: flex-start;
-            color:#000;
+
+                  .flau{
+                    
+                    width: 159px;
+                    height: 43px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid #cfcfcf;
+                    border-radius: 12px;
+                    color: #ffffff;
+                    font-weight: 700;
+                    cursor: pointer;
+                    background: #3575E2;
+                    opacity: 0.4;
+
+                  }
             
-          
-            ion-img {
-              width: 4em;
-              margin-right: 12px;
             }
           }
           .button-price{
@@ -455,6 +469,23 @@
               cursor: pointer;
             }
           }
+          .guarantee {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            margin-bottom: 16px;
+            cursor: pointer;
+            justify-content: flex-start;
+            color:#000;
+            
+          
+            ion-img {
+              width: 4em;
+              margin-right: 12px;
+            }
+          }
+        
         }
         .contain-fixed-photo{}
       }
@@ -540,6 +571,7 @@
                 color: #fff;
                 font-weight: bold;
                 cursor: pointer;
+                
 
                 a{
                   color: #fff;
@@ -579,6 +611,8 @@
           column-gap: 10px;
           width: 100%;
           margin-top: 35px;
+          padding-right: 10px;
+
           @media only screen and (max-width: 780px) {
             display: flex;
           }
@@ -593,6 +627,12 @@
             color: #fff;
             font-weight: bold;
             cursor: pointer;
+
+            @media  (max-width: 780px) {
+              font-size: 15px;
+              width: 104px;
+        
+            }
             a{
               color: #fff;
               text-decoration: none;
@@ -610,6 +650,12 @@
             color: #fff;
             font-weight: bold;
             cursor: pointer;
+
+            @media  (max-width: 780px) {
+              font-size: 15px;
+              width: 104px;
+        
+            }
             a{
               color: #fff;
               text-decoration: none;
@@ -627,7 +673,11 @@
             color: #3575E2;
             font-weight: bold;
             cursor: pointer;
-           
+            @media  (max-width: 780px) {
+              font-size: 15px;
+              width: 104px;
+        
+            }
           }
         }
         .section-title{
