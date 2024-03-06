@@ -11,7 +11,6 @@
        <div class="card">
         <div class="image-profile">
           <img *ngIf="user?.avatar !== undefined && user?.avatar !== null" src="{{user?.avatar}}"/>
-          <img *ngIf="user?.avatar === undefined || user?.avatar ==null" src="assets/imgs/bg1.jpg"/>
         </div>
         <div class="name-profile">
           {{user?.name}}
@@ -35,7 +34,16 @@
         </div>
         <div class="buttons-profile">
           <div class="item-button">Seguir</div>
-          <div class="item-button chat" (click)="createChat()">Iniciar Chat</div>
+          <div class="item-button chat" >
+            <a title="Contacto telefónico" 
+            *ngIf="user?.phoneNumber"
+            aria-label="Chat on WhatsApp" 
+            href="https://wa.me/{{user?.phoneNumber}}" 
+            class="badge">
+            Whatsapp
+            </a>
+            </div>
+          <div class="item-button chat" (click)="createChat()">Chat</div>
         </div>
         <div class="header-content-top-right">
           <div class="block-action-top">
@@ -59,12 +67,55 @@
         
         </div>
       </div>
+
+      <div class="valoraciones">
+        <div class="title-valoraciones">
+          Valoraciones
+        </div>
+        <div class="container-valoraciones">
+          <div class="item-valor  item-valor-1">
+            No tiene valoraciones aun
+          </div>
+        </div>
+      </div>
       </ng-container>
 
     </div>
     <div class="containter-right">
+      <!--SERVICIOS-->
+      <div class="section-more-work" *ngIf="moreWorks.length">
+        <ion-row class="more-work-title">
+          <ion-label><span class="title-oracle">Servicios de este profesional</span></ion-label>
+        </ion-row>
+
+        <div class="grid-more-work">
+          
+          <div class="item-more" 
+            
+            *ngFor="let more of moreWorks">
+            <a [href]="'/servicio/' + removeBlankSpace(more?.title) + '/detail/' + more?.productId">
+             
+              <div class="name-work">
+                <div>{{more.title}}</div>
+              </div>
+              <div class="texts-work">
+                <div class="image-work"><img src="{{more.images[0]}}"/></div>
+                <div class="description-work"> 
+                  <div class="description-more">
+                    <ion-label [innerHtml]="more.description"></ion-label>
+                  </div>
+                  <div class="more-view">
+                    Mostrar  <i class="fa fa-chevron-right"></i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        
+        </div>
+      </div>
       <!--ORACULO-->
-      <div class="section-perfil">
+      <div class="section-perfil"  [ngClass]="{'sinmargen': iAdvises.length === 0}" >
         <div class="oracle" *ngIf="iAdvises.length > 0">
           <ion-row class="oracle-title">
             <ion-label><span class="title-oracle">Publicaciones en Oráculo</span></ion-label>
@@ -82,32 +133,7 @@
           </div>
         </div>
 
-        <!--SERVICIOS-->
-        <div class="section-more-work" [ngClass]="{'sinmargen': iAdvises.length === 0}" *ngIf="moreWorks.length">
-          <ion-row class="more-work-title">
-            <ion-label><span class="title-oracle">Servicios de este profesional</span></ion-label>
-          </ion-row>
-  
-          <div class="grid-more-work">
-            
-            <div class="item-more" 
-              
-              *ngFor="let more of moreWorks">
-              <a [href]="'/servicio/' + removeBlankSpace(more?.title) + '/detail/' + more?.productId">
-                <div class="name-work">
-                  <div>{{more.title}}</div>
-                </div>
-                <div class="description-more">
-                  <ion-label [innerHtml]="more.description"></ion-label>
-                </div>
-                <div class="more-view">
-                  Mostrar  <i class="fa fa-chevron-right"></i>
-                </div>
-              </a>
-            </div>
-         
-          </div>
-        </div>
+    
       </div>
 
        <!--SERVICIOS-->

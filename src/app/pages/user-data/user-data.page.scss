@@ -43,8 +43,8 @@ ion-header {
   }
 
   .avatarmenu {
-    margin-left: auto;
-    margin-right: auto;
+    width: 139px;
+    height: 139px;
   }
 
   .content-background {
@@ -174,8 +174,8 @@ ion-header {
 }
 
 .avatarmenu {
-  width: 80px;
-  height: 80px;
+  width: 139px;
+  height: 139px;
 
   ion-img {
     object-fit: scale-down;
@@ -303,6 +303,7 @@ ion-header {
 .flex_content {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .div-breadcrumbs-b {
@@ -326,4 +327,271 @@ ion-header {
 .breadcrumbs-next-b {
   width: 6px;
   margin: 0px 15px;
+}
+
+
+:host{
+  width: 100%;
+  position: relative;
+  display: block;
+  background: #fcfffe;
+  contain: unset;
+  height: 100%;
+  
+}
+.container-layer{
+  width: 100%;
+  height: -moz-fit-content;
+  height: 100%;
+  position: relative;
+  margin: auto;
+  position: absolute;
+  overflow: auto;
+}
+
+.layer-gradient{
+  height: 300px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  background:linear-gradient(to top,rgb(255,255,255),rgb(208,230,255));
+ 
+}
+.container-detail-profile{
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+  padding: 38px 27px;
+  max-width: 1485px;
+  margin: -165px auto 100px
+}
+.container {
+	background: #fff;
+	width: 100%;
+	padding: 1rem;
+  max-width: 1000px;
+    width: 100%;
+    /* margin: auto; */
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: #0000001a 0 12px 48px;
+    background: rgb(255,255,255);
+    margin-bottom: 50px;
+}
+
+.title {
+	font-size: 24px;
+	line-height: 28px;
+	font-weight: bold;
+	color: #374151;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #d7dbdf;
+}
+
+.form-group {
+	margin-top: 4px;
+	display: flex;
+	flex-direction: column;
+}
+
+.grid2{
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+.textarea-group label,
+.form-group label {
+  color: #374151;
+  font-size: 14px;
+  line-height: 19px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.form-group [type],
+.textarea-group textarea {
+	border: 1px solid #d2d6db;
+	border-radius: 6px;
+	padding: 15px;
+}
+.form-group [type]:hover,
+.textarea-group textarea:hover {
+	border-color: #a8afb9;
+}
+.form-group [type]:focus,
+.textarea-group textarea:focus {
+	border-color: #5850eb;
+}
+
+.textarea-group {
+	margin-top: 24px;
+}
+
+.textarea-group textarea {
+	resize: none;
+	width: 100%;
+	margin-top: 10px;
+	height: calc(100% - 32px);
+}
+
+.checkbox-group {
+	margin-top: 25px;
+}
+
+.checkbox-group label {
+	display: flex;
+}
+
+.checkbox-group label::before {
+	content: "\0020";
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	border: 1px solid #d2d6db;
+	border-radius: 6px;
+	transition: background 0.1s ease-in;
+}
+
+.checkbox-group input[type="checkbox"] {
+	/* ici on ne doit pas mettre de display: none afin de pouvoir "tabber" */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+.checkbox-group input[type="checkbox"]:focus + label:before {
+	border-color: #5850eb;
+}
+.checkbox-group input[type="checkbox"]:checked + label:before {
+	color: #fff;
+	content: "\2713";
+	background: #5850eb;
+	border-color: #5850eb;
+}
+
+.button2 {
+	font-weight: bold;
+	line-height: 19px;
+	background: #5850eb;
+	border: none;
+	padding: 15px 25px;
+	border-radius: 6px;
+	color: white;
+	width: 100%;
+  margin-top: 33px;
+}
+.image-profile{
+  height: 100%;
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+    img{
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 100000%;
+    }
+} 
+@media screen and (min-width: 1024px) {
+	
+	.checkboxes {
+		display: flex;
+	}
+	.checkboxes > :not(:first-child) {
+		margin-left: 1rem;
+	}
+
+	.grid {
+    display: grid;
+    grid-gap: 7px;
+    grid-template-columns: 1fr 1fr 1fr;
+  
+	}
+
+	.email-group {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.phone-group {
+		grid-column: 2;
+		grid-row: 2;
+	}
+
+	.textarea-group {
+		grid-column: 3;
+		grid-row: span 2;
+		margin-right: 2rem;
+	}
+
+	.button-container {
+		text-align: right;
+	}
+
+	.button2 {
+		/* bon, bon, bon
+		c'est pas tout mais j'ai faim moi ^^
+		*/
+		width: auto;
+	}
+
+
+  .card-container{
+    display: flex;
+    margin-top: 29px;
+  }
+  .card{
+    width: 25%;
+    height: 100%;
+
+   
+    .image-profile{
+      height: 100%;
+      padding-top: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+        img{
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 100000%;
+        }
+    } 
+  }
+  .datas{
+    width: 75%;
+    .data1{
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .form-data{
+        width: 100% !important;
+        margin: 2px;
+      }
+    }
+  }
+}
+
+
+input{
+  background: #fff;
+  color: #000
+}textarea{
+  background: #fff;
+  color: #000
 }

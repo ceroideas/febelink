@@ -93,13 +93,13 @@
         [ngClass]="{ 'max-content-text-b': showSeePost }"
       ></div>
 
-      <!-- <ion-row
-      class="marg-t10"
+      <div
+      class=""
       *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
     >
       <a (click)="watch()">
         <ion-img
-          class="h-social-media marg-se media"
+          class="h-social-media media"
           [src]="iAdvise.media_url"
           [alt]="iAdvise.media_url"
           [title]="iAdvise.media_url"
@@ -129,7 +129,7 @@
           [useHtmlLinkDefaultClickEvent]="true"
         ></ngx-link-preview>
       </a>
-    </ion-row> -->
+    </div>
 
     </div>
    

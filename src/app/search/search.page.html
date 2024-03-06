@@ -8,7 +8,7 @@
         <span *ngIf="locationSelected == undefined || locationSelected == null">España</span> 
       </h1>
       <h1 class="title-search" *ngIf="h1Title">{{ h1Title }}</h1>
-      <p class="subtitle-search">Miles de ofertas de trabajo en todos los sectores  te están esperando.</p>
+      <p class="subtitle-search">Encuentra los mejores profesionales cerca de ti</p>
     </div>
     <div class="search-capsule">
       <div class="capsule">
@@ -27,17 +27,16 @@
     </div>
   </div>
 
-  <div class="container-selects" *ngIf="locationFilterLink?.length !== 0">
+  <!-- <div class="container-selects" *ngIf="locationFilterLink?.length !== 0"> -->
 
-      <div class="content-select">
+      <!-- <div class="content-select">
         <div class="subtitle-select">Busca por Profesionales</div>
         <select>
           <option>--</option>
           <option *ngFor="let profession of locationFilterLink">{{profession.title}}</option>
         </select>
         <i></i>
-      </div>
-
+      </div> -->
 
       <!-- <div class="content-select">
         <div class="subtitle-search">Profesionales</div>
@@ -47,8 +46,7 @@
         <i></i>
       </div> -->
 
-      
-    </div>
+  <!-- </div> -->
 
   <div class="container-search">
     <div class="left-search" *ngIf="locationFilterLink?.length !== 0">
@@ -132,6 +130,15 @@
             </div>
           </div>
         </div>
+        <div
+            *ngIf="searchResponse?.otherResults?.length < 100"
+            (click)="searchMoreResults()"
+            class="more-other-results-button"
+          >
+            Ver más resultados
+          </div>
+
+          <p>{{metaDescription}}</p>
       </div>
    
     </div>

@@ -1,27 +1,6 @@
-<ion-content class="content-background">
+<!-- <ion-content class="content-background">
   <ion-grid class="ion-no-padding" size="12">
-    <!--<ion-row size="12" class="row_grid">
-      &lt;!&ndash; Breadcrumb mobile &ndash;&gt;
-      <ion-breadcrumbs class="mobile" mode="ios">
-        <ion-breadcrumb href="#">
-          <ion-img class="mobile" src="assets/icon/svg/icono-casa.svg"></ion-img>
-          <ion-label class="label_breadcrumb_01">Inicio</ion-label>
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#">
-          <ion-label class="label_breadcrumb_02">Datos de usuario</ion-label>
-        </ion-breadcrumb>
-      </ion-breadcrumbs>
-      &lt;!&ndash; Breadcrumb desktop &ndash;&gt;
-      <div class="desktop">
-        <div class="div-breadcrumbs-b">
-          <div class="breadcrumbs-text-b">
-            <span class="breadcrumbs-index-b">Inicio</span>
-            <img class="breadcrumbs-next-b" src="assets/icon/svg/chevron-right.svg"/>
-            <span>Datos de usuario</span>
-          </div>
-        </div>
-      </div>
-    </ion-row>-->
+
     <ion-row class="row_content" size="12">
       <ion-col class="mobile">
         <ion-label class="ion-padding text_label_content">Datos de usuario</ion-label>
@@ -188,4 +167,156 @@
       </ion-row>
     </ion-grid>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
+<div class="container-layer">
+  <div   class="layer-gradient"><div    class="eclipse"></div></div>
+<div class="container-detail-profile">
+  <div class="container"  *ngIf="form">
+
+    <h1 class="title">Datos Usuario	
+    </h1>
+
+    <div class="card-container"  [formGroup]="form">
+      <div class="card">
+        <div class="image-profile">
+          <ion-avatar class="avatarmenu" alt="Mi avatar">
+            <ion-img [src]="iFile?.src || avatarUrl || 'https://api.febelink.com/storage/users/default.png'"
+                     (click)="filePicker.clicks()"
+                     (error)="onImgError($event)">
+            </ion-img>
+          </ion-avatar>
+          <app-file-picker hidden #filePicker [iFile]="iFile" [pickType]="filePickType.IMAGE"
+                           (OnFile)="fileSelected($event)"></app-file-picker>
+
+          <ion-row class="flex_content margin_05" size="12" (click)="filePicker.clicks()">
+          <ion-col size="10" class="ion-text-center">
+            <ion-label class="text_label_blue">Cambiar foto de perfil</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-no-margin flex_content" size="12" (click)="filePicker.clicks()">
+          <ion-col size="10" class="ion-text-center">
+            <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row size="12">
+          <div class="servicios-sections-title-b" style="width: 100%" [routerLink]="'/profile/public'">
+            <ion-button expand class="botoneditar">Perfil público
+            </ion-button>
+          </div>
+        </ion-row>
+        </div>
+      </div>
+      <div class="datas">
+        <div class="data1">
+          <div class="form-group a form-data">
+            <label for="username">Usuario
+            </label>
+            <input id="username" formControlName="username" type="text">
+          </div>
+    
+        </div>
+        <div class="data1">
+          <div class="textarea-group form-data">
+            <label for="description">Sobre mí</label>
+            <textarea id="description" formControlName="description"></textarea>
+          </div> 
+        </div>
+        <div class="grid grid2">
+    
+          <div class="form-group email-group">
+            <label for="password">Contraseña
+            </label>
+            <input id="password"  formControlName="password"  type="text">
+            <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
+          </div>
+    
+          <div class="form-group phone-group">
+            <label for="repeatPass">Repetir Contraseña  </label>
+            <input id="repeatPass" formControlName="repeatPass" type="text">
+            <span class="error" *ngIf="!passIgual">* Las contraseñas no son iguales</span>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+    
+    <div class="button-container">
+      <button class="button2"  (click)="onClickSubmit()">Guardar Cambios</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <h1 class="title">Datos personales	
+    </h1>
+
+    <div class="card-container" 
+    [formGroup]="form2">
+      <div class="grid">
+         <div class="form-group a">
+          <label for="name">Nombre y Apellidos
+          </label>
+          <input id="name" formControlName="name" type="text">
+        </div>
+  
+       <div class="form-group b">
+          <label for="dni">DNI/NIF/NIE/CIF
+          </label>
+          <input id="dni" formControlName="dni" type="text">
+        </div>
+  
+        <div class="form-group b">
+          <label for="telefono">Teléfono
+          </label>
+          <input id="telefono" formControlName="telefono"  type="text">
+        </div>
+  
+        <div class="form-group phone-group">
+          <label for="direccion">Dirección  </label>
+          <input id="direccion" formControlName="direccion"type="text">
+        </div>
+  
+        
+  
+        <div class="form-group">
+          <label for="num_cuenta">Número de cuenta</label>
+          <input id="num_cuenta" formControlName="num_cuenta" placeholder="*************3033" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="empresa">Nombre de Empresa</label>
+          <input id="empresa"  formControlName="empresa" type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="web">Web</label>
+          <input id="web"  formControlName="web" type="text">
+        </div>
+  
+       <div class="form-group item-credit-card">
+          <label for="tarjeta_credito">tarjeta_credito</label>
+          <input id="tarjeta_credito"  formControlName="tarjeta_credito" type="text">
+        </div>
+  
+  
+        <div class="form-group">
+          <label for="zip">Idioma</label>
+          <ion-select formControlName="idioma" value="Español" multiple="false" placeholder="Idioma">
+            <ion-select-option value="es">Español</ion-select-option>
+            <ion-select-option value="en">Inglés</ion-select-option>
+          </ion-select>
+        </div> 
+      </div>
+    </div>
+   
+
+    
+
+    <div class="button-container">
+      <button class="button2"  (click)="onClickSubmit2()">Guardar Cambios</button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+</div>
+

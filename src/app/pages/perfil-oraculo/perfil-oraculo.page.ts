@@ -84,9 +84,10 @@ export class PerfilOraculoPage implements OnInit {
   ngOnDestroy() {
   }
   ngOnInit() {
+    
     this.getFeed();
     this.getUserDetail();
-    this.getProductDetail()
+    
     this.getProductUser()
     this.ratings = [];
     this.bests = [];
@@ -105,6 +106,7 @@ export class PerfilOraculoPage implements OnInit {
         phoneNumber: response.phoneNumber,
         date: '12 April at 09.28 PM', // ToDo: Remove this hardcoded value
       };
+      this.getProductDetail()
     }
   }
 

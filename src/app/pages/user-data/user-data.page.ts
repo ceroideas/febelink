@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IUser} from 'src/app/models/user.model';
 import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, FormGroup} from '@angular/forms';
 import {UserDataService} from './Services/user-data.service';
 import {FilePickType, IFile} from '../../components/file-picker/models/file.model';
 import {ToastSvc} from '../../services/toast.service';
@@ -12,14 +12,33 @@ import {ToastSvc} from '../../services/toast.service';
   styleUrls: ['./user-data.page.scss'],
 })
 export class UserDataPage implements OnInit {
-  public username: string = null;
-  public password: string = null;
-  public repeatPass: string = null;
-  public description: string = null;
+  public username: string = "";
+  public password: string = "";
+  public repeatPass: string = "";
+  public description: string = "";
 
   form: UntypedFormGroup;
   public nameuser: string = '';
   public passIgual: boolean = true;
+
+
+
+
+
+
+
+  curUser: IUser;
+  form2: UntypedFormGroup;
+  public name: string = "";
+  public dni: string = "";
+  public empresa: string = "";
+  public direccion: string = "";
+  public telefono: string = "";
+  public web: string = "";
+  public idioma: string = "";
+  public tarjetaCredito: string = "";
+  public numCuenta: string = "";
+
 
   avatarUrl: string;
   iFile: IFile;
@@ -28,32 +47,120 @@ export class UserDataPage implements OnInit {
   constructor(
     public sessionSvc: UserSessionSvc,
     private formBuilder: UntypedFormBuilder,
+    private formBuilder2: UntypedFormBuilder,
     private userDataService: UserDataService,
     private toastSvc: ToastSvc
   ) {
   }
 
   ngOnInit() {
+
+    this.form = new FormGroup({
+      
+      username: new FormControl('', [Validators.nullValidator]),
+      repeatPass: new FormControl('', [Validators.nullValidator]),
+      password: new FormControl('', [Validators.nullValidator]),
+      description: new FormControl('', [Validators.nullValidator]),
+      
+    })
+    this.form2  = new FormGroup({
+      name: new FormControl("", [Validators.nullValidator]),
+      dni: new FormControl("", [Validators.nullValidator]),
+      empresa: new FormControl("", [Validators.nullValidator]),
+      direccion: new FormControl("", [Validators.nullValidator]),
+      telefono: new FormControl("", [Validators.nullValidator]),
+      web: new FormControl("", [Validators.nullValidator]),
+      idioma: new FormControl("", [Validators.nullValidator]),
+      tarjeta_credito: new FormControl("", [Validators.nullValidator]),
+      num_cuenta: new FormControl("", [Validators.nullValidator]),
+      
+    })
+
+    console.log(this.form)
+
     this.userDataService.getUserInfo().then(
       (data) => {
-        this.form = this.formBuilder.group({
-          username: data.response.username,
-          repeatPass: [''],
-          password: [''],
-          description: data.response.description,
-        });
+          // this.form = this.formBuilder.group({
+          //   username: data.response.username,
+          //   repeatPass: [''],
+          //   password: [''],
+          //   description: data.response.description,
+          // });
+
+
+        
         this.avatarUrl = data.response.avatarImageURL;
+        this.form.controls['username'].setValue(data?.response.username) 
+        this.form.controls['description'].setValue(data?.response.description) 
+
+        this.form2.controls['name'].setValue(data?.response.name) 
+        this.form2.controls['dni'].setValue(data?.response.dni) 
+        this.form2.controls['empresa'].setValue(data?.response.business) 
+        this.form2.controls['direccion'].setValue(data?.response.address) 
+        this.form2.controls['telefono'].setValue(data?.response.phoneNumber) 
+        this.form2.controls['web'].setValue(data?.response.web) 
+        this.form2.controls['idioma'].setValue(data?.response.lang) 
+        this.form2.controls['tarjeta_credito'].setValue(data?.response.creditCard) 
+        this.form2.controls['num_cuenta'].setValue(data?.response.bankAccountNumber) 
+       
       });
+
+      
+      this.getUser();
+
+      
+      
+  }
+  submitForm() {
+  } 
+  async getUser() {
+    this.curUser = await this.sessionSvc.get();
   }
 
+
+  async onClickSubmit2() {
+
+    this.name = this.form2?.get('name')?.value;
+    this.dni = this.form2?.get('dni')?.value;
+    this.empresa = this.form2?.get('empresa')?.value;
+    this.direccion = this.form2?.get('direccion')?.value;
+    this.telefono = this.form2?.get('telefono')?.value;
+    this.web = this.form2?.get('web')?.value;
+    this.idioma = this.form2?.get('idioma')?.value;
+    this.tarjetaCredito = this.form2?.get('tarjeta_credito')?.value;
+    this.numCuenta = this.form2?.get('num_cuenta')?.value;
+
+    if (this.form2?.valid) {
+      const datos = {
+        name: this.name,
+        ID: this.dni,
+        business: this.empresa,
+        address: this.direccion,
+        phoneNumber: this.telefono,
+        web: this.web,
+        lang: this.idioma,
+        creditCard: this.tarjetaCredito,
+        bankAccountNumber: this.numCuenta,
+      };
+
+
+      this.userDataService.updatePersonalDataUser(datos)
+        .then(res => {
+          //console.log('Datos guardados con éxito : '+res);
+        })
+        .catch(err => {
+          //console.log('Error al enviar los datos'+err);
+        });
+    }
+  }
   async onClickSubmit() {
 
-    this.username = this.form.get('username').value;
-    this.password = this.form.get('password').value;
-    this.repeatPass = this.form.get('repeatPass').value;
-    this.description = this.form.get('description').value;
+    this.username = this.form?.get('username')?.value;
+    this.password = this.form?.get('password')?.value;
+    this.repeatPass = this.form?.get('repeatPass')?.value;
+    this.description = this.form?.get('description')?.value;
 
-    if (this.form.valid) {
+    if (this.form?.valid) {
 
       if (this.password == this.repeatPass) {
         this.passIgual = true;

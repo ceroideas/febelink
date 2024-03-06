@@ -74,7 +74,7 @@
         class="menu item_menu_margen"
         color="item"
         button
-        (click)="goTo('profile/account')"
+        (click)="goTo('profile')"
         lines="none"
       >
         <div tabindex="0"></div>
@@ -355,7 +355,7 @@
     <ion-tabs id="footer-nav-bar" [ngClass]="{'safe-header': !onHome}">
       <ion-tab-bar slot="bottom" color="menuf">
         <!-- Inicio -->
-        <ion-tab-button tab="listado">
+        <ion-tab-button  tab="/">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>{{ 'menu.tabs.inicio' | translate }}</ion-label>
         </ion-tab-button>
