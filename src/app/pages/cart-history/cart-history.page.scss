@@ -38,10 +38,28 @@
   line-height: 150%;
   color: #111928;
 }
+.grid-cart{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns with equal width */
+  gap: 20px; /* Adjust as needed */
 
+  /* For screens larger than 1024px */
+  @media (max-width: 1224px) {
+    grid-template-columns: repeat(2, 1fr); /* Three columns */
+  }
+  /* For screens larger than 768px */
+  
+  /* For screens larger than 768px */
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr); /* Two columns */
+  }
+ 
+
+}
 .cart-block {
   width: 100%;
   padding-bottom: 16px;
+ 
 }
 
 .cart-date {
@@ -133,6 +151,22 @@
 .content-wrapper-b {
   width: 100%;
   padding: 25px 60px;
+  padding-top: 0;
+
+
+  /* For screens larger than 1024px */
+  @media (max-width: 1224px) {
+    padding: 25px 60px;
+  }
+  /* For screens larger than 768px */
+  @media (max-width: 768px) {
+      padding: 0 0px 25px;
+  }
+  /* For screens larger than 768px */
+  @media (max-width: 568px) {
+    padding: 0 0px 25px;
+  }
+
 }
 
 .breadcrumbs-text-b {
@@ -163,28 +197,53 @@
 }
 
 .cart-block-b {
-  width: 38%;
+  width: 100%;
   box-shadow: 0 2px 13px #00000012;
   border-radius: 10px;
   padding: 17px;
-  margin-bottom: 21px;
+  margin-bottom: 5px;
+  background-color: #fff;
 }
 
 .cart-date-b {
   width: 100%;
   padding-bottom: 3px;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 13px;
   line-height: 150%;
   color: #111928;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
+.capsule{
+  
+  width: 100px;
+  /* background: #abf3a4; */
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+ 
+  font-size: 14px;
+  font-weight: bold;
 
+  div{
+    color: #32c723;
+    &.course{
+      color: #b5891d;
+    }
+    &.canceled{
+      color:red
+    }
+  }
+
+}
 
 .item-content-carrito {
   display: table;
   width: 100%;
-  height: 123px;
-  margin-bottom: 32px;
+  height: 83px;
 }
 
 .item-cell-img {
@@ -273,22 +332,31 @@
 
 .item-price {
   font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
-  color: #111928;
+    font-size: 20px;
+    line-height: 150%;
+    color: #111928;
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .cancel-button {
   cursor: pointer;
-  width: 100px;
-  text-align: center;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 150%;
-  color: #1B80F8;
-  border: 1px solid #1B80F8
+    width: 85px;
+    text-align: center;
+    padding: 5px 7px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #1b80f8;
+    border: 1px solid #1B80F8;
+
+
+  &.finish{
+    color: #fff !important;
+    background:  #1B80F8
+  }
 }
 
 .content-background {
@@ -602,12 +670,13 @@
 
 .div-terminar-servicio {
   display: block;
-  width: 100%;
-  margin-top: 32px;
-  margin-bottom: 16px;
-  padding: 16px;
-  background: #D1D5DB;
-  border-radius: 8px;
+    width: 100%;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: #e5efff;
+    border-radius: 8px;
+    border: 1px solid #a3c4ff;
 }
 
 .div-terminar-servicio-title {
@@ -1744,18 +1813,6 @@
   margin-bottom: 8px;
 }
 
-.cancel-button {
-  cursor: pointer;
-  width: 100px;
-  text-align: center;
-  padding: 8px 12px;
-  background: red;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 150%;
-  color: #fff;
-}
 
 
 .row{
@@ -1815,8 +1872,16 @@ div.see-more a {color:#fff}
 
 .buttons-list{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
+  margin-top: 27px;
+}
+.listbutton{
+
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+
 }
 .container-general{
   width: 100%;
@@ -1854,9 +1919,24 @@ div.see-more a {color:#fff}
       position: relative;
       display: flex;
       padding: 38px 27px;
-      max-width: 1485px;
+      max-width: 1627px;
       margin: auto;
       margin-top: -150px;
       margin-bottom: 100px;
+      margin: -177px auto 100px;
   }
+}
+
+:host{
+  z-index: 101;
+    display: flex;
+    position: absolute;
+    top: -68px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    contain: layout size style;
 }

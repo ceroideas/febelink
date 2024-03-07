@@ -77,126 +77,71 @@
   </div>
   <div class="container-detail-cart">
     <div class="content-wrapper-b">
-      <div class="breadcrumbs-text-b">
+      <!-- <div class="breadcrumbs-text-b">
         Inicio
         <img
           src="assets/icon/svg/chevron-right.svg"
           class="breadcrumbs-next-svg-b"
         />
         <span class="color-blue">Historial de compras</span>
-      </div>
+      </div> -->
       <div class="content-title-b">Historial de compras</div>
-      <div *ngFor="let cart of iCart" class="cart-block-b">
-        <div *ngFor="let item of cart.items; let i = index"
-        >
-          <div class="superior">
-          
-            <div class="cart-date-b">{{cart.buyDate}}</div>
-            <div class="item-title">{{item.product}}</div>
-          </div>
-          <div class="inferior">
-            <div class="item-content-carrito">
-              <div>
-                Estado: {{item.isCancelled ? 'Cancelado' : item.finishDate ?
-                'Finalizado' : 'En curso'}}
-              </div>
-              <div class="item-subtitle"
-              [routerLink]="['/user/' + item.username + '/detail/' + item.userId]">{{item.username}}</div>
-              <div>
-                Cantidad: 1
-              </div>
-              <div class="item-price">
-                {{(item.productsTotalPrice).toLocaleString('es',
-                  {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
-              </div>
-              <div class="buttons-list">
-                <div
-                *ngIf="!item.isCancelled && !item.finishDate"
-              >
-                <div
-                  class="cancel-button"
-                  style="width:120px; margin-right: 1em;"
-                  (click)="toggleServiceModal(cart.cartId, item.productId)"
-                >
-                  Cancelar
-                </div>
-              </div>
-              <div
-                *ngIf="!item.isCancelled && !item.finishDate"
-              >
-                <div
-                  class="cancel-button"
-                  style="width:120px; background-color: #1B80F8;"
-                  (click)="terminarServicio(i,item.productId,cart.cartId)"
-                >
-                  Terminar
-                </div>
-              </div>
-              </div>
-        
+      <div class="grid-cart">
+        <div *ngFor="let cart of iCart; let i = index" class="cart-block-b">
+          <div *ngFor="let item of cart.items"
+          >
+            <div class="superior">
             
-            </div>
-          </div>
-            
-          
-        </div>
-      </div>
-      <div *ngFor="let cart of iCart" class="cart-block-b">
-        <div class="cart-date-b">{{cart.buyDate}}</div>
-        <div>
-          <div *ngFor="let item of cart.items; let i = index" class="item-content-carrito">
-          
-            <div class="item-cell-text">
-              Estado: {{item.isCancelled ? 'Cancelado' : item.finishDate ?
-                'Finalizado' : 'En curso'}}
+              <div class="cart-date-b">
+                <div class="date"> {{cart.buyDate}}</div>
+                <div class="capsule">
+                  <div class="canceled" *ngIf="item.isCancelled">
+                    Cancelado
+                  </div>
+                  <div  *ngIf="item.finishDate">
+                    Finalizado</div>
+                    <div class="course" *ngIf="!item.finishDate">
+                      En curso</div>
+                </div>
+               </div>
               <div class="item-title">{{item.product}}</div>
-              <div class="item-subtitle"
-                   [routerLink]="['/user/' + item.username + '/detail/' + item.userId]">{{item.username}}</div>
-              <div class="item-div-buttons">
-                <ion-item class="no-padding item-quantity-select">
-                  <ion-label class="quantity-label">Cantidad:</ion-label>
-                  <ion-select
-                    [disabled]="true"
-                    class="quantity-select"
-                    cancelText="Cancelar"
-                    okText="Aceptar"
-                    [(ngModel)]="item.productAmount"
-                  >
-                    <ion-select-option [value]="1">1</ion-select-option>
-                    <ion-select-option [value]="2">2</ion-select-option>
-                    <ion-select-option [value]="3">3</ion-select-option>
-                    <ion-select-option [value]="4">4</ion-select-option>
-                    <ion-select-option [value]="5">5</ion-select-option>
-                    <ion-select-option [value]="6">6</ion-select-option>
-                    <ion-select-option [value]="7">7</ion-select-option>
-                    <ion-select-option [value]="8">8</ion-select-option>
-                    <ion-select-option [value]="9">9</ion-select-option>
-                  </ion-select>
-                </ion-item>
-                <div
-                  *ngIf="!item.isCancelled && !item.finishDate"
-                >
-                  <div
-                    class="cancel-button"
-                    style="width:120px; margin-right: 1em;"
-                    (click)="toggleServiceModal(cart.cartId, item.productId)"
-                  >
-                    Cancelar
-                  </div>
+            </div>
+            <div class="inferior">
+              <div class="item-content-carrito">
+                <div>
+                  Cantidad: 1
                 </div>
-                <div
-                  *ngIf="!item.isCancelled && !item.finishDate"
-                >
-                  <div
-                    class="cancel-button"
-                    style="width:120px; background-color: #1B80F8;"
-                    (click)="terminarServicio(i,item.productId,cart.cartId)"
-                  >
-                    Terminar
-                  </div>
+                <div class="buttons-list">
+
+                    <div class="item-price">
+                      {{(item.productsTotalPrice).toLocaleString('es',
+                        {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
+                    </div>
+                    <div class="listbutton"   >
+                      <div
+                        *ngIf="!item.isCancelled && !item.finishDate "
+                        class="cancel-button"
+                        style=" margin-right: 1em;"
+                        (click)="toggleServiceModal(cart.cartId, item.productId, i)"
+                      >
+                        Cancelar
+                      </div>
+                      <div
+                      *ngIf="!item.isCancelled && !item.finishDate "
+                    >
+                      <div
+                        class="cancel-button finish"
+                        style=" background-color: #1B80F8;"
+                        (click)="terminarServicio(i,item.productId,cart.cartId)"
+                      >
+                        Terminar
+                      </div>
+                    </div>
+                    </div>
                 </div>
+          
               </div>
-              <div *ngIf="indexTerminarServicio==i">
+              <div *ngIf="indexTerminarServicio == i && showFinish">
                 <div class="div-terminar-servicio">
                   <div class="div-terminar-servicio-title">Terminar el servicio</div>
                   <div class="div-terminar-servicio-subtitle">
@@ -221,7 +166,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="cancelServiceModalToggle">
+              <div *ngIf="indexCancelServicio == i && showCancel">
                 <div class="div-terminar-servicio">
                   <div class="div-terminar-servicio-title">Cancelar el servicio</div>
                   <div class="div-terminar-servicio-subtitle">
@@ -245,15 +190,13 @@
                 </div>
               </div>
             </div>
-            <div class="item-cell-price">
-              <div class="item-price">
-                {{(item.productsTotalPrice).toLocaleString('es',
-                  {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
-              </div>
-            </div>
+              
+            
           </div>
         </div>
       </div>
+      
+     
     </div>
   </div>
 </div>
