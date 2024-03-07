@@ -34,13 +34,12 @@
         </div>
         <div class="buttons-profile">
           <div class="item-button">Seguir</div>
-          <div class="item-button chat" >
+          <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber">
             <a title="Contacto telefónico" 
-            *ngIf="user?.phoneNumber"
             aria-label="Chat on WhatsApp" 
             href="https://wa.me/{{user?.phoneNumber}}" 
             class="badge">
-            Whatsapp
+              <i class="fa fa-whatsapp"></i>
             </a>
             </div>
           <div class="item-button chat" (click)="createChat()">Chat</div>

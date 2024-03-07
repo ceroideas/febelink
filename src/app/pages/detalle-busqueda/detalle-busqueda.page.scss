@@ -572,7 +572,10 @@
                 font-weight: bold;
                 cursor: pointer;
                 
-
+                &.whatsapp{
+                  width: 63px;
+                  font-size: 24px;
+                }
                 a{
                   color: #fff;
                   text-decoration: none;
@@ -627,6 +630,11 @@
             color: #fff;
             font-weight: bold;
             cursor: pointer;
+
+            &.whatsapp{
+              width: 63px;
+              font-size: 24px;
+            }
 
             @media  (max-width: 780px) {
               font-size: 15px;

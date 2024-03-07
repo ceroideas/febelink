@@ -133,15 +133,15 @@
               Iniciar Chat
             </div>
             <div
-            class="chat-button buttondesktop"
-          
+            class="chat-button whatsapp buttondesktop"
+            *ngIf="user?.phoneNumber"
             >
             <a title="Contacto telefónico" 
               *ngIf="user?.phoneNumber"
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/{{user?.phoneNumber}}" 
               class="badge">
-              Whatsapp
+              <i class="fa fa-whatsapp"></i>
           </a>
             
           </div>
@@ -161,16 +161,16 @@
             Iniciar Chat
           </div>
           <div
-          class="chat-button buttonmobile"
-          (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
-          >
-          <a title="Contacto telefónico" 
-            aria-label="Chat on WhatsApp" 
-            href="https://wa.me/{{user?.phone}}" 
-            class="badge">
-            Whatsapp
-          </a>
-        </div>
+          class="chat-button whatsapp buttonmobile"
+            *ngIf="user?.phoneNumber"
+            >
+            <a title="Contacto telefónico"  
+              aria-label="Chat on WhatsApp" 
+              href="https://wa.me/{{user?.phone}}" 
+              class="badge">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+          </div>
           <div
             class="follow-button buttonmobile"
             >
