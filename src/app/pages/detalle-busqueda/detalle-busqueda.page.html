@@ -133,11 +133,10 @@
               Iniciar Chat
             </div>
             <div
-            class="chat-button buttondesktop"
-          
+              [ngClass]="{'disabled': !user?.phone}"
+              class="chat-button buttondesktop"
             >
             <a title="Contacto telefónico" 
-              *ngIf="user?.phoneNumber"
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/{{user?.phoneNumber}}" 
               class="badge">
@@ -161,8 +160,8 @@
             Iniciar Chat
           </div>
           <div
-          class="chat-button buttonmobile"
-          (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            class="chat-button buttonmobile"
+            [ngClass]="{'disabled': !user?.phone}"
           >
           <a title="Contacto telefónico" 
             aria-label="Chat on WhatsApp" 
@@ -182,7 +181,7 @@
         <!--TITLE SECTION-->
         <div class="section-title">
           <ion-row class="product-title">
-            <ion-label><h1>{{detalle?.title}}</h1></ion-label>
+            <ion-label><h2>{{detalle?.title}}</h2></ion-label>
           </ion-row>
           <ion-row class="product-rating">
             <ion-label class="content_item">
@@ -227,8 +226,8 @@
          <div class="section-towhom" *ngIf="!!detalle?.whom">
           <ion-row class="towhom-title">
             <ion-label>
-              <!-- <h1>{{detalle?.towhom}}</h1> -->
-              <h1>A quien va dirigido</h1>
+              <!-- <h2>{{detalle?.towhom}}</h2> -->
+              <h2>A quien va dirigido</h2>
             </ion-label>
           </ion-row>
           <ion-row class="towhom-description">
@@ -240,8 +239,8 @@
         <div class="section-others-view" *ngIf="othersView.length  > 0">
           <ion-row class="others-view-title">
             <ion-label>
-              <!-- <h1>{{detalle?.othersview}}</h1> -->
-              <h1>Otros usuarios también vieron</h1>
+              <!-- <h2>{{detalle?.othersview}}</h2> -->
+              <h2>Otros usuarios también vieron</h2>
             </ion-label>
           </ion-row>
   
@@ -302,7 +301,7 @@
         <div class="section-more-work" *ngIf="moreWorks.length">
           <ion-row class="more-work-title">
             <ion-label>
-              <h1>Más servicios de este profesional</h1>
+              <h2>Más servicios de este profesional</h2>
             </ion-label>
           </ion-row>
   
@@ -334,7 +333,7 @@
   <!--RESEÑAS-->
   <!-- <div class="reviews">
     <ion-row class="reviews-title">
-      <ion-label><h1>Reseñas</h1></ion-label>
+      <ion-label><h2>Reseñas</h2></ion-label>
     </ion-row>
     <div class="container-reviews">
       <div class="item-reviews">
@@ -519,7 +518,7 @@
   <!--ORACULO-->
   <div class="oracle" *ngIf="iAdvises.length > 0">
     <ion-row class="oracle-title">
-      <ion-label><h1>Contenidos en Oráculo</h1></ion-label>
+      <ion-label><h2>Contenidos en Oráculo</h2></ion-label>
     </ion-row>
     <div class="container-oracle" >
 
