@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { MisPublicacionesPageRoutingModule } from './mis-publicaciones-routing.module';
 
 import { MisPublicacionesPage } from './mis-publicaciones.page';
+import { PostComponentsModule } from '../posts/components/components.module';
 
 @NgModule({
   imports: [
     SharedModule
   , SharedPostModule
   ,  IonicModule,
-    MisPublicacionesPageRoutingModule
+    MisPublicacionesPageRoutingModule,
+    PostComponentsModule,
   ],
   declarations: [MisPublicacionesPage]
 })

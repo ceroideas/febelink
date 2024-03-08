@@ -7,6 +7,7 @@ import { ReportService } from 'src/app/services/report.service';
 import { IAdviseFull } from '../posts/advises/models/advises.model';
 import { AdviseService } from '../posts/advises/services/advises.service';
 import { UserDataService } from '../user-data/Services/user-data.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-mis-publicaciones',
@@ -14,7 +15,7 @@ import { UserDataService } from '../user-data/Services/user-data.service';
   styleUrls: ['./mis-publicaciones.page.scss'],
 })
 export class MisPublicacionesPage implements OnInit {
-  idPerfil: any = 208;
+  idPerfil: 208
   user: any;
   iAdvises: IAdviseFull[] = [];
   ratings: any;
@@ -62,7 +63,7 @@ export class MisPublicacionesPage implements OnInit {
     { id: 21, name: 'Salud' },
     { id: 22, name: 'Criptomonedas' },
   ]; // ToDo: HARDCODED! Fetch this info from DB
-
+  currentUser: any = {};
   constructor(
     public popoverController: PopoverController,
     private router: Router,
@@ -71,10 +72,13 @@ export class MisPublicacionesPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     private adviseSvc: AdviseService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private utilities: UtilitiesService,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.currentUser = { ...(await this.utilities.getUserData()) };
+
     this.getUserInfo();
     this.getFeed();
     this.ratings = [];
@@ -86,11 +90,9 @@ export class MisPublicacionesPage implements OnInit {
   async getUserInfo() {
     const { response } = await this.userDataService.getUserInfo();
     if (response) {
-      this.user = {
-        name: response?.username,
-        description: response.description,
-      };
+      this.user = response  ;
     }
+
   }
 
   async getFeed() {
@@ -101,7 +103,7 @@ export class MisPublicacionesPage implements OnInit {
       sector: null,
       subsector: null,
       lang: null,
-      user: this.idPerfil,
+      user: this.currentUser.id,
       hideContent: true,
       content: null,
     };

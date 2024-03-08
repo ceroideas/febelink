@@ -1883,60 +1883,74 @@ div.see-more a {color:#fff}
   justify-content: flex-end;
 
 }
-.container-general{
-  width: 100%;
-  height: -moz-fit-content;
-  height: 100%;
-  position: relative;
-  /* display: flex; */
-  /* padding: 38px 27px; */
-  /* max-width: 1500px; */
-  margin: auto;
-  position: absolute;
-  overflow: auto;
-
-  .layer-gradient{
-      height: 300px;
-      width: 100%;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 50px;
-      background:linear-gradient(to top,rgb(255,255,255),rgb(208,230,255));
-     
-  }
- /* Media query for screens with a maximum width of 600px */
-  @media only screen and (max-width: 780px) {
-      padding-bottom: 117px
-  }
-
-
-
-  .container-detail-cart{
-      width: 100%;
-      height: fit-content;
-      position: relative;
-      display: flex;
-      padding: 38px 27px;
-      max-width: 1627px;
-      margin: auto;
-      margin-top: -150px;
-      margin-bottom: 100px;
-      margin: -177px auto 100px;
-  }
-}
 
 :host{
   z-index: 101;
-    display: flex;
-    position: absolute;
-    top: -68px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    contain: layout size style;
-}
+  width: 100%;
+  position: relative;
+  display: block;
+  background: #fcfffe;
+  contain: unset;
+  height: 100%;
+
+  
+  .container-general{
+      width: 100%;
+      height: -moz-fit-content;
+      height: 100%;
+      position: relative;
+      /* display: flex; */
+      /* padding: 38px 27px; */
+      /* max-width: 1500px; */
+      margin: auto;
+      position: absolute;
+      overflow: auto;
+
+      .layer-gradient{
+          height: 300px;
+          width: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 50px;
+          background:linear-gradient(to top,rgb(255,255,255),rgb(208,230,255));
+         
+      }
+     /* Media query for screens with a maximum width of 600px */
+      @media only screen and (max-width: 780px) {
+          padding-bottom: 117px
+      }
+   
+
+
+      .container-detail-search{
+          width: 100%;
+          height: fit-content;
+          position: relative;
+          display: flex;
+          padding: 38px 27px;
+          max-width: 1485px;
+          margin: auto;
+          margin-top: -150px;
+          margin-bottom: 100px;
+
+          /* Media query for screens with a maximum width of 600px */
+          @media only screen and (max-width: 1000px) {
+            display: flex;
+            flex-direction: column;
+            padding: 38px 54px 0;
+            /* Styles for screens with a width up to 600px */
+          }
+          @media only screen and (max-width: 780px) {
+            padding: 0px 0px 0;
+    
+          }
+       
+          .containter-right{
+            width: 100%;
+            height: 100%;}
+          }
+        }
+      }
+      
