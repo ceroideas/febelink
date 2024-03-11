@@ -72,6 +72,7 @@ a{ text-decoration: none; outline: none;}
   align-items: center;
   gap: 16px;
   margin-top: 30px;
+  position: relative;
 
   .price{
     color: #000000;
@@ -91,7 +92,9 @@ a{ text-decoration: none; outline: none;}
     padding: 10px 13px;
   }
 }
-
+.iconwhatsapp{ position: absolute;
+  left: -69px;
+  font-size: 24px; color: #25D366;}
 ngx-skeleton-loader {
   &::ng-deep {
     .skeleton-loader {
