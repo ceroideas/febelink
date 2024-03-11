@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="febelink">
     <ion-icon
       slot="start"
@@ -10,7 +10,6 @@
     >
 
     <ion-buttons slot="end" class="margin-end">
-      <!-- Send Payment -->
       <ion-icon
         name="send-outline"
         class="margin-end"
@@ -18,202 +17,242 @@
         *ngIf="walletParams.userWallets"
       ></ion-icon>
 
-      <!-- Help -->
       <ion-icon name="help-circle-outline" (click)="showHelp()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content class="ion-padding" *ngIf="walletParams.userWallets">
-  <!-- Loading -->
-  <app-loading
-    [isLoading]="isLoading"
-    message="common.labelLoading"
-  ></app-loading>
+<div id="search-content" class="container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
 
-  <ion-grid *ngIf="!isLoading">
-    <!-- Public Key -->
-    <ion-card (click)="copyPublicKey()">
-      <ion-row>
-        <ion-col size="4" size-sm="3" class="vertical-content">
-          <ion-label>{{ 'pages.wallet.public-key' | translate }}</ion-label>
-        </ion-col>
-        <ng-container tappable>
-          <ion-col size="6" size-sm="8" class="vertical-content">
-            <ion-label class="one-line" tappable
-              ><b>{{ walletParams.publicKey || '--' }}</b></ion-label
-            >
-          </ion-col>
-          <ion-col size="2" size-sm="1" class="vertical-content">
+  <div class="container-section">
+    <div class="item1" size="8">
+      <ion-breadcrumbs mode="ios">
+        <ion-breadcrumb href="#">
+          <ion-label class="margin_left_breadcrumbs1">Inicio</ion-label>
+        </ion-breadcrumb>
+        <ion-breadcrumb >
+          <ion-label class="margin_left_breadcrumbs2">Wallet</ion-label>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+    </div>
+    <div  class="item2"size="4">
+     
+      <div>
+        <div  class="servicios-sections-cell-button">
+          <div class="servicios-sections-button-primary"  >
             <ion-icon
-              name="clipboard"
-              *ngIf="walletParams.publicKey"
+              name="send-outline"
+              class="margin-end"
+              (click)="send()"
+              *ngIf="walletParams.userWallets"
             ></ion-icon>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </ion-card>
-    <!-- Private Key -->
-    <ion-card (click)="copyPrivateKey()">
-      <ion-row>
-        <ion-col size="4" size-sm="3" class="vertical-content">
-          <ion-label>{{ 'pages.wallet.private-key' | translate }}</ion-label>
-        </ion-col>
-        <ng-container tappable>
-          <ion-col size="6" size-sm="8" class="vertical-content">
-            <ion-label class="one-line" tappable>
-              <b>{{ walletParams.privateKey || '--' }}</b>
-            </ion-label>
-          </ion-col>
-          <ion-col size="2" size-sm="1" class="vertical-content">
-            <ion-icon
-              name="clipboard"
-              *ngIf="walletParams.publicKey"
-            ></ion-icon>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </ion-card>
 
-    <!-- Retained Tokens -->
-    <ion-card
-      (click)="hideRetained = !hideRetained"
-      *ngIf="walletParams.retainedTks?.length > 0"
-    >
-      <ion-row>
-        <ion-col size="12" size-sm="3">
-          <ion-label class="margin-end"
-            >{{ 'pages.wallet.retained' | translate }}</ion-label
-          >
-          <i [class]="'fa fa-chevron-' + ( hideRetained ? 'down' : 'up' )"></i>
-        </ion-col>
+            <ion-icon name="help-circle-outline" (click)="showHelp()"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="title-oracle"><span >Mi Wallet</span></div>
+  <div class="container-detail-search">
 
-        <ion-col size="12" size-sm="9" *ngIf="!hideRetained">
-          <ion-card *ngFor="let tks of walletParams.retainedTks">
-            <ion-row>
-              <ion-col size="12" size-sm="6">
-                <ion-label><b>{{ tks?.phase_tokens + ': ' }}</b></ion-label>
-                <app-num-float
-                  [number]="tks?.num_tokens"
-                  [round]="walletParams?.assetsMaxDecimals"
-                  classNbr="margin-start"
-                ></app-num-float>
-              </ion-col>
+    <div class="ion-padding" *ngIf="walletParams.userWallets">
+      <!-- Loading -->
+      <app-loading
+        [isLoading]="isLoading"
+        message="common.labelLoading"
+      ></app-loading>
 
-              <ion-col size="12" size-sm="6">
-                <ion-label>{{ 'pages.wallet.release' | translate }}</ion-label>
-                <ion-label class="margin-start"
-                  ><b
-                    >{{ tks?.date | dateFormat: dateFormatType.Date }}</b
-                  ></ion-label
+      <ion-grid *ngIf="!isLoading">
+        <!-- Public Key -->
+        <ion-card (click)="copyPublicKey()">
+          <ion-row>
+            <ion-col size="4" size-sm="3" class="vertical-content">
+              <ion-label class="labelFont">{{ 'pages.wallet.public-key' | translate }}</ion-label>
+            </ion-col>
+            <ng-container tappable>
+              <ion-col size="6" size-sm="8" class="vertical-content">
+                <ion-label class="one-line" tappable
+                  ><b>{{ walletParams.publicKey || '--' }}</b></ion-label
                 >
               </ion-col>
-            </ion-row>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-
-    <!-- Assets -->
-    <ion-row>
-      <ion-col
-        size="6"
-        size-sm="2.4"
-        *ngFor="let currency of walletParams.userWallets"
-      >
-        <ion-card>
-          <ion-row class="vertical-content no-margin">
-            <ion-col size="12" size-sm="12" class="no-padding">
-              <ion-row class="vertical-content ion-no-padding">
-                <img
-                  src="assets/icon/{{currency.currency.toLowerCase()}}.png"
-                />
-                <ion-label class="bold-6"> {{currency.currency}}</ion-label>
-              </ion-row>
+              <ion-col size="2" size-sm="1" class="vertical-content">
+                <ion-icon
+                  name="clipboard"
+                  *ngIf="walletParams.publicKey"
+                ></ion-icon>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-card>
+        <!-- Private Key -->
+        <ion-card (click)="copyPrivateKey()">
+          <ion-row>
+            <ion-col size="4" size-sm="3" class="vertical-content">
+              <ion-label class="labelFont">{{ 'pages.wallet.private-key' | translate }}</ion-label>
             </ion-col>
-            <ion-col size="12" size-sm="12" class="tx-center no-padding">
-              <app-num-float
-                [number]="currency.amount"
-                [round]="walletParams?.assetsMaxDecimals"
-                [bold]="true"
-                classNbr="font-20"
-                classFloat="font-12"
-              ></app-num-float>
+            <ng-container tappable>
+              <ion-col size="6" size-sm="8" class="vertical-content">
+                <ion-label class="one-line" tappable>
+                  <b>{{ walletParams.privateKey || '--' }}</b>
+                </ion-label>
+              </ion-col>
+              <ion-col size="2" size-sm="1" class="vertical-content">
+                <ion-icon
+                  name="clipboard"
+                  *ngIf="walletParams.publicKey"
+                ></ion-icon>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-card>
+
+        <!-- Retained Tokens -->
+        <ion-card
+          (click)="hideRetained = !hideRetained"
+          *ngIf="walletParams.retainedTks?.length > 0"
+        >
+          <ion-row>
+            <ion-col size="12" size-sm="3">
+              <ion-label class="margin-end"
+                >{{ 'pages.wallet.retained' | translate }}</ion-label
+              >
+              <i [class]="'fa fa-chevron-' + ( hideRetained ? 'down' : 'up' )"></i>
+            </ion-col>
+
+            <ion-col size="12" size-sm="9" *ngIf="!hideRetained">
+              <ion-card *ngFor="let tks of walletParams.retainedTks">
+                <ion-row>
+                  <ion-col size="12" size-sm="6">
+                    <ion-label><b>{{ tks?.phase_tokens + ': ' }}</b></ion-label>
+                    <app-num-float
+                      [number]="tks?.num_tokens"
+                      [round]="walletParams?.assetsMaxDecimals"
+                      classNbr="margin-start"
+                    ></app-num-float>
+                  </ion-col>
+
+                  <ion-col size="12" size-sm="6">
+                    <ion-label>{{ 'pages.wallet.release' | translate }}</ion-label>
+                    <ion-label class="margin-start"
+                      ><b
+                        >{{ tks?.date | dateFormat: dateFormatType.Date }}</b
+                      ></ion-label
+                    >
+                  </ion-col>
+                </ion-row>
+              </ion-card>
             </ion-col>
           </ion-row>
         </ion-card>
 
-        <!-- Buy Assets | only those allowed to buy | only if account verified -->
-        <ion-row
-          (click)="buy( currency )"
-          click-stop-propagation
-          *ngIf="currency?.priceBuy > 0"
-        >
-          <ion-button expand="block" color="febelink">
-            {{( 'pages.wallet.buy.button' | translate ) + ' ' +
-            currency?.currency }}
-          </ion-button>
+        <!-- Assets -->
+        <ion-row>
+          <ion-col
+            size="6"
+            size-sm="2.4"
+            *ngFor="let currency of walletParams.userWallets"
+          >
+            <ion-card>
+              <ion-row class="vertical-content no-margin">
+                <ion-col size="12" size-sm="12" class="no-padding">
+                  <ion-row class="vertical-content ion-no-padding">
+                    <img
+                      src="assets/icon/{{currency.currency.toLowerCase()}}.png"
+                    />
+                    <ion-label class="bold-6"> {{currency.currency}}</ion-label>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="12" size-sm="12" class="tx-center no-padding">
+                  <app-num-float
+                    [number]="currency.amount"
+                    [round]="walletParams?.assetsMaxDecimals"
+                    [bold]="true"
+                    classNbr="font-20"
+                    classFloat="font-12"
+                  ></app-num-float>
+                </ion-col>
+              </ion-row>
+            </ion-card>
+
+            <!-- Buy Assets | only those allowed to buy | only if account verified -->
+            <ion-row
+              (click)="buy( currency )"
+              click-stop-propagation
+              *ngIf="currency?.priceBuy > 0"
+            >
+              <ion-button expand="block" color="febelink">
+                {{( 'pages.wallet.buy.button' | translate ) + ' ' +
+                currency?.currency }}
+              </ion-button>
+            </ion-row>
+          </ion-col>
         </ion-row>
-      </ion-col>
-    </ion-row>
 
-    <!-- Divider -->
-    <!-- <ion-row class="margin-bottom">
-      <ion-item-divider></ion-item-divider>
-    </ion-row> -->
+        <!-- Divider -->
+        <!-- <ion-row class="margin-bottom">
+          <ion-item-divider></ion-item-divider>
+        </ion-row> -->
 
-    <!-- Offers List -->
-    <!-- <ion-card class="ion-no-margin">
-      <app-offers-list #offersList [walletParams]="walletParams" (OnChange)="balance()"></app-offers-list>
-    </ion-card> -->
+        <!-- Offers List -->
+        <!-- <ion-card class="ion-no-margin">
+          <app-offers-list #offersList [walletParams]="walletParams" (OnChange)="balance()"></app-offers-list>
+        </ion-card> -->
 
-    <!-- Divider -->
-    <ion-row class="margin-bottom">
-      <ion-item-divider></ion-item-divider>
-    </ion-row>
+        <!-- Divider -->
+        <ion-row class="margin-bottom">
+          <ion-item-divider></ion-item-divider>
+        </ion-row>
 
-    <!-- Exchange -->
-    <ion-card class="ion-no-margin">
-      <app-exchange
-        #xchng
-        [walletParams]="walletParams"
-        [exchangeType]="exchangeTypes.CREATE"
-        (OnDone)="refresh()"
-      ></app-exchange>
-    </ion-card>
-
-    <!-- Divider -->
-    <ion-row class="margin-bottom">
-      <ion-item-divider></ion-item-divider>
-    </ion-row>
-
-    <!-- Transactions History -->
-    <ion-row
-      class="vertical-content align-center clickable"
-      (click)="hideTransactions = transactions?.operations?.records?.length > 0 ? !hideTransactions : true"
-    >
-      <h4 class="margin-end">
-        {{ 'pages.wallet.' + ( transactions?.operations?.records?.length > 0 ?
-        '' : 'no-' ) + 'transactions' | translate }}
-      </h4>
-      <i
-        [class]="'margin-start fa fa-chevron-' + ( hideTransactions ? 'down' : 'up' )"
-        *ngIf="transactions?.operations?.records?.length > 0"
-      ></i>
-    </ion-row>
-
-    <ng-container *ngIf="!hideTransactions">
-      <ion-row
-        *ngFor="let operation of transactions?.operations?.records"
-        (click)="transaction( operation )"
-      >
-        <ion-card class="transactions">
-          <ion-card-content>
-            {{ operation?.created_at | dateFormat: dateFormatType.TimeDate }} -
-            {{ 'pages.wallet.operations.' + operation?.type_i | translate }}
-          </ion-card-content>
+        <!-- Exchange -->
+        <ion-card class="ion-no-margin">
+          <app-exchange
+            #xchng
+            [walletParams]="walletParams"
+            [exchangeType]="exchangeTypes.CREATE"
+            (OnDone)="refresh()"
+          ></app-exchange>
         </ion-card>
-      </ion-row>
-    </ng-container>
-  </ion-grid>
-</ion-content>
+
+        <!-- Divider -->
+        <ion-row class="margin-bottom">
+          <ion-item-divider></ion-item-divider>
+        </ion-row>
+
+        <!-- Transactions History -->
+        <ion-row
+          class="vertical-content align-center clickable"
+          (click)="hideTransactions = transactions?.operations?.records?.length > 0 ? !hideTransactions : true"
+        >
+          <h4 class="margin-end">
+            {{ 'pages.wallet.' + ( transactions?.operations?.records?.length > 0 ?
+            '' : 'no-' ) + 'transactions' | translate }}
+          </h4>
+          <i
+            [class]="'margin-start fa fa-chevron-' + ( hideTransactions ? 'down' : 'up' )"
+            *ngIf="transactions?.operations?.records?.length > 0"
+          ></i>
+        </ion-row>
+
+        <ng-container *ngIf="!hideTransactions">
+          <ion-row
+            *ngFor="let operation of transactions?.operations?.records"
+            (click)="transaction( operation )"
+          >
+            <ion-card class="transactions">
+              <ion-card-content>
+                {{ operation?.created_at | dateFormat: dateFormatType.TimeDate }} -
+                {{ 'pages.wallet.operations.' + operation?.type_i | translate }}
+              </ion-card-content>
+            </ion-card>
+          </ion-row>
+        </ng-container>
+      </ion-grid>
+    </div>
+  </div>
+  <app-footer></app-footer>
+
+</div>

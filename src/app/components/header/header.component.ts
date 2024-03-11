@@ -31,7 +31,8 @@ export class HeaderComponent {
         const urlParts = event.url.split('/'); // Split the URL
      
         console.log(urlParts)
-        if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('profile')  && !urlParts.includes('user')) {
+        if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('profile') && !urlParts.includes('wallet')  && !urlParts.includes('professions')  
+         && !urlParts.includes('user')) {
           this.detachBlock = true;
           this.detached = true;
         } else {
@@ -78,7 +79,10 @@ export class HeaderComponent {
 
 
   // Obtén la referencia al elemento con id 'capa-2'
-    const capa2Element = document.getElementById('search-content');
+    const capa2Element = document.getElementById('search-content1');
+
+
+    console.log(capa2Element)
     const scrollTopValue = capa2Element.scrollTop;
 
     var miElemento = document.getElementById('miElemento');

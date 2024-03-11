@@ -15,6 +15,9 @@ ion-card {
   padding: 10px;
   margin: 0px; margin-bottom: 10px;
   cursor: default;
+  box-shadow: #0000001a 0 12px 48px;
+  background: rgb(255,255,255);
+  border-radius: 8px;
 
   ion-row {
     margin-bottom: 5px;
@@ -36,3 +39,153 @@ ion-card {
   width: 100%;
   --width: 100%;
 }
+
+.bold-6{
+  font-weight: bold;
+  color: #000;
+}
+.labelFont{
+  color: #000;
+  font-size: 15px;
+}
+
+
+
+:host{
+  z-index: 101;
+  width: 100%;
+  position: relative;
+  display: block;
+  background: #fcfffe;
+  contain: unset;
+  height: 100%;
+
+  
+  .container-general{
+      width: 100%;
+      height: -moz-fit-content;
+      height: 100%;
+      position: relative;
+      /* display: flex; */
+      /* padding: 38px 27px; */
+      /* max-width: 1500px; */
+      margin: auto;
+      position: absolute;
+      overflow: auto;
+
+      .layer-gradient{
+          height: 300px;
+          width: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 50px;
+          background:linear-gradient(to top,rgb(255,255,255),rgb(208,230,255));
+         
+      }
+     /* Media query for screens with a maximum width of 600px */
+      @media only screen and (max-width: 780px) {
+          padding-bottom: 117px
+      }
+   
+      .title-oracle{
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        display: block;
+        margin: auto;
+        width: 100%;
+        max-width: 1334px;
+        margin-top: -102px;
+        position: relative;
+
+         /* Media query for screens with a maximum width of 600px */
+         @media only screen and (max-width: 1000px) {
+          padding: 38px 54px 0;
+          /* Styles for screens with a width up to 600px */
+        }
+        @media only screen and (max-width: 780px) {
+          padding: 0px 0px 0;
+  
+        }
+       }
+      .container-section{
+        width: 100%;
+        height: -moz-fit-content;
+        height: fit-content;
+        position: relative;
+        display: flex;
+        padding: 34px 21px;
+        max-width: 1402px;
+        margin: -209px auto 100px;
+        .item1{
+          width: 80%;
+        }
+     
+        .item2{
+          width: 20%;
+          width: 20%;
+          DISPLAY: FLEX;
+          JUSTIFY-CONTENT: FLEX-END;
+        }
+        @media only screen and (max-width: 1000px) {
+          display: flex;
+          flex-direction: column;
+          padding: 38px 54px 0;
+
+          .item1{
+            width: 100%;
+          }
+       
+          .item2{
+            width: 100%;
+          }
+      
+          /* Styles for screens with a width up to 600px */
+        }
+        @media only screen and (max-width: 780px) {
+          padding: 0px 0px 0;
+  
+        }
+
+       
+    }
+
+      .container-detail-search{
+          width: 100%;
+          height: fit-content;
+          position: relative;
+          display: flex;
+          padding: 38px 27px;
+          max-width: 1485px;
+          margin: auto;
+          margin-top: -10px;
+          margin-bottom: 100px;
+
+          /* Media query for screens with a maximum width of 600px */
+          @media only screen and (max-width: 1000px) {
+            display: flex;
+            flex-direction: column;
+            padding: 38px 54px 0;
+            /* Styles for screens with a width up to 600px */
+          }
+          @media only screen and (max-width: 780px) {
+            padding: 0px 0px 0;
+    
+          }
+          .ion-padding{
+            width: 100%;
+          }
+        }
+      }
+      ion-button{
+        box-shadow: none;
+      }
+      ion-label{
+        color: black;
+      }
+    }
+
+   

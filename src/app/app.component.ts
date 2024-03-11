@@ -111,7 +111,8 @@ export class AppComponent implements OnInit, OnDestroy {
       if ( e instanceof NavigationEnd ) {
         const urlParts = e.url.split('/');
      
-        this.onHome = (e.url === '/' || urlParts.includes('user') || urlParts.includes('profile'));
+        this.onHome = (e.url === '/' || urlParts.includes('user') || urlParts.includes('wallet') || urlParts.includes('profile')
+        || urlParts.includes('professions'));
       } 
     });
   }
