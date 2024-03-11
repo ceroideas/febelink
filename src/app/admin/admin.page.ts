@@ -16,6 +16,7 @@ export class AdminPage {
     {title: 'Enlaces de ubicaciones', icon: 'link-outline', link: 'keyword/link-location'},
     {title: 'Ciudades', icon: 'location-outline', link: 'keyword/city'},
     {title: 'Enlaces de ciudades', icon: 'link-outline', link: 'keyword/link-city'},
+    {title: 'Enlaces de footer', icon: 'link-outline', link: 'keyword/link-footer'},
   ];
 
   homePage: string = environment.HOME_PAGE;

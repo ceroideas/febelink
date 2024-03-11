@@ -17,6 +17,7 @@ import { LocationPage } from './location/location.page';
 import { LinkLocationPage } from './link-location/link-location.page';
 import { CityPage } from './city/city.page';
 import { LinkCityPage } from './link-city/link-city.page';
+import { LinkFooterPage } from './link-footer/link-footer.page';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { LinkCityPage } from './link-city/link-city.page';
     SubSectorPage,
     LocationPage,
     CityPage,
+    LinkFooterPage,
     LinkCityPage,
     LinkLocationPage,
     SectorPipe,

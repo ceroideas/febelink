@@ -572,11 +572,10 @@
                 font-weight: bold;
                 cursor: pointer;
                 
-                &.disabled{
-                  opacity: .3;
-                  pointer-events: none;
+                &.whatsapp{
+                  width: 63px;
+                  font-size: 24px;
                 }
-    
                 a{
                   color: #fff;
                   text-decoration: none;
@@ -632,9 +631,10 @@
             font-weight: bold;
             cursor: pointer;
 
-            &.disabled{
-              opacity: .3;
-              pointer-events: none;
+
+            &.whatsapp{
+              width: 63px;
+              font-size: 24px;
             }
 
             @media  (max-width: 780px) {
