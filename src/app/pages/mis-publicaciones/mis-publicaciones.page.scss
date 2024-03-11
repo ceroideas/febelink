@@ -1496,6 +1496,19 @@ ion-header {
                 padding-top: 0;
                 margin-top: 18px;
 
+                .title-valoraciones{
+                    text-align: center;
+                    font-family: InterFont;
+                    font-weight: 700;
+                    color: #170f49;
+                    height: 26px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 16px;
+                    width: 100%;
+                  }
+
               }
       
               .valoraciones{
