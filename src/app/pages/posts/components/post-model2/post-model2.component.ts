@@ -34,6 +34,7 @@ import {RouteSvc} from '../../../../services/route.service';
 })
 export class PostModel2Component implements OnInit, AfterViewInit {
   @Input() id: number;
+  @Input() type: number = 0;
   @Input() iAdvise: IAdviseFull;
   @Input() showLang: boolean = false;
   @Input() showOpts: boolean = false;

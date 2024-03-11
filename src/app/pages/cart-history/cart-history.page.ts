@@ -43,6 +43,7 @@ export class CartHistoryPage implements OnInit {
   isFinalizados: boolean = false;
   isNuevoServicio: boolean = false;
   indexTerminarServicio: number;
+  indexCancelServicio: number;
   indexTerminarServicioMobile: boolean = false;
   servicioAdded: boolean = false;
   unitTypes: any;
@@ -52,7 +53,8 @@ export class CartHistoryPage implements OnInit {
   productIdTerminar: number;
   cartIdTerminar: number;
   isTemplate: boolean = false;
-
+  showCancel: boolean = false;
+  showFinish: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -99,7 +101,9 @@ export class CartHistoryPage implements OnInit {
     }
   }
 
-  toggleServiceModal(cartId?: number, productId?: number) {
+  toggleServiceModal(cartId?: number, productId?: number, index_cart?: number) {
+    this.showCancel = true
+    this.indexCancelServicio = index_cart
     this.cartId = cartId;
     this.productId = productId;
     this.cancelServiceModalToggle = !this.cancelServiceModalToggle;
@@ -130,6 +134,8 @@ export class CartHistoryPage implements OnInit {
     this.finValorarServicio = true;
     this.indexValorarServicio = false;
     this.indexTerminarServicioMobile = false;
+    this.showFinish = false;
+    this.showCancel = false;
     this.indexTerminarServicio = null;
     this.productIdTerminar = null;
     this.cartIdTerminar = null;
@@ -143,6 +149,8 @@ export class CartHistoryPage implements OnInit {
     this.indexTerminarServicioMobile = false;
     this.indexTerminarServicio = null;
     this.productIdTerminar = null;
+    this.showFinish = false;
+    this.showCancel = false;
     this.cartIdTerminar = null;
   }
 
@@ -151,6 +159,8 @@ export class CartHistoryPage implements OnInit {
     this.isDisponibles = true;
     this.isCurso = false;
     this.isFinalizados = false;
+    this.showFinish = false;
+    this.showCancel = false;
   }
 
   cerrarFinValorarServicio() {
@@ -163,6 +173,8 @@ export class CartHistoryPage implements OnInit {
     this.dragLogged = false;
     this.productIdTerminar = null;
     this.cartIdTerminar = null;
+    this.showFinish = false;
+    this.showCancel = false;
   }
 
   terminarServicio(index: number, product: number, cart: number) {
@@ -170,5 +182,7 @@ export class CartHistoryPage implements OnInit {
     this.indexTerminarServicioMobile = true;
     this.productId = product;
     this.cartId = cart;
+    this.showFinish = true;
   }
+  
 }

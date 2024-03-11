@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CartHistoryPageRoutingModule } from './cart-history-routing.module';
 
 import { CartHistoryPage } from './cart-history.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CartHistoryPageRoutingModule
+    CartHistoryPageRoutingModule,
+    SharedModule
   ],
   declarations: [CartHistoryPage]
 })

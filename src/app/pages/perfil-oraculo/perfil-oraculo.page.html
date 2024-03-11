@@ -1,6 +1,6 @@
 
 
-<div id="search-content" class="container-general">
+<div id="search-content" class="search-content container-general">
   <div class="layer-gradient">
     <div class="eclipse"></div>
   </div>
@@ -10,7 +10,9 @@
       <ng-container>
        <div class="card">
         <div class="image-profile">
-          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null" src="{{user?.avatar}}"/>
+          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null" src="{{user?.avatar}}" 
+          appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+          />
         </div>
         <div class="name-profile">
           {{user?.name}}
@@ -34,6 +36,7 @@
         </div>
         <div class="buttons-profile">
           <div class="item-button">Seguir</div>
+
           <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber">
             <a title="Contacto telefónico" 
             aria-label="Chat on WhatsApp" 
@@ -73,7 +76,7 @@
         </div>
         <div class="container-valoraciones">
           <div class="item-valor  item-valor-1">
-            No tiene valoraciones aun
+            No tiene valoraciones aún
           </div>
         </div>
       </div>

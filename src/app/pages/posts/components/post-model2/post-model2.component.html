@@ -11,6 +11,7 @@
       <div class="cell-dots-top">
         <div class="follower-mobile">
           <app-follower-button
+            *ngIf="type !== 1"
             [user]="postUser"
             [transparent]="true"
           ></app-follower-button>

@@ -75,7 +75,9 @@ export class SubSectorPage implements OnInit {
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
       this.subSectorKeys = this.subSectorKeys.filter((sector) => {
-        return sector.link.toLowerCase().includes(this.filter.toLowerCase());
+        if ( sector?.link !== '' && sector?.link !== undefined && sector?.link !== null){
+          return sector?.link?.toLowerCase().includes(this.filter.toLowerCase());
+        }
       })
     } else {
       this.subSectorKeys = this.subSectorKeys_filtered;
@@ -99,7 +101,7 @@ export class SubSectorPage implements OnInit {
 
   removeAccents(inputString) {
     // Normalize accented characters to their base form
-    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
     return normalizedString;
   }
 

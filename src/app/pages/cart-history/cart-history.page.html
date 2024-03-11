@@ -1,207 +1,135 @@
-<ion-content class="background-content">
-  <div class="mobile">
-    <div class="content-wrapper">
-      <div class="breadcrumbs-text">
-        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg"/>
-        Inicio
-        <img
-          src="assets/icon/svg/chevron-right.svg"
-          class="breadcrumbs-next-svg"
-        />
-        Historial de compras
-      </div>
-      <div class="content-title">Historial de compras</div>
-
-      <ng-container *ngIf="iCart">
-        <div *ngFor="let cart of iCart" class="cart-block">
-          <div class="cart-date">{{cart.buyDate}}</div>
-          <div>
-            <div *ngFor="let item of cart.items" class="div-carrito-item">
-              <div class="div-table-100">
-                Estado: {{item.isCancelled ? 'Cancelado' : item.finishDate ?
-                  'Finalizado' : 'En curso'}}
-              </div>
-              <div class="div-table-100">
-                <div class="display-cell-middle cell-number">
-                  <div class="cell-number-box">
-                    <span class="cell-number-text">{{item.productAmount}}</span>
-                  </div>
-                </div>
-                <div class="display-cell-middle">
-                  <div class="cell-item-title">{{item.product}}</div>
-                  <div class="cell-item-subtitle"
-                       [routerLink]="['/user/' + item.username + '/detail/' + item.userId]">{{item.username}}</div>
-                </div>
-                <div class="display-cell-middle cell-price">
-                  {{(item.productsTotalPrice).toLocaleString('es', {
-                    minimumFractionDigits: 2, maximumFractionDigits: 2
-                })}}€
-                </div>
-              </div>
-              <div
-                *ngIf="!item.isCancelled && !item.finishDate"
-                class="div-table-100"
-                style="padding-top: 16px"
-              >
-                <div
-                  class="cancel-button"
-                  style="width: 100%; background-color: #1B80F8;"
-                  (click)="toggleFinishModal(cart.cartId, item.productId)"
-                >
-                  Terminar
-                </div>
-              </div>
-              <div
-                *ngIf="!item.isCancelled && !item.finishDate"
-                class="div-table-100"
-                style="padding-top: 16px"
-              >
-                <div
-                  class="cancel-button"
-                  style="width: 100%"
-                  (click)="toggleServiceModal(cart.cartId, item.productId)"
-                >
-                  Cancelar
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </div>
+ 
+<div id="search-content" class="search-content container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
   </div>
-
-  <div class="desktop">
-    <div class="content-wrapper-b">
-      <div class="breadcrumbs-text-b">
-        Inicio
-        <img
-          src="assets/icon/svg/chevron-right.svg"
-          class="breadcrumbs-next-svg-b"
-        />
-        <span class="color-blue">Historial de compras</span>
-      </div>
-      <div class="content-title-b">Historial de compras</div>
-
-      <div *ngFor="let cart of iCart" class="cart-block-b">
-        <div class="cart-date-b">{{cart.buyDate}}</div>
-        <div>
-          <div *ngFor="let item of cart.items; let i = index" class="item-content-carrito">
-            <!--<div class="item-cell-img">
-              <img src="assets/imgs/img-prueba.jpg" class="item-img"/>
-            </div>-->
-            <div class="item-cell-text">
-              Estado: {{item.isCancelled ? 'Cancelado' : item.finishDate ?
-                'Finalizado' : 'En curso'}}
-              <div class="item-title">{{item.product}}</div>
-              <div class="item-subtitle"
-                   [routerLink]="['/user/' + item.username + '/detail/' + item.userId]">{{item.username}}</div>
-              <div class="item-div-buttons">
-                <ion-item class="no-padding item-quantity-select">
-                  <ion-label class="quantity-label">Cantidad:</ion-label>
-                  <ion-select
-                    [disabled]="true"
-                    class="quantity-select"
-                    cancelText="Cancelar"
-                    okText="Aceptar"
-                    [(ngModel)]="item.productAmount"
-                  >
-                    <ion-select-option [value]="1">1</ion-select-option>
-                    <ion-select-option [value]="2">2</ion-select-option>
-                    <ion-select-option [value]="3">3</ion-select-option>
-                    <ion-select-option [value]="4">4</ion-select-option>
-                    <ion-select-option [value]="5">5</ion-select-option>
-                    <ion-select-option [value]="6">6</ion-select-option>
-                    <ion-select-option [value]="7">7</ion-select-option>
-                    <ion-select-option [value]="8">8</ion-select-option>
-                    <ion-select-option [value]="9">9</ion-select-option>
-                  </ion-select>
-                </ion-item>
-                <div
-                  *ngIf="!item.isCancelled && !item.finishDate"
-                >
-                  <div
-                    class="cancel-button"
-                    style="width:120px; margin-right: 1em;"
-                    (click)="toggleServiceModal(cart.cartId, item.productId)"
-                  >
-                    Cancelar
+  <div class="container-detail-search">
+    
+    <div class="containter-right">
+    
+      <div class="content-wrapper-b">
+     
+        <div class="content-title-b">Historial de compras</div>
+        <div class="grid-cart">
+          <div *ngFor="let cart of iCart; let i = index" class="cart-block-b">
+            <div *ngFor="let item of cart.items"
+            >
+              <div class="superior">
+              
+                <div class="cart-date-b">
+                  <div class="date"> {{cart.buyDate}}</div>
+                  <div class="capsule">
+                    <div class="canceled" *ngIf="item.isCancelled">
+                      Cancelado
+                    </div>
+                    <div  *ngIf="item.finishDate">
+                      Finalizado</div>
+                      <div class="course" *ngIf="!item.finishDate">
+                        En curso</div>
+                  </div>
+                 </div>
+                <div class="item-title">{{item.product}}</div>
+              </div>
+              <div class="inferior">
+                <div class="item-content-carrito">
+                  <div>
+                    Cantidad: 1
+                  </div>
+                  <div class="buttons-list">
+  
+                      <div class="item-price">
+                        {{(item.productsTotalPrice).toLocaleString('es',
+                          {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
+                      </div>
+                      <div class="listbutton"   >
+                        <div
+                          *ngIf="!item.isCancelled && !item.finishDate "
+                          class="cancel-button"
+                          style=" margin-right: 1em;"
+                          (click)="toggleServiceModal(cart.cartId, item.productId, i)"
+                        >
+                          Cancelar
+                        </div>
+                        <div
+                        *ngIf="!item.isCancelled && !item.finishDate "
+                      >
+                        <div
+                          class="cancel-button finish"
+                          style=" background-color: #1B80F8;"
+                          (click)="terminarServicio(i,item.productId,cart.cartId)"
+                        >
+                          Terminar
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+            
+                </div>
+                <div *ngIf="indexTerminarServicio == i && showFinish">
+                  <div class="div-terminar-servicio">
+                    <div class="div-terminar-servicio-title">Terminar el servicio</div>
+                    <div class="div-terminar-servicio-subtitle">
+                      Tienes en curso este servicio todavía. ¿Quieres realmente terminar
+                      el servicio?
+                      <br/>Si has terminado el servicio confirmalo y posteriormente
+                      podrás valorar al cliente.
+                    </div>
+                  </div>
+                  <div class="div-terminar-servicio-buttons">
+                    <div
+                      class="div-terminar-servicio-button-secondary"
+                      (click)="cancelarServicio()"
+                    >
+                      Cancelar
+                    </div>
+                    <div
+                      class="div-terminar-servicio-button-primary"
+                      (click)="valorarServicio()"
+                    >
+                      Aceptar
+                    </div>
                   </div>
                 </div>
-                <div
-                  *ngIf="!item.isCancelled && !item.finishDate"
-                >
-                  <div
-                    class="cancel-button"
-                    style="width:120px; background-color: #1B80F8;"
-                    (click)="terminarServicio(i,item.productId,cart.cartId)"
-                  >
-                    Terminar
+                <div *ngIf="indexCancelServicio == i && showCancel">
+                  <div class="div-terminar-servicio">
+                    <div class="div-terminar-servicio-title">Cancelar el servicio</div>
+                    <div class="div-terminar-servicio-subtitle">
+                      Tienes en curso este servicio. ¿Quieres realmente cancelar
+                      el servicio?
+                    </div>
+                  </div>
+                  <div class="div-terminar-servicio-buttons">
+                    <div
+                      class="div-terminar-servicio-button-secondary"
+                      (click)="toggleServiceModal()"
+                    >
+                      Cancelar
+                    </div>
+                    <div
+                      class="div-terminar-servicio-button-primary"
+                      (click)="cancelProduct()"
+                    >
+                      Aceptar
+                    </div>
                   </div>
                 </div>
               </div>
-              <div *ngIf="indexTerminarServicio==i">
-                <div class="div-terminar-servicio">
-                  <div class="div-terminar-servicio-title">Terminar el servicio</div>
-                  <div class="div-terminar-servicio-subtitle">
-                    Tienes en curso este servicio todavía. ¿Quieres realmente terminar
-                    el servicio?
-                    <br/>Si has terminado el servicio confirmalo y posteriormente
-                    podrás valorar al cliente.
-                  </div>
-                </div>
-                <div class="div-terminar-servicio-buttons">
-                  <div
-                    class="div-terminar-servicio-button-secondary"
-                    (click)="cancelarServicio()"
-                  >
-                    Cancelar
-                  </div>
-                  <div
-                    class="div-terminar-servicio-button-primary"
-                    (click)="valorarServicio()"
-                  >
-                    Aceptar
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="cancelServiceModalToggle">
-                <div class="div-terminar-servicio">
-                  <div class="div-terminar-servicio-title">Cancelar el servicio</div>
-                  <div class="div-terminar-servicio-subtitle">
-                    Tienes en curso este servicio. ¿Quieres realmente cancelar
-                    el servicio?
-                  </div>
-                </div>
-                <div class="div-terminar-servicio-buttons">
-                  <div
-                    class="div-terminar-servicio-button-secondary"
-                    (click)="toggleServiceModal()"
-                  >
-                    Cancelar
-                  </div>
-                  <div
-                    class="div-terminar-servicio-button-primary"
-                    (click)="cancelProduct()"
-                  >
-                    Aceptar
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item-cell-price">
-              <div class="item-price">
-                {{(item.productsTotalPrice).toLocaleString('es',
-                  {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
-              </div>
+                
+              
             </div>
           </div>
         </div>
+        
+       
       </div>
     </div>
   </div>
 
-</ion-content>
+  <app-footer></app-footer>
+
+</div>
+ 
+
 
 <div *ngIf="indexValorarServicio" class="desktop">
   <div class="modal-back-background">

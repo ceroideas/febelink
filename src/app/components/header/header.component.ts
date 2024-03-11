@@ -31,7 +31,10 @@ export class HeaderComponent {
         const urlParts = event.url.split('/'); // Split the URL
      
         console.log(urlParts)
-        if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('profile')  && !urlParts.includes('user')) {
+        if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('profile') 
+        && !urlParts.includes('services') 
+        && !urlParts.includes('wallet')  && !urlParts.includes('professions')  
+         && !urlParts.includes('user')) {
           this.detachBlock = true;
           this.detached = true;
         } else {
@@ -78,22 +81,41 @@ export class HeaderComponent {
 
 
   // Obtén la referencia al elemento con id 'capa-2'
-    const capa2Element = document.getElementById('search-content');
-    const scrollTopValue = capa2Element.scrollTop;
+    // const capa2Element = document.getElementsByClassName('search-content');
 
-    var miElemento = document.getElementById('miElemento');
+    // for (var i = 0; i < capa2Element.length; i++) {
+    //   // Realizar alguna acción con cada elemento
 
-      const distanceY = capa2Element.scrollTop;
+    //   const distanceY = capa2Element[i].scrollTop;
+    //   const shrinkOn = 100;
+    //   const innerW = window.innerWidth;
+  
+     
+    //   !this.detachBlock 
+    //     ? this.detached = distanceY > shrinkOn
+    //     : null;
+  
+    //   this.reduced = innerW <= 400;
+    // }
+
+    
+
+    const capa2Elements = document.getElementsByClassName('search-content');
+
+    for (var i = 0; i < capa2Elements.length; i++) {
+      const distanceY = capa2Elements[i].scrollTop;;  // Usa window.pageYOffset para obtener la posición de desplazamiento de la ventana
+    
       const shrinkOn = 100;
       const innerW = window.innerWidth;
-  
-     
-     
-      !this.detachBlock 
+    
+      // Asumiendo que 'detachBlock' es una propiedad válida, de lo contrario, ajusta según tu lógica
+      !this.detachBlock
         ? this.detached = distanceY > shrinkOn
         : null;
-  
+    
       this.reduced = innerW <= 400;
+    }
+     
 
    };
 }

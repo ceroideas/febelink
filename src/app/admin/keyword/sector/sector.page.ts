@@ -88,7 +88,9 @@ export class SectorPage implements OnInit {
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
       this.sectorKeys = this.sectorKeys.filter((sector) => {
-        return sector.search_term.toLowerCase().includes(this.filter.toLowerCase());
+        if ( sector?.search_term !== '' && sector?.search_term !== undefined && sector?.search_term !== null){
+          return sector?.search_term?.toLowerCase().includes(this.filter.toLowerCase());
+        }
       })
     } else {
       this.sectorKeys = this.sectorKeys_filtered;
@@ -97,7 +99,7 @@ export class SectorPage implements OnInit {
 
   removeAccents(inputString) {
     // Normalize accented characters to their base form
-    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
     return normalizedString;
   }
 

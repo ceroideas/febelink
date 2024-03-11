@@ -1,0 +1,113 @@
+ <div *ngFor="let cart of iCart" class="cart-block-b">
+        <div class="cart-date-b">{{cart.buyDate}}</div>
+        <div>
+          <div *ngFor="let item of cart.items; let i = index" class="item-content-carrito">
+          
+            <div class="item-cell-text">
+              Estado: {{item.isCancelled ? 'Cancelado' : item.finishDate ?
+                'Finalizado' : 'En curso'}}
+              <div class="item-title">{{item.product}}</div>
+              <div class="item-subtitle"
+                   [routerLink]="['/user/' + item.username + '/detail/' + item.userId]">{{item.username}}</div>
+              <div class="item-div-buttons">
+                <ion-item class="no-padding item-quantity-select">
+                  <ion-label class="quantity-label">Cantidad:</ion-label>
+                  <ion-select
+                    [disabled]="true"
+                    class="quantity-select"
+                    cancelText="Cancelar"
+                    okText="Aceptar"
+                    [(ngModel)]="item.productAmount"
+                  >
+                    <ion-select-option [value]="1">1</ion-select-option>
+                    <ion-select-option [value]="2">2</ion-select-option>
+                    <ion-select-option [value]="3">3</ion-select-option>
+                    <ion-select-option [value]="4">4</ion-select-option>
+                    <ion-select-option [value]="5">5</ion-select-option>
+                    <ion-select-option [value]="6">6</ion-select-option>
+                    <ion-select-option [value]="7">7</ion-select-option>
+                    <ion-select-option [value]="8">8</ion-select-option>
+                    <ion-select-option [value]="9">9</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <div
+                  *ngIf="!item.isCancelled && !item.finishDate"
+                >
+                  <div
+                    class="cancel-button"
+                    style="width:120px; margin-right: 1em;"
+                    (click)="toggleServiceModal(cart.cartId, item.productId)"
+                  >
+                    Cancelar
+                  </div>
+                </div>
+                <div
+                  *ngIf="!item.isCancelled && !item.finishDate"
+                >
+                  <div
+                    class="cancel-button finish"
+                    style="width:120px; background-color: #1B80F8;"
+                    (click)="terminarServicio(i,item.productId,cart.cartId)"
+                  >
+                    Terminar
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="indexTerminarServicio==i">
+                <div class="div-terminar-servicio">
+                  <div class="div-terminar-servicio-title">Terminar el servicio</div>
+                  <div class="div-terminar-servicio-subtitle">
+                    Tienes en curso este servicio todavía. ¿Quieres realmente terminar
+                    el servicio?
+                    <br/>Si has terminado el servicio confirmalo y posteriormente
+                    podrás valorar al cliente.
+                  </div>
+                </div>
+                <div class="div-terminar-servicio-buttons">
+                  <div
+                    class="div-terminar-servicio-button-secondary"
+                    (click)="cancelarServicio()"
+                  >
+                    Cancelar
+                  </div>
+                  <div
+                    class="div-terminar-servicio-button-primary"
+                    (click)="valorarServicio()"
+                  >
+                    Aceptar
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="cancelServiceModalToggle">
+                <div class="div-terminar-servicio">
+                  <div class="div-terminar-servicio-title">Cancelar el servicio</div>
+                  <div class="div-terminar-servicio-subtitle">
+                    Tienes en curso este servicio. ¿Quieres realmente cancelar
+                    el servicio?
+                  </div>
+                </div>
+                <div class="div-terminar-servicio-buttons">
+                  <div
+                    class="div-terminar-servicio-button-secondary"
+                    (click)="toggleServiceModal()"
+                  >
+                    Cancelar
+                  </div>
+                  <div
+                    class="div-terminar-servicio-button-primary"
+                    (click)="cancelProduct()"
+                  >
+                    Aceptar
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item-cell-price">
+              <div class="item-price">
+                {{(item.productsTotalPrice).toLocaleString('es',
+                  {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

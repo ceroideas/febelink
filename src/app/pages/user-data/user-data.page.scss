@@ -210,7 +210,7 @@ ion-header {
 
 .text_label_blue {
   font-size: 14px;
-  color: #1C64F2;
+  color: #76aadb;
 }
 
 .text_label_grey {
@@ -219,7 +219,7 @@ ion-header {
 }
 
 .botonf1 {
-  --background: #1C64F2;
+  --background: #76aadb;
   --color: #FFFFFF;
   --border-radius: 8px;
   width: 100%;
@@ -230,7 +230,7 @@ ion-header {
 }
 
 .botoneditar {
-  --background: #1C64F2;
+  --background: #76aadb;
   --color: #FFFFFF;
   --border-radius: 8px;
   height: 2.5em;
@@ -248,7 +248,7 @@ ion-header {
 
 .botonf2 {
   --background: #FFFFFF;
-  --color: #1C64F2;
+  --color: #76aadb;
   --border-radius: 8px;
   width: 100%;
   margin-left: 1em;
@@ -422,7 +422,7 @@ ion-header {
 }
 .form-group [type]:focus,
 .textarea-group textarea:focus {
-	border-color: #5850eb;
+	border-color: #76aadb;
 }
 
 .textarea-group {
@@ -469,24 +469,25 @@ ion-header {
 	border: 0;
 }
 .checkbox-group input[type="checkbox"]:focus + label:before {
-	border-color: #5850eb;
+	border-color: #76aadb;
 }
 .checkbox-group input[type="checkbox"]:checked + label:before {
 	color: #fff;
 	content: "\2713";
-	background: #5850eb;
-	border-color: #5850eb;
+	background: #76aadb;
+	border-color: #76aadb;
 }
 
 .button2 {
-	font-weight: bold;
-	line-height: 19px;
-	background: #5850eb;
-	border: none;
-	padding: 15px 25px;
-	border-radius: 6px;
-	color: white;
-	width: 100%;
+  font-weight: 700;
+  line-height: 19px;
+  background: #76aadb;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 6px;
+  color: #fff;
+  width: 100%;
+  font-size: 14px;
   margin-top: 33px;
 }
 .image-profile{
@@ -516,6 +517,7 @@ ion-header {
     display: grid;
     grid-gap: 7px;
     grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
   
 	}
 

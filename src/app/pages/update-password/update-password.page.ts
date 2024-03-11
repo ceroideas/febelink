@@ -79,7 +79,7 @@ export class UpdatePasswordPage implements OnInit {
     }
 
     await this.api.updatePasswornd(data).subscribe(data=>{
-     window.location.href = '/'
+     window.location.href = '/login'
     });
   }
 }

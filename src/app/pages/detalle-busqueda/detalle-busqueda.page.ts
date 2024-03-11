@@ -164,8 +164,9 @@ export class DetalleBusquedaPage implements OnInit {
   }
 
   async createChat(ownerUsername: string, ownerUserId: number) {
+
     const {response, error} = await this.chatService.createChat(
-      ownerUserId
+      this.detalle.ownerId
     );
 
     if (response) {
@@ -180,6 +181,7 @@ export class DetalleBusquedaPage implements OnInit {
       this.router.navigate([`chat`]);
     }
   }
+  
 
   removeBlankSpace(term: string): string {
    

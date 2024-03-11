@@ -24,6 +24,7 @@ export class LoBuscamosPorTiPage implements OnInit {
 
   error: any = {}
 
+  servicioFinsish: boolean = false;
   servicioAdded: boolean = false;
   servicioError: boolean = false;
   servicioAddedOther: boolean = false;
@@ -53,7 +54,8 @@ export class LoBuscamosPorTiPage implements OnInit {
 
     this.readUser();
 
-
+    
+    
    
   }
   async readLocations(){
@@ -66,8 +68,6 @@ export class LoBuscamosPorTiPage implements OnInit {
   this.currentUser = {...(await this.utilities.getUserData())};
 
   if ( this.currentUser?.email  !== undefined){
-      
-
 
     //@ts-ignore
     if ( this.currentUser?.nick == undefined || this.currentUser?.nick == null){
@@ -77,8 +77,7 @@ export class LoBuscamosPorTiPage implements OnInit {
       this.name = this.currentUser?.nick;
     }
 
-      //@ts-ignore
-   
+    //@ts-ignore
 
     if ( this.currentUser?.email === undefined || this.currentUser?.email == null){
       this.email =  null;
@@ -149,26 +148,15 @@ export class LoBuscamosPorTiPage implements OnInit {
     
         const {response, error} = await this.servicesSvc.create(productCreate);
 
+        setTimeout(() => {
+          this.loadSend = false
+          this.servicioAdded = true;
+        }, 2000);
         
     
         this.images = []
    
-        this.title = null;
-        this.description = null;
-        this.editorText = null;
-        this.name = null;
-        this.email = null;
-        this.phone = null;
-        this.location = null;
-        this.selectedValue = null;
-
-        setTimeout(() => {
-          this.loadSend = false
-          this.servicioAdded = true;
-        }, 1000);
        
-       
-        this.isTemplate = false;
       } else {
     
 
@@ -201,17 +189,24 @@ export class LoBuscamosPorTiPage implements OnInit {
         this.loadSend = false
         this.servicioError = true;
         this.servicioAdded = false;
+
+        this.servicioFinsish = false;
        
         
       }
        
   }
     
+  finish(){
+    this.servicioAdded = false;
+    this.servicioFinsish = true;
+  }
 
   closeSearch(){
     this.images = []
     this.isTemplate = false;
     this.servicioAdded = false;
+    this.servicioFinsish = false;
 
     this.title = null;
     this.description = null;
@@ -222,6 +217,8 @@ export class LoBuscamosPorTiPage implements OnInit {
     this.location = null;
     this.selectedValue = null;
 
+    window.scrollTo(0, 0);
+
   }
   closeServicioError(){
     this.servicioAdded = false;
@@ -231,6 +228,18 @@ export class LoBuscamosPorTiPage implements OnInit {
 
   goToHome(){
     this.router.navigate(['/']);
+  }
+
+  gotoSearch(){
+
+    const normalizedString = this.title.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
+    if (this.title) {
+      // You can construct the URL for the new route with the parameters
+        const targetRoute = `/listado/${normalizedString}`;
+  
+        // Use the Router to navigate to the new route
+        this.router.navigate([targetRoute]);
+      }
   }
 
 }
