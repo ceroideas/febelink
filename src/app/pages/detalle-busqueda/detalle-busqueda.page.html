@@ -123,7 +123,7 @@
             <div class="name">
               <h2><a [routerLink]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
             </div>
-            <div (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)" class="button-perfil">Ver Perfil</div>
+            <a [href]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
           </div>
           <div class="buttons-avatar buttondesktop">
             <div

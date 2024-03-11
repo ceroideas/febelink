@@ -179,21 +179,29 @@
   <div class="modal-front-content">
     <div class="modal-front-title">Petición Enviada</div>
     <div class="modal-front-subtitle modal-subtitle-margin-a">
-      Se ha enviado tu petición de servicio al destinatario. Pronto el equipo de Febelink se pondrá en contacto contigo.
+      Se ha enviado tu petición de servicio al  equipo de Febelink. Pronto se pondrán en contacto contigo.
       <p>
-      Debes mirar tu email para confirmar la búsqueda y hacer el seguimiento</p>
+      Debes revisar tu email para confirmar la búsqueda y hacer el seguimiento de este.</p>
     </div>
+  </div>
+</div>
+
+
+<div *ngIf="servicioFinsish" class="  modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">Realizar Búsqueda</div>
     
     <div class="modal-front-subtitle modal-subtitle-margin-a">
-      Quieres realizar otra busqueda de otro servicio o ir a la pagina principal?
+      ¿Quieres realizar otra búsqueda de otro servicio o ir a la página principal?
     </div>
     <div class="container-buttons">
-      <div class="modal-button-secondary-b" (click)="closeSearch()">Realizar otra busqueda</div>
-      <div class="modal-button-primary" (click)="goToHome()">Salir</div>
+      <div class="modal-button-secondary-b" (click)="closeSearch()">Realizar otra búsqueda</div>
+      <div class="modal-button-primary" (click)="gotoSearch()">Finalizar</div>
     </div>
    
   </div>
 </div>
+
 
 
 

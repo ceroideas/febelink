@@ -167,7 +167,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
     if (this.searchTerm) {
     // You can construct the URL for the new route with the parameters
-      const targetRoute = `/search/${this.searchTerm}`;
+      const targetRoute = `/listado/${this.searchTerm}`;
 
       // Use the Router to navigate to the new route
       this.router.navigate([targetRoute]);
