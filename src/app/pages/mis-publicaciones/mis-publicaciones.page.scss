@@ -1480,6 +1480,23 @@ ion-header {
                 padding: 0;
                 top: 0;
               }
+              .newbutton{
+                min-height: 94px;
+                box-shadow: #0000001a 0 12px 48px;
+                background: rgb(255,255,255);
+                border-radius: 8px;
+                width: 92%;
+                padding: 0 25px;
+                margin: auto;
+                padding-top: 15px;
+                min-height: 56px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 0;
+                margin-top: 18px;
+
+              }
       
               .valoraciones{
                 min-height: 94px;

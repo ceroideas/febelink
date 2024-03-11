@@ -1,5 +1,8 @@
 .content-background {
   --background: #fcfcfc;
+  overflow: auto;
+    height: 100%;
+    background: #fcfcfc;
 }
 
 @media (min-width: 768px) {
@@ -1522,16 +1525,15 @@
 .page-new-services{
   width: 100%;
   max-width: 900px;
-  margin: auto;
+  margin: 28px auto;
   background: #fff;
   height: -moz-fit-content;
   height: fit-content;
   padding: 22px;
-  margin-top: 28px;
-  margin-bottom: 28px;
   border-radius: 10px;
   z-index: 2;
   position: relative;
+  margin-top: 200px;
   @media only screen and (max-width: 600px) {
     padding: 0;
   }
@@ -2036,13 +2038,13 @@
 }
 .container-detail-profile{
   width: 100%;
-  height: -moz-fit-content;
-  height: fit-content;
-  position: relative;
-  padding: 38px 27px;
-  max-width: 1640px;
-  margin: -298px auto 100px;
-  min-height: calc(70% - 50px);
+    height: -moz-fit-content;
+    height: fit-content;
+    position: relative;
+    padding: 38px 27px;
+    max-width: 1640px;
+    margin: -208px auto 100px;
+    min-height: calc(70% - 50px);
 
   @media only screen and (max-width: 780px) {
     padding: 0px 0px 0;

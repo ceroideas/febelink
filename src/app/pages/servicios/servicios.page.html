@@ -1,4 +1,4 @@
-<div class="container-layer" *ngIf="!isNuevoServicio">
+<div class="container-layer search-content" *ngIf="!isNuevoServicio">
   <div   class="layer-gradient">
     <div    class="eclipse"></div>
   </div>
@@ -277,6 +277,27 @@
   <div class="mobile add-service-floating"  *ngIf="!isNuevoServicio" (click)="selectNuevoServicio()">
     <img class="add-service-svg" src="assets/icon/svg/plus.svg"/>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   </div>
   <app-footer></app-footer>
 </div>
@@ -286,11 +307,7 @@
 
 
 
-
-
-
-
-<ion-content class="content-background" *ngIf="isNuevoServicio" >
+<div class="content-background search-content" *ngIf="isNuevoServicio" >
   <div >
     <div class="page-new-services">
       <div class="header-new-services">
@@ -554,7 +571,11 @@
 
 
   <app-footer></app-footer>
-</ion-content>
+</div>
+
+
+
+
 
 
 
