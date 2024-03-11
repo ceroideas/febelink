@@ -9,7 +9,6 @@
 }
 
 .div-main-back-button {
-  background: #F9FAFB;
   padding: 16px 14px 20px 14px;
   width: 100%;
 }
@@ -64,6 +63,11 @@
   font-size: 24px;
   line-height: 150%;
   color: #111928;
+
+  @media only screen and (max-width: 780px) {
+    width: 97%;
+    margin: auto;
+  }
 }
 
 .wrapper-content {
@@ -79,8 +83,9 @@
   padding: 16px;
   width: 100%;
   background: #FFFFFF;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
+  box-shadow: #0000001a 0 12px 48px;
+  background: rgb(255,255,255);
   margin-bottom: 22px;
 }
 
@@ -270,6 +275,11 @@
 .div-main-back-button-b {
   padding: 45px 60px 34px 60px;
   width: 100%;
+
+  @media only screen and (max-width: 780px) {
+    width: 97%;
+    margin: auto;
+  }
 }
 
 .breadcrumbs-text-b {
@@ -330,4 +340,74 @@
   left: 0px;
   width: 100%;
   padding: 0px 16px;
+}
+:host{
+  z-index: 101;
+  width: 100%;
+  position: relative;
+  display: block;
+  background: #fcfffe;
+  contain: unset;
+  height: 100%;
+
+  
+  .container-general{
+      width: 100%;
+      height: -moz-fit-content;
+      height: 100%;
+      position: relative;
+      /* display: flex; */
+      /* padding: 38px 27px; */
+      /* max-width: 1500px; */
+      margin: auto;
+      position: absolute;
+      overflow: auto;
+
+      .layer-gradient{
+          height: 300px;
+          width: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 50px;
+          background:linear-gradient(to top,rgb(255,255,255),rgb(208,230,255));
+         
+      }
+     /* Media query for screens with a maximum width of 600px */
+      @media only screen and (max-width: 780px) {
+          padding-bottom: 117px
+      }
+   
+
+
+      .container-detail-search{
+          width: 100%;
+          height: fit-content;
+          position: relative;
+          display: flex;
+          padding: 38px 27px;
+          max-width: 1485px;
+          margin: auto;
+          margin-top: -150px;
+          margin-bottom: 100px;
+
+          /* Media query for screens with a maximum width of 600px */
+          @media only screen and (max-width: 1000px) {
+            display: flex;
+            flex-direction: column;
+            padding: 38px 54px 0;
+            /* Styles for screens with a width up to 600px */
+          }
+          @media only screen and (max-width: 780px) {
+            padding: 0px 0px 0;
+    
+          }
+        
+      }
+  }
+}
+.wfull{
+  width: 100%;
+  margin-top: -86px;
 }

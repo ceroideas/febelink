@@ -30,10 +30,10 @@ export class HeaderComponent {
       if (event instanceof NavigationEnd) {
         const urlParts = event.url.split('/'); // Split the URL
      
-        console.log(urlParts)
         if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('profile') 
         && !urlParts.includes('services') 
         && !urlParts.includes('wallet')  && !urlParts.includes('professions')  
+        && !urlParts.includes('subscriptions')
          && !urlParts.includes('user')) {
           this.detachBlock = true;
           this.detached = true;

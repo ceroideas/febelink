@@ -113,7 +113,8 @@ export class AppComponent implements OnInit, OnDestroy {
      
         this.onHome = (e.url === '/' || urlParts.includes('user')
         || urlParts.includes('services')
-         || urlParts.includes('wallet') || urlParts.includes('profile')
+        || urlParts.includes('wallet') || 
+        urlParts.includes('profile')|| urlParts.includes('subscriptions')
         || urlParts.includes('professions'));
       } 
     });
