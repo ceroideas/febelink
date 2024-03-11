@@ -1,63 +1,280 @@
-<ion-content class="background-content">
 
-  <!-- Mobile version -->
-  <div class="mobile">
-    <div class="div-main-back-button">
-      <div class="breadcrumbs-text">
-        <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg"/>
-        Inicio
-        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
+<div id="search-content" class="search-content container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  <div class="container-detail-search">
+  <!-- <ion-content class="background-content"> -->
+
+    <!-- Mobile version -->
+    <div class="mobile">
+      <div class="div-main-back-button">
+        <div class="breadcrumbs-text">
+          <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg"/>
+          Inicio
+          <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
+          Mi suscripción
+        </div>
+      </div>
+
+      <div class="title-suscription">
         Mi suscripción
       </div>
-    </div>
 
-    <div class="title-suscription">
-      Mi suscripción
-    </div>
+      <div *ngIf="!suscriptionChange && subLoaded" class="wrapper-content">
+        <div *ngIf="subscriptions?.length == 0" class="box-suscription">
+          <div class="box-title">
+            Suscripción Gratuita
+          </div>
+          <div class="box-price-a">
+            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+          </div>
+          <div class="table-options">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Los usuarios ahora pueden encontrar tu perfil profesional por tu sector y localidad, así como darte una
+              valoración y dejarte reseñas
+            </div>
+          </div>
+          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+            Cambiar
+          </div>
+        </div>
 
-    <div *ngIf="!suscriptionChange && subLoaded" class="wrapper-content">
-      <div *ngIf="subscriptions?.length == 0" class="box-suscription">
-        <div class="box-title">
-          Suscripción Gratuita
-        </div>
-        <div class="box-price-a">
-          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+        <div  class="box-suscription box-height1">
+          <div class="box-title">
+            Suscripción Super Pro
           </div>
-          <div class="table-cell-right">
-            Los usuarios ahora pueden encontrar tu perfil profesional por tu sector y localidad, así como darte una
-            valoración y dejarte reseñas
+          <!-- <div class="box-price-a">
+            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+          </div> -->
+          <div class="table-options">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Los mejores profesionales de cada sector en cada localidad.
+            </div>
+          </div>
+          <div class="box-button disabled">
+            Solicita más información
           </div>
         </div>
-        <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-          Cambiar
-        </div>
+        <ng-container *ngFor="let sub of subscriptions">
+          <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription">
+            <div class="box-title-b">
+              Suscripción<br>PRO
+            </div>
+            <div class="table-offer">
+              <div class="table-offer-left">
+                <span class="box-price-b-big text-cross-line">29,95€</span>/mes
+              </div>
+            </div>
+            <div class="box-offer-custom">
+              30 días gratis - Después 3 meses por sólo 9,95€/mes
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Edita las plantillas con tus servicios
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Obtén la marca PRO en tu perfil
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                PROMO: añade una Profesión y una Oferta extra
+              </div>
+            </div>
+            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+              Cambiar
+            </div>
+          </div>
+          <div *ngIf="sub.subscriptionName == 'sub-plus'" class="box-suscription border-wrapper">
+            <div class="box-title-b">
+              Suscripción<br>PLUS
+            </div>
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Añade tus Servicios y Ofertas Personalizadas
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Aporta tu valor añadido
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Diferénciate con tus mejores virtudes
+              </div>
+            </div>
+            <div class="box-quantity">
+              Cantidad
+            </div>
+            <div class="padding-select">
+              <ion-item class="no-padding modal-add-price-select">
+                <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select" placeholder="1"
+                            cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option [value]="1">1</ion-select-option>
+                  <ion-select-option [value]="2">2</ion-select-option>
+                  <ion-select-option [value]="3">3</ion-select-option>
+                  <ion-select-option [value]="4">4</ion-select-option>
+                  <ion-select-option [value]="5">5</ion-select-option>
+                  <ion-select-option [value]="6">6</ion-select-option>
+                  <ion-select-option [value]="7">7</ion-select-option>
+                  <ion-select-option [value]="8">8</ion-select-option>
+                  <ion-select-option [value]="9">9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+              Cambiar
+            </div>
+          </div>
+          <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper">
+            <div class="box-title-b">
+              Profesiones
+            </div>
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            </div>
+            <div class="box-offer">
+              Gratis
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Añade profesiones relacionadas
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Amplía el campo de tus actividades
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Incrementa tus posibilidades de venta
+              </div>
+            </div>
+            <div class="box-quantity">
+              Cantidad
+            </div>
+            <div class="padding-select">
+              <ion-item class="no-padding modal-add-price-select">
+                <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select" placeholder="1"
+                            cancelText="Cancelar"
+                            okText="Aceptar">
+                  <ion-select-option [value]="1">1</ion-select-option>
+                  <ion-select-option [value]="2">2</ion-select-option>
+                  <ion-select-option [value]="3">3</ion-select-option>
+                  <ion-select-option [value]="4">4</ion-select-option>
+                  <ion-select-option [value]="5">5</ion-select-option>
+                  <ion-select-option [value]="6">6</ion-select-option>
+                  <ion-select-option [value]="7">7</ion-select-option>
+                  <ion-select-option [value]="8">8</ion-select-option>
+                  <ion-select-option [value]="9">9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+              Cambiar
+            </div>
+          </div>
+          <div *ngIf="sub.subscriptionName.includes('sub-range')" class="box-suscription border-wrapper">
+            <div class="box-title-b">
+              Disponibilidad Geográfica
+            </div>
+            <div class="box-price-b">
+              <ng-container *ngIf="sub.subscriptionName == 'sub-range-region'">
+                <span class="box-price-b-big text-cross-line">9,95€</span>/mes
+              </ng-container>
+              <ng-container *ngIf="sub.subscriptionName == 'sub-range-country'">
+                <span class="box-price-b-big text-cross-line">19,95€</span>/mes
+              </ng-container>
+            </div>
+            <div class="box-offer">
+              Gratis
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Extiende el alcance de tu actividad
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Expande tu negocio
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Completa tus resultados
+              </div>
+            </div>
+            <div class="box-quantity">
+              Alcance
+            </div>
+            <div class="padding-select">
+              <ion-item class="no-padding modal-add-price-select">
+                <ion-select [(ngModel)]="sub.subscriptionName" [disabled]="!suscriptionChange" class="price-select"
+                            placeholder="Nacional" cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option value="sub-range-region">Regional</ion-select-option>
+                  <ion-select-option value="sub-range-country">Nacional</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+              Cambiar
+            </div>
+          </div>
+        </ng-container>
       </div>
 
-      <div  class="box-suscription box-height1">
-        <div class="box-title">
-          Suscripción Super Pro
-        </div>
-        <!-- <div class="box-price-a">
-          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-        </div> -->
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Los mejores profesionales de cada sector en cada localidad.
-          </div>
-        </div>
-        <div class="box-button disabled">
-          Solicita más información
-        </div>
-      </div>
-      <ng-container *ngFor="let sub of subscriptions">
-        <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription">
+      <div *ngIf="suscriptionChange" class="wrapper-content">
+        <div *ngIf="subscriptions.length == 0" class="box-suscription">
           <div class="box-title-b">
             Suscripción<br>PRO
           </div>
@@ -93,468 +310,474 @@
               PROMO: añade una Profesión y una Oferta extra
             </div>
           </div>
-          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-            Cambiar
-          </div>
-        </div>
-        <div *ngIf="sub.subscriptionName == 'sub-plus'" class="box-suscription border-wrapper">
-          <div class="box-title-b">
-            Suscripción<br>PLUS
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Añade tus Servicios y Ofertas Personalizadas
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Aporta tu valor añadido
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Diferénciate con tus mejores virtudes
-            </div>
-          </div>
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select" placeholder="1"
-                          cancelText="Cancelar" okText="Aceptar">
-                <ion-select-option [value]="1">1</ion-select-option>
-                <ion-select-option [value]="2">2</ion-select-option>
-                <ion-select-option [value]="3">3</ion-select-option>
-                <ion-select-option [value]="4">4</ion-select-option>
-                <ion-select-option [value]="5">5</ion-select-option>
-                <ion-select-option [value]="6">6</ion-select-option>
-                <ion-select-option [value]="7">7</ion-select-option>
-                <ion-select-option [value]="8">8</ion-select-option>
-                <ion-select-option [value]="9">9</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-            Cambiar
-          </div>
-        </div>
-        <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper">
-          <div class="box-title-b">
-            Profesiones
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
-          </div>
-          <div class="box-offer">
-            Gratis
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Añade profesiones relacionadas
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Amplía el campo de tus actividades
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Incrementa tus posibilidades de venta
-            </div>
-          </div>
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select" placeholder="1"
-                          cancelText="Cancelar"
-                          okText="Aceptar">
-                <ion-select-option [value]="1">1</ion-select-option>
-                <ion-select-option [value]="2">2</ion-select-option>
-                <ion-select-option [value]="3">3</ion-select-option>
-                <ion-select-option [value]="4">4</ion-select-option>
-                <ion-select-option [value]="5">5</ion-select-option>
-                <ion-select-option [value]="6">6</ion-select-option>
-                <ion-select-option [value]="7">7</ion-select-option>
-                <ion-select-option [value]="8">8</ion-select-option>
-                <ion-select-option [value]="9">9</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-            Cambiar
-          </div>
-        </div>
-        <div *ngIf="sub.subscriptionName.includes('sub-range')" class="box-suscription border-wrapper">
-          <div class="box-title-b">
-            Disponibilidad Geográfica
-          </div>
-          <div class="box-price-b">
-            <ng-container *ngIf="sub.subscriptionName == 'sub-range-region'">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes
-            </ng-container>
-            <ng-container *ngIf="sub.subscriptionName == 'sub-range-country'">
-              <span class="box-price-b-big text-cross-line">19,95€</span>/mes
-            </ng-container>
-          </div>
-          <div class="box-offer">
-            Gratis
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Extiende el alcance de tu actividad
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Expande tu negocio
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Completa tus resultados
-            </div>
-          </div>
-          <div class="box-quantity">
-            Alcance
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [(ngModel)]="sub.subscriptionName" [disabled]="!suscriptionChange" class="price-select"
-                          placeholder="Nacional" cancelText="Cancelar" okText="Aceptar">
-                <ion-select-option value="sub-range-region">Regional</ion-select-option>
-                <ion-select-option value="sub-range-country">Nacional</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-            Cambiar
-          </div>
-        </div>
-      </ng-container>
-    </div>
-
-    <div *ngIf="suscriptionChange" class="wrapper-content">
-      <div *ngIf="subscriptions.length == 0" class="box-suscription">
-        <div class="box-title-b">
-          Suscripción<br>PRO
-        </div>
-        <div class="table-offer">
-          <div class="table-offer-left">
-            <span class="box-price-b-big text-cross-line">29,95€</span>/mes
-          </div>
-        </div>
-        <div class="box-offer-custom">
-          30 días gratis - Después 3 meses por sólo 9,95€/mes
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Edita las plantillas con tus servicios
-          </div>
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Obtén la marca PRO en tu perfil
-          </div>
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            PROMO: añade una Profesión y una Oferta extra
-          </div>
-        </div>
-        <div class="box-button-primary"
-             (click)="subscribe('sub-pro', 1)">
-          Seleccionar
-        </div>
-      </div>
-      <ng-container>
-        <div *ngIf="proUser" class="box-suscription border-wrapper">
-          <div class="box-title-b">
-            Suscripción<br>PLUS
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Añade tus Servicios y Ofertas Personalizadas
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Aporta tu valor añadido
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Diferénciate con tus mejores virtudes
-            </div>
-          </div>
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [value]="findSubscription('sub-plus')?.amount"
-                          [disabled]="!suscriptionChange" class="price-select" placeholder="- Selecciona una cantidad -"
-                          cancelText="Cancelar" okText="Aceptar" #plus>
-                <ion-select-option [value]="1">1</ion-select-option>
-                <ion-select-option [value]="2">2</ion-select-option>
-                <ion-select-option [value]="3">3</ion-select-option>
-                <ion-select-option [value]="4">4</ion-select-option>
-                <ion-select-option [value]="5">5</ion-select-option>
-                <ion-select-option [value]="6">6</ion-select-option>
-                <ion-select-option [value]="7">7</ion-select-option>
-                <ion-select-option [value]="8">8</ion-select-option>
-                <ion-select-option [value]="9">9</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div *ngIf="plus.value" class="box-button-primary"
-               (click)="subscribe('sub-plus', plus.value)">
+          <div class="box-button-primary"
+              (click)="subscribe('sub-pro', 1)">
             Seleccionar
           </div>
         </div>
-        <div *ngIf="proUser" class="box-suscription border-wrapper">
-          <div class="box-title-b">
-            Profesiones
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
-          </div>
-          <div class="box-offer">
-            Gratis
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+        <ng-container>
+          <div *ngIf="proUser" class="box-suscription border-wrapper">
+            <div class="box-title-b">
+              Suscripción<br>PLUS
             </div>
-            <div class="table-cell-right">
-              Añade profesiones relacionadas
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Añade tus Servicios y Ofertas Personalizadas
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Aporta tu valor añadido
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Diferénciate con tus mejores virtudes
+              </div>
+            </div>
+            <div class="box-quantity">
+              Cantidad
+            </div>
+            <div class="padding-select">
+              <ion-item class="no-padding modal-add-price-select">
+                <ion-select [value]="findSubscription('sub-plus')?.amount"
+                            [disabled]="!suscriptionChange" class="price-select" placeholder="- Selecciona una cantidad -"
+                            cancelText="Cancelar" okText="Aceptar" #plus>
+                  <ion-select-option [value]="1">1</ion-select-option>
+                  <ion-select-option [value]="2">2</ion-select-option>
+                  <ion-select-option [value]="3">3</ion-select-option>
+                  <ion-select-option [value]="4">4</ion-select-option>
+                  <ion-select-option [value]="5">5</ion-select-option>
+                  <ion-select-option [value]="6">6</ion-select-option>
+                  <ion-select-option [value]="7">7</ion-select-option>
+                  <ion-select-option [value]="8">8</ion-select-option>
+                  <ion-select-option [value]="9">9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div *ngIf="plus.value" class="box-button-primary"
+                (click)="subscribe('sub-plus', plus.value)">
+              Seleccionar
             </div>
           </div>
-          <div class="table-options-b">
+          <div *ngIf="proUser" class="box-suscription border-wrapper">
+            <div class="box-title-b">
+              Profesiones
+            </div>
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            </div>
+            <div class="box-offer">
+              Gratis
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Añade profesiones relacionadas
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Amplía el campo de tus actividades
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Incrementa tus posibilidades de venta
+              </div>
+            </div>
+            <div class="box-quantity">
+              Cantidad
+            </div>
+            <div class="padding-select">
+              <ion-item class="no-padding modal-add-price-select">
+                <ion-select [value]="findSubscription('sub-prof')?.amount"
+                            [disabled]="!suscriptionChange" class="price-select" placeholder="- Selecciona una cantidad -"
+                            cancelText="Cancelar"
+                            okText="Aceptar"
+                            #prof>
+                  <ion-select-option [value]="1">1</ion-select-option>
+                  <ion-select-option [value]="2">2</ion-select-option>
+                  <ion-select-option [value]="3">3</ion-select-option>
+                  <ion-select-option [value]="4">4</ion-select-option>
+                  <ion-select-option [value]="5">5</ion-select-option>
+                  <ion-select-option [value]="6">6</ion-select-option>
+                  <ion-select-option [value]="7">7</ion-select-option>
+                  <ion-select-option [value]="8">8</ion-select-option>
+                  <ion-select-option [value]="9">9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div *ngIf="prof.value" class="box-button-primary"
+                (click)="subscribe('sub-prof', prof.value)">
+              Seleccionar
+            </div>
+          </div>
+          <div *ngIf="proUser" class="box-suscription border-wrapper">
+            <div class="box-title-b">
+              Disponibilidad Geográfica
+            </div>
+            <div class="box-price-b">
+              <ng-container *ngIf="geoDisp.value != 'sub-range-country'">
+                <span class="box-price-b-big text-cross-line">9,95€</span>/mes
+              </ng-container>
+              <ng-container *ngIf="geoDisp.value == 'sub-range-country'">
+                <span class="box-price-b-big text-cross-line">19,95€</span>/mes
+              </ng-container>
+            </div>
+            <div class="box-offer">
+              Gratis
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Extiende el alcance de tu actividad
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Expande tu negocio
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Completa tus resultados
+              </div>
+            </div>
+            <div class="box-quantity">
+              Alcance
+            </div>
+            <div class="padding-select">
+              <ion-item class="no-padding modal-add-price-select">
+                <ion-select [value]="findSubscription('sub-range')?.subscriptionName" #geoDisp
+                            [disabled]="!suscriptionChange" class="price-select"
+                            placeholder="- Selecciona un rango -" cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option selected disabled>- Selecciona un rango -</ion-select-option>
+                  <ion-select-option value="sub-range-region">Regional</ion-select-option>
+                  <ion-select-option value="sub-range-country">Nacional</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div *ngIf="geoDisp.value" class="box-button-primary"
+                (click)="subscribe(geoDisp.value, 1)">
+              Seleccionar
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </div>
+
+    <!-- ------------------------ -->
+    <!-- Desktop version -->
+    <div class="desktop wfull">
+      <div class="div-main-back-button-b">
+        <div class="breadcrumbs-text-b">
+          Inicio
+          <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg-b"/>
+          <span class="breadcrumbs-color-blue">Mi suscripción</span>
+        </div>
+      </div>
+
+      <div class="title-suscription-b">
+        Mi suscripción
+      </div>
+
+      <div *ngIf="!suscriptionChange && subLoaded" style="display:block;width:100%;padding:0px 60px 24px 60px;">
+        <div *ngIf="subscriptions?.length == 0" class="box-suscription box-same-height">
+          <div class="box-title">
+            Suscripción Gratuita
+          </div>
+          <div class="box-price-a">
+            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+          </div>
+          <div class="table-options">
             <div class="table-cell-left">
               <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Amplía el campo de tus actividades
+              Los usuarios ahora pueden encontrar tu perfil profesional por tu sector y localidad, así como darte una
+              valoración y dejarte reseñas
             </div>
           </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+          <div class="position-bottom">
+            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+              Cambiar
             </div>
-            <div class="table-cell-right">
-              Incrementa tus posibilidades de venta
-            </div>
-          </div>
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [value]="findSubscription('sub-prof')?.amount"
-                          [disabled]="!suscriptionChange" class="price-select" placeholder="- Selecciona una cantidad -"
-                          cancelText="Cancelar"
-                          okText="Aceptar"
-                          #prof>
-                <ion-select-option [value]="1">1</ion-select-option>
-                <ion-select-option [value]="2">2</ion-select-option>
-                <ion-select-option [value]="3">3</ion-select-option>
-                <ion-select-option [value]="4">4</ion-select-option>
-                <ion-select-option [value]="5">5</ion-select-option>
-                <ion-select-option [value]="6">6</ion-select-option>
-                <ion-select-option [value]="7">7</ion-select-option>
-                <ion-select-option [value]="8">8</ion-select-option>
-                <ion-select-option [value]="9">9</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div *ngIf="prof.value" class="box-button-primary"
-               (click)="subscribe('sub-prof', prof.value)">
-            Seleccionar
           </div>
         </div>
-        <div *ngIf="proUser" class="box-suscription border-wrapper">
-          <div class="box-title-b">
-            Disponibilidad Geográfica
+
+
+        <div  class="box-suscription box-same-height">
+          <div class="box-title">
+            Suscripción Super Pro
           </div>
-          <div class="box-price-b">
-            <ng-container *ngIf="geoDisp.value != 'sub-range-country'">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes
-            </ng-container>
-            <ng-container *ngIf="geoDisp.value == 'sub-range-country'">
-              <span class="box-price-b-big text-cross-line">19,95€</span>/mes
-            </ng-container>
-          </div>
-          <div class="box-offer">
-            Gratis
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Extiende el alcance de tu actividad
-            </div>
-          </div>
-          <div class="table-options-b">
+          <!-- <div class="box-price-a">
+            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+          </div> -->
+          <div class="table-options">
             <div class="table-cell-left">
               <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Expande tu negocio
+              Los mejores profesionales de cada sector en cada localidad.
             </div>
           </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Completa tus resultados
+          <div class="position-bottom">
+            <div class="box-button disabled">
+              Solicita más información
             </div>
           </div>
-          <div class="box-quantity">
-            Alcance
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [value]="findSubscription('sub-range')?.subscriptionName" #geoDisp
-                          [disabled]="!suscriptionChange" class="price-select"
-                          placeholder="- Selecciona un rango -" cancelText="Cancelar" okText="Aceptar">
-                <ion-select-option selected disabled>- Selecciona un rango -</ion-select-option>
-                <ion-select-option value="sub-range-region">Regional</ion-select-option>
-                <ion-select-option value="sub-range-country">Nacional</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div *ngIf="geoDisp.value" class="box-button-primary"
-               (click)="subscribe(geoDisp.value, 1)">
-            Seleccionar
-          </div>
         </div>
-      </ng-container>
 
-    </div>
-
-  </div>
-
-  <!-- ------------------------ -->
-  <!-- Desktop version -->
-  <div class="desktop">
-    <div class="div-main-back-button-b">
-      <div class="breadcrumbs-text-b">
-        Inicio
-        <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg-b"/>
-        <span class="breadcrumbs-color-blue">Mi suscripción</span>
+        <ng-container *ngFor="let sub of subscriptions">
+          <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription border-wrapper-b box-same-height">
+            <div class="box-title-b">
+              Suscripción<br>PRO
+            </div>
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">29,95€</span>/mes
+            </div>
+            <div class="box-offer-custom">
+              30 días gratis - Después 3 meses por sólo 9,95€/mes
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Edita las plantillas con tus servicios
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Obtén la marca PRO en tu perfil
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                PROMO: añade una Profesión y una Oferta extra
+              </div>
+            </div>
+            <div class="position-bottom">
+              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+                Cambiar
+              </div>
+            </div>
+          </div>
+          <div *ngIf="sub.subscriptionName == 'sub-plus'" class="box-suscription border-wrapper-b box-same-height">
+            <div class="box-title-b">
+              Suscripción<br>PLUS
+            </div>
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Añade tus Servicios y Ofertas Personalizadas
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Aporta tu valor añadido
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Diferénciate con tus mejores virtudes
+              </div>
+            </div>
+            <div class="position-bottom">
+              <div class="box-quantity">
+                Cantidad
+              </div>
+              <div class="padding-select">
+                <ion-item class="no-padding modal-add-price-select">
+                  <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select"
+                              placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                    <ion-select-option [value]="1">1</ion-select-option>
+                    <ion-select-option [value]="2">2</ion-select-option>
+                    <ion-select-option [value]="3">3</ion-select-option>
+                    <ion-select-option [value]="4">4</ion-select-option>
+                    <ion-select-option [value]="5">5</ion-select-option>
+                    <ion-select-option [value]="6">6</ion-select-option>
+                    <ion-select-option [value]="7">7</ion-select-option>
+                    <ion-select-option [value]="8">8</ion-select-option>
+                    <ion-select-option [value]="9">9</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+                Cambiar
+              </div>
+            </div>
+          </div>
+          <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper-b box-same-height">
+            <div class="box-title-b">
+              Profesiones
+            </div>
+            <div class="box-price-b">
+              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            </div>
+            <div class="box-offer">
+              Gratis
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Añade profesiones relacionadas
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Amplía el campo de tus actividades
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Incrementa tus posibilidades de venta
+              </div>
+            </div>
+            <div class="position-bottom">
+              <div class="box-quantity">
+                Cantidad
+              </div>
+              <div class="padding-select">
+                <ion-item class="no-padding modal-add-price-select">
+                  <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select"
+                              placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                    <ion-select-option [value]="1">1</ion-select-option>
+                    <ion-select-option [value]="2">2</ion-select-option>
+                    <ion-select-option [value]="3">3</ion-select-option>
+                    <ion-select-option [value]="4">4</ion-select-option>
+                    <ion-select-option [value]="5">5</ion-select-option>
+                    <ion-select-option [value]="6">6</ion-select-option>
+                    <ion-select-option [value]="7">7</ion-select-option>
+                    <ion-select-option [value]="8">8</ion-select-option>
+                    <ion-select-option [value]="9">9</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+                Cambiar
+              </div>
+            </div>
+          </div>
+          <div *ngIf="sub.subscriptionName.includes('sub-range')"
+              class="box-suscription border-wrapper-b box-same-height">
+            <div class="box-title-b">
+              Disponibilidad Geográfica
+            </div>
+            <div class="box-price-b">
+              <ng-container *ngIf="sub.subscriptionName == 'sub-range-region'">
+                <span class="box-price-b-big text-cross-line">9,95€</span>/mes
+              </ng-container>
+              <ng-container *ngIf="sub.subscriptionName == 'sub-range-country'">
+                <span class="box-price-b-big text-cross-line">19,95€</span>/mes
+              </ng-container>
+            </div>
+            <div class="box-offer">
+              Gratis
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Extiende el alcance de tu actividad
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Expande tu negocio
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Completa tus resultados
+              </div>
+            </div>
+            <div class="position-bottom">
+              <div class="box-quantity">
+                Cantidad
+              </div>
+              <div class="padding-select">
+                <ion-item class="no-padding modal-add-price-select">
+                  <ion-select [(ngModel)]="sub.subscriptionName" [disabled]="!suscriptionChange" class="price-select"
+                              placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                    <ion-select-option value="sub-range-region">Regional</ion-select-option>
+                    <ion-select-option value="sub-range-country">Nacional</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
+                Cambiar
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
-    </div>
 
-    <div class="title-suscription-b">
-      Mi suscripción
-    </div>
-
-    <div *ngIf="!suscriptionChange && subLoaded" style="display:block;width:100%;padding:0px 60px 24px 60px;">
-      <div *ngIf="subscriptions?.length == 0" class="box-suscription box-same-height">
-        <div class="box-title">
-          Suscripción Gratuita
-        </div>
-        <div class="box-price-a">
-          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Los usuarios ahora pueden encontrar tu perfil profesional por tu sector y localidad, así como darte una
-            valoración y dejarte reseñas
-          </div>
-        </div>
-        <div class="position-bottom">
-          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-            Cambiar
-          </div>
-        </div>
-      </div>
-
-
-      <div  class="box-suscription box-same-height">
-        <div class="box-title">
-          Suscripción Super Pro
-        </div>
-        <!-- <div class="box-price-a">
-          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-        </div> -->
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Los mejores profesionales de cada sector en cada localidad.
-          </div>
-        </div>
-        <div class="position-bottom">
-          <div class="box-button disabled">
-            Solicita más información
-          </div>
-        </div>
-      </div>
-
-      <ng-container *ngFor="let sub of subscriptions">
-        <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription border-wrapper-b box-same-height">
+      <div *ngIf="suscriptionChange" style="display:block;width:100%;padding:0px 60px 24px 60px;">
+        <div *ngIf="subscriptions?.length == 0" class="box-suscription border-wrapper-b box-same-height">
           <div class="box-title-b">
             Suscripción<br>PRO
           </div>
@@ -588,13 +811,12 @@
               PROMO: añade una Profesión y una Oferta extra
             </div>
           </div>
-          <div class="position-bottom">
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
-            </div>
+          <div class="box-button-primary"
+              (click)="subscribe('sub-pro', 1)">
+            Seleccionar
           </div>
         </div>
-        <div *ngIf="sub.subscriptionName == 'sub-plus'" class="box-suscription border-wrapper-b box-same-height">
+        <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
           <div class="box-title-b">
             Suscripción<br>PLUS
           </div>
@@ -631,8 +853,9 @@
             </div>
             <div class="padding-select">
               <ion-item class="no-padding modal-add-price-select">
-                <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select"
-                            placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                <ion-select [value]="findSubscription('sub-plus')?.amount" [disabled]="!suscriptionChange"
+                            class="price-select"
+                            placeholder="- Selecciona una cantidad -" cancelText="Cancelar" okText="Aceptar" #plusDesktop>
                   <ion-select-option [value]="1">1</ion-select-option>
                   <ion-select-option [value]="2">2</ion-select-option>
                   <ion-select-option [value]="3">3</ion-select-option>
@@ -645,12 +868,13 @@
                 </ion-select>
               </ion-item>
             </div>
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
+            <div *ngIf="plusDesktop.value" class="box-button-primary"
+                (click)="subscribe('sub-plus', plusDesktop.value)">
+              Seleccionar
             </div>
           </div>
         </div>
-        <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper-b box-same-height">
+        <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
           <div class="box-title-b">
             Profesiones
           </div>
@@ -690,8 +914,9 @@
             </div>
             <div class="padding-select">
               <ion-item class="no-padding modal-add-price-select">
-                <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select"
-                            placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                <ion-select [value]="findSubscription('sub-prof')?.amount" [disabled]="!suscriptionChange"
+                            class="price-select"
+                            placeholder="- Selecciona una cantidad -" cancelText="Cancelar" okText="Aceptar" #profDesktop>
                   <ion-select-option [value]="1">1</ion-select-option>
                   <ion-select-option [value]="2">2</ion-select-option>
                   <ion-select-option [value]="3">3</ion-select-option>
@@ -704,21 +929,21 @@
                 </ion-select>
               </ion-item>
             </div>
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
+            <div *ngIf="profDesktop.value" class="box-button-primary"
+                (click)="subscribe('sub-prof', profDesktop.value)">
+              Seleccionar
             </div>
           </div>
         </div>
-        <div *ngIf="sub.subscriptionName.includes('sub-range')"
-             class="box-suscription border-wrapper-b box-same-height">
+        <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
           <div class="box-title-b">
             Disponibilidad Geográfica
           </div>
           <div class="box-price-b">
-            <ng-container *ngIf="sub.subscriptionName == 'sub-range-region'">
+            <ng-container *ngIf="geoDispDesktop.value != 'sub-range-country'">
               <span class="box-price-b-big text-cross-line">9,95€</span>/mes
             </ng-container>
-            <ng-container *ngIf="sub.subscriptionName == 'sub-range-country'">
+            <ng-container *ngIf="geoDispDesktop.value == 'sub-range-country'">
               <span class="box-price-b-big text-cross-line">19,95€</span>/mes
             </ng-container>
           </div>
@@ -755,240 +980,23 @@
             </div>
             <div class="padding-select">
               <ion-item class="no-padding modal-add-price-select">
-                <ion-select [(ngModel)]="sub.subscriptionName" [disabled]="!suscriptionChange" class="price-select"
-                            placeholder="1" cancelText="Cancelar" okText="Aceptar">
+                <ion-select [value]="findSubscription('sub-range')?.subscriptionName" #geoDispDesktop
+                            [disabled]="!suscriptionChange"
+                            class="price-select"
+                            placeholder="- Selecciona un rango -" cancelText="Cancelar" okText="Aceptar">
                   <ion-select-option value="sub-range-region">Regional</ion-select-option>
                   <ion-select-option value="sub-range-country">Nacional</ion-select-option>
                 </ion-select>
               </ion-item>
             </div>
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
+            <div *ngIf="geoDispDesktop.value" class="box-button-primary"
+                (click)="subscribe(geoDispDesktop.value, 1)">
+              Seleccionar
             </div>
           </div>
         </div>
-      </ng-container>
-    </div>
-
-    <div *ngIf="suscriptionChange" style="display:block;width:100%;padding:0px 60px 24px 60px;">
-      <div *ngIf="subscriptions?.length == 0" class="box-suscription border-wrapper-b box-same-height">
-        <div class="box-title-b">
-          Suscripción<br>PRO
-        </div>
-        <div class="box-price-b">
-          <span class="box-price-b-big text-cross-line">29,95€</span>/mes
-        </div>
-        <div class="box-offer-custom">
-          30 días gratis - Después 3 meses por sólo 9,95€/mes
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Edita las plantillas con tus servicios
-          </div>
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Obtén la marca PRO en tu perfil
-          </div>
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            PROMO: añade una Profesión y una Oferta extra
-          </div>
-        </div>
-        <div class="box-button-primary"
-             (click)="subscribe('sub-pro', 1)">
-          Seleccionar
-        </div>
-      </div>
-      <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
-        <div class="box-title-b">
-          Suscripción<br>PLUS
-        </div>
-        <div class="box-price-b">
-          <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Añade tus Servicios y Ofertas Personalizadas
-          </div>
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Aporta tu valor añadido
-          </div>
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Diferénciate con tus mejores virtudes
-          </div>
-        </div>
-        <div class="position-bottom">
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [value]="findSubscription('sub-plus')?.amount" [disabled]="!suscriptionChange"
-                          class="price-select"
-                          placeholder="- Selecciona una cantidad -" cancelText="Cancelar" okText="Aceptar" #plusDesktop>
-                <ion-select-option [value]="1">1</ion-select-option>
-                <ion-select-option [value]="2">2</ion-select-option>
-                <ion-select-option [value]="3">3</ion-select-option>
-                <ion-select-option [value]="4">4</ion-select-option>
-                <ion-select-option [value]="5">5</ion-select-option>
-                <ion-select-option [value]="6">6</ion-select-option>
-                <ion-select-option [value]="7">7</ion-select-option>
-                <ion-select-option [value]="8">8</ion-select-option>
-                <ion-select-option [value]="9">9</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div *ngIf="plusDesktop.value" class="box-button-primary"
-               (click)="subscribe('sub-plus', plusDesktop.value)">
-            Seleccionar
-          </div>
-        </div>
-      </div>
-      <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
-        <div class="box-title-b">
-          Profesiones
-        </div>
-        <div class="box-price-b">
-          <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
-        </div>
-        <div class="box-offer">
-          Gratis
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Añade profesiones relacionadas
-          </div>
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Amplía el campo de tus actividades
-          </div>
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Incrementa tus posibilidades de venta
-          </div>
-        </div>
-        <div class="position-bottom">
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [value]="findSubscription('sub-prof')?.amount" [disabled]="!suscriptionChange"
-                          class="price-select"
-                          placeholder="- Selecciona una cantidad -" cancelText="Cancelar" okText="Aceptar" #profDesktop>
-                <ion-select-option [value]="1">1</ion-select-option>
-                <ion-select-option [value]="2">2</ion-select-option>
-                <ion-select-option [value]="3">3</ion-select-option>
-                <ion-select-option [value]="4">4</ion-select-option>
-                <ion-select-option [value]="5">5</ion-select-option>
-                <ion-select-option [value]="6">6</ion-select-option>
-                <ion-select-option [value]="7">7</ion-select-option>
-                <ion-select-option [value]="8">8</ion-select-option>
-                <ion-select-option [value]="9">9</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div *ngIf="profDesktop.value" class="box-button-primary"
-               (click)="subscribe('sub-prof', profDesktop.value)">
-            Seleccionar
-          </div>
-        </div>
-      </div>
-      <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
-        <div class="box-title-b">
-          Disponibilidad Geográfica
-        </div>
-        <div class="box-price-b">
-          <ng-container *ngIf="geoDispDesktop.value != 'sub-range-country'">
-            <span class="box-price-b-big text-cross-line">9,95€</span>/mes
-          </ng-container>
-          <ng-container *ngIf="geoDispDesktop.value == 'sub-range-country'">
-            <span class="box-price-b-big text-cross-line">19,95€</span>/mes
-          </ng-container>
-        </div>
-        <div class="box-offer">
-          Gratis
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Extiende el alcance de tu actividad
-          </div>
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Expande tu negocio
-          </div>
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Completa tus resultados
-          </div>
-        </div>
-        <div class="position-bottom">
-          <div class="box-quantity">
-            Cantidad
-          </div>
-          <div class="padding-select">
-            <ion-item class="no-padding modal-add-price-select">
-              <ion-select [value]="findSubscription('sub-range')?.subscriptionName" #geoDispDesktop
-                          [disabled]="!suscriptionChange"
-                          class="price-select"
-                          placeholder="- Selecciona un rango -" cancelText="Cancelar" okText="Aceptar">
-                <ion-select-option value="sub-range-region">Regional</ion-select-option>
-                <ion-select-option value="sub-range-country">Nacional</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div *ngIf="geoDispDesktop.value" class="box-button-primary"
-               (click)="subscribe(geoDispDesktop.value, 1)">
-            Seleccionar
-          </div>
-        </div>
       </div>
     </div>
+  <!-- </ion-content> -->
   </div>
-</ion-content>
+</div>
