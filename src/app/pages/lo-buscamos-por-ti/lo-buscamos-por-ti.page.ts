@@ -151,13 +151,6 @@ export class LoBuscamosPorTiPage implements OnInit {
         setTimeout(() => {
           this.loadSend = false
           this.servicioAdded = true;
-
-          setTimeout(() => {
-            this.loadSend = false
-            this.servicioAdded = false;
-            this.servicioFinsish = true;
-          
-          }, 1000);
         }, 2000);
         
     
@@ -204,11 +197,16 @@ export class LoBuscamosPorTiPage implements OnInit {
        
   }
     
+  finish(){
+    this.servicioAdded = false;
+    this.servicioFinsish = true;
+  }
 
   closeSearch(){
     this.images = []
     this.isTemplate = false;
     this.servicioAdded = false;
+    this.servicioFinsish = false;
 
     this.title = null;
     this.description = null;
@@ -218,6 +216,8 @@ export class LoBuscamosPorTiPage implements OnInit {
     this.phone = null;
     this.location = null;
     this.selectedValue = null;
+
+    window.scrollTo(0, 0);
 
   }
   closeServicioError(){

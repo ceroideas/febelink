@@ -175,13 +175,19 @@
   <app-footer></app-footer>
 </div>
 
-<div *ngIf="servicioAdded" class="  modal-back-background">
+<div *ngIf="servicioAdded" class="modal-back-background">
   <div class="modal-front-content">
     <div class="modal-front-title">Petición Enviada</div>
-    <div class="modal-front-subtitle modal-subtitle-margin-a">
+    <div class="modal-front-subtitle">
       Se ha enviado tu petición de servicio al  equipo de Febelink. Pronto se pondrán en contacto contigo.
-      <p>
-      Debes revisar tu email para confirmar la búsqueda y hacer el seguimiento de este.</p>
+  
+      <div class="modal-front-subtitle">
+        <p>
+          Debes revisar tu email para confirmar la búsqueda y hacer el seguimiento de este.</p>
+      </div>
+      <div class="container-buttons marginTop">
+        <div class="modal-button-primary" (click)="finish()">Aceptar</div>
+      </div>
     </div>
   </div>
 </div>

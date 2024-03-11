@@ -648,6 +648,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  &.marginTop{
+    margin-top: 50px;
+  }
   div{
     width: 50% !important;
   }
