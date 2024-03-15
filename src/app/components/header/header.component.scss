@@ -106,7 +106,7 @@ ion-content {
 }
 
 .avatarmenu {
-  margin-left: 15px;
+  // margin-left: 15px;
   width: fit-content;
   color: black;
   --background-hover: transparent;
@@ -487,4 +487,41 @@ ion-thumbnail {
 }
 ion-image{
   margin-right: 17px;
+}
+
+.buttonlogin-mobile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .3s;
+  color: inherit;
+  text-decoration: none;
+  color: black;
+  
+  &.login-mobile{
+    height: 38px;
+    border-radius: 10px;
+    gap: 11px;
+    color: #fff;
+    background: #104CBA;
+    height: 41px;
+    width: 39px;
+    font-size: 18px;
+    text-align: center;
+    justify-content: center;
+   
+  }
+
+  &.logged{
+    padding: 2px 2px !important;
+    img{
+      width: 32px;
+      height: 32px;
+      border-radius: 10000px;
+  
+    }
+  }
 }

@@ -29,10 +29,10 @@
               <ion-label class="text_label_grey">Peso máximo de archivo 2MB</ion-label>
             </ion-col>
           </ion-row>
-          <ion-row size="12">
-            <div class="servicios-sections-title-b" style="width: 100%" [routerLink]="'/profile/public'">
-              <ion-button expand class="botoneditar">Perfil público
-              </ion-button>
+          <ion-row size="12"> 
+            <div class="servicios-sections-title-b" style="width: 100%" (click)="userDetail()" >
+              <a  [href]="'/user/' + userName + '/detail/' + curUser.id" class="button2"  >Perfil público
+              </a>
             </div>
           </ion-row>
           </div>

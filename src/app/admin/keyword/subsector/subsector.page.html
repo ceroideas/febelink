@@ -33,6 +33,7 @@
           <th style="width: 15%">Sector</th>
           <th style="width: 15%">SubSector</th>
           <th>Link</th>
+          <th>Keywords</th>
           <th>Encabezado h1</th>
           <th>Titulo de Pagina</th>
           <th>Meta Desripcion</th>
@@ -52,6 +53,9 @@
           <td >
             <span >{{keys.link}}</span>
            
+          </td>
+          <td >
+            <span>{{keys.keySearchParse}}</span>
           </td>
           <td >
             <span>{{keys.h1}}</span>
@@ -137,6 +141,15 @@
     <div class="item-select">
       <label>Link: *</label>
       <input type="text" [(ngModel)]="keySubSector.link" #newKeywordLink>
+    </div>
+    <div class="item-select">
+      <label>Terminos de Busqueda: *</label>
+      <div  id="inputContainer">
+        <!-- <input type="text" [(ngModel)]="keySector.icon"   #newKeywordIcon > -->
+        
+      </div>
+     
+      <button type="button" class="addInput" (click)="addInput()">Añadir otro</button>
     </div>
     <div class="item-select">
       <label>Encabezado 1 *</label>

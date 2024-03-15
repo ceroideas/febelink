@@ -1,3 +1,5 @@
+<!-- <partial-popup [displayToggle]="displayPartialSignUp"
+               (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup> -->
 <div class="container-general">
   <div class="container-detail-search">
     <div class="containter-left">
@@ -125,23 +127,34 @@
             </div>
             <a [href]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
           </div>
+          <!-- (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
           <div class="buttons-avatar buttondesktop">
             <div
               class="chat-button buttondesktop"
-              (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+              (click)="!authService.isAuthenticated()  ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            
               >
               Iniciar Chat
             </div>
             <div
               class="chat-button whatsapp buttondesktop"
-              *ngIf="user?.phoneNumber"
+              *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null"
             >
+
             <a title="Contacto telefónico" 
+              *ngIf="!authService.isAuthenticated()"
+              aria-label="Chat on WhatsApp" 
+              (click)="irA('/login')" 
+              class="badge">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+            <a title="Contacto telefónico" 
+              *ngIf="authService.isAuthenticated()"
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/34{{user?.phoneNumber}}" 
               class="badge">
               <i class="fa fa-whatsapp"></i>
-          </a>
+            </a>
             
           </div>
             <div
@@ -155,7 +168,7 @@
         <div class="buttons-mobileavatar buttonmobile">
           <div
             class="chat-button buttonmobile"
-            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            (click)="!authService.isAuthenticated() ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
             >
             Iniciar Chat
           </div>
@@ -163,7 +176,15 @@
             class="chat-button whatsapp buttonmobile"
             *ngIf="user?.phoneNumber"
            >
-            <a title="Contacto telefónico"  
+            <a title="Contacto telefónico" 
+              *ngIf="!authService.isAuthenticated()"
+              aria-label="Chat on WhatsApp" 
+              (click)="irA('/login')" 
+              class="badge">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+            <a title="Contacto telefónico" 
+              *ngIf="authService.isAuthenticated()"
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/34{{user?.phoneNumber}}" 
               class="badge">
@@ -518,7 +539,10 @@
   <!--ORACULO-->
   <div class="oracle" *ngIf="iAdvises.length > 0">
     <ion-row class="oracle-title">
-      <ion-label><h2>Contenidos en Oráculo</h2></ion-label>
+      <ion-label>
+        <h2 *ngIf="!otherTitelOracle">Contenidos en Oráculo</h2>
+        <h2 *ngIf="otherTitelOracle">Otros Contenidos en Oráculo</h2>
+      </ion-label>
     </ion-row>
     <div class="container-oracle" >
 

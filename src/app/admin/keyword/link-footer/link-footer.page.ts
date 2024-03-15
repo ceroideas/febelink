@@ -122,11 +122,11 @@ export class LinkFooterPage implements OnInit {
 
 
  
-  async create(title: string,  link: string) {
+  async create(title: string,  link: string, pagetitle: string, h1: string, h2: string, description: string) {
     if (this.isLoading) {
       this.showToastLoading();
       return;
-    } else if (link && title ) {
+    } else if (link && title && pagetitle && h1 && h2 && description) {
       try {
 
 
@@ -135,7 +135,7 @@ export class LinkFooterPage implements OnInit {
         linkParse= this.removeAccents(linkParse)
         
 
-        await this.keywordService.addLinkFooterKeyword({title,  link: linkParse});
+        await this.keywordService.addLinkFooterKeyword({title,  link: linkParse, pagetitle, h1, h2, description});
         await this.search();
         this.restoreData();
       } catch (e) {}
@@ -187,17 +187,17 @@ export class LinkFooterPage implements OnInit {
     }
     this.showCreatekeyword = false;
   }
-  async edit( title: string,  link: string) {
+  async edit( title: string,  link: string ,pagetitle: string, h1: string, h2: string, description: string) {
     if (this.isLoading) {
       this.showToastLoading();
       return;
-    } else if (title && link ) {
+    } else if (title && link && pagetitle && h1 && h2 && description ) {
       try {
         let linkParse;
         linkParse = link.replace(new RegExp(' ', 'g'), '-').toLowerCase();
         linkParse= this.removeAccents(linkParse)
         
-        await this.keywordService.updateLinkFooterKeyword({footer:  parseInt(this.keyLinkFooter.id) ,title,  link: linkParse});
+        await this.keywordService.updateLinkFooterKeyword({footer:  parseInt(this.keyLinkFooter.id) ,title,  link: linkParse, pagetitle, h1, h2, description});
         await this.search();
         this.restoreData();
       } catch (e) {}

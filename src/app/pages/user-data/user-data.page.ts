@@ -41,6 +41,7 @@ export class UserDataPage implements OnInit {
 
 
   avatarUrl: string;
+  userName: string;
   iFile: IFile;
   filePickType = FilePickType;
 
@@ -89,6 +90,7 @@ export class UserDataPage implements OnInit {
 
 
         
+        this.userName = data.response.username;
         this.avatarUrl = data.response.avatarImageURL;
         this.form.controls['username'].setValue(data?.response.username) 
         this.form.controls['description'].setValue(data?.response.description) 
@@ -115,6 +117,7 @@ export class UserDataPage implements OnInit {
   } 
   async getUser() {
     this.curUser = await this.sessionSvc.get();
+
   }
 
 
@@ -152,6 +155,9 @@ export class UserDataPage implements OnInit {
           //console.log('Error al enviar los datos'+err);
         });
     }
+  }
+  userDetail(){
+    sessionStorage.setItem('productId', String(this.curUser.id))
   }
   async onClickSubmit() {
 

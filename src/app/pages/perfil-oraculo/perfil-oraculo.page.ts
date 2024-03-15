@@ -1,6 +1,6 @@
 import {ChatService} from 'src/app/services/chat.service';
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PopoverController, AlertController} from '@ionic/angular';
 import {FileService} from 'src/app/components/file-picker/services/file.service';
@@ -13,6 +13,8 @@ import {AdviseService} from '../posts/advises/services/advises.service';
 import {UserDataService} from '../user-data/Services/user-data.service';
 import {Location} from '@angular/common';
 import { SearchService } from 'src/app/tab1/search/services/search.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -34,6 +36,7 @@ export class PerfilOraculoPage implements OnInit {
   apiMetaTagUrl: string = `${environment.baseWebUrl}api/auth/meta-tags`;
   linksArray: string[] = [];
 
+  hideChat: boolean = false;
   topics = [
     {id: null, name: 'Todos'},
     {id: 1, name: 'Política'},
@@ -60,6 +63,7 @@ export class PerfilOraculoPage implements OnInit {
     {id: 22, name: 'Criptomonedas'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
   public detalle: any;
+  curUser
   constructor(
     private route: ActivatedRoute,
     public popoverController: PopoverController,
@@ -74,16 +78,21 @@ export class PerfilOraculoPage implements OnInit {
     private chatService: ChatService,
     private location: Location,
     private profileUser: UserDataService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    public authService: AuthenticationService, 
+    public sessionSvc: UserSessionSvc,
+    public cdref: ChangeDetectorRef,
   ) {
     this.route.paramMap.subscribe((params) => {
       this.idPerfil = params.get('id');
+
+
     });
   }
 
   ngOnDestroy() {
   }
-  ngOnInit() {
+  async ngOnInit() {
     
     this.getFeed();
     this.getUserDetail();
@@ -91,6 +100,16 @@ export class PerfilOraculoPage implements OnInit {
     this.getProductUser()
     this.ratings = [];
     this.bests = [];
+    this.curUser = await this.sessionSvc.get();
+   
+    if ( Number(this.curUser.id) == Number(this.idPerfil)) {
+      this.hideChat = true;
+    } else {
+      this.hideChat = false;
+    }
+
+    this.cdref.detectChanges();
+    
   }
 
   async getUserDetail() {
@@ -98,7 +117,6 @@ export class PerfilOraculoPage implements OnInit {
       this.idPerfil
     );
     if (response) {
-      
       this.user = {
         name: response.username,
         description: response.description,
@@ -130,6 +148,8 @@ export class PerfilOraculoPage implements OnInit {
   async getProductDetail() {
     const user = JSON.parse(sessionStorage.getItem('productId'));
     const {response} =  await this.searchService.getProductDetail(user);
+    console.log(response)
+    console.log('======================')
     if (response) {
       this.detalle = response;
       this.user.avatar = response.ownerAvatar 
@@ -205,7 +225,9 @@ export class PerfilOraculoPage implements OnInit {
       this.router.navigate([`chat`]);
     }
   }
-
+  public irA(p: string): void {
+    this.router.navigate([p]);
+  }
   backButton() {
     this.location.back();
   }

@@ -38,6 +38,8 @@ export class DetalleBusquedaPage implements OnInit {
   iAdvises: any = [];
   othersView: any = [];
   moreWorks: any = [];
+
+  otherTitelOracle: boolean = false;
   unitTypes = [
     {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
     {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
@@ -96,6 +98,23 @@ export class DetalleBusquedaPage implements OnInit {
     };
     const {response, error} = await this.adviseSvc.list(filters);
     this.iAdvises = response;
+
+    if ( this.iAdvises.length === 0) {
+      this.otherTitelOracle = true;
+      var filters = {
+        activePage: 1,
+        keys: null,
+        topic: null,
+        sector: null,
+        subsector: null,
+        lang: null,
+        user: null,
+        hideContent: true,
+        content: null,
+      };
+      const {response, error} = await this.adviseSvc.list(filters);
+      this.iAdvises = response;
+    }
   }
 
 
@@ -120,7 +139,6 @@ export class DetalleBusquedaPage implements OnInit {
       };
     }
 
-    console.log(this.user)
   }
   getOthersWork(){
     const othersViewData = JSON.parse(sessionStorage.getItem('searchResponse'));

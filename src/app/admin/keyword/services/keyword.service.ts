@@ -27,18 +27,26 @@ export class KeywordService {
       return this.http.delete(`admin/deleteSector/${id}`);
     }
   }
+  public removeSectorKeySearch(id: number) {
+    if (id) {
+      return this.http.delete(`admin/deleteSectorKeySearch/${id}`);
+    }
+  }
+  
+  public updateSectorKeySearch(value: { id?: number, sector?: number,  name: string }) {
+    return this.http.post('admin/updateSectorKeySearch', value);
+  }
 
-  public addSectorKeyword(value: { name: string, searchTerm: string, icon: string}) {
+  public addSectorKeyword(value: { name: string, link: string, keySearch: any, icon: string}) {
     return this.http.post('admin/createSector', value);
   }
 
-  public updateSectorKeyword(value: { sector: number, name: string, searchTerm: string, icon: string }) {
+  public updateSectorKeyword(value: { sector: number, name: string, link: string, icon: string }) {
     return this.http.post('admin/updateSector', value);
   }
 
   public getSubSectorAll() {
     return this.http.get('getSubsectorAll');
-   
   }
 
   // SubSector
@@ -46,7 +54,7 @@ export class KeywordService {
     return this.http.get('getSubsector/1');
   }
 
-  public addSubSectorKeyword(value: { sector: number,name: string, link: string , imageURL: string, h1: string,  pagetitle: string, metadescription: string}) {
+  public addSubSectorKeyword(value: { sector: number,name: string, link: string ,  keySearch: any, imageURL: string, h1: string,  pagetitle: string, metadescription: string}) {
     return this.http.post('admin/createSubsector', value);
   }
 
@@ -58,6 +66,15 @@ export class KeywordService {
     if (id) {
       return this.http.delete(`admin/deleteSubsector/${id}`);
     }
+  }
+  public removeSubSectorKeySearch(id: number) {
+    if (id) {
+      return this.http.delete(`admin/deleteSubSectorKeySearch/${id}`);
+    }
+  }
+  
+  public updateSubSectorKeySearch(value: { id?: number, subSector?: number,  name: string }) {
+    return this.http.post('admin/updateSubSectorKeySearch', value);
   }
 
 
@@ -79,8 +96,6 @@ export class KeywordService {
       return this.http.delete(`admin/deleteLocations/${id}`);
     }
   }
-
-
 
 
   // Enlaces de ubicaciones
@@ -160,21 +175,16 @@ export class KeywordService {
   }
 
 
-
-
-
-
-
   // Enlaces de footer
   public getLinkFooterKeywords() {
     return this.http.get('getLinks');
   }
   
-  public addLinkFooterKeyword(value: {title: string, link: string}) {
+  public addLinkFooterKeyword(value: {title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
     return this.http.post('admin/createLinks', value);
   }
 
-  public updateLinkFooterKeyword(value: {footer: number, title: string, link: string}) {
+  public updateLinkFooterKeyword(value: {footer: number, title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
     return this.http.post('admin/updateLinks', value);
   }
 
