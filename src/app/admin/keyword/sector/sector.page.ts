@@ -11,7 +11,7 @@ interface SectorKeys {
   sector_id: number,
   key_name: string,
   nombre: string,
-  search_term: string,
+  link: string,
   icons: string,
   isEdit: boolean
 }
@@ -50,7 +50,7 @@ export class SectorPage implements OnInit {
   keySector: any =  {
     sector: '',
     nombre: '',
-    search_term: '',
+    link: '',
     icon: '',
   }
   constructor(
@@ -73,13 +73,23 @@ export class SectorPage implements OnInit {
     // this.filter = event?.target?.value || this.filter || '';
     const {response} = await this.keywordService.getSectorKeywords();
     this.sectorKeys = response;
-    this.sectorKeys_filtered = this.sectorKeys;
-  
-    // this.totalRecords = response.totalRecords;
-    // this.recordsPerPage = response.limit;
-    // this.qPages = response.qPages;
-    this.isLoading = false;
 
+    this.sectorKeys.forEach((sector: any) => { 
+      if ( sector.keySearch !== null && sector.keySearch !== undefined && sector.keySearch.length > 0){
+        const namesString = sector.keySearch.map(item => item.key_name).join(', '); // Usa
+
+        sector.keySearchParse = namesString;
+
+        sector.keySearch.forEach((key) => {
+          key.edit = false;
+          key.delete = false;
+          key.name = key.key_name;
+        })
+      }
+    })
+
+    this.sectorKeys_filtered = this.sectorKeys;
+    this.isLoading = false;
 
   }
 
@@ -88,8 +98,8 @@ export class SectorPage implements OnInit {
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
       this.sectorKeys = this.sectorKeys.filter((sector) => {
-        if ( sector?.search_term !== '' && sector?.search_term !== undefined && sector?.search_term !== null){
-          return sector?.search_term?.toLowerCase().includes(this.filter.toLowerCase());
+        if ( sector?.link !== '' && sector?.link !== undefined && sector?.link !== null){
+          return sector?.link?.toLowerCase().includes(this.filter.toLowerCase());
         }
       })
     } else {
@@ -114,7 +124,10 @@ export class SectorPage implements OnInit {
         keywordParse = keyword.replace(new RegExp(' ', 'g'), '-').toLowerCase();
         keywordParse= this.removeAccents(keywordParse)
         
-        await this.keywordService.addSectorKeyword({name: sector, searchTerm: keywordParse, icon: icon});
+        let keySearch = []
+        keySearch =  this.readInputValues()
+        
+        await this.keywordService.addSectorKeyword({name: sector, link: keyword, keySearch, icon: icon});
         this.keySector = {};
         await this.search();
         this.restoreData();
@@ -142,7 +155,25 @@ export class SectorPage implements OnInit {
         keywordParse = keyword.replace(new RegExp(' ', 'g'), '-').toLowerCase();
         keywordParse= this.removeAccents(keywordParse)
 
-        await this.keywordService.updateSectorKeyword({sector:this.keySector.id,  name: sector, searchTerm: keywordParse, icon:  icon});
+        await this.keywordService.updateSectorKeyword({sector:this.keySector.id,  name: sector, link: keywordParse, icon:  icon});
+
+        this.keySector.keySearch.forEach(async (key) => {
+          console.log(key)
+          if ( key.edit ){
+            await this.keywordService.updateSectorKeySearch({id:key.id,  name: key.name});
+          }
+         
+          if ( key.delete ){
+            await this.keywordService.removeSectorKeySearch(key.id);
+          }
+        })
+
+
+        const inputs = document.querySelectorAll('.nuevo') as NodeListOf<HTMLInputElement>;
+        inputs.forEach(async (input) => {
+          await this.keywordService.updateSectorKeySearch({sector:this.keySector.id,  name: input.value});
+        })
+
         this.keySector = {};
         await this.search();
         this.restoreData();
@@ -159,22 +190,38 @@ export class SectorPage implements OnInit {
     }
   }
 
+  readInputValues() {
+    const inputs = document.querySelectorAll('.input-with-icon') as NodeListOf<HTMLInputElement>;
+    let keySearch = [];
+    inputs.forEach((input) => {
+      keySearch.push({name: input.value});
+    })
+     return keySearch;
+  }
   async showEdit(keys: SectorKeys) {
+
+    this.keySector = {};
     this.keySector = JSON.parse(JSON.stringify(keys));
     let searchText;
-    searchText = this.keySector.search_term.replace(new RegExp('-', 'g'), ' ').toLowerCase();
+    searchText = this.keySector.link.replace(new RegExp('-', 'g'), ' ').toLowerCase();
     searchText= this.removeAccents(searchText)
 
-    this.keySector.search_term = searchText;
-    this.showCreatekeyword = true;
+    this.keySector.link = searchText;
 
+    //
+
+    this.showCreatekeyword = true;
+    setTimeout(() => {
+      this.addInputValue(this.keySector.keySearch)
+    }, 100);
+    
   }
 
   restoreData(){
     this.keySector =  {
       sector: '',
       nombre: '',
-      search_term: '',
+      link: '',
       icon: '',
     }
     this.showCreatekeyword = false;
@@ -230,4 +277,102 @@ export class SectorPage implements OnInit {
     this.search();
   }
 
+  showCreate(){
+    this.showCreatekeyword = true; 
+    setTimeout(() => {
+      this.addInput()
+    }, 200);
+  }
+
+  addInput() {
+    const container = document.getElementById('inputContainer');
+
+    // Crea el contenedor del input y el ícono
+    const inputIconContainer = document.createElement('div');
+    inputIconContainer.className = 'input-icon-container';
+
+    // Crea el input
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'input-with-icon';
+
+    // Crea el ícono de búsqueda
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-times iconinput';
+
+    icon.onclick = () =>{
+        container.removeChild(inputIconContainer);
+        if (container.children.length === 0) {
+         this.addInput()
+        }
+    };
+    input.onkeyup = (e: any) => {
+      if (this.showCreatekeyword) {
+        // const target = e.target as HTMLInputElement;
+        // this.keySector.keySearch.push({key_name: target.value,  delete: false, edit: true});
+
+        input.className += ' nuevo';
+      }
+    
+
+      //container.removeChild(inputIconContainer);
+    };
+   
+    // Añade el input, el ícono y el botón de eliminar al contenedor
+    inputIconContainer.appendChild(input);
+    inputIconContainer.appendChild(icon);
+
+
+
+    // Añade el contenedor al elemento en el DOM
+    container.appendChild(inputIconContainer);
+
+    // input.focus();
+  }
+
+  addInputValue(keySearch: any) {
+    
+    keySearch.forEach((key) => {
+      const container = document.getElementById('inputContainer');
+     
+  
+    // Crea el contenedor del input y el ícono
+    const inputIconContainer = document.createElement('div');
+    inputIconContainer.className = 'input-icon-container';
+
+    // Crea el input
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value =  key.key_name;
+    input.className = 'input-with-icon';
+
+    // Crea el ícono de búsqueda
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-times iconinput';
+
+    icon.onclick = () => {
+      key.delete = true;
+      key.edit = false;
+      container.removeChild(inputIconContainer);
+    };
+
+    input.onkeyup = (e: any) => {
+      const target = e.target as HTMLInputElement;
+      key.edit = true;
+      key.delete = false;
+      key.name = target.value;
+      //container.removeChild(inputIconContainer);
+    };
+
+    // Añade el input, el ícono y el botón de eliminar al contenedor
+    inputIconContainer.appendChild(input);
+    inputIconContainer.appendChild(icon);
+
+
+    // // Añade el contenedor al elemento en el DOM
+    container.appendChild(inputIconContainer);
+    });
+
+    // input.focus();
+  }
 }

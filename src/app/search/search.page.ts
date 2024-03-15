@@ -110,6 +110,7 @@ export class SearchPage implements AfterViewInit {
   }
 
   async leerDatos(){
+  
 
     await this.readData()
 
@@ -159,18 +160,25 @@ export class SearchPage implements AfterViewInit {
 
         setTimeout(() => {
           const cityLink = this.cities.find(item => Number(item.citys_id) === Number(this.cityFilter));
-
-          console.log( this.cities)
-          console.log( cityLink)
        }, 2000);
        
       
       } else if ( sectorLink ) {
+
+        sessionStorage.removeItem("metaLocationFilter"); 
+        sessionStorage.removeItem("IdMetaFilter"); 
+        sessionStorage.removeItem("sectorFilter"); 
+
         this.searchText = sectorLink.link
         this.searchText2 = this.searchText.replace(/-/g, ' ').toLowerCase()
         this.title.setTitle(sectorLink.page_title);
         this.metaDescription = sectorLink.meta_description;
         this.h1Title = sectorLink.h1;
+
+
+        sessionStorage.setItem("metaLocationFilter", this.metaLocationFilter); 
+        sessionStorage.setItem("IdMetaFilter", this.IdMetaFilter); 
+        sessionStorage.setItem("sectorFilter",this.sectorFilter); 
       } 
 
 
@@ -401,11 +409,11 @@ export class SearchPage implements AfterViewInit {
     //   this.title.setTitle(citiesLink.page_title);
     //   this.generalTitle.emit(citiesLink.h1);
     //   this.resultTitle = '';
-    //   this.metaDescription = citiesLink.metaDescription;
-
-    //   this.changeFilter(citiesLink.title, citiesLink.link)  ;
-    //   this.changeMetaFilter(null, null);
-
+    //   this.metaDescription = citiesLink.metaDescription;  sessionStorage.removeItem("locationFilter");
+    sessionStorage.removeItem("metaLocationFilter"); 
+    sessionStorage.removeItem("IdMetaFilter"); 
+    sessionStorage.removeItem("sectorFilter"); 
+    sessionStorage.removeItem("locationSelected");
     //   this.location.go(`search/${citiesLink.link}`)
     // } else if (sectorLink) {
     //   this.title.setTitle(sectorLink.page_title);
@@ -447,7 +455,7 @@ export class SearchPage implements AfterViewInit {
     if (this.searchText2) {
       let termino = this.searchText2.replace(new RegExp(' ', 'g'), '-').toLowerCase()
     // You can construct the URL for the new route with the parameters
-      const targetRoute = `/search/${termino}`;
+      const targetRoute = `/listado/${termino}`;
 
       // Use the Router to navigate to the new route
       this.router.navigate([targetRoute]);

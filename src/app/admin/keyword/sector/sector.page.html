@@ -4,7 +4,7 @@
     Panel de Administrador 
     <span class="simbol">></span> 
     <span class="span1">Gestion keyword - Sectores</span>
-    <div class="button-add" (click)="showCreatekeyword = true"><i class="fa fa-plus"></i>Añadir</div>
+    <div class="button-add" (click)="showCreate()"><i class="fa fa-plus"></i>Añadir</div>
   </div>
   <div class="buscador">
     <ion-searchbar
@@ -34,6 +34,7 @@
           <tr>
             <th style="width: 15%">Sector</th>
             <th style="width:8%">Icono</th>
+            <th>Link</th>
             <th>Keywords</th>
             <th colspan="2" style="width: 10%">Acciones</th>
           </tr>
@@ -47,8 +48,10 @@
             
             </td>
             <td [ngSwitch]="keys.isEdit">
-              <span *ngSwitchDefault>{{keys.search_term}}</span>
-             
+              <span *ngSwitchDefault>{{keys.link}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.keySearchParse}}</span>
             </td>
             <td class="edit">
               <ion-icon name="create-outline" (click)="showEdit(keys)"></ion-icon>
@@ -91,8 +94,17 @@
       <input type="text" [(ngModel)]="keySector.nombre"  #newKeywordSector  >
     </div>
     <div class="item-select">
-      <label>Termino de Busqueda: *</label>
-      <input type="text" [(ngModel)]="keySector.search_term"   #newKeywordValue >
+      <label>Link: *</label>
+      <input type="text" [(ngModel)]="keySector.link"   #newKeywordValue >
+    </div>
+    <div class="item-select">
+      <label>Terminos de Busqueda: *</label>
+      <div  id="inputContainer">
+        <!-- <input type="text" [(ngModel)]="keySector.icon"   #newKeywordIcon > -->
+        
+      </div>
+     
+      <button type="button" class="addInput" (click)="addInput()">Añadir otro</button>
     </div>
     <div class="item-select">
       <label>Icono: *</label>

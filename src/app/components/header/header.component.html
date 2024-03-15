@@ -1,36 +1,3 @@
-<!-- <ion-header>
-  <ion-toolbar color="header">
-    <ion-buttons *ngIf="currentUser" buttons-start slot="start">
-      <ion-menu-button class="avatarmenu">
-        <ion-avatar>
-          <ion-img [src]="currentUser?.logo || 'https://api.febelink.com/storage/users/default.png'"
-                   (error)="onImgError($event)"
-                   alt="Menu profile picture">
-          </ion-img>
-        </ion-avatar>
-      </ion-menu-button>
-      <ion-img class="pos_menu" src="assets/icon/icon_header_menu.png"></ion-img>
-      <ion-img *ngIf="perfil" class="mobile menu_header" src="assets/icon/svg/chat_header.svg"></ion-img>
-    </ion-buttons>
-    <app-header-buttons class="buttons_flex" [currentUser]="currentUser" [perfil]="perfil"
-                        currentTab="1"></app-header-buttons>
-    <ion-buttons buttons-start slot="end">
-      <div *ngIf="!currentUser" class="login-button" (click)="irA('/login')">
-        Inicio
-      </div>
-      <div *ngIf="!currentUser" class="header-register-button desktop" (click)="irA('/registro')">
-        Regístrate
-      </div>
-      <a  href="/listado">
-        <ion-img tappable
-        src="assets/imgs/logo.png"
-        alt="Febelink logo"
-        class="ion-margin logo"></ion-img>
-      </a>
-     
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header> -->
 
 
 <header>
@@ -89,7 +56,9 @@
         </ion-buttons>
         <ion-buttons *ngIf="!currentUser" buttons-start slot="start">
           <ion-menu-button class="avatarmenu"  (click)="irA('/login')">
-            <i class="fa fa-bars"></i>
+            <div class="buttonlogin-mobile login-mobile ">
+              <i  class="fas fa-user-circle "></i> 
+            </div>
           </ion-menu-button>
         </ion-buttons>
       </div>
