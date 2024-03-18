@@ -36,7 +36,7 @@
           <th>Encabezado h1</th>
           <th>Titulo de Pagina</th>
           <th>Meta Desripcion</th>
-          <th>Imagen</th>
+          <th style="width: 15%">Imagen</th>
           <th colspan="2" style="width: 10%">Acciones</th>
         </tr>
         <tr *ngFor="let keys of subSectorKeys">
@@ -65,7 +65,7 @@
             <span >{{keys.meta_description}}</span>
           
           </td>
-          <td >
+          <td style="width: 15%" class="imgclass">
             <span >{{keys.imageURL}}</span>
            
           </td>

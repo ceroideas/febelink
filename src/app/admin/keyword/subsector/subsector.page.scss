@@ -462,3 +462,11 @@
   z-index: 1;
   top: 0;
 }
+.imgclass{
+  span{
+    width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+  }
+}
