@@ -13,6 +13,7 @@
           <img *ngIf="user?.avatar !== undefined && user?.avatar !== null" src="{{user?.avatar}}" 
           appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
+          <img *ngIf="user?.avatar == undefined || user?.avatar === null" src="https://api.febelink.com/storage/users/default.png"  />
         </div>
         <div class="name-profile">
           {{user?.name}}
@@ -34,20 +35,28 @@
         <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
           {{user?.description}}
         </div>
-        <div class="buttons-profile">
+        <div class="buttons-profile" *ngIf="!hideChat">
           <div class="item-button">Seguir</div>
 
-          <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber">
+          <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
             <a title="Contacto telefónico" 
-            aria-label="Chat on WhatsApp" 
-            href="https://wa.me/34{{user?.phoneNumber}}" 
-            class="badge">
+              *ngIf="!authService.isAuthenticated()"
+              aria-label="Chat on WhatsApp" 
+              (click)="irA('/login')" 
+              class="badge">
               <i class="fa fa-whatsapp"></i>
             </a>
-            </div>
-          <div class="item-button chat" (click)="createChat()">Chat</div>
+            <a title="Contacto telefónico" 
+              *ngIf="authService.isAuthenticated()"
+              aria-label="Chat on WhatsApp" 
+              href="https://wa.me/34{{user?.phoneNumber}}" 
+              class="badge">
+                <i class="fa fa-whatsapp"></i>
+            </a>
+          </div>
+          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
         </div>
-        <div class="header-content-top-right">
+        <div class="header-content-top-right" *ngIf="!hideChat">
           <div class="block-action-top">
             <img
               src="assets/icon/svg/donate-blue.svg"

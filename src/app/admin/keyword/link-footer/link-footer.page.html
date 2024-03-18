@@ -34,6 +34,10 @@
           <tr>
             <th>Titulo</th>
             <th>Link</th>
+            <th>Titulo Pagina</th>
+            <th>Encabezado h1</th>
+            <th>Encabezado h2</th>
+            <th>description</th>
             <th colspan="2" style="width: 10%">Acciones</th>
           </tr>
           <tr *ngFor="let keys of linkfooter">
@@ -43,6 +47,18 @@
             </td>
             <td>  
               <span>{{keys.link}}</span>
+            </td>
+            <td>  
+              <span>{{keys.page_title}}</span>
+            </td>
+            <td>
+              <span>{{keys.h1}}</span>
+            </td>
+            <td>
+              <span>{{keys.h2}}</span>
+            </td>
+            <td>
+              <span>{{keys.meta_description}}</span>
             </td>
             
             <td class="edit">
@@ -91,17 +107,40 @@
       <label>Enlace: *</label>
       <input type="text" [(ngModel)]="keyLinkFooter.link" #newKeywordLink>
     </div>
+    <div class="item-select"   >
+      <label>Titulo de pagina: *</label>
+      <input type="text" [(ngModel)]="keyLinkFooter.page_title" #newKeywordPageLink>
+    </div>
+    <div class="item-select"   >
+      <label>Encabezado 1: *</label>
+      <input type="text" [(ngModel)]="keyLinkFooter.h1"  #newKeywordH1>
+    </div>
+    <div class="item-select"  >
+      <label>Encabezado 2: *</label>
+      <input type="text" [(ngModel)]="keyLinkFooter.h2" #newKeywordH2>
+    </div>
+    <div class="item-select"  >
+      <label>Descripcion: *</label>
+      <input type="text" [(ngModel)]="keyLinkFooter.meta_description" #newKeywordDescription>
+    </div>
   
     <div class="buttons">
       <ion-button color="light" (click)="restoreData()">Cancelar</ion-button>
        <ion-button color="success" 
        *ngIf="keyLinkFooter.id === ''" (click)="create(
         newKeywordPageLink.value, 
-       newKeywordLink.value
+       newKeywordLink.value, newKeywordPageLink.value, 
+       newKeywordH1.value,
+        newKeywordH2.value,
+         newKeywordDescription.value
       ); ">Añadir</ion-button>
       <ion-button color="primary" *ngIf="keyLinkFooter.id !== ''" (click)="edit(
         newKeywordPageLink.value, 
-        newKeywordLink.value
+        newKeywordLink.value,
+        newKeywordPageLink.value, 
+        newKeywordH1.value,
+         newKeywordH2.value,
+          newKeywordDescription.value
       ); ">Modificar</ion-button>
 
     </div>

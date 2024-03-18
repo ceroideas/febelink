@@ -194,3 +194,33 @@ ionic-selectable-modal {
 div#fg_bubble {
   display: none !important;
 }
+
+.input-icon-container {
+  height: 39px;
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  background: none;
+  padding: 0 10px;
+  border-radius: 5px;
+  width: 98%;
+  margin-top: 14px;
+  position: relative;
+  display: inline-block;
+
+  input{
+    border: none;
+    outline: none;
+  }
+}
+
+
+.icon-input {
+  position: absolute;
+  right: 19px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #757575;
+  background: #fff;
+  cursor: pointer;
+}
+
