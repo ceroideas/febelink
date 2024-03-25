@@ -3,7 +3,7 @@
     <div class="header-new-services">
       <div class="sections-add-service-left">
         <h1 class="sections-add-service-title">
-          Lo buscamos por ti
+          Pedir presupuesto gratis
         </h1>
 
         <p class="sections-add-service-subtitle">
@@ -13,7 +13,7 @@
         <img class="header-image" src="assets/imgs/find.png" />
       </div>
     </div>
-    <div class="body-new-services">
+    <div class="body-new-services" [ngClass]="{'disabled': isTemplate}">
       <div class="item-new-services">
         <div class="add-service-label-input" [ngClass]="{'error': error.title === true}">Título de búsqueda *</div>
         <div class="add-service-margin-input">
@@ -33,7 +33,7 @@
         <div class="add-service-margin-input">
         <app-wysiwyg
           [html]="description"
-
+          [disabled]="isTemplate"
           [placeholder]="'Tip: Describe los detalles y preferencias de tu búsqueda'"
           (OnChange)="error.description = false;wysiwygChange( $event )"
           rows="6"
@@ -46,14 +46,15 @@
       <div class="item-new-services">
         <div class="add-service-label-input" [ngClass]="{'error': error.location === true}">Localidad *</div>
         <div class="add-service-margin-input">
-          <!-- <ion-input
+          <ion-input
+            *ngIf="isTemplate"
             [disabled]="isTemplate"
             [(ngModel)]="location"
             placeholder=""
             class="padding-input-12 add-service-input"
             (ionChange)="error.location = false"
-          ></ion-input> -->
-          <ion-select label="Default label" [(ngModel)]="selectedValue" (ionChange)="onSelectChange($event)" placeholder="Selecciona una localizacion">
+          ></ion-input>
+          <ion-select label="Default label" *ngIf="!isTemplate" [(ngModel)]="selectedValue" (ionChange)="onSelectChange($event)" placeholder="Selecciona una localizacion">
             <ion-select-option value="{{location.id}}" *ngFor="let location of locations">{{location.title}}</ion-select-option>
          
           </ion-select>
@@ -155,7 +156,7 @@
         </div>
         <div class="title-pie"></div>
       </div>
-      <div class="sections-add-service-right">
+      <div class="sections-add-service-right" *ngIf="!isTemplate">
         <div
           class="sections-add-service-button-secondary"
           (click)="cancelNuevoServicio()"

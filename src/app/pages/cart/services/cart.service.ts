@@ -28,7 +28,17 @@ export class CartService {
   }
 
   // To Get Active Cart
-  async get(): Promise<IHttpService> {
+  async getFindServices(): Promise<IHttpService> {
+    return this.http.get('getFindServices');
+  }
+  // To Get Active Cart
+  async getFindService(id): Promise<IHttpService> {
+    return this.http.get('getFindService/'+id);
+  }
+  
+
+   // To Get Active Cart
+   async get(): Promise<IHttpService> {
     return this.http.get('cart');
   }
 

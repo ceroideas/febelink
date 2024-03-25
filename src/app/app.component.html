@@ -366,11 +366,18 @@
           <ion-label>{{ 'menu.tabs.carrito' | translate }}</ion-label>
         </ion-tab-button>
 
+
+        <ion-tab-button tab="chat" *ngIf="currentUser !== undefined">
+          <ion-icon name="chatbox-outline"></ion-icon>
+          <ion-label>{{ 'menu.tabs.chat' | translate }}</ion-label>
+        </ion-tab-button>
+
+
         <!-- Oracles -->
-        <ion-tab-button tab="oracles">
+        <!-- <ion-tab-button tab="oracles">
           <ion-icon name="eye-outline"></ion-icon>
           <ion-label>{{ 'menu.tabs.advises' | translate }}</ion-label>
-        </ion-tab-button>
+        </ion-tab-button> -->
       </ion-tab-bar>
     </ion-tabs>
   </ng-container>

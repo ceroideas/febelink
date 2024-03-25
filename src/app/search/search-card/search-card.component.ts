@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { ToastSvc } from 'src/app/services/toast.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -29,20 +29,31 @@ export class SearchCardComponent {
   }
 
   async sendSearchContactRequest() {
-    const {response, error} = await this.searchSvc.contact4Search(this.searchTerm, this.data.link, this.data.title, this.data.description);
-    if (response) {
-      await this.toastSvc.show('La solicitud de contacto ha sido enviada correctamente. Los profesionales seleccionados se ' +
-        'pondrán en contacto contigo muy pronto.');
+    console.log( this.data.title)
+    // this.router.navigate(['/pedir-presupuesto-gratis'],  { queryParams: { params: this.data.title }});
 
-      await this.utilities.getUserData().then((data) => {
-        if (!data) {
-          this.router.navigate(['/registro']);
-        }
-      });
-    }
-    if (error) {
-      await this.toastSvc.show('Ha ocurrido un error al enviar la solicitud. Por favor, inténtelo de nuevo y si el error ' +
-        'persiste póngase en contacto con el equipo de soporte a través del email: info@febelink.com');
-    }
+    const queryParams: any = {};
+    queryParams.search = JSON.stringify(this.data)
+    const navigationExtras: NavigationExtras = {
+      fragment: queryParams
+    };
+
+    this.router.navigate(['/pedir-presupuesto-gratis'], navigationExtras);
+    
+    // const {response, error} = await this.searchSvc.contact4Search(this.searchTerm, this.data.link, this.data.title, this.data.description);
+    // if (response) {
+    //   await this.toastSvc.show('La solicitud de contacto ha sido enviada correctamente. Los profesionales seleccionados se ' +
+    //     'pondrán en contacto contigo muy pronto.');
+
+    //   await this.utilities.getUserData().then((data) => {
+    //     if (!data) {
+    //       this.router.navigate(['/registro']);
+    //     }
+    //   });
+    // }
+    // if (error) {
+    //   await this.toastSvc.show('Ha ocurrido un error al enviar la solicitud. Por favor, inténtelo de nuevo y si el error ' +
+    //     'persiste póngase en contacto con el equipo de soporte a través del email: info@febelink.com');
+    // }
   }
 }

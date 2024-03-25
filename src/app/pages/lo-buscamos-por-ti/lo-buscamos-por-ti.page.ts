@@ -11,7 +11,8 @@ import { KeywordService } from 'src/app/admin/keyword/services/keyword.service';
 import { ApiService } from 'src/app/services/api.service';
 import { IUser } from 'src/app/models/user.model';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../cart/services/cart.service';
 @Component({
   selector: 'app-lo-buscamos-por-ti',
   templateUrl: './lo-buscamos-por-ti.page.html',
@@ -40,23 +41,64 @@ export class LoBuscamosPorTiPage implements OnInit {
 
   editorText: string;
   isTemplate: boolean = false;
+  disabled: boolean = false;
   locations: any = [];
+  peticions: any = {}
   selectedValue
   currentUser: any = {
     nick: null,
     email: null,
     telefono: null
   }
-  constructor(  private router: Router,  private utilities: UtilitiesService,  private api: ApiService, private keywordService: KeywordService, private modalCtrl: ModalController,  public servicesSvc: SearchforyouService,  public cref: ChangeDetectorRef ) { }
+  id;
+  constructor(  private router: Router, private route: ActivatedRoute,  private utilities: UtilitiesService,  
+    public cartSvc: CartService,
+    private api: ApiService, private keywordService: KeywordService, private modalCtrl: ModalController,  public servicesSvc: SearchforyouService,  public cref: ChangeDetectorRef ) { 
+
+    this.route.fragment.subscribe(fragment => {
+      if (!!fragment) {
+          console.log(fragment); // Verify the structure of 'fragment'
+          // Check if 'search' property exists in 'fragment' object
+          if (fragment.hasOwnProperty('search')) {
+              try {
+                //@ts-ignore
+                  const jsonObject = JSON.parse(fragment.search);
+                  // Retrieve the value of the 'title' property
+                  const title = jsonObject.title;
+                  this.title = title;
+              } catch (error) {
+                  console.error('Error parsing JSON:', error);
+              }
+          } else {
+              console.error('Fragment does not contain the "search" property.');
+          }
+      }
+    });
+    this.id = this.route.snapshot.paramMap.get('id') || ''
+   
+    if ( this.id !== ''){
+        this.getfindServices()
+    }
+  }
 
   ngOnInit() {
     this.readLocations()
-
     this.readUser();
+  }
 
-    
-    
-   
+  async getfindServices() {
+    const {response, error} = await this.cartSvc.getFindService(this.id);
+    this.peticions = response;
+
+
+    this.title = response.title
+    this.description = response.description
+    this.images = response.images
+    this.location = response.location
+
+    this.isTemplate = true
+    console.log(response)
+    // this.iCart = response;
   }
   async readLocations(){
     const {response} = await this.keywordService.getLocationKeywords();

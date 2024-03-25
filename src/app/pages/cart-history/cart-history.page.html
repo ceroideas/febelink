@@ -3,11 +3,32 @@
   <div class="layer-gradient">
     <div class="eclipse"></div>
   </div>
+  <div class="servicios-sections-right ">
+    <div class="servicios-sections-cell-b">
+      <div
+        class="servicios-sections-title-b"
+        [ngClass]="{'servicios-sections-selected-b' : isCart}"
+        (click)="selectCart()"
+      >
+        Historial de Compras
+      </div>
+    </div>
+    <div class="servicios-sections-cell-b">
+      <div
+        class="servicios-sections-title-b"
+        [ngClass]="{'servicios-sections-selected-b' : isPeticions}"
+        (click)="selectPeticions()"
+      >
+        Mis Peticiones de Servicio
+      </div>
+    </div>
+  </div>
   <div class="container-detail-search">
     
     <div class="containter-right">
     
-      <div class="content-wrapper-b">
+      
+      <div class="content-wrapper-b" *ngIf="isCart">
      
         <div class="content-title-b">Historial de compras</div>
         <div class="grid-cart">
@@ -117,6 +138,40 @@
                 
               
             </div>
+          </div>
+        </div>
+        
+       
+      </div>
+      <div class="content-wrapper-b" *ngIf="isPeticions">
+     
+        <div class="content-title-b">Peticiones de Servicios</div>
+        <div class="grid-cart">
+          <div *ngFor="let item of peticions; let i = index" 
+          (click)="showDetailFindService(item)"
+            class="cart-block-b">
+           
+              <div class="superior">
+              
+                <div class="cart-date-b">
+                  <div class="date"> {{item.created_at}}</div>
+                  <div class="capsule">
+                    <div>
+                      {{item.location}}
+                    </div>
+                  </div>
+                 </div>
+                <div class="item-title">{{item.title}}</div>
+              </div>
+              <div class="inferior">
+                <div class="item-contentdescription">
+                  
+                  {{item.description}}
+            
+                </div>
+              </div>
+                
+              
           </div>
         </div>
         
