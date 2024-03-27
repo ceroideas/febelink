@@ -12,7 +12,7 @@
       <!-- MENU DESKTOP -->
       <div  class="right"  >
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " href="/">Home</a></div>
-        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " [href]="'/oracles'" >Oraculo</a></div>
+        <!-- <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " [href]="'/oracles'" >Oraculo</a></div> -->
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " >Carrito</a></div>
         <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div>
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>

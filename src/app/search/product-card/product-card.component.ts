@@ -40,6 +40,7 @@ export class ProductCardComponent {
   }
 
   async createChat(ownerUsername: string, ownerUserId: number) {
+    alert(8)
     const {response, error} = await this.chatService.createChat(
       ownerUserId
     );

@@ -21,17 +21,7 @@
         <div class="subname-profile">
           {{user?.email}}
         </div>
-        <!-- <div class="social-profile">
-          <div class="social-item">
-            <i class="fa fa-facebook"></i>
-          </div>
-          <div class="social-item">
-            <i class="fa fa-twitter"></i>
-          </div>
-          <div class="social-item">
-            <i class="fa fa-instagram"></i>
-          </div>
-        </div> -->
+       
         <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
           {{user?.description}}
         </div>
@@ -40,14 +30,6 @@
 
           <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
             <a title="Contacto telefónico" 
-              *ngIf="!authService.isAuthenticated()"
-              aria-label="Chat on WhatsApp" 
-              (click)="irA('/login')" 
-              class="badge">
-              <i class="fa fa-whatsapp"></i>
-            </a>
-            <a title="Contacto telefónico" 
-              *ngIf="authService.isAuthenticated()"
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/34{{user?.phoneNumber}}" 
               class="badge">
@@ -126,7 +108,7 @@
         </div>
       </div>
       <!--ORACULO-->
-      <div class="section-perfil"  [ngClass]="{'sinmargen': iAdvises.length === 0}" >
+      <!-- <div class="section-perfil"  [ngClass]="{'sinmargen': iAdvises.length === 0}" >
         <div class="oracle" *ngIf="iAdvises.length > 0">
           <ion-row class="oracle-title">
             <ion-label><span class="title-oracle">Publicaciones en Oráculo</span></ion-label>
@@ -145,7 +127,7 @@
         </div>
 
     
-      </div>
+      </div> -->
 
        <!--SERVICIOS-->
     </div>

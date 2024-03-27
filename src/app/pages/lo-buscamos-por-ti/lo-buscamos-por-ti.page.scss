@@ -1553,6 +1553,10 @@
    .body-new-services{
       width: 100%;
       overflow: auto;
+
+      &.disabled{
+        pointer-events: none;
+      }
  
      .item-new-services{
        width: 100%;

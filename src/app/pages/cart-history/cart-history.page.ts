@@ -55,6 +55,11 @@ export class CartHistoryPage implements OnInit {
   isTemplate: boolean = false;
   showCancel: boolean = false;
   showFinish: boolean = false;
+
+  isCart: boolean = true;
+  isPeticions: boolean = false;
+
+  peticions: any = []
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -77,8 +82,15 @@ export class CartHistoryPage implements OnInit {
 
   ngOnInit() {
     this.getHistoryCart();
+    this.getfindServices();
   }
 
+  async getfindServices() {
+    const {response, error} = await this.cartSvc.getFindServices();
+    this.peticions = response
+    console.log(response)
+    // this.iCart = response;
+  }
   async getHistoryCart() {
     const {response, error} = await this.cartSvc.history();
     this.iCart = response;
@@ -101,6 +113,16 @@ export class CartHistoryPage implements OnInit {
     }
   }
 
+
+  selectCart(){
+    this.isCart = true;
+    this.isPeticions = false;
+  }
+
+  selectPeticions(){
+    this.isCart = false;
+    this.isPeticions = true;
+  }
   toggleServiceModal(cartId?: number, productId?: number, index_cart?: number) {
     this.showCancel = true
     this.indexCancelServicio = index_cart
@@ -183,6 +205,10 @@ export class CartHistoryPage implements OnInit {
     this.productId = product;
     this.cartId = cart;
     this.showFinish = true;
+  }
+
+  showDetailFindService(item: any ){
+    this.router.navigate(['pedir-presupuesto-gratis/'+item.id])
   }
   
 }

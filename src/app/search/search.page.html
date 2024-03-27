@@ -108,9 +108,11 @@
           <div  *ngIf="searchResponse.offers?.length > 0">
             <div *ngFor="let data of searchResponse?.offers
             "  >
+            <!-- (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null" -->
+
               <search-product-card
                 [data]="data"
-                [unitTypes]="unitTypes" (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
+                [unitTypes]="unitTypes" 
               ></search-product-card> 
             </div>
           </div>
@@ -122,10 +124,11 @@
         <div class="container-capsule-results">
           <div  >
             <div *ngFor="let data of searchResponse?.otherResults"  >
+              <!-- (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null" -->
+<!--  -->
               <search-card
                 [data]="data"
                 [searchTerm]="searchText"
-                (click)="!authenticationService.isAuthenticated() && !email ? displayPartialSignUp = true : null"
               ></search-card>
             </div>
           </div>
@@ -170,7 +173,7 @@
 
 
       <div class="search-for-you">
-        <h3 class="title-foryou">🚀 Lo buscamos por ti</h3>
+        <h3 class="title-foryou">🚀 Pedir presupuesto gratis</h3>
         <div class="container-search-for-you">
           <p class="texts">
             ¿No encuentras lo que buscas?

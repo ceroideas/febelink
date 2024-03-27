@@ -96,11 +96,15 @@ export class ChatPage {
 
     this.ApiService.getAllMessages(this.room_id).then((myObservable) => {
       myObservable.subscribe((response) => {
+        console.log(response)
         if (response.correct == true && response.message == 'Correct') {
           this.load_data = true;
           let new_messages = [];
-          this.firstMessage = response.result[0]['id'];
-          this.finish_chat = response.result[0]['finish'];
+          if (response.result.length){
+            this.firstMessage = response.result[0]['id'];
+            this.finish_chat = response.result[0]['finish'];
+          }
+          
           response.result.forEach(function callback(
             currentValue,
             index,

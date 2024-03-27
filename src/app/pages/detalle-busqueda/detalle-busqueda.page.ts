@@ -186,6 +186,7 @@ export class DetalleBusquedaPage implements OnInit {
     const {response, error} = await this.chatService.createChat(
       this.detalle.ownerId
     );
+    console.log(response)
 
     if (response) {
       // Send first comment

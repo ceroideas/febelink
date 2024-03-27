@@ -50,7 +50,13 @@ const routes: Routes = [
     component: SearchPage
   },
   {
-    path: 'lo-buscamos-por-ti',
+    path: 'pedir-presupuesto-gratis',
+    component: LoBuscamosPorTiPage
+    // loadChildren: () => 
+      // import('./pages/lo-buscamos-por-ti/lo-buscamos-por-ti.module').then((m) => m.LoBuscamosPorTiPageModule),
+  },
+  {
+    path: 'pedir-presupuesto-gratis/:id',
     component: LoBuscamosPorTiPage
     // loadChildren: () => 
       // import('./pages/lo-buscamos-por-ti/lo-buscamos-por-ti.module').then((m) => m.LoBuscamosPorTiPageModule),

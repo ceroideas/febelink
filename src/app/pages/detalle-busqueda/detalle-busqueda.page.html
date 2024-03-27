@@ -127,11 +127,12 @@
             </div>
             <a [href]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
           </div>
+          <!-- (click)="!authService.isAuthenticated()  ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
           <!-- (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
           <div class="buttons-avatar buttondesktop">
             <div
               class="chat-button buttondesktop"
-              (click)="!authService.isAuthenticated()  ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+              (click)="createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
             
               >
               Iniciar Chat
@@ -140,22 +141,12 @@
               class="chat-button whatsapp buttondesktop"
               *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null"
             >
-
             <a title="Contacto telefónico" 
-              *ngIf="!authService.isAuthenticated()"
-              aria-label="Chat on WhatsApp" 
-              (click)="irA('/login')" 
-              class="badge">
-              <i class="fa fa-whatsapp"></i>
-            </a>
-            <a title="Contacto telefónico" 
-              *ngIf="authService.isAuthenticated()"
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/34{{user?.phoneNumber}}" 
               class="badge">
               <i class="fa fa-whatsapp"></i>
             </a>
-            
           </div>
             <div
               class="follow-button buttondesktop"
@@ -537,7 +528,7 @@
   </div> -->
 
   <!--ORACULO-->
-  <div class="oracle" *ngIf="iAdvises.length > 0">
+  <!-- <div class="oracle" *ngIf="iAdvises.length > 0">
     <ion-row class="oracle-title">
       <ion-label>
         <h2 *ngIf="!otherTitelOracle">Contenidos en Oráculo</h2>
@@ -564,7 +555,7 @@
       </div>
      
     </div>
-  </div>
+  </div> -->
 
 
   <div class="capsule-price-mobile">
