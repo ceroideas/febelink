@@ -145,4 +145,23 @@ export class SearchService {
   async getProductDetail(productId: number) {
     return this.http.get('product/detail/' + productId);
   }
+
+
+
+
+  async registerClick(data: any) {
+
+    const formData = new FormData();
+
+    // Agregar datos al FormData si están presentes
+    if (data.profile !== undefined) {
+      formData.append('profile', data.profile);
+    }
+    if (data.publication !== undefined) {
+      formData.append('publication', data.publication);
+    }
+
+    // Enviar la solicitud POST con el FormData
+    return this.http.post('createClickWhatsApps', formData);
+  }
 }

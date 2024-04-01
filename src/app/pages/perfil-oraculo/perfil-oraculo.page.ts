@@ -231,4 +231,12 @@ export class PerfilOraculoPage implements OnInit {
   backButton() {
     this.location.back();
   }
+
+  async registerClick(user, profile){
+    let data = {
+      user: user,
+      profile: profile
+    }
+    const {response, error} = await this.searchService.registerClick(data);
+  }
 }
