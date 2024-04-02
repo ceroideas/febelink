@@ -43,25 +43,7 @@
           </div>
         </div>
 
-        <div  class="box-suscription box-height1">
-          <div class="box-title">
-            Suscripción Super Pro
-          </div>
-          <!-- <div class="box-price-a">
-            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-          </div> -->
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Los mejores profesionales de cada sector en cada localidad.
-            </div>
-          </div>
-          <div class="box-button disabled">
-            Solicita más información
-          </div>
-        </div>
+     
         <ng-container *ngFor="let sub of subscriptions">
           <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription">
             <div class="box-title-b">
@@ -311,6 +293,7 @@
             </div>
           </div>
           <div class="box-button-primary"
+        
               (click)="subscribe('sub-pro', 1)">
             Seleccionar
           </div>
@@ -495,6 +478,72 @@
 
       </div>
 
+      <div  class="box-suscription box-height1">
+        <div class="box-title">
+          Suscripción Super Pro
+        </div>
+        <!-- <div class="box-price-a">
+          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+        </div> -->
+        <!-- <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+          </div>
+          <div class="table-cell-right">
+            Los mejores profesionales de cada sector en cada localidad.
+          </div>
+        </div>
+        <div class="box-button disabled">
+          Solicita más información
+        </div> -->
+
+        <div class="box-price-b">
+          <span class="box-price-b-big">99,00€</span>/mes
+        </div>
+      
+          <!-- <div class="table-options-">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Edita las plantillas con tus servicios
+            </div>
+          </div>
+          <div class="table-options-">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Obtén la marca SUPER PRO en tu perfil
+            </div>
+          </div> -->
+        <div class="table-options">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+          </div>
+          <div class="table-cell-right">
+            Los mejores profesionales de cada sector en cada localidad.
+          </div>
+        </div>
+        <div class="table-options">
+      
+        <div class="position-bottom">
+          <div  class="box-button-primary"
+          *ngIf="!findSubscription('superpro')"
+              (click)="subscribe('superpro', 1)">
+            Seleccionar
+          </div>
+          <div 
+          class="super"
+            *ngIf="findSubscription('superpro')"
+             >
+            Ya tienes la subscripcion SUPER PRO
+          </div>
+        </div>
+        
+      </div>
+      </div>
+
     </div>
 
     <!-- ------------------------ -->
@@ -512,7 +561,7 @@
         Mi suscripción
       </div>
 
-      <div *ngIf="!suscriptionChange && subLoaded" style="display:block;width:100%;padding:0px 60px 24px 60px;">
+      <div *ngIf="!suscriptionChange && subLoaded" style="display:block;float:left;padding:0px 60px 24px 60px;">
         <div *ngIf="subscriptions?.length == 0" class="box-suscription box-same-height">
           <div class="box-title">
             Suscripción Gratuita
@@ -537,27 +586,6 @@
         </div>
 
 
-        <div  class="box-suscription box-same-height">
-          <div class="box-title">
-            Suscripción Super Pro
-          </div>
-          <!-- <div class="box-price-a">
-            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-          </div> -->
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Los mejores profesionales de cada sector en cada localidad.
-            </div>
-          </div>
-          <div class="position-bottom">
-            <div class="box-button disabled">
-              Solicita más información
-            </div>
-          </div>
-        </div>
 
         <ng-container *ngFor="let sub of subscriptions">
           <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription border-wrapper-b box-same-height">
@@ -776,7 +804,7 @@
         </ng-container>
       </div>
 
-      <div *ngIf="suscriptionChange" style="display:block;width:100%;padding:0px 60px 24px 60px;">
+      <div *ngIf="suscriptionChange" style="display:block;float:left;padding:0px 60px 24px 60px;">
         <div *ngIf="subscriptions?.length == 0" class="box-suscription border-wrapper-b box-same-height">
           <div class="box-title-b">
             Suscripción<br>PRO
@@ -996,6 +1024,65 @@
           </div>
         </div>
       </div>
+
+      <div  style="display:block;float:left;padding:0px 60px 24px 60px;">
+        <div  class="box-suscription box-same-height">
+          <div class="box-title">
+            Suscripción Super Pro
+          </div>
+          <!-- <div class="box-price-a">
+            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
+          </div> -->
+          <div class="box-price-b">
+            <span class="box-price-b-big">99,00€</span>/mes
+          </div>
+        
+          <!-- <div class="table-options-b">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Edita las plantillas con tus servicios
+            </div>
+          </div>
+          <div class="table-options-b">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Obtén la marca SUPER PRO en tu perfil
+            </div>
+          </div> -->
+          <div class="table-options">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Los mejores profesionales de cada sector en cada localidad.
+            </div>
+          </div>
+          <div class="table-options">
+        
+          <div class="position-bottom">
+            <div  class="box-button-primary"
+            *ngIf="!findSubscription('superpro')"
+                (click)="subscribe('superpro', 1)">
+              Seleccionar
+            </div>
+
+            <div 
+            class="super"
+              *ngIf="findSubscription('superpro')"
+               >
+              Ya tienes la subscripcion SUPER PRO
+            </div>
+          </div>
+          
+        </div>
+
+       
+        </div>
+    </div>
     </div>
   <!-- </ion-content> -->
   </div>
