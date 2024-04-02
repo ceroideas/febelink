@@ -21,4 +21,15 @@ export const environment = {
   KYC_SELFIE: true,
   // Initial Page
   HOME_PAGE: '',
+  FIREBASE_CONFIG: {
+    apiKey: "AIzaSyDbYXGGXYL21-NK-Ob8bNZAY-jcVwx4-7s",
+    authDomain: "febelink-app.firebaseapp.com",
+    databaseURL: "https://febelink-app.firebaseio.com",
+    projectId: "febelink-app",
+    storageBucket: "febelink-app.appspot.com",
+    messagingSenderId: "939891417028",
+    appId: "1:939891417028:web:fc2479f6487c6fd4afce91",
+    measurementId: "G-LL020HEJ1L"
+  },
+  FIREBASE_VAPID_KEY: 'BEiWoNPviKxsd2vXNfwP-N99b9EAaOfJSV9P-6894BcZwIdz_E4XUNVbaHbwoo21i3E2Q8b1RWwAQfv5fNGDirU'
 };

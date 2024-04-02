@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   
-    // baseWebUrl: 'https://api.febelink.com/',
-    // API_URL: 'https://api.febelink.com/api/',
-    // API_URL_AUTH: 'https://api.febelink.com/api/auth/',
+    baseWebUrl: 'https://api.febelink.com/',
+    API_URL: 'https://api.febelink.com/api/',
+    API_URL_AUTH: 'https://api.febelink.com/api/auth/',
 /*
     baseWebUrl: 'http://apitest.febelink.com/',
     API_URL: 'http://apitest.febelink.com/api/',
@@ -18,9 +18,9 @@ export const environment = {
   // API_URL: 'http://localhost/api/',
   // API_URL_AUTH: 'http://localhost/api/auth/',
 
-  baseWebUrl: 'http://192.168.0.31/',
-  API_URL: 'http://192.168.0.31/api/',
-  API_URL_AUTH: 'http://192.168.0.31/api/auth/',
+  // baseWebUrl: 'http://192.168.0.31/',
+  // API_URL: 'http://192.168.0.31/api/',
+  // API_URL_AUTH: 'http://192.168.0.31/api/auth/',
 
 
   SOCKET_URL: 'http://localhost:3425/',
@@ -42,7 +42,19 @@ export const environment = {
   KYC_SELFIE: true,
 
   // Initial Page
-  HOME_PAGE: ''
+  HOME_PAGE: '',
+
+  FIREBASE_CONFIG: {
+    apiKey: "AIzaSyDbYXGGXYL21-NK-Ob8bNZAY-jcVwx4-7s",
+    authDomain: "febelink-app.firebaseapp.com",
+    databaseURL: "https://febelink-app.firebaseio.com",
+    projectId: "febelink-app",
+    storageBucket: "febelink-app.appspot.com",
+    messagingSenderId: "939891417028",
+    appId: "1:939891417028:web:fc2479f6487c6fd4afce91",
+    measurementId: "G-LL020HEJ1L"
+  },
+  FIREBASE_VAPID_KEY: 'BEiWoNPviKxsd2vXNfwP-N99b9EAaOfJSV9P-6894BcZwIdz_E4XUNVbaHbwoo21i3E2Q8b1RWwAQfv5fNGDirU'
 };
 
 /*
