@@ -46,7 +46,6 @@ export class SuscripcionesPage implements OnInit {
 
   async getMySubscriptions() {
     const { response } = await this.subService.getMySubscriptions();
-    console.log(response)
     this.subscriptions = response;
     this.subLoaded = true;
     if (this.subscriptions.find((e) => e.subscriptionName === 'sub-pro')) {
@@ -60,29 +59,12 @@ export class SuscripcionesPage implements OnInit {
       amount,
     });
 
-    console.log(response)
     if (typeof response === 'string') {
       window.location.href = response;
     } else {
       await this.getMySubscriptions();
       this.suscriptionChange = false;
     }
-  }
-
-
-  async subscribeSuperPro() {
-    // const { response } = await this.subService.getSubscriptionLink({
-    //   subscriptionName,
-    //   amount,
-    // });
-
-    // console.log(response)
-    // if (typeof response === 'string') {
-    //   // window.location.href = response;
-    // } else {
-    //   await this.getMySubscriptions();
-    //   this.suscriptionChange = false;
-    // }
   }
 
   findSubscription(searchTerm: string) {

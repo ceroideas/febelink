@@ -77,7 +77,7 @@
                     [pickType]="filePickType.IMAGE"
                     (OnFile)="images.length <= 4 ? fileSelected($event): null"
                   ></app-file-picker>
-                  <div class="icon-add">
+                  <div class="icon-add" *ngIf="!isTemplate">
                     <div class="picker" (click)=" error.images = false;filePickerDesktop.clicks()">
                       <span>Click here </span>to upload or drop media image
                     </div>
@@ -105,7 +105,7 @@
             </div>
           </div>
 
-          <div class="butttonaddphotos" *ngIf="images.length <= 4">
+          <div class="butttonaddphotos" *ngIf="images.length <= 4 && !isTemplate">
             <div (click)="error.images = false;filePickerDesktop.clicks()">Añadir Fotos</div>
           </div>
           <div class="title-pie">Peso máximo 3 Mb. Máximo 6 imágenes.</div>
