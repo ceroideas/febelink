@@ -26,6 +26,7 @@
           {{user?.description}}
         </div>
         <div class="buttons-profile" *ngIf="!hideChat">
+
           <div class="item-button">Seguir</div>
 
           <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
@@ -39,6 +40,8 @@
           </div>
           <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
         </div>
+        <img  *ngIf="detalle?.subscription === 5" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+
         <div class="header-content-top-right" *ngIf="!hideChat">
           <div class="block-action-top">
             <img

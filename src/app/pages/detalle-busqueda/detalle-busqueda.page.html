@@ -130,6 +130,8 @@
           <!-- (click)="!authService.isAuthenticated()  ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
           <!-- (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
           <div class="buttons-avatar buttondesktop">
+            <img  *ngIf="detalle?.subcription === 9" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+
             <div
               class="chat-button buttondesktop"
               (click)="!authService.isAuthenticated() ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
@@ -160,6 +162,8 @@
         </div>
         <div class="user-detail">{{user?.description}}</div>
         <div class="buttons-mobileavatar buttonmobile">
+          <img  *ngIf="detalle?.subcription === 9"  class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+
           <div
             class="chat-button buttonmobile"
             (click)="!authService.isAuthenticated() ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"

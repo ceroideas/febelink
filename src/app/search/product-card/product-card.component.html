@@ -72,6 +72,7 @@
           <h4 class="animation-card_content_title title-2">{{data?.title}}</h4>
           <div class="votes">({{data?.votes}} Valoraciones)</div>  
           <div class="bottom">
+            <img *ngIf="data?.subcription === 9" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
             <i class="iconwhatsapp fa fa-whatsapp"></i>
             <div class="price">
               {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
