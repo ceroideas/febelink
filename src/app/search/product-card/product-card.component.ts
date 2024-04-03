@@ -13,6 +13,8 @@ export interface SearchProductCardType {
   ownerUserId: number;
   ownerUsername: string;
   description: string;
+  subcription: number;
+  verified: number;
 }
 
 export interface PriceUnitType {

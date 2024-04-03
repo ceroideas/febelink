@@ -58,6 +58,7 @@ export class SuscripcionesPage implements OnInit {
       subscriptionName,
       amount,
     });
+
     if (typeof response === 'string') {
       window.location.href = response;
     } else {

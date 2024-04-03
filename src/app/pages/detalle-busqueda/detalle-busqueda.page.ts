@@ -210,4 +210,13 @@ export class DetalleBusquedaPage implements OnInit {
       return term
     }
   }
+
+
+
+  async registerClick(user, publication){
+    let data = {
+      publication: publication
+    }
+    const {response, error} = await this.searchService.registerClick(data);
+  }
 }

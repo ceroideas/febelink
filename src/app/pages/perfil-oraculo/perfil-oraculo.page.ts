@@ -148,10 +148,9 @@ export class PerfilOraculoPage implements OnInit {
   async getProductDetail() {
     const user = JSON.parse(sessionStorage.getItem('productId'));
     const {response} =  await this.searchService.getProductDetail(user);
-    console.log(response)
-    console.log('======================')
     if (response) {
       this.detalle = response;
+      console.log(this.detalle)
       this.user.avatar = response.ownerAvatar 
     }
   }
@@ -230,5 +229,13 @@ export class PerfilOraculoPage implements OnInit {
   }
   backButton() {
     this.location.back();
+  }
+
+  async registerClick(user, profile){
+    let data = {
+      user: user,
+      profile: profile
+    }
+    const {response, error} = await this.searchService.registerClick(data);
   }
 }

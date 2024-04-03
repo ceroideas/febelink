@@ -8,6 +8,7 @@ import {LinkLocationPage} from './link-location/link-location.page';
 import { CityPage } from './city/city.page';
 import { LinkCityPage } from './link-city/link-city.page';
 import { LinkFooterPage } from './link-footer/link-footer.page';
+import { ClicksPage } from './clicks/clicks.page';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'link-footer',
     component: LinkFooterPage
+  },
+  {
+    path: 'clicks',
+    component: ClicksPage
   }
 ];
 

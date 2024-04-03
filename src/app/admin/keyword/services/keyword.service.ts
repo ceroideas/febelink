@@ -194,4 +194,10 @@ export class KeywordService {
     }
   }
 
+
+
+  public listClickViews(){
+    return this.http.get('admin/listClickViews');
+ }
+
 }
