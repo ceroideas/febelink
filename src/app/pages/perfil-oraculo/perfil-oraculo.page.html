@@ -40,7 +40,7 @@
           </div>
           <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
         </div>
-        <img  *ngIf="detalle?.verified === 9" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+        <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
 
         <div class="header-content-top-right" *ngIf="!hideChat">
           <div class="block-action-top">
