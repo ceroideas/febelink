@@ -14,6 +14,7 @@ export interface SearchProductCardType {
   ownerUsername: string;
   description: string;
   subcription: number;
+  verified: number;
 }
 
 export interface PriceUnitType {
