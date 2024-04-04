@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
 import { TranslateConfigService } from './translate/translate-config.service';
 import { ILang, ILangDEFAULTS } from '../models/langs.model';
@@ -24,7 +24,8 @@ export class ApiService {
     public utilities: UtilitiesService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    public translateSvc: TranslateConfigService
+    public translateSvc: TranslateConfigService,
+    private platform: Platform,
   ) {}
 
   verifiedChangePassword(token) {
@@ -195,9 +196,20 @@ export class ApiService {
   public async guardarTokenDeRegistro(tokenRegistro) {
     const formData = new FormData();
     formData.append('registerToken', tokenRegistro);
-    formData.append('platform', this.utilities.getPlatform());
+    
+    console.log(this.platform)
 
+
+    let plataform;
+    if (
+      this.platform.is('ios')
+      || this.platform.is('android')) {
+        plataform = this.utilities.getPlatform()
+  } else {
+    plataform = 'desktop'
+  }
    
+  formData.append('platform', plataform);
     // console.log(tokenRegistro)
     // console.log(formData)
     // console.log("==========formData")

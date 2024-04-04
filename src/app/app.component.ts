@@ -162,10 +162,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.initDeeplinks();
         this.router.navigate(['login']);
       }
-      this.userSubscription = this.api.getUserLogged().subscribe((item) => {
-        this.pushSetup();
-      });
+      this.pushSetup();
+      // this.userSubscription = this.api.getUserLogged().subscribe((item) => {
+      //   this.pushSetup();
+      // });
     });
+ 
+
+
 
     this.authenticationService.authenticationState.subscribe(async (state) => {
       if (state) {
@@ -403,6 +407,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // pushObject
     //   .on('error')
     //   .subscribe((error) => console.log('Error with Push plugin' + error));
+   
 
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
@@ -420,6 +425,7 @@ export class AppComponent implements OnInit, OnDestroy {
         });
 
         onMessage(messaging, (payload) => {
+
           console.log('Message received. ', payload);
         });
       } else {
