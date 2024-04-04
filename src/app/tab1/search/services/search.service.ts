@@ -161,6 +161,10 @@ export class SearchService {
       formData.append('publication', data.publication);
     }
 
+    if (data.user !== undefined) {
+      formData.append('user', data.user);
+    }
+
     // Enviar la solicitud POST con el FormData
     return this.http.post('createClickWhatsApps', formData);
   }
