@@ -159,15 +159,24 @@ export class ApiService {
     const lang = await this.translateSvc.getLanguage();
 
     //perform the API call
+    console.log(lang)
+    console.log(token)
+    console.log(endpoint)
+    console.log(data)
     return this.http
       .post<any>(environment.API_URL_AUTH + endpoint, data, {
         headers: { Authorization: `Bearer ${token}`, Lang: lang },
       })
       .pipe(
         map((res: any) => {
+          console.log(res)
+          console.log("=========================================respuesta")
           return res;
         }),
         catchError((err: any, caught: Observable<any>) => {
+          console.log(err)
+          console.log(caught)
+          console.log("=========================================respuesta")
           return this.handleError(err, caught, endpoint);
         })
       );
@@ -192,12 +201,21 @@ export class ApiService {
    * Guardamos el token de registro de las notificaciones push
    * @param tokenRegistro
    */
-  public guardarTokenDeRegistro(tokenRegistro) {
+  public async guardarTokenDeRegistro(tokenRegistro) {
     const formData = new FormData();
     formData.append('registerToken', tokenRegistro);
     formData.append('platform', this.utilities.getPlatform());
 
-    return this._createData('guardar-token', formData);
+   
+    console.log(tokenRegistro)
+    console.log(formData)
+    console.log("==========formData")
+    // return this._createData('guardar-token', formData);
+    const responseObs: Observable<any> = await this._createData(
+      'guardar-token',
+      formData
+    );
+    return responseObs.pipe(first()).toPromise();
   }
 
   //

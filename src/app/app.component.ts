@@ -162,8 +162,9 @@ export class AppComponent implements OnInit, OnDestroy {
         this.initDeeplinks();
         this.router.navigate(['login']);
       }
-
+      this.api.guardarTokenDeRegistro('cuNUcyLoMhHccopI_9uKPx:APA91bG3rzb48etTB1zOJdzmSATYl1M8RZdfXxmlXUOk9rmK5RcHk_9IDxYrdhyD63UtoGfiIzkpP8ezMeJX-VTRo_leEH1CxUXjV9zqX4QL5FOYnnlddhr8Z5N9E6xW7KxSRustBCer')
       this.userSubscription = this.api.getUserLogged().subscribe((item) => {
+    
         this.pushSetup();
       });
     });
@@ -406,17 +407,17 @@ export class AppComponent implements OnInit, OnDestroy {
     //   .subscribe((error) => console.log('Error with Push plugin' + error));
 
     Notification.requestPermission().then((permission) => {
+      console.log(permission)
       if (permission === 'granted') {
         // Initialize Firebase Cloud Messaging and get a reference to the service
         const messaging = getMessaging(this.firebaseApp);
 
         getToken(messaging, { vapidKey: environment.FIREBASE_VAPID_KEY })
         .then(async (currentToken) => {
-          if (currentToken) {
+          // if (currentToken) {
             // Send the token to your server and update the UI if necessary
             await this.api.guardarTokenDeRegistro(currentToken)
-            console.log(currentToken);
-          }
+          // }
         }).catch((err) => {
           console.log('An error occurred while retrieving token. ', err);
         });
