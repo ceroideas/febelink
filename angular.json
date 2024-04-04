@@ -36,7 +36,8 @@
               "src/getstarted.html",
               "src/sitemap.xml",
               "src/robots.txt",
-              "src/ads.txt"
+              "src/ads.txt",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               {
@@ -159,7 +160,8 @@
                 "input": "src/assets",
                 "output": "/assets"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/firebase-messaging-sw.js"
             ]
           },
           "configurations": {

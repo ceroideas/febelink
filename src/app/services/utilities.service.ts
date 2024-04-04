@@ -73,6 +73,7 @@ export class UtilitiesService {
    * Devuelve el sistema operativo del dispositivo
    */
   getPlatform() {
+   
     return this.platform.is('ios') ? 'ios' : 'android';
   }
 

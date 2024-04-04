@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
 import { TranslateConfigService } from './translate/translate-config.service';
 import { ILang, ILangDEFAULTS } from '../models/langs.model';
@@ -24,7 +24,8 @@ export class ApiService {
     public utilities: UtilitiesService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    public translateSvc: TranslateConfigService
+    public translateSvc: TranslateConfigService,
+    private platform: Platform,
   ) {}
 
   verifiedChangePassword(token) {
@@ -45,7 +46,6 @@ export class ApiService {
     const formData = new FormData();
     formData.append('token', params.token);
     formData.append('password', params.password);
-    console.log(params)
     // return this._createData('update/register', formData);
     return this.http.post(environment.API_URL_AUTH + 'update/register', formData).pipe(
       map((res: any) => {
@@ -159,6 +159,7 @@ export class ApiService {
     const lang = await this.translateSvc.getLanguage();
 
     //perform the API call
+  
     return this.http
       .post<any>(environment.API_URL_AUTH + endpoint, data, {
         headers: { Authorization: `Bearer ${token}`, Lang: lang },
@@ -192,12 +193,32 @@ export class ApiService {
    * Guardamos el token de registro de las notificaciones push
    * @param tokenRegistro
    */
-  public guardarTokenDeRegistro(tokenRegistro) {
+  public async guardarTokenDeRegistro(tokenRegistro) {
     const formData = new FormData();
     formData.append('registerToken', tokenRegistro);
-    formData.append('platform', this.utilities.getPlatform());
+    
+    console.log(this.platform)
 
-    return this._createData('guardar-token', formData);
+
+    let plataform;
+    if (
+      this.platform.is('ios')
+      || this.platform.is('android')) {
+        plataform = this.utilities.getPlatform()
+  } else {
+    plataform = 'desktop'
+  }
+   
+  formData.append('platform', plataform);
+    // console.log(tokenRegistro)
+    // console.log(formData)
+    // console.log("==========formData")
+    // return this._createData('guardar-token', formData);
+    const responseObs: Observable<any> = await this._createData(
+      'guardar-token',
+      formData
+    );
+    return responseObs.pipe(first()).toPromise();
   }
 
   //
