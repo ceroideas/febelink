@@ -29,10 +29,9 @@
 
           <div class="item-button">Seguir</div>
 
-          <div class="item-button whatsapp chat" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
+          <div class="item-button whatsapp chat"  (click)="registerClick(user?.id, idPerfil)" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
             <a title="Contacto telefónico" 
               aria-label="Chat on WhatsApp" 
-              (click)="registerClick(user?.id, idPerfil)"
               href="https://wa.me/34{{user?.phoneNumber}}" 
               class="badge">
                 <i class="fa fa-whatsapp"></i>

@@ -140,14 +140,14 @@
               Iniciar Chat
             </div>
             <!-- * -->
-            <!--  -->
+            <!--    -->
             <div
               class="chat-button whatsapp buttondesktop"
+              (click)="registerClick(user?.id, productId )"
               *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null"
             >
             <a title="Contacto telefónico" 
               aria-label="Chat on WhatsApp" 
-              (click)="registerClick(user?.id, productId )"
               href="https://wa.me/34{{user?.phoneNumber}}"
               class="badge">
               <i class="fa fa-whatsapp"></i>
@@ -171,15 +171,15 @@
             Iniciar Chat
           </div>
           <!-- !-- *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null" --> 
-            <!-- href="https://wa.me/34{{user?.phoneNumber}}"  -->
+            <!--   -->
           <div
             class="chat-button whatsapp buttonmobile"
-         
+            (click)="registerClick(user?.id, productId )"
            >
            <a title="Contacto telefónico" 
-            (click)="registerClick(user?.id, productId )"
+            
             aria-label="Chat on WhatsApp" 
-          
+            href="https://wa.me/34{{user?.phoneNumber}}"
             class="badge">
             <i class="fa fa-whatsapp"></i>
           </a>

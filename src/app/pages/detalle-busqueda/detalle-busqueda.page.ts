@@ -7,6 +7,7 @@ import {ChatService} from '../../services/chat.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import { AdviseService } from '../posts/advises/services/advises.service';
 import { UserDataService } from '../user-data/Services/user-data.service';
+import { UserSessionSvc } from 'src/app/services/user-session.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs]);
@@ -59,6 +60,7 @@ export class DetalleBusquedaPage implements OnInit {
   constructor(public searchService: SearchService, public router: Router, private route: ActivatedRoute,
               private cartService: CartService, private chatService: ChatService, public authService: AuthenticationService, 
               private profileUser: UserDataService,
+              public sessionSvc: UserSessionSvc,
               private adviseSvc: AdviseService) {
     this.route.paramMap.subscribe((params) => {
       this.productId = params.get('id');
@@ -213,9 +215,13 @@ export class DetalleBusquedaPage implements OnInit {
 
 
 
-  async registerClick(user, publication){
+  async registerClick(user1, publication){
+
+    let userId = await this.sessionSvc.get();
+    console.log(userId)
     let data = {
-      publication: publication
+      publication: publication,
+      user: userId?.id
     }
     const {response, error} = await this.searchService.registerClick(data);
   }
