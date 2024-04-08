@@ -51,6 +51,11 @@ import {PipesModule} from './pipes/pipes.module';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {SharedModule} from './shared/shared.module';
 
+
+
+// import { initializeApp } from "firebase/app";
+// initializeApp(environment.FIREBASE_CONFIG);
+
 function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

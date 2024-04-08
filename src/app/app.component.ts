@@ -425,8 +425,17 @@ export class AppComponent implements OnInit, OnDestroy {
         });
 
         onMessage(messaging, (payload) => {
+          const notification = new Notification(payload.data?.title, {
+            body: payload.data?.message,
+            icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
+          });
 
-          console.log('Message received. ', payload);
+
+        
+          notification.onclick = (event) => {
+            // Handle notification click event here
+          };
+          
         });
       } else {
         console.log('Unable to get permission to notify.');
