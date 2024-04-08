@@ -416,7 +416,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
         getToken(messaging, { vapidKey: environment.FIREBASE_VAPID_KEY })
         .then(async (currentToken) => {
-          console.log(currentToken)
           // if (currentToken) {
             // Send the token to your server and update the UI if necessary
             await this.api.guardarTokenDeRegistro(currentToken)
@@ -426,11 +425,17 @@ export class AppComponent implements OnInit, OnDestroy {
         });
 
         onMessage(messaging, (payload) => {
-          new Notification(payload.data?.title, {
+          const notification = new Notification(payload.data?.title, {
             body: payload.data?.message,
             icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
           });
-          console.log('Message received. ', payload);
+
+
+        
+          notification.onclick = (event) => {
+            // Handle notification click event here
+          };
+          
         });
       } else {
         console.log('Unable to get permission to notify.');
