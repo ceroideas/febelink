@@ -163,7 +163,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.initDeeplinks();
         this.router.navigate(['login']);
       }
-      this.pushSetup();
+      this.pushSetupFunction();
+      // this.pushSetup();
       // this.userSubscription = this.api.getUserLogged().subscribe((item) => {
       //   this.pushSetup();
       // });
@@ -337,82 +338,83 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
+
+
+  handlePermission(permission) {
+    console.log(permission)
+    if (permission === 'granted') {
+      // Initialize Firebase Cloud Messaging and get a reference to the service
+      const messaging = getMessaging(this.firebaseApp);
+
+      getToken(messaging, { vapidKey: environment.FIREBASE_VAPID_KEY })
+      .then(async (currentToken) => {
+        // if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          await this.api.guardarTokenDeRegistro(currentToken)
+        // }
+      }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+      });
+
+      
+      onMessage(messaging, (payload) => {
+        if (   this.platform.is('ios')
+          || this.platform.is('android')) {
+          navigator.serviceWorker.ready.then((registration) => {
+            registration.showNotification(payload.data?.title, {
+              body: payload.data?.message,
+              icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
+            });
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+          });
+        } else {
+          const notification = new Notification(payload.data?.title, {
+            body: payload.data?.message,
+            icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
+          });
+
+
+        
+          notification.onclick = (event) => {
+            // Handle notification click event here
+          };
+        }
+        
+       
+        
+      });
+    } else {
+      console.log('Unable to get permission to notify.');
+    }
+  } 
+
+
+  public pushSetupFunction(): void {
+      // Intentar obtener permiso utilizando una promesa
+      try {
+        Notification.requestPermission()
+        .then(permission => {
+            this.handlePermission(permission);
+        })
+        .catch((error) => {
+            console.error('Error al solicitar permiso de notificación:', error);
+        });
+      } catch (error) {
+          if (error instanceof TypeError) {
+            Notification.requestPermission((permission) => {
+                this.handlePermission(permission);
+            });
+          } else {
+              throw error;
+          }
+      }
+  }
+
   public pushSetup(): void {
-    // // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
-    // this.push
-    //   .createChannel({
-    //     id: 'testchannel1',
-    //     description: 'My first test channel',
-    //     // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
-    //     importance: 3,
-    //   })
-    //   .then(() => console.log('Channel created'));
-
-    // const options: PushOptions = {
-    //   android: {
-    //     senderID: '41183692404',
-    //     // By default the icon selected is app's icon:
-    //     // https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/PAYLOAD.md#images
-    //     // else you can specify by name, refering an icon inside res/drawable folder
-    //     // icon: 'notification', // this icon does not exist in drawable folder
-    //   },
-    //   ios: {
-    //     alert: 'true',
-    //     badge: true,
-    //     sound: 'true',
-    //     // senderID: '41183692404',
-    //     // gcmSandbox: true,
-    //   },
-    //   windows: {},
-    // };
-    // // console.log('en el push setup');
-
-    // const pushObject: PushObject = this.push.init(options);
-
-    // pushObject.on('notification').subscribe((notification) => {
-    //   // console.log('en el notification');
-    //   // console.log("NOTIFICACION DATA:", JSON.stringify(notification.additionalData));
-    //   if (notification.additionalData.foreground) {
-    //     if (notification.additionalData.apiData.id) {
-    //       let id = notification.additionalData.apiData.id;
-    //       this.pushAlert(notification.title, notification.message, id);
-    //     } else {
-    //       this.utilities.showAlert(notification.title, notification.message);
-    //     }
-    //   } else {
-    //     if (notification.additionalData.apiData.id) {
-    //       let id = notification.additionalData.apiData.id;
-    //       this.router.navigate(['perfil-demandante'], {
-    //         queryParams: {id_perfil: id, contacto: true},
-    //       });
-    //     }
-    //   }
-    // });
-    // pushObject.on('registration').subscribe(async (registration) => {
-    //   console.log('en el registration');
-    //   console.log(JSON.stringify(registration));
-
-    //   (
-    //     await this.api.guardarTokenDeRegistro(registration.registrationId)
-    //   ).subscribe(
-    //     (response) => {
-    //       console.log('response apiNotificaciones.guardarTokenDeRegistro = ');
-    //       console.log(response);
-    //     },
-    //     (err) => {
-    //       console.log('error apiNotificaciones.guardarTokenDeRegistro =');
-    //       console.log(err);
-    //     }
-    //   );
-    // });
-    // pushObject
-    //   .on('error')
-    //   .subscribe((error) => console.log('Error with Push plugin' + error));
-   
+    
    
     Notification.requestPermission().then((permission) => {
-
-    
 
       if (permission === 'granted') {
         // Initialize Firebase Cloud Messaging and get a reference to the service
