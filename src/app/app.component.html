@@ -3,6 +3,8 @@
         <app-menu></app-menu>
         <ion-router-outlet id="main"></ion-router-outlet>
     -->
+
+    
   <div id="advertisement" [style]="{'display': advertisement ? 'block' : 'none'}" (click)="closeAdvertisement();">
     <img src="assets/imgs/advertisement.png" [routerLink]="'/registro'">
   </div>
@@ -345,7 +347,7 @@
     </ion-content>
   </ion-menu>
 
-  <app-header [currentUser]="currentUser"></app-header>
+  <app-header  id="notificationButton" [currentUser]="currentUser"></app-header>
 
   <div class="header-space"></div>
 

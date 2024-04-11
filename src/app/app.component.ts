@@ -137,6 +137,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
     /* Show */
     this.consoleSvc.warning();
+
+
+    document.getElementById('notificationButton').addEventListener('click', () =>{
+      if (Notification.permission !== 'granted') {
+          Notification.requestPermission().then((permission) => {
+            this.handlePermission(permission);
+          });
+      } else {
+          console.log('Notification permission already granted');
+          // You can now proceed to show notifications
+      }
+    });
   }
 
   displayAdvertisement() {
