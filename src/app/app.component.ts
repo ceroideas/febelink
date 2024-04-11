@@ -128,6 +128,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    navigator.serviceWorker.register("firebase-messaging-sw.js");
     // this.displayAdvertisement();
     this.initializeApp();
     this.openCookieBanner();
@@ -408,8 +409,11 @@ export class AppComponent implements OnInit, OnDestroy {
     //   .on('error')
     //   .subscribe((error) => console.log('Error with Push plugin' + error));
    
-
+   
     Notification.requestPermission().then((permission) => {
+
+    
+
       if (permission === 'granted') {
         // Initialize Firebase Cloud Messaging and get a reference to the service
         const messaging = getMessaging(this.firebaseApp);
@@ -424,17 +428,32 @@ export class AppComponent implements OnInit, OnDestroy {
           console.log('An error occurred while retrieving token. ', err);
         });
 
-        onMessage(messaging, (payload) => {
-          const notification = new Notification(payload.data?.title, {
-            body: payload.data?.message,
-            icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
-          });
-
-
         
-          notification.onclick = (event) => {
-            // Handle notification click event here
-          };
+        onMessage(messaging, (payload) => {
+          if (   this.platform.is('ios')
+            || this.platform.is('android')) {
+            navigator.serviceWorker.ready.then((registration) => {
+              registration.showNotification(payload.data?.title, {
+                body: payload.data?.message,
+                icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
+              });
+            }).catch((err) => {
+              console.log('An error occurred while retrieving token. ', err);
+            });
+          } else {
+            const notification = new Notification(payload.data?.title, {
+              body: payload.data?.message,
+              icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
+            });
+  
+  
+          
+            notification.onclick = (event) => {
+              // Handle notification click event here
+            };
+          }
+          
+         
           
         });
       } else {
