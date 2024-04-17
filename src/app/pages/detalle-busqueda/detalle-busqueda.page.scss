@@ -575,6 +575,21 @@
                 &.whatsapp{
                   width: 63px;
                   font-size: 24px;
+                  background-color: #25D366 ;
+                  position: absolute;
+                  bottom: 0;
+                  width: 205px;
+                  a{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                  span{
+                    font-size: 17px;
+
+                     margin-left: 11px;
+                  }
+                  
                 }
                 a{
                   color: #fff;
@@ -635,8 +650,27 @@
             &.whatsapp{
               width: 63px;
               font-size: 24px;
-            }
 
+              
+            }
+            &.whatsapp{
+              width: 63px;
+              font-size: 24px;
+              background-color: #25D366 ;
+              width: 217px;
+              margin-top: -13px;
+              a{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+              span{
+                font-size: 17px;
+
+                 margin-left: 11px;
+              }
+              
+            }
             @media  (max-width: 780px) {
               font-size: 15px;
               width: 104px;
