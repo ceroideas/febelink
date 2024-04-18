@@ -24,7 +24,7 @@
       <div *ngIf="!suscriptionChange && subLoaded" class="wrapper-content">
         <div *ngIf="subscriptions?.length == 0" class="box-suscription">
           <div class="box-title">
-            Suscripción Gratuita
+            Suscripción <BR>FREE
           </div>
           <div class="box-price-a">
             <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
@@ -34,8 +34,16 @@
               <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Los usuarios ahora pueden encontrar tu perfil profesional por tu sector y localidad, así como darte una
-              valoración y dejarte reseñas
+             1 Profesión
+            </div>
+          </div>
+
+          <div class="table-options">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              3 Ofertas de servicios
             </div>
           </div>
           <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
@@ -55,16 +63,16 @@
               </div>
             </div>
             <div class="box-offer-custom">
-              30 días gratis - Después 3 meses por sólo 9,95€/mes
+              Prueba 2 meses por sólo 9,95€/mes
             </div>
-            <div class="table-options-b">
+            <!-- <div class="table-options-b">
               <div class="table-cell-left">
                 <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
               </div>
               <div class="table-cell-right">
                 Edita las plantillas con tus servicios
               </div>
-            </div>
+            </div> -->
             <div class="table-options-b">
               <div class="table-cell-left">
                 <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
@@ -78,7 +86,23 @@
                 <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
               </div>
               <div class="table-cell-right">
-                PROMO: añade una Profesión y una Oferta extra
+                Boton Whatsapp directo
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+                Boton llamada directa
+              </div>
+            </div>
+            <div class="table-options">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+               PROMO: añade 2 Profesiones y 3 Ofertas
               </div>
             </div>
             <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
@@ -90,7 +114,7 @@
               Suscripción<br>PLUS
             </div>
             <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
             </div>
             <div class="table-options-b">
               <div class="table-cell-left">
@@ -141,14 +165,14 @@
           </div>
           <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper">
             <div class="box-title-b">
-              Profesiones
+              Suscripción<br> Profesiones
             </div>
             <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
             </div>
-            <div class="box-offer">
+            <!-- <div class="box-offer">
               Gratis
-            </div>
+            </div> -->
             <div class="table-options-b">
               <div class="table-cell-left">
                 <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
@@ -197,7 +221,7 @@
               Cambiar
             </div>
           </div>
-          <div *ngIf="sub.subscriptionName.includes('sub-range')" class="box-suscription border-wrapper">
+          <!-- <div *ngIf="sub.subscriptionName.includes('sub-range')" class="box-suscription border-wrapper">
             <div class="box-title-b">
               Disponibilidad Geográfica
             </div>
@@ -251,7 +275,7 @@
             <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
               Cambiar
             </div>
-          </div>
+          </div> -->
         </ng-container>
       </div>
 
@@ -266,7 +290,7 @@
             </div>
           </div>
           <div class="box-offer-custom">
-            30 días gratis - Después 3 meses por sólo 9,95€/mes
+           Prueba 2 meses por sólo 9,95€/mes
           </div>
           <div class="table-options-b">
             <div class="table-cell-left">
@@ -304,7 +328,7 @@
               Suscripción<br>PLUS
             </div>
             <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
             </div>
             <div class="table-options-b">
               <div class="table-cell-left">
@@ -357,10 +381,10 @@
           </div>
           <div *ngIf="proUser" class="box-suscription border-wrapper">
             <div class="box-title-b">
-              Profesiones
+              Suscripción<br> Profesiones
             </div>
             <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
             </div>
             <div class="box-offer">
               Gratis
@@ -428,9 +452,9 @@
                 <span class="box-price-b-big text-cross-line">19,95€</span>/mes
               </ng-container>
             </div>
-            <div class="box-offer">
+            <!-- <div class="box-offer">
               Gratis
-            </div>
+            </div> -->
             <div class="table-options-b">
               <div class="table-cell-left">
                 <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
@@ -508,12 +532,22 @@
             Los mejores profesionales de cada sector en cada localidad.
           </div>
         </div>
+
+        
         <div class="table-options-b">
           <div class="table-cell-left">
             <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
           </div>
           <div class="table-cell-right">
-            Obtén la marca PRO en tu perfil Verificado
+            Configuración de beneficios Súper Pro
+          </div>
+        </div>
+        <div class="table-options-b">
+          <div class="table-cell-left">
+            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+          </div>
+          <div class="table-cell-right">
+            Perfil Verificado
           </div>
         </div>
           <div class="table-options-b">
@@ -521,7 +555,7 @@
               <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Campañas de marketing digital personalizadas
+              Incluir videos
             </div>
           </div>
           <div class="table-options-b">
@@ -529,7 +563,7 @@
               <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Botón WhatsApp directo
+              Botón WhatsApp
             </div>
           </div>
           <div class="table-options-b">
@@ -537,7 +571,7 @@
               <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Botón llamada directa
+              Botón llamada
             </div>
           </div>
           <div class="table-options-b">
@@ -545,7 +579,7 @@
               <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Incluye vídeos
+              5 Profesiones y 5 Ofertas
             </div>
           </div>
        
@@ -591,7 +625,7 @@
       <div *ngIf="!suscriptionChange && subLoaded" style="display:block;float:left;padding:0px 60px 24px 60px;">
         <div *ngIf="subscriptions?.length == 0" class="box-suscription box-same-height">
           <div class="box-title">
-            Suscripción Gratuita
+            Suscripción <br>Free
           </div>
           <div class="box-price-a">
             <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
@@ -601,8 +635,15 @@
               <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              Los usuarios ahora pueden encontrar tu perfil profesional por tu sector y localidad, así como darte una
-              valoración y dejarte reseñas
+              1 Profesion
+            </div>
+          </div>
+          <div class="table-options">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              3 Ofertas de Servicios
             </div>
           </div>
           <div class="position-bottom">
@@ -623,14 +664,14 @@
               <span class="box-price-b-big text-cross-line">29,95€</span>/mes
             </div>
             <div class="box-offer-custom">
-              30 días gratis - Después 3 meses por sólo 9,95€/mes
+             Prueba 2 meses por sólo 9,95€/mes
             </div>
             <div class="table-options-b">
               <div class="table-cell-left">
                 <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
               </div>
               <div class="table-cell-right">
-                Edita las plantillas con tus servicios
+               Obtén la marca PRO en tu perfil
               </div>
             </div>
             <div class="table-options-b">
@@ -638,7 +679,7 @@
                 <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
               </div>
               <div class="table-cell-right">
-                Obtén la marca PRO en tu perfil
+               Botón WhatsApp directo
               </div>
             </div>
             <div class="table-options">
@@ -646,7 +687,15 @@
                 <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
               </div>
               <div class="table-cell-right">
-                PROMO: añade una Profesión y una Oferta extra
+                Boton llamada directa
+              </div>
+            </div>
+            <div class="table-options-b">
+              <div class="table-cell-left">
+                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
+              </div>
+              <div class="table-cell-right">
+               PROMO: añade 2 Profesiones y 3 Ofertas
               </div>
             </div>
             <div class="position-bottom">
@@ -660,7 +709,7 @@
               Suscripción<br>PLUS
             </div>
             <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+              <span class="box-price-b-big ">9,95€</span>/mes por Oferta
             </div>
             <div class="table-options-b">
               <div class="table-cell-left">
@@ -713,14 +762,14 @@
           </div>
           <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper-b box-same-height">
             <div class="box-title-b">
-              Profesiones
+              Suscripción<br>Profesiones
             </div>
             <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+              <span class="box-price-b-big">9,95€</span>/mes por Oferta
             </div>
-            <div class="box-offer">
+            <!-- <div class="box-offer">
               Gratis
-            </div>
+            </div> -->
             <div class="table-options-b">
               <div class="table-cell-left">
                 <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
@@ -770,17 +819,17 @@
               </div>
             </div>
           </div>
-          <div *ngIf="sub.subscriptionName.includes('sub-range')"
+          <!-- <div *ngIf="sub.subscriptionName.includes('sub-range')"
               class="box-suscription border-wrapper-b box-same-height">
             <div class="box-title-b">
               Disponibilidad Geográfica
             </div>
             <div class="box-price-b">
               <ng-container *ngIf="sub.subscriptionName == 'sub-range-region'">
-                <span class="box-price-b-big text-cross-line">9,95€</span>/mes
+                <span class="box-price-b-big ">9,95€</span>/mes
               </ng-container>
               <ng-container *ngIf="sub.subscriptionName == 'sub-range-country'">
-                <span class="box-price-b-big text-cross-line">19,95€</span>/mes
+                <span class="box-price-b-big ">19,95€</span>/mes
               </ng-container>
             </div>
             <div class="box-offer">
@@ -827,7 +876,7 @@
                 Cambiar
               </div>
             </div>
-          </div>
+          </div> -->
         </ng-container>
       </div>
 
@@ -837,19 +886,12 @@
             Suscripción<br>PRO
           </div>
           <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">29,95€</span>/mes
+            <span class="box-price-b-big ">29,95€</span>/mes
           </div>
           <div class="box-offer-custom">
-            30 días gratis - Después 3 meses por sólo 9,95€/mes
+            Prueba 2 meses por sólo 9,95€/mes
           </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Edita las plantillas con tus servicios
-            </div>
-          </div>
+          
           <div class="table-options-b">
             <div class="table-cell-left">
               <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
@@ -858,12 +900,28 @@
               Obtén la marca PRO en tu perfil
             </div>
           </div>
+          <div class="table-options-b">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+              Boton WhatsApp directo
+            </div>
+          </div>
+          <div class="table-options-b">
+            <div class="table-cell-left">
+              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
+            </div>
+            <div class="table-cell-right">
+            Boton llamada directa
+            </div>
+          </div>
           <div class="table-options">
             <div class="table-cell-left">
               <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
             </div>
             <div class="table-cell-right">
-              PROMO: añade una Profesión y una Oferta extra
+              PROMO: añade una 2 Profesionesy 3 Ofertas
             </div>
           </div>
           <div class="box-button-primary"
@@ -876,7 +934,7 @@
             Suscripción<br>PLUS
           </div>
           <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            <span class="box-price-b-big ">9,95€</span>/mes por Oferta
           </div>
           <div class="table-options-b">
             <div class="table-cell-left">
@@ -931,14 +989,14 @@
         </div>
         <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
           <div class="box-title-b">
-            Profesiones
+            Suscripción<br> Profesiones
           </div>
           <div class="box-price-b">
-            <span class="box-price-b-big text-cross-line">4,95€</span>/mes por Oferta
+            <span class="box-price-b-big ">9,95€</span>/mes por Oferta
           </div>
-          <div class="box-offer">
+          <!-- <div class="box-offer">
             Gratis
-          </div>
+          </div> -->
           <div class="table-options-b">
             <div class="table-cell-left">
               <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
@@ -990,66 +1048,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
-          <div class="box-title-b">
-            Disponibilidad Geográfica
-          </div>
-          <div class="box-price-b">
-            <ng-container *ngIf="geoDispDesktop.value != 'sub-range-country'">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes
-            </ng-container>
-            <ng-container *ngIf="geoDispDesktop.value == 'sub-range-country'">
-              <span class="box-price-b-big text-cross-line">19,95€</span>/mes
-            </ng-container>
-          </div>
-          <div class="box-offer">
-            Gratis
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Extiende el alcance de tu actividad
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Expande tu negocio
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Completa tus resultados
-            </div>
-          </div>
-          <div class="position-bottom">
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [value]="findSubscription('sub-range')?.subscriptionName" #geoDispDesktop
-                            [disabled]="!suscriptionChange"
-                            class="price-select"
-                            placeholder="- Selecciona un rango -" cancelText="Cancelar" okText="Aceptar">
-                  <ion-select-option value="sub-range-region">Regional</ion-select-option>
-                  <ion-select-option value="sub-range-country">Nacional</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div *ngIf="geoDispDesktop.value" class="box-button-primary"
-                (click)="subscribe(geoDispDesktop.value, 1)">
-              Seleccionar
-            </div>
-          </div>
-        </div>
+      
       </div>
 
       <div  style="display:block;float:left;padding:0px 60px 24px 60px;">

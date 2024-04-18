@@ -141,24 +141,27 @@
             </div>
             <!-- * -->
             <!--    -->
-            <div
-              class="chat-button whatsapp buttondesktop"
-              (click)="registerClick(user?.id, productId )"
-              *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null"
-            >
-            <a title="Contacto telefónico" 
-              aria-label="Chat on WhatsApp" 
-              href="https://wa.me/34{{user?.phoneNumber}}"
-              class="badge">
-              <i class="fa fa-whatsapp"></i>
-            </a>
-          </div>
+        
             <div
               class="follow-button buttondesktop"
               >
              Seguir
             </div>
+
+            <div
+            class="chat-button whatsapp buttondesktop"
+            (click)="registerClick(user?.id, productId )"
+            *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null"
+          >
+          <a title="Contacto telefónico" 
+            aria-label="Chat on WhatsApp" 
+            href="https://wa.me/34{{user?.phoneNumber}}"
+            class="badge">
+            <i class="fa fa-whatsapp"></i> <span>Whatsapp</span>
+          </a>
+        </div>
           </div>
+         
         </div>
         <div class="user-detail">{{user?.description}}</div>
         <div class="buttons-mobileavatar buttonmobile">
@@ -172,6 +175,16 @@
           </div>
           <!-- !-- *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null" --> 
             <!--   -->
+          
+          <div
+            class="follow-button buttonmobile"
+            >
+           Seguir
+          </div>
+        </div>
+        <div class="buttons-mobileavatar buttonmobile">
+
+          
           <div
             class="chat-button whatsapp buttonmobile"
             (click)="registerClick(user?.id, productId )"
@@ -182,15 +195,11 @@
             href="https://wa.me/34{{user?.phoneNumber}}"
             class="badge">
             <i class="fa fa-whatsapp"></i>
+            <span>WhatsApp</span>
           </a>
           </div>
-          <div
-            class="follow-button buttonmobile"
-            >
-           Seguir
-          </div>
+         
         </div>
-      
   
         <!--TITLE SECTION-->
         <div class="section-title">

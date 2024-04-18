@@ -29,16 +29,25 @@
 
           <div class="item-button">Seguir</div>
 
+         
+          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
+        </div>
+
+
+        <div class="buttons-profile" *ngIf="!hideChat">
+
+
           <div class="item-button whatsapp chat"  (click)="registerClick(user?.id, idPerfil)" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
             <a title="Contacto telefónico" 
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/34{{user?.phoneNumber}}" 
               class="badge">
                 <i class="fa fa-whatsapp"></i>
+                <span>WhatsApp</span>
             </a>
           </div>
-          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
         </div>
+
         <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
 
         <div class="header-content-top-right" *ngIf="!hideChat">
