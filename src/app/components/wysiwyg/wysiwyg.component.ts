@@ -14,9 +14,10 @@ import {
   QuillEditorComponent,
 } from 'ngx-quill';
 import { iWYSIWYG } from './models/wysiwyg.model';
-import 'quill-emoji/dist/quill-emoji.js';
+// import 'quill-emoji/dist/quill-emoji.js';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-wysiwyg',
@@ -24,21 +25,19 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./wysiwyg.component.scss'],
 })
 export class WYSIWYGComponent implements OnInit, AfterViewInit {
-  // https://www.freakyjolly.com/angular-rich-text-editor-using-ngx-quill-tutorial/
-  // https://www.youtube.com/watch?v=f1qQOorMKGo
-  // https://quilljs.com/docs/quickstart/
 
   @Input() placeholder: string = '';
   @Input() readOnly: boolean = false;
 
   @Input() styles: {} = { height: '200px' };
-  @Input() html: string;
+  @Input() html: string = "";
   @Output() OnFocus: EventEmitter<any> = new EventEmitter();
   @Output() OnChange: EventEmitter<iWYSIWYG> = new EventEmitter();
   @Output() OnBlur: EventEmitter<any> = new EventEmitter();
   @Output() OnImgClick: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('quill') quill: QuillEditorComponent;
+  @ViewChild('quill')
+  quill!: QuillEditorComponent;
 
   blured = false;
   focused = false;
@@ -52,52 +51,19 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
 
   constructor(private http: HttpClient) {
     this.modules = {
-      'emoji-shortname': true,
-      'emoji-textarea': false,
-      'emoji-toolbar': true,
+     
       toolbar: false,
-      /*toolbar: {
-        container: [
-          /!* [{ 'font': [] }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'align': [] }],
-          ['bold' , 'italic', 'underline', 'strike' ], // toggled buttons
-          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-
-        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-
-        ['blockquote', 'code-block'],
-
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
-
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-          ['link' , 'image', 'video' ], // link and image, video
-          ['image'],
-
-          ['emoji']
-
-          ['clean'], // remove formatting button
-        *!/],
-        /!*handlers: {
-          image: () => {
-            if (this.OnImgClick) {
-              this.OnImgClick.emit();
-            }
-          },
-        },*!/
-      },*/
     };
   }
 
-  public apiCallbackFn = (route: string) => {
-    try {
-      return this.http.get(route);
-    } catch (error) {
-      console.log('ups', error);
-    }
+  
+  public apiCallbackFn = (route: any) => {
+    return this.http.get(route).pipe(
+      catchError((error: any) => {
+        // You can handle the error here or rethrow it if necessary
+        return throwError(error); // Rethrow the error if needed
+      })
+    );
   };
 
   ngOnInit() {}
@@ -119,7 +85,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('html' in changes && this.quill) {
-      this.contenido = changes.html.currentValue || '';
+      this.contenido = changes['html'].currentValue || '';
     }
   }
 
@@ -136,11 +102,11 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
     // console.log('editor-change', event)
     if (event?.event == 'text-change') {
       this.content = {
-        html: event?.editor?.root?.innerHTML || event?.html,
-        text: event?.editor?.root?.innerText || event?.text,
+          html: event?.editor?.root?.innerHTML ?? event?.html ?? undefined,
+          text: event?.editor?.root?.innerText ?? event?.text ?? undefined,
       };
 
-      this.loadLinks(this.content?.text);
+      this.loadLinks(String(this.content.text));
 
       if (this.OnChange) {
         this.OnChange.emit(this.content);
@@ -148,7 +114,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
     }
   }
 
-  focus($event) {
+  focus($event: any) {
     if (this.OnFocus) {
       this.OnFocus.emit();
     }
@@ -157,7 +123,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
     this.blured = false;
   }
 
-  blur($event) {
+  blur($event: any) {
     if (this.OnBlur) {
       this.OnBlur.emit();
     }
@@ -166,27 +132,17 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
     this.blured = true;
   }
 
-  created(quill) {
-    // e.g. to capture prior user typing
-    /* quill.keyboard.addBinding({
-      key: 'b'
-    }, (range, context) => {
-      console.log('KEYBINDING B', range, context)
-    })
-
-    quill.keyboard.addBinding({
-      key: 'B',
-      shiftKey: true
-    }, (range, context) => {
-      console.log('KEYBINDING SHIFT + B', range, context)
-    }) */
+  created(quill: any) {
   }
 
   loadLinks(text: string) {
-    this.linksArray = text.split(/[\s,]+|\.\s/).filter((splitedWord) => {
-      if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)) {
-        return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+    this.linksArray = text.split(/[\s,]+|\.\s/).filter((splitedWord: any) => {
+      if (splitedWord){
+        if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)) {
+          return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
+        }
       }
+     
     });
   }
 }

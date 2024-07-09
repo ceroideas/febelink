@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { ApiService } from '../../services/api.service';
+// import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import {
   ModalController,
   PopoverController,
   Platform,
   AlertController,
 } from '@ionic/angular';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { UtilitiesService } from '../../services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { UserService } from '../../services/user.service';
+import { MailService } from '../../services/mail.service';
+import { ReportService } from '../../services/report.service';
 
 @Component({
   selector: 'app-cart-error',
@@ -21,12 +21,12 @@ import { ReportService } from 'src/app/services/report.service';
   styleUrls: ['./cart-error.page.scss'],
 })
 export class CartErrorPage implements OnInit {
-  bought: number;
+  bought: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
-    private socialSharing: SocialSharing,
+    // private socialSharing: SocialSharing,
     private platform: Platform,
     private modalCtrl: ModalController,
     public popoverController: PopoverController,

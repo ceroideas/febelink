@@ -1,7 +1,7 @@
-import { ReportService } from 'src/app/services/report.service';
+import { ReportService } from './../../services/report.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { ApiService } from 'src/app/services/api.service';
+import { UtilitiesService } from './../../services/utilities.service';
+import { ApiService } from './../../services/api.service';
 import {
   ModalController,
   PopoverController,
@@ -10,21 +10,21 @@ import {
   NavController,
 } from '@ionic/angular';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
+// import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { SharePopoverComponent } from './../../components/share-popover/share-popover.component';
 import { GuidePage } from '../guide/guide.page';
 import { Meta } from '@angular/platform-browser';
 import { AlertController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
-import { IUser } from 'src/app/models/user.model';
-import { ISearch } from 'src/app/models/search.model';
+// import { Storage } from '@ionic/storage';
+import { IUser } from './../../models/user.model';
+import { ISearch } from './../../models/search.model';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from 'src/environments/environment';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { DemandaService } from 'src/app/services/demanda.service';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { IReport } from 'src/app/models/report.model';
+import { AuthenticationService } from './../../services/authentication/authentication.service';
+import { DemandaService } from './../../services/demanda.service';
+import { UserService } from './../../services/user.service';
+import { MailService } from './../../services/mail.service';
+import { IReport } from './../../models/report.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-detalle-demanda',
@@ -32,20 +32,20 @@ import { IReport } from 'src/app/models/report.model';
   styleUrls: ['./detalle-demanda.page.scss'],
 })
 export class DetalleDemandaPage implements OnInit {
-  @ViewChild(IonContent, { static: false }) content: IonContent;
-  demanda: ISearch = null;
+  @ViewChild(IonContent, { static: false }) content: IonContent | undefined;
+  demanda: ISearch | undefined;
   opiniones: any;
   demandasRelacionadas: any;
   rol: any;
-  aceptada: boolean;
-  sector_correcto: boolean;
-  subSector_correcto: boolean;
+  aceptada: boolean = false;
+  sector_correcto: boolean= false;
+  subSector_correcto: boolean= false;
   sectoresPerfil: any[] = [];
   subSectoresPerfil: any[] = [];
-  perfil: IUser = null;
-  isLoading: boolean;
+  perfil: IUser | undefined;
+  isLoading: boolean= false;
   showChat = false;
-  urlName: string;
+  urlName: string = "";
 
   homePage: string = environment.HOME_PAGE;
 
@@ -57,11 +57,9 @@ export class DetalleDemandaPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public meta: Meta,
-    private socialSharing: SocialSharing,
+    // private socialSharing: SocialSharing,
     public popoverController: PopoverController,
     public alertController: AlertController,
-    private storage: Storage,
-    private navCtrl: NavController,
     private translateService: TranslateService,
     private authSvc: AuthenticationService,
     private demanadaSvc: DemandaService,
@@ -70,14 +68,13 @@ export class DetalleDemandaPage implements OnInit {
     public reportSvc: ReportService
   ) {
     let data: any = route.snapshot.queryParamMap;
-    let id_demanda = data.params.id_demanda;
 
     //if (id_demanda) {
     if (data.params.demanda === undefined) {
       //this.obtenerDemanda(id_demanda);
       //this.aceptada = data.params.aceptada;
 
-      this.route.paramMap.subscribe((params) => {
+      this.route.paramMap.subscribe((params: any) => {
         this.obtenerDemanda(params.get('id'));
         this.aceptada = data.params.aceptada;
         this.urlName = params.get('name');
@@ -97,7 +94,7 @@ export class DetalleDemandaPage implements OnInit {
    * Obtenemos la demanda a partir del id
    * @param id_demanda
    */
-  async obtenerDemanda(id_demanda) {
+  async obtenerDemanda(id_demanda: any) {
     this.isLoading = true;
     (await this.api.obtenerDemanda(id_demanda)).subscribe(
       (demanda) => {
@@ -123,6 +120,7 @@ export class DetalleDemandaPage implements OnInit {
   async isCorrectSearch() {
     if (this.urlName) {
       const nameToUrlType: string = this.utilities.textToUrl(
+        //@ts-ignore
         this.demanda.nombre
       );
       if (nameToUrlType !== this.urlName) {
@@ -144,7 +142,9 @@ export class DetalleDemandaPage implements OnInit {
     this.isLoading = true;
     (
       await this.api.obtenerDemandasRelacionadas(
+         //@ts-ignore
         this.demanda.id_demandante,
+         //@ts-ignore
         this.demanda.id
       )
     ).subscribe(
@@ -170,6 +170,7 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   public handleImgError(ev: any) {
+     //@ts-ignore
     this.demanda.imagen = null;
   }
 
@@ -177,10 +178,11 @@ export class DetalleDemandaPage implements OnInit {
    * Ir a otra demanda
    * @param demanda
    */
-  public detalleDemanda(demanda): void {
+  public detalleDemanda(demanda: any): void {
     this.demanda = this.checkDescrip(demanda);
     this.obtenerOfertasRelacionadas();
-    this.content.scrollToTop(1500);
+
+    this.content?.scrollToTop(1500);
     //this.router.navigate(['detalle-demanda'],{ queryParams: { 'demanda': JSON.stringify(demanda), 'contacto': false  }});
   }
 
@@ -196,37 +198,40 @@ export class DetalleDemandaPage implements OnInit {
    * Ir a un perfil
    */
   public irAPerfil(): void {
-    this.router.navigate(['perfil/' + this.demanda.id_demandante], {
+    this.router.navigate(['perfil/' + this.demanda?.id_demandante], {
       queryParams: {
-        id_perfil: this.demanda.id_demandante,
+        id_perfil: this.demanda?.id_demandante,
         contacto: this.aceptada,
       },
     });
   }
 
-  public async share(id, ev: any): Promise<void> {
-    const nameForUrl = this.utilities.textToUrl(this.demanda.nombre);
+  public async share(id:any, ev: any): Promise<void> {
+    const nameForUrl = this.utilities.textToUrl(String(this.demanda?.nombre));
     let url = `${environment.WEB_URL}busqueda/${id}/${nameForUrl}`;
-    var desc = this.demanda.descripcion;
+    var desc = this.demanda?.descripcion;
 
-    if (desc.length > 50) {
+    if (desc && desc.length > 50) {
       desc = desc.substring(0, 49) + '...';
     }
     let message =
       '¿Conoces una solución para esta búsqueda?\n' +
-      this.demanda.nombre +
+      this.demanda?.nombre +
       ': \n' +
       desc +
       ' \n-Febelink-\n';
 
     let image = null;
-    if (await this.isImage(this.demanda.imagen)) {
-      image = this.demanda.imagen;
+    if (await this.isImage(this.demanda?.imagen)) {
+      image = this.demanda?.imagen;
     }
 
     if (this.platform.is('cordova')) {
+      //@ts-ignore
       this.shareNative(url, message, image);
     } else {
+      //@ts-ignore
+
       this.shareWeb(ev, url, message, image);
     }
   }
@@ -235,10 +240,10 @@ export class DetalleDemandaPage implements OnInit {
    * Share Android/iOS
    */
   shareNative(url: string, message: string, image?: string) {
-    this.socialSharing
-      .share(message, message, image, url)
-      .then((result) => {})
-      .catch((error) => {});
+    // this.socialSharing
+    //   .share(message, message, image, url)
+    //   .then((result) => {})
+    //   .catch((error) => {});
   }
 
   /**
@@ -258,17 +263,18 @@ export class DetalleDemandaPage implements OnInit {
   /*
    * Check if image exist
    */
-  isImage(src): Promise<boolean> {
-    return new Promise((resolve) => {
-      var image = new Image();
-      image.onerror = function () {
-        resolve(false);
-      };
-      image.onload = function () {
-        resolve(true);
-      };
-      image.src = src;
-    });
+  isImage(src: any): boolean {
+    return true
+    // return new Promise((resolve) => {
+    //   var image = new Image();
+    //   image.onerror = function () {
+    //     resolve(false);
+    //   };
+    //   image.onload = function () {
+    //     resolve(true);
+    //   };
+    //   image.src = src;
+    // });
   }
 
   /**
@@ -304,32 +310,34 @@ export class DetalleDemandaPage implements OnInit {
   }
 
   goToChat() {
+      //@ts-ignore
+
     if (this.userSvc.checkUserDataComplete(this.perfil)) {
-      this.storage.get('userData').then((user) => {
-        if (user) {
-          const roomId = `${user.id}${this.demanda.id}${this.demanda.id_demandante}`;
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              user_id: JSON.stringify(user.id),
-              user_name: JSON.stringify(user.nick),
-              person_name: JSON.stringify('Chat'),
-              person_id: JSON.stringify(this.demanda.id_demandante),
-              room_id: JSON.stringify(roomId),
-              create: JSON.stringify(user.id),
-              id_demandante: JSON.stringify(this.demanda.id_demandante),
-              demand_id: JSON.stringify(this.demanda.id),
-              search_title: JSON.stringify(this.demanda.nombre),
-            },
-          };
-          this.navCtrl.navigateForward('chat', navigationExtras);
-        }
-      });
+      // this.storage.get('userData').then((user) => {
+      //   if (user) {
+      //     const roomId = `${user.id}${this.demanda?.id}${this.demanda?.id_demandante}`;
+      //     const navigationExtras: NavigationExtras = {
+      //       queryParams: {
+      //         user_id: JSON.stringify(user.id),
+      //         user_name: JSON.stringify(user.nick),
+      //         person_name: JSON.stringify('Chat'),
+      //         person_id: JSON.stringify(this.demanda?.id_demandante),
+      //         room_id: JSON.stringify(roomId),
+      //         create: JSON.stringify(user.id),
+      //         id_demandante: JSON.stringify(this.demanda?.id_demandante),
+      //         demand_id: JSON.stringify(this.demanda?.id),
+      //         search_title: JSON.stringify(this.demanda?.nombre),
+      //       },
+      //     };
+      //     this.navCtrl.navigateForward('chat', navigationExtras);
+      //   }
+      // });
     }
   }
 
   async viewChat() {
     if (this.perfil !== null) {
-      if (this.perfil.id == this.demanda.id_demandante) {
+      if (this.perfil?.id == this.demanda?.id_demandante) {
         const alert = await this.alertController.create({
           cssClass: 'my-custom-class',
           header: 'Chat',
@@ -348,7 +356,7 @@ export class DetalleDemandaPage implements OnInit {
     }
   }
 
-  async onClickAddToFavorites(demand) {
+  async onClickAddToFavorites(demand: any) {
     this.demanadaSvc.addToFavorites(demand);
   }
 

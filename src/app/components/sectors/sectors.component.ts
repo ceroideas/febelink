@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ISector, ISubSector } from 'src/app/models/sector.model';
-import { SubsectorService } from 'src/app/components/sectors/services/subsectores.service';
 import { SectorService } from './services/sectores.service';
+import { ISector, ISubSector } from '../../models/sector.model';
+import { SubsectorService } from './services/subsectores.service';
 
 @Component({
   selector: 'app-sectors',
@@ -21,10 +21,10 @@ export class SectorsComponent implements OnInit {
   sectors: ISector[] = [];
   subsectors: ISubSector[] = [];
   @Input() showSector: boolean = true;
-  @Input() sector: number = null;
-  @Input() subsector: number = null;
-  sectorSlctd: ISector = null;
-  subsectorSlctd: ISubSector = null;
+  @Input() sector: number | undefined;
+  @Input() subsector: number | undefined;
+  sectorSlctd: ISector | undefined;
+  subsectorSlctd: ISubSector | undefined;
 
   constructor(
     private sectorSvc: SectorService,
@@ -46,11 +46,11 @@ export class SectorsComponent implements OnInit {
         .then((sectors) => this.autoselectSector(sectors));
       this.subsectorSvc
         .get(idSector)
-        .then((subsectors) => this.autoselectSubsector(subsectors));
+        .then((subsectors: any) => this.autoselectSubsector(subsectors));
     } else {
       this.subsectorSvc
         .sectorsNsub()
-        .then((sectorsNsub) => this.autoselectSubsector(sectorsNsub));
+        .then((sectorsNsub: any) => this.autoselectSubsector(sectorsNsub));
     }
   }
 
@@ -58,7 +58,7 @@ export class SectorsComponent implements OnInit {
     this.sectors = list;
 
     if (this.sector)
-      list.forEach((item: ISubSector) => {
+      list.forEach((item: any ) => {
         if (item.id == this.sector) this.sectorSlctd = item;
       });
 
@@ -81,34 +81,35 @@ export class SectorsComponent implements OnInit {
     this.subsector = subsector || 0;
   }
 
-  async onChangeSector(event?) {
+  async onChangeSector(event?: any) {
     this.sector = event.value?.id;
-    this.subsector = null;
+    this.subsector = undefined;
     this.subsectors = [];
     if (this.OnSectorChange) this.OnSectorChange.emit(this.sector);
     this.subsectors = await this.subsectorSvc.get(
-      !this.showSector ? null : this.sector
+      !this.showSector ? undefined : this.sector !== undefined ? this.sector : undefined
+
     );
   }
 
-  async onChangeSubsector(event) {
+  async onChangeSubsector(event: any) {
     this.subsector = event.value?.id;
     if (this.OnSubsectorChange) this.OnSubsectorChange.emit(this.subsector);
-    if (!this.showSector) this.sector = this.subsectorSlctd.id_sector;
+    if (!this.showSector) this.sector = this.subsectorSlctd?.id_sector;
   }
 
   /* OnClose */
-  onCloseSector(event) {
+  onCloseSector(event: any) {
     this.OnCloseSector.emit(event);
   }
-  onCloseSubsector(event) {
+  onCloseSubsector(event: any) {
     this.OnCloseSubsector.emit(event);
   }
 
   // Remove Selection
   clear() {
-    this.sector = null;
-    this.subsector = null;
+    this.sector = undefined;
+    this.subsector = undefined;
   }
 
   // Get Lists Again
@@ -116,8 +117,8 @@ export class SectorsComponent implements OnInit {
     this.clear();
     this.sectors = [];
     this.subsectors = [];
-    this.sectorSlctd = null;
-    this.subsectorSlctd = null;
+    this.sectorSlctd = undefined;
+    this.subsectorSlctd = undefined;
     this.load();
   }
 }

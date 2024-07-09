@@ -1,41 +1,22 @@
-import { TranslateConfigService } from './../../../services/translate/translate-config.service';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
 import { Injectable } from '@angular/core';
-import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { Platform } from '@ionic/angular';
 import { FileMaxSize, FilePickType, IFile } from '../models/file.model';
-import { ToastSvc } from './../../../services/toast.service';
-import {
-  File as FileCordova,
-  FileEntry,
-  IFile as IFileNGX,
-} from '@awesome-cordova-plugins/file/ngx';
+import { ToastSvc } from '../../../services/toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
-  base64img: string;
+  base64img: string = "";
   maxSize: FileMaxSize = FileMaxSize.BLOB_MEDIUM;
 
-  options: CameraOptions = {
-    quality: 100,
-    // destinationType: this.camera.DestinationType.FILE_URI,
-    // mediaType: this.camera.MediaType.ALLMEDIA,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    mediaType: this.camera.MediaType.PICTURE,
-    encodingType: this.camera.EncodingType.JPEG,
-
-    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    targetWidth: 1920,
-    targetHeight: 1080,
-  };
+ 
 
   constructor(
-    private camera: Camera,
     private platform: Platform,
     private toastSvc: ToastSvc,
     private translateSvc: TranslateConfigService,
-    private fileCordova: FileCordova
   ) {}
 
   public pickImg(
@@ -43,26 +24,28 @@ export class FileService {
     maxSize?: FileMaxSize
   ): Promise<any> {
     this.maxSize = maxSize || this.maxSize;
-    if (this.platform.is('cordova')) return this.pickMediaNative();
+    // if (this.platform.is('cordova')) return this.pickMediaNative();
 
+    //@ts-ignore
     return this.pickMediaWeb(filePicker);
   }
 
-  private pickMediaNative(): Promise<IFile> {
-    return new Promise(async (resolve) => {
-      this.camera
-        .getPicture(this.options)
-        .then(async (media) => {
-          const iFile = await this.getNativeDATA(media);
-          // const iFile = await this.getNativeURI( media )
+  private pickMediaNative() {
+    return false
+    // return new Promise(async (resolve) => {
+    //   this.camera
+    //     .getPicture(this.options)
+    //     .then(async (media) => {
+    //       const iFile = await this.getNativeDATA(media);
+    //       // const iFile = await this.getNativeURI( media )
 
-          if (!this.exceedsSize(iFile.file)) resolve(iFile);
-        })
-        .catch((error) => {
-          console.log('image.service. error', error);
-          this.toastSvc.show('tabs.tab4.errors.image', true);
-        });
-    });
+    //       if (!this.exceedsSize(iFile.file)) resolve(iFile);
+    //     })
+    //     .catch((error) => {
+    //       console.log('image.service. error', error);
+    //       this.toastSvc.show('tabs.tab4.errors.image', true);
+    //     });
+    // });
   }
 
   private pickMediaWeb(filePicker: HTMLInputElement): Promise<IFile> {
@@ -73,7 +56,9 @@ export class FileService {
       }
 
       const iFile: IFile = await this.convert(filePicker.files[0]);
-      if (this.exceedsSize(iFile.src)) return;
+      if (iFile.src && this.exceedsSize(iFile.src)) {
+        return;
+    }
 
       // base64img
       resolve(iFile);
@@ -97,9 +82,9 @@ export class FileService {
     );
     const ext = this.getExt(fileName);
 
-    const src = window['Ionic']['WebView'].convertFileSrc(
+    const src = (window as any)['Ionic']['WebView'].convertFileSrc(
       mediaURI?.includes('file://') ? mediaURI : 'file://' + mediaURI
-    );
+  );
 
     const iFile: IFile = {
       src: src,
@@ -111,42 +96,43 @@ export class FileService {
     return iFile;
   }
 
-  async getNativeFile(filePath: string): Promise<File> {
-    // Get FileEntry from media path
-    const fileEntry: FileEntry =
-      (await this.fileCordova.resolveLocalFilesystemUrl(filePath)) as FileEntry;
+  async getNativeFile(filePath: string){
+    // // Get FileEntry from media path
+    // const fileEntry: FileEntry =
+    //   (await this.fileCordova.resolveLocalFilesystemUrl(filePath)) as FileEntry;
 
-    // Get File from FileEntry. Note that this file does not contain the actual file data yet.
-    const cordovaFile: IFileNGX = await this.convertFileEntryToCvaFile(
-      fileEntry
-    );
+    // // Get File from FileEntry. Note that this file does not contain the actual file data yet.
+    // const cordovaFile: IFileNGX = await this.convertFileEntryToCvaFile(
+    //   fileEntry
+    // );
 
-    // Use FileReader on each object to populate it with the true file contents.
-    return this.convertCvaToJsFile(cordovaFile);
+    // // Use FileReader on each object to populate it with the true file contents.
+    // return this.convertCvaToJsFile(cordovaFile);
   }
 
-  private convertFileEntryToCvaFile(fileEntry: FileEntry): Promise<IFileNGX> {
-    return new Promise<IFileNGX>((resolve, reject) => {
-      fileEntry.file(resolve, reject);
-    });
-  }
+  // private convertFileEntryToCvaFile(fileEntry: FileEntry): Promise<IFileNGX> {
+  //   return new Promise<IFileNGX>((resolve, reject) => {
+  //     fileEntry.file(resolve, reject);
+  //   });
+  // }
 
-  private convertCvaToJsFile(cvaFile: IFileNGX): Promise<File> {
-    return new Promise<File>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.error) reject(reader.error);
-        else {
-          const blob: any = new Blob([reader.result], { type: cvaFile.type });
-          blob.lastModified = cvaFile.lastModified;
-          blob.lastModifiedDate = cvaFile.lastModifiedDate;
-          blob.name = cvaFile.name;
-          resolve(blob as File);
-        }
-      };
-      reader.readAsArrayBuffer(cvaFile);
-    });
-  }
+  // private convertCvaToJsFile(cvaFile: IFileNGX): Promise<File> {
+  //   return new Promise<File>((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       if (reader.error) reject(reader.error);
+  //       else {
+  //         //@ts-ignore
+  //         const blob: any = new Blob([reader.result], { type: cvaFile.type });
+  //         blob.lastModified = cvaFile.lastModified;
+  //         blob.lastModifiedDate = cvaFile.lastModifiedDate;
+  //         blob.name = cvaFile.name;
+  //         resolve(blob as File);
+  //       }
+  //     };
+  //     reader.readAsArrayBuffer(cvaFile);
+  //   });
+  // }
 
   public resetFileInput(filePicker: HTMLInputElement) {
     filePicker.value = '';
@@ -159,6 +145,7 @@ export class FileService {
         fileReader.readAsDataURL(file);
         fileReader.onload = () =>
           resolve({
+            //@ts-ignore
             src: fileReader.result,
             file: file,
             format:
@@ -185,9 +172,9 @@ export class FileService {
     return true;
   }
 
-  ab2st(ab: ArrayBuffer) {
-    return !ab ? null : String.fromCharCode.apply(null, new Uint8Array(ab));
-  }
+   ab2st(ab: ArrayBuffer) {
+    return !ab ? null : String.fromCharCode.apply(null, [...new Uint8Array(ab)]);
+}
 
   str2ab(str: string) {
     return !str ? null : Uint8Array.from(str, (x) => x.charCodeAt(0));
@@ -236,6 +223,7 @@ export class FileService {
   }
 
   getExt(fileName: string): string {
+    //@ts-ignore
     return (fileName || '').split('.').pop();
   }
 

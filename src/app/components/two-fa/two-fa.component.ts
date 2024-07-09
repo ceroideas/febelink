@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from '../../services/api.service';
 
 
 @Component({
@@ -12,12 +12,12 @@ export class TwoFAComponent implements OnInit {
 
   isLoading: boolean = false;
   isVerifying: boolean = false;
-  loadingMsg: string;
-  code: string;
-  ok: boolean;
-  minutes: number;
-  codeLength: number;
-  error: string;
+  loadingMsg: string | undefined;
+  code: string | undefined;
+  ok: boolean | undefined;
+  minutes: number | undefined;
+  codeLength: number | undefined;
+  error: string | undefined;
   retries: number = -1;
 
   constructor(
@@ -61,7 +61,7 @@ export class TwoFAComponent implements OnInit {
       this.isVerifying = true;
       this.loadingMsg = this.apiSvc.translateSvc.instant( 'common.two-fa.verifying' );
 
-      const response = await this.apiSvc.verify2FAcode( this.code );
+      const response = await this.apiSvc.verify2FAcode( String(this.code) );
       this.ok = response.ok;
 
       if( this.ok ) {
@@ -85,20 +85,25 @@ export class TwoFAComponent implements OnInit {
     }
   }
 
-  counter: { min: number, sec: number };
-  interval;
+  counter: { min: number, sec: number } | undefined;
+  interval: number = 0
   startTimer() {
-    this.counter = { min: this.minutes, sec: 0 };
+    this.counter = { min: Number(this.minutes), sec: 0 };
 
     if( this.interval )
       clearInterval( this.interval );
-
+   //@ts-ignore
     this.interval = setInterval(() => {
+       //@ts-ignore
       if ( this.counter.sec - 1 == -1 ) {
+         //@ts-ignore
         this.counter.min -= 1;
+         //@ts-ignore
         this.counter.sec = 59
       } 
+       //@ts-ignore
       else this.counter.sec -= 1
+       //@ts-ignore
       if ( this.counter.min === 0 && this.counter.sec == 0 ) clearInterval( this.interval )
     }, 1000 );
   }

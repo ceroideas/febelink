@@ -1,9 +1,9 @@
 import { CryptoTransactions } from './../../models/wallet/currency.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WalletParams } from 'src/app/models/wallet/params.model';
 import { LoadingSvc } from '../loading.service';
 import { WalletService } from './wallet.service';
+import { WalletParams } from '../../models/wallet/params.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { WalletService } from './wallet.service';
 export class WalletInfoSvc
 {
   walletParams: WalletParams = { userWallets: [] }
-  transactions: CryptoTransactions
+  transactions: CryptoTransactions | undefined
   isLoading: boolean = false
   
   constructor(
@@ -39,7 +39,7 @@ export class WalletInfoSvc
     })
   }
 
-  setVars(response) {
+  setVars(response: any) {
     this.walletParams.publicKey = response.publicKey;
     this.walletParams.userWallets = response.data;
     this.walletParams.retainedTks = response.retainedTks;

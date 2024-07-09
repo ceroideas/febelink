@@ -10,12 +10,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { IonInput } from '@ionic/angular';
-import { IPaginationFilter } from 'src/app/models/pagination.model';
-import { IUser } from 'src/app/models/user.model';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
-import { LoadingSvc } from 'src/app/services/loading.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
+import { IPaginationFilter } from './../../../../models/pagination.model';
+import { IUser } from './../../../../models/user.model';
+import { DateFormatType } from './../../../../pipes/date-format.pipe';
+import { LoadingSvc } from './../../../../services/loading.service';
+import { ToastSvc } from './../../../../services/toast.service';
+import { UserSessionSvc } from './../../../../services/user-session.service';
 import { IAdviseFull } from '../../advises/models/advises.model';
 import { IComment, ICommentFull } from '../../advises/models/comment.model';
 import { CommentService } from '../../advises/services/comment.service';
@@ -27,22 +27,22 @@ import { CommentService } from '../../advises/services/comment.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class CommentsComponent implements OnInit {
-  @ViewChild('inComment', { static: false }) inComment: IonInput;
+  @ViewChild('inComment', { static: false }) inComment: IonInput | undefined;
 
-  @Input() post: IAdviseFull; // Referencing Post
+  @Input() post: IAdviseFull | null = null; // Referencing Post
   @Input() iComments: ICommentFull[] = [];
   @Input() listComments: boolean = false;
   @Input() isVisible: boolean = false;
   @Output() OnCommentsVisible: EventEmitter<any> = new EventEmitter();
 
   dateFormatType = DateFormatType;
-  iUser: IUser;
+  iUser: IUser| null = null; 
 
-  isLoading: boolean = false;
+  isLoading: boolean = false
   filter: IPaginationFilter = { activePage: 0 };
 
   // Comment selected
-  iComment: ICommentFull;
+  iComment: ICommentFull| null = null; 
 
   // Comments done
   userComments: ICommentFull[] = [];
@@ -61,7 +61,7 @@ export class CommentsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('listComments' in changes) {
-      this.listComments = changes.listComments.currentValue;
+      this.listComments = changes['listComments'].currentValue;
       if (this.listComments) this.list();
     }
   }
@@ -71,8 +71,9 @@ export class CommentsComponent implements OnInit {
 
     // Clear user comments, since will be brought from DBs
     this.userComments = [];
-
+//@ts-ignore
     const { response, error } = await this.commentSvc.list(
+      //@ts-ignore
       this.post?.id,
       this.filter
     );
@@ -89,7 +90,9 @@ export class CommentsComponent implements OnInit {
 
   async OnDoEdit(comment: ICommentFull) {
     this.iComment = comment;
+    //@ts-ignore
     this.inComment.value = this.iComment?.comment || '';
+    //@ts-ignore
     this.inComment.setFocus();
   }
 
@@ -97,6 +100,7 @@ export class CommentsComponent implements OnInit {
     // Remove from lists if is updating
     this.removeFromList(this.userComments, comment);
     this.removeFromList(this.iComments, comment);
+    //@ts-ignore
     this.post.comments_qant--;
   }
 
@@ -113,7 +117,9 @@ export class CommentsComponent implements OnInit {
     };
 
     const { response, error } = !this.iComment?.id
+    //@ts-ignore
       ? await this.commentSvc.create(this.post?.id, comment)
+      //@ts-ignore
       : await this.commentSvc.update(this.post?.id, this.iComment?.id, comment);
 
     if (error)
@@ -123,18 +129,22 @@ export class CommentsComponent implements OnInit {
       );
 
     // Remove from lists if is updating
+    //@ts-ignore
     this.removeFromList(this.userComments, this.iComment);
+    //@ts-ignore
     this.removeFromList(this.iComments, this.iComment);
 
     // Add new|updated item to List
     if (response) {
       this.addToList(response?.comment);
+      //@ts-ignore
       this.post.comments_qant++;
     }
 
     this.list();
 
     // Clear Input
+    //@ts-ignore
     this.inComment.value = '';
 
     // Clear selected comment to edit

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
-import { RegistroPage } from '../registro/registro.page';
-import { CookiePolicyPage } from '../cookie-policy/cookie-policy.page';
 import { Router } from '@angular/router';
+import { Registro2Component } from '../registro2/registro2.component';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -11,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class PrivacyPolicyPage implements OnInit {
 
-  register: RegistroPage;
+  register: Registro2Component | undefined;
 
   constructor(private location: Location,  private router: Router) {
    

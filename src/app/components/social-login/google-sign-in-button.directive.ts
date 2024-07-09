@@ -2,14 +2,14 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 
-declare var google;
+declare var google: any;
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'google-signin-butt',
 })
 export class GoogleSigninButtDirective implements OnInit {
-  @Input('selectable') option: boolean;
+  @Input('selectable') option: boolean | undefined;
 
   constructor(
     private el: ElementRef,

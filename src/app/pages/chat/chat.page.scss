@@ -6,6 +6,17 @@
   max-width: 88%;
 }
 
+:host{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding-top: 72px;
+
+  @media (max-width: 768px) {
+    padding-bottom: 60px;
+  }
+}
 .message div {
   display: flex;
   justify-content: center;
@@ -60,7 +71,10 @@
   margin-top: 4px;
   color: rgba(255, 255, 255, 0.74);
 }
-
+.textarea_message_chat {
+  max-height: 120px; /* Adjust based on the height of your text rows */
+  overflow: auto; /* Allows scrolling inside the textarea if text exceeds the max height */
+}
 .message-input {
   margin-top: 0px;
   border: 1px solid var(--ion-color-medium);
@@ -111,6 +125,7 @@ ion-footer {
   width: auto;
   //height: 44px;
   background: #ececec;
+  width: 76%;
 
   color: black;
   border-radius: 20px;
@@ -221,11 +236,14 @@ ion-grid {
   --background: #2b2a2f !important;
 }
 
+.footer-grid {
+  padding: 0;
+}
 .ion_row_message {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px 5px
+  margin: 5px 5px;
 }
 
 .day_event {
@@ -250,5 +268,9 @@ ion-grid {
 }
 
 #chat-section {
-  height: 88%;
+  height: 82%;
+
+  &.peueno{
+    height: 74%;
+  }
 }

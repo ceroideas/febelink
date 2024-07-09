@@ -2,12 +2,12 @@
   <ion-row>
     <!-- Sector -->
     <ion-col class="ion-no-padding pad-e5" size="6" *ngIf="showSector">
-      <app-loading [isLoading]="sectors?.length <= 0" message="common.labelSector"></app-loading>
-      <ion-item class="input" color="transparent" lines="none" *ngIf="sectors?.length > 0">
+      <app-loading [isLoading]="sectors.length <= 0" message="common.labelSector"></app-loading>
+      <ion-item class="input" color="transparent" lines="none" *ngIf="sectors && sectors.length > 0">
         <!-- Label -->
         <ion-label position="floating">{{ 'common.labelSector' | translate }}</ion-label>
         <!-- Select -->
-        <ionic-selectable
+        <!-- <ionic-selectable
           item-content
           [(ngModel)]="sectorSlctd"
           itemValueField="id"
@@ -17,20 +17,20 @@
           [canClear]="true"
           (onClose)="onCloseSector( $event )"
           (onChange)="onChangeSector( $event )">
-        </ionic-selectable>
+        </ionic-selectable> -->
       </ion-item>
     </ion-col>
 
     <!-- Subsector -->
     <ion-col class="ion-no-padding pad-s5" [size]="showSector ? 6 : 12">
       <app-loading
-        [isLoading]="subsectors?.length <= 0"
+        [isLoading]="subsectors.length <= 0"
         [message]="'common.label' + ( showSector ? 'Subsector' : 'SectorNsub' )"
       ></app-loading>
-      <ion-item class="input" color="transparent" lines="none" *ngIf="subsectors?.length>0">
+      <ion-item class="input" color="transparent" lines="none" *ngIf="subsectors && subsectors.length>0">
         <!-- Label -->
         <ion-label position="floating">{{ 'common.label' + ( showSector ? 'Subsector' : 'SectorNsub' ) | translate }}</ion-label>
-        <ionic-selectable
+        <!-- <ionic-selectable
           item-content
           [(ngModel)]="subsectorSlctd"
           itemValueField="id"
@@ -40,7 +40,7 @@
           [canClear]="true"
           (onClose)="onCloseSubsector( $event )"
           (onChange)="onChangeSubsector( $event )">
-        </ionic-selectable>
+        </ionic-selectable> -->
       </ion-item>
     </ion-col>
   </ion-row>

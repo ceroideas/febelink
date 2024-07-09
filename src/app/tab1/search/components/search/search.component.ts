@@ -1,15 +1,14 @@
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IonSlides} from '@ionic/angular';
 import {SearchService} from '../../services/search.service';
-import {IKeywords} from '../../models/search.model';
 import {SearchProductCardType} from '../product-card/product-card.component';
 import {SearchCardType} from '../search-card/search-card.component';
 import {AuthenticationService} from '../../../../services/authentication/authentication.service';
-import {SeoService} from 'src/app/services/seo.service';
 import {Title} from '@angular/platform-browser';
 import { Location } from '@angular/common';
-import { KeywordService } from 'src/app/admin/keyword/services/keyword.service';
+import { KeywordService } from '../../../../admin/keyword/services/keyword.service';
+
+import { toSlug } from '../../../../../utils/utils';
 
 const GENERAL_TITLE = 'Feed Oráculo | Febelink ¿Qué necesitas?';
 
@@ -32,12 +31,15 @@ export class SearchComponent implements AfterViewInit {
   @Input() type: string = '';
   @Output() generalTitle = new EventEmitter<string>();
 
+  toSlug = toSlug;
+
   public slideOpts = {
     initialSlide: 1,
     speed: 400,
   };
 
-  recommendations;
+  recommendations: any;
+  //@ts-ignore
   searchResponse: SearchType;
   locationFilter: string = '';
   cityFilter: string = '';
@@ -80,7 +82,7 @@ export class SearchComponent implements AfterViewInit {
   cities= [];
 
   displayPartialSignUp: boolean = false;
-  email: string;
+  email: string = "";
 
   constructor(
     public searchService: SearchService,
@@ -110,61 +112,98 @@ export class SearchComponent implements AfterViewInit {
     await this.readData()
 
     this.type = 'resultado';
+    //@ts-ignore
     
     this.locationFilter = sessionStorage.getItem('locationFilter');
+    //@ts-ignore
+
     this.cityFilter = sessionStorage.getItem('cityFilter');
+    //@ts-ignore
+
     this.locationFilterLink = this.locationFilterLinkFull.filter(link => link.locations_id.title === this.locationFilter);
+    //@ts-ignore
+
     this.metaLocationFilter = sessionStorage.getItem('metaLocationFilter');
+    //@ts-ignore
+
     this.IdMetaFilter = sessionStorage.getItem('IdMetaFilter');
     
 
     this.actRouter.params.subscribe(val => {
 
-      const metaLink = this.locationFilterLinkFull.find(item => item.locations_id.title === this.locationFilter 
+    //@ts-ignore
+
+      const metaLink = this.locationFilterLinkFull.find((item: any) => item.locations_id.title === this.locationFilter 
+    //@ts-ignore
+
         && item.id_sector.name === this.metaLocationFilter && Number(item.id) === Number(this.IdMetaFilter));
-      const locationLink = this.locations.find(item => item.title === this.locationFilter);
-      const sectorLink = this.sectors.find(item => item.title === this.locationFilter);
+    //@ts-ignore
+
+      const locationLink = this.locations.find((item: any) => item.title === this.locationFilter);
+    //@ts-ignore
+
+      const sectorLink = this.sectors.find((item: any) => item.title === this.locationFilter);
      
 
      
-      console.log(metaLink)
-      console.log(locationLink)
-      console.log(sectorLink)
+      
       if ( metaLink ) {
+    //@ts-ignore
+
         this.resultTitle = metaLink.h2;
+    //@ts-ignore
+
         this.metaDescription = metaLink.description;
+    //@ts-ignore
+
         this.title.setTitle(metaLink.page_title);
         setTimeout(() => {
+    //@ts-ignore
+
           this.generalTitle.emit(metaLink.h1);
         });
+
+    //@ts-ignore
 
        this.readDataCityLocationSector(metaLink.locations_id.id, metaLink.id_sector.id)
 
       } else if ( locationLink ) {
+    //@ts-ignore
+
         this.title.setTitle(locationLink.page_title);
+    //@ts-ignore
+
         this.metaDescription = locationLink.meta_description;
         setTimeout(() => {
+    //@ts-ignore
+
            this.generalTitle.emit(locationLink.h1);
         });
+    //@ts-ignore
 
         this.readDataCity(locationLink.id)
 
 
         setTimeout(() => {
-          const cityLink = this.cities.find(item => Number(item.citys_id) === Number(this.cityFilter));
+    //@ts-ignore
 
-          console.log( this.cities)
-          console.log( cityLink)
+          const cityLink = this.cities.find((item: any) => Number(item.citys_id) === Number(this.cityFilter));
+
        }, 2000);
        
 
       
       } else if ( sectorLink ) {
+    //@ts-ignore
 
           this.title.setTitle(sectorLink.pageTitle);
+    //@ts-ignore
+
         this.metaDescription = sectorLink.meta_description;
 
         setTimeout(() => {
+    //@ts-ignore
+
           this.generalTitle.emit(sectorLink.h1);
         });
       } 
@@ -184,30 +223,34 @@ export class SearchComponent implements AfterViewInit {
     if ( !!seoData ) {
       const response = JSON.parse(seoData);
       this.services = response.sector
-        .filter(item => !!item.icon)
-        .sort((a, b) => 0.5 - Math.random());
+        .filter((item: any) => !!item.icon)
+        .sort((a: any, b: any) => 0.5 - Math.random());
       this.sectors = response.subsector
-        .filter(item => !!item.imageURL)
-        .sort((a, b) => 0.5 - Math.random());
+        .filter((item: any) => !!item.imageURL)
+        .sort((a: any, b: any) => 0.5 - Math.random());
       this.locations = response.locations;
-      this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+      this.locationLinks = response.locations.sort((a: any,b: any) => a.title.localeCompare(b.title));
       this.locationFilterLinkFull = response.linklocations;
 
       this.fetchData();
     } else {
       await this.fetchData();
-      this.services = this.services.sort((a, b) => 0.5 - Math.random());
-      this.sectors = this.sectors.sort((a, b) => 0.5 - Math.random());
+      this.services = this.services.sort((a: any, b: any) => 0.5 - Math.random());
+      this.sectors = this.sectors.sort((a: any, b: any) => 0.5 - Math.random());
     }
   }
 
 
-  async readDataCity(id) {
+  async readDataCity(id: any) {
+        //@ts-ignore
+
     const {response} = await this.keywordService.getLinkCitysLocation(id)
     this.cities = response;
   }
 
-  async readDataCityLocationSector(id, sector) {
+  async readDataCityLocationSector(id: any, sector: any) {
+        //@ts-ignore
+
     const {response} = await this.keywordService.getLinkCitysLocationSector(id, sector)
     this.cities = response;
   }
@@ -215,21 +258,20 @@ export class SearchComponent implements AfterViewInit {
   async fetchData() {
     const {response} = await this.keywordService.getData();
     this.services = response.sector
-      .filter(item => !!item.icon)
-      .sort((a, b) => 0.5 - Math.random());
+      .filter((item: any) => !!item.icon)
+      .sort((a: any, b: any) => 0.5 - Math.random());
     this.sectors = response.subsector
-      .filter(item => !!item.imageURL)
-      .sort((a, b) => 0.5 - Math.random());
+      .filter((item: any) => !!item.imageURL)
+      .sort((a: any, b: any) => 0.5 - Math.random());
     this.locations = response.locations;
 
-    this.locationLinks = response.locations.sort((a,b) => a.title.localeCompare(b.title));
+    this.locationLinks = response.locations.sort((a: any,b: any) => a.title.localeCompare(b.title));
     this.locationFilterLinkFull = response.linklocations;
 
     sessionStorage.setItem('seoData', JSON.stringify(response));
   }
 
-  segmentChanged(event) {
-    console.log(event);
+  segmentChanged(event: any) {
   }
 
   public irA(p: string): void {
@@ -286,7 +328,7 @@ export class SearchComponent implements AfterViewInit {
     );
     if (response) {
       const bestProfessionMatch: number[] = [];
-      response.forEach((elem) => {
+      response.forEach((elem: any) => {
         bestProfessionMatch.push(elem.id);
       });
 
@@ -304,29 +346,30 @@ export class SearchComponent implements AfterViewInit {
 
     }
 
+    let filterLink: any ;
+    let locationLink: any ;
+    let citiesLink: any ;
+    let sectorLink: any ;
 
-    const filterLink = this.locationFilterLinkFull.find(item => 
+    filterLink = this.locationFilterLinkFull.find((item: any) => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
     )
-    const locationLink = this.locationLinks.find(item => 
+    locationLink = this.locationLinks.find((item: any) => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
     )
-    const citiesLink = this.cities.find(item => 
+    citiesLink = this.cities.find((item: any) => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
     )
-    const sectorLink = this.sectors.find(item => 
+    sectorLink = this.sectors.find((item: any) => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText.replace(/ /g, '').replace(/-/g, '').toLowerCase()
     )
 
 
-    console.log('filterlink', filterLink);
-    console.log('locationlink', locationLink);
-    console.log('citieslink', citiesLink);
-    console.log('sectorlink', sectorLink)
    
 
     if ( filterLink ) {
-      const metaLink = this.locationFilterLinkFull.find(item => item.locations_id.title === filterLink.locations_id.title 
+      let metaLink: any = {}
+      metaLink = this.locationFilterLinkFull.find((item: any) => item.locations_id.title === filterLink.locations_id.title 
         && item.id_sector.name === filterLink.id_sector.name && Number(item.id) === Number(this.IdMetaFilter));
      
 
@@ -337,6 +380,8 @@ export class SearchComponent implements AfterViewInit {
         this.resultTitle = metaLink.h2;
         this.metaDescription = metaLink.description;
         if ( updateFilter ) {
+        //@ts-ignore
+
           this.locationFilterLink = this.locationFilterLinkFull.filter(l => l.locations_id.title === filterLink.locations_id.title);
           this.changeFilter(filterLink.location, filterLink.link);
           this.changeMetaFilter(metaLink.sector, metaLink.sector);
@@ -348,8 +393,12 @@ export class SearchComponent implements AfterViewInit {
         this.resultTitle = 'Resultados';
         this.metaDescription = '';
         if ( updateFilter ) {
+        //@ts-ignore
+
             this.locationFilterLink = this.locationFilterLinkFull.filter(l => l.locations_id.title === filterLink.locations_id.title);
           this.changeFilter(filterLink.location, filterLink.link);
+        //@ts-ignore
+
           this.changeMetaFilter(null, null);
         }
       }
@@ -362,6 +411,8 @@ export class SearchComponent implements AfterViewInit {
       this.metaDescription = locationLink.metaDescription;
 
       this.changeFilter(locationLink.title, locationLink.link)  ;
+        //@ts-ignore
+
       this.changeMetaFilter(null, null);
 
       this.location.go(`listado/${locationLink.link}`)
@@ -372,6 +423,8 @@ export class SearchComponent implements AfterViewInit {
       this.metaDescription = citiesLink.metaDescription;
 
       this.changeFilter(citiesLink.title, citiesLink.link)  ;
+        //@ts-ignore
+
       this.changeMetaFilter(null, null);
 
       this.location.go(`listado/${citiesLink.link}`)
@@ -382,6 +435,8 @@ export class SearchComponent implements AfterViewInit {
       this.metaDescription = sectorLink.metaDescription;
 
       this.changeFilter(sectorLink.title, sectorLink.link);
+        //@ts-ignore
+
       this.changeMetaFilter(null, null);
 
       this.location.go(`listado/${sectorLink.link}`)
@@ -395,7 +450,10 @@ export class SearchComponent implements AfterViewInit {
 
       if ( updateFilter ) {
         this.locationFilterLink = [];
+        //@ts-ignore
         this.changeFilter(null, null);
+        //@ts-ignore
+
         this.changeMetaFilter(null, null);
       }
 
@@ -414,10 +472,6 @@ export class SearchComponent implements AfterViewInit {
       this.searchResponse.otherResults =
         this.searchResponse.otherResults.concat(response);
     }
-  }
-
-  removeBlankSpace(term: string): string {
-    return term.replace(new RegExp(' ', 'g'), '-');
   }
 
   async changeFilter(locationFilter: string, link: string) {
@@ -442,14 +496,14 @@ export class SearchComponent implements AfterViewInit {
 
   async changeMetaFilter(metaFilter: string, link: string , id?: string) {
 
-    console.log(metaFilter)
-    console.log(link)
-    console.log(id)
+  
 
     sessionStorage.removeItem("metaLocationFilter"); 
     sessionStorage.removeItem("IdMetaFilter"); 
     await this.searchService.setMetaLocationFilter(metaFilter);
     sessionStorage.setItem('metaLocationFilter', metaFilter);
+        //@ts-ignore
+
     sessionStorage.setItem('IdMetaFilter', id);
     // this.irA('/listado/' + link);
   }
@@ -460,7 +514,11 @@ export class SearchComponent implements AfterViewInit {
     sessionStorage.removeItem("IdMetaFilter"); 
     await this.searchService.setMetaLocationFilter(metaFilter);
     sessionStorage.setItem('metaLocationFilter', metaFilter);
+        //@ts-ignore
+
     sessionStorage.setItem('IdMetaFilter', location);
+        //@ts-ignore
+
     sessionStorage.setItem("cityFilter", city);
 
   }

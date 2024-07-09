@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@ionic/storage';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { supportedLanguages } from 'src/utils/utils';
+// import { Storage } from '@ionic/storage';
+import { supportedLanguages } from '../../../utils/utils';
+import { ILang, ILangDEFAULTS } from '../../models/langs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,21 +10,32 @@ import { supportedLanguages } from 'src/utils/utils';
 export class TranslateConfigService {
   constructor(
     private translateService: TranslateService,
-    private storage: Storage
+    // private storage: Storage
   ) {}
 
   async getLanguage(): Promise<string> {
     let language = this.getBrowserLang();
 
     // If has a saved Lang, take that selection
-    let lang = <ILang> await ILangDEFAULTS.getLangSaved( this.storage );
-    if( lang != null ) language = lang.lang;
+    
+    let lang = <ILang> await ILangDEFAULTS.getLangSaved(  );
+    if( lang != null ) language = lang.lang
 
+    if (language)
     if (!supportedLanguages().includes(language))
       language = ILangDEFAULTS.enUK.lang;
 
-    this.translateService.setDefaultLang(language);
-    return new Promise(resolve => { resolve( language )});
+    if (language) {
+      this.translateService.setDefaultLang(language);
+      return Promise.resolve(language);
+  } else {
+      // If language is undefined, provide a default language fallback
+      const defaultLanguage = 'en'; // Change this to your desired default language
+      this.translateService.setDefaultLang(defaultLanguage);
+      return Promise.resolve(defaultLanguage);
+  }
+  // this.translateService.setDefaultLang(language);
+  // return new Promise(resolve => { resolve( language )});
   }
 
   getBrowserLang() {

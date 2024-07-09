@@ -1,53 +1,55 @@
-import { FollowerButtonModule } from 'src/app/components/follower/follower.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { AdvisePageRoutingModule } from '../advises/advise-routing.module';
+import { SharedModule } from './../../../shared/shared.module';
+// import { AdvisePageRoutingModule } from '../advises/advise-routing.module';
 
 import { PostBottomBarComponent } from './bottom-bar/bottom-bar.component';
 import { PostComponent } from './post/post.component';
 import { CommentComponent } from './comment/comment.component';
-import { CommentsComponent } from './comments/comments.component';
-import { SharedPostModule } from '../shared-post.module';
-import { DonateButtonModule } from 'src/app/components/donate/donate-button.module';
+// import { CommentsComponent } from './comments/comments.component';
+// import { SharedPostModule } from '../shared-post.module';
+import { DonateButtonModule } from './../../../components/donate/donate-button.module';
 import { PostModel2Component } from './post-model2/post-model2.component';
+import { FollowerButtonModule } from './../../../components/follower/follower.module';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
     imports: [
         CommonModule
-      , IonicModule
-      , TranslateModule.forChild()
+      , TranslateModule
       , FormsModule
       , ReactiveFormsModule
-      , AdvisePageRoutingModule
+      // , AdvisePageRoutingModule
       , SharedModule
-      , SharedPostModule
+      // // , SharedPostModule
       , DonateButtonModule
-      , FollowerButtonModule
+      , FollowerButtonModule,
+
+
+
+      
     ],
     exports: [
-        CommonModule
-      , IonicModule
-      , FormsModule
-      , ReactiveFormsModule
-      , AdvisePageRoutingModule
-      , SharedModule
-      , SharedPostModule
-      , DonateButtonModule
-
-      , PostBottomBarComponent
-      , PostComponent
-      , PostModel2Component
-      , CommentComponent
-      , CommentsComponent
+      //   CommonModule
+      // , FormsModule
+      // , ReactiveFormsModule
+      // // , AdvisePageRoutingModule
+      // // , SharedModule
+      // // , SharedPostModule
+      // , DonateButtonModule,
+      //   FollowerButtonModule
+      // , PostBottomBarComponent
+      //   PostComponent
+      //  PostModel2Component
+      // , CommentComponent
+      // // , CommentsComponent
     ],
     declarations: [
         PostBottomBarComponent
       , PostComponent
-      , PostModel2Component
+       , PostModel2Component
       , CommentComponent
       , CommentsComponent
     ],

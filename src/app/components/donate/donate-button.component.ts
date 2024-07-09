@@ -1,6 +1,6 @@
-import { IUser } from 'src/app/models/user.model';
+import { IUser } from '../../models/user.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { WalleSendSvc } from 'src/app/services/wallet/wallet-send.service';
+import { WalleSendSvc } from '../../services/wallet/wallet-send.service';
 
 @Component({
   selector: 'app-donate-button',
@@ -10,8 +10,8 @@ import { WalleSendSvc } from 'src/app/services/wallet/wallet-send.service';
 export class DonateButtonComponent implements OnInit {
 
   @Input() text: string = 'common.labelDonate'
-  @Input() user: IUser
-  @Input() clase: string
+  @Input() user: any
+  @Input() clase: boolean =! ""
   @Input() asButton: boolean = false
 
   constructor(

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
+import { TokensUser } from '../../../admin/models/tokens-user';
+import { CryptoCurrency } from '../../../models/wallet/currency.model';
 
 @Component({
   selector: 'app-wallet-balance',
@@ -9,8 +9,8 @@ import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 })
 export class BalanceComponent implements OnInit {
 
-  @Input() asset: CryptoCurrency;
-  @Input() retainedTks: TokensUser[];
+  @Input() asset: CryptoCurrency | undefined;
+  @Input() retainedTks: TokensUser[] | undefined;
 
   @Input() isRetainedShowing: boolean = false;
   @Input() isDetailsShowing: boolean = false;
@@ -29,4 +29,10 @@ export class BalanceComponent implements OnInit {
     this.retainedTks?.forEach( tk => this.sumRetainedTks += Number( tk?.num_tokens || '0' ));
   }
 
+  parseNumber(){
+    const assetAmount = this.asset?.amount ?? 0; // Use 0 if this.asset?.amount is undefined
+    const sumRetainedTks = this.sumRetainedTks ?? 0; // Use 0 if this.sumRetainedTks is undefined
+
+    return assetAmount - sumRetainedTks;
+}
 }

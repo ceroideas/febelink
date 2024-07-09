@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController, AlertController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
+import { UserService } from './../../services/user.service';
+import { MailService } from './../../services/mail.service';
+import { ReportService } from './../../services/report.service';
 
 @Component({
   selector: 'app-cart-success',
@@ -11,7 +11,7 @@ import { ReportService } from 'src/app/services/report.service';
   styleUrls: ['./cart-success.page.scss'],
 })
 export class CartSuccessPage implements OnInit {
-  bought: number;
+  bought: number = 0;
 
   constructor(
     public popoverController: PopoverController,

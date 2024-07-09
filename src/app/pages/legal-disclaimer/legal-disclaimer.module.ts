@@ -7,9 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { LegalDisclaimerPageRoutingModule } from './legal-disclaimer-routing.module';
 
 import { LegalDisclaimerPage } from './legal-disclaimer.page';
-import { TranslateModule } from '@ngx-translate/core';
-import { LegalPointComponent } from './legal-point/legal-point.component';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { PipesModule } from '../../pipes/pipes.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -18,12 +17,12 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     IonicModule,
     PipesModule,
     LegalDisclaimerPageRoutingModule,
-    TranslateModule.forChild(),
+    SharedModule
   ],
   declarations: [
     LegalDisclaimerPage,
-    LegalPointComponent,
   ],
-  exports: [LegalPointComponent, TranslateModule],
+  exports: [
+     ],
 })
 export class LegalDisclaimerPageModule {}

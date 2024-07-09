@@ -1,4 +1,4 @@
-import { IFile } from "src/app/components/file-picker/models/file.model";
+import { IFile } from "../../../components/file-picker/models/file.model";
 
 export interface ISearchFull {
   

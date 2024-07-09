@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NumFloatComponent implements OnInit {
 
-  @Input() number: string | number;
+  @Input() number: number = 0; // Provide a default value
   @Input() round: number = 2;
   @Input() bold: boolean = false;
   @Input() color: string = 'black';

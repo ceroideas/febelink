@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { ApiService } from './../../services/api.service';
+// import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import {
   ModalController,
   PopoverController,
@@ -10,16 +10,16 @@ import {
 } from '@ionic/angular';
 import { PublicarOpinionPage } from '../publicar-opinion/publicar-opinion.page';
 import { GuidePage } from '../guide/guide.page';
-import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
-import { environment } from 'src/environments/environment';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { IUser } from 'src/app/models/user.model';
+import { SharePopoverComponent } from './../../components/share-popover/share-popover.component';
+import { UtilitiesService } from './../../services/utilities.service';
+import { IUser } from './../../models/user.model';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
-import { IReport } from 'src/app/models/report.model';
+import { AuthenticationService } from './../../services/authentication/authentication.service';
+import { UserService } from './../../services/user.service';
+import { MailService } from './../../services/mail.service';
+import { ReportService } from './../../services/report.service';
+import { IReport } from './../../models/report.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-perfil-demandante',
@@ -33,18 +33,18 @@ export class PerfilDemandantePage implements OnInit {
   perfilpublico: any;
   contacto: any;
   sinOpiniones: any;
-  isLoading: boolean;
+  isLoading: boolean = false;
   refreshTab: any;
   isLogin: any;
-  currentUser: IUser = null;
-  urlName: string;
+  currentUser: IUser  | null= null;
+  urlName: string | null= null;;
 
   homePage: string = environment.HOME_PAGE;
 
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
-    private socialSharing: SocialSharing,
+    // private socialSharing: SocialSharing,
     private platform: Platform,
     private modalCtrl: ModalController,
     public popoverController: PopoverController,
@@ -198,7 +198,7 @@ export class PerfilDemandantePage implements OnInit {
    * Share Native ( Android/iOS)
    */
   public shareProfileNative(url: string, message: string, image?: string) {
-    this.socialSharing.share(message, message, image, url);
+    // this.socialSharing.share(message, message, image, url);
   }
 
   /**
@@ -218,7 +218,7 @@ export class PerfilDemandantePage implements OnInit {
   /*
    * Check if image exist
    */
-  isImage(src): Promise<boolean> {
+  isImage(src:any): Promise<boolean> {
     return new Promise((resolve) => {
       var image = new Image();
       image.onerror = function () {
@@ -235,8 +235,8 @@ export class PerfilDemandantePage implements OnInit {
    * Modal para valorar el perfil
    */
   async opinionModal() {
-    console.log(this.currentUser.id);
-    if (this.currentUser.id != undefined) {
+    console.log(this.currentUser?.id);
+    if (this.currentUser?.id != undefined) {
       // If User has main data completed
       if (this.userSvc.checkUserDataComplete(this.currentUser)) {
         const publicarModal = await this.modalCtrl.create({

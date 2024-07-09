@@ -7,10 +7,17 @@ import {ISector} from '../../../models/sector.model';
 export class LocationPipe implements PipeTransform {
 
   transform(id: number, location: ISector[]): string {
-    if (!id) {
-      return '';
+    if (!id || !location || location.length === 0) {
+        return '';
     }
-    return location.find(location => location.id === id).nombre;
+    
+    const foundLocation = location.find(location => location.id === id);
+    if (foundLocation) {
+        return foundLocation.nombre;
+    } else {
+        return ''; // or handle the case when no location is found
+    }
+    
   }
 
 }

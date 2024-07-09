@@ -1,15 +1,15 @@
-import { ExchangePop } from 'src/app/services/wallet/exchange.pop';
+import { ExchangePop } from './../../../services/wallet/exchange.pop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Offer } from 'src/app/models/wallet/offers.models';
-import { WalletParams } from 'src/app/models/wallet/params.model';
-import { DateFormatType, MonthFormatType } from 'src/app/pipes/date-format.pipe';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { AssetService } from 'src/app/services/wallet/asset.service';
-import { OfferService } from 'src/app/services/wallet/offer.service';
-import { ExchangeType } from 'src/app/models/wallet/exchange.model';
-import { AlertSvc } from 'src/app/services/alert.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { LoadingSvc } from 'src/app/services/loading.service';
+import { Offer } from './../../../models/wallet/offers.models';
+import { WalletParams } from './../../../models/wallet/params.model';
+import { DateFormatType, MonthFormatType } from './../../../pipes/date-format.pipe';
+import { TranslateConfigService } from './../../../services/translate/translate-config.service';
+import { AssetService } from './../../../services/wallet/asset.service';
+import { OfferService } from './../../../services/wallet/offer.service';
+import { ExchangeType } from './../../../models/wallet/exchange.model';
+import { AlertSvc } from './../../../services/alert.service';
+import { ToastSvc } from './../../../services/toast.service';
+import { LoadingSvc } from './../../../services/loading.service';
 
 @Component({
   selector: 'app-offers',
@@ -18,9 +18,10 @@ import { LoadingSvc } from 'src/app/services/loading.service';
 })
 export class OffersComponent implements OnInit {
 
-  @Input() offer: Offer;
-  @Input() isSelling: boolean;
-  @Input() walletParams: WalletParams;
+  @Input() offer: Offer | any;
+  @Input() isSelling: boolean = false;
+  //@ts-ignore
+  @Input() walletParams: WalletParams ;
   @Output() OnChange: EventEmitter<ExchangeType> = new EventEmitter()
 
   dateFormatType = DateFormatType;

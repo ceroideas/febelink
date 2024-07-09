@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Services } from './services.model';
 import { serviceData } from './data';
-import { Scraping } from 'src/app/components/link-preview/link-preview.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Scraping } from '../../../components/link-preview/link-preview.component';
 
 @Component({
   selector: 'app-services',
@@ -15,10 +15,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
  */
 export class ServicesComponent implements OnInit {
 
-  trustedVideoUrl: SafeResourceUrl;
+  trustedVideoUrl: SafeResourceUrl | undefined;
   url: string = 'Eyui67T07No'; // https://www.youtube.com/watch?v=Eyui67T07No
 
-  serviceData: Services[];
+  serviceData: Services[] | undefined;
   url_prensa: Array<Scraping> = [
     {
       u: 'https://cadenaser.com/emisora/2021/08/29/ser_malaga/1630226894_751094.html',

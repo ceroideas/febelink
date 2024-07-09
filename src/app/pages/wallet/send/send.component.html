@@ -18,7 +18,7 @@
 <ion-content class="padding">
   <app-loading [isLoading]="isLoading"></app-loading>
 
-  <form [formGroup]="form" style="margin: auto" *ngIf="!isLoading">
+  <form *ngIf="form && !isLoading" [formGroup]="form" style="margin: auto">
     <ion-grid>
       <!-- Addressee -->
       <ion-row
@@ -70,7 +70,8 @@
         <ion-col size="6" class="vertical-content">
           <img
             class="margin-end"
-            src="assets/icon/{{ asset?.currency.toLowerCase() }}.png"
+            [src]="'assets/icon/' + (asset?.currency?.toLowerCase() ?? 'default') + '.png'"
+
           />
           <ion-label class="margin-start"> {{ asset?.currency }}</ion-label>
         </ion-col>
@@ -79,7 +80,7 @@
             #amount
             name="amount"
             class="tx-end box no-padding padding-start padding-end"
-            (ionChange)="calc(amount?.value)"
+            (ionChange)="calc(amount?.value ?? 0)"
             [placeholder]="0"
             [debounce]="300"
             type="number"
@@ -99,7 +100,7 @@
         </ion-col>
         <ion-col size="6" class="tx-end">
           <app-num-float
-            [number]="calcs.diff"
+           [number]="calcs.diff ?? 0"
             [round]="assetsMaxDecimals"
           ></app-num-float>
         </ion-col>

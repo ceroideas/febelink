@@ -1,7 +1,7 @@
-import { FileService } from 'src/app/components/file-picker/services/file.service';
+import { FileService } from './../../../../components/file-picker/services/file.service';
 import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
 import { Router } from '@angular/router';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
+import { DateFormatType } from './../../../../pipes/date-format.pipe';
 import { IAdviseFull } from '../../advises/models/advises.model';
 import { AdviseService } from '../../advises/services/advises.service';
 
@@ -13,8 +13,9 @@ import { AdviseService } from '../../advises/services/advises.service';
 })
 export class PostSummaryComponent implements OnInit {
 
-  @Input() id: number
-  @Input() iAdvise: IAdviseFull
+  @Input() id: number = 0
+  //@ts-ignore
+  @Input() iAdvise: IAdviseFull ;
   @Input() watchOnClick: boolean = true
 
   dateFormatType = DateFormatType

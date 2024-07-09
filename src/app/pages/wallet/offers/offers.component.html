@@ -5,10 +5,13 @@
       <ion-col size="5.2" class="center-v">
         <!-- Asset Buying -->
         <ion-row class="vertical-content">
-          <img class="abicon-25" [src]="assetSvc.getImg( offer?.selling.asset_code )" />
+          
+          <img class="abicon-25" [src]="offer?.selling.asset_code ? assetSvc.getImg(offer?.selling.asset_code) : ''"
+          />
           <app-num-float
-            [number]="offer?.amount"
-            [round]="walletParams.assetsMaxDecimals"
+            [number]="offer?.amount ?? 0"
+             [round]="walletParams.assetsMaxDecimals ?? 0"
+
             classNbr="margin-start"
             [bold]="true"
           ></app-num-float>
@@ -16,10 +19,15 @@
 
         <!-- Asset Selling -->
         <ion-row class="vertical-content">
-          <img class="abicon-25" [src]="assetSvc.getImg( offer?.buying.asset_code )" />
+          <img class="abicon-25" 
+          
+          [src]="offer?.selling.asset_code ? assetSvc.getImg(offer?.selling.asset_code) : ''"
+          />
           <app-num-float
-            [number]="offerSvc.calcBuy( offer?.amount, offer?.price, this.walletParams?.assetsMaxDecimals )"
-            [round]="walletParams.assetsMaxDecimals"
+          [number]="offerSvc.calcBuy(offer?.amount ?? 0, offer?.price ?? 0, this.walletParams?.assetsMaxDecimals ?? 0)"
+
+           [round]="walletParams.assetsMaxDecimals ?? 0"
+
             classNbr="margin-start"
             [bold]="true"
           ></app-num-float>

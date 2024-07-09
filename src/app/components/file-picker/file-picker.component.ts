@@ -24,7 +24,8 @@ import { FileService } from './services/file.service';
   styleUrls: ['./file-picker.component.scss'],
 })
 export class FilePickerComponent implements OnInit {
-  @Input() iFile: IFile = {};
+  //@ts-ignore
+  @Input() iFile: IFile;
   @Input() fallback: string = 'assets/icon/svg/nopic.svg';
   @Input() height: string = '100%';
   @Input() width: string = '100%';
@@ -39,12 +40,12 @@ export class FilePickerComponent implements OnInit {
   elTypes = FileElementType;
 
   @Output() OnClick: EventEmitter<any> = new EventEmitter();
-  @Output() OnFile: EventEmitter<IFile> = new EventEmitter();
+  @Output() OnFile: EventEmitter<any> = new EventEmitter();
 
   isNative: boolean = false;
 
-  @ViewChild('filePicker') filePicker: ElementRef;
-  @ViewChild('videoPlayer') videoPlayer: ElementRef;
+  @ViewChild('filePicker') filePicker: ElementRef | undefined;
+  @ViewChild('videoPlayer') videoPlayer: ElementRef | undefined;
 
   constructor(
     public mediaSvc: FileService,
@@ -53,23 +54,39 @@ export class FilePickerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.platform
-      .ready()
-      .then(() => (this.isNative = this.platform.is('cordova')));
   }
 
   clicks() {
-    this.filePicker.nativeElement.click();
+    this.filePicker?.nativeElement.click();
   }
 
-  async pickMedia(filePicker) {
+  async pickMedia(filePicker: any) {
     if (this.OnClick) this.OnClick.emit(filePicker);
     this.iFile = await this.mediaSvc.pickImg(filePicker, this.maxSize);
-    if (this.iFile) if (this.OnFile) this.OnFile.emit(this.iFile);
+    this.OnFile.emit(this.iFile);
+
+
+    
   }
 
-  toggleVideo(event) {
+  readFile(){
+    let srcUrl: string;
+
+    if (this.iFile.src instanceof ArrayBuffer) {
+        // Convert ArrayBuffer to Base64 string
+        const uint8Array = new Uint8Array(this.iFile.src);
+        const blob = new Blob([uint8Array]);
+        srcUrl = URL.createObjectURL(blob);
+    } else {
+        // iFile.src is a string or undefined
+        srcUrl = this.iFile.src ?? '';
+    }
+
+    return srcUrl
+  }
+
+  toggleVideo(event: any) {
     // event.nativeElement.play()
-    this.videoPlayer.nativeElement.play();
+    this.videoPlayer?.nativeElement.play();
   }
 }

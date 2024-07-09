@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-legal-disclaimer',
   templateUrl: './legal-disclaimer.page.html',
@@ -17,19 +15,23 @@ export class LegalDisclaimerPage implements OnInit {
     private location: Location,
     private router: Router,
     private modalCtrl: ModalController,
-    private translateService: TranslateConfigService
-  ) {}
+   
+    @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
     this.setClickPrivacyPolicy(document.getElementById('openprivacypolicy1'));
     this.setClickPrivacyPolicy(document.getElementById('openprivacypolicy2'));
+    }
   }
 
-  setClickPrivacyPolicy(el) {
-    if (el) el.addEventListener('click', (e) => this.openPrivacyPolicy());
+  setClickPrivacyPolicy(el: any) {
+    if (isPlatformBrowser(this.platformId)) {
+    if (el) el.addEventListener('click', (e: any) => this.openPrivacyPolicy());
     else console.log('can`t recept clicks to open privacy policy');
+    }
   }
 
   public goBack(): void {

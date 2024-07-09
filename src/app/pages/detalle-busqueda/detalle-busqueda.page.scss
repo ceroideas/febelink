@@ -173,9 +173,8 @@
     overflow: auto;
     background-color: #fcfcfc;
 
-     /* Media query for screens with a maximum width of 600px */
-     @media only screen and (max-width: 780px) {
-      padding-bottom: 117px
+    @media (max-width: 768px) {
+      padding-bottom: 200px;
     }
    
     .capsule-price-mobile{
@@ -187,6 +186,10 @@
       display: none;
       position: fixed;
       bottom: 0;
+
+      @media (max-width: 768px) {
+        bottom: 57px;
+      }
 
       @media only screen and (max-width: 1030px) {
         display: flex;
@@ -292,6 +295,7 @@
       position: relative;
       display: flex;
       padding: 38px 21px;
+      padding-top: 80px;
       margin-bottom: 40px;
       max-width: 1386px;
       margin: auto;

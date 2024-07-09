@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IPaginationFilter } from 'src/app/models/pagination.model';
-import { HttpService, IHttpService } from 'src/app/services/http.service';
+import { IPaginationFilter } from '../../../models/pagination.model';
+import { HttpService, IHttpService } from '../../../services/http.service';
 import { IFollower } from '../models/follower.model';
 
 @Injectable({

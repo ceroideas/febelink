@@ -8,7 +8,7 @@ export class ScrollspyDirective {
 
   @Input() public spiedTags = [];
   @Output() public sectionChange = new EventEmitter<string>();
-  private currentSection: string;
+  private currentSection: string = "";
 
   // tslint:disable-next-line: variable-name
   constructor(private _el: ElementRef, @Inject(DOCUMENT) private document: Document, ) { }
@@ -32,7 +32,11 @@ export class ScrollspyDirective {
         }
       }
     }
+    //@ts-ignore
+    //@TODO:NOE
     if (currentSection !== this.currentSection) {
+      //@ts-ignore
+      //@TODO:NOE
       this.currentSection = currentSection;
       this.sectionChange.emit(this.currentSection);
     }

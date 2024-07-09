@@ -32,7 +32,7 @@ export class SubsectorService
         return this.list;
     }
 
-    async sectorsNsub( id: number = null )
+    async sectorsNsub( id?: number  )
     {
       return ( await this.httpSvc.get( 'sectorsNsub' + ( id ? '/' + id : '' ))).response || []
     }

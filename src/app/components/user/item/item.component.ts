@@ -1,7 +1,7 @@
-import {IUser} from 'src/app/models/user.model';
+import {IUser} from '../../../models/user.model';
 import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {UserSessionSvc} from '../../../services/user-session.service';
 import {IUserItem} from '../models/user-item.model';
 
 @Component({
@@ -11,12 +11,25 @@ import {IUserItem} from '../models/user-item.model';
 })
 export class UserItemComponent implements OnInit {
 
+  //@ts-ignore
   @Input() id: number;
-  @Input() user: IUserItem;
+  //@ts-ignore
+
+  @Input() user: any;
+  //@ts-ignore
+
   @Input() subtitle: string;
+  //@ts-ignore
+
   @Input() txEnd: string;
+  //@ts-ignore
+
   @Input() txSubEnd: string;
+  //@ts-ignore
+
   @Input() clase: string;
+  //@ts-ignore
+
   @Input() classImg: string;
   @Input() OnClickShowProfile: boolean = false;
   @Output() onUserClick: EventEmitter<IUserItem> = new EventEmitter();

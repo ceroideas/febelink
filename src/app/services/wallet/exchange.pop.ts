@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { ExchangeType } from 'src/app/models/wallet/exchange.model';
-import { Offer } from 'src/app/models/wallet/offers.models';
-import { WalletParams } from 'src/app/models/wallet/params.model';
-import { ExchangeComponent } from 'src/app/pages/wallet/exchange/exchange.component';
+import { CryptoCurrency } from '../../models/wallet/currency.model';
+import { ExchangeType } from '../../models/wallet/exchange.model';
+import { Offer } from '../../models/wallet/offers.models';
+import { WalletParams } from '../../models/wallet/params.model';
+import { ExchangeComponent } from '../../pages/wallet/exchange/exchange.component';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class ExchangePop {
                 walletParams: walletParams,
                 exchangeType: exchangeType,
 
-                OnDismiss: data => exchangeModal.dismiss( data )
+                OnDismiss: (data:any) => exchangeModal.dismiss( data )
             },
             cssClass: 'pop-w-700 pop-op-5 pop-br-5',
         });

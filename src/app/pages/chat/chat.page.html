@@ -32,7 +32,8 @@
   </ion-header>
 </ion-header>
 
-<ion-content [scrollEvents]="true" #content id="chat-section">
+<ion-content [scrollEvents]="true" #content id="chat-section"
+[ngClass]="{'peueno': message.length > 75}">
   <div *ngIf="messages.length === 0" class="body_loading_chat">
     <div class="loader_spinner_home">
       <h3>No hay mensajes en este chat</h3>
@@ -64,8 +65,8 @@
         <div class="message other-message">
           <div>
             <p>
-              {{ message.msg }}
-              <span class="time_my">{{ message.createdAt}}</span>
+              {{ message?.msg }}
+              <span class="time_my">{{ message?.createdAt}}</span>
             </p>
           </div>
         </div>
@@ -74,8 +75,8 @@
         <div class="message my-message">
           <div>
             <p>
-              {{ message.msg }}
-              <span class="time_my">{{ message.createdAt}}</span>
+              {{ message?.msg }}
+              <span class="time_my">{{ message?.createdAt}}</span>
             </p>
           </div>
         </div>
@@ -85,7 +86,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-grid>
+  <ion-grid class="footer-grid">
     <div id="user_typing" style="display: none">
       <div class="spinner">
         <div class="bounce1"></div>
@@ -122,10 +123,7 @@
 
       <ion-button
         style="
-          border: 0.5px solid #ffffff;
-          background: #55abdd;
-          border-radius: 50px;
-          margin-left: 10px;
+         border: 0.5px solid #ffffff;background: #55abdd;border-radius: 10000px;margin-left: 10px;height: 50px;width: 54px;padding: 0 !important;--padding-start: 0p;--padding-end: 0;
         "
         expand="block"
         fill="clear"

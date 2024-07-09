@@ -1,9 +1,9 @@
 <div class="mobile">
   <div class="table-main-reactions">
-    <div *ngIf="!post.reacted" (click)="react( $event )" class="react-left">
+    <div *ngIf="post && !post.reacted" (click)="react( $event )" class="react-left">
       <img src="assets/icon/svg/heart.svg" class="react-left-svg" />{{ 'pages.posts.react' | translate }}
     </div>
-    <div *ngIf="post.reacted" (click)="react( $event )" class="react-left-color">
+    <div *ngIf="post && post.reacted" (click)="react( $event )" class="react-left-color">
       <img src="assets/icon/svg/heart-back-blue.svg" class="react-left-svg" />{{ 'pages.posts.react' | translate }}
     </div>
     <div (click)="share( $event )" class="react-middle">
@@ -22,10 +22,10 @@
 
 <div class="desktop">
   <div class="table-main-reactions-b">
-    <div *ngIf="!post.reacted" (click)="react( $event )" class="react-left-b">
+    <div *ngIf="post && !post.reacted" (click)="react( $event )" class="react-left-b">
       <img src="assets/icon/svg/heart-blue.svg" class="react-left-svg" />{{ 'pages.posts.react' | translate }}
     </div>
-    <div *ngIf="post.reacted" (click)="react( $event )" class="react-left-color-b">
+    <div *ngIf="post&& post.reacted" (click)="react( $event )" class="react-left-color-b">
       <img src="assets/icon/svg/heart-back-blue.svg" class="react-left-svg" />{{ 'pages.posts.react' | translate }}
     </div>
     <div (click)="share( $event )" class="react-middle-b">

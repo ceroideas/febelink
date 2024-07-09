@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from '../../services/api.service';
+import { TranslateConfigService } from '../../services/translate/translate-config.service';
+import { UtilitiesService } from '../../services/utilities.service';
 
 @Component({
   selector: 'app-verification',
@@ -13,13 +13,13 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 export class VerificationComponent implements OnInit {
 
   verifWhich = VerifWhich;
-  which: VerifWhich;
-  id: string;
-  email: string;
+  which: VerifWhich | undefined;
+  id: string| undefined;
+  email: string | undefined;
   verifSent: boolean = false;
   hasError: boolean = false;
 
-  form: UntypedFormGroup;
+  form: UntypedFormGroup | undefined;
   
   constructor(
     public alertCtrl: AlertController,
@@ -57,11 +57,11 @@ export class VerificationComponent implements OnInit {
    * To Verify User Email
    */
   public async verifyEmail() {
-    const email = this.form.get('email').value;
+    const email = this.form?.get('email')?.value;
     const msg = this.translateService.instant( 'common.verif.email.sending', { email: email });
     this.utilities.showLoading( msg );
 
-    (await this.api.verifyEmail( this.id, email )).subscribe(
+    (await this.api.verifyEmail( Number(this.id), email )).subscribe(
       (resp) => {
         this.verificationEmailSent( resp );
 
@@ -86,9 +86,9 @@ export class VerificationComponent implements OnInit {
     );
   }
 
-  public verificationEmailSent( resp ) {
+  public verificationEmailSent( resp : any) {
     this.verifSent = true;
-    const email = this.form.get('email').value;
+    const email = this.form?.get('email')?.value;
 
     this.saveEmail( email );
     this.closeModal();
@@ -97,14 +97,14 @@ export class VerificationComponent implements OnInit {
     this.utilities.showToast( message );
   }
 
-  async saveEmail( email ) {
+  async saveEmail( email: any ) {
     const user = await this.utilities.getUserData();
     user.email = email;
     await this.utilities.saveUserData( user );
   }
 
   closeModal() {
-    const email = this.form.get('email').value;
+    const email = this.form?.get('email')?.value;
     this.modalCtrl.dismiss({ email: email, hasError: this.hasError, verifSent: this.verifSent });
   } 
 

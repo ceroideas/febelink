@@ -6,7 +6,7 @@ import { GeoPlacesModel } from '../models/geoplaces.model';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../models/user.model';
 import { UserLanding } from '../landing/models/user-landing';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { Loader } from '@googlemaps/js-api-loader';
 
 @Injectable({
@@ -21,9 +21,10 @@ export class GeoPlacesApi {
 
     API_URL: string = "https://maps.googleapis.com/maps/api/js";
     API_URL_ID: string = "https://maps.googleapis.com/maps/api/js";
-    inputs: any[];
-    place: GeoPlacesModel = null;
-    loader: Loader;
+    inputs: any = [];
+    //@ts-ignore
+    place: GeoPlacesModel | null;
+    loader: Loader | undefined;
     fields: string[] = [
         "address_components",
         "adr_address",
@@ -34,8 +35,8 @@ export class GeoPlacesApi {
         "url",
         "name"
     ];
-    onResponse: ( place: GeoPlacesModel ) => void;
-    onGotPlace: ( place: GeoPlacesModel ) => void;
+    onResponse: ((place: GeoPlacesModel) => void) | null = null;
+    onGotPlace: ((place: GeoPlacesModel) => void) | null = null;
     onError?: ( error: any ) => void;
     
     constructor(
@@ -107,11 +108,12 @@ export class GeoPlacesApi {
             return await (input as HTMLIonInputElement).getInputElement();
         
         // No input found, get out of here
+        //@ts-ignore
         return null;
     }
   
-    initAutocomplete( google ) {
-        this.inputs.forEach( input => {
+    initAutocomplete( google: any ) {
+        this.inputs.forEach( (input: any) => {
             const autocomplete = new google.maps.places.Autocomplete( input );
             autocomplete.setFields( this.fields );
 
@@ -134,20 +136,21 @@ export class GeoPlacesApi {
                 } else {
                     this.setDefaults( place );
 
-                    if( this.onResponse )
-                        this.onResponse( this.place );
+                    if (this.onResponse && this.place !== null) {
+                        this.onResponse(this.place);
+                    }
                 }
             });
 
             // Control to remove GooglePlace selection if text changes
-            input.addEventListener( 'input', ( e ) => {
+            input.addEventListener( 'input', ( e: any ) => {
                 if( this.place !== null && this.place.address !== input.value )
                     this.place = null;
             });
         });
     }
 
-    private setDefaults( place, modifyThis: boolean =  true ) : GeoPlacesModel {
+    private setDefaults( place: any, modifyThis: boolean =  true ) : GeoPlacesModel {
         // Declaration based on place
         const geoplace : GeoPlacesModel = {
             span_address: place.adr_address,
@@ -229,11 +232,21 @@ export class GeoPlacesApi {
 
     // Funcion creada para llenar place con su valores guardados
     public setUserPlace( user: IUser | UserLanding ) {
+        //@ts-ignore
+
         const address: string = (user as IUser).direccion ? (user as IUser).direccion : (user as UserLanding).address;
+        //@ts-ignore
+
         const country: string = this.ifUndefined( user.country );
+        //@ts-ignore
         const state: string = this.ifUndefined( user.state );
+        //@ts-ignore
+
         const department: string = this.ifUndefined( user.department );
+        //@ts-ignore
+
         const locality: string = this.ifUndefined( user.locality );
+        //@ts-ignore
         
         const place_id: string = this.ifUndefined( user.place_id );
 
@@ -252,21 +265,27 @@ export class GeoPlacesApi {
         const interfaceTypeOf = (user as IUser).direccion ? 'IUser' : 'UserLanding'; 
         switch( interfaceTypeOf ) {
             case 'IUser':
-                (user as IUser).direccion = this.place.address;
+                (user as IUser).direccion = this.place?.address ?? null;
                 break;
             case 'UserLanding':
-                (user as UserLanding).address = this.place.address;
+        //@ts-ignore
+
+                (user as UserLanding).address = this.place?.address ?? null;
                 break;
         }
         
-        user.country = this.place.Country.short;
-        user.state = this.place.State.long;
-        user.department = this.place.Department.long;
-        user.locality = this.place.Locality.long;
+        user.country = this.place?.Country?.short;
+        user.state = this.place?.State?.long;
+        user.department = this.place?.Department?.long;
+        user.locality = this.place?.Locality?.long;
 
-        user.place_id = this.place.place_id;
+        user.place_id = this.place?.place_id;
     }
     public getPlaceSelected(): GeoPlacesModel {
+        if (this.place === null) {
+            // Handle the null case, perhaps by throwing an error or returning a default value
+            throw new Error("No place selected.");
+        }
         return this.place;
     }
     public getPlace( id: string, onGotPlace?: ( place: GeoPlacesModel ) => void, onError?: ( place: GeoPlacesModel ) => void ) {
@@ -282,7 +301,7 @@ export class GeoPlacesApi {
         // Para devolver en caso de haber tenido un error
         const err = {
             status: 'error',
-            message: null,
+            message: "",
             msg: null,
             url: url
         };
@@ -337,7 +356,7 @@ export class GeoPlacesApi {
     }
     public hasSelected(): boolean {
         // Controla que no sea null y a su vez que tenga asignado country
-        const country = this.getPlaceSelected() ? this.getPlaceSelected().Country.short : '';
+        const country = this.getPlaceSelected() ? this.getPlaceSelected()?.Country?.short : '';
         return  country !== null && country !== '' ? true : false;
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService, IHttpService } from 'src/app/services/http.service';
+import { HttpService, IHttpService } from './../../../../services/http.service';
 import { IAdviseFull, IAdviseFilter, IAdvise } from '../models/advises.model';
 
 @Injectable({
@@ -63,6 +63,7 @@ export class AdviseService {
 
   extractTitle( iAdvise: IAdvise, isContentVisible: boolean = false ): string
   {
+    //@ts-ignore
     return iAdvise.title || isContentVisible ? iAdvise.title
       : !iAdvise?.content
         ? null : this.first( iAdvise.content )
@@ -70,18 +71,20 @@ export class AdviseService {
 
   extractSummary( iAdvise: IAdvise ): string
   {
+    //@ts-ignore
+
     return iAdvise.summary ? iAdvise.summary
       : !iAdvise?.content ? null
         : iAdvise?.title ? iAdvise.content : this.after( iAdvise.content)
   }
 
-  private first( str ): string
+  private first( str : string): string
   {
     str = this.html2str( str )
     return str.substring( 0, Math.max( 0, this.html2str( str ).indexOf( '.' )))
   }
 
-  private after( str ): string
+  private after( str : string ): string
   {
     str = this.html2str( str )
     return str.substring( Math.max( 0, this.html2str( str ).indexOf( '.' ) +1 ))

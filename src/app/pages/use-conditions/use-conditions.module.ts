@@ -7,12 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { UseConditionsPageRoutingModule } from './use-conditions-routing.module';
 
 import { UseConditionsPage } from './use-conditions.page';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
+    
+    SharedModule,
     UseConditionsPageRoutingModule
   ],
   declarations: [UseConditionsPage]

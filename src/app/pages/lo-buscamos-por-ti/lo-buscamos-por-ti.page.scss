@@ -24,6 +24,14 @@
  }
  
  
+ .selectlocation{
+  width: 100%;
+  height: 46px;
+  border: 20px;
+  padding: 0 9px;
+  background: rgba(238, 241, 249, 0.6);
+  outline: none;
+ }
  .padding-input-12 {
    --padding-top: 12px;
    --inner-padding-top: 12px;
@@ -403,6 +411,29 @@
     margin: 0 auto;
     display: block;
    }
+
+  .chat-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 14px;
+    text-decoration: none;
+
+    &.whatsapp{
+      width: fit-content;
+      font-size: 24px;
+      background-color: #25D366;
+
+      span{
+        font-size: 17px;
+        margin-left: 11px;
+      }
+    }
+  }
  }
  
  .sections-add-service-title {
@@ -1720,8 +1751,28 @@
  ion-select{
   background: rgba(238,241,249,.6);
   border-radius: 6px;
-  color: #000
+  color: #000;
+  display: block;
+  
+  
  }
+
+ 
+ion-select::part(select-wrapper-inner){
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+ion-select::part(select-wrapper-inner) {
+  /* Your styles for the select wrapper */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  padding: 0 14px;
+}
  ion-input{
   color: #000
  }

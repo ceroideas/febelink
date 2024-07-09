@@ -27,6 +27,13 @@ ion-header {
   }
 }
 
+select{
+  border: 1px solid #d2d6db;
+  border-radius: 6px;
+  padding: 15px;
+  background: none;
+}
+
 .header_buttons {
   padding-left: 1em;
 }

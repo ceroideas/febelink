@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertSvc} from 'src/app/services/alert.service';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {ToastSvc} from 'src/app/services/toast.service';
+import {AlertSvc} from '../../../services/alert.service';
+import {LoadingSvc} from '../../../services/loading.service';
+import {ToastSvc} from '../../../services/toast.service';
 import {KeywordService} from '../services/keyword.service';
 import {SectorService} from '../../../components/sectors/services/sectores.service';
 import {ISector} from '../../../models/sector.model';
+import { Location } from '@angular/common'
 
 interface LinkFooterKeys {
   id: number, 
@@ -37,21 +38,22 @@ interface LinkFooterKeys {
   selector: 'link-footer-page',
   templateUrl: './link-footer.page.html',
   styleUrls: ['./link-footer.page.scss'],
+  host: {ngSkipHydration: 'true'},
 })
 
 export class LinkFooterPage implements OnInit {
 
   isLoading: boolean = false;
-  LinkFooterKeys: LinkFooterKeys[];
-  sectors: ISector[];
-  filter: string;
+  LinkFooterKeys: LinkFooterKeys[] | undefined
+  sectors: ISector[] | undefined
+  filter: string | undefined
 
   showCreatekeyword: boolean = false;
 
   linkfooter: any =[];
   linkfooter_filtered: any =[];
-  locations: [];
-  footers: [];
+  locations: any =  [];
+  footers: any = [];
 
   keyLinkFooter: any =  {
     id: '',
@@ -75,13 +77,14 @@ export class LinkFooterPage implements OnInit {
     h2: '',
     description: '',
   }
-  locationSelect: number;
+  locationSelect: number = 0;
   constructor(
     public alertSvc: AlertSvc,
     public toastSvc: ToastSvc,
     public loadingSvc: LoadingSvc,
     private keywordService: KeywordService,
-    private sectorService: SectorService
+    private sectorService: SectorService,
+    private location: Location,
   ) {
   }
 
@@ -90,13 +93,20 @@ export class LinkFooterPage implements OnInit {
     await this.search();
   }
 
- 
+  
+  /**
+     * Close modal
+     */
+  public goBack(): void {
+    this.location.back();
+  }
 
   search_filter(event?: any){
     this.linkfooter = this.linkfooter_filtered;
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
-      this.linkfooter = this.linkfooter.filter((sector) => {
+      this.linkfooter = this.linkfooter.filter((sector: any) => {
+        if ( this.filter )
         return sector.link.toLowerCase().includes(this.filter.toLowerCase());
       })
     } else {
@@ -107,14 +117,17 @@ export class LinkFooterPage implements OnInit {
 
   async search(event?: any) {
     this.isLoading = true;
-    const {response} = await this.keywordService.getLinkFooterKeywords();
-    this.linkfooter = response;
-    this.linkfooter_filtered = this.linkfooter;
 
-    this.isLoading = false;
+    this.keywordService.getLinkFooterKeywords().then(async (response: any) => {
+
+      this.linkfooter = response.response;;
+      this.linkfooter_filtered = this.linkfooter;
+
+      this.isLoading = false;
+    })
   }
 
-  removeAccents(inputString) {
+  removeAccents(inputString: any) {
     // Normalize accented characters to their base form
     const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return normalizedString;

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from './../../services/api.service';
+import { UtilitiesService } from './../../services/utilities.service';
 import { StripeService } from 'ngx-stripe';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
@@ -13,7 +13,7 @@ import { StripeElementsOptions, StripeElements } from '@stripe/stripe-js';
   styleUrls: ['./suscription-browser.page.scss'],
 })
 export class SuscriptionBrowserPage implements OnInit {
-  elements: StripeElements;
+  elements: StripeElements | undefined;
   // optional parameters
   elementsOptions: StripeElementsOptions = {
     locale: 'es',
@@ -23,7 +23,7 @@ export class SuscriptionBrowserPage implements OnInit {
   subscription: any;
   selected: any = null;
   clicked: any = 0;
-  subscriptions: any[];
+  subscriptions: any[] | undefined;
   perfil: any;
 
   constructor(
@@ -94,16 +94,19 @@ export class SuscriptionBrowserPage implements OnInit {
       }
     });
 
-    this.card.addEventListener('change', (event) => {
+    this.card.addEventListener('change', (event: any) => {
       var displayError = document.getElementById('card-errors');
-      if (event.error) {
+      if (event.error ) {
+        //@ts-ignore
         displayError.textContent = event.error.message;
       } else {
+        //@ts-ignore
         displayError.textContent = '';
       }
     });
 
     var form = document.getElementById('payment-form');
+    //@ts-ignore
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
@@ -113,14 +116,18 @@ export class SuscriptionBrowserPage implements OnInit {
           .subscribe(async (result) => {
             if (result.error) {
               var errorElement = document.getElementById('card-errors');
-              errorElement.textContent = result.error.message;
+              //@ts-ignore
+              errorElement.textContent = result.error.message ?? null;
+
             } else {
               this.utilities.showLoading();
 
               (
                 await this.api.subscribe(this.selected, result.token.id)
               ).subscribe(async (response) => {
+                //@ts-ignore
                 document.getElementById('payment-form').style.display = 'none';
+                //@ts-ignore
                 document.getElementById('div_suscription').style.display =
                   'flex';
                 this.card.clear();
@@ -136,7 +143,7 @@ export class SuscriptionBrowserPage implements OnInit {
     });
   }
 
-  async openStripe(stripe_plan) {
+  async openStripe(stripe_plan: any) {
     this.selected = stripe_plan;
   }
 
@@ -153,7 +160,7 @@ export class SuscriptionBrowserPage implements OnInit {
     });
   }
 
-  async swapSubscription(stripe_plan) {
+  async swapSubscription(stripe_plan: any) {
     this.utilities.showLoading();
 
     (await this.api.swapSubscription(stripe_plan)).subscribe(
@@ -169,7 +176,7 @@ export class SuscriptionBrowserPage implements OnInit {
   async cancelSubscription() {
     this.utilities.showLoading();
 
-    (await this.api.cancelSubscription()).subscribe(async (response) => {
+    (await this.api.cancelSubscription()).subscribe(async (response: any) => {
       await this.utilities.saveUserSubscription(response.subscription);
       this.closeModal();
       this.utilities.dismissLoading();

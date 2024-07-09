@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { TokensUsersService } from 'src/app/admin/services/tokens-users.service';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
-import { AlertSvc } from 'src/app/services/alert.service';
-import { ClipboardSvc } from 'src/app/services/clipboard.service';
-import { LoadingSvc } from 'src/app/services/loading.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { WalletService } from 'src/app/services/wallet/wallet.service';
+import { TokensUsersService } from '../../admin/services/tokens-users.service';
+import { CryptoCurrency } from '../../models/wallet/currency.model';
+import { DateFormatType } from '../../pipes/date-format.pipe';
+import { AlertSvc } from '../../services/alert.service';
+import { ClipboardSvc } from '../../services/clipboard.service';
+import { LoadingSvc } from '../../services/loading.service';
+import { ToastSvc } from '../../services/toast.service';
+import { TranslateConfigService } from '../../services/translate/translate-config.service';
+import { UtilitiesService } from '../../services/utilities.service';
+import { WalletService } from '../../services/wallet/wallet.service';
 import { TokenCRUD, TokenPhase, TokensUser } from '../models/tokens-user';
 import { EditTokensComponent } from './edit-tokens/edit-tokens.component';
+import { Location } from '@angular/common'
+
 
 @Component({
   selector: 'app-tokens-users',
   templateUrl: './tokens-users.page.html',
   styleUrls: ['./tokens-users.page.scss'],
+  host: {ngSkipHydration: 'true'},
 })
 export class TokensUsersPage implements OnInit {
 
@@ -31,27 +34,39 @@ export class TokensUsersPage implements OnInit {
     , public toastSvc: ToastSvc
     , public loadingSvc: LoadingSvc
     , private translateSvc: TranslateConfigService
-    , private walletSvc: WalletService
+    , private walletSvc: WalletService,
+    private location: Location,
     ) { }
 
-  tokensUsers:TokensUser[]
-  tkPhases: TokenPhase[]
+  tokensUsers:TokensUser[] | undefined
+  tkPhases: TokenPhase[] | undefined
 
   async ngOnInit() {
     this.search();
   }
 
-  filter:string;
+
+  /**
+   * Close modal
+   */
+  public goBack(): void {
+    this.location.back();
+  }
+  filter:string = "";
   async search(event?: any) {
     this.isLoading = true;
     this.filter = event?.target?.value || this.filter || '';
-    const response = await this.tokensUsersSvc.getTokensUsers( this.activePage, this.filter );
-    this.tokensUsers = response.items;
-    this.tkPhases = response.tkPhases;
-    this.totalRecords = response.totalRecords;
-    this.recordsPerPage = response.limit;
-    this.qPages = response.qPages;
-    this.isLoading = false;
+
+    // this.tokensUsersSvc.getTokensUsers( this.activePage, this.filter).then(async (response: any) => {
+    //   this.tokensUsers = response.items;
+    //   this.tkPhases = response.tkPhases;
+    //   this.totalRecords = response.totalRecords;
+    //   this.recordsPerPage = response.limit;
+    //   this.qPages = response.qPages;
+    //   this.isLoading = false;
+    // })
+
+   
   }
 
   async create() {

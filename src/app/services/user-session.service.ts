@@ -1,51 +1,59 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ToastSvc } from './toast.service';
 import { IUser } from '../models/user.model';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserSessionSvc {
-  user: IUser;
+  user: IUser | undefined;
   static KEY: string = 'userData';
 
-  constructor(private storage: Storage, private toastSvc: ToastSvc) {}
+      
+  constructor( 
+    @Inject(PLATFORM_ID) public platformId: Object, 
+    private toastSvc: ToastSvc
+  ) {}
 
   save(user: IUser): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.storage
-        .set(UserSessionSvc.KEY, user)
-        .then(() => resolve(true))
-        .catch((error) => reject(false));
+      try {
+        // Convert the user object to a JSON string
+        const userJSON = JSON.stringify(user);
+        // Save the JSON string to sessionStorage
+        sessionStorage.setItem(UserSessionSvc.KEY, userJSON);
+        // Resolve the promise with true
+        resolve(true);
+      } catch (error) {
+        // If an error occurs, reject the promise with false
+        reject(false);
+      }
     });
   }
 
-  get(): Promise<IUser> {
+  get(): Promise<IUser | undefined> {
     return new Promise((resolve, reject) => {
-      /* if( this.user ) {
-                resolve( this.user )
-                return
-            } */
-
-      this.storage
-        .ready()
-        .then(() => {
-          this.storage
-            .get(UserSessionSvc.KEY)
-            .then((userData) => {
-              this.user = userData;
-              resolve(userData);
-            })
-            .catch((error) => {
-              console.log({ error });
-              reject(null);
-            });
-        })
-        .catch((error) => {
-          console.log({ error });
+      if ( isPlatformBrowser(this.platformId) ) {
+        try {
+          // Retrieve the user JSON string from sessionStorage
+          const userJSON = sessionStorage.getItem(UserSessionSvc.KEY);
+          // If userJSON is null, resolve with null
+          if (!userJSON) {
+            resolve(undefined);
+            return;
+          }
+          // Parse the user JSON string back to an object
+          const user = JSON.parse(userJSON);
+          // Resolve the promise with the user object
+          resolve(user);
+        } catch (error) {
+          // If an error occurs, reject the promise with null
           reject(null);
-        });
+        }
+      } else {
+        resolve(undefined);
+      }
     });
   }
 
@@ -53,7 +61,7 @@ export class UserSessionSvc {
     return (await this.get())?.id;
   }
 
-  async isUser(id: number) {
+  async isUser(id: any) {
     return (await this.get())?.id == id;
   }
 

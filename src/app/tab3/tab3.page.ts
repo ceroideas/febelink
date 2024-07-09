@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {
   ModalController,
-  IonItemSliding,
   AlertController,
 } from '@ionic/angular';
 import {ApiService} from '../services/api.service';
@@ -11,12 +10,8 @@ import {InteriorOfertaPage} from '../pages/interior-oferta/interior-oferta.page'
 import {IOffer} from '../models/offer.model';
 import {IUser} from '../models/user.model';
 import {TranslateService} from '@ngx-translate/core';
-import {TermsPage} from '../pages/terms/terms.page';
 import {IFavorite} from '../models/favorite.model';
 import {GuidePage} from '../pages/guide/guide.page';
-import {NotificationService} from '../services/notification.service';
-import {NotifType} from '../models/notification';
-import {ISearch} from '../models/search.model';
 import {ChatService} from '../services/chat.service';
 
 @Component({
@@ -27,10 +22,10 @@ import {ChatService} from '../services/chat.service';
 export class Tab3Page implements OnInit {
   currentYear = new Date().getFullYear();
   offers: IOffer[] = [];
-  isLoading: boolean;
-  currentUser: IUser = null;
+  isLoading: boolean = false;
+  currentUser: IUser | undefined;
   unreadMessages: Map<number, number> = new Map();
-  rooms: [] = [];
+  rooms: any[] = [];
 
   constructor(
     private modalCtrl: ModalController,
@@ -39,16 +34,21 @@ export class Tab3Page implements OnInit {
     private router: Router,
     private translateService: TranslateService,
     private alertCtrl: AlertController,
-    private notificationSvc: NotificationService,
     private chatSVC: ChatService
   ) {
   }
 
   async ngOnInit(): Promise<void> {
-    const {response, error} = await this.chatSVC.getMyChatRooms();
-    this.rooms = response;
 
-    await this.api.getUnreadMessages();
+    this.chatSVC.getMyChatRooms().then(async (data: any) => {
+      this.rooms = data.response;
+    })
+    this.api.getUnreadMessages().then()
+
+
+    
+
+    // await this.api.getUnreadMessages();
     this.api.unreadChatMessages.subscribe((unreadMessages) => {
       this.unreadMessages.clear();
       unreadMessages?.forEach((room) => {
@@ -56,16 +56,15 @@ export class Tab3Page implements OnInit {
       });
       // console.log("unreadNotificationsCount", this.unreadMessages);
     });
-  }
 
-  async ionViewDidEnter() {
     await this.getUserProfile();
     if (this.currentUser) {
       this.isLoading = true;
       await this.getOffers();
     }
-    // this.notificationSvc.setNotificationsAsRead(NotifType.Chat);
   }
+
+ 
 
   async getUserProfile() {
     this.currentUser = await this.utilities.getUserData();
@@ -85,38 +84,38 @@ export class Tab3Page implements OnInit {
       await (await this.api.getFavorites()).toPromise(),
       this.setType(
         await (
-          await this.api.obtenerDemandasDemandante(this.currentUser.id)
+          await this.api.obtenerDemandasDemandante(this.currentUser?.id)
         ).toPromise(),
         Type.PendingDemand
       ),
     ]);
-    Object.values(favorites[0]).forEach((favorite: IOffer) => {
+    (Object.values(favorites[0]) as IOffer[]).forEach((favorite: IOffer) => {
       favorite.type = Type.Favorite;
       favorite.created_at = favorites[1].find(
         (f: IFavorite) => f.favoriteable_id === favorite.id
       ).created_at;
     });
 
-    let myOffersF = myOffers.sort((a, b) => {
+    let myOffersF = myOffers.sort((a: any, b: any) => {
       return b.id - a.id;
     });
     myOffersF = myOffersF.filter(
-      (v, i, a) =>
+      (v:any, i:any, a:any) =>
         a.findIndex(
-          (t) =>
+          (t:any) =>
             t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante
         ) === i
     );
-    let receivedOffers = offers.sort((a, b) => {
+    let receivedOffers = offers.sort((a: any, b: any) => {
       return b.id - a.id;
     });
     receivedOffers = receivedOffers.filter(
-      (r) => r.id_ofertante !== this.currentUser.id
+      (r: any) => r.id_ofertante !== this.currentUser?.id
     );
     receivedOffers = receivedOffers.filter(
-      (v, i, a) =>
+      (v: any, i: any, a: any) =>
         a.findIndex(
-          (t) =>
+          (t:any) =>
             t.id_demanda === v.id_demanda && t.id_ofertante === v.id_ofertante
         ) === i
     );
@@ -137,7 +136,7 @@ export class Tab3Page implements OnInit {
     this.isLoading = false;
   }
 
-  doRefreshOffers(refresher): void {
+  doRefreshOffers(refresher: any): void {
     this.getOffers();
     refresher.event.complete();
   }
@@ -170,7 +169,7 @@ export class Tab3Page implements OnInit {
         }
       );
     } else {
-      (await this.api.borrarDemanda(offer.id)).subscribe(
+      (await this.api.borrarDemanda(Number(offer.id))).subscribe(
         (resp) => {
           this.getOffers();
         },
@@ -184,7 +183,7 @@ export class Tab3Page implements OnInit {
     }
   }
 
-  async interiorOferta(oferta) {
+  async interiorOferta(oferta: any) {
     const interiorOfertaModal = await this.modalCtrl.create({
       component: InteriorOfertaPage,
       componentProps: {oferta: oferta},
@@ -195,7 +194,7 @@ export class Tab3Page implements OnInit {
     this.getOffers();
   }
 
-  detalleDemanda(idDemanda, estado): void {
+  detalleDemanda(idDemanda: any, estado: any): void {
     let aceptada: boolean;
     if (estado === 1) {
       aceptada = true;
@@ -227,34 +226,24 @@ export class Tab3Page implements OnInit {
     }
   }
 
+
   getOfferBackgroundColor(offerStatus: number) {
     switch (offerStatus) {
-      case 1: {
-        return '#19cf50';
-      }
-      case 2: {
-        return '#da1c1c';
-      }
-      case 3: {
-        return '#3289db';
-      }
+        case 1: return '#19cf50';
+        case 2:  return '#da1c1c';
+        case 3: return '#3289db';
+        default: return 'Unknown'; // Handle unexpected values
     }
-  }
+}
 
   getOfferText(offerStatus: number) {
     switch (offerStatus) {
-      case 1: {
-        return 'Aceptada';
-      }
-      case 2: {
-        return 'Denegada';
-      }
-      case 3: {
-        return 'Sin respuesta';
-      }
+        case 1: return 'Aceptada';
+        case 2: return 'Denegada';
+        case 3: return 'Sin respuesta';
+        default: return 'Unknown'; // Handle unexpected values
     }
-  }
-
+}
   async deleteItem(offer: IOffer) {
     const alert = await this.alertCtrl.create({
       header: this.translateService.instant('menu.tabs.chat'),
@@ -319,7 +308,7 @@ export class Tab3Page implements OnInit {
 
   getUnreadMessages(offer: any): number {
     if (!offer || !this.unreadMessages.size) {
-      return;
+      return 0;
     }
     let roomId: number;
     switch (offer.type) {
@@ -327,13 +316,13 @@ export class Tab3Page implements OnInit {
         roomId = +(
           offer.id_ofertante?.toString() +
           offer.id_demanda?.toString() +
-          this.currentUser.id.toString()
+          this.currentUser?.id.toString()
         );
         break;
       }
       case Type.MyOffer: {
         roomId = +(
-          this.currentUser.id.toString() +
+          this.currentUser?.id.toString() +
           offer.id_demanda?.toString() +
           offer.id_demandante?.toString()
         );
@@ -341,8 +330,9 @@ export class Tab3Page implements OnInit {
       }
     }
     // debugger
+    //@ts-ignore
     const num = this.unreadMessages.get(roomId);
-    return num;
+    return Number(num);
   }
 
   setType(item: any[], type: Type): any {

@@ -4,13 +4,13 @@ import {
   FilePickType,
   IFile,
 } from '../../components/file-picker/models/file.model';
-import {iWYSIWYG} from 'src/app/components/wysiwyg/models/wysiwyg.model';
+import {iWYSIWYG} from './../../components/wysiwyg/models/wysiwyg.model';
 import { ISearchFull } from './models/lo-buscamos-por-ti.model';
-import { SearchforyouService } from 'src/app/services/searchforyou.service';
-import { KeywordService } from 'src/app/admin/keyword/services/keyword.service';
-import { ApiService } from 'src/app/services/api.service';
-import { IUser } from 'src/app/models/user.model';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { SearchforyouService } from './../../services/searchforyou.service';
+import { KeywordService } from './../../admin/keyword/services/keyword.service';
+import { ApiService } from './../../services/api.service';
+import { IUser } from './../../models/user.model';
+import { UtilitiesService } from './../../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../cart/services/cart.service';
 @Component({
@@ -20,7 +20,8 @@ import { CartService } from '../cart/services/cart.service';
 })
 export class LoBuscamosPorTiPage implements OnInit {
 
-  iFile: IFile;
+  //@ts-ignore
+  iFile: IFile ;
   filePickType = FilePickType;
 
   error: any = {}
@@ -30,34 +31,33 @@ export class LoBuscamosPorTiPage implements OnInit {
   servicioError: boolean = false;
   servicioAddedOther: boolean = false;
   loadSend: boolean = false;
-  title: string;
-  description: string;
-  name: string;
-  email: string;
-  phone: string;
-  location: string;
+  title: string = ""
+  description: string = ""
+  name: string = ""
+  email: string = ""
+  phone: string = ""
+  location: string = ""
 
-  images: (string | IFile)[] = [];
+  images: IFile[] = [];
 
-  editorText: string;
+  editorText: string =""
   isTemplate: boolean = false;
   disabled: boolean = false;
   locations: any = [];
   peticions: any = {}
-  selectedValue
+  selectedValue: any;
   currentUser: any = {
     nick: null,
     email: null,
     telefono: null
   }
+  //@ts-ignore
   id;
   constructor(  private router: Router, private route: ActivatedRoute,  private utilities: UtilitiesService,  
     public cartSvc: CartService,
     private api: ApiService, private keywordService: KeywordService, private modalCtrl: ModalController,  public servicesSvc: SearchforyouService,  public cref: ChangeDetectorRef ) { 
-
     this.route.fragment.subscribe(fragment => {
       if (!!fragment) {
-          console.log(fragment); // Verify the structure of 'fragment'
           // Check if 'search' property exists in 'fragment' object
           if (fragment.hasOwnProperty('search')) {
               try {
@@ -87,22 +87,24 @@ export class LoBuscamosPorTiPage implements OnInit {
   }
 
   async getfindServices() {
-    const {response, error} = await this.cartSvc.getFindService(this.id);
-    this.peticions = response;
+    this.cartSvc.getFindService(this.id).then(async (data: any) => {
+      this.peticions = data.response;
+      this.title = data.response.title
+      this.description = data.response.description
+      this.images = data.response.images
+      this.location = data.response.location
 
-
-    this.title = response.title
-    this.description = response.description
-    this.images = response.images
-    this.location = response.location
-
-    this.isTemplate = true
-    console.log(response)
-    // this.iCart = response;
+      this.isTemplate = true
+     })
+    
   }
   async readLocations(){
-    const {response} = await this.keywordService.getLocationKeywords();
-    this.locations = response;
+
+    this.keywordService.getLocationKeywords().then(async (data: any) => {
+      this.locations = data.response;
+    })
+
+
   }
 
   async readUser(){
@@ -122,7 +124,7 @@ export class LoBuscamosPorTiPage implements OnInit {
     //@ts-ignore
 
     if ( this.currentUser?.email === undefined || this.currentUser?.email == null){
-      this.email =  null;
+      this.email =  "";
     } else {
       //@ts-ignore
       this.email = this.currentUser?.email;
@@ -141,12 +143,14 @@ export class LoBuscamosPorTiPage implements OnInit {
   
 
   }
-
-  onSelectChange($event){
+  onSelect(hero: any): void {
+    console.log(hero)
+  }
+  onSelectChange($event: any){
   
     this.error.location = false;
   }
-  clearImageByIndex(index: IFile) {
+  clearImageByIndex(index: any) {
     this.images = this.images.filter(img=> img !== index)
     this.cref.detectChanges()
   }
@@ -156,6 +160,7 @@ export class LoBuscamosPorTiPage implements OnInit {
   }
 
   wysiwygChange(content: iWYSIWYG) {
+    //@ts-ignore
     this.editorText = content.html;
   }
 
@@ -180,6 +185,7 @@ export class LoBuscamosPorTiPage implements OnInit {
 
         var productCreate: ISearchFull = {
           title: this.title,
+          //@ts-ignore
           description: doc.body.textContent,
           images: this.images,
           name: this.name,
@@ -250,13 +256,13 @@ export class LoBuscamosPorTiPage implements OnInit {
     this.servicioAdded = false;
     this.servicioFinsish = false;
 
-    this.title = null;
-    this.description = null;
-    this.editorText = null;
-    this.name = null;
-    this.email = null;
-    this.phone = null;
-    this.location = null;
+    this.title = "";
+    this.description = "";
+    this.editorText = "";
+    this.name = "";
+    this.email = "";
+    this.phone = "";
+    this.location = "";
     this.selectedValue = null;
 
     window.scrollTo(0, 0);

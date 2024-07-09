@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AcercaDePage } from 'src/app/pages/acerca-de/acerca-de.page';
+import { AcercaDePage } from './../../pages/acerca-de/acerca-de.page';
 
 @Component({
   selector: 'app-menu',

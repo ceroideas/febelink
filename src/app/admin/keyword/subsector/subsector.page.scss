@@ -2,7 +2,17 @@
   background: #FAFAFA;
   width: 100%;
   height: 100%;
+  padding-top: 100px;
+  th{
+    background: #55abdd !important;
+    color: #fff !important;
+  }
+  input{background-color: #fff; color: #000;}
 
+  .delete{
+    color: #b33232;
+  }
+  .edit{}
   .container-general{
     display: flex;
     justify-content: flex-start;
@@ -15,7 +25,13 @@
     margin: auto;
     width: 1440px;
      
-   
+    ion-icon{
+      margin-right: 20px;
+      margin-left: 8px;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
       .title{
         width: 100%;
         text-align: center;
@@ -147,12 +163,13 @@
 
         .edit {
             text-align: center;
-            color: var(--ion-color-success);
+           
+            color: #16c916;
         }
 
         .delete {
             text-align: center;
-            color: var(--ion-color-danger);
+            color: #b33232;
         }
 
         ion-icon{
@@ -186,135 +203,7 @@
       }
     }
   }
-  #createKeywordController {
-    width: 100%;
-    color: #000;
-    justify-content: space-around;
-    background: #fff!important;
-    box-shadow: 0 22px 40px #b3bcc930!important;
-    position: fixed;
-    max-width: 500px;
-    height: -moz-fit-content;
-    height: fit-content;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    z-index: 1;
-    padding: 16px 0;
-    border-radius: 10px;
-    right: 0;
-    max-height: 95%;
-    overflow: auto;
-
-    .headerTitle{
-      width: 100%;
-      height: 40px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-end;
-      font-weight: 700;
-      font-size: 1.2rem;
-      padding-top: 10px;
-      padding: 0 29px;
-      color: #0e4a87;
-    }
-    .headerSubTitle{
-      width: 100%;
-      height: 40px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      font-weight: normal;
-      font-size: 1rem;
-      padding-top: 10px;
-      padding: 0 29px;
-      margin-bottom: 27px;
-      color: #416a95;
-    }
-    .containerKeyWord{
-      width: 100%;
-      height: calc(100% - 81px);
-
-      .item-select{
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        width: 90%;
-        flex-direction: column;
-        margin: auto auto 14px;
-        min-height: 82px;
-        gap: 10px;
-
-        label{
-          font-weight: bold;
-          font-size: 1rem;
-        }
-
-        select{
-          height: 39px;
-          border: 1px solid lightgrey;
-          background: none;
-          padding: 0 10px;
-          border-radius: 5px;
-        }
-        input{
-          height: 39px;
-          border: none;
-          border-bottom: 1px solid lightgrey;
-          background: none;
-          padding: 0 10px;
-          border-radius: 5px;
-          width: 98%;
-
-        }
-
-        .container-icons {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1em;
-          justify-content: center;
-          margin-bottom: 30px;
-
-          .item-icon{
-            width: 3em;
-            height: 3em;
-            border: 1px solid #ddd;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-
-            img {
-              filter: grayscale(1);
-            }
-
-            &.selected{
-              background: #f7fcff;
-              border: 1px solid #0075ff;
-
-              img {
-                filter: unset;
-              }
-          
-            }
-          }
-        }
-      }
-      .buttons{
-        
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin: auto 25px 8px auto;
-        column-gap: 10px;
-
-      }
-    }
-  }
+ 
   //**** add keyword *****//
   .darklayer-createKeyword{
     background: red;
@@ -326,12 +215,12 @@
 }
 
 
-#createKeywordController {
+#createKeywordSubsectorController {
   width: 100%;
   color: #000;
   justify-content: space-around;
-  background: #fff!important;
-  box-shadow: 0 22px 40px #b3bcc930!important;
+  background: #fff !important;
+  box-shadow: 0 22px 40px rgba(179, 188, 201, 0.1882352941) !important;
   position: fixed;
   max-width: 500px;
   height: -moz-fit-content;
@@ -340,14 +229,18 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  top: 0;
+  top: 14px;
   left: 0;
   bottom: 0;
   margin: auto;
-  z-index: 1;
+  z-index: 222;
   padding: 16px 0;
   border-radius: 10px;
   right: 0;
+  min-height: 80%;
+  overflow: auto;
+  max-height: 271px;
+  margin: auto;
 
   .headerTitle{
     width: 100%;
@@ -384,9 +277,10 @@
       align-items: flex-start;
       width: 90%;
       flex-direction: column;
-      margin: auto auto 14px;
-      min-height: 82px;
+      margin: auto;
+      height: fit-content;
       gap: 10px;
+      margin-bottom: 14px;
 
       label{
         font-weight: bold;
@@ -410,37 +304,6 @@
         width: 98%;
 
       }
-
-      .container-icons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1em;
-        justify-content: center;
-        margin-bottom: 30px;
-
-        .item-icon{
-          width: 3em;
-          height: 3em;
-          border: 1px solid #ddd;
-          padding: 8px;
-          border-radius: 8px;
-          cursor: pointer;
-
-          img {
-            filter: grayscale(1);
-          }
-
-          &.selected{
-            background: #f7fcff;
-            border: 1px solid #0075ff;
-
-            img {
-              filter: unset;
-            }
-        
-          }
-        }
-      }
     }
     .buttons{
       
@@ -453,15 +316,16 @@
     }
   }
 }
-//**** add keyword *****//
 #darkcreateKeywordController{
   background: #00000052;
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 30;
   top: 0;
 }
+
+
 .imgclass{
   span{
     width: 100px;

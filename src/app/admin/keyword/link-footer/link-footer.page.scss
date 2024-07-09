@@ -2,6 +2,12 @@
   background: #FAFAFA;
   width: 100%;
   height: 100%;
+  padding-top: 100px;
+  th{
+    background: #55abdd !important;
+    color: #fff !important;
+  }
+  input{background-color: #fff; color: #000;}
 
   .container-general{
     display: flex;
@@ -15,7 +21,13 @@
     margin: auto;
     width: 1440px;
      
-   
+      ion-icon{
+        margin-right: 20px;
+        margin-left: 8px;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+      }
       .title{
         width: 100%;
         text-align: center;
@@ -146,14 +158,16 @@
         }
 
         .edit {
-            text-align: center;
-            color: var(--ion-color-success);
-        }
+          text-align: center;
+         
+          color: #16c916;
+      }
 
-        .delete {
-            text-align: center;
-            color: var(--ion-color-danger);
-        }
+      .delete {
+          text-align: center;
+          color: #b33232;
+      }
+
 
         ion-icon{
             font-size: 18px;
@@ -187,29 +201,31 @@
     }
   }
   #createKeywordController {
-    width: 40%;
-    background-color: #fff;
+    width: 100%;
     color: #000;
     justify-content: space-around;
-    background: #fff!important;
-    box-shadow: 0 22px 40px #b3bcc930!important;
+    background: #fff !important;
+    box-shadow: 0 22px 40px rgba(179, 188, 201, 0.1882352941) !important;
     position: fixed;
-    width: 47%;
+    max-width: 500px;
+    height: -moz-fit-content;
     height: fit-content;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    top: 0;
-    bottom: 0;
+    top: 14px;
     left: 0;
-    right: 0;
+    bottom: 0;
     margin: auto;
-    z-index: 1;
+    z-index: 222;
     padding: 16px 0;
     border-radius: 10px;
-    max-height: 95%;
+    right: 0;
+    min-height: 80%;
     overflow: auto;
+    max-height: 271px;
+    margin: auto;
 
     .headerTitle{
       width: 100%;
@@ -247,7 +263,7 @@
         width: 90%;
         flex-direction: column;
         margin: auto;
-        height: 82px;
+        height: fit-content;
         gap: 10px;
         margin-bottom: 14px;
 
@@ -285,15 +301,17 @@
       }
     }
   }
-  //**** add keyword *****//
   #darkcreateKeywordController{
     background: #00000052;
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 30;
     top: 0;
   }
+  
+  
 
 }
+
 

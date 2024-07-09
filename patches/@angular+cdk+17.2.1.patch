@@ -1,0 +1,13 @@
+diff --git a/node_modules/@angular/cdk/fesm2022/platform.mjs b/node_modules/@angular/cdk/fesm2022/platform.mjs
+index 2d8cdca..62099db 100755
+--- a/node_modules/@angular/cdk/fesm2022/platform.mjs
++++ b/node_modules/@angular/cdk/fesm2022/platform.mjs
+@@ -201,7 +201,7 @@ function supportsScrollBehavior() {
+             return scrollBehaviorSupported;
+         }
+         // If the element can have a `scrollBehavior` style, we can be sure that it's supported.
+-        if ('scrollBehavior' in document.documentElement.style) {
++        if (isPlatformBrowser(PLATFORM_ID) && 'scrollBehavior' in document.documentElement.style) {
+             scrollBehaviorSupported = true;
+         }
+         else {

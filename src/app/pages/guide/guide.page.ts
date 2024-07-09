@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { ChatMessage, UserInfo, ChatService, Pages } from 'src/app/services/chat.service';
-import { NavParams, ModalController, IonSlides } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
-
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { UtilitiesService } from './../../services/utilities.service';
+import { ChatMessage, UserInfo, ChatService, Pages } from './../../services/chat.service';
+import { ApiService } from './../../services/api.service';
+import { ModalController } from '@ionic/angular/standalone';
+import { getDocument, getWindow } from 'ssr-window';
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-guide',
   templateUrl: './guide.page.html',
   styleUrls: ['./guide.page.scss'],
 })
-export class GuidePage implements OnInit {
+export class GuidePage implements OnInit, OnDestroy {
 
-  @ViewChild("chatContent", {static: false}) chatContent: ElementRef;
-  @ViewChild(IonSlides, {static: true}) slides: IonSlides;
+  @ViewChild("chatContent", {static: false}) chatContent: ElementRef | undefined;
   public events: any;
   msgList: ChatMessage[] = [];
-  user: UserInfo;
+  user: UserInfo | undefined;
   toUser: UserInfo;
   pages: Pages[] = [];
   noShowCheckbox: boolean = false;
@@ -31,13 +31,13 @@ export class GuidePage implements OnInit {
   constructor( private utilities: UtilitiesService,
                private api: ApiService,
                private chatService: ChatService,
-               public navParams: NavParams,
+               @Inject(PLATFORM_ID) private platformId: Object,
                private modalCtrl: ModalController) { 
     
     // Get the navParams toUserId parameter
     this.toUser = {
       id: '210000198410281948',
-      name: navParams.get('toUserName')
+      name: 'Febelink'
     };
     // Get mock user information
     this.chatService.getUserInfo()
@@ -48,14 +48,6 @@ export class GuidePage implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  ionViewDidLoad() {
-    // unsubscribe
-    this.events.unsubscribe();
-  }
-
-  ionViewDidEnter() {
 
     //Get profile
     this.obtenerPerfil();
@@ -65,15 +57,19 @@ export class GuidePage implements OnInit {
     this.getMsg();
     // Subscribe to received  new message events
     //this.events = this.chatService.chatReceived().subscribe(msg => this.pushNewMsg(msg));
-
   }
 
+  ngOnDestroy(): void {
+     // unsubscribe
+    //  this.events.unsubscribe();
+  }
+  
   /**
    * @name pushNewMsg
    * @param msg
    */
   pushNewMsg(msg: ChatMessage) {
-    const userId = this.user.id,
+    const userId = this.user?.id,
       toUserId = this.toUser.id;
     // Verify user relationships
     if (msg.userId === userId && msg.toUserId === toUserId) {
@@ -126,7 +122,6 @@ export class GuidePage implements OnInit {
     .getMsgList()
     .subscribe(res => {
 
-      console.log("MESSGES",res);
 
       this.msgList.push(res[0]);
 
@@ -144,7 +139,10 @@ export class GuidePage implements OnInit {
       }, 6000);
       setTimeout(() => {
         this.showLogo = true;
-        this.logoHeight = window.innerHeight - this.chatContent.nativeElement.offsetHeight - 112;
+        if ( isPlatformBrowser(this.platformId) ) {
+        
+        this.logoHeight = window.innerHeight - this.chatContent?.nativeElement.offsetHeight - 112;
+        }
       }, 7500);
 
     });
@@ -155,7 +153,8 @@ export class GuidePage implements OnInit {
    * Close modal
    */
   public closeModal(): void {
-    this.modalCtrl.dismiss();
+
+    // this.modalCtrl.dismiss();
   }
 
   closeDescription() {
@@ -165,7 +164,7 @@ export class GuidePage implements OnInit {
   async slideChanged() {
 
     this.opacity = false;
-    this.currentIndex = await this.slides.getActiveIndex();
+    // this.currentIndex = await this.slides.getActiveIndex();
     this.title = this.pages[this.currentIndex].name;
     this.titleIcon = this.pages[this.currentIndex].icon;
     console.log('Current index is', this.currentIndex);
@@ -179,11 +178,11 @@ export class GuidePage implements OnInit {
   }
 
   async forward() {
-    this.slides.slideTo( await this.slides.getActiveIndex() + 1, 500);
+    // this.slides.slideTo( await this.slides.getActiveIndex() + 1, 500);
   }
 
   async back() {
-    this.slides.slideTo( await this.slides.getActiveIndex() - 1, 500);
+    // this.slides.slideTo( await this.slides.getActiveIndex() - 1, 500);
   }
 
   async noShowAgaing() {
@@ -192,7 +191,7 @@ export class GuidePage implements OnInit {
 
     if(this.guideChecked) {
 
-      (await this.api.noShowAgain(null)).subscribe( res => {
+      (await this.api.noShowAgain(null)).subscribe( (res: any )=> {
 
         console.log("SAVE GUIDE",res.actualizado);
         this.utilities.saveUserData(res.actualizado);

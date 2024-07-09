@@ -28,11 +28,12 @@
 </ion-content>
 
 <ion-footer no-border>
-  <ion-toolbar *ngIf="buttons?.length > 0" class="tx-center">
+  <ion-toolbar *ngIf="buttons && buttons.length > 0" class="tx- center">
+
     <ion-button  *ngFor="let button of buttons"
-      [class]="button?.css || ''"
+      [class]="button.css || ''"
       (click)="onButtonClick( button )"
-      [innerHTML]="button?.text | translate"
+      [innerHTML]="button.text | translate"
     ></ion-button>
   </ion-toolbar>
 </ion-footer>

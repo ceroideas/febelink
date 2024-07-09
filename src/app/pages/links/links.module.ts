@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { InterestingLinksRoutingModule } from './links-routing.module';
 import { InterestingLinksPage } from './links.page';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [SharedModule, IonicModule, InterestingLinksRoutingModule],

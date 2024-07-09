@@ -32,13 +32,8 @@
         height: 100%;
         object-fit: cover;
         position: absolute;
-        opacity: 0;
-        transition: opacity 100ms ease-out;
+        opacity: 0.1;
         z-index: 1;
-        &.loaded {
-          opacity: 0.05;
-        }
-        
       }
       .eclipse{
         width: 226px;
@@ -291,9 +286,7 @@
         }
       }
     }
-    .container-body{
-    
-    }
+   
     .section2{
       width: 100%;
       max-width: 1400px;
@@ -1004,7 +997,7 @@
 
 
     #benefits {
-      background: black url("~src/assets/imgs/home/benefits-assistant.jpeg") no-repeat fixed;
+      background: black url("/assets/imgs/home/benefits-assistant.jpeg") no-repeat fixed;
       color: white;
       background-size: cover;
       text-align: center;

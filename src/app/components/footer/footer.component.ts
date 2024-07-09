@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { KeywordService } from 'src/app/admin/keyword/services/keyword.service';
-import { LegalDisclaimerPage } from 'src/app/pages/legal-disclaimer/legal-disclaimer.page';
-import { TermsPage } from 'src/app/pages/terms/terms.page';
+import { KeywordService } from './../../admin/keyword/services/keyword.service';
+import { LegalDisclaimerPage } from './../../pages/legal-disclaimer/legal-disclaimer.page';
+import { TermsPage } from './../../pages/terms/terms.page';
+import { IHttpService } from '../../services/http.service';
+import { Keywords } from '../../interfaces/keywords';
+import { Link } from '../../interfaces/link';
 
 @Component({
   selector: 'app-footer',
@@ -12,13 +16,25 @@ import { TermsPage } from 'src/app/pages/terms/terms.page';
 })
 export class FooterComponent implements OnInit{
   currentYear = new Date().getFullYear();
-  footerLinks: any = []
-  constructor(  private keywordService: KeywordService,private modalCtrl: ModalController) {}
+  footerLinks: Link[] = []
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private keywordService: KeywordService,
+    private modalCtrl: ModalController,
+  ) {}
 
 
-  async ngOnInit(): Promise<void> {
-    const {response} = await this.keywordService.getData();
-    this. footerLinks = response.links;
+  async ngOnInit() {
+    this.keywordService.getData().then((data: IHttpService) => {
+      this.footerLinks = (data.response as Keywords).links;
+    });
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.keywordService.getData(false).then((data: IHttpService) => {
+        this.footerLinks = (data.response as Keywords).links;
+      });
+    }
   }
 
 

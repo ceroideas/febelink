@@ -7,9 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { UpdatePasswordPageRoutingModule } from './update-password-routing.module';
 
 import { UpdatePasswordPage } from './update-password.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { ComponentsModule } from '../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [UpdatePasswordPage],
@@ -17,10 +17,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule,
     UpdatePasswordPageRoutingModule,
     ComponentsModule,
-    TranslateModule.forChild(),
     SharedModule,
   ],
   exports: [TranslateModule],

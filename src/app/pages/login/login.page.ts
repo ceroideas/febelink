@@ -1,13 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormGroup, UntypedFormBuilder, Validators} from '@angular/forms';
-import {ApiService} from 'src/app/services/api.service';
-import {UtilitiesService} from 'src/app/services/utilities.service';
+import {ApiService} from '../../services/api.service';
+import {UtilitiesService} from '../../services/utilities.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadingController, ModalController, Platform} from '@ionic/angular';
-import {OlvidarContrasenaPage} from '../olvidar-contrasena/olvidar-contrasena.page';
-import {ILang, ILangDEFAULTS} from 'src/app/models/langs.model';
-import {TranslateConfigService} from 'src/app/services/translate/translate-config.service';
-import {environment} from 'src/environments/environment';
+import {OlvidarContrasenaComponent} from '../olvidar-contrasena/olvidar-contrasena.component';
+import {ILang, ILangDEFAULTS} from '../../models/langs.model';
+import {TranslateConfigService} from '../../services/translate/translate-config.service';
+import { environment } from '../../../environments/environment';
+import { SeoService } from '../../services/seo.service';
+import { Title } from '@angular/platform-browser';
+// import {environment} from 'src/environments/environment';
+
+
+const GENERAL_TITLE = 'Febelink | Ofertas de servicios profesionales';
+const GENERAL_DESC = 'Iniciar sesión en Febelink, el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +22,14 @@ import {environment} from 'src/environments/environment';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  form: UntypedFormGroup;
+  form: UntypedFormGroup | undefined;
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
 
-  redirect: string;
+  redirect: string | null = null;
 
+  defaultTitle = 'Iniciar sesión';
+  generalTitle = this.defaultTitle;
   constructor(
     private formBuilder: UntypedFormBuilder,
     private api: ApiService,
@@ -30,17 +39,24 @@ export class LoginPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateConfigService,
-    public platform: Platform
+    public platform: Platform,
+    private seoService: SeoService,
+    private title: Title,
   ) {
   }
 
   ngOnInit() {
     this.loginImplicito();
+    
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
+
+    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+    this.title.setTitle(this.defaultTitle);
+
   }
 
   async submitForm() {
@@ -51,13 +67,15 @@ export class LoginPage implements OnInit {
     )).lang;
 
     const formData = new FormData();
-    formData.append('email', this.form.get('email').value);
-    formData.append('password', this.form.get('password').value);
+    formData.append('email', this.form?.get('email')?.value);
+    formData.append('password', this.form?.get('password')?.value);
     formData.append('remember_me', '1');
     formData.append('lang', lang);
 
+    //@ts-ignore
     this.api.login(formData, 'login', null, this.redirect).subscribe(
       (res) => {
+     
         this.utilities.dismissLoading();
       },
       (err) => {
@@ -95,7 +113,7 @@ export class LoginPage implements OnInit {
    */
   async openModal() {
     const profileModal = await this.modalCtrl.create({
-      component: OlvidarContrasenaPage,
+      component: OlvidarContrasenaComponent,
     });
     return await profileModal.present();
   }

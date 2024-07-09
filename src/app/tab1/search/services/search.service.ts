@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {IKeywords} from '../models/search.model';
 import {HttpService} from '../../../services/http.service';
-import {ProfessionType} from '../../../pages/cuenta-profesional/cuenta-profesional.page';
-import {Subject} from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +13,20 @@ export class SearchService {
   public visibleListas: boolean = true;
   public listaSearchDesktop: boolean = false;
   private dataLists = null;
-  private iKeyWords: IKeywords;
+  private iKeyWords: IKeywords | null = null;
   public isLoading: boolean = false;
   public show_imagen: boolean = true;
   public show_detalle: boolean = false;
   public dataDesktopDetail = null;
 
-  locationFilter: string;
-  metaLocationFilter: string;
-  sectorFilter: string;
+  locationFilter: string  | null = null
+  metaLocationFilter: string | null = null
+  sectorFilter: string | null = null
 
-  constructor(private http: HttpService) {
+  constructor(
+    private http: HttpService,
+    private httpClient: HttpClient
+  ) {
   }
 
 
@@ -93,26 +96,35 @@ export class SearchService {
 
   getResult() {
     if (this.dataLists != null) {
+      //@ts-ignore
       return this.dataLists.data.results;
     }
   }
 
   getOffers() {
     if (this.dataLists != null) {
-      return this.dataLists.data.offers;
+      //@ts-ignore
+
+      return this.dataLists.data?.offers;
     }
   }
 
   getList() {
     if (this.dataLists != null) {
-      return this.dataLists.data.list;
+      //@ts-ignore
+
+      return this.dataLists.data?.list;
     }
   }
 
   searchText(text?: string): string {
     if (text != undefined) {
+      //@ts-ignore
+
       this.iKeyWords.searchText = text;
     }
+      //@ts-ignore
+
     return this.iKeyWords?.searchText;
   }
 
@@ -124,6 +136,27 @@ export class SearchService {
 
   async getProfessionsByFilter(filterTerm: string) {
     return this.http.post('collections/profession/filter', {filterTerm});
+  }
+
+  async doofinderSearch(searchTerm: string, transferCache: boolean = false) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Token ${environment.DOOFINDER_API_KEY}`,
+      }),
+      transferCache: transferCache
+    };
+
+    return new Promise((resolve, reject) => {
+      this.httpClient.get(`${environment.DOOFINDER_BASE_URL}${environment.DOOFINDER_HASHID}/_search?query=${searchTerm}&rpp=1000`, httpOptions)
+      .subscribe(
+        (data) => {
+          resolve(data);
+        },
+        (error) => {
+          reject(error);
+        }
+      )
+    })
   }
 
   async getRecommendations() {
@@ -145,9 +178,6 @@ export class SearchService {
   async getProductDetail(productId: number) {
     return this.http.get('product/detail/' + productId);
   }
-
-
-
 
   async registerClick(data: any) {
 

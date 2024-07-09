@@ -3,9 +3,10 @@
     <div class="table-100">
       <app-user-item
         class="no-padding"
-        [id]="iAdvise?.uid"
+        [id]="iAdvise?.uid ?? -1"
         [user]="iAdvise"
-        [subtitle]="iAdvise?.created_at | dateFormat : dateFormatType.DateTime"
+        [subtitle]="(iAdvise?.created_at || '')"
+
         [OnClickShowProfile]="true"
       ></app-user-item>
       <div class="cell-dots-top">
@@ -42,7 +43,7 @@
           *ngIf="
           isPostVisible &&
           iAdvise.media_url &&
-          fileSvc.isImage(iAdvise.media_ext)
+          (iAdvise.media_ext !== undefined && fileSvc.isImage(iAdvise.media_ext))
         "
         ></ion-img>
 
@@ -50,7 +51,8 @@
         <video
           playsinline
           controls
-          *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
+         
+          *ngIf=" (iAdvise.media_ext !== undefined && fileSvc.isVideo(iAdvise.media_ext))"
           class="w-social-media h-social-media media-video media"
           [src]="iAdvise.media_url + '#t=0.001'"
           preload="metadata"
@@ -69,15 +71,17 @@
     </ion-row>
     <div class="post-main-reactions">
       <div class="post-main-reactions-left">
-        <span *ngIf="iAdvise.react_qant > 0">{{ iAdvise.react_qant }} </span
-        ><span *ngIf="!(iAdvise.react_qant > 0)">0 </span>
+        <span *ngIf="iAdvise?.react_qant ?? 0 > 0">{{ iAdvise.react_qant }} </span
+        ><span *ngIf="!(iAdvise?.react_qant ?? 0 > 0)">0 </span>
+
         <span *ngIf="iAdvise.react_qant == 1">Reacción</span
         ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
       </div>
       <div class="post-main-reactions-right">
-        <span *ngIf="iAdvise.comments_qant > 0"
+        <span *ngIf="iAdvise?.react_qant ?? 0 > 0"
+
         >{{ iAdvise.comments_qant }} </span
-        ><span *ngIf="!(iAdvise.comments_qant > 0)">0 </span>
+        ><span *ngIf="!(iAdvise?.react_qant ?? 0 > 0)">0 </span>
         <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
         ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
       </div>
@@ -106,9 +110,10 @@
       <app-user-item
         class="no-padding"
         style="width: 95%; display: block"
-        [id]="iAdvise?.uid"
+        [id]="iAdvise?.uid ?? -1"
         [user]="iAdvise"
-        [subtitle]="iAdvise?.created_at | dateFormat : dateFormatType.DateTime"
+        [subtitle]="(iAdvise?.created_at || '')"
+
         [OnClickShowProfile]="true"
       ></app-user-item>
       <div class="cell-dots-top-b">
@@ -144,7 +149,8 @@
           *ngIf="
           isPostVisible &&
           iAdvise.media_url &&
-          fileSvc.isImage(iAdvise.media_ext)
+          (iAdvise.media_ext !== undefined && fileSvc.isVideo(iAdvise.media_ext))
+
         "
         ></ion-img>
 
@@ -152,7 +158,7 @@
         <video
           playsinline
           controls
-          *ngIf="fileSvc.isVideo(iAdvise.media_ext)"
+          *ngIf="(iAdvise.media_ext !== undefined && fileSvc.isVideo(iAdvise.media_ext))"
           class="w-social-media h-social-media media-video media"
           [src]="iAdvise.media_url + '#t=0.001'"
           preload="metadata"
@@ -171,15 +177,15 @@
     </ion-row>
     <div class="post-main-reactions-b">
       <div class="post-main-reactions-left">
-        <span *ngIf="iAdvise.react_qant > 0">{{ iAdvise.react_qant }} </span
-        ><span *ngIf="!(iAdvise.react_qant > 0)">0 </span>
+        <span *ngIf="iAdvise?.react_qant ?? 0 > 0">{{ iAdvise.react_qant }} </span
+        ><span *ngIf="!(iAdvise?.react_qant ?? 0 > 0)">0 </span>
         <span *ngIf="iAdvise.react_qant == 1">Reacción</span
         ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
       </div>
       <div class="post-main-reactions-right">
-        <span *ngIf="iAdvise.comments_qant > 0"
+        <span *ngIf="iAdvise?.comments_qant ?? 0 > 0"
         >{{ iAdvise.comments_qant }} </span
-        ><span *ngIf="!(iAdvise.comments_qant > 0)">0 </span>
+        ><span *ngIf="!(iAdvise?.comments_qant ?? 0 > 0)">0 </span>
         <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
         ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
       </div>

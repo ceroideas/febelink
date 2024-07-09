@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserDataPersonalPageRoutingModule } from './user-data-personal-routing.module';
 
 import { UserDataPersonalPage } from './user-data-personal.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [

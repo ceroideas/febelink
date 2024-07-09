@@ -1,7 +1,11 @@
 <div class="slider-item">
   <div class="animation-card_image">
-      <img *ngIf="!data?.imageURL" rc="assets/icon/svg/default_product.svg" alt="">
-      <img *ngIf="data?.imageURL" [src]="data?.imageURL"  alt="">
+    
+      <img *ngIf="!data?.imageURL" src="assets/icon/svg/default_product.svg" alt="">
+      
+      <img *ngIf="data?.imageURL" 
+      [src]="urlWsrv + data?.imageURL +'&w=1600&output=webp'"
+      alt="">
   </div>
   <div class="animation-card_content">
       <h4 class="animation-card_content_title title-2">{{data?.title}}</h4>

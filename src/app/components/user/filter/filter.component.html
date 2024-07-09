@@ -39,7 +39,7 @@
   class="ion-no-border ion-text-center desktop"
   no-border
   color="transparent"
-  *ngIf="pagination?.qPages > 1"
+  *ngIf="pagination && pagination.qPages && pagination.qPages > 1"
 >
   <ion-toolbar color="febelink">
     <!-- Pagination Bottom -->

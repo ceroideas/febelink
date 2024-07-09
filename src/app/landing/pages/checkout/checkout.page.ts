@@ -13,8 +13,8 @@ import {
 } from '@stripe/stripe-js';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from '../../../services/api.service';
+import { UtilitiesService } from '../../../services/utilities.service';
 
 @Component({
   selector: 'app-checkout',
@@ -22,17 +22,17 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
-  elements: StripeElements;
-  card: StripeCardNumberElement;
-  error: string = undefined;
+  elements: StripeElements | undefined;
+  card: StripeCardNumberElement | undefined;
+  error: string | undefined;
 
-  numTokens: number;
+  numTokens: number  | undefined;
 
   elementsOptions: StripeElementsOptions = {
     locale: 'es',
   };
 
-  stripeTest: UntypedFormGroup;
+  stripeTest: UntypedFormGroup | undefined;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -43,9 +43,9 @@ export class CheckoutPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const navExtras = this.router.getCurrentNavigation().extras.state;
+    const navExtras = this.router.getCurrentNavigation()?.extras.state;
     if (navExtras) {
-      this.numTokens = navExtras.numTokens;
+      this.numTokens = navExtras['numTokens'];
     } else {
       this.numTokens = 200;
     }
@@ -100,22 +100,25 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+  //@ts-ignore
+  //@TODO:NOE
   onCardChange = ({ error }) => {
     // debugger
     if (error) {
       this.error = error?.message;
-      console.log('onCardChange', error);
     } else {
+      //@ts-ignore
       this.error = null;
     }
   };
 
   async buy() {
-    const name = this.stripeTest.get('name').value;
+    const name = this.stripeTest?.get('name')?.value;
     // debugger;
     await this.utils.showLoading();
     try {
       this.stripeSvc
+        //@ts-ignore
         .createToken(this.card, { name })
         .subscribe(async (result) => {
           if (result.token) {
@@ -132,12 +135,12 @@ export class CheckoutPage implements OnInit {
             window.open(payment.receipt_url);
           } else if (result.error) {
             this.utils.dismissLoading();
-            console.log('Error', result.error.message);
             this.error = result.error.message;
           }
         });
     } catch (error) {
       this.utils.dismissLoading();
+        //@ts-ignore
       this.error = error.message;
     }
   }

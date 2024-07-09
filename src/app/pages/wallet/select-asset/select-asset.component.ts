@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as Currency from 'src/app/models/wallet/currency.model';
+import * as Currency from '../../../models/wallet/currency.model';
 import { PopoverController } from '@ionic/angular';
-import { ToastSvc } from 'src/app/services/toast.service';
+import { ToastSvc } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-select-asset',
@@ -10,7 +10,7 @@ import { ToastSvc } from 'src/app/services/toast.service';
 })
 export class SelectAssetComponent implements OnInit {
 
-  @Input() except: Currency.CryptoCurrencyType;
+  @Input() except: Currency.CryptoCurrencyType | undefined;
   @Input() assetTypes: Currency.CryptoCurrency[] = Currency.AssetTypes;
 
   constructor(

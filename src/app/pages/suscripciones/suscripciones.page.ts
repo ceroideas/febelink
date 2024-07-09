@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, AlertController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
+import { UserService } from '../../services/user.service';
+import { MailService } from '../../services/mail.service';
+import { ReportService } from '../../services/report.service';
 import { SubscriptionService } from './Services/subscription.service';
 
 export enum SubscriptionType {
   PRO = 'sub-pro',
+  SUPERPRO = 'superpro',
   PLUS = 'sub-plus',
   PROF = 'sub-prof',
   RANGE_REGION = 'sub-range-region',
@@ -23,7 +24,7 @@ export interface Subscription {
   templateUrl: './suscripciones.page.html',
   styleUrls: ['./suscripciones.page.scss'],
 })
-export class SuscripcionesPage implements OnInit {
+export class SuscripcionesPage {
   suscriptionChange: boolean = false;
 
   proUser: boolean = false;
@@ -53,12 +54,11 @@ export class SuscripcionesPage implements OnInit {
     }
   }
 
-  async subscribe(subscriptionName, amount) {
+  async subscribe(subscriptionName: any, amount: any) {
     const { response } = await this.subService.getSubscriptionLink({
       subscriptionName,
       amount,
     });
-
     if (typeof response === 'string') {
       window.location.href = response;
     } else {

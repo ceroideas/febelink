@@ -48,7 +48,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       }  
   }
 
-  update( response ) {
+  update( response: any ) {
     this.totalRecords = response?.totalRecords;
     this.recordsPerPage = response?.limit;
     this.qPages = response?.qPages;

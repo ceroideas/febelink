@@ -13,7 +13,7 @@
   }
   .lista_footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
   }
   .logo {
     width: 114px;
@@ -77,4 +77,12 @@ ion-router-link {
 #footer-desktop {
   border-top: 1px solid #ebebeb;
   background-color: white;
+}
+
+#footer-desktop{
+  display: block !important;
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+
 }

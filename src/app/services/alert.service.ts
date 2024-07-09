@@ -62,7 +62,7 @@ export class AlertSvc {
       });
     }
 
-    private translate( params ) {
+    private translate( params:any ) {
       params.title = !params.title ? null : this.translateSvc.instant( params.title, params.titleParams || [] );
       params.message = !params.message ? null : this.translateSvc.instant( params.message, params.msgParams || [] );
       params.msg = !params.msg ? null : this.translateSvc.instant( params.msg, params.msgParams || [] );

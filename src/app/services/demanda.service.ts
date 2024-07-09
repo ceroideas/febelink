@@ -14,7 +14,7 @@ export class DemandaService {
     private translateService: TranslateService
   ) { }
 
-  async addToFavorites(demand):Promise<void> {
+  async addToFavorites(demand: any):Promise<void> {
     let p = {
       id: demand.id,
     };

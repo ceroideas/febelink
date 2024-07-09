@@ -1,7 +1,12 @@
-ion-content {
-  --background: #F9FAFB;
+:host{
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 70px;
+  overflow: auto;
+  color: black;
 }
-
 .passwordIcon {
   color: var(--ion-color-dark);
   font-size: 1rem !important;
@@ -33,13 +38,13 @@ ion-content {
   width:100%;display:table;height:64px;padding:0px 12px;background: #FFFFFF;border-bottom: 1px solid #EDEDED;
 }
 .login-header-left {
-  display:table-cell;vertical-align:middle;text-align:left;
+  display:flex;vertical-align:middle;text-align:left;
 }
 .login-header-logo {
   width:96px;margin-top:6px;
 }
 .login-header-right {
-  display:table-cell;vertical-align:middle;text-align:right;
+  display:flex;vertical-align:middle;text-align:right;
 }
 .login-lang-item {
   --background: #F9FAFB;border: 1px solid #D1D5DB;border-radius: 8px;font-weight: 400;font-size: 14px;line-height: 150%;color: #111928;display:inline-flex;height:43px;width:75px;padding-top:2px;vertical-align: middle;
@@ -81,13 +86,13 @@ ion-content {
   font-size:14px;font-weight:400px;line-height:125%;background: #F9FAFB;border: 1px solid #D1D5DB;border-radius: 8px;
 }
 .login-options-table {
-  display:table;width:100%;margin-bottom:15px;
+  display:flex;width:100%;margin-bottom:15px;
 }
 .login-options-left {
-  display:table-cell;vertical-align:top;text-align:left;
+  display:flex;vertical-align:top;text-align:left;
 }
 .login-options-right {
-  display:table-cell;vertical-align:top;text-align:right;
+  display:flex;vertical-align:top;text-align:right;
 }
 .login-checkbox {
   --border-radius: 4px;width: 16px;height: 16px;--background: #F9FAFB;

@@ -1,19 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, Platform, PopoverController } from '@ionic/angular';
-import { SharePopoverComponent } from 'src/app/components/share-popover/share-popover.component';
-import { IUser } from 'src/app/models/user.model';
-import { GuidePage } from 'src/app/pages/guide/guide.page';
-import { environment } from 'src/environments/environment';
+import { SharePopoverComponent } from './../../../components/share-popover/share-popover.component';
+import { IUser } from './../../../models/user.model';
+import { GuidePage } from './../../../pages/guide/guide.page';
+import { environment } from './../../../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { ApiService } from 'src/app/services/api.service';
+// import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { UtilitiesService } from './../../../services/utilities.service';
+import { NotificationService } from './../../../services/notification.service';
+import { ApiService } from './../../../services/api.service';
 import { filter } from 'rxjs/operators';
-import { YouTubePopComponent } from 'src/app/components/youtube/popover/pop.component';
+import { YouTubePopComponent } from './../../../components/youtube/popover/pop.component';
 import { CartServiceShow } from '../../../services/cart.service';
-import { SeoService } from 'src/app/services/seo.service';
+import { SeoService } from './../../../services/seo.service';
 
 const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
 const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
@@ -28,12 +28,21 @@ const GENERAL_DESC_ORACULO = 'Trucos y consejos de servicios profesionales. El l
   styleUrls: ['./header-buttons.component.scss'],
 })
 export class HeaderButtonsComponent implements OnInit {
+  //@ts-ignore
+
   @Input() perfil: IUser;
+  //@ts-ignore
   @Input() currentTab: Tabs;
+  //@ts-ignore
+
   @Input() currentUser: IUser;
 
   tabs = Tabs;
+  //@ts-ignore
+
   notifCount: number;
+  //@ts-ignore
+
   totalUnreadMessages: number;
 
   homePage: string = environment.HOME_PAGE;
@@ -43,7 +52,7 @@ export class HeaderButtonsComponent implements OnInit {
     private api: ApiService,
     private router: Router,
     private platform: Platform,
-    private socialSharing: SocialSharing,
+    // private socialSharing: SocialSharing,
     public popoverController: PopoverController,
     private translateService: TranslateService,
     private utilities: UtilitiesService,
@@ -137,7 +146,7 @@ export class HeaderButtonsComponent implements OnInit {
    * Share Native ( Android/iOS)
    */
   public shareNative(url: string, message: string, image?: string) {
-    this.socialSharing.share(message, message, image, url);
+    // this.socialSharing.share(message, message, image, url);
   }
 
   /**

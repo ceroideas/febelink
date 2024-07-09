@@ -1,4 +1,4 @@
-import {SeoService} from 'src/app/services/seo.service';
+import {SeoService} from '../../../../services/seo.service';
 import {AdviseService} from './../services/advises.service';
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,8 +12,8 @@ const GENERAL_TITLE = 'Feed Oráculo | Febelink ¿Qué necesitas?';
   styleUrls: ['./advise.page.scss'],
 })
 export class AdvisePage implements OnInit {
-  @Input() id: number;
-  @Input() iAdvise: IAdviseFull;
+  @Input() id: number | null = null;
+  @Input() iAdvise: IAdviseFull| null = null
 
   isLoading: boolean = false;
 

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NotificationsLogPageRoutingModule } from './notifications-log-routing.module';
 
 import { NotificationsLogPage } from './notifications-log.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [

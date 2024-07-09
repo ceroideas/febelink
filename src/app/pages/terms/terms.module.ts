@@ -8,12 +8,14 @@ import { TermsPageRoutingModule } from './terms-routing.module';
 
 import { TermsPage } from './terms.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     TermsPageRoutingModule,
     TranslateModule.forChild(),
   ],

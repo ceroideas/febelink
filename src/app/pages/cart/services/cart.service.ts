@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpService, IHttpService} from 'src/app/services/http.service';
+import {HttpService, IHttpService} from '../../../services/http.service';
 import {AuthenticationService} from '../../../services/authentication/authentication.service';
 import {Subject} from 'rxjs';
 import {CartServiceShow} from '../../../services/cart.service';
@@ -18,7 +18,7 @@ export class CartService {
   ) {
   }
 
-  setActiveCart(newCartState) {
+  setActiveCart(newCartState: any) {
     this.activeCart.next(newCartState);
     this.cartServiceShow.isToggleCart = true;
   }
@@ -32,7 +32,7 @@ export class CartService {
     return this.http.get('getFindServices');
   }
   // To Get Active Cart
-  async getFindService(id): Promise<IHttpService> {
+  async getFindService(id: any): Promise<IHttpService> {
     return this.http.get('getFindService/'+id);
   }
   
@@ -66,7 +66,7 @@ export class CartService {
     });
   }
 
-  async addProductToActiveCart(productId, productAmount) {
+  async addProductToActiveCart(productId: any, productAmount: any) {
     return this.http.post(this.authenticationService.isAuthenticated() ? 'cart/add' : 'cart/guest/add', {productId, productAmount});
   }
 }

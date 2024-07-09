@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from './../../services/api.service';
+import { UtilitiesService } from './../../services/utilities.service';
 import { StripeService } from 'ngx-stripe';
 import { StripeElementsOptions, StripeElements } from '@stripe/stripe-js';
 import { ModalController } from '@ionic/angular';
@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { Subscription } from 'src/app/models/subscription';
+import { Subscription } from './../../models/subscription';
 
 @Component({
   selector: 'app-suscribirse',
@@ -16,20 +16,20 @@ import { Subscription } from 'src/app/models/subscription';
   styleUrls: ['./suscribirse.page.scss'],
 })
 export class SuscribirsePage implements OnInit {
-  elements: StripeElements;
+  elements: StripeElements | undefined;
   // optional parameters
   elementsOptions: StripeElementsOptions = {
     locale: 'es',
   };
 
   card: any;
-  subscription: Subscription[];
-  selected: number;
+  subscription: Subscription[]  | undefined;
+  selected: number = 0;
   clicked: any = 0;
-  subscriptions: Subscription[];
+  subscriptions: Subscription[]  | undefined;;
   perfil: any;
   subscriptionDetails: Map<string, SubscriptionDetails> = new Map();
-  subscriptionChanged: boolean;
+  subscriptionChanged: boolean =false;
 
   constructor(
     private stripeService: StripeService,
@@ -48,19 +48,25 @@ export class SuscribirsePage implements OnInit {
       this.subscriptions = suscriptions;
       this.utilities.getUserSubscription().then(async (subscription) => {
         this.subscription = subscription;
-        if (this.subscription.length == 0) {
+        if (this.subscription?.length == 0) {
+          //@ts-ignore
           this.subscription = null;
-          this.myCurrentPlan = this.subscriptions.filter(
+          //@ts-ignore
+          this.myCurrentPlan = this.subscriptions?.filter(
             (s) => s.price === 0
           )[0];
         } else {
+          //@ts-ignore
           const stripePlan = this.subscription[0].stripe_plan;
-          this.myCurrentPlan = this.subscriptions.filter(
+          //@ts-ignore
+
+          this.myCurrentPlan = this.subscriptions?.filter(
             (s) => s.stripe_plan === stripePlan
           )[0];
         }
 
-        this.selected = this.myCurrentPlan.id;
+        //@ts-ignore
+        this.selected = this.myCurrentPlan?.id;
         // this.setupStripe();
         // console.log(this.selected);
       });
@@ -202,7 +208,7 @@ export class SuscribirsePage implements OnInit {
 
   // }
 
-  async openStripe(stripe_plan) {
+  async openStripe(stripe_plan: any) {
     this.selected = stripe_plan;
     console.log(this.selected);
   }
@@ -223,7 +229,8 @@ export class SuscribirsePage implements OnInit {
   async paySubscription(idSelectedSubscription: number) {
     console.log(idSelectedSubscription);
     await this.utilities.showLoading();
-    const myNewPlan: Subscription = this.subscriptions.filter(
+    //@ts-ignore
+    const myNewPlan: Subscription = this.subscriptions?.filter(
       (s) => s.id === idSelectedSubscription
     )[0];
     if (myNewPlan.price > 0) {
@@ -239,7 +246,7 @@ export class SuscribirsePage implements OnInit {
     } else {
       const checkout = await this.api.cancelSubscription();
       const subscriptionInfo: {
-        subscription;
+        subscription: any;
         subscription_details: Subscription;
       } = await this.api.getUserSusbcription();
       await this.utilities.saveUserSubscription(subscriptionInfo.subscription);
@@ -270,7 +277,7 @@ export class SuscribirsePage implements OnInit {
   async cancelSubscription() {
     this.utilities.showLoading();
 
-    (await this.api.cancelSubscription()).subscribe(async (response) => {
+    (await this.api.cancelSubscription()).subscribe(async (response: any) => {
       await this.utilities.saveUserSubscription(response.subscription);
       this.closeModal();
       this.utilities.dismissLoading();

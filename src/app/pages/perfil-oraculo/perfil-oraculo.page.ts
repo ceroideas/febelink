@@ -1,20 +1,22 @@
-import {ChatService} from 'src/app/services/chat.service';
+import {ChatService} from './../../services/chat.service';
 import {HttpClient} from '@angular/common/http';
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PopoverController, AlertController} from '@ionic/angular';
-import {FileService} from 'src/app/components/file-picker/services/file.service';
-import {MailService} from 'src/app/services/mail.service';
-import {ReportService} from 'src/app/services/report.service';
-import {RouteSvc} from 'src/app/services/route.service';
-import {environment} from 'src/environments/environment';
+import {FileService} from './../../components/file-picker/services/file.service';
+import {MailService} from './../../services/mail.service';
+import {ReportService} from './../../services/report.service';
+import {RouteSvc} from './../../services/route.service';
 import {IAdviseFull} from '../posts/advises/models/advises.model';
 import {AdviseService} from '../posts/advises/services/advises.service';
 import {UserDataService} from '../user-data/Services/user-data.service';
-import {Location} from '@angular/common';
-import { SearchService } from 'src/app/tab1/search/services/search.service';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserSessionSvc } from 'src/app/services/user-session.service';
+import {Location, isPlatformBrowser} from '@angular/common';
+import { SearchService } from './../../tab1/search/services/search.service';
+import { AuthenticationService } from './../../services/authentication/authentication.service';
+import { UserSessionSvc } from './../../services/user-session.service';
+import { environment } from '../../../environments/environment';
+
+import { toSlug } from '../../../utils/utils';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -22,6 +24,9 @@ import { UserSessionSvc } from 'src/app/services/user-session.service';
   styleUrls: ['./perfil-oraculo.page.scss'],
 })
 export class PerfilOraculoPage implements OnInit {
+
+  toSlug = toSlug;
+
   idPerfil: any;
   user: any;
   iAdvises: IAdviseFull[] = [];
@@ -30,12 +35,12 @@ export class PerfilOraculoPage implements OnInit {
   isFeed: boolean = true;
   isRatings: boolean = false;
   isBest: boolean = false;
-  postUser;
-  post;
+  postUser: any;
+  post: any;
   moreWorks: any = [];
   apiMetaTagUrl: string = `${environment.baseWebUrl}api/auth/meta-tags`;
   linksArray: string[] = [];
-
+  urlWsrv: string = environment.baseWebUrlWsrv;
   hideChat: boolean = false;
   topics = [
     {id: null, name: 'Todos'},
@@ -63,7 +68,7 @@ export class PerfilOraculoPage implements OnInit {
     {id: 22, name: 'Criptomonedas'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
   public detalle: any;
-  curUser
+  curUser: any;
   constructor(
     private route: ActivatedRoute,
     public popoverController: PopoverController,
@@ -82,11 +87,10 @@ export class PerfilOraculoPage implements OnInit {
     public authService: AuthenticationService, 
     public sessionSvc: UserSessionSvc,
     public cdref: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) public platformId: Object,
   ) {
     this.route.paramMap.subscribe((params) => {
       this.idPerfil = params.get('id');
-
-
     });
   }
 
@@ -94,7 +98,6 @@ export class PerfilOraculoPage implements OnInit {
   }
   async ngOnInit() {
     
-    this.getFeed();
     this.getUserDetail();
     
     this.getProductUser()
@@ -102,30 +105,33 @@ export class PerfilOraculoPage implements OnInit {
     this.bests = [];
     this.curUser = await this.sessionSvc.get();
    
-    if ( Number(this.curUser.id) == Number(this.idPerfil)) {
-      this.hideChat = true;
-    } else {
-      this.hideChat = false;
-    }
+    // if (this.curUser !== undefined &&  Number(this.curUser.id) == Number(this.idPerfil)) {
+    //   this.hideChat = true;
+    // } else {
+    //   this.hideChat = false;
+    // }
 
-    this.cdref.detectChanges();
+    // this.cdref.detectChanges();
     
   }
 
   async getUserDetail() {
-    const {response} = await this.userDataService.getUserDetail(
-      this.idPerfil
-    );
-    if (response) {
-      this.user = {
-        name: response.username,
-        description: response.description,
-        email: response.email,
-        phoneNumber: response.phoneNumber,
-        date: '12 April at 09.28 PM', // ToDo: Remove this hardcoded value
-      };
-      this.getProductDetail()
-    }
+
+
+    this.userDataService.getUserDetail( this.idPerfil ).then(async (data: any) => {
+      if (data.response) {
+        this.user = {
+          name: data.response.username,
+          description: data.response.description,
+          email: data.response.email,
+          phoneNumber: data.response.phoneNumber,
+          date: '12 April at 09.28 PM', // ToDo: Remove this hardcoded value
+        };
+
+        this.getProductDetail()
+      }
+    })
+   
   }
 
  
@@ -133,52 +139,29 @@ export class PerfilOraculoPage implements OnInit {
 
   async getProductUser() {
 
-    
-    const user = JSON.parse(sessionStorage.getItem('productId'));
-    
-    const {response, error} = await this.profileUser.getUserProduct(this.idPerfil);
-    if (!!response)
-    this.moreWorks = response.available;
-
-
+    this.profileUser.getUserProduct( this.idPerfil ).then(async (data: any) => {
+      if (!!data.response)
+        this.moreWorks = data.response.available;
+    })
 
   }
 
 
   async getProductDetail() {
-    const user = JSON.parse(sessionStorage.getItem('productId'));
-    const {response} =  await this.searchService.getProductDetail(user);
-    if (response) {
-      this.detalle = response;
-      console.log(this.detalle)
-      this.user.avatar = response.ownerAvatar 
-    }
+    if ( isPlatformBrowser(this.platformId) ) {
+
+      //@ts-ignore
+      const productId = JSON.parse(sessionStorage.getItem('productId'));
+
+      this.searchService.getProductDetail( productId ).then(async (data: any) => {
+        if (data.response) {
+          this.detalle = data.response;
+          this.user.avatar = data.response.ownerAvatar 
+        }
+      })
+   }
   }
 
-  async getFeed() {
-    var filters = {
-      activePage: 1,
-      keys: null,
-      topic: null,
-      sector: null,
-      subsector: null,
-      lang: null,
-      user: this.idPerfil,
-      hideContent: true,
-      content: null,
-    };
-    const {response, error} = await this.adviseSvc.list(filters);
-    this.iAdvises = response;
-  }
-
-  removeBlankSpace(term: string): string {
-   
-    if ( term !== null){
-      return term.replace(new RegExp(' ', 'g'), '-');
-    } else {
-      return term
-    }
-  }
   showFeed() {
     this.isFeed = true;
     this.isRatings = false;
@@ -197,6 +180,7 @@ export class PerfilOraculoPage implements OnInit {
     this.isBest = true;
   }
 
+  //@ts-ignore
   public apiCallbackFn = (route: string) => {
     try {
       return this.http.get(route);
@@ -210,33 +194,34 @@ export class PerfilOraculoPage implements OnInit {
   }
 
   async createChat() {
-    const {response, error} = await this.chatService.createChat(
-      this.idPerfil
-    );
 
-    if (response) {
-      this.router.navigate([`chat/${response?.id}`], {
-        state: {receiverId: this.idPerfil, receiverUsername: this.user.name},
-      });
-    }
 
-    if (error) {
-      this.router.navigate([`chat`]);
-    }
-  }
-  public irA(p: string): void {
-    this.router.navigate([p]);
-  }
-  backButton() {
-    this.location.back();
+    this.chatService.createChat( this.idPerfil ).then(async (response: any) => {
+      if (response) {
+        this.router.navigate([`chat/${response?.id}`], {
+          state: {receiverId: this.idPerfil, receiverUsername: this.user.name},
+        });
+      } else {
+        this.router.navigate([`chat`]);
+      }
+    })
+
+   
   }
 
-  async registerClick(user, profile){
+  
+  async registerClick(user: any, profile: any){
     let userId = await this.sessionSvc.get();
     let data = {
       user: userId?.id,
       profile: profile
     }
     const {response, error} = await this.searchService.registerClick(data);
+  }
+  public irA(p: string): void {
+    this.router.navigate([p]);
+  }
+  backButton() {
+    this.location.back();
   }
 }

@@ -17,6 +17,7 @@
   locale="es-ES"
   size="large"
   logo_alignment="left"
-  [width]="document?.defaultView?.innerWidth < 900 ? '337' : '304'"
+  [width]="(document?.defaultView?.innerWidth ?? 0) < 900 ? 337 : 304"
+
 >
 </asl-google-signin-button>

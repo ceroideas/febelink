@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController, AlertController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
-import { MailService } from 'src/app/services/mail.service';
-import { ReportService } from 'src/app/services/report.service';
+import { UserService } from './../../services/user.service';
+import { MailService } from './../../services/mail.service';
+import { ReportService } from './../../services/report.service';
 import { IAdviseFull } from '../posts/advises/models/advises.model';
 import { AdviseService } from '../posts/advises/services/advises.service';
 import { UserDataService } from '../user-data/Services/user-data.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { UtilitiesService } from './../../services/utilities.service';
 
 @Component({
   selector: 'app-mis-publicaciones',
@@ -15,7 +15,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
   styleUrls: ['./mis-publicaciones.page.scss'],
 })
 export class MisPublicacionesPage implements OnInit {
-  idPerfil: 208
+  idPerfil: number = 208
   user: any;
   iAdvises: IAdviseFull[] = [];
   ratings: any;
@@ -31,12 +31,12 @@ export class MisPublicacionesPage implements OnInit {
   isBestAchieves: boolean = true;
   isBestChange: boolean = false;
   isBestChangeList: boolean = true;
-  selectedBest: number;
+  selectedBest: number = 0;
 
   isBestChanged: boolean = false;
   isRatingSaved: boolean = false;
   openRating: boolean = false;
-  indexRating: number = null;
+  indexRating: number | null = null;
 
   topics = [
     { id: null, name: 'Todos' },
@@ -107,6 +107,7 @@ export class MisPublicacionesPage implements OnInit {
       hideContent: true,
       content: null,
     };
+    //@ts-ignore
     const { response, error } = await this.adviseSvc.list(filters);
     this.iAdvises = response;
   }
@@ -140,10 +141,19 @@ export class MisPublicacionesPage implements OnInit {
 
   saveRating() {
     var rating = {
+    //@ts-ignore
       title: this.ratingsPending[this.indexRating].title,
+    //@ts-ignore
+
       service: this.ratingsPending[this.indexRating].service,
+    //@ts-ignore
+
       img: this.ratingsPending[this.indexRating].img,
+    //@ts-ignore
+
       price: this.ratingsPending[this.indexRating].price,
+    //@ts-ignore
+
       rating: 5,
       date: '20/08/2022',
       description:
@@ -175,6 +185,8 @@ export class MisPublicacionesPage implements OnInit {
 
       this.isBestChanged = true;
       this.isBestChange = false;
+    //@ts-ignore
+
       this.selectedBest = null;
     }
   }

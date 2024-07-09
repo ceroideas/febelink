@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ApiService } from '../../services/api.service';
 import { TokensUser } from '../models/tokens-user';
 
@@ -10,7 +9,6 @@ export class TokensUsersService {
 
   constructor(
       private api: ApiService
-    , private utilities: UtilitiesService
   ) { }
 
   async getTokensUsers( activePage: number, filter?:string ){

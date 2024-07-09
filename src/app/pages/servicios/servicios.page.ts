@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PopoverController, Platform, AlertController} from '@ionic/angular';
-import {UserService} from 'src/app/services/user.service';
-import {MailService} from 'src/app/services/mail.service';
-import {ReportService} from 'src/app/services/report.service';
+import {UserService} from './../../services/user.service';
+import {MailService} from './../../services/mail.service';
+import {ReportService} from './../../services/report.service';
 import {ServicesService} from './services/services.service';
 import {IServiceFull} from './models/services.model';
 import {SubscriptionService} from '../suscripciones/Services/subscription.service';
@@ -13,7 +13,8 @@ import {
   FilePickType,
   IFile,
 } from '../../components/file-picker/models/file.model';
-import {iWYSIWYG} from 'src/app/components/wysiwyg/models/wysiwyg.model';
+import {iWYSIWYG} from './../../components/wysiwyg/models/wysiwyg.model';
+import { getWindow } from 'ssr-window';
 
 @Component({
   selector: 'app-servicios',
@@ -23,8 +24,8 @@ import {iWYSIWYG} from 'src/app/components/wysiwyg/models/wysiwyg.model';
 export class ServiciosPage implements OnInit {
   cancelServiceModalToggle = false;
   finishServiceModalToggle = false;
-  cartId: number;
-  productId: number;
+  cartId: number = 0;
+  productId: number= 0;
 
   isSlideDrag: boolean = false;
 
@@ -32,7 +33,7 @@ export class ServiciosPage implements OnInit {
   isCurso: boolean = false;
   isFinalizados: boolean = false;
   isNuevoServicio: boolean = false;
-  indexTerminarServicio: number;
+  indexTerminarServicio: number= 0;
   indexTerminarServicioMobile: boolean = false;
   indexValorarServicio: boolean = false;
   finValorarServicio: boolean = false;
@@ -44,23 +45,23 @@ export class ServiciosPage implements OnInit {
   unitTypes: any;
   iProducts: any;
   doUpdate: boolean = false;
-  editUpdate: number;
-  productIdTerminar: number;
-  cartIdTerminar: number;
+  editUpdate: any;
+  productIdTerminar: any;
+  cartIdTerminar: any;
   isTemplate: boolean = false;
 
-  title: string;
-  description: string;
-  whom: string;
-  buttonName: number;
-  unitPrice: number | string;
-  unitType: number;
-  sector: number;
-  buttonNameSelect: number;
-  images: (string | IFile)[] = [];
+  title: any
+  description: any;
+  whom: any;
+  buttonName: any;
+  unitPrice: any;
+  unitType: any;
+  sector: any;
+  buttonNameSelect: any;
+  images: any[] = [];
 
-  editorText: string;
-  editorTextWhom: string;
+  editorText: string =""
+  editorTextWhom: string =""
 
   iProfessions: any;
   iUserProfession: any;
@@ -69,11 +70,12 @@ export class ServiciosPage implements OnInit {
 
   numbServicesAvaliable: number = 3;
 
+  //@ts-ignore
   iFile: IFile;
   filePickType = FilePickType;
 
   error: any = {}
-
+  window = getWindow();
   constructor(
     public platform: Platform,
     public popoverController: PopoverController,
@@ -122,7 +124,10 @@ export class ServiciosPage implements OnInit {
     if (response) {
       response.forEach((elem: Subscription) => {
         if (elem.subscriptionName === 'sub-pro') {
-          this.numbServicesAvaliable += 20;
+          this.numbServicesAvaliable = 2;
+        }
+        if (elem.subscriptionName === 'superpro') {
+          this.numbServicesAvaliable = 5;
         }
         if (elem.subscriptionName === 'sub-plus') {
           this.numbServicesAvaliable += elem.amount;
@@ -133,10 +138,11 @@ export class ServiciosPage implements OnInit {
 
   async getProducts() {
     const {response, error} = await this.servicesSvc.get();
+    
     this.iProducts = response;
-    response?.available?.forEach((elem) => {
+    response?.available?.forEach((elem: any) => {
       if (!elem.isTemplate && elem.isPublished) {
-        this.numbServicesAvaliable -= 1;
+        this.numbServicesAvaliable = this.numbServicesAvaliable - 1;
       }
     });
   }
@@ -149,14 +155,14 @@ export class ServiciosPage implements OnInit {
 
   async getUserProfession() {
     const {response, error} = await this.servicesSvc.userProfession();
-    this.iUserProfession = response;
+    this.iUserProfession = response.professions;
     this.mapProfessions();
   }
 
   mapProfessions() {
-    this.ProfessionsMapped = this.iUserProfession.map((e, i) => {
+    this.ProfessionsMapped = this.iUserProfession.map((e:any, i:any) => {
       let temp = this.iProfessions.find(
-        (element) => element.id === e.subSectorId
+        (element: any) => element.id === e.subSectorId
       );
       if (temp.name) {
         e.name = temp.name;
@@ -166,11 +172,12 @@ export class ServiciosPage implements OnInit {
   }
 
   selectNuevoServicio() {
+    console.log(this.numbServicesAvaliable)
     if (this.numbServicesAvaliable > 0) {
       this.isNuevoServicio = true;
     } else {
       this.toastSvc.show(
-        'Cambia a Plan PRO o añade productos PLUS para poder crear ofertas activas adicionales.'
+        'Cambia a Plan SUPERPRO para poder crear ofertas activas adicionales.'
       );
     }
   }
@@ -218,6 +225,9 @@ export class ServiciosPage implements OnInit {
     this.unitType = null;
     this.sector = null;
     this.isTemplate = false;
+
+
+    this.window.location.reload();
   } else {
 
     this.servicioError = true;
@@ -237,7 +247,7 @@ export class ServiciosPage implements OnInit {
     this.sector = service.subSectorId;
     this.buttonName = service.buttonName;
     this.editUpdate = service.productId;
-    service.images.forEach((value, index) => {
+    service.images?.forEach((value, index) => {
       this.images[index] = value;
     });
 
@@ -280,6 +290,8 @@ export class ServiciosPage implements OnInit {
     this.unitType = null;
     this.sector = null;
     this.isTemplate = false;
+
+    this.window.location.reload();
   }
 
   cancelNuevoServicio() {
@@ -297,6 +309,7 @@ export class ServiciosPage implements OnInit {
     this.buttonNameSelect = null;
     this.whom = null;
     this.isTemplate = false;
+    //@ts-ignore
     this.images.fill(null);
   }
 
@@ -322,6 +335,7 @@ export class ServiciosPage implements OnInit {
   }
 
   cancelarServicio() {
+    //@ts-ignore
     this.indexTerminarServicio = null;
     this.indexTerminarServicioMobile = false;
     this.dragLogged = false;
@@ -348,6 +362,7 @@ export class ServiciosPage implements OnInit {
     this.finValorarServicio = true;
     this.indexValorarServicio = false;
     this.indexTerminarServicioMobile = false;
+    //@ts-ignore
     this.indexTerminarServicio = null;
     this.productIdTerminar = null;
     this.cartIdTerminar = null;
@@ -359,6 +374,8 @@ export class ServiciosPage implements OnInit {
   cancelarValorarServicio() {
     this.indexValorarServicio = false;
     this.indexTerminarServicioMobile = false;
+    //@ts-ignore
+
     this.indexTerminarServicio = null;
     this.productIdTerminar = null;
     this.cartIdTerminar = null;
@@ -410,21 +427,25 @@ export class ServiciosPage implements OnInit {
     this.router.navigate([p]);
   }
 
-  clearImageByIndex(index: IFile) {
+  clearImageByIndex(index: any) {
     this.images = this.images.filter(img=> img !== index)
     this.cref.detectChanges()
   }
 
-  fileSelected(iFile: IFile) {
+  fileSelected(iFile: any) {
     this.images.push( iFile)
   }
 
   wysiwygChange(content: iWYSIWYG) {
+    //@ts-ignore
+
     this.editorText = content.html;
   }
 
 
   wysiwygChangeWhom(content: iWYSIWYG) {
+    //@ts-ignore
+
     this.editorTextWhom = content.html;
   }
   async cancelProduct() {
@@ -440,18 +461,24 @@ export class ServiciosPage implements OnInit {
     }
   }
 
-  onSelectChange($event){
+  onSelectChange($event: any){
     this.buttonName = $event.detail.value
   }
 
   toggleFinishModal(cartId?: number, productId?: number) {
+    //@ts-ignore
     this.cartId = cartId;
+    //@ts-ignore
     this.productId = productId;
     this.finishServiceModalToggle = !this.finishServiceModalToggle;
   }
 
   toggleServiceModal(cartId?: number, productId?: number) {
+    //@ts-ignore
+
     this.cartId = cartId;
+    //@ts-ignore
+
     this.productId = productId;
     this.cancelServiceModalToggle = !this.cancelServiceModalToggle;
   }

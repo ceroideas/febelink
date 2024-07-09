@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from '../../../services/http.service';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -7,30 +10,43 @@ import {HttpService} from '../../../services/http.service';
 export class KeywordService {
 
   constructor(
-    private http: HttpService
-  ) {
+    private http: HttpService,
+    private http2: HttpClient,
+  ) {}
+
+  getDataOld(): Promise<any> {
+    return this.http2.get(environment.API_URL_AUTH + 'getData')
+      .pipe(
+        map(data => {
+          return data;
+
+        }),
+        catchError((error: any) => {
+          throw new Error("Cannot get camps");
+        })
+      )
+      .toPromise(); // Convert Observable to Promise
   }
-
-
   // Read Data
-  public getData() {
-    return this.http.get('getData');
+  public getData(transferCache: boolean = true) {
+    return this.http.get('getData', {}, transferCache);
   }
 
   // Sector
   public getSectorKeywords() {
-    return this.http.get('getSector');
+    return this.http.get('getSector', {}, false);
   }
 
-  public removeSectorKeyword(id: number) {
-    if (id) {
+  removeSectorKeyword(id: any) {
+    
       return this.http.delete(`admin/deleteSector/${id}`);
-    }
+   
   }
-  public removeSectorKeySearch(id: number) {
-    if (id) {
+  public removeSectorKeySearch(id: any) {
+    
       return this.http.delete(`admin/deleteSectorKeySearch/${id}`);
-    }
+   
+
   }
   
   public updateSectorKeySearch(value: { id?: number, sector?: number,  name: string }) {
@@ -46,7 +62,7 @@ export class KeywordService {
   }
 
   public getSubSectorAll() {
-    return this.http.get('getSubsectorAll');
+    return this.http.get('getSubsectorAll', {}, false);
   }
 
   // SubSector
@@ -63,14 +79,15 @@ export class KeywordService {
   }
 
   public removeSubSectorKeyword(id: number) {
-    if (id) {
+    
       return this.http.delete(`admin/deleteSubsector/${id}`);
-    }
+   
+
   }
   public removeSubSectorKeySearch(id: number) {
-    if (id) {
       return this.http.delete(`admin/deleteSubSectorKeySearch/${id}`);
-    }
+   
+
   }
   
   public updateSubSectorKeySearch(value: { id?: number, subSector?: number,  name: string }) {
@@ -80,7 +97,7 @@ export class KeywordService {
 
   // Ubicationes
   public getLocationKeywords() {
-    return this.http.get('getLocation');
+    return this.http.get('getLocation', {}, false);
   }
 
   public addLocationKeyword(value: {  title: string, link: string , h1: string,  pagetitle: string, metadescription: string}) {
@@ -92,15 +109,15 @@ export class KeywordService {
   }
 
   public removeLocationKeyword(id: number) {
-    if (id) {
       return this.http.delete(`admin/deleteLocations/${id}`);
-    }
+   
+
   }
 
 
   // Enlaces de ubicaciones
   public getLinkLocationKeywords() {
-    return this.http.get('getLinkLocationsAll');
+    return this.http.get('getLinkLocationsAll', {}, false);
   }
 
   public addLinkLocationKeyword(value: { sector: number, locations: number, title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
@@ -112,9 +129,8 @@ export class KeywordService {
   }
 
   public removeLinkLocationKeyword(id: number) {
-    if (id) {
       return this.http.delete(`admin/deleteLinkLocations/${id}`);
-    }
+
   }
 
 
@@ -132,32 +148,29 @@ export class KeywordService {
   }
 
   public removeCityKeyword(id: number) {
-    if (id) {
       return this.http.delete(`admin/deleteCitys/${id}`);
-    }
+
   }
 
 
 
   // Enlaces de Ciudades
   public getLinkCityKeywords() {
-    return this.http.get('getLinkCitysAll');
+    return this.http.get('getLinkCitysAll', {}, false);
   }
-  public getCityLocation(id: number) {
-    if (id) {
+  public getCityLocation(id: any) {
       return this.http.get(`getCityLocation/${id}`);
-    }
+
   }
   public getLinkCitysLocation(id: number) {
-    if (id) {
       return this.http.get(`getLinkCitysLocation/${id}`);
-    }
+
   }
 
+  //@ts-ignore
   public getLinkCitysLocationSector(id: number, sector: number) {
-    if (id && sector) {
       return this.http.get(`getLinkCitysLocationSector/${id}/${sector}`);
-    }
+
   
   }
   public addLinkCityKeyword(value: { sector: number, location: number, city: number, title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
@@ -169,15 +182,15 @@ export class KeywordService {
   }
 
   public removeLinkCityKeyword(id: number) {
-    if (id) {
       return this.http.delete(`admin/deleteLinkCitys/${id}`);
-    }
+   
+
   }
 
 
   // Enlaces de footer
   public getLinkFooterKeywords() {
-    return this.http.get('getLinks');
+    return this.http.get('getLinks', {}, false);
   }
   
   public addLinkFooterKeyword(value: {title: string, link: string, pagetitle: string, h1: string, h2: string, description: string}) {
@@ -189,12 +202,9 @@ export class KeywordService {
   }
 
   public removeLinkFooterKeyword(id: number) {
-    if (id) {
       return this.http.delete(`admin/deleteLinks/${id}`);
-    }
+
   }
-
-
 
   public listClickViews(){
     return this.http.get('admin/listClickViews');

@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {TabsPage} from 'src/app/tabs/tabs.page';
-import {environment} from 'src/environments/environment';
+import {TabsPage} from './../../tabs/tabs.page';
 
 const routes: Routes = [
   {

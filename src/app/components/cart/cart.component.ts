@@ -30,7 +30,6 @@ export class CartComponent implements OnInit {
       this.cartService.getActiveCart().subscribe((value) => {
         this.iCart = value;
         this.cdRef.detectChanges();
-        console.log('Carrito offline', this.iCart);
       });
     }
   }

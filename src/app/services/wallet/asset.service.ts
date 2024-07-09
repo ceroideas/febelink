@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { SelectAssetComponent } from 'src/app/pages/wallet/select-asset/select-asset.component';
+import { CryptoCurrency } from '../../models/wallet/currency.model';
+import { SelectAssetComponent } from '../../pages/wallet/select-asset/select-asset.component';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +43,7 @@ export class AssetService {
     }
 
     async select(
-        event,
+        event: any,
         assetTpes: CryptoCurrency[],
         exceptCrypto?: CryptoCurrency
     ): Promise<CryptoCurrency>

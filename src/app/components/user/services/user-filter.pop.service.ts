@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IAdviseFilter } from 'src/app/pages/posts/advises/models/advises.model';
+import { IAdviseFilter } from '../../../pages/posts/advises/models/advises.model';
 import { UserFilterComponent } from '../filter/filter.component';
 import { IUserItem } from '../models/user-item.model';
 

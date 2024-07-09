@@ -1,46 +1,49 @@
 import { Component, ViewChild } from '@angular/core';
-import { WalletService } from 'src/app/services/wallet/wallet.service';
+import { WalletService } from '../../services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import {
   CryptoCurrency,
   CryptoTransactions,
-} from 'src/app/models/wallet/currency.model';
+} from '../../models/wallet/currency.model';
 import { ModalController } from '@ionic/angular';
-import { IUser } from 'src/app/models/user.model';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
+import { IUser } from '../../models/user.model';
+import { DateFormatType } from '../../pipes/date-format.pipe';
 import { BuyAssetsComponent } from './buy-assets/buy-assets.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InformComponent } from 'src/app/components/inform/inform.component';
-import { UserService } from 'src/app/services/user.service';
+import { InformComponent } from '../../components/inform/inform.component';
+import { UserService } from '../../services/user.service';
 import { SendComponent } from './send/send.component';
-import { WalletParams } from 'src/app/models/wallet/params.model';
+import { WalletParams } from '../../models/wallet/params.model';
 import { OffersListComponent } from './offers-list/offers-list.component';
-import { ExchangeType } from 'src/app/models/wallet/exchange.model';
-import { ClipboardSvc } from 'src/app/services/clipboard.service';
-import { AlertSvc } from 'src/app/services/alert.service';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { AccountSvc } from 'src/app/services/wallet/account.service';
-import { ExchangePop } from 'src/app/services/wallet/exchange.pop';
-import { environment } from 'src/environments/environment';
+import { ExchangeType } from '../../models/wallet/exchange.model';
+import { ClipboardSvc } from '../../services/clipboard.service';
+import { AlertSvc } from '../../services/alert.service';
+import { TranslateConfigService } from '../../services/translate/translate-config.service';
+import { AccountSvc } from '../../services/wallet/account.service';
+import { ExchangePop } from '../../services/wallet/exchange.pop';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'wallet-page',
   templateUrl: './wallet.page.html',
   styleUrls: ['./wallet.page.scss'],
+  host: {ngSkipHydration: 'true'},
 })
 export class WalletPage {
-  @ViewChild('offersList') offersList: OffersListComponent;
+  @ViewChild('offersList') offersList: OffersListComponent | undefined;
 
   isLoading: boolean = false;
-  user: IUser;
+  user: IUser | undefined;
 
   walletParams: WalletParams = { userWallets: [] };
-  transactions: CryptoTransactions;
+  transactions: CryptoTransactions | undefined;
 
   hideRetained: boolean = true;
   hideTransactions: boolean = true;
 
-  dateFormatType = DateFormatType;
+  // dateFormatType = DateFormatType;
+  dateFormatType: DateFormatType = DateFormatType.SomeValue; // Replace SomeValue with the appropriate value
+
   exchangeTypes = ExchangeType;
 
   constructor(
@@ -75,7 +78,7 @@ export class WalletPage {
       .getWalletInfo()
       .then();
     serviceRequest.subscribe((response) => {
-      const currency = this.walletParams.userWallets.filter(
+      const currency = this.walletParams?.userWallets?.filter(
         (walletCurrency) => {
           return walletCurrency.currency === buyTokenLinkCurrency;
         }
@@ -117,15 +120,18 @@ export class WalletPage {
 
   public async send() {
     // If user has not verified Data and Email, redirect to profile
-    if (!this.walletParams.verified.mandatory) {
+    if (!this.walletParams.verified?.mandatory) {
       await this.userSvc.showAlertToRedir();
       return;
     }
 
+    const userWallet = this.walletParams?.userWallets?.[0];
+    const asset = userWallet ? userWallet.assetId : undefined;
+
     const sendTksModal = await this.modalCtrl.create({
       component: SendComponent,
       componentProps: {
-        asset: this.walletParams.userWallets[0],
+        asset: asset,
         retainedTks: this.walletParams.retainedTks,
         assetsMaxDecimals: this.walletParams.assetsMaxDecimals,
 
@@ -148,7 +154,7 @@ export class WalletPage {
     serviceRequest.subscribe((response) => this.setVars(response));
   }
 
-  setVars(response) {
+  setVars(response: any) {
     this.walletParams.publicKey = response.publicKey;
     this.walletParams.privateKey = response.privateKey;
     this.walletParams.userWallets = response.data;
@@ -185,10 +191,10 @@ export class WalletPage {
       }
     );
 
-    if (saved && !error) this.offersList.refresh();
+    if (saved && !error) this.offersList?.refresh();
   }
   refresh() {
-    this.offersList.refresh();
+    this.offersList?.refresh();
   }
 
   showHelp() {
@@ -202,9 +208,9 @@ export class WalletPage {
     );
   }
 
-  async buy(currency) {
+  async buy(currency: any) {
     // If user has no Public Key or has not verified account
-    if (!this.walletParams.publicKey || !this.walletParams.verified.account) {
+    if (!this.walletParams.publicKey || !this.walletParams.verified?.account) {
       await this.userSvc.showAlertToRedir();
       return;
     }
@@ -227,7 +233,7 @@ export class WalletPage {
     const buy = data?.buy;
   }
 
-  transaction(operation) {
+  transaction(operation: any) {
     console.log('operation:', operation);
   }
 

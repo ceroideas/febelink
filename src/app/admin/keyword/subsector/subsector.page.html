@@ -1,6 +1,8 @@
 <div class="container-general">
   <div class="title">
-    <ion-back-button defaultHref="/admin"></ion-back-button> 
+    <ion-icon (click)="goBack()" slot="start" name="arrow-back-outline"></ion-icon>
+
+    <!-- <ion-back-button defaultHref="/admin"></ion-back-button>  -->
     Panel de Administrador 
     <span class="simbol">></span> 
     <span class="span1">Gestion keyword - SubSectores</span>
@@ -119,7 +121,7 @@
 </div> -->
 
 <div id="darkcreateKeywordController" *ngIf="showCreatekeyword"></div>
-<div id="createKeywordController" *ngIf="showCreatekeyword">
+<div id="createKeywordSubsectorController" *ngIf="showCreatekeyword">
   <div class="headerTitle">Subsector</div>
   <div class="headerSubTitle">Introduce un nombre y agregale los datos necesarios</div>
   <div class="containerKeyWord">
@@ -139,11 +141,11 @@
     </div>
    
     <div class="item-select">
-      <label>Link: *</label>
+      <label>Link: </label>
       <input type="text" [(ngModel)]="keySubSector.link" #newKeywordLink>
     </div>
     <div class="item-select">
-      <label>Terminos de Busqueda: *</label>
+      <label>Terminos de Busqueda: </label>
       <div  id="inputContainer">
         <!-- <input type="text" [(ngModel)]="keySector.icon"   #newKeywordIcon > -->
         
@@ -152,19 +154,19 @@
       <button type="button" class="addInput" (click)="addInput()">Añadir otro</button>
     </div>
     <div class="item-select">
-      <label>Encabezado 1 *</label>
+      <label>Encabezado 1 </label>
       <input type="text" [(ngModel)]="keySubSector.h1" #newKeywordH1>
     </div>
     <div class="item-select">
-      <label>Titulo de Pagina *</label>
+      <label>Titulo de Pagina </label>
       <input type="text" [(ngModel)]="keySubSector.page_title" #newKeywordPagetitle>
     </div>
     <div class="item-select">
-      <label>Meta Descripcion  *</label>
+      <label>Meta Descripcion  </label>
       <input type="text" [(ngModel)]="keySubSector.meta_description" #newKeywordMetaDescription>
     </div>
     <div class="item-select">
-      <label>Escribe la direccion de la imagen: *</label>
+      <label>Escribe la direccion de la imagen: </label>
       <input type="text" [(ngModel)]="keySubSector.imageURL" #newKeywordImage>
     </div>
 

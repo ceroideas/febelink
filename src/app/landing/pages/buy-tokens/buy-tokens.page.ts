@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from '../../../services/api.service';
+import { UtilitiesService } from '../../../services/utilities.service';
 import { LandingService } from '../../services/landing.service';
 import { BuyTokensComponent } from '../../shared/buy-tokens/buy-tokens.component';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { ILang, ILangDEFAULTS } from '../../../models/langs.model';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
 
 @Component({
   selector: 'app-page-buy-tokens',

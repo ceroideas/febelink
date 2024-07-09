@@ -1,21 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
+import { CryptoCurrency } from './../../../models/wallet/currency.model';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { IUser } from 'src/app/models/user.model';
-import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { TwoFAComponent } from 'src/app/components/two-fa/two-fa.component';
-import { WalletService } from 'src/app/services/wallet/wallet.service';
-import { ClipboardSvc } from 'src/app/services/clipboard.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { LoadingSvc } from 'src/app/services/loading.service';
-import { AlertSvc } from 'src/app/services/alert.service';
-import { InformSvc } from 'src/app/services/inform.service';
+import { IUser } from './../../../models/user.model';
+import { TokensUser } from './../../../admin/models/tokens-user';
+import { TwoFAComponent } from './../../../components/two-fa/two-fa.component';
+import { WalletService } from './../../../services/wallet/wallet.service';
+import { ClipboardSvc } from './../../../services/clipboard.service';
+import { ToastSvc } from './../../../services/toast.service';
+import { LoadingSvc } from './../../../services/loading.service';
+import { AlertSvc } from './../../../services/alert.service';
+import { InformSvc } from './../../../services/inform.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,28 +24,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./send.component.scss'],
 })
 export class SendComponent implements OnInit {
-  @Input() title: string;
-  @Input() asset: CryptoCurrency;
+  @Input() title: string = "";
+  @Input() asset: CryptoCurrency | undefined;
+  //@ts-ignore
   @Input() user: IUser;
-  @Input() retainedTks: TokensUser[];
+  @Input() retainedTks: TokensUser[] | undefined;
   @Input() returnBalance: boolean = false;
   @Input() hideWarning: boolean = false;
   @Input() assetsMaxDecimals: number = 7;
 
   // Value to send predefined
-  @Input() amount: number;
+  @Input() amount: number = 0;
   // If user can or cannot change the amount
   @Input() canModify: boolean = true;
 
-  public form: UntypedFormGroup;
-  isLoading: boolean;
+  public form: UntypedFormGroup | undefined;
+  isLoading: boolean = false;
   calcs: {
     retained?: number;
     send?: number;
     diff?: number;
     max?: number;
   } = {};
-  publicKey: string;
+  publicKey: string = "";
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -65,14 +66,24 @@ export class SendComponent implements OnInit {
     this.buildForm();
   }
 
-  calcLimits() {
-    this.calcs.retained = 0;
-    this.retainedTks?.forEach(
-      (tk) => (this.calcs.retained += Number(tk?.num_tokens || '0'))
-    );
+calcLimits() {
+  this.calcs.retained = 0;
 
-    this.calcs.max = this.asset?.amount - this.calcs.retained;
+  // Check if this.retainedTks is defined before iterating over it
+  if (this.retainedTks) {
+    this.retainedTks.forEach(tk => {
+      // Use optional chaining and default value to handle potential undefined tk or tk.num_tokens
+      //@ts-ignore
+      this.calcs.retained += Number(tk?.num_tokens || '0');
+    });
   }
+
+  // Check if this.calcs and this.asset are defined before accessing their properties
+  if (this.calcs && this.asset) {
+    // Use optional chaining to handle potential undefined this.asset.amount
+    this.calcs.max = (this.asset.amount || 0) - this.calcs.retained;
+  }
+}
 
   ionViewDidLeave() {
     this.form?.reset();
@@ -97,8 +108,9 @@ export class SendComponent implements OnInit {
     this.modalCtrl.dismiss({});
   }
 
-  calc(amount: number) {
+  calc(amount: any) {
     this.calcs.send = amount;
+    if (this.calcs.max)
     this.calcs.diff = this.calcs.max - amount;
   }
 
@@ -108,6 +120,7 @@ export class SendComponent implements OnInit {
       try {
         const res = await this.wallet.send(
           this.publicKey,
+          //@ts-ignore
           this.asset.assetId,
           this.calcs.send,
           this.returnBalance,
@@ -124,7 +137,7 @@ export class SendComponent implements OnInit {
         // Show success message
         this.toastSvc.show(res.message);
         this.modalCtrl.dismiss({ asset: this.asset, response: res });
-      } catch (ex) {
+      } catch (ex: any) {
         await this.loadingSvc.dismiss();
         // ToDo: Handle Stellar error Statuses
         alert(ex.error.message);
@@ -155,18 +168,19 @@ export class SendComponent implements OnInit {
   }
 
   checkErrors(): boolean {
-    const { publicKey } = this.form.value;
+    const { publicKey } = this.form?.value;
 
+    if (this.calcs.retained)
     if ((this.asset?.amount || 0) - this.calcs.retained <= 0) {
       this.toastSvc.show('pages.wallet.error.cant-send', true);
-      return;
+      return true;
     }
 
     if (!this.calcs.send || this.calcs.send <= 0) {
       this.toastSvc.show('pages.wallet.error.qSend', true);
       return false;
     }
-
+    if (this.calcs.diff)
     if (this.calcs.diff < 0) {
       this.toastSvc.show('pages.wallet.error.minSend', true);
       return false;

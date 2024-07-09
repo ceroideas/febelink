@@ -1,24 +1,29 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {  NgModule } from '@angular/core';
 
-import { IonicModule } from '@ionic/angular';
-
-import { LoBuscamosPorTiPageRoutingModule } from './lo-buscamos-por-ti-routing.module';
 
 import { LoBuscamosPorTiPage } from './lo-buscamos-por-ti.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
+
+import { Routes, RouterModule } from '@angular/router';
+
+
+const routes: Routes = [
+  {
+    path: '',
+    component: LoBuscamosPorTiPage
+  }
+];
+
+
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
+    // RouterModule.forChild(routes),
     SharedModule,
-    LoBuscamosPorTiPageRoutingModule
   ],
   declarations: [LoBuscamosPorTiPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [RouterModule],
+
 })
 export class LoBuscamosPorTiPageModule {}
 

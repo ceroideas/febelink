@@ -8,9 +8,9 @@ import { SharedModule } from '../shared/shared.module';
 import { Index1Component } from './index1/index1.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { TimerComponent } from 'src/app/components/timer/timer.component';
+import { TimerComponent } from '../../components/timer/timer.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule as GeneralSharedModule } from 'src/app/shared/shared.module';
+import { SharedModule as GeneralSharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [Index1Component, TimerComponent],

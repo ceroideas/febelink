@@ -5,28 +5,28 @@ import { map } from 'rxjs/operators';
 import { HttpService, IHttpService } from './http.service';
 
 export class ChatMessage {
-  messageId: string;
-  userId: string;
-  userName: string;
-  userAvatar: string;
-  toUserId: string;
-  time: number | string;
-  message: string;
-  status: string;
+  messageId: string = "";
+  userId: string = "";
+  userName: string = "";
+  userAvatar: string = "";
+  toUserId: string = "";
+  time: number | string = 0;
+  message: string = "";
+  status: string = "";
 }
 
 export class Pages {
-  name: string;
-  icon: string;
-  url: string;
-  urlweb: string;
-  description: string;
+  name: string = "";
+  icon: string = "";
+  url: string = "";
+  urlweb: string = "";
+  description: string = "";
 }
 
 export class UserInfo {
-  id: string;
-  name?: string;
-  avatar?: string;
+  id: string = "";
+  name?: string = "";
+  avatar?: string = "";
 }
 
 @Injectable({
@@ -37,7 +37,7 @@ export class ChatService {
 
   constructor(private http: HttpClient, private httpSVC: HttpService) {}
 
-  mockNewMsg(msg) {
+  mockNewMsg(msg: any) {
     const mockMsg: ChatMessage = {
       messageId: Date.now().toString(),
       userId: '210000198410281948',

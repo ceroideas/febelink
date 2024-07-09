@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { HttpService } from 'src/app/services/http.service';
-import { ToastSvc } from 'src/app/services/toast.service';
+import { HttpService } from '../../../services/http.service';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { IUserItem } from '../models/user-item.model';
+import { ToastSvc } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-user-filter',
@@ -17,10 +17,10 @@ export class UserFilterComponent implements OnInit {
   @Input() params: any
   @Output() OnUserSelectd: EventEmitter<IUserItem> = new EventEmitter()
   
-  @ViewChild( "pagination" ) pagination: PaginationComponent
+  @ViewChild( "pagination" ) pagination: PaginationComponent | undefined
 
   isLoading: boolean = false
-  list: IUserItem[]
+  list: IUserItem[] | undefined
   filter: string = ''
 
   constructor(
@@ -36,13 +36,12 @@ export class UserFilterComponent implements OnInit {
     this.modalCtrl.dismiss({ iUser })
   }
   
-  async search( text?: string )
-  {
+  async search(text?: any) {
     this.filter = text || text == '' ? text : this.filter
 
     // If Empty do not search
     if( !this.filter ) {
-      this.list = null
+      this.list = undefined
       return
     }
     this.isLoading = true

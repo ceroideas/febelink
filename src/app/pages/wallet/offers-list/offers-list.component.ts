@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
-import { ExchangeType } from 'src/app/models/wallet/exchange.model';
-import { OffersFilter, OffersList, OffersType } from 'src/app/models/wallet/offers.models';
-import { WalletParams } from 'src/app/models/wallet/params.model';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { AssetService } from 'src/app/services/wallet/asset.service';
-import { OfferService } from 'src/app/services/wallet/offer.service';
+import { CryptoCurrency, CryptoCurrencyType } from '../../../models/wallet/currency.model';
+import { ExchangeType } from '../../../models/wallet/exchange.model';
+import { OffersFilter, OffersList, OffersType } from '../../../models/wallet/offers.models';
+import { WalletParams } from '../../../models/wallet/params.model';
+import { ToastSvc } from '../../../services/toast.service';
+import { AssetService } from '../../../services/wallet/asset.service';
+import { OfferService } from '../../../services/wallet/offer.service';
 
 @Component({
   selector: 'app-offers-list',
@@ -14,7 +14,7 @@ import { OfferService } from 'src/app/services/wallet/offer.service';
 })
 export class OffersListComponent implements OnInit, OnChanges {
   
-  @Input() walletParams: WalletParams;
+  @Input() walletParams: WalletParams | undefined;
   @Output() OnChange: EventEmitter<ExchangeType> = new EventEmitter()
 
   offersList: OffersList[] = [
@@ -28,8 +28,8 @@ export class OffersListComponent implements OnInit, OnChanges {
 
   // Sort Options
   orderAsc: boolean = false;
-  assetSelling: CryptoCurrency;
-  assetBuying: CryptoCurrency;
+  assetSelling: CryptoCurrency | undefined;
+  assetBuying: CryptoCurrency | undefined;
   currencyType = CryptoCurrencyType;
 
   constructor(
@@ -45,6 +45,7 @@ export class OffersListComponent implements OnInit, OnChanges {
   
   ngOnChanges( changes: SimpleChanges ) {
     // Set default asset selected == First item in list == ownAsset
+    if (this.walletParams?.userWallets)
     if( this.assetSelling == null && this.walletParams?.userWallets?.length > 0 )
       this.assetSelling = { currency: this.walletParams?.userWallets[ 0 ]?.currency };
   }
@@ -54,11 +55,13 @@ export class OffersListComponent implements OnInit, OnChanges {
     const list = this.getList();
 
     if( hasChanged || !list?.offers || list?.offers?.length == 0 )
+      //@ts-ignore
       this.refresh( list );
   }
 
-  async selectAsset( event, isSelling: boolean )
+  async selectAsset( event: any, isSelling: boolean )
   {
+    //@ts-ignore
     const asset = await this.assetSvc.select( event, this.walletParams.userWallets );
     if( !asset )
       return
@@ -94,17 +97,20 @@ export class OffersListComponent implements OnInit, OnChanges {
     this.OnChange.emit();
 
     if( !list )
+      //@ts-ignore
       list = this.getList();
-    
+    //@ts-ignore
     list.isLoading = true;
     const { response, error } = await this.offerSvc.list({
+      //@ts-ignore
       last_item: list?.lastIdsPerPage?.length > 0 ?
-        list.lastIdsPerPage[ list?.lastIdsPerPage?.length -1 ] : null,
+      //@ts-ignore
+      list.lastIdsPerPage[ list?.lastIdsPerPage?.length -1 ] : null,
 
       selling: this.assetSelling?.assetId,
 
       buying: this.assetBuying?.assetId,
-
+      //@ts-ignore
       public: list.type != OffersType.OWN ? null : this.walletParams.publicKey,
       
       order: this.orderAsc ? 'asc' : 'desc'
@@ -114,14 +120,16 @@ export class OffersListComponent implements OnInit, OnChanges {
       this.toastSvc.show( error?.message || 'An error occurred when trying to get offers list' );
       return;
     }
-
+    //@ts-ignore
     list.offers = response.offers
+    //@ts-ignore
     list.isLoading = false;
   }
 
   paginToken( list: OffersList )
   {
     if( list?.offers?.length > 0 ) {
+      //@ts-ignore
       const lastId = list[ list?.offers?.length -1 ]?.paging_token;
       list.lastIdsPerPage.push( lastId );
       return lastId;

@@ -6,6 +6,7 @@ export interface Notification {
     is_read?: number;
     type?: NotifType;
     route?: string;
+    open?: boolean
 }
 
 export enum NotifType {

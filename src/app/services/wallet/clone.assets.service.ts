@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CryptoCurrency, CryptoCurrencyType } from 'src/app/models/wallet/currency.model';
-import { ExchangeType } from 'src/app/models/wallet/exchange.model';
-import { Asset, AssetTypes, Offer } from 'src/app/models/wallet/offers.models';
-import { WalletParams } from 'src/app/models/wallet/params.model';
+import { CryptoCurrency, CryptoCurrencyType } from '../../models/wallet/currency.model';
+import { ExchangeType } from '../../models/wallet/exchange.model';
+import { Asset, AssetTypes, Offer } from '../../models/wallet/offers.models';
+import { WalletParams } from '../../models/wallet/params.model';
 import { OfferService } from './offer.service';
 
 @Injectable({
@@ -10,8 +10,13 @@ import { OfferService } from './offer.service';
 })
 export class CloneAssetSvc
 {
-    private exchangeType: ExchangeType
+    //@ts-ignore
+    private exchangeType: ExchangeType;
+    //@ts-ignore
+
     private offer: Offer
+    //@ts-ignore
+
     private walletParams: WalletParams
 
     constructor(
@@ -26,18 +31,22 @@ export class CloneAssetSvc
 
     // This is to get as default the first asset available different than the opposite one
     // It is allways in this order: [ OWN, XLM, ... ]
-    get( self: CryptoCurrency, opposite: CryptoCurrency, isSell: boolean )
-    {
-        if( self?.currency || this.offer )
-            return this.cloneCurrency( self, isSell );
+    get(self: CryptoCurrency, opposite: CryptoCurrency, isSell: boolean) {
+        if (self?.currency || this.offer) {
+            return this.cloneCurrency(self, isSell);
+        }
+    
+        const userWallets = this.walletParams?.userWallets ?? [];
+    
+        for (let i = 0; i < userWallets.length; i++) {
+            if (userWallets[i]?.currency !== opposite?.currency &&
+                (userWallets[i]?.issuerId || userWallets[i]?.currency === CryptoCurrencyType.lumens)
+            ) {
+                return this.cloneCurrency(userWallets[i], isSell);
+            }
+        }
 
-        for( let i = 0; i < this.walletParams.userWallets.length; i++ )
-            if( this.walletParams.userWallets[ i ]?.currency != opposite?.currency &&
-                ( this.walletParams.userWallets[ i ]?.issuerId ||
-                  this.walletParams.userWallets[ i ]?.currency == CryptoCurrencyType.lumens
-                )
-            )
-                return this.cloneCurrency( this.walletParams.userWallets[ i ], isSell );
+        return 
     }
 
     private cloneCurrency( currency: CryptoCurrency , isSell: boolean ): CryptoCurrency
@@ -49,11 +58,13 @@ export class CloneAssetSvc
 
         const maxDecimals = this.walletParams.assetsMaxDecimals;
         const amount: number = Number.parseFloat( this.offer?.amount );
-        const price: number = this.exchangeType == ExchangeType.CREATE ? 0
-            : ( this.exchangeType == ExchangeType.BUY
-                ? ( !isSell ? amount : this.offerSvc.calcBuy( amount, this.offer?.price, maxDecimals ))
-                : ( isSell ? amount : this.offerSvc.calcBuy( amount, this.offer?.price, maxDecimals ))
-            )
+        const price: any = this.exchangeType === ExchangeType.CREATE
+        ? 0
+        : (this.exchangeType === ExchangeType.BUY
+            ? (!isSell ? amount : this.offer?.price ?? 0) // Use 0 as default price if this.offer?.price is null or undefined
+            : (isSell ? amount : this.offer?.price ?? 0) // Use 0 as default price if this.offer?.price is null or undefined
+        );
+    
         
         // console.log({ ofAsset, amount, price, currency, isSell, offer: this.offer });
 

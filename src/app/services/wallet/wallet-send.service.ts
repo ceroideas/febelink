@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { WalletParams } from 'src/app/models/wallet/params.model';
 import { WalletInfoSvc } from './wallet-info.service';
 import { UserService } from '../user.service';
 import { ModalController } from '@ionic/angular';
-import { SendComponent } from 'src/app/pages/wallet/send/send.component';
-import { IUser } from 'src/app/models/user.model';
 import { TranslateConfigService } from '../translate/translate-config.service';
 import { ToastSvc } from '../toast.service';
 import { UserSessionSvc } from '../user-session.service';
+import { IUser } from '../../models/user.model';
+import { WalletParams } from '../../models/wallet/params.model';
+import { SendComponent } from '../../pages/wallet/send/send.component';
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +23,14 @@ export class WalleSendSvc
     private toastSvc: ToastSvc,
   ) {}
 
-  async exec( title: string, user: IUser = null, showLoading: boolean = true ): Promise<any>
+  async exec( title: string, user: IUser , showLoading: boolean = true ): Promise<any>
   {
     if( await this.isUser( user?.id )) return
 
     const walletParams: WalletParams = await this.walletInfoSvc.get( showLoading )
 
     // If user has not verified Data and Email, redirect to profile
-    if ( !walletParams.verified.mandatory )
+    if ( !walletParams?.verified?.mandatory )
     {
       await this.userSvc.showAlertToRedir();
       return;
@@ -40,10 +40,10 @@ export class WalleSendSvc
       component: SendComponent,
       componentProps: {
         title,
-        asset: walletParams.userWallets[0],
+        asset: walletParams?.userWallets?.[0] ?? null, // If walletParams or userWallets is undefined or userWallets is empty, set asset to null
         user,
-        retainedTks: walletParams.retainedTks,
-        assetsMaxDecimals: walletParams.assetsMaxDecimals,
+        retainedTks: walletParams?.retainedTks ?? null, // If walletParams or retainedTks is undefined, set retainedTks to null
+        assetsMaxDecimals: walletParams?.assetsMaxDecimals ?? null, // If walletParams or assetsMaxDecimals is undefined, set assetsMaxDecimals to null
 
         returnBalance: true,
         hideWarning: true,
@@ -61,7 +61,7 @@ export class WalleSendSvc
     if( !user )
     {
       this.toastSvc.show( 'pages.wallet.donate.no-user', true )
-      return
+      // return 
     }
 
     return this.exec( this.translateSvc.instant(

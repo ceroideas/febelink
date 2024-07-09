@@ -26,6 +26,7 @@ export class ReactTypePopSvc
         const { data } = await popover.onDidDismiss();
     
         if( !data )
+          //@ts-ignore
           return;
         
         return data;

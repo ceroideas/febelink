@@ -2,12 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { IUser } from 'src/app/models/user.model';
-import { ApiService } from 'src/app/services/api.service';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { environment } from 'src/environments/environment';
+import { ApiService } from '../../../services/api.service';
+import { UtilitiesService } from '../../../services/utilities.service';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
+import { ILang, ILangDEFAULTS } from '../../../models/langs.model';
+import { IUser } from '../../../models/user.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-whitelist',
@@ -28,7 +28,7 @@ export class WhitelistComponent implements OnInit {
       (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
   }
 
-  @Input() lang: string;
+  @Input() lang: string = "";
   response: any;
 
   async addEmailToWhitelist(emailField: any) {
@@ -54,7 +54,6 @@ export class WhitelistComponent implements OnInit {
     } finally {
       this.utils.dismissLoading();
     }
-    console.log(this.response);
   }
 
   async login() {

@@ -1,10 +1,9 @@
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { GeoPlacesModel } from 'src/app/models/geoplaces.model';
-import { ApiService } from 'src/app/services/api.service';
-import { GeoPlacesApi } from 'src/app/services/geoplaces.service';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { GeoPlacesModel } from '../../../models/geoplaces.model';
+import { GeoPlacesApi } from '../../../services/geoplaces.service';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
+import { UtilitiesService } from '../../../services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 
 @Component({
@@ -14,7 +13,7 @@ import { UserLanding } from '../../models/user-landing';
 })
 export class UserDataFormComponent implements OnInit, AfterViewInit {
 
-  labelDoc: string;
+  labelDoc: string ="";
 
   constructor(
     private utils: UtilitiesService
@@ -39,21 +38,21 @@ export class UserDataFormComponent implements OnInit, AfterViewInit {
                
     this.geoPlaces
       .OnResponse(( place: GeoPlacesModel ) => {
-          this.userData.address = place.address;
-          this.userData.country = place.Country.short;
-          this.userData.state = place.State.long;
-          this.userData.department = place.Department.long;
-          this.userData.locality = place.Locality.long;
-          this.userData.place_id = place.place_id;
+          this.userData.address = place?.address;
+          this.userData.country = place?.Country?.short;
+          this.userData.state = place?.State?.long;
+          this.userData.department = place?.Department?.long;
+          this.userData.locality = place?.Locality?.long;
+          this.userData.place_id = place?.place_id;
       })
       .OnError(( err ) => {
           console.log( 'Got this err', err );
-          this.userData.address = null;
-          this.userData.country = null;
-          this.userData.state = null;
-          this.userData.department = null;
-          this.userData.locality = null;
-          this.userData.place_id = null;
+          this.userData.address = undefined;
+          this.userData.country = undefined;
+          this.userData.state = undefined;
+          this.userData.department = undefined;
+          this.userData.locality = undefined;
+          this.userData.place_id = undefined;
       })
       .initModal( address );
       this.geoPlaces.setUserPlace( this.userData );

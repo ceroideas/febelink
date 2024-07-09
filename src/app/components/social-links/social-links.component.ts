@@ -17,24 +17,24 @@ export class SocialLinksComponent implements OnInit {
   private _linkedin: string = 'https://es.linkedin.com/company/febelink';
   private _mail: string = 'mailto:token@febelink.com';
 
-  nothingSet: boolean;
+  nothingSet: boolean  = false;
 
   // Si necesita modificarlas           Si solo quiere mostrar alguna en particular
-  @Input() telegram: string;
+  @Input() telegram: string = ""
   @Input() show_telegram: boolean = false;
-  @Input() twitter: string;
+  @Input() twitter: string = ""
   @Input() show_twitter: boolean = false;
-  @Input() facebook: string;
+  @Input() facebook: string = ""
   @Input() show_facebook: boolean = false;
-  @Input() instagram: string;
+  @Input() instagram: string = ""
   @Input() show_instagram: boolean = false;
-  @Input() youtube: string;
+  @Input() youtube: string = ""
   @Input() show_youtube: boolean = false;
-  @Input() tiktok: string;
+  @Input() tiktok: string = ""
   @Input() show_tiktok: boolean = false;
-  @Input() linkedin: string;
+  @Input() linkedin: string = ""
   @Input() show_linkedin: boolean = false;
-  @Input() mail: string;
+  @Input() mail: string = ""
   @Input() show_mail: boolean = false;
 
   @Input() target: string = '_blank';

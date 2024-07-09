@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { DateFormatType } from 'src/app/pipes/date-format.pipe';
 import { IStats } from '../models/stats.model';
 import { PostStatsSvc } from '../services/stats.service';
+import { DateFormatType } from '../../../../pipes/date-format.pipe';
 
 @Component({
   selector: 'app-post-stats-component',
@@ -11,11 +11,11 @@ import { PostStatsSvc } from '../services/stats.service';
 })
 export class PostStatsComponent implements OnInit
 {
-  @Input() id: number
-  @Input() stats: IStats
+  @Input() id: any
+  @Input() stats: IStats | null = null
   
   dateFormatType = DateFormatType
-  isLoading: boolean
+  isLoading: boolean | null = null
 
   constructor(
       private router: Router
@@ -27,7 +27,7 @@ export class PostStatsComponent implements OnInit
   ngOnChanges( changes: SimpleChanges ): void
   {
     if ( 'id' in changes) {
-      this.id = changes.id.currentValue
+      this.id = changes['id'].currentValue
       if( this.id ) this.get()
     }
   }
@@ -35,7 +35,7 @@ export class PostStatsComponent implements OnInit
   async get()
   {
     this.isLoading = true
-    const { response } = await this.postStatsSvc.getQs( this.id )
+    const { response } = await this.postStatsSvc.getQs( Number(this.id) )
     this.stats = response
     this.isLoading = false
   }

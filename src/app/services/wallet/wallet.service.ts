@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { IUser } from 'src/app/models/user.model';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
 import { ApiService } from '../api.service';
+import { IUser } from '../../models/user.model';
+import { CryptoCurrency } from '../../models/wallet/currency.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +23,11 @@ export class WalletService {
     const formData = new FormData();
     
     // Selling
-    formData.append('selling', assetOrigin.currency );
+    formData.append('selling', assetOrigin.currency ?? ''); // Use nullish coalescing operator to provide a default value ('' in this case) if assetOrigin.currency is undefined
     formData.append('amountSell', assetOrigin.amount + '' );
 
     // Buying
-    formData.append('buying', assetDestiny.currency );
+    formData.append('buying', assetDestiny.currency ?? ''); 
     formData.append('amountBuy', assetDestiny.amount + '' );
     
     return ( await this.api._createData( 'wallet/exchange', formData )).toPromise();
@@ -40,7 +38,7 @@ export class WalletService {
     currency: string,
     amount: number,
     returnBalance: boolean = true,
-    user: IUser = null
+    user: IUser
   ) {
     const formData = new FormData();
 
@@ -48,7 +46,7 @@ export class WalletService {
       formData.append( 'asset', currency )
       formData.append( 'amount', ( amount || '' ) + '' )
       formData.append( 'returnBalance', returnBalance ? '1' : '0' )
-      formData.append( 'user', !user ? null : JSON.stringify( user ))
+      formData.append('user', user ? JSON.stringify(user) : '');
 
       await this.api.utilities.showLoading()
       const response = ( await this.api._createData('wallet/payments/send', formData)).toPromise()

@@ -1,0 +1,14 @@
+<ion-item lines="none" class="ion-no-padding search-product keys-dropdown">
+  <div class="avatar_dropdown" slot="start">
+    <ion-img *ngIf="!data?.imageURL" src="assets/icon/svg/default_product.svg"
+             class="default-avatar"></ion-img>
+    <ion-img *ngIf="data?.imageURL" [src]="data?.imageURL"></ion-img>
+  </div>
+  <div class="info">
+    <div class="search-title">{{data?.title}}</div>
+    <div class="font_texto_14 search-description">{{data?.description}}</div>
+    <div class="search-button">
+      <ion-button (click)="sendSearchContactRequest()">Pide precio gratis</ion-button>
+    </div>
+  </div>
+</ion-item>

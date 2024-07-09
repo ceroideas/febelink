@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { UtilitiesService } from '../utilities.service';
@@ -16,15 +16,12 @@ export class AuthenticationService {
   authenticationState = new BehaviorSubject(false);
 
   constructor(
-    private storage: Storage
-    , private utilities: UtilitiesService
+     private utilities: UtilitiesService
     , private platform: Platform
     , private router:Router
     , private translateService: TranslateService
     ) {
-    this.platform.ready().then(() => {
       this.checkUserData();
-    });
   }
 
     /**

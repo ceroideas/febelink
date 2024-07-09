@@ -1,8 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, first, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { UtilitiesService } from './utilities.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -10,6 +9,8 @@ import { AlertController, Platform } from '@ionic/angular';
 import { UnreadMessages } from '../models/unreadMessages';
 import { TranslateConfigService } from './translate/translate-config.service';
 import { ILang, ILangDEFAULTS } from '../models/langs.model';
+import { environment } from '../../environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ import { ILang, ILangDEFAULTS } from '../models/langs.model';
 export class ApiService {
   public userLogged: EventEmitter<any> = new EventEmitter();
   public refreshTab: EventEmitter<any> = new EventEmitter();
-
+  sessionStorage = document.defaultView?.sessionStorage;
   constructor(
     public alertController: AlertController,
     private http: HttpClient,
@@ -26,9 +27,17 @@ export class ApiService {
     private authenticationService: AuthenticationService,
     public translateSvc: TranslateConfigService,
     private platform: Platform,
-  ) {}
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.sessionStorage = this.sessionStorage ;
+    } else {
+      // Implementación alternativa para el servidor
+      this.sessionStorage  = undefined;
+    }
+  }
 
-  verifiedChangePassword(token) {
+  verifiedChangePassword(token: any) {
     const formData = new FormData();
     formData.append('token', token);
     // return this._createData('update/register', formData);
@@ -42,7 +51,7 @@ export class ApiService {
     );;
   }
 
-  updatePasswornd(params) {
+  updatePasswornd(params: any) {
     const formData = new FormData();
     formData.append('token', params.token);
     formData.append('password', params.password);
@@ -57,8 +66,8 @@ export class ApiService {
     );;
   }
   login(
-    params,
-    endpoint,
+    params: any,
+    endpoint: any,
     firstLogin?: boolean,
     redirect?: string
   ): Observable<any> {
@@ -151,19 +160,31 @@ export class ApiService {
   }
 
   async _createData(endpoint: string, data: any = new FormData()) {
-    let token;
-    await this.utilities.getAccessTokenInfo().then((tokenInfo) => {
-      token = tokenInfo ? tokenInfo.access_token : null;
-    });
+
+    let token
+    if (this.sessionStorage?.getItem('accessTokenInfo') !== undefined && this.sessionStorage?.getItem('accessTokenInfo') !== null)
+    //@ts-ignore
+    token  =JSON.parse( this.sessionStorage?.getItem('accessTokenInfo'))
+    let httpOptions 
+    if ( token === undefined || token === null){
+      httpOptions = {
+        withCredentials: true,
+      };
+    } else {
+      httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token.access_token}`,
+        }),
+        withCredentials: true,
+      };
+  
+    }
 
     const lang = await this.translateSvc.getLanguage();
-
     //perform the API call
   
     return this.http
-      .post<any>(environment.API_URL_AUTH + endpoint, data, {
-        headers: { Authorization: `Bearer ${token}`, Lang: lang },
-      })
+      .post<any>(environment.API_URL_AUTH + endpoint, data, httpOptions)
       .pipe(
         map((res: any) => {
           return res;
@@ -178,7 +199,7 @@ export class ApiService {
    * Recuperar contraseña y enviar email
    * @param email
    */
-  public async recuperarContraseña(email, lang: string) {
+  public async recuperarContraseña(email:string, lang: string) {
     const formData = new FormData();
     formData.append('email', email);
     formData.append('lang', lang);
@@ -193,11 +214,10 @@ export class ApiService {
    * Guardamos el token de registro de las notificaciones push
    * @param tokenRegistro
    */
-  public async guardarTokenDeRegistro(tokenRegistro) {
+  public async guardarTokenDeRegistro(tokenRegistro: any) {
     const formData = new FormData();
     formData.append('registerToken', tokenRegistro);
     
-    console.log(this.platform)
 
 
     let plataform;
@@ -205,15 +225,12 @@ export class ApiService {
       this.platform.is('ios')
       || this.platform.is('android')) {
         plataform = this.utilities.getPlatform()
-  } else {
-    plataform = 'desktop'
-  }
-   
-  formData.append('platform', plataform);
-    // console.log(tokenRegistro)
-    // console.log(formData)
-    // console.log("==========formData")
-    // return this._createData('guardar-token', formData);
+    } else {
+      plataform = 'desktop'
+    }
+    
+    formData.append('platform', plataform);
+    
     const responseObs: Observable<any> = await this._createData(
       'guardar-token',
       formData
@@ -226,7 +243,7 @@ export class ApiService {
   //  * SuspendedUser
   //  * @param user_id
   //  */
-  // public suspendedUser(user_id) {
+  // public suspendedUser(user_id:number) {
   //   console.log('ytsgdfgd')
   //   const formData = new FormData();
   //   formData.append('user_id', user_id);
@@ -238,7 +255,7 @@ export class ApiService {
   /**
    * Saltar guia
    */
-  public noShowAgain(params): any {
+  public noShowAgain(params: any): any {
     return this._createData('saltar-guia', params);
   }
 
@@ -246,7 +263,7 @@ export class ApiService {
    * Añadir a favoritos una demanda.
    * @param params
    */
-  favouriteDemand(params) {
+  favouriteDemand(params: any) {
     const formData = new FormData();
     formData.append('id', params.id);
     return this._createData('favorite', formData);
@@ -256,7 +273,7 @@ export class ApiService {
    * Eliminar de favoritos una demanda.
    * @param params
    */
-  unFavouriteDemand(params) {
+  unFavouriteDemand(params: any) {
     const formData = new FormData();
     formData.append('id', params.id);
     return this._createData('unfavorite', formData);
@@ -273,7 +290,7 @@ export class ApiService {
    * Borrar demanda a partir de su id
    * @param id
    */
-  public borrarDemanda(id) {
+  public borrarDemanda(id: any) {
     const formData = new FormData();
     formData.append('id', id);
 
@@ -284,7 +301,7 @@ export class ApiService {
    * Editar una demanda
    * @param params
    */
-  public editarDemanda(params) {
+  public editarDemanda(params: any) {
     const formData = new FormData();
     formData.append('id', params.id);
     formData.append('nombre', params.nombre);
@@ -307,14 +324,14 @@ export class ApiService {
    * @param file
    */
   public publicarDemanda(
-    nombre,
-    descripcion,
-    sector,
-    sub_sector,
-    ofertas_restantes,
-    file,
-    userInfo?,
-    userId?
+    nombre: any,
+    descripcion: any,
+    sector: any,
+    sub_sector: any,
+    ofertas_restantes: any,
+    file: any,
+    userInfo?: any,
+    userId?: any,
   ) {
     const formData = new FormData();
     formData.append('descripcion', descripcion);
@@ -348,11 +365,11 @@ export class ApiService {
    * @param subsector
    */
   public enviarNotificacionAOfertantes(
-    title,
-    desc,
-    sector,
-    subsector,
-    searchId?: string
+    title: any,
+    desc: any,
+    sector: any,
+    subsector: any,
+    searchId?: any
   ) {
     const formData = new FormData();
     formData.append('mtitle', title);
@@ -372,14 +389,14 @@ export class ApiService {
    * @param respuesta
    * @param id_oferta
    */
-  public responderOferta(respuesta, id_oferta) {
+  public responderOferta(respuesta:any, id_oferta:any) {
     const formData = new FormData();
     formData.append('respuesta', respuesta);
     formData.append('id_oferta', id_oferta);
     return this._createData('responder-oferta', formData);
   }
 
-  public subscribe(subscription_id, token) {
+  public subscribe(subscription_id:any, token:any) {
     const formData = new FormData();
     formData.append('subscription_id', subscription_id);
     formData.append('token', token);
@@ -393,7 +410,7 @@ export class ApiService {
    * @param id_oferta
    * @param respuesta
    */
-  public enviarNotificationOfertaRespondida(title, desc, id_oferta, respuesta) {
+  public enviarNotificationOfertaRespondida(title: string, desc: string, id_oferta: string, respuesta: any) {
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
@@ -412,7 +429,7 @@ export class ApiService {
     return responseObs.pipe(first()).toPromise();
   }
 
-  public swapSubscription(stripe_plan) {
+  public swapSubscription(stripe_plan: any) {
     const formData = new FormData();
     formData.append('subscriptionId', stripe_plan);
     return this._createData('swap-subscription', formData);
@@ -451,7 +468,7 @@ export class ApiService {
    * Obtener los subsectores a partir de un sector id
    * @param id
    */
-  public obtenerSubSectores(id) {
+  public obtenerSubSectores(id:any) {
     return this._getData('sub-sectores/' + id);
   }
 
@@ -466,17 +483,17 @@ export class ApiService {
    * Obtener los sectores de un perfil a partir de id
    * @param id
    */
-  public obtenerSectoresPerfil(id) {
+  public obtenerSectoresPerfil(id: any) {
     return this._getData('sectores-perfil/' + id);
   }
 
-  public suspendedUser(user_id) {
+  public suspendedUser(user_id: any) {
     const formData = new FormData();
     formData.append('user_id', user_id);
     return this._createData('suspended-user', formData);
   }
 
-  public obtenerSubSectoresPerfil(id) {
+  public obtenerSubSectoresPerfil(id: any) {
     return this._getData('sub-sectores-perfil/' + id);
   }
 
@@ -484,7 +501,7 @@ export class ApiService {
    * Comprobar si existe un usuario a partir de su nombre (único)
    * @param name
    */
-  public existeUsuario(name) {
+  public existeUsuario(name: string) {
     return this._getData('existe-usuario/' + name);
   }
 
@@ -492,21 +509,21 @@ export class ApiService {
     return this._getData('get-subscriptions');
   }
 
-  public hasSubscription(userId) {
+  public hasSubscription(userId: number) {
     return this._getData(`has-subscription/${userId}`);
   }
 
   /**
    * Search by keys
    */
-  public searchByKeys(key) {
+  public searchByKeys(key: string) {
     return this._getData('buscar-keys?keys=' + key);
   }
 
   /**
    * Get sectors by keys
    */
-  public getSectorsByKeys(keyword: string, level?: string) {
+  public getSectorsByKeys(keyword: any, level?: string) {
     return this._getData(
       `sectores-keys?keys=${keyword}` + (level ? `&level=${level}` : '')
     );
@@ -515,7 +532,7 @@ export class ApiService {
   /**
    * Get Bidders by score
    */
-  public getBiddersByScore(id) {
+  public getBiddersByScore(id:number) {
     return this._getData('ofertantes-sector/' + id);
   }
 
@@ -527,14 +544,14 @@ export class ApiService {
     return this._getData('get-opinions-types');
   }
 
-  public getSubSectores(id) {
+  public getSubSectores(id:number) {
     return this._getData('get-sub-sectores-perfil/' + id);
   }
 
   /**
    * Obtener localidades
    */
-  public obtenerLocalidades(id_provincia) {
+  public obtenerLocalidades(id_provincia: any) {
     const formData = new FormData();
     formData.append('id_provincia', id_provincia);
 
@@ -547,7 +564,7 @@ export class ApiService {
    * @param desc
    * @param name
    */
-  public enviarNotificacionPedirRecomendacion(title, desc, name) {
+  public enviarNotificacionPedirRecomendacion(title:string, desc:string, name:string) {
     const formData = new FormData();
     formData.append('mtitle', title);
     formData.append('mdesc', desc);
@@ -568,25 +585,25 @@ export class ApiService {
    * @param pass
    */
   public editarOfertanteYContra(
-    nick,
-    email,
-    descripcion,
-    telefono,
+    nick: string,
+    email: string,
+    descripcion: string,
+    telefono: string,
 
-    direccion,
-    direccion_resto,
-    country,
-    state,
-    department,
-    locality,
-    place_id,
+    direccion: string,
+    direccion_resto: string,
+    country: string,
+    state: string,
+    department: string,
+    locality: string,
+    place_id: string,
 
-    sector,
-    sub_sector,
-    dni,
-    link_url,
-    imagen,
-    pass
+    sector: string,
+    sub_sector: string,
+    dni: string,
+    link_url: string,
+    imagen: string,
+    pass: string
   ) {
     const formData = new FormData();
     formData.append('nick', nick);
@@ -624,24 +641,24 @@ export class ApiService {
    * @param imagen
    */
   public editarOfertante(
-    nick,
-    email,
-    descripcion,
-    telefono,
+    nick:string,
+    email:string,
+    descripcion:string,
+    telefono:string,
 
-    direccion,
-    direccion_resto,
-    country,
-    state,
-    department,
-    locality,
-    place_id,
+    direccion:string,
+    direccion_resto:string,
+    country:string,
+    state:string,
+    department:string,
+    locality:string,
+    place_id:string,
 
-    sector,
-    sub_sector,
-    dni,
-    link_url,
-    imagen
+    sector:string,
+    sub_sector:string,
+    dni:string,
+    link_url:string,
+    imagen:string,
   ) {
     const formData = new FormData();
     formData.append('nick', nick);
@@ -671,7 +688,7 @@ export class ApiService {
    * @param texto
    * @param id_demandante
    */
-  public publicarOpinion(type_id, subsector_id, to_user_id) {
+  public publicarOpinion(type_id:string, subsector_id:string, to_user_id:string) {
     const formData = new FormData();
     formData.append('type_id', type_id);
     formData.append('subsector_id', subsector_id);
@@ -686,7 +703,7 @@ export class ApiService {
    * @param precio
    * @param id_demanda
    */
-  public realizarOferta(nombre, descripcion, precio, id_demanda) {
+  public realizarOferta(nombre:string, descripcion:string, precio:string, id_demanda:string) {
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
@@ -700,7 +717,7 @@ export class ApiService {
    * @param id_usuario
    * @param id_oferta
    */
-  public obtenerDemandasRelacionadas(id_usuario, id_oferta) {
+  public obtenerDemandasRelacionadas(id_usuario:number, id_oferta:number) {
     return this._getData(
       'demandas-relacionadas/' + id_usuario + '/' + id_oferta
     );
@@ -710,7 +727,7 @@ export class ApiService {
    * Obtener un perfil a partir de id
    * @param id
    */
-  public obtenerPerfil(id) {
+  public obtenerPerfil(id:any) {
     return this._getData('obtener-perfil/' + id);
   }
 
@@ -718,7 +735,7 @@ export class ApiService {
    * Obtener las opiniones de un perfil segun id
    * @param id
    */
-  public opinionesPerfil(id) {
+  public opinionesPerfil(id:any) {
     return this._getData('opiniones-perfil/' + id);
   }
 
@@ -726,7 +743,7 @@ export class ApiService {
    * Comprobar si existen opiniones
    * @param id_demandante
    */
-  public comprobarOpinion(id_demandante) {
+  public comprobarOpinion(id_demandante:number) {
     return this._getData('comprobar-opiniones/' + id_demandante);
   }
 
@@ -741,7 +758,7 @@ export class ApiService {
    * Obtener las demandas del demandate a partir de su id
    * @param id
    */
-  public obtenerDemandasDemandante(id) {
+  public obtenerDemandasDemandante(id:any) {
     return this._getData('demandas-demandante/' + id);
   }
 
@@ -756,7 +773,7 @@ export class ApiService {
    * Borrar una oferta
    * @param id
    */
-  public borrarOferta(id) {
+  public borrarOferta(id:any) {
     return this._getData('borrar-oferta/' + id);
   }
 
@@ -771,7 +788,7 @@ export class ApiService {
    * Obtener demanda a partir de id
    * @param id
    */
-  public obtenerDemanda(id) {
+  public obtenerDemanda(id:number) {
     return this._getData('demanda/' + id);
   }
 
@@ -782,7 +799,7 @@ export class ApiService {
    * @param password
    * @param password_confirmation
    */
-  public registro(params): any {
+  public registro(params: any): any {
     const formData = new FormData();
     formData.append('nick', params.nick);
     formData.append('sector', params.sector);
@@ -801,16 +818,16 @@ export class ApiService {
   }
 
   handleError(error: any, caught: Observable<any>, endpoint: string) {
-    switch (error.status) {
-      case 401: {
-        this.router.navigate(['login']);
-        this.utilities.showToast('Sesión expirada');
+    // switch (error.status) {
+    //   case 401: {
+    //     // this.router.navigate(['login']);
+    //     // this.utilities.showToast('Sesión expirada');
+    //     // return throwError(error);
+    //   }
+    //   default: {
         return throwError(error);
-      }
-      default: {
-        return throwError(error);
-      }
-    }
+    //   }
+    // }
   }
 
   /**
@@ -821,20 +838,20 @@ export class ApiService {
       return tokenInfo?.access_token;
     });
   }
-  public getAllMessages(params) {
+  public getAllMessages(params: any) {
     const formData = new FormData();
     formData.append('room_id', params);
     return this._createData('getallmessages', formData);
   }
 
-  public getChatOferta(id_demanda, id_ofertante) {
+  public getChatOferta(id_demanda: string, id_ofertante:string) {
     const formData = new FormData();
     formData.append('id_demanda', id_demanda);
     formData.append('id_ofertante', id_ofertante);
     return this._createData('getchatoferta', formData);
   }
 
-  public setMessage(user_id, person_id, message, room, timecreated) {
+  public setMessage(user_id: string, person_id: string, message: string, room: string, timecreated:any) {
     const formData = new FormData();
     formData.append('user_id', user_id);
     formData.append('person_id', person_id);
@@ -844,13 +861,13 @@ export class ApiService {
     return this._createData('setmessage', formData);
   }
 
-  public openChat(room) {
+  public openChat(room: any) {
     const formData = new FormData();
     formData.append('room', room);
     return this._createData('openchat', formData);
   }
 
-  public closeChat(room) {
+  public closeChat(room: any) {
     const formData = new FormData();
     formData.append('room', room);
     return this._createData('closechat', formData);
@@ -863,9 +880,8 @@ export class ApiService {
     return this._createData('notify-new-message', formData);
   }
 
-  unreadChatMessages: BehaviorSubject<UnreadMessages[]> = new BehaviorSubject(
-    null
-  );
+  unreadChatMessages: BehaviorSubject<UnreadMessages[]> = new BehaviorSubject<UnreadMessages[]>(null as unknown as UnreadMessages[]);
+
   public async getUnreadMessages() {
     this.unreadChatMessages.next(
       await (await this._getData('getUnreadMessages')).toPromise()
@@ -885,7 +901,7 @@ export class ApiService {
    * Comprobar si existe un usuario con un dni que le pasamos por parámetro
    * @param dni
    */
-  public existeDNI(dni) {
+  public existeDNI(dni: string) {
     // Agrego esta linea porque sino cuando quiere borrar
     // su dni, no pasa párametro y provoca error
     dni = dni ? dni : 'null';
@@ -896,7 +912,7 @@ export class ApiService {
    * Comprobar si existe un usuario con un email que le pasamos por parámetro
    * @param email
    */
-  public existeEmail(email) {
+  public existeEmail(email: string) {
     return this._getData('existe-usuario-email/' + email);
   }
 
@@ -904,7 +920,7 @@ export class ApiService {
    * To verify Email account and save on user info
    * @param email
    */
-  public async verifyEmail(id, email) {
+  public async verifyEmail(id:number, email:string) {
     const lang = (<ILang>await ILangDEFAULTS.getCurrentLang(this.translateSvc))
       .lang;
     return await this._getData(`verify-email/${id}/${lang}/${email}`);
@@ -914,7 +930,7 @@ export class ApiService {
    * To verify Email account and save on user info
    * @param email
    */
-  public async emailVerified(id) {
+  public async emailVerified(id:any) {
     return await this._getData('email-verified/' + id);
   }
 
@@ -928,7 +944,7 @@ export class ApiService {
   /**
    * To Verify 2FA code
    */
-  public async verify2FAcode(code) {
+  public async verify2FAcode(code:string) {
     const data = new FormData();
     data.append('code', code);
     return (await this._createData('verify2FAcode', data)).toPromise();

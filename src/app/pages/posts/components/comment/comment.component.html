@@ -121,7 +121,8 @@
       ></ion-img>
   </div>
   <div class="reply-input">
-    <ion-input #inComment type="text" placeholder="Responder..." class="padding-input-12 textarea-comment" (keyup.enter)="comment(inComment.value)"></ion-input>
+    <ion-input #inComment type="text" placeholder="Responder..." class="padding-input-12 textarea-comment" (keyup.enter)="comment(inComment?.value ? inComment?.value : '')"
+    ></ion-input>
   </div>
 </div>
 

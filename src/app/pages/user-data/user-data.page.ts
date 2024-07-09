@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {IUser} from 'src/app/models/user.model';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {IUser} from '../../models/user.model';
+import {UserSessionSvc} from '../../services/user-session.service';
 import {UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, FormGroup} from '@angular/forms';
 import {UserDataService} from './Services/user-data.service';
 import {FilePickType, IFile} from '../../components/file-picker/models/file.model';
 import {ToastSvc} from '../../services/toast.service';
+import { KeywordService } from '../../admin/keyword/services/keyword.service';
 
 @Component({
   selector: 'app-user-data',
@@ -16,7 +17,7 @@ export class UserDataPage implements OnInit {
   public password: string = "";
   public repeatPass: string = "";
   public description: string = "";
-
+ //@ts-ignore
   form: UntypedFormGroup;
   public nameuser: string = '';
   public passIgual: boolean = true;
@@ -27,34 +28,43 @@ export class UserDataPage implements OnInit {
 
 
 
-  curUser: IUser;
+  curUser: IUser | undefined;
+   //@ts-ignore
   form2: UntypedFormGroup;
   public name: string = "";
   public dni: string = "";
   public empresa: string = "";
+  public ciudad: string = "";
+  public provincia: string = "";
   public direccion: string = "";
   public telefono: string = "";
   public web: string = "";
   public idioma: string = "";
   public tarjetaCredito: string = "";
   public numCuenta: string = "";
+  provincianame: string = ""
 
-
-  avatarUrl: string;
-  userName: string;
-  iFile: IFile;
+  avatarUrl: string = "";
+  userName: string = "";
+  //@ts-ignore
+  iFile: IFile ;
   filePickType = FilePickType;
-
+  locations: any = []
   constructor(
     public sessionSvc: UserSessionSvc,
     private formBuilder: UntypedFormBuilder,
     private formBuilder2: UntypedFormBuilder,
     private userDataService: UserDataService,
-    private toastSvc: ToastSvc
+    private toastSvc: ToastSvc,
+    private keywordService: KeywordService,
   ) {
   }
 
   ngOnInit() {
+    this.keywordService.getLocationKeywords().then(async (response: any) => {
+      this.locations =response.response;
+    })
+    this.userDataService.getUserInfo().then()
 
     this.form = new FormGroup({
       
@@ -69,6 +79,7 @@ export class UserDataPage implements OnInit {
       dni: new FormControl("", [Validators.nullValidator]),
       empresa: new FormControl("", [Validators.nullValidator]),
       direccion: new FormControl("", [Validators.nullValidator]),
+      ciudad: new FormControl("", [Validators.nullValidator]),
       telefono: new FormControl("", [Validators.nullValidator]),
       web: new FormControl("", [Validators.nullValidator]),
       idioma: new FormControl("", [Validators.nullValidator]),
@@ -77,33 +88,25 @@ export class UserDataPage implements OnInit {
       
     })
 
-    console.log(this.form)
 
     this.userDataService.getUserInfo().then(
-      (data) => {
-          // this.form = this.formBuilder.group({
-          //   username: data.response.username,
-          //   repeatPass: [''],
-          //   password: [''],
-          //   description: data.response.description,
-          // });
-
-
-        
-        this.userName = data.response.username;
-        this.avatarUrl = data.response.avatarImageURL;
-        this.form.controls['username'].setValue(data?.response.username) 
-        this.form.controls['description'].setValue(data?.response.description) 
-
-        this.form2.controls['name'].setValue(data?.response.name) 
-        this.form2.controls['dni'].setValue(data?.response.dni) 
-        this.form2.controls['empresa'].setValue(data?.response.business) 
-        this.form2.controls['direccion'].setValue(data?.response.address) 
-        this.form2.controls['telefono'].setValue(data?.response.phoneNumber) 
-        this.form2.controls['web'].setValue(data?.response.web) 
-        this.form2.controls['idioma'].setValue(data?.response.lang) 
-        this.form2.controls['tarjeta_credito'].setValue(data?.response.creditCard) 
-        this.form2.controls['num_cuenta'].setValue(data?.response.bankAccountNumber) 
+      (datarResponse: any) => {
+        let data = datarResponse.response
+        this.userName = data.username;
+        this.avatarUrl = data.avatarImageURL;
+        this.provincia = data.locationId
+        this.form?.controls['username'].setValue(data?.username) 
+        this.form?.controls['description'].setValue(data?.description) 
+        this.form2?.controls['name'].setValue(data?.name) 
+        this.form2?.controls['dni'].setValue(data?.ID) 
+        this.form2?.controls['empresa'].setValue(data?.business) 
+        this.form2?.controls['direccion'].setValue(data?.address) 
+        this.form2?.controls['ciudad'].setValue(data?.city) 
+        this.form2?.controls['telefono'].setValue(data?.phoneNumber) 
+        this.form2?.controls['web'].setValue(data?.web) 
+        this.form2?.controls['idioma'].setValue(data?.lang) 
+        this.form2?.controls['tarjeta_credito'].setValue(data?.creditCard) 
+        this.form2?.controls['num_cuenta'].setValue(data?.bankAccountNumber) 
        
       });
 
@@ -115,7 +118,17 @@ export class UserDataPage implements OnInit {
   }
   submitForm() {
   } 
+
+  onSelect(hero: any): void {
+    console.log(hero)
+  }
+  onSelectChange($event: any){
+    this.provincia = $event.target.value
+
+    this.provincianame = this.locations.filter((location:any)=> location.id === Number($event.target.value))[0].title
+  }
   async getUser() {
+
     this.curUser = await this.sessionSvc.get();
 
   }
@@ -126,6 +139,7 @@ export class UserDataPage implements OnInit {
     this.name = this.form2?.get('name')?.value;
     this.dni = this.form2?.get('dni')?.value;
     this.empresa = this.form2?.get('empresa')?.value;
+    this.ciudad = this.form2?.get('ciudad')?.value;
     this.direccion = this.form2?.get('direccion')?.value;
     this.telefono = this.form2?.get('telefono')?.value;
     this.web = this.form2?.get('web')?.value;
@@ -139,6 +153,9 @@ export class UserDataPage implements OnInit {
         ID: this.dni,
         business: this.empresa,
         address: this.direccion,
+        city: this.ciudad,
+        location: this.provincianame,
+        locationId:this.provincia,
         phoneNumber: this.telefono,
         web: this.web,
         lang: this.idioma,
@@ -157,7 +174,7 @@ export class UserDataPage implements OnInit {
     }
   }
   userDetail(){
-    sessionStorage.setItem('productId', String(this.curUser.id))
+    sessionStorage.setItem('productId', String(this.curUser?.id))
   }
   async onClickSubmit() {
 
@@ -206,11 +223,13 @@ export class UserDataPage implements OnInit {
     }
   }
 
-  onImgError(event) {
+  onImgError(event: any) {
     event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
 
-  fileSelected(file: IFile) {
+  fileSelected(file: any) {
+    console.log(file)
+    this.avatarUrl = file.src
     this.iFile = file;
   }
 }

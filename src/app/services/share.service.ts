@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Platform, PopoverController } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
 import { SharePopoverComponent } from '../components/share-popover/share-popover.component';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+// import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class ShareService {
   constructor(
     private platform: Platform,
     private popCtrl: PopoverController,
-    private socialSharing: SocialSharing
+    // private socialSharing: SocialSharing
   ) {}
 
   public async exec(
@@ -19,36 +19,39 @@ export class ShareService {
     route: string,
     title: string,
     message: string,
-    image,
+    image: any,
     id_oracle?: number
   ): Promise<boolean> {
     const url = `${environment.WEB_URL}${route}`;
 
-    message = !message ? null : ' \n\n-Febelink-\n';
 
-    image = !(await this.isImage(image)) ? null : image;
+    message = message !== null ? `${message} \n\n-Febelink-\n` : ''; // Default to empty string if message is null
 
-    if (this.platform.is('cordova') && !id_oracle)
-      return this.shareNative(url, title, message, image);
-    else return this.shareWeb(ev, url, title, message, image, id_oracle);
+    image = await this.isImage(image) ? image : null; // Allow image to be null
+
+    return this.shareWeb(ev, url, title, message, image, id_oracle);
+  
+    // if (this.platform.is('cordova') && !id_oracle)
+    //   return this.shareNative(url, title, message, image);
+    // else return this.shareWeb(ev, url, title, message, image, id_oracle);
   }
 
   /**
    * Share Android | iOS
    */
-  private async shareNative(
-    url: string,
-    title: string,
-    desc: string,
-    image?: string
-  ): Promise<boolean> {
-    return new Promise((resolve) =>
-      this.socialSharing
-        .share(title, desc, image, url)
-        .then((result) => resolve(true))
-        .catch((error) => resolve(false))
-    );
-  }
+  // private async shareNative(
+  //   url: string,
+  //   title: string,
+  //   desc: string,
+  //   image?: string
+  // ): Promise<boolean> {
+  //   return new Promise((resolve) =>
+  //     this.socialSharing
+  //       .share(title, desc, image, url)
+  //       .then((result) => resolve(true))
+  //       .catch((error) => resolve(false))
+  //   );
+  // }
 
   /**
    * Share Web
@@ -76,7 +79,7 @@ export class ShareService {
   }
 
   // Check if image exist
-  private isImage(src): Promise<boolean> {
+  private isImage(src:any): Promise<boolean> {
     return new Promise((resolve) => {
       var image = new Image();
       image.onerror = () => resolve(false);

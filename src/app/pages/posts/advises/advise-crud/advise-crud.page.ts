@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {iWYSIWYG} from 'src/app/components/wysiwyg/models/wysiwyg.model';
+import {iWYSIWYG} from './../../../../components/wysiwyg/models/wysiwyg.model';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
@@ -9,16 +9,16 @@ import {
 import {IAdviseFull, ITopic} from '../models/advises.model';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '../../../../components/file-picker/services/file.service';
-import {ToastSvc} from 'src/app/services/toast.service';
+import {ToastSvc} from './../../../../services/toast.service';
 import {AdviseService} from '../services/advises.service';
-import {SectorsComponent} from 'src/app/components/sectors/sectors.component';
-import {AlertSvc} from 'src/app/services/alert.service';
-import {LangBtnComponent} from 'src/app/components/langs/btn/btn.component';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {FilePickType, IFile} from 'src/app/components/file-picker/models/file.model';
-import {UserService} from 'src/app/services/user.service';
-import {RouteSvc} from 'src/app/services/route.service';
+import {SectorsComponent} from './../../../../components/sectors/sectors.component';
+import {AlertSvc} from './../../../../services/alert.service';
+import {LangBtnComponent} from './../../../../components/langs/btn/btn.component';
+import {LoadingSvc} from './../../../../services/loading.service';
+import {UserSessionSvc} from './../../../../services/user-session.service';
+import {FilePickType, IFile} from './../../../../components/file-picker/models/file.model';
+import {UserService} from './../../../../services/user.service';
+import {RouteSvc} from './../../../../services/route.service';
 
 @Component({
   selector: 'app-post-advise-crud',
@@ -26,29 +26,30 @@ import {RouteSvc} from 'src/app/services/route.service';
   styleUrls: ['./advise-crud.page.scss'],
 })
 export class AdviseCRUDPage implements OnInit {
-  @ViewChild('sectors') sectors: SectorsComponent;
-  @ViewChild('lang') lang: LangBtnComponent;
+  @ViewChild('sectors') sectors: SectorsComponent | null = null;
+  @ViewChild('lang') lang: LangBtnComponent| null = null
 
   isLoading: boolean = false;
 
   filePickType = FilePickType;
 
-  form: UntypedFormGroup;
-  iFile: IFile;
+  form: UntypedFormGroup| null = null
+  //@ts-ignore
+  iFile: IFile
   content: iWYSIWYG = {};
 
-  id: number;
-  iAdvise: IAdviseFull;
+  id: number| null = null
+  iAdvise: IAdviseFull| null = null
 
-  id_reference: number;
-  reference: IAdviseFull;
+  id_reference: number| null = null
+  reference: IAdviseFull | null = null
 
   paramsQuery: any;
   paramsUrl: any;
 
-  hasVerifiedEmail: boolean;
+  hasVerifiedEmail: boolean | null = null
 
-  topicSelected: ITopic;
+  topicSelected: ITopic| null = null
   topics = [
     {id: null, name: 'Todos'},
     {id: 1, name: 'Política'},
@@ -76,7 +77,7 @@ export class AdviseCRUDPage implements OnInit {
     {id: 23, name: 'Animales'},
     {id: 24, name: 'Historia'},
   ]; // ToDo: HARDCODED! Fetch this info from DB
-  curUser;
+  curUser: any;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -122,6 +123,7 @@ export class AdviseCRUDPage implements OnInit {
     this.id = id;
     const {response, error} = await this.adviseSvc.get(id);
     this.iAdvise = response;
+    //@ts-ignore
     if (error || !(await this.sessionSvc.isUser(this.iAdvise?.uid))) {
       this.kickOff();
       return;
@@ -174,13 +176,13 @@ export class AdviseCRUDPage implements OnInit {
   }
 
   updateForm() {
-    this.form.patchValue({
+    this.form?.patchValue({
       topic: this.iAdvise?.topic || '',
       title: this.iAdvise?.title || '',
       subtitle: this.iAdvise?.subtitle || '',
       summary: this.iAdvise?.summary || '',
     });
-
+//@ts-ignore
     this.topicSelected = this.topics.find(elem =>
       elem.id === this.iAdvise?.topic
     );
@@ -193,7 +195,11 @@ export class AdviseCRUDPage implements OnInit {
   clear() {
     this.iAdvise = null;
     this.content.html = '';
+//@ts-ignore
+
     this.fileSelected(null);
+//@ts-ignore
+
     this.form.reset();
     this.id_reference = null;
   }
@@ -201,12 +207,14 @@ export class AdviseCRUDPage implements OnInit {
   fileSelected(file: IFile) {
     this.iFile = file;
     if (file == null && this.iAdvise) {
-      this.iAdvise.media_name = null;
-      this.iAdvise.media_ext = null;
-    }
+      // Assign undefined instead of null
+      this.iAdvise.media_name = undefined;
+      this.iAdvise.media_ext = undefined;
+  }
   }
 
   removeFileSelected() {
+    //@ts-ignore
     this.iFile = null;
   }
 
@@ -228,7 +236,7 @@ export class AdviseCRUDPage implements OnInit {
       this.router.navigateReload(['oracles']);
     }
   }
-  removeAccents(inputString) {
+  removeAccents(inputString: any) {
     // Normalize accented characters to their base form
     const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return normalizedString;
@@ -238,16 +246,16 @@ export class AdviseCRUDPage implements OnInit {
 
     let lower = ''
     let searchText
-    searchText = this.iAdvise.title.replace(new RegExp(' ', 'g'), '-');
+    searchText = this.iAdvise?.title.replace(new RegExp(' ', 'g'), '-');
     searchText= this.removeAccents(searchText)
     lower = searchText.toLowerCase();
       
-    this.router.navigate([`posts/oracle/${this.iAdvise.id}/`+ lower]);
+    this.router.navigate([`posts/oracle/${this.iAdvise?.id}/`+ lower]);
 
   }
 
   async check(): Promise<boolean> {
-    const {title} = this.form.value;
+    const {title} = this.form?.value;
 
     /* if( title.length < 4 ) {
       this.toastSvc.show( 'pages.posts.advises.create.error.title', true )
@@ -287,12 +295,13 @@ export class AdviseCRUDPage implements OnInit {
   async shareAdvise() {
     await this.loadingSvc.show();
 
-    const {title, subtitle, summary, topic} = this.form.value;
+    const {title, subtitle, summary, topic} = this.form?.value;
 
     const opts: IAdviseFull = {
       topic: topic.id,
       lang: this.lang?.langSelected?.id || 1,
 
+      //@ts-ignore
       id_advise: this.id_reference,
 
       title: title,

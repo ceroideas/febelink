@@ -11,11 +11,16 @@
       ></ion-img>
   </div>
   <div class="all-comments-input">
-    <ion-input #inComment type="text" placeholder="Dejar comentario" class="padding-input-12 textarea-comment" (keyup.enter)="comment(inComment.value)"></ion-input>
+    <ion-input #inComment type="text" placeholder="Dejar comentario" class="padding-input-12 textarea-comment" 
+    (keyup.enter)="comment(inComment?.value ?? '')"
+
+    ></ion-input>
   </div>
 </div>
 
-<ng-container *ngIf="userComments?.length > 0 || (iComments?.length > 0 && isVisible)">
+<ng-container *ngIf="(userComments?.length ?? 0) > 0 || ((iComments?.length ?? 0) > 0 && isVisible)"
+>
+
   <app-loading
   *ngIf="isLoading"
   message="common.labelSearching"
@@ -25,7 +30,7 @@
     <!-- Comments done by user from ion-input -->
     <app-comment-component
       *ngFor="let iComment of userComments"
-      [post]="post?.id"
+      [post]="post?.id ?? 0"
       [iComment]="iComment"
       (OnDoEdit)="OnDoEdit($event)"
       (OnDeleted)="OnDeleted($event)"
@@ -34,7 +39,7 @@
     <!-- Comments from DBs -->
     <app-comment-component
       *ngFor="let iComment of iComments"
-      [post]="post?.id"
+      [post]="post?.id ?? 0"
       [iComment]="iComment"
       (OnDoEdit)="OnDoEdit($event)"
       (OnDeleted)="OnDeleted($event)"

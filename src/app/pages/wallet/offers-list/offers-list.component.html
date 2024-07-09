@@ -37,14 +37,16 @@
           <!-- Filter By Selling ASSET -->
           <ion-img
             class="btn-ic margin-end"
-            [src]="assetSvc.getImg( assetSelling?.currency, 'svg/filter.svg' )"
+            [src]="assetSvc.getImg(assetSelling?.currency ?? '', 'svg/filter.svg')"
+
             (click)="selectAsset( $event, true )"
           ></ion-img>
 
           <!-- Filter By Buying ASSET -->
           <ion-img
             class="btn-ic margin-end"
-            [src]="assetSvc.getImg( assetBuying?.currency, 'svg/filter.svg' )"
+            [src]="assetSvc.getImg(assetBuying?.currency ?? '', 'svg/filter.svg')"
+
             (click)="selectAsset( $event, false )"
           ></ion-img>
         </ion-col>
@@ -60,7 +62,8 @@
     <app-loading [isLoading]="list.isLoading" message="common.labelLoading"></app-loading>
 
     <ng-container *ngIf="!list.isLoading">
-      <div *ngIf="list?.offers?.length > 0">
+        <div *ngIf="list?.offers?.length ?? 0 > 0">
+
         <!-- Offers -->
         <ion-grid *ngIf="segment == list.type">
           <ion-row>
@@ -68,7 +71,8 @@
               <app-offers
                 [offer]="offer"
                 [isSelling]="list.type == offersType.OWN"
-                [walletParams]="walletParams"
+                [walletParams]="walletParams ?? {  }"
+
                 (OnChange)="refresh( list )"
               ></app-offers>
             </ion-col>

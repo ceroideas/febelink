@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { ILang, ILangDEFAULTS } from '../../../models/langs.model';
 
 @Component({
   selector: 'app-lang-pop',

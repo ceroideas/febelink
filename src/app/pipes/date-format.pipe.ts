@@ -4,7 +4,8 @@ import { TranslateConfigService } from '../services/translate/translate-config.s
 export enum DateFormatType {
     Date
   , TimeDate
-  , DateTime
+  , DateTime,
+  SomeValue
 }
 export enum MonthFormatType {
     Number
@@ -64,7 +65,7 @@ export class DateFormatPipe implements PipeTransform {
     }
   }
 
-  isValidDate( strDate )
+  isValidDate( strDate: any )
   {
     return !isNaN(( new Date( strDate )).getMonth() )
   }

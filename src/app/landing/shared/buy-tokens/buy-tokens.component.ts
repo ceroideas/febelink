@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ILang, ILangDEFAULTS } from '../../../models/langs.model';
+import { ApiService } from '../../../services/api.service';
+import { UtilitiesService } from '../../../services/utilities.service';
 import { UserLanding } from '../../models/user-landing';
 import { LandingService } from '../../services/landing.service';
 import { UserDataFormComponent } from '../user-data-form/user-data-form.component';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
 
 @Component({
   selector: 'app-buy-tokens',
@@ -27,9 +27,9 @@ export class BuyTokensComponent implements OnInit {
     , private translateService: TranslateConfigService
   ) { }
     
-  numTokens:number;
-  numFiat:number;
-  phaseToTokenCost:[];
+  numTokens:number = 0;
+  numFiat:number = 0;
+  phaseToTokenCost:[] | undefined;
 
   async ngOnInit() {
     this.phaseToTokenCost = await (await this.api._getData('getPhaseToTokenCost')).toPromise();
@@ -96,20 +96,20 @@ export class BuyTokensComponent implements OnInit {
         const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
 
         const formData = new FormData();
-        formData.append('nick', userLanding.nick);
-        formData.append('lastName', userLanding.lastName);
-        formData.append('email', userLanding.email);
-        formData.append('dni', userLanding.dni);
+        formData.append('nick', userLanding.nick?? '');
+        formData.append('lastName', userLanding.lastName?? '');
+        formData.append('email', userLanding.email?? '');
+        formData.append('dni', userLanding.dni?? '');
         
-        formData.append('direccion', userLanding.address);
-        formData.append('direccion_resto', userLanding.address_rest);
-        formData.append('country', userLanding.country);
-        formData.append('state', userLanding.state);
-        formData.append('department', userLanding.department);
-        formData.append('locality', userLanding.locality);
-        formData.append('place_id', userLanding.place_id);
+        formData.append('direccion', userLanding.address?? '');
+        formData.append('direccion_resto', userLanding.address_rest?? '');
+        formData.append('country', userLanding.country?? '');
+        formData.append('state', userLanding.state?? '');
+        formData.append('department', userLanding.department?? '');
+        formData.append('locality', userLanding.locality?? '');
+        formData.append('place_id', userLanding.place_id?? '');
 
-        formData.append('telefono', userLanding.phone);
+        formData.append('telefono', userLanding.phone?? '');
         formData.append('tokens_cost_euros', numFiat.toString());
         formData.append('phase_tokens', phaseTokens.toString());
         formData.append('lang', lang);
@@ -149,7 +149,7 @@ export class BuyTokensComponent implements OnInit {
     }
   }
 
-  lastInput:LastInput;
+  lastInput:LastInput | undefined;
   private saveInSession(profile: any, userLanding: UserLanding) {
     profile.nick = userLanding.nick;
     profile.lastName = userLanding.lastName;
@@ -167,7 +167,7 @@ export class BuyTokensComponent implements OnInit {
     this.utils.saveUserData(profile);
   }
 
-  phaseChange(event){
+  phaseChange(event: any){
     this.landingSvc.setPhaseTokens(+event.detail.value)
     if(this.lastInput === LastInput.Fiat){
       this.fiatToTokens({target:{value: this.numFiat}});
@@ -186,7 +186,7 @@ export class BuyTokensComponent implements OnInit {
   //   this.lastInput = LastInput.Token;
   // }
 
-  fiatToTokens(event){   
+  fiatToTokens(event: any){   
     let fiat = event.target.value;
     fiat = Math.round(fiat * 100) / 100
     this.numFiat = fiat;
@@ -197,6 +197,7 @@ export class BuyTokensComponent implements OnInit {
   tokenCost():number{
     const phaseTokens = this.landingSvc.getPhaseTokens();
     if(!phaseTokens) return 0;
+    //@ts-ignore
     return this.phaseToTokenCost[phaseTokens];
   }
 }

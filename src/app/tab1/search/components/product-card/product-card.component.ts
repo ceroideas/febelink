@@ -28,7 +28,11 @@ export interface PriceUnitType {
   styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent {
+  //@ts-ignore
+
   @Input() data: SearchProductCardType;
+  //@ts-ignore
+
   @Input() unitTypes: PriceUnitType[];
 
   constructor(private router: Router, private chatService: ChatService) {
@@ -54,9 +58,5 @@ export class ProductCardComponent {
     if (error) {
       this.router.navigate([`chat`]);
     }
-  }
-
-  removeBlankSpace(term: string): string {
-    return term.replace(new RegExp(' ', 'g'), '-');
   }
 }

@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IUser } from 'src/app/models/user.model';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { IUser } from '../../../models/user.model';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
 import { TokenCRUD, TokenPhase, TokensUser } from '../../models/tokens-user';
 import { TokensUsersService } from '../../services/tokens-users.service';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { AlertSvc } from 'src/app/services/alert.service';
-import { ToastSvc } from 'src/app/services/toast.service';
+import { AlertSvc } from '../../../services/alert.service';
+import { ToastSvc } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-edit-tokens',
@@ -17,14 +17,16 @@ export class EditTokensComponent implements OnInit {
 
   tkCRUD = TokenCRUD;
   @Input() tokenCRUD: TokenCRUD = TokenCRUD.Update;
-  @Input() tokensUser: TokensUser;
-
+  //@ts-ignore
+  @Input() tokensUser: TokensUser | null = null;
+//@ts-ignore
   @Input() tkPhases: TokenPhase[];
 
-  title: string;
+  title: string = "";
   isLoading: boolean = false;
-  loadingMsg: string;
-  usersList: IUser[];
+  loadingMsg: string = "";
+  usersList: IUser[] | undefined;
+  //@ts-ignore
   tokensForm: UntypedFormGroup;
 
   constructor(
@@ -70,7 +72,7 @@ export class EditTokensComponent implements OnInit {
     });
   }
 
-  keys:string;
+  keys:string ="";
   async search( event?: any ) {
     this.isLoading = true;
     this.keys = event?.target?.value || this.keys || '';
@@ -84,27 +86,31 @@ export class EditTokensComponent implements OnInit {
     this.isLoading = false;
   }
 
-  userSelected( user ) {
+  userSelected( user: any ) {
     if( this.isLoading ) { this.showToastLoading(); return; }
 
     this.tokensUser = <TokensUser> user;
     this.builtForm();
   }
 
-  phaseChange( event ){
-    this.tokensUser.id_phase_tokens = event.detail.value;
-    const phaseTk = this.getPhase( this.tokensUser.id_phase_tokens );
-    this.tokensUser.phase_tokens = phaseTk?.phase_tokens;
-    this.tokensForm.controls.date.setValue( phaseTk?.date || '' );
-  }
+    phaseChange( event: any ){
 
-  getPhase( id_phase_tokens ): TokenPhase {
+      if (this.tokensUser !== null) {
+        this.tokensUser.id_phase_tokens = event.detail.value;
+        const phaseTk = this.getPhase( this.tokensUser?.id_phase_tokens );
+        this.tokensUser.phase_tokens = phaseTk?.phase_tokens;
+        this.tokensForm.controls['date'].setValue(phaseTk?.date || '');
+      }
+      
+    }
+
+  getPhase( id_phase_tokens: any ): TokenPhase {
     for( let i = 0; id_phase_tokens && i < this.tkPhases.length; i++ ) {
       const tkPhase = this.tkPhases[ i ];
       if( tkPhase.id == id_phase_tokens )
         return tkPhase;
     }
-
+    //@ts-ignore
     return null;
   }
 
@@ -119,12 +125,15 @@ export class EditTokensComponent implements OnInit {
     }
 
     const { num_tokens, id_phase_tokens, date, payed_date, obs } = this.tokensForm.value;
-    this.tokensUser.num_tokens = num_tokens;
-    this.tokensUser.id_phase_tokens = id_phase_tokens;
-    this.tokensUser.date = date;
-    this.tokensUser.payed_date = payed_date;
-    this.tokensUser.observations = obs;
-
+    if (this.tokensUser !== null) {
+      this.tokensUser.num_tokens = num_tokens;
+      this.tokensUser.id_phase_tokens = id_phase_tokens;
+      this.tokensUser.date = date;
+      this.tokensUser.payed_date = payed_date;
+      this.tokensUser.observations = obs;
+  
+    }
+ 
     if( !num_tokens ) {
       this.toastSvc.show( 'admin.tokensUsers.error.num_tokens', true );
       return;
@@ -151,9 +160,11 @@ export class EditTokensComponent implements OnInit {
       this.isLoading = true;
       switch( this.tokenCRUD ) {
         case TokenCRUD.Create:
+          if (this.tokensUser !== null)
           await this.tokenSvc.createTokenUser( this.tokensUser );
           break;
         case TokenCRUD.Update:
+          if (this.tokensUser !== null)
           await this.tokenSvc.editTokenUser( this.tokensUser );
           break;
       }

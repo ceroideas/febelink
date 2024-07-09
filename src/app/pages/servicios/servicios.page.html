@@ -473,9 +473,12 @@
               </div>
               <div class="visorPhotos" *ngIf="images.length > 0">
                 <div class="item-photo" *ngFor="let imageURL of images; let i = index">
-                  <img
+                  <div *ngIf="imageURL">
+                    <img
                     [src]="imageURL?.src || imageURL"
                   /> 
+                  </div>
+                 
                   <div
                     class="add-service-remove-div"
                     *ngIf="imageURL"
@@ -570,7 +573,7 @@
 
 
 
-  <app-footer></app-footer>
+  <!-- <app-footer></app-footer> -->
 </div>
 
 

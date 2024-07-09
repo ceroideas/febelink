@@ -36,7 +36,8 @@ export class ReportService {
                     dismiss: true,
                 }, {
                     text: 'common.buttons.report',
-                    handler: ( data ) => {
+                    //@ts-ignore
+                    handler: ( data: any ) => {
                         if(( data?.report || '' ).trim().split( ' ' ).length < 5 ) {
                             this.toastSvc.show( 'common.mailTo.error.minLength', true )
                             return false

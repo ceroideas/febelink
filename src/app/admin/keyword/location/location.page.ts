@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertSvc} from 'src/app/services/alert.service';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {ToastSvc} from 'src/app/services/toast.service';
+import {AlertSvc} from '../../../services/alert.service';
+import {LoadingSvc} from '../../../services/loading.service';
+import {ToastSvc} from '../../../services/toast.service';
 import {KeywordService} from '../services/keyword.service';
 import {SectorService} from '../../../components/sectors/services/sectores.service';
 import {ISector} from '../../../models/sector.model';
+import { Location } from '@angular/common'
 
 interface LocationKeys {
   id: number, 
@@ -20,15 +21,16 @@ interface LocationKeys {
   selector: 'location-page',
   templateUrl: './location.page.html',
   styleUrls: ['./location.page.scss'],
+  host: {ngSkipHydration: 'true'},
 })
 
 export class LocationPage implements OnInit {
 
   isLoading: boolean = false;
-  LocationKeys: LocationKeys[];
-  LocationKeys_filtered: LocationKeys[];
-  sectors: ISector[];
-  filter: string;
+  LocationKeys: LocationKeys[] | undefined;
+  LocationKeys_filtered: LocationKeys[] | undefined;
+  sectors: ISector[] | undefined;
+  filter: string | undefined;
 
   showCreatekeyword: boolean = false;
   keyLocation: any =  {
@@ -44,21 +46,27 @@ export class LocationPage implements OnInit {
     public toastSvc: ToastSvc,
     public loadingSvc: LoadingSvc,
     private keywordService: KeywordService,
-    private sectorService: SectorService
+    private sectorService: SectorService,
+    private location: Location,
   ) {
   }
 
   async ngOnInit() {
-    this.sectors = await this.sectorService.get();
-    await this.search();
+    this.sectorService.get().then(async (response: any) => {
+      this.sectors = response; 
+      await this.search();
+    })
+
   }
 
   search_filter(event?: any){
     this.LocationKeys = this.LocationKeys_filtered;
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
-      this.LocationKeys = this.LocationKeys.filter((sector) => {
+      if ( this.LocationKeys )
+      this.LocationKeys = this.LocationKeys.filter((sector:any) => {
         if ( sector?.link !== '' && sector?.link !== undefined && sector?.link !== null){
+          if ( this.filter )
           return sector?.link?.toLowerCase().includes(this.filter.toLowerCase());
         }
       })
@@ -66,19 +74,29 @@ export class LocationPage implements OnInit {
       this.LocationKeys = this.LocationKeys_filtered;
     }
   } 
+  /**
+   * Close modal
+   */
+  public goBack(): void {
+    this.location.back();
+  }
+
   async search(event?: any) {
     this.isLoading = true;
     // this.filter = event?.target?.value || this.filter || '';
-    const {response} = await this.keywordService.getLocationKeywords();
-    this.LocationKeys = response;
-    this.LocationKeys_filtered = this.LocationKeys;
-    // this.totalRecords = response.totalRecords;
-    // this.recordsPerPage = response.limit;
-    // this.qPages = response.qPages;
-    this.isLoading = false;
+    this.keywordService.getLocationKeywords().then(async (response: any) => {
+      this.LocationKeys = response.response;
+      this.LocationKeys_filtered = this.LocationKeys;
+      // this.totalRecords = response.totalRecords;
+      // this.recordsPerPage = response.limit;
+      // this.qPages = response.qPages;
+      this.isLoading = false;
+    })
+
+   
   }
 
-  removeAccents(inputString) {
+  removeAccents(inputString: any) {
     // Normalize accented characters to their base form
     const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
     return normalizedString;

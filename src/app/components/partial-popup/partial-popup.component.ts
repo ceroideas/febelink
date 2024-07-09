@@ -11,7 +11,7 @@ export class PartialPopupComponent implements OnInit {
 
   @Input() displayToggle: boolean = false;
   @Output() partialLoginResponseEvent = new EventEmitter<string>();
-  email: string;
+  email: string = "";
 
   constructor(private userService: UserService, private toastService: ToastSvc) {
   }
@@ -26,7 +26,6 @@ export class PartialPopupComponent implements OnInit {
       await this.toastService.show('Usuario registrado con éxito. Revisa tu email para completar el registro.');
     }
     if (error) {
-      console.log(error);
       await this.toastService.show(error.error.message);
     }
   }

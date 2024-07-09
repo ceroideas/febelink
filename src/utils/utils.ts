@@ -1,3 +1,5 @@
+import slugify from "slugify";
+
 // TODO: Add all desired languages to the array.
 // https://www.loc.gov/standards/iso639-2/php/code_list.php
 export const supportedLanguages = (): string[] => {
@@ -11,4 +13,8 @@ export const answerOptions = (): {text: string, value: string}[] => {
         {text: "5", value: "5"},
         {text: "∞", value: "99"},
     ];
+}
+
+export const toSlug = (text: string): string => {
+    return !!text ? slugify(text) : '';
 }

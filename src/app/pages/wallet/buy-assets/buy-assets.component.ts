@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
+import { CryptoCurrency } from './../../../models/wallet/currency.model';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { IUser } from 'src/app/models/user.model';
+import { IUser } from './../../../models/user.model';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from './../../../services/api.service';
 
 @Component({
   selector: 'app-buy-assets',
@@ -19,11 +19,11 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class BuyAssetsComponent implements OnInit {
   @Input() asset: CryptoCurrency = {};
-  @Input() minnersFee: number;
-  @Input() stripeFee: number;
-  @Input() assetsMaxDecimals: number;
+  @Input() minnersFee: number = 0;
+  @Input() stripeFee: number= 0;
+  @Input() assetsMaxDecimals: number = 0;
 
-  public buyForm: UntypedFormGroup;
+  public buyForm: UntypedFormGroup  | undefined;
 
   cash: number = 0;
   calcStripe: number = 0;
@@ -60,7 +60,7 @@ export class BuyAssetsComponent implements OnInit {
     });
   }
 
-  calc(amount: string) {
+  calc(amount: any) {
     const cancelCalc = !amount || !this.asset;
     this.cash = cancelCalc ? 0 : parseFloat(amount);
 
@@ -75,6 +75,7 @@ export class BuyAssetsComponent implements OnInit {
     this.calcSubtotal =
       this.cash == 0 ? 0 : this.cash - this.calcStripe - this.minnersFee;
 
+    if ( this.asset?.priceBuy != undefined)
     this.calcTotal = parseFloat(
       (this.cash == 0 ? 0 : this.calcSubtotal / this.asset?.priceBuy).toFixed(
         this.assetsMaxDecimals
@@ -98,6 +99,7 @@ export class BuyAssetsComponent implements OnInit {
     try {
       const formData = new FormData();
 
+      //@ts-ignores
       for (var key in user) formData.append(key, user[key]);
 
       formData.append('cash', this.cash + '');
@@ -108,6 +110,7 @@ export class BuyAssetsComponent implements OnInit {
 
       formData.append('stripeFee', this.stripeFee + '');
       formData.append('minnersFee', this.minnersFee + '');
+      //@ts-ignore
       formData.append('assetId', this.asset?.assetId);
 
       formData.append('dontCheckDiff', this.dontCheckDiff ? '1' : '0');
@@ -127,6 +130,7 @@ export class BuyAssetsComponent implements OnInit {
 
         // Difference in totals between frontend and backend calculations
         if (res.hasDiff) {
+          //@ts-ignore
           this.api.utilities.showAlert(null, errorMsg, null, [
             // Cancel the Purchase
             {

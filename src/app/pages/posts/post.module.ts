@@ -4,11 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PostPageRoutingModule } from './post-routing.module';
+// import { PostPageRoutingModule } from './post-routing.module';
 
 import { PostPage } from './post.page';
-import { PostComponentsModule } from './components/components.module';
-import { TabsSharedModule } from 'src/app/tabs/tabs.shared.module';
+// import { PostComponentsModule } from './components/components.module';
+// import { TabsSharedModule } from '../../tabs/tabs.shared.module';
 
 @NgModule({
   imports: [
@@ -16,9 +16,9 @@ import { TabsSharedModule } from 'src/app/tabs/tabs.shared.module';
     , FormsModule
     , ReactiveFormsModule 
     , IonicModule
-    , PostPageRoutingModule
-    , PostComponentsModule
-    , TabsSharedModule
+    // , PostPageRoutingModule
+    // , PostComponentsModule
+    // , TabsSharedModule
   ],
   declarations: [
       PostPage

@@ -2,6 +2,11 @@
   background: #FAFAFA;
   width: 100%;
   height: 100%;
+  th{
+    background: #55abdd !important;
+    color: #fff !important;
+  }
+  input{background-color: #fff; color: #000;}
 
   .container-general{
     display: flex;

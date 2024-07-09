@@ -48,28 +48,7 @@
       </ng-container>
 
     </div>
-    <div class="containter-right">
     
-      <!--ORACULO-->
-      <div class="section-perfil"  [ngClass]="{'sinmargen': iAdvises.length === 0}" >
-        <div class="oracle" *ngIf="iAdvises.length > 0">
-          <ion-row class="oracle-title">
-            <ion-label><span class="title-oracle">Mis Publicaciones en Oráculo</span></ion-label>
-          </ion-row>
-          <div class="container-oracle" >
-            <app-post-model2-component
-              *ngFor="let advise of iAdvises"
-              [id]="advise.id"
-              [iAdvise]="advise"
-              [showLang]="true"
-              [showSeePost]="true"
-              [type]="1"
-            ></app-post-model2-component>
-           
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <app-footer></app-footer>

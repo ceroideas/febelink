@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { OlvidarContrasenaComponent } from './olvidar-contrasena.component';
 
-import { OlvidarContrasenaPage } from './olvidar-contrasena.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: OlvidarContrasenaPage
+    component: OlvidarContrasenaComponent
   }
 ];
 

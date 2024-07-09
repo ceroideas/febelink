@@ -6,10 +6,11 @@ import { UserLanding } from '../models/user-landing';
 })
 export class LandingService {
 
-  private numFiat:number;
-  private phaseTokens:number;
-  private justLogged:boolean;
-  private user:UserLanding;
+  private numFiat:number = 0;
+  private phaseTokens:number= 0;
+  private justLogged:boolean= false;
+  //@ts-ignore
+  private user:UserLanding ;
 
   setNumFiat(numFiat:number) {
     this.numFiat = numFiat;

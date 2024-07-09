@@ -8,7 +8,72 @@
   contain: unset;
   height: 100%;
 
+  select{
+    border: 1px solid #d2d6db;
+    border-radius: 6px;
+    padding: 15px;
+    background: none;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+
+    input{
+      background: white;
+    }
+  }
   
+.textarea-group label,
+.form-group label {
+  color: #374151;
+  font-size: 14px;
+  line-height: 19px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  /* font-family: InterFont; */
+  font-weight: 600;
+  color: #696969;
+  margin-bottom: 0;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.form-group [type],
+.textarea-group textarea {
+	border: 1px solid #d2d6db;
+	border-radius: 6px;
+	padding: 15px;
+}
+.form-group [type]:hover,
+.textarea-group textarea:hover {
+	border-color: #a8afb9;
+}
+.form-group [type]:focus,
+.textarea-group textarea:focus {
+	border-color: #76aadb;
+}
+  .addButton{
+       height: 45px;
+       font-weight: bold;
+       color: #ffffff;
+       margin: auto;
+       width: 100%;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       border-radius: 9px;
+       margin: 0 auto;
+       margin-right: 0;
+       font-size: 14px;
+       margin: 0;
+       /* padding-top: 32px; */
+       padding-right: 1px;
+       background: #1b80f8;
+       margin-top: 31px;
+  }
+  .container-valoraciones{
+    margin-top: 30px
+  }
   .container-general{
       width: 100%;
       height: -moz-fit-content;
@@ -360,7 +425,7 @@
               box-shadow: #0000001a 0 12px 48px;
               background: rgba(225, 239, 254, 1);
               border-radius: 8px;
-              width: 92%;
+              width: 97%;
               /* padding: 15px 25px 0; */
               margin: auto;
             }
@@ -368,25 +433,26 @@
     
             .valoraciones{
               min-height: 94px;
-              box-shadow: #0000001a 0 12px 48px;
-              background: rgb(255,255,255);
+              box-shadow: rgba(0, 0, 0, 0.1019607843) 0 12px 48px;
+              background: rgb(255, 255, 255);
               border-radius: 8px;
               width: 92%;
               padding: 0 25px;
               margin: auto;
               padding-top: 15px;
+              padding-bottom: 30px;
 
               
               .title-valoraciones{
                 text-align: center;
                 font-family: InterFont;
                 font-weight: 700;
-                color: #170f49;
+                color: #000000;
                 height: 26px;
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
-                font-size: 16px;
+                font-size: 18px;
               }
               .item-valor{
                 font-size: 15px;
@@ -437,4 +503,51 @@
   text-align: center;
 }
 
+}
+.div-profesions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  @media only screen and (max-width: 780px) {
+    display: block;
+    .item-profesion{
+      display: flex;
+      justify-content: space-between;
+      width: 100% !important;
+      gap: 10px;
+      column-gap: 10px;
+
+      &.boton{
+        width: 50%;
+      }
+    }
+}
+  .item-profesion{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    gap: 10px;
+    column-gap: 10px;
+
+    
+    &.boton{
+      width: 13%;
+    }
+    .form-group{
+      width: 100%;
+    }
+  }
+
+}
+.mobilesection{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 46px;
+
+  @media  (max-width: 1000px) {
+    display: flex;
+  }
 }

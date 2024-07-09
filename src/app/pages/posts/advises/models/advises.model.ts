@@ -1,5 +1,5 @@
-import { IPaginationFilter } from 'src/app/models/pagination.model';
-import { IUserShow } from 'src/app/models/user.model';
+import { IPaginationFilter } from './../../../../models/pagination.model';
+import { IUserShow } from './../../../../models/user.model';
 
 export interface IAdvise {
   id?: number;

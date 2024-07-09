@@ -14,7 +14,7 @@ export class YouTubePopComponent implements OnInit {
   @Input() rel: number = 0;
   @Input() title: string = '¿Cómo funciona la app de Febelink?';
 
-  trustedVideoUrl: SafeResourceUrl;
+  trustedVideoUrl: SafeResourceUrl | undefined;
 
   constructor(
       private popoverController: PopoverController

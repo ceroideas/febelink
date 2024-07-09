@@ -9,8 +9,8 @@ import { IOptsMenuButton } from './models/opts-menu.model';
 })
 export class OptsMenuComponent implements OnInit {
 
-  @Input() buttons: IOptsMenuButton[]
-  @Input() title: string
+  @Input() buttons: IOptsMenuButton[] | undefined
+  @Input() title: string = ""
 
   constructor(
     private popCtrl: PopoverController

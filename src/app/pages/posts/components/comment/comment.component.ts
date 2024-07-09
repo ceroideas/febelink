@@ -7,15 +7,15 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import {IOptsMenuButton} from 'src/app/components/opts-menu/models/opts-menu.model';
-import {OptsMenuSvc} from 'src/app/components/opts-menu/services/opts-menu.service';
-import {IReport} from 'src/app/models/report.model';
-import {DateFormatType} from 'src/app/pipes/date-format.pipe';
-import {AlertSvc, IAlert} from 'src/app/services/alert.service';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {ReportService} from 'src/app/services/report.service';
-import {ToastSvc} from 'src/app/services/toast.service';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {IOptsMenuButton} from '../../../../components/opts-menu/models/opts-menu.model';
+import {OptsMenuSvc} from '../../../../components/opts-menu/services/opts-menu.service';
+import {IReport} from '../../../../models/report.model';
+import {DateFormatType} from '../../../../pipes/date-format.pipe';
+import {AlertSvc, IAlert} from '../../../../services/alert.service';
+import {LoadingSvc} from '../../../../services/loading.service';
+import {ReportService} from '../../../../services/report.service';
+import {ToastSvc} from '../../../../services/toast.service';
+import {UserSessionSvc} from '../../../../services/user-session.service';
 import {ICommentFull} from '../../advises/models/comment.model';
 import {CommentService} from '../../advises/services/comment.service';
 
@@ -26,7 +26,9 @@ import {CommentService} from '../../advises/services/comment.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class CommentComponent implements OnInit {
+  //@ts-ignore
   @Input() post: number; // Referencing Post Id
+  //@ts-ignore
   @Input() iComment: ICommentFull;
   @Output() OnDoEdit: EventEmitter<ICommentFull> = new EventEmitter();
   @Output() OnDeleted: EventEmitter<ICommentFull> = new EventEmitter();
@@ -59,7 +61,7 @@ export class CommentComponent implements OnInit {
     }
   } */
 
-  async options(event) {
+  async options(event:any) {
     let opts: IOptsMenuButton[];
 
     if (await this.sessionSvc.isUser(this.iComment?.uid))
@@ -98,6 +100,7 @@ export class CommentComponent implements OnInit {
       await this.loadingSvc.show();
       const {response, error} = await this.commentSvc.delete(
         this.post,
+        //@ts-ignore
         this.iComment?.id
       );
       await this.loadingSvc.dismiss();
@@ -123,7 +126,8 @@ export class CommentComponent implements OnInit {
     } as IReport);
   }
 
-  comment(message: string | number) {
+  comment(message: any) {
+    //@ts-ignore
     this.childSubmit.emit({message, parentId: this.iComment?.id});
   }
 
@@ -132,6 +136,6 @@ export class CommentComponent implements OnInit {
     this.indexShowReply = index;
   }
 
-  share(event) {
+  share(event:any) {
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { environment } from 'src/environments/environment';
+import { ApiService } from './../../services/api.service';
+import { environment } from './../../../environments/environment';
 
 @Component({
   selector: 'app-ofertantes',
@@ -13,7 +13,7 @@ export class OfertantesPage implements OnInit {
   sector: any;
   sectorName: string;
   ofertantes: any = [];
-  isLoading: boolean;
+  isLoading: boolean = false;
 
   constructor( private route: ActivatedRoute,
                private router: Router,
@@ -55,7 +55,7 @@ export class OfertantesPage implements OnInit {
   /**
    * Ir a un perfil
    */
-  public irAPerfil(id): void {
+  public irAPerfil(id: any): void {
     this.router.navigate(['perfil/'+id],{ queryParams: { 'id_perfil': id , 'contacto': true  }});
   }
 

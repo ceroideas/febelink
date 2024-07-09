@@ -10,26 +10,29 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import '~@ionic/angular/css/core.css';
+@import '@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
-@import '~@ionic/angular/css/display.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
-@import '~@ionic/angular/css/padding.css';
-// @import '~@ionic/angular/css/float-elements.css'; // ToDo: IONIC BUG - TRIGGER 10 WARNINGS WHHEN COMPILE.
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
-
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
+@import '@ionic/angular/css/display.css';
 @import 'swiper/css';
 
 @import "swiper/css/free-mode";
 @import "swiper/css/navigation";
 @import "swiper/css/thumbs";
+
+body {
+  color: black;
+}
 
 .swiper-button-prev{
   display: none;
@@ -84,14 +87,14 @@ ionic-selectable-modal {
 }
 
 .desktop {
-  @media (max-width: 768px) {
-    display: none !important;
-  }
+  // @media (max-width: 768px) {
+  //   display: none !important;
+  // }
 }
 .mobile {
-  @media (min-width: 768px) {
+  // @media (min-width: 768px) {
     display: none;
-  }
+  // }
 }
 .responsive-max {
   @media (max-width: 1165px) {
@@ -214,6 +217,50 @@ div#fg_bubble {
 }
 
 
+
+ion-input {
+  --border-radius: 20px;
+  --border-color: red;
+  --padding-start: 50px;
+  --padding-end: 50px;
+  /* --background for solid only*/
+  --background: purple;
+}
+
+ion-input{
+  background: red;
+  display: block;
+  outline: none;
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+}
+ion-input.aqua {
+  --background: aqua;
+}
+ion-input input.native-input{
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 12px;
+  outline: none;
+  background: transparent;
+}
+
+ion-searchbar{
+  width: 100%;
+  ::ng-deep{
+    .searchbar-search-icon { display:none; width:0; height:0; padding: 0; }
+    .searchbar-input.sc-ion-searchbar-md{padding: 0 !important;text-align: left;}
+    .searchbar-input.sc-ion-searchbar-ios {
+     background: none;
+     padding: 0;
+  }
+  }
+}
 .icon-input {
   position: absolute;
   right: 19px;
@@ -224,3 +271,12 @@ div#fg_bubble {
   cursor: pointer;
 }
 
+
+
+ion-searchbar {
+  --background: #141414;
+  --border-radius: 25px;
+  --color: white;
+  --icon-color: white;
+  --placeholder-color: white;
+}

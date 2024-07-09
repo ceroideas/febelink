@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { PublicarOpinionPageRoutingModule } from './publicar-opinion-routing.module';
 
 import { PublicarOpinionPage } from './publicar-opinion.page';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule,
+    SharedModule,
     PublicarOpinionPageRoutingModule
   ],
   declarations: [PublicarOpinionPage]

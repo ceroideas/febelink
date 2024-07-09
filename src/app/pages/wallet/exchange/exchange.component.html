@@ -9,7 +9,8 @@
               {{ 'pages.wallet.exchange.title.' + ( offer ? 'offer' : 'exchange' ) | translate }}
             </ion-label>
             <ion-label class="marg-s" *ngIf="offer?.last_modified_time">
-              {{ offer?.last_modified_time | dateFormat: dateFormatType.DateTime }}
+              {{ (offer?.last_modified_time ?? '') | dateFormat: dateFormatType.DateTime }}
+
             </ion-label>
           </ion-row>
         </ion-col>
@@ -29,7 +30,7 @@
     </ion-grid>
     
     <!-- Form -->
-    <form [formGroup]="form" style="margin: auto;">
+    <form *ngIf="form" [formGroup]="form" style="margin: auto;">
       <ion-card class="back-gray no-margin">
         <ion-grid>
           <ion-row>            
@@ -38,7 +39,7 @@
               <!-- Asset Icon -->
               <ion-row class="align-center">
                 <ion-avatar class="abicon-40 pointer" (click)="selectAsset( $event, true )">
-                  <ion-img [src]="assetSvc.getImg( sell?.currency )"></ion-img>
+                  <ion-img [src]="assetSvc.getImg( sell?.currency ?? '' )"></ion-img>
                 </ion-avatar>
               </ion-row>
 
@@ -59,7 +60,8 @@
                 <ion-col size="7">
                   <app-num-float
                     [number]="limitSell"
-                    [round]="walletParams.assetsMaxDecimals"
+                    [round]="walletParams.assetsMaxDecimals ?? 0"
+
                     classNbr="margin-start"
                     [bold]="true"
                   ></app-num-float>
@@ -91,7 +93,7 @@
             <ion-col size="12" size-sm="3" class="center-v">
               <ion-row class="align-center" *ngIf="exchangeType != exchangeTypes.BUY">
                 <!-- Loading Market Price of Selected Assets -->
-                <app-loading [isLoading]="mktPrice.isLoading" message="common.labelLoading"></app-loading>
+                <app-loading [isLoading]="mktPrice.isLoading ?? false"></app-loading>
 
                 <ng-container *ngIf="!mktPrice.isLoading && mktPrice.price_selling && mktPrice.price_buying">
                   <!-- Option to Take Price From Market -->
@@ -112,7 +114,7 @@
               </ion-row>
 
               <!-- Conversion -->
-              <ng-container *ngIf="numSellQant?.value > 0 && numBuyQant?.value > 0">
+              <ng-container *ngIf="numSellQant && numSellQant?.value ?? 0 > 0 && numBuyQant?.value ?? 0 > 0">
                 <!-- Title -->
                 <ion-row class="marg-t10">
                   <ion-label class="bold-6">
@@ -124,8 +126,10 @@
                   <!-- Selling Conversion -->
                   <ion-col class="tx-center no-padding pad-e5" size-sm="12" size-md="6" size="6">
                     <app-num-float
-                      [number]="getConversion( true, numBuyQant.value, numSellQant.value )"
-                      [round]="walletParams.assetsMaxDecimals"
+                    [number]="getConversion(true, numBuyQant?.value ?? 0, numSellQant?.value ?? 0)"
+
+                      [round]="walletParams.assetsMaxDecimals ?? 0"
+
                       classNbr="margin-start"
                       [bold]="true"
                     ></app-num-float>
@@ -134,8 +138,10 @@
                   <!-- Buying Conversion -->
                   <ion-col class="tx-center no-padding" size-sm="12" size-md="6" size="6">
                     <app-num-float
-                    [number]="getConversion( false, numBuyQant.value, numSellQant.value )"
-                      [round]="walletParams.assetsMaxDecimals"
+                    [number]="getConversion(false, numBuyQant?.value ?? 0, numSellQant?.value ?? 0)"
+
+                      [round]="walletParams.assetsMaxDecimals ?? 0"
+
                       classNbr="margin-start"
                       [bold]="true"
                     ></app-num-float>
@@ -149,7 +155,8 @@
               <!-- Asset Icon -->
               <ion-row class="align-center">
                 <ion-avatar class="abicon-40 pointer" (click)="selectAsset( $event, false )">
-                  <ion-img [src]="assetSvc.getImg( buy?.currency )"></ion-img>
+                  <ion-img [src]="assetSvc.getImg( buy?.currency || '' )"></ion-img>
+
                 </ion-avatar>
               </ion-row>
 

@@ -1,14 +1,16 @@
-<ion-footer id="footer-desktop" class="ion-no-border ion-text-center desktop">
+<div id="footer-desktop" class="ion-no-border ion-text-center desktop">
  <section class="sectionLink" *ngIf="footerLinks.length > 0">
   <div class="link-footer">
     <div *ngFor="let link of footerLinks"><a href="{{link.link}}">{{link.title}}</a></div>
   </div>
  </section>
  
+
+
   <section>
     <ion-grid>
       <ion-row class="row_alto">
-        <ion-col size="5">
+        <ion-col size="2">
           <ion-img
             tappable
             src="assets/imgs/logo.png"
@@ -18,7 +20,7 @@
           >
           </ion-img>
         </ion-col>
-        <ion-col size="7">
+        <ion-col size="10">
           <ion-grid>
             <ion-row class="lista_footer">
               <ion-col size="3">
@@ -29,7 +31,7 @@
                       }}</ion-label>
                   </ion-item>
                   <ion-item lines="none">
-                    <a href="https://www.febelink.com/posts/oracle/551"
+                    <a href="posts/oracle/551"
                        style="color: inherit; text-decoration: inherit">
                       <ion-label color="texto-gray-footer">{{
                           'menu.footer.about' | translate
@@ -74,7 +76,7 @@
                       }}</ion-label>
                   </ion-item>
                   <ion-item lines="none">
-                    <a href="https://www.febelink.com/user/Febelink/detail/341?id_perfil=341&contacto=false"
+                    <a href="user/Febelink/detail/341?id_perfil=341&contacto=false"
                        style="color: inherit; text-decoration: inherit">
                       <ion-label color="texto-gray-footer">{{
                           'menu.footer.contact' | translate
@@ -173,4 +175,4 @@
       </ion-row>
     </ion-grid>
   </section>
-</ion-footer>
+</div>

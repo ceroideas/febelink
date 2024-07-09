@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertSvc} from 'src/app/services/alert.service';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {ToastSvc} from 'src/app/services/toast.service';
 import {KeywordService} from '../services/keyword.service';
 import {SectorService} from '../../../components/sectors/services/sectores.service';
 import {ISector} from '../../../models/sector.model';
+import { AlertSvc } from '../../../services/alert.service';
+import { ToastSvc } from '../../../services/toast.service';
+import { LoadingSvc } from '../../../services/loading.service';
+import { Location } from '@angular/common'
 
 interface CityKeys {
   id: number, 
@@ -24,15 +25,16 @@ interface CityKeys {
   selector: 'city-page',
   templateUrl: './city.page.html',
   styleUrls: ['./city.page.scss'],
+  host: {ngSkipHydration: 'true'},
 })
 
 export class CityPage implements OnInit {
 
   isLoading: boolean = false;
-  CityKeys: CityKeys[];
-  CityKeys_filtered: CityKeys[];
-  sectors: ISector[];
-  filter: string;
+  CityKeys: CityKeys[] | undefined
+  CityKeys_filtered: CityKeys[] | undefined
+  sectors: ISector[] | undefined
+  filter: string | undefined
 
   showCreatekeyword: boolean = false;
   keyCity: any =  {
@@ -48,33 +50,38 @@ export class CityPage implements OnInit {
     },
   }
 
-  locations: [];
+  locations: any =  [];
   constructor(
     public alertSvc: AlertSvc,
     public toastSvc: ToastSvc,
     public loadingSvc: LoadingSvc,
     private keywordService: KeywordService,
-    private sectorService: SectorService
+    private location: Location,
   ) {
   }
 
   async ngOnInit() {
     await this.readLocations();
-    this.sectors = await this.sectorService.get();
+    
     await this.search();
   }
 
   async readLocations(){
-    const {response} = await this.keywordService.getLocationKeywords();
-    this.locations = response;
+    this.keywordService.getLocationKeywords().then(async (response: any) => {
+    this.locations =response.response;
+
+    })
+    
   }
 
   search_filter(event?: any){
     this.CityKeys = this.CityKeys_filtered;
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
-      this.CityKeys = this.CityKeys.filter((sector) => {
+      if ( this.CityKeys )
+      this.CityKeys = this.CityKeys.filter((sector: any) => {
         if ( sector?.link !== '' && sector?.link !== undefined && sector?.link !== null){
+          if ( this.filter )
           return sector?.link?.toLowerCase().includes(this.filter.toLowerCase());
         }
       })
@@ -84,20 +91,28 @@ export class CityPage implements OnInit {
   } 
   async search(event?: any) {
     this.isLoading = true;
-    const {response} = await this.keywordService.getCityKeywords();
-    console.log(response)
-    this.CityKeys = response;
-    this.CityKeys_filtered = this.CityKeys;
-   
-    this.isLoading = false;
+    this.keywordService.getCityKeywords().then(async (response: any) => {
+      this.CityKeys =response.response;
+      this.CityKeys_filtered = this.CityKeys;
+     
+      this.isLoading = false;
+    })
+  
+  
   }
 
-  removeAccents(inputString) {
+  removeAccents(inputString: any) {
     // Normalize accented characters to their base form
-    const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
+    const normalizedString = inputString?.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
     return normalizedString;
   }
 
+  /**
+     * Close modal
+     */
+  public goBack(): void {
+    this.location.back();
+  }
 
 
   async create(title: string, link: string, h1: string,  pagetitle: string, metadescription: string) {
@@ -108,7 +123,7 @@ export class CityPage implements OnInit {
       try {
 
         let linkParse;
-        linkParse = link.replace(new RegExp(' ', 'g'), '-').toLowerCase();
+        linkParse = link?.replace(new RegExp(' ', 'g'), '-').toLowerCase();
         linkParse= this.removeAccents(linkParse)
         
 

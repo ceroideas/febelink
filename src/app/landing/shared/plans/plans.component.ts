@@ -13,7 +13,7 @@ import { pricingData } from './data';
  * Plans component
  */
 export class PlansComponent implements OnInit {
-  pricingData: Pricing[];
+  pricingData: Pricing[] | undefined;
   teamMembers: TeamMember[] = [
     {
       pic: 'JD',

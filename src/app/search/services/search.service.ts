@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Subject} from 'rxjs';
-import { IKeywords } from '../assistant/models/assistant.model';
-import { HttpService } from 'src/app/services/http.service';
+import { HttpService } from '../../services/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +10,14 @@ export class SearchService {
 
   public visibleListas: boolean = true;
   public listaSearchDesktop: boolean = false;
-  private dataLists = null;
-  private iKeyWords: IKeywords;
+  private dataLists: any;
   public isLoading: boolean = false;
   public show_imagen: boolean = true;
   public show_detalle: boolean = false;
   public dataDesktopDetail = null;
 
-  locationFilter: string;
-  metaLocationFilter: string;
+  locationFilter: string| null = null;
+  metaLocationFilter: string| null = null;
 
   constructor(private http: HttpService) {
   }
@@ -84,7 +82,7 @@ export class SearchService {
 
   getResult() {
     if (this.dataLists != null) {
-      return this.dataLists.data.results;
+      return this.dataLists?.data?.results;
     }
   }
 
@@ -100,11 +98,16 @@ export class SearchService {
     }
   }
 
-  searchText(text?: string): string {
-    if (text != undefined) {
-      this.iKeyWords.searchText = text;
+  searchText(text?: string) {
+    //@ts-ignore
+    if (!!text) {
+    //@ts-ignore
+
+      // this.iKeyWords.searchText = text;
     }
-    return this.iKeyWords?.searchText;
+    //@ts-ignore
+
+    // return this.iKeyWords?.searchText;
   }
 
   clear() {

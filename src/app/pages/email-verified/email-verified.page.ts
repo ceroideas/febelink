@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from './../../services/api.service';
+import { UtilitiesService } from './../../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
+import { environment } from './../../../environments/environment';
 
 @Component({
   selector: 'app-email-verified',
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class EmailVerifiedPage implements OnInit {
 
-  id: string;
+  id: string = "";
   loading: boolean = true;
   noerror: boolean = true;
   seconds: number = 7;
@@ -26,7 +26,7 @@ export class EmailVerifiedPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(( params ) => {
+    this.activatedRoute.paramMap.subscribe(( params: any ) => {
       this.id = params.get('id');
       
       // If There is no Id, go Home
@@ -57,7 +57,7 @@ export class EmailVerifiedPage implements OnInit {
     );
   }
 
-  async saveVerified( resp ) {
+  async saveVerified( resp:any ) {
     const user = await this.utilities.getUserData();
 
     // only update user data if the one logged in is the same

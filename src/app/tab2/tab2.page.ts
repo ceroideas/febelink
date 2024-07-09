@@ -3,14 +3,13 @@ import { ApiService } from '../services/api.service';
 import { UtilitiesService } from '../services/utilities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { IonicSelectableComponent } from 'ionic-selectable';
 import { ISearch } from '../models/search.model';
 import { ISector, ISubSector } from '../models/sector.model';
 import { IUser } from '../models/user.model';
-import { environment } from 'src/environments/environment';
 import { DemandaService } from '../services/demanda.service';
 import { SeoService } from '../services/seo.service';
 import { TranslateConfigService } from '../services/translate/translate-config.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-tab2',
@@ -22,9 +21,9 @@ export class Tab2Page {
   provinceParam: string = '';
 
   currentYear = new Date().getFullYear();
-  currentUser: IUser = null;
+  currentUser: IUser | undefined;
   demandas: any;
-  isLoading: boolean;
+  isLoading: boolean = false;
   sectors: ISector[] = [];
   subSectors: ISubSector[] = [];
   subsector: any;
@@ -58,7 +57,7 @@ export class Tab2Page {
       this.isLogin = data;
     });
 
-    this.route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe((params: any) => {
       // Parametros pasados en el PathVariable. e.g.: ../busquedas/{{albañil}}/{{provincia}}
       this.subsectorParam = params.get('subsector');
       if (params.get('province'))
@@ -146,14 +145,14 @@ export class Tab2Page {
     });
   }
 
-  public detalleDemanda(demanda): void {
+  public detalleDemanda(demanda:any): void {
     this.router.navigate(['busqueda/' + demanda.id], {
       queryParams: { demanda: JSON.stringify(demanda) },
     });
   }
 
   sectorChange(event: {
-    component: IonicSelectableComponent;
+    component: any;
     value: any;
   }): void {
     this.subSectors = [];
@@ -164,7 +163,7 @@ export class Tab2Page {
   }
 
   subSectorChange(event: {
-    component: IonicSelectableComponent;
+    component: any;
     value: any;
   }): void {
     this.subsector = event.value;
@@ -172,7 +171,7 @@ export class Tab2Page {
   }
 
   provincesChange(event: {
-    component: IonicSelectableComponent;
+    component: any;
     value: any;
   }): void {
     this.towns = [
@@ -188,14 +187,14 @@ export class Tab2Page {
   }
 
   townsChange(event: {
-    component: IonicSelectableComponent;
+    component: any;
     value: any;
   }): void {
     this.town = event.value;
     this.filterSearchResults();
   }
 
-  public doRefresh(refresher): void {
+  public doRefresh(refresher:any): void {
     this.getSearchResults();
     this.sector = this.sectors[0];
     this.subSectors = [];
@@ -222,7 +221,7 @@ export class Tab2Page {
       if (data) this.currentUser = { ...data };
       if (this.currentUser) {
         this.currentUser = { ...data };
-        if (this.currentUser.skip_wizard === 0 && this.isLogin === 'login') {
+        if (this.currentUser?.skip_wizard === 0 && this.isLogin === 'login') {
           // if(this.platform.is('cordova')){
           // this.openGuide();
           // }
@@ -280,7 +279,7 @@ export class Tab2Page {
     this.towns = [{ id: 0, name: 'Todas' }];
     this.towns = [
       ...this.towns,
-      await (await this.api.obtenerLocalidades(idProvincia)).toPromise(),
+      await (await this.api.obtenerLocalidades(Number(idProvincia))).toPromise(),
     ];
     this.town = this.towns[0];
   }
@@ -397,7 +396,7 @@ export class Tab2Page {
     }
   }
 
-  async onClickAddToFavorites(demand) {
+  async onClickAddToFavorites(demand:any) {
     this.demanadaSvc.addToFavorites(demand);
   }
 

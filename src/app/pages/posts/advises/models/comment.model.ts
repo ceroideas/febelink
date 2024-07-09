@@ -1,4 +1,4 @@
-import { IUserShow } from 'src/app/models/user.model';
+import { IUserShow } from './../../../../models/user.model';
 
 export interface IComment {
   id?: number;

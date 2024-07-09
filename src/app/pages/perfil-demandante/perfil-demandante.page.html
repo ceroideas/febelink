@@ -93,8 +93,8 @@
 
             <!-- Link Preview -->
             <app-link-preview
-              columns="1"
-              [urls]="[{ u: perfilpublico?.link_url, d: null, showLink: true }]" >
+              [columns]="1"
+              [urls]="[{ u: perfilpublico?.link_url ?? '', d: undefined, showLink: true }]">
             </app-link-preview>
           </div>
         </ion-col>
@@ -188,7 +188,7 @@
         <ion-col size="12" class="ion-no-padding">
           <app-follower-button
             [user]="perfilpublico"
-            clase="boton max-width"
+            class="boton max-width"
           ></app-follower-button>
         </ion-col>
       </ion-row>
@@ -198,8 +198,8 @@
         <ion-col size="12" class="ion-no-padding">
           <app-donate-button
             [user]="perfilpublico"
-            clase="boton max-width"
-            asButton="true"
+            class="boton max-width"
+            [asButton]="true"
           ></app-donate-button>
         </ion-col>
       </ion-row>

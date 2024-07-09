@@ -12,7 +12,7 @@ export class OptsMenuSvc {
         private popCtrl: PopoverController
     ) {}
 
-    async show( event, iOptsMenuButtons: IOptsMenuButton[], title?: string )
+    async show( event: any, iOptsMenuButtons: IOptsMenuButton[], title?: string )
     {
         const popover = await this.popCtrl.create({
             event: event,

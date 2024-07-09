@@ -11,8 +11,8 @@ import {HttpService, IHttpService} from './http.service';
   providedIn: 'root',
 })
 export class UserService {
-  userInfo: IUser;
-  userProfessions;
+  userInfo: IUser | undefined;
+  userProfessions: any;
 
   constructor(
     private router: Router,
@@ -23,7 +23,6 @@ export class UserService {
     private http: HttpService
   ) {
     if (this.authenticationService.isAuthenticated()) {
-      console.log('UserService: User  is authenticated.');
       this.loadUserProfessions();
     }
   }
@@ -112,13 +111,13 @@ export class UserService {
 
   async showAlertToRedir() {
     await this.api.utilities.showAlert(
-      null,
+      '', // Empty string instead of null for the title
       this.api.utilities.translateService.instant(
         'tabs.tab4.alert-need-to-complete'
       ),
       '',
       [
-        {text: this.api.translateSvc.instant('common.no'), role: 'cancel'},
+        { text: this.api.translateSvc.instant('common.no'), role: 'cancel' },
         {
           text: this.api.translateSvc.instant('common.yes'),
           handler: () => this.redir(),
@@ -142,7 +141,8 @@ export class UserService {
         },
         {
           text: this.api.translateSvc.instant('common.buttons.block'),
-          handler: (data) => {
+          //@ts-ignore
+          handler: (data: any) => {
             if ((data?.report || '').trim().split(' ').length < 5) {
               this.api.utilities.showToast(
                 this.api.translateSvc.instant('common.mailTo.error.minLength')

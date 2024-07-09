@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {NavigationExtras, Router} from '@angular/router';
 import { SearchService } from '../services/search.service';
-import { ToastSvc } from 'src/app/services/toast.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ToastSvc } from '../../services/toast.service';
+import { UtilitiesService } from '../../services/utilities.service';
+import { environment } from '../../../environments/environment';
 
 export interface SearchCardType {
   link: string;
@@ -17,8 +18,10 @@ export interface SearchCardType {
   styleUrls: ['./search-card.component.scss'],
 })
 export class SearchCardComponent {
-  @Input() data: SearchCardType;
-  @Input() searchTerm: string;
+  @Input() data: SearchCardType | null = null;
+  @Input() searchTerm: string| null = null
+
+  urlWsrv: string = environment.baseWebUrlWsrv;
 
   constructor(private router: Router, private searchSvc: SearchService, private toastSvc: ToastSvc, private utilities: UtilitiesService) {
     
@@ -29,7 +32,6 @@ export class SearchCardComponent {
   }
 
   async sendSearchContactRequest() {
-    console.log( this.data.title)
     // this.router.navigate(['/pedir-presupuesto-gratis'],  { queryParams: { params: this.data.title }});
 
     const queryParams: any = {};

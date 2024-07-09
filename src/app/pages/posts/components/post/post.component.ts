@@ -8,23 +8,24 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import {FileService} from 'src/app/components/file-picker/services/file.service';
-import {IOptsMenuButton} from 'src/app/components/opts-menu/models/opts-menu.model';
-import {OptsMenuSvc} from 'src/app/components/opts-menu/services/opts-menu.service';
-import {IReport} from 'src/app/models/report.model';
-import {IUser} from 'src/app/models/user.model';
-import {DateFormatType} from 'src/app/pipes/date-format.pipe';
-import {AlertSvc, IAlert} from 'src/app/services/alert.service';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {ReportService} from 'src/app/services/report.service';
-import {SeoService} from 'src/app/services/seo.service';
-import {ToastSvc} from 'src/app/services/toast.service';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {environment} from 'src/environments/environment';
+import {FileService} from './../../../../components/file-picker/services/file.service';
+import {IOptsMenuButton} from './../../../../components/opts-menu/models/opts-menu.model';
+import {OptsMenuSvc} from './../../../../components/opts-menu/services/opts-menu.service';
+import {IReport} from './../../../../models/report.model';
+import {IUser} from './../../../../models/user.model';
+import {DateFormatType} from './../../../../pipes/date-format.pipe';
+import {AlertSvc, IAlert} from './../../../../services/alert.service';
+import {LoadingSvc} from './../../../../services/loading.service';
+import {ReportService} from './../../../../services/report.service';
+import {SeoService} from './../../../../services/seo.service';
+import {ToastSvc} from './../../../../services/toast.service';
+import {UserSessionSvc} from './../../../../services/user-session.service';
 import {IAdviseFull} from '../../advises/models/advises.model';
 import {AdviseService} from '../../advises/services/advises.service';
 import {Meta} from '@angular/platform-browser';
 import {RouteSvc} from '../../../../services/route.service';
+import { environment } from '../../../../../environments/environment';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-post-component',
@@ -33,7 +34,8 @@ import {RouteSvc} from '../../../../services/route.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class PostComponent implements OnInit, AfterViewInit {
-  @Input() id: number;
+  @Input() id: number = 0;
+  //@ts-ignore
   @Input() iAdvise: IAdviseFull;
   @Input() showLang: boolean = false;
   @Input() showOpts: boolean = false;
@@ -48,12 +50,17 @@ export class PostComponent implements OnInit, AfterViewInit {
   linksArray: string[] = [];
 
   dateFormatType = DateFormatType;
-  iUser: IUser;
+  //@ts-ignore
 
+  iUser: IUse;
+
+  //@ts-ignore
   oracleRef: IAdviseFull;
   showFollow: boolean = false;
-  postUser: IUser;
-  topic: string;
+  //@ts-ignore
+
+  postUser: IUse;
+  topic: string| null = null;
   topics = [
     {id: null, name: 'Todos'},
     {id: 1, name: 'Política'},
@@ -97,7 +104,7 @@ export class PostComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.iAdvise.media_url) {
+    if (this.iAdvise?.media_url) {
       this.metaService.updateTag({
         property: 'og:image',
         content: this.iAdvise.media_url,
@@ -111,15 +118,18 @@ export class PostComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
- 
+ //@ts-ignore
     this.metaService.updateTag({
       property: 'og:image',
       content: this.iAdvise?.media_url,
     });
+ //@ts-ignore
+
     this.metaService.updateTag({
       property: 'og:image:url',
       content: this.iAdvise?.media_url,
     });
+ //@ts-ignore
 
     this.topic = this.topics.find((topic) => {
       return topic.id === this.iAdvise?.topic;
@@ -136,7 +146,7 @@ export class PostComponent implements OnInit, AfterViewInit {
 
       this.linksArray = adaptedText
         .split(/[\s,]+|\.\s/)
-        .filter((splitedWord) => {
+        .filter((splitedWord: any) => {
           if (splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)) {
             return splitedWord.match(/^https?:\/\/.*\.(com|es|net|org|be)/i)[0];
           }
@@ -146,23 +156,27 @@ export class PostComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('iAdvise' in changes) {
-      this.iAdvise = changes.iAdvise.currentValue;
+      this.iAdvise = changes['iAdvise'].currentValue;
 
+      //@ts-ignore
       this.postUser = {
-        id: this.iAdvise.uid,
+        id: this.iAdvise?.uid,
 
         topic: null,
-
-        nick: this.iAdvise.nick,
-        name: this.iAdvise.name,
-        lastName: this.iAdvise.lastName,
-
-        logo: this.iAdvise.logo,
-        avatar: this.iAdvise.avatar,
-
-        email: this.iAdvise.email,
-
-        public: this.iAdvise.public,
+ //@ts-ignore
+        nick: this.iAdvise?.nick,
+         //@ts-ignore
+        name: this.iAdvise?.name,
+         //@ts-ignore
+        lastName: this.iAdvise?.lastName,
+ //@ts-ignore
+        logo: this.iAdvise?.logo,
+         //@ts-ignore
+        avatar: this.iAdvise?.avatar,
+ //@ts-ignore
+        email: this.iAdvise?.email,
+ //@ts-ignore
+        public: this.iAdvise?.public,
       } as IUser;
       this.showFollow = this.postUser?.id != this.iUser?.id && this.showContent;
 
@@ -190,16 +204,18 @@ export class PostComponent implements OnInit, AfterViewInit {
   }
 
   extractTitle(): string {
+     //@ts-ignore
     return this.adviseSvc.extractTitle(this.iAdvise, this.showContent);
   }
 
   extractSummary(): string {
+     //@ts-ignore
     return this.adviseSvc.extractSummary(this.iAdvise);
   }
 
-  async options(event) {
+  async options(event: any) {
     let opts: IOptsMenuButton[];
-
+ //@ts-ignore
     if (await this.sessionSvc.isUser(this.iAdvise?.uid)) {
       opts = [
         {
@@ -227,6 +243,7 @@ export class PostComponent implements OnInit, AfterViewInit {
   async edit() {
     let searchText = ''
     let lower = ''
+     //@ts-ignore
     searchText = this.iAdvise?.title.replace(new RegExp(' ', 'g'), '-');
     searchText= this.removeAccents(searchText)
 
@@ -272,26 +289,29 @@ export class PostComponent implements OnInit, AfterViewInit {
     this.router.navigate([`posts/oracle/${this.id}`]);
   }
 
-  public apiCallbackFn = (route: string) => {
-    try {
-      return this.http.get(route);
-    } catch (error) {
-      console.log('ups', error);
-    }
+  public apiCallbackFn = (route: any) => {
+    return this.http.get(route).pipe(
+      catchError((error: any) => {
+        console.log('ups', error);
+        // You can handle the error here or rethrow it if necessary
+        return throwError(error); // Rethrow the error if needed
+      })
+    );
   };
-
-  removeAccents(inputString) {
+  removeAccents(inputString: any) {
     // Normalize accented characters to their base form
     const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return normalizedString;
   }
  
   watch() {
+    
     let searchText = ''
+     //@ts-ignore
     if ( this.iAdvise.title == null || this.iAdvise.title == undefined || this.iAdvise.title == '' ) {
       this.router.navigate([`posts/oracle/${this.id}`]);
     }else{
-      
+       //@ts-ignore
       searchText = this.iAdvise.title.replace(new RegExp(' ', 'g'), '-');
       searchText= this.removeAccents(searchText)
       let lower = searchText.toLowerCase();

@@ -7,12 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { InteriorOfertaPageRoutingModule } from './interior-oferta-routing.module';
 
 import { InteriorOfertaPage } from './interior-oferta.page';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    IonicModule,
+    SharedModule,
     InteriorOfertaPageRoutingModule
   ],
   declarations: [InteriorOfertaPage]

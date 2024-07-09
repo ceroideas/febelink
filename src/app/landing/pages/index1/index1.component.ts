@@ -2,10 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { SeoService } from 'src/app/services/seo.service';
-import { ILang, ILangDEFAULTS } from 'src/app/models/langs.model';
+import { SeoService } from '../../../services/seo.service';
+import { ILang, ILangDEFAULTS } from '../../../models/langs.model';
 import { PopoverController } from '@ionic/angular';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
+import { TranslateConfigService } from '../../../services/translate/translate-config.service';
 
 export interface xTimer {
   szMs: string;
@@ -27,7 +27,7 @@ export interface xTimer {
 export class Index1Component implements OnInit {
   currentSection = 'home';
 
-  langSelected: ILang;
+  langSelected: ILang | undefined;
 
   constructor(
     private http: HttpClient,
@@ -62,9 +62,9 @@ export class Index1Component implements OnInit {
       document.body.scrollTop >= 50 ||
       document.documentElement.scrollTop > 50
     ) {
-      navbar.classList.add('nav-sticky');
+      navbar?.classList.add('nav-sticky');
     } else {
-      navbar.classList.remove('nav-sticky');
+      navbar?.classList.remove('nav-sticky');
     }
   }
 
@@ -80,14 +80,14 @@ export class Index1Component implements OnInit {
    * Toggle navbar
    */
   toggleMenu() {
-    document.getElementById('navbarCollapse').classList.toggle('show');
+    document.getElementById('navbarCollapse')?.classList.toggle('show');
   }
 
   szDigits2(i_Number: number) {
     return i_Number > 9 ? '' + i_Number : '0' + i_Number;
   }
 
-  async suscribe(emailAddres) {
+  async suscribe(emailAddres: any) {
     const body = {
       email_address: emailAddres,
       status: 'subscribed',
@@ -109,12 +109,11 @@ export class Index1Component implements OnInit {
         { headers }
       )
       .subscribe(() => {
-        console.log('Suscribir: ', emailAddres);
       });
   }
 
   scrollTo(id: string) {
-    document.getElementById(id).scrollIntoView({
+    document.getElementById(id)?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });

@@ -1,6 +1,7 @@
 <ion-grid class="box-bw-r1-lln marg-tb-10" *ngIf="id">
   <!-- Loading -->
-  <app-loading [isLoading]="isLoading"></app-loading>
+  <!-- <app-loading [isLoading]="isLoading"></app-loading> -->
+  <app-loading [isLoading]="isLoading !== null ? isLoading : false"></app-loading>
 
   <ion-row>
     <!-- Total Posts Created By User -->
@@ -19,7 +20,7 @@
   <ion-list *ngIf="stats?.posts">
     <app-post-summary-component
       *ngFor="let oracle of stats?.posts"
-      [id]="oracle?.id"
+      [id]="oracle?.id ?? 0"
       [iAdvise]="oracle"
     ></app-post-summary-component>
   </ion-list>
@@ -27,7 +28,9 @@
   <!-- See Oracles -->
   <ion-row class="align-center" *ngIf="!isLoading">
     <ion-label class="pointer hint" (click)="seePosts()"><em>
-      {{ 'pages.posts.advises.see' + ( stats?.qPosts > 0 ? '-user' : '' ) | translate }}
+
+      {{ 'pages.posts.advises.see' + (stats?.qPosts ?? 0 > 0 ? '-user' : '') | translate }}
+
     </em></ion-label>
   </ion-row>
 </ion-grid>

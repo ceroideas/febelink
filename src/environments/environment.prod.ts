@@ -1,9 +1,15 @@
 export const environment = {
   production: true,
+  baseWebUrlWsrv: 'https://wsrv.nl?url=',
   baseWebUrl: 'https://api.febelink.com/',
   API_URL: 'https://api.febelink.com/api/',
   API_URL_AUTH: 'https://api.febelink.com/api/auth/',
   SOCKET_URL: 'https://febelink-chat.herokuapp.com/',
+
+  DOOFINDER_BASE_URL: 'https://eu1-search.doofinder.com/6/',
+  DOOFINDER_HASHID: '72a38bd66f322e35fa2c168a48117d02',
+  DOOFINDER_API_KEY: 'eu1-eb36910de5a685bff32fd906a8e4ffe2ce4f031a',
+
   // SOCKET_URL: 'https://api.febelink.com:3425/',
   WEB_CLIENT_ID:
     '939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com',

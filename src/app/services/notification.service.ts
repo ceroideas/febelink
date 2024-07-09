@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { NotifType } from '../models/notification';
 import { ApiService } from './api.service';
 import { UtilitiesService } from './utilities.service';
-import { Badge } from '@awesome-cordova-plugins/badge/ngx';
+// import { Badge } from '@awesome-cordova-plugins/badge/ngx';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +13,11 @@ export class NotificationService {
   constructor(
     private api: ApiService,
     private utils: UtilitiesService,
-    private badge: Badge
+    // private badge: Badge
   ) {}
 
-  unreadNotificationsCount: BehaviorSubject<number> = new BehaviorSubject(null);
+  unreadNotificationsCount: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
 
   async getNotificacionsLog() {
     const notifListObs: Observable<any> = await this.api._getData(
@@ -61,19 +62,19 @@ export class NotificationService {
 
   faviconNotification(notifCount: number, totalUnreadMessages: number) {
     const count: number = notifCount + totalUnreadMessages;
-    this.badge.set(count).catch((err) => {
-      if (count) {
-        this.utils
-          .updateWebFavicon('favicon-notif')
-          .updateWebFavicon('favicon-notif', 192)
-          .updateWebFavicon('favicon-notif', 'apple');
-      } else {
-        this.utils
-          .updateWebFavicon('fav/icon-32x32')
-          .updateWebFavicon('fav/icon-192x192', 192)
-          .updateWebFavicon('fav/icon-180X180', 'apple');
-      }
-    });
+    // this.badge.set(count).catch((err) => {
+    //   if (count) {
+    //     this.utils
+    //       .updateWebFavicon('favicon-notif')
+    //       .updateWebFavicon('favicon-notif', 192)
+    //       .updateWebFavicon('favicon-notif', 'apple');
+    //   } else {
+    //     this.utils
+    //       .updateWebFavicon('fav/icon-32x32')
+    //       .updateWebFavicon('fav/icon-192x192', 192)
+    //       .updateWebFavicon('fav/icon-180X180', 'apple');
+    //   }
+    // });
   }
 
   titleNotification(notifCount: number, totalUnreadMessages: number) {

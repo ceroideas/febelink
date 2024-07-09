@@ -1,0 +1,1215 @@
+{
+  "common": {
+    "labelSectors": "Sectors",
+    "labelSubsectors": "Subsectors",
+    "labelSectors2": "Sector/s",
+    "labelSubsectors2": "Subsector/s",
+    "labelSector": "Sector",
+    "labelSubsector": "Subsector",
+    "labelSectorNsub": "Sector and Subsector",
+    "labelProvince": "Province",
+    "labelTown": "Town",
+    "labelNoElements": "No elements to show",
+    "labelLoading": "Loading...",
+    "labelSearching": "Searching...",
+    "publishPlaceholder": "What do you need?",
+    "searchPlaceholder": "Search post",
+    "labelDescription": "Description",
+    "cookies1": "We use cookies to provide you with the best possible experience. By continuing, we assume that you agree with our",
+    "cookies2": "cookie policy",
+    "labelName": "Name",
+    "labelEmail": "Email",
+    "labelAddress": "Address",
+    "labelAddressRest": "Rest Address",
+    "labelPhone": "Phone",
+    "labelLink": "URL Link",
+    "labelNewPass": "New password",
+    "labelConfirmNewPass": "Confirm new password",
+    "labelTitle": "Title",
+    "labelTopic": "Topic",
+    "labelEdited": "Edited",
+    "labelLang": "Language",
+    "labelUser": "User",
+    "labelDonate": "Give Tip",
+    "clipboard": "Copied to Clipboard",
+    "clipboardErr": "Error on Copy to Clipboard",
+    "clipboardNone": "No Valies to Copy to Clipboard",
+    "share": "Share",
+    "slogan": "The professional services search engine",
+    "contactUs": "Contact Febelink",
+    "contact": "Contact",
+    "labelSubsribe": "Subscribe",
+    "labelSocialShare": "Share on Social",
+    "labelReferenceOracle": "Quote Oracle",
+    "first": "First",
+    "last": "Last",
+    "unavailable": "Function not available yet",
+    "yes": "Yes",
+    "no": "No",
+    "not-logged": "To perform this action you need to be Logged",
+    "developing": "Feature in Development",
+    "personal": {
+      "accountname": "Account Name",
+      "surname": "Surnames",
+      "pass": "Passwword",
+      "passEr": "The password must be at least 8 digits with numbers and letters",
+      "tel": "Phone",
+      "id": "Identity Document",
+      "id_short": "Doc",
+      "errors": {
+        "name": "Fill in the name",
+        "surname": "Fill in the surname",
+        "email": "Fill in the email",
+        "id": "Fill in the Identity Document",
+        "address": "Write and select your full Address",
+        "phone": "Fill in your Phone Number"
+      }
+    },
+    "buttons": {
+      "confirm": "Confirm",
+      "back": "Back",
+      "cancel": "Cancel",
+      "send": "Send",
+      "close": "Close",
+      "retry": "Retry",
+      "got-it": "Got It",
+      "report": "Report",
+      "block": "Block",
+      "continue": "Continue",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "address": {
+      "state": "Province",
+      "locality": "Locality",
+      "address": "Address"
+    },
+    "timer": {
+      "months": "MONS",
+      "days": "DAYS",
+      "hours": "HORS",
+      "mins": "MINS",
+      "secs": "SECS"
+    },
+    "legal": {
+      "privacyPolicy": "Privacy Policy",
+      "condsNterms": "Conditions and Terms",
+      "warning": "Legal Warning",
+      "lastUpdate": "Last update",
+      "rights": "All rights reserved. FEBELINK DIGITAL S.L."
+    },
+    "verif": {
+      "which": {
+        "email": "Email Verificado",
+        "kyc": "Identidad Verificada"
+      },
+      "email": {
+        "head": "Data Verification",
+        "title": "You must validate your email account in order to enjoy functions such as: <ul><li>interact</li><li>publish searches</li><li>chat</li><li>rate</li><li>among others...</li></ul>",
+        "pompadour": "Check that your email is correct, to receive and verify your account: ",
+        "not-verified": "Email not verified",
+        "sending": "sending verification to the email {{ email }}",
+        "error": "It seems that there was an error when trying to validate the email",
+        "sent": "Verify your email",
+        "message": "Check your mailbox {{email}}"
+      },
+      "buttons": {
+        "now": "Verify",
+        "not-now": "Later"
+      }
+    },
+    "two-fa": {
+      "title": "Verify Account - 2FA",
+      "message": "Write here the {{ length }}-digit code that we have sent to your email",
+      "type": "******",
+      "expires": "Will expire in {{ min }} minutes",
+      "generating": "Generating 2FA Code",
+      "verifying": "Verifying 2FA Code",
+      "re-send": "Resend verification code",
+      "error": {
+        "expired": "Your code has expired, a new one has been sent to you",
+        "wrong": "Wrong code, try again"
+      }
+    },
+    "months": [
+      {
+        "short": "Jan",
+        "long": "January"
+      },
+      {
+        "short": "Feb",
+        "long": "February"
+      },
+      {
+        "short": "Mar",
+        "long": "March"
+      },
+      {
+        "short": "Apr",
+        "long": "April"
+      },
+      {
+        "short": "May",
+        "long": "May"
+      },
+      {
+        "short": "Jun",
+        "long": "June"
+      },
+      {
+        "short": "Jul",
+        "long": "July"
+      },
+      {
+        "short": "Ago",
+        "long": "August"
+      },
+      {
+        "short": "Sep",
+        "long": "September"
+      },
+      {
+        "short": "Oct",
+        "long": "October"
+      },
+      {
+        "short": "Nov",
+        "long": "November"
+      },
+      {
+        "short": "Dec",
+        "long": "December"
+      }
+    ],
+    "social": {
+      "telegram": "Join the Chat conversation in Telegram"
+    },
+    "mailTo": {
+      "support": "soporte@febelink.com",
+      "from": "From: ",
+      "to": "To: ",
+      "msg": "Message: ",
+      "report": {
+        "title": "Report",
+        "msg": "Tell us in detail what is happening"
+      },
+      "block": {
+        "title": "Block",
+        "msg": "Tell us in detail what is happening"
+      },
+      "error": {
+        "minLength": "You must detail with a minimum of 5 words"
+      }
+    },
+    "users": {
+      "no-items": "There are no users with that data",
+      "error": {
+        "list": "It looks like there was an error displaying the list. Try again"
+      }
+    },
+    "report": {
+      "create": {
+        "title": "Report",
+        "msg": "Tell us in detail what is happening",
+        "placeholder": "Write here your report",
+        "done": "Report sent successfully! We will review the issue shortly",
+        "error": "Error when trying to generate report"
+      }
+    },
+    "follow": {
+      "do": "Follow",
+      "cancel": "Following",
+      "create": {
+        "done": "Followed Successfully",
+        "error": "Error trying to Follow"
+      },
+      "update": "Updated Successfully",
+      "toggle": "Toggled Successfully",
+      "same": "You can't follow yourself"
+    }
+  },
+  "menu": {
+    "tabs": {
+      "landingICO": "Buy FLAU",
+      "token": "Token",
+      "searchEngine": "Search",
+      "recommend": "Recommend",
+      "advises": "Oracles",
+      "inicio": "Home",
+      "carrito": "Cart",
+      "carro": "Cart",
+      "chat": "Chat",
+      "profile": "Profile",
+      "login": "Login",
+      "share-febelink": "Share Febelink",
+      "share-msg": "I want to share with you Febelink, the searcher for proffesional services.",
+      "register": "Register"
+    },
+    "pages": {
+      "opinions": "Opinions",
+      "wallet": "My Wallet",
+      "subscriptions": "Subscriptions",
+      "datosPersonales": "Personal information",
+      "historialCompras": "Shopping history",
+      "misPublicaciones": "My posts",
+      "cambioAPremium": "Switch to professional account",
+      "plan": "My plan",
+      "suscripcion": "My subscription",
+      "servicios": "My services",
+      "ofertas": "My offers",
+      "valoraciones": "Ratings and statistics",
+      "idioma": "Idioma",
+      "ayuda": "Help",
+      "salir": "Sign out",
+      "detalle": {
+        "servicio": "Service",
+        "valoracion": "ratings",
+        "cantidad": "Quantity",
+        "comprar": "Buy now",
+        "add": "Add to cart",
+        "readmore": " Read more"
+      }
+    },
+    "labels": {
+      "currentPlan": "Current plan",
+      "editarPerfil": "Edit profile"
+    },
+    "footer": {
+      "company": "COMPANY",
+      "about": "About",
+      "premium": "Premium",
+      "blog": "Blog",
+      "affiliate": "Affiliate Program",
+      "cupon": "Get Coupon",
+      "support": "HELP AND SUPPORT",
+      "contact": "Contact Us",
+      "conocimiento": "Knowledge Center",
+      "premiumBis": "Premium Support",
+      "sponsor": "Sponsorsship",
+      "legal": "LEGACY",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions",
+      "derechos": "All rights reserved."
+    }
+  },
+  "tabs": {
+    "tab1": {
+      "labelPhoto": "Do you want to add a photo?",
+      "labelAnswers": "How many answers do you want to receive?",
+      "buttonSend": "Send search",
+      "messageSearchDone": "A search has been made, look at your panel!",
+      "messageSearchSent": "Search sent. You will soon receive your answers. Good luck!",
+      "errorPublishSearch": "There was an error in publishing the search.",
+      "errorMissingProfileInfo": "You must fill in your profile fields to perform the searches.",
+      "pop": {
+        "head": "Publish new Search",
+        "title": "Cancel Search",
+        "msg": "Do you confirm that you want to leave this search?"
+      },
+      "search": {
+        "resultado": "Results",
+        "oferta": "Offers",
+        "listado": "Professionals",
+        "sin_resultado_tit": "No results found",
+        "sin_resultado_subtit": "Try searching for other keywords",
+        "valoraciones": "ratings",
+        "recomendaciones": "Recommendations",
+        "oferta_destacada": "Featured Offer",
+        "basado_search": "Based on your search",
+        "search_prof": "Find trusted professionals"
+      }
+    },
+    "tab2": {
+      "filters": "Filters",
+      "messageAddedFavorite": "It has been added to favorites correctly.",
+      "messageRemovedFavorite": "It has been correctly removed from the favorites.",
+      "errorAddFavorite": "Error when adding to favorites.",
+      "errorRemoveFavorite": "Error when deleting from favorites.",
+      "update-research": "Save changes"
+    },
+    "tab3": {
+      "alertDelete": {
+        "message": "¿Are you sure you want to remove this search??",
+        "btnCancel": "Cancel",
+        "btnDelete": "Delete"
+      },
+      "errorRemoveOffer": "The offer could not be deleted.",
+      "errorRemoveSearch": "The search could not be deleted."
+    },
+    "tab4": {
+      "buttonAskRecommendation": "Ask for a recommendation",
+      "buttonSuscription": "Subscribe and upgrade to PRO",
+      "proUser": "PRO User",
+      "buttonSave": "Save changes",
+      "labelNoOpinions": "No opinions yet",
+      "labelOpinions": "Opinions",
+      "alert-need-to-complete": "To use this feature you will need to • Complete your profile <br> • Verify your Email <br> • Verify your Identity. <br> Do you want to do it now?",
+      "need-to-complete": "To enjoy more of Febelink, complete your profile",
+      "labelDisable": "Disable account",
+      "labelDisableConfirm": "Are you sure you want to disable your account?",
+      "buttonDisable": "Disable",
+      "labelDisableConfirmed": "Account disabled successfully",
+      "done": "Changes done successfully",
+      "valuation": {
+        "from": ", from Febelink wants you to give them an evaluation of their profile!",
+        "recommendation": " from Febelink wants you to recommend their profile!",
+        "panel": "Go to their panel to see their ratings!",
+        "notif": "A notification has been sent to the user",
+        "noMailuser": "There is no user with that email"
+      },
+      "errors": {
+        "title": "Error editing data",
+        "message": "The following errors occurred: ",
+        "messageChk": "Check that all the fields are entered.",
+        "name": "The name must be at least 3 characters long",
+        "passMatch": "Enter the password confirmation correctly",
+        "mail": "The email is not valid",
+        "mailExists": "The email you have entered already exists",
+        "mailEmpty": "The email field cannot be empty",
+        "phone": "The phone's format is not correct",
+        "id": "The Identity Document you have entered is not valid",
+        "idFormat": "The format of Identity Document is not correct",
+        "image": "Error getting image",
+        "imageMaxSize": "File too large, max. {{ max }}",
+        "noFileSelected": "No file selected.",
+        "noFileProvided": "No file provided",
+        "limitSelectSectors_1": "You can only select ",
+        "limitSelectSectors_2": " sectors with your current subscription"
+      },
+      "alerts": {
+        "improve": "Improve your profile",
+        "chooseShare": "Choose where you want to share",
+        "shareInside": "Within the app",
+        "shareOutside": "Outside the app",
+        "recommendation": "Ask for a recommendation",
+        "mail": "Write the user's email"
+      },
+      "search": {
+        "of": " in ",
+        "title": "The 10 best {{ subsector }}{{ provincia }}",
+        "descript": "At Febelink you have the best professionals in your area so that you can speak directly to them for free, quickly and easily."
+      }
+    }
+  },
+  "pages": {
+    "offerDetails": {
+      "alertShowData": {
+        "header": "Show user data",
+        "message": "You will see the user's email and phone number and your data (email and phone number) will be visible. Are you sure?",
+        "buttonAccept": "Accept",
+        "buttonCancel": "Cancel"
+      }
+    },
+    "demandDetails": {
+      "messageFillProfileData": "You must fill in the fields in your profile to be able to chat.",
+      "alertChat": {
+        "message": "You can't chat with yourself."
+      },
+      "alertNameDontMatch": {
+        "header": "Beware",
+        "message": "Make sure the search is the correct one."
+      }
+    },
+    "editDemand": {
+      "messageSuccessEditDemand": "The search has been successfully edited.",
+      "messageErrorEditDemand": "Error when editing the search."
+    },
+    "perfilDemandante": {
+      "alertNameDontMatch": {
+        "header": "Beware",
+        "message": "Make sure the profile is the correct one."
+      }
+    },
+    "registro": {
+      "title": "Create your free account",
+      "userName": "Username",
+      "confirmPass": "Confirm Password",
+      "cond1": "I have read, and accept the",
+      "cond2": "privacy policy",
+      "cond3": "and the",
+      "cond4": "general conditions of use",
+      "button": "REGISTER",
+      "or": "OR",
+      "continueWith": "Continue with ",
+      "errors": {
+        "title": "Registration failed",
+        "list": "The following errors occurred when registering:",
+        "server": "There was a server error registering. Try again later",
+        "terms": "You have to accept the privacy policy and the general conditions of use",
+        "fields": "You have to insert the required fields"
+      }
+    },
+    "login": {
+      "title": "Log in",
+      "forgotPass": "Forgot your password?",
+      "rememberPass": "Remember now",
+      "button": "LOG IN",
+      "newUser": "New user?",
+      "register": "Create Account",
+      "logging": "Logging in...",
+      "must": "To be able to enjoy this section you must first be logged in.<br><br>To continue, Log in",
+      "recover": {
+        "title": "Recover password",
+        "subtitle": "Enter the email to recover the password"
+      },
+      "errors": {
+        "title": "Failed to login",
+        "message": "There was an error logging in. Try again later",
+        "data": "The data entered is not correct",
+        "email": "The format of the email entered is not correct"
+      }
+    },
+    "email-verification": {
+      "title": "Email Verification",
+      "done": "Great! You've verified your email account",
+      "error": "Oops.. it seems that you have arrived here by mistake",
+      "redirect": "in {{ seconds }} seconds you will be redircted to the Home Page"
+    },
+    "success": {
+      "token": {
+        "title": "Thanks!",
+        "subtitle": "You have completed your registration in the reservation list.",
+        "text": "<p>You will receive more information about the Febelink Áureo token in your inbox in the next few minutes. Check your spam or promotions folder.</p><p>If the email does not reach you in the next 5 minutes, fill out the form again here.</p>"
+      },
+      "subscription-pro": {
+        "title": "Thanks!",
+        "subtitle": "Subscription done",
+        "text": "You have successfully subscribed to the Pro plan. From this moment you can start taking advantage of all its benefits"
+      },
+      "default": {
+        "title": "Thanks!",
+        "subtitle": "Your purchase has been made successfully",
+        "text": ""
+      }
+    },
+    "wallet": {
+      "title": "My Wallet",
+      "public-key": "Public Key",
+      "private-key": "Private Key",
+      "retained": "Retained Tokens",
+      "release": "Release Date:",
+      "transactions": "Recent transactions",
+      "no-transactions": "No recent transactions",
+      "buy": {
+        "title": "Buy assets",
+        "buy": "Quantity to Buy:",
+        "price": "Individual Price:",
+        "cost1": "Received: ",
+        "cost2": " / Tokens",
+        "fee": "Transaction Cost:",
+        "stripe": "Management Cost:",
+        "total": "<b>Tokens Total</b> ( Current + Buy )",
+        "button": "Purchase"
+      },
+      "purchase": {
+        "title-success": "Congratulations!",
+        "title-error": "Purchase Error",
+        "msg-success": "Your purchase has been done successful",
+        "msg-error": "It seems that there was an error in your purchase, so they have not been deducted from your card. Please try again and if the error persists contact info@febelink.com"
+      },
+      "help": {
+        "title": "Why do I see only the balance of some Currencies?",
+        "message": "Balances are shown in FLAU, BTC, XLM, EUR, USD. If you have other balances in your Wallet they will not be shown in this window"
+      },
+      "send": {
+        "title": "Send Tokens to",
+        "addressee": "Addressee",
+        "total": "Total Remaining Balance",
+        "button": "Send",
+        "alert": {
+          "title": "Important announcement",
+          "message": "For your safety, make sure to review the information of the wallet where you send your balances, as well as the functioning of the platform where you send them.<br><br>Febelink is not responsible for those balances once they are outside its platform.<br><br>We are at your disposal for any questions at <a href=\"mailto:soporte@febelink.com\">support@febelink.com</a>"
+        }
+      },
+      "donate": {
+        "title": "Give Tip to <b> {{ person }} </b>",
+        "no-user": "You have not selected user to tip",
+        "same-user": "You can't tip yourself"
+      },
+      "balance": {
+        "balance": "Balance",
+        "retained": "Total Retained",
+        "balance-av": "Available Balance"
+      },
+      "offers": {
+        "market": "Market",
+        "own": "My Offers",
+        "nothing": "There are no Items in the list",
+        "delete": {
+          "title": "Delete Offer",
+          "message": "Do you Confirm that you want to remove this offer?",
+          "success": "Offer removed successfully",
+          "error": "There was an error removing the offer:\n\n"
+        }
+      },
+      "exchange": {
+        "minnersFee": "Transaction cost",
+        "select-origin": "Select Origin Currency",
+        "select-destiny": "Select Destination Currency",
+        "sell_qant": "Quantity",
+        "sell_conv": "Conversion",
+        "buy_qant": "Quantity",
+        "buy_conv": "Conversion",
+        "create": "Offer",
+        "edit": "Edit",
+        "purchase": "Confirm",
+        "sell": "Sell",
+        "buy": "Receive",
+        "cant-switch": "Having selected an offer you cannot switch with the assets",
+        "exceeds-sell": "The Offer cannot exceed the sale amount",
+        "exceeds-buy": "The Offer cannot exceed the buy amount",
+        "market-price": "Use Market Price",
+        "available": "Available: ",
+        "title": {
+          "exchange": "Publish Order",
+          "offer": "Offer Edited - "
+        }
+      },
+      "error": {
+        "missing-sell": "You must select the Selling Currency",
+        "missing-buy": "You must select the Buying Currency",
+        "sell_qant": "Indicate the amount of Currency to Change",
+        "buy_qant": "Indicate the amount of Currency to Receive",
+        "qSend": "Indicate the amount of Currency to Send",
+        "minSend": "You cannot send more Tokens than you have",
+        "public-key": "You must indicate the Public Key of the Wallet to send",
+        "cant-send": "You do not have enough balance to send",
+        "unknown": "Unknow the Transaction Result",
+        "exceeded": "You do not possess the amount you want to trade",
+        "asset-not-available": "At the moment this Currency is not available for Transactions",
+        "no-public": "Until you have the Wallet Created (assigned Public Key) you will not be able to purchase Tokens. Fill in your profile information to continue"
+      },
+      "operations": [
+        "Account Creation",
+        "Sending Payment to Account",
+        "Creation of Payment Path between accounts",
+        "Offer Administration (CRUD)",
+        "Offer creation that will not consume a counter offer that exactly matches this offer",
+        "Setting of Account Options (inflation destination, added signers, etc)",
+        "Trustline CRUD",
+        "Update of the \"authorized\" indicator of an existing trust line",
+        "Account deletion and balance transfer to destination account.",
+        "Running inflation",
+        "Established, modified, or removed of a data entry",
+        "Advanced Account Sequence Number",
+        "Management of offer to buy (bid) one asset for another"
+      ],
+      "trustline": "*Remember that you must accept the FLAU asset to establish a trustline in the site where the wallet that receives this sending is located.",
+      "moreFundsButton": "Buy FLAU"
+    },
+    "posts": {
+      "see": "See post",
+      "react": "React",
+      "reacts": {
+        "like": "Useful",
+        "disagreement": "Not useful",
+        "love": "Like it",
+        "useful": "Useful"
+      },
+      "advises": {
+        "title": "Oracle",
+        "my-posts": "My Posts",
+        "see": "Watch more Posts",
+        "see-user": "Watch more posts of the User",
+        "create": {
+          "title": "Create Post",
+          "subtitle": "Subtitle",
+          "summary": "Summary",
+          "wysiwyg": "What do you want to tell?",
+          "done": "Oracle created successfully",
+          "error": {
+            "title": "The title cannot be less than 4 digits",
+            "content": "You must indicate the content to publish",
+            "topic": "You must indicate the topic to which you refer"
+          },
+          "saveButton": "Publish"
+        },
+        "edit": "Edit Post",
+        "editButton": "Save Changes",
+        "new": {
+          "title": "Great Job!",
+          "msg": "Now, ¿would you like to create another Oracle?"
+        },
+        "confirm": {
+          "edit": "Do you confirm that want to edit this Oracle?",
+          "new": "Do you confirm that want to create new Oracle?"
+        },
+        "delete": {
+          "title": "Delete Oracle",
+          "msg": "Are you sure you want to delete this Oracle?",
+          "done": "Oracle deleted"
+        },
+        "share": "Share",
+        "stats": {
+          "qCreated": "Oracles Created:",
+          "qReacts": "Reacts to these:"
+        },
+        "error": {
+          "search": "There was an error in the search, please try again",
+          "unauthorized": "You do not have permission to edit this Oracle",
+          "no-item": "Ups, seems that this advice does not exist<br>Would you like to post one?<br>Click here",
+          "no-items": "Till here we got with the Oracles<br>Would you like to post one?<br>Click here",
+          "no-items-filters": "Till here we've got with these filters<br>Do you want to publish one?<br>Click here"
+        }
+      },
+      "comments": "Comment/s",
+      "comment": {
+        "placeholder": "Comment...",
+        "created": "Comment added",
+        "updated": "Comment edited",
+        "delete": {
+          "title": "Delete Comment",
+          "msg": "Do you confirm that want to delete this Comment?",
+          "done": "Comment deleted"
+        }
+      }
+    }
+  },
+  "toast": {
+    "need-register": "Sign up to have a better experience with Febelink!"
+  },
+  "landing": {
+    "header": {
+      "welcome1": "Launch of the FLAU Token",
+      "welcome2": "Febelink Áureo"
+    },
+    "whitelist": {
+      "signUp": "Register now and get 10 FLAU tokens as a Gift",
+      "mail": "Enter your email address",
+      "action": {
+        "toDo": "Register",
+        "done": "Registered ✔"
+      },
+      "download": "Download Whitepaper",
+      "success": "Thank you for subscribing to our WhiteList"
+    },
+    "tokens": {
+      "title": "Save your tokens",
+      "button": "Save tokens"
+    },
+    "aboutTk": {
+      "title": "General information\nAbout the Token",
+      "detail": "The Aureo Token is part of Febelink's platform ecosystem, helping users to carry out their transactions in a safer, simpler, faster and more efficient way, also having many benefits for use, discounts, and exclusive services.",
+      "subtitle": "Probably the most usable token in the world",
+      "discounts": "DISCOUNTS",
+      "discountsDetail": "With Febelink's Aureo Token you automatically get great discounts on the platform, such as Professional and Premium subscriptions, and free services.",
+      "exclusive": "EXCLUSIVE PRODUCTS",
+      "exclusiveDetail": "Thanks to Febelink's Aureo Token you have access to specific products for the community.",
+      "governance": "GOVERNANCE",
+      "governanceDetail": "Having Febelink's Aureo Token gives you the right to participate in many decisions on the platform, such as new products or aid projects.",
+      "economy": "REAL ECONOMY",
+      "economyDetail": "With Febelink's Aureo Token you can exchange products and services with other users, directly from the token or by changing to any FIAT or Crypto currency."
+    },
+    "reserveTk": {
+      "title": "Save now your tokens for the public stage of the Febelink Aureo Token ICO.",
+      "info": [
+        "Purchases are executed in order of registration.",
+        "The reservation does not guarantee participation, as there are no reservation limits.",
+        "Availability is limited.",
+        "The amount has to be deposited in Febelink's wallet.",
+        "Choose the stage in which you want to participate and make your reservation now."
+      ],
+      "select": "SELECT YOUR RESERVATION",
+      "stage": "Stage",
+      "first": "First ",
+      "second": "Second ",
+      "third": "Third ",
+      "coin": "Euros",
+      "number": "Number of Tokens",
+      "button": "Save",
+      "modal": {
+        "title": "Fill in your details"
+      }
+    },
+    "phases": {
+      "phase": "Stage",
+      "title": "PUBLIC SALE's START (ICO)",
+      "price": "Price per token:",
+      "blocking": "Blocking:",
+      "release": "Release:",
+      "limit": "Purchase limits:",
+      "number": "No. of tokens:",
+      "card": [
+        {
+          "phase": 1,
+          "date": "From 00:00 on November 5, 2021 to 23:59 on November 11, 2021 (Madrid time UTC + 2)",
+          "price": "€ 0.10 (-66.6% discount)",
+          "blocking": "6 months after the closing of the public sale, release Jun/01/2022",
+          "release": "5 months progressively at a rate of 20% per month",
+          "limit": "minimum € 1,000, maximum € 60,000\n% of the total: 10%",
+          "number": "10 MM"
+        },
+        {
+          "phase": 2,
+          "date": "From 00:00 on November 12, 2021 to 23:59 on November 18, 2021 (Madrid time UTC + 2)",
+          "price": "€ 0.20 (-33.3% discount)",
+          "blocking": "3 months after the closing of the public sale, release Mar/01/2022",
+          "release": "5 months progressively at a rate of 20% per month",
+          "limit": "minimum € 500, maximum € 30,000\n% of total: 10%",
+          "number": "10 MM"
+        },
+        {
+          "phase": 3,
+          "date": "From 00:00 on November 19 2021 to 23:59 on November 30 2021 (Madrid time UTC + 2)",
+          "price": "€ 0,30\n",
+          "blocking": "1 month after the closing of the public sale, release on Jan/01/2022",
+          "release": "immediate after blocking\n",
+          "limit": "minimum € 100, maximum € 10,000\n% of total: 5%",
+          "number": "5 MM"
+        }
+      ]
+    },
+    "aboutUs": {
+      "title": "ABOUT US",
+      "story": "Our story",
+      "description": "Febelink is the search engine for professional services, a social network where users publish their searches and the system sends notifications to professionals related to the activity. Our goal is to help people find the professionals and companies they need more efficiently, and to help companies and professionals find new clients.",
+      "press": "PRESS",
+      "blog": "BLOG",
+      "blogFebelink": "FEBELINK's BLOG",
+      "blogMedia": "THE MEDIA SPEAKS",
+      "blogSearchEng": "WHAT ARE SEARCH ENGINES?",
+      "blogICO": "WHAT IS AN ICO?",
+      "podcast": "PODCAST",
+      "podcastBlockchain": "BLOCKCHAIN TERRITORY",
+      "podcastInterview": "INTERVIEW with CEO OF FEBELINK"
+    },
+    "aboutTeam": {
+      "title": "OUR TEAM",
+      "description": "Experience and knowledge are identity signs of the people who make up our work group. Join our expanding team.",
+      "juan": "Founder & CEO. Entrepreneur with 27 years of experience, developing his career mainly in financial consulting and in the automotive sector.",
+      "david": "Founder & CTO. Developer with extensive experience in Cloud systems. He has worked in large public institutions and online auction houses such as: Christie's, Hilco StremBank or LeasePlan.",
+      "miguel": "Marketing professional with extensive experience in technology and FMCG. Marketing manager of various multinationals such as Hewlett-Packard or WD-40 Company.",
+      "miguelAngel": "(Minery Report) Specialist in Digitization, Cybersecurity and Blockchain technology. Co-founder of the Cybersecurity Directorate of the Air Force, Ministry of Defense of Spain."
+    },
+    "footer": {
+      "doubts": "Do you have any doubt? Contact us"
+    },
+    "success": {
+      "title": "Thank you!",
+      "subtitle": "You have completed your registration in the reservation list.",
+      "text": "<p>You will receive more information about Febelink's Aureo Token in your inbox in the next few minutes. Check your spam or promotions folder.</p><p>If the email does not reach you in the next 5 minutes, fill in the form again here.</p>"
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "DATA PROTECTION",
+      "pompadour": "In compliance with the provisions of Law 3/2018, the personal data provided will be incorporated into our automated files and will be treated with the utmost confidentiality. Informing you of your rights of access, rectification, cancellation or opposition, which may be exercised by contacting us in writing at our registered office, in order to guarantee that the processing of personal data is carried out respecting fundamental rights and freedoms, with special attention to confidentiality, personal identity and the right to protection of personal data.",
+      "subtitle": "FEBELINK TERMS AND CONDITIONS OF USE",
+      "li": [
+        "These Terms and Conditions of Use regulate the rules to which the use of the Febelink APP (hereinafter, the APP) is subject, which can be downloaded. Downloading or using the APP attributes the condition of User to whoever does so and implies acceptance of all the conditions included in this document and in the Privacy Policy and Legal Notice of said website. The User should read these conditions each time they uses the APP, since they could be modified in the future.",
+        "Only Users expressly authorized by Febelink may access the download and use of the APP. Users who do not have authorization will not be able to access said content.",
+        "Charges: You are responsible for paying all costs or expenses you incur as a result of downloading and using the Febelink App, including any roaming or carrier network charges. Check with your service provider for details.",
+        "Anonymous statistics: Febelink reserves the right to track your activity on the App and to report it to our third-party statistical service providers. All this anonymously.",
+        "Protection of your personal information: we want to help you carry out all the necessary steps to protect your privacy and information. Please see the Febelink Privacy Policy and the App's privacy notices to learn what kind of information we collect and the steps we take to protect your personal information.",
+        "It is forbidden to alter or modify any part of the APP other than those contained therein, circumvent, deactivate or manipulate in any other way (or try to circumvent, deactivate or manipulate) the security functions or other functions of the program and use the APP or its contents for a commercial or advertising purpose. The use of the APP for the purpose of damaging property, rights or interests of Febelink or third parties is prohibited. It is also prohibited to carry out any other use that alters, damages or disables the networks, servers, equipment, products and computer programs of Febelink or of third parties.",
+        "The APP and its contents (texts, photographs, graphics, images, technology, software, links, contents, graphic design, source code, etc.), as well as trademarks and other distinctive signs are the property of Febelink or third parties, acquiring the User no rights over them by the mere use of the APP. The User must refrain from: a) Reproducing, copying, distributing, making available to third parties, publicly communicating, transforming or modifying the APP or its contents, except in the cases contemplated by law or expressly authorized by Febelink or by the owner of said rights. b) Reproduce or copy the APP or its contents for private use, as well as communicate them publicly or make them available to third parties when this entails their reproduction. c) Extract or reuse all or a substantial part of the contents of the APP.",
+        "Subject to the conditions established in the previous section, Febelink grants the User a license to use the APP, non-exclusive, free, for personal use, and indefinitely. Said license is also granted under the same terms with respect to updates and improvements made to the application. Said user licenses may be unilaterally revoked by Febelink at any time.",
+        "In any case, it is the User's responsibility to have adequate tools for the detection and disinfection of malicious programs or any other harmful computer element. Febelink is not responsible for damages caused to computer equipment during the use of the APP. Likewise, Febelink will not be responsible for damages caused to Users when said damages originate from failures or disconnections in the telecommunications networks that interrupt the service.",
+        "IMPORTANT: We can, without this entailing any obligation to you, modify these Terms of Use without notifying you at any time. If you continue to use the application after any modification to these Terms of Use has been made, that continued use will constitute your acceptance of such modifications. If you do not accept these terms of use nor agree to be bound by them, you must not use the application or download or use any related software. The use you make of the application is under your sole responsibility. We have no responsibility for the removal or inability to store or transmit any content or other information maintained or transmitted by the application. We are not responsible for the accuracy or reliability of any information or advice transmitted through the application. We may, at any time, limit or discontinue your use in our sole discretion. To the maximum extent permitted by law, in no event will we be liable for any related loss or damage.",
+        "The User agrees to make correct use of the APP, in accordance with the Law, with these Terms and Conditions of Use and with the other rules and instructions that, where appropriate, may be applicable The User will respond to Febelink and against third parties of any damages or losses that could cause breach of these obligations.",
+        "These Terms and Conditions of Use are governed entirely by Spanish law. For the resolution of any conflict related to its interpretation or application, the User expressly submits to the jurisdiction of the courts of Malaga (Spain)."
+      ]
+    },
+    "warning": {
+      "title": "FEBELINK LEGAL NOTICE",
+      "descript": [
+        "In order to comply with Law 34/2002, of July 11, on Services of the Information Society and Electronic Commerce, the following Legal Notice is made available to the user.",
+        "Its observance and compliance will be enforceable with respect to any person who accesses, browses or uses the Website <a href=\"https://www.febelink.com\">https://www.febelink.com</a> and/or the mobile application (hereinafter, the “<strong>Website</strong>” and the “<strong>Application</strong>” downloadable through Google Play) from FEBELINK DIGITAL S.L. If you do not agree with the conditions set out, do not access, browse or use them."
+      ],
+      "points": [
+        {
+          "title": "1.  IDENTIFICATION",
+          "items": [
+            {
+              "descript": "<strong>Headline: </strong>FEBELINK DIGITAL S.L. (onwards, “<strong>FEBELINK</strong>”)"
+            },
+            {
+              "descript": "<strong>Registered office: </strong>La Gitanilla street, 17, Office 19, Pol. Ind. Santa Cruz, 29004, Málaga"
+            },
+            {
+              "descript": "<strong>Registry information: </strong>Registro Mercantil de Málaga, Bulletin 86, Reference 216576, Volume 6031, Book 4938, Folio 74, Section 8, Sheet 160744, Inscription 1."
+            },
+            {
+              "descript": "<strong>Telephone contact: </strong>+34 952633297"
+            },
+            {
+              "descript": "<strong>CIF: </strong>B05367511"
+            },
+            {
+              "descript": "<strong>E-mail: </strong> <a href=\"mailto:info@febelink.com\">info@febelink.com</a>"
+            }
+          ]
+        },
+        {
+          "title": "2.  OBJECT",
+          "items": [
+            {
+              "descript": "This Legal Notice establishes the rules of access, navigation and use of the Website and/or the Application. However, access to certain content and the use of certain services may be subject to certain particular conditions, which will in any case be clearly displayed and must be expressly accepted by users (hereinafter, “<strong>User</strong>” or “<strong>Users</strong>”). These particular conditions may replace, complete or, where appropriate, modify those established in this Legal Notice."
+            }
+          ]
+        },
+        {
+          "title": "3.  WEBSITE",
+          "items": [
+            {
+              "descript": "Through the Website and/or the Application, the User may carry out the following actions:",
+              "items": [
+                "Register as a FEBELINK user;",
+                "Know the specifications of the services offered;",
+                "Contract the services offered;",
+                "Access the FEBELINK community;",
+                "Get information about social networks;",
+                "View the content offered on the Website and/or the Application and;",
+                "Contact FEBELINK through the contact form;",
+                "Access the different offers of third parties located on the Website and/or the Application;",
+                "Access the legal texts that regulate the navigation of the Website and/or the Application."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "4.  ACCESS AND REGISTRATION",
+          "items": [
+            {
+              "descript": "Access to the contents of the Website and/or the Application is completely free."
+            },
+            {
+              "descript": "When a User provides personal data through any of the forms enabled for this purpose on the Website and/or the Application, it will be necessary for them to previously accept the <a id=\"openprivacypolicy1\" style=\"cursor:pointer;\">Privacy Policy.</a>"
+            },
+            {
+              "descript": " In any case, access and navigation on the Website and/or the Application by minors under eighteen (18) years of age is prohibited. It will be presumed that the access made by a minor to the Website has been made with the prior and express authorization of their parents, guardians or legal representatives."
+            },
+            {
+              "descript": " Under no circumstances will FEBELINK be responsible for the veracity of the data provided by the Users, so each of them will be solely responsible for the possible consequences, errors and failures that may arise from the lack of accuracy of the data provided."
+            }
+          ]
+        },
+        {
+          "title": "5.  INTELLECTUAL PROPERTY AND INDUSTRY RIGHTS",
+          "items": [
+            {
+              "title": "5.1.  Rights over content",
+              "items": [
+                {
+                  "descript": "FEBELINK is the owner or, where appropriate, has the corresponding licenses on the exploitation rights of intellectual and industrial property necessary to operate on the Website and/or the Application, as well as all the content offered therein, including the own Website, texts, photographs or illustrations, logos, brands, graphics, designs, interfaces, or any other information or content, and the services available through it."
+                }
+              ]
+            },
+            {
+              "title": "5.2.  Rights on the Website and/or the Application",
+              "items": [
+                {
+                  "descript": " In no case will it be understood that the access, navigation and use of the Website and/or the Application by the User implies a waiver, transmission, license or total or partial transfer of said rights by FEBELINK. The User has a right to use the contents and/or services of the Website and/or the Application within a strictly domestic scope and solely for the purpose of making use of the benefits the benefits of the service in accordance with this Legal Notice."
+                },
+                {
+                  "descript": "References to trademarks or registered trade names, or other distinctive signs, whether owned by FEBELINK or third parties, imply the prohibition on their use without the consent of FEBELINK or its legitimate owners. At no time does the access, navigation or use of the Website and/or the Application and/or its contents confer on the User any right over distinctive signs included therein, unless otherwise provided in this Legal Notice."
+                },
+                {
+                  "descript": "All intellectual and industrial property rights over the contents and/or services of the Website and/or the Application are reserved and, in particular, it is prohibited to modify, copy, reproduce, publicly communicate, transform or distribute, by any means and in any form, all or part of the contents included in the Website and/or in the Application, for any purpose, if you do not have the prior, express, and written authorization of FEBELINK or, where appropriate, of FEBELINK of the corresponding rights."
+                },
+                {
+                  "descript": "Likewise, it is prohibited to suppress or manipulate the copyright indications or other credits that identify the holders of rights of the contents that the User finds on the Website and/or in the Application, as well as the technical protection devices, fingerprints, or any protection mechanism or information incorporated into the content offered on the Website and/or in the Application."
+                },
+                {
+                  "descript": "The services offered, or any information provided through the Website and/or the Application may not be used for commercial or advertising purposes without prior authorization from FEBELINK."
+                },
+                {
+                  "descript": "In any case, the User agrees not to use the Website and/or the Application for illegal or prohibited purposes.."
+                }
+              ]
+            },
+            {
+              "title": "5.3.  Rights over the content and information diffused by the User",
+              "items": [
+                {
+                  "descript": "In case the User sends information or content of any kind to FEBELINK through any of the channels enabled for this purpose, the User declares, guarantees, and accepts that they have the right to do so freely, that said information does not infringe any intellectual, industrial property rights, commercial secret or any other rights of third parties, and that said information is not confidential or harmful to third parties."
+                },
+                {
+                  "descript": "The User acknowledges assuming responsibility, leaving FEBELINK harmless, for any communication or content sent personally or in his name."
+                },
+                {
+                  "descript": "If the User becomes aware of the existence of any content that is illicit, illegal, contrary to the laws or that could imply an infringement of intellectual, industrial property rights, or of any other nature, he must immediately notify FEBELINK through the email address <a href=\"mailto:info@febelink.com\">info@febelink.com</a> so that it can proceed to adopt the appropriate actions."
+                },
+                {
+                  "descript": "In the same way, in case that any User or a third party considers that any of the contents of the Website and/or the Application, owned by FEBELINK, violates their intellectual, industrial property rights, or of any other nature, they must send a communication to <a href=\"mailto:info@febelink.com\">info@febelink.com</a> with the following information:",
+                  "items": [
+                    "Identification data and means of contact of the claimant or his legal representative;",
+                    "Documentation that proves your status as the owner of the rights allegedly infringed;",
+                    "Detailed account of the rights allegedly infringed by FEBELINK, as well as their exact location within the Website and/or the Application;",
+                    "Expressed declaration by the claimant that the use of the contents has been made without the consent of the owner of the rights allegedly infringed."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6.  LINKS",
+          "items": [
+            {
+              "title": "6.1.  Links to other web pages",
+              "items": [
+                {
+                  "descript": "In case that in the Website and/or the Application are shown links to other web pages through different buttons, links, banners or embedded content, FEBELINK informs that these are managed by third parties, FEBELINK having neither human nor technical means to know in advance and/or control and/or approve all the information, content, products or services provided by other platforms to which links can be established from the Website and/or the Application."
+                },
+                {
+                  "descript": "Consequently, FEBELINK will not be able to assume any type of responsibility for any aspect related to the Website or the Application or web page to which a link could be established from the Website and/or the Application, specifically, by way of example, but Non-limiting, on its operation, access, data, information, files, quality, and reliability of its products and services, its own links, and/or any of its contents, in general."
+                },
+                {
+                  "descript": "In this sense, if the Users had effective knowledge that the activities carried out through these third-party web pages are illegal or contravene morality and/or public order, they must immediately notify FEBELINK in order to proceed to disable the link to access them, an action that will be carried out in the shortest possible time."
+                },
+                {
+                  "descript": "In any case, the establishment of any type of link from the Website and/or the Application to another third party web page will not imply that there is any type of relationship, collaboration or dependency between FEBELINK and the person responsible for said third party web page."
+                }
+              ]
+            },
+            {
+              "title": "6.2.  Links to the FEBELINK channel on other platforms and social networks",
+              "items": [
+                {
+                  "descript": "FEBELINK makes available to Users, through different tools and applications, means of link that allow Users to access the channels and pages of the Website and/or the Application that it maintains on different platforms and social networks belonging to and/or managed by third parties (eg. Facebook, etc.). The sole purpose of including these links on the Website and/or the Application is to provide Users with access to said channels on the different platforms and social networks."
+                },
+                {
+                  "descript": "The establishment of these applications does not imply the existence of any relationship between FEBELINK and the owner, manufacturer or distributor of the Website and/or the linked Application, nor does it imply the acceptance and approval by FEBELINK of its contents and/or services, being their owner, manufacturer or distributor the sole responsible for them."
+                },
+                {
+                  "descript": "The activation and use of these applications may entail the identification and authentication of the User (login/password) on the corresponding platforms, completely external to the Website and outside the control of FEBELINK. By accessing these external networks, the User enters an environment not controlled by FEBELINK, so FEBELINK will not assume any responsibility for the security configuration of said environments."
+                },
+                {
+                  "descript": "Given that FEBELINK may have limited control over the content hosted on said channels, the User acknowledges and accepts that FEBELINK does not assume any responsibility for the content or for the services that the User can access on said pages, or for any content, products, services, advertising, or any other material available in them."
+                }
+              ]
+            },
+            {
+              "title": "6.3.  Links on other web pages to the Website and/or the Application",
+              "items": [
+                {
+                  "descript": "FEBELINK does not authorize the establishment of a link to the Website from those pages that contain materials, information or content that is illicit, illegal, degrading, obscene and, in general, that contravenes laws, morals or public order, or generally accepted social norms."
+                },
+                {
+                  "descript": "In any case, Users may establish links that lead to the Website, as long as they meet the following conditions:",
+                  "items": [
+                    "The link may not reproduce the content of the Website and/or the Application or parts of it in any way;",
+                    "It is not allowed to create a browser or a border environment on the sections of the Website and/or the Application and/or the Application, nor may the Website and/or the Application be modified in any other way;",
+                    "It is not allowed to make false or inaccurate or incorrect statements or indications on the Website and/or the Application and/or, in particular, declare or imply that FEBELINK has authorized the link or that it has supervised or assumed in any way the offered contents or services or made available on the website where said link is established;",
+                    "The web page in which the link to the Website or the Application is established will not contain information or content that is illegal, contrary to morality and generally accepted good customs and public order, nor will it contain content that is contrary to any rights of third parties, including intellectual or industrial property rights and/or the right to honor, personal or family privacy or one's own image or any other right, or content contrary to the regulatory norms of protection of personal data."
+                  ]
+                },
+                {
+                  "descript": "FEBELINK does not have the power or human or technical means to know, control or approve all the information, content, products or services provided by other web pages that have established links to the Website or the Application. Therefore, FEBELINK does not assume any type of responsibility for any aspect related to the web page that establishes that link to the Website or the Application; specifically, by way of example and not limitative, on its operation, access, data, information, files, quality and reliability of its products and services, its own links and/or any of its contents, in general."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "7.  RULES OF USE OF THE WEBSITE AND THE APPLICATION",
+          "items": [
+            {
+              "descript": "It is not allowed and, therefore, its consequences will be the sole responsibility of the User, the access or use of the Website and/or the Application for illegal or unauthorized purposes, with or without profit. In particular, and without the following list being limiting, it is prohibited:",
+              "items": [
+                "Use the Website and/or the Application in any way that may cause damage, interruptions, inefficiencies or defects in its operation or in the computer equipment of a third party;",
+                "Use the Website and/or the Application for the transmission, installation or publication of any virus, malicious code or other harmful programs or files or with illicit intentions;",
+                "Use the Website and/or the Application to transmit for advertising or promotional purposes, including spam, chain emails or similar, without the expressed prior written authorization of FEBELINK;",
+                "Use the Website and/or the Application to collect personal data from other Users;",
+                "Using the Website and/or the Application illegally, against good faith, moral, and public order;",
+                "Register through the Website and/or the Application with a false identity, impersonating third parties or using a profile or taking any other action that may confuse other Users about the User's identity;",
+                "Access without authorization to any section of the Website and/or the Application, other systems or networks connected to the Website, the FEBELINK servers, or the services offered through the Website and/or the Application, by means of hacking or forgery, password extraction or any other illegitimate means;",
+                "Carry out any action that causes a disproportionate or unnecessary saturation in the infrastructure of the Website and/or the Application or in the systems or networks of FEBELINK, as well as in the systems and networks connected to the Website;",
+                "unauthorized access to any section of the Website and/or the Application, other systems or networks connected to them, any FEBELINK server or the services offered through the Website and/or the Application by means of hacking or falsification, extraction of passwords or any other illegitimate means or established in this Legal Notice;",
+                "use the Website and/or the Application to transmit or publish any material of a defamatory, offensive, racist, vulgar, degrading, pornographic nature, or of an obscene or threatening nature or that may annoy, harm or merely affect any person under FEBELINK's criteria;",
+                "Prevent the normal development of an event, contest, promotion or any other activity available through the Website and/or the Application or any of its functionalities, either by altering or trying to alter, illegally or in any other way, the access, participation or operation of those, or falsifying the result of the same and/or using fraudulent participation methods, through any procedure, and/or through any practice that attempts or violates this legal notice."
+              ]
+            },
+            {
+              "descript": "Failure to comply with any of the above obligations by the User may entail the adoption by FEBELINK of the appropriate actions covered by Law and in the exercise of its rights or obligations, which may lead to the elimination or blocking of the account of the offending User, without that there is any possibility of compensation for the damages caused."
+            }
+          ]
+        },
+        {
+          "title": "8.  RESPONSIBILITIES AND GUARANTEES",
+          "items": [
+            {
+              "descript": "Consequently, FEBELINK does not guarantee or is responsible for:",
+              "items": [
+                "The continuity of the contents, services, and/or functionalities of the Website and/or the Application and/or of the Application;",
+                "The absence of viruses or other harmful components on the Website and/or the Application or on the server that supplies it;",
+                "The invulnerability of the Website and/or the Application or the impossibility of violating the security measures adopted for it;",
+                "The lack of usefulness or performance of the contents of the Website and/or the Application and/or of the Application, and;",
+                "the failures of the Website and/or the Application caused by any type of attack on its servers or those of third FEBELINK service providers, as well as technical or security failures of the system of any of said providers that prevent proper functioning of the Website and/or the Application and/or of the Application;",
+                "any technical failure, of any kind, that hinders, delays or prevents the proper functioning of the Website and/or the Application and/or of the Application;",
+                "Damages or losses caused, to himself or to a third party, by any person who violates the conditions, rules, and instructions that FEBELINK establishes, or through the violation of security systems."
+              ]
+            },
+            {
+              "descript": "However, FEBELINK declares that it has adopted all the necessary measures, within its possibilities and the state of the technique to guarantee the functioning of the Website and/or the Application and to minimize system errors, both from the point of view from a technical point of view as well as the content published on the Website and/or the Application."
+            },
+            {
+              "descript": "FEBELINK will not be responsible for the veracity, integrity or updating of the information contained in other platforms to which it is linked from the Website and/or the Application. FEBELINK will not assume responsibility for hypothetical damages that may arise from the use of the aforementioned information."
+            },
+            {
+              "descript": "FEBELINK will not be liable for causes beyond its control, among which may be listed in a non-limiting manner: force majeure, internet access problems, technological problems beyond the diligent and reasonable management of FEBELINK, actions or omissions of third parties, etc. In all the aforementioned cases, outside of the control and due diligence of FEBELINK, there will be no compensation from FEBELINK to the User for damages, to the extent permitted by current legislation."
+            }
+          ]
+        },
+        {
+          "title": "9.  SUSPENSION OF THE WEBSITE AND/OR THE APPLICATION",
+          "items": [
+            {
+              "descript": "FEBELINK reserves the right to suspend, modify, restrict or interrupt, either temporarily or permanently, the access, browsing, use, hosting and/or downloading of the content and/or use of services of the Website and/or the Application and/or of the Application, with or without prior notification, to Users who contravene any of the dispositions detailed in this legal notice, without the User being able to demand any compensation for this cause."
+            }
+          ]
+        },
+        {
+          "title": "10.  DATA PROTECTION",
+          "items": [
+            {
+              "descript": "In accordance with the provisions of the Organic Law 3/2018, of December 5th, on the Protection of Personal Data and guarantee of digital rights, all personal data collected during the use of the Website and/or the Application will be treated in accordance with the provisions of the <a id=\"openprivacypolicy2\" style=\"cursor:pointer;\">Privacy Policy</a>, that every User must expressly accept in case of providing personal data through the Website and/or the Application and/or of the Application."
+            }
+          ]
+        },
+        {
+          "title": "11.  GENERAL",
+          "items": [
+            {
+              "descript": "The headings of the different clauses are only informative, and will not affect, qualify or expand the interpretation of this Legal Notice. Likewise, FEBELINK may modify the conditions stipulated here, in whole or in part, by publishing any change in the same way that this legal notice appears or through any type of communication addressed to Users."
+            },
+            {
+              "descript": "The temporary validity of this Legal Notice coincides, therefore, with the time of its exposure, until it is totally or partially modified, at which time the modified legal notice will take effect."
+            },
+            {
+              "descript": "FEBELINK may terminate, suspend or interrupt, at any time and without prior notice, access to the contents of the Website and/or the Application, with no possibility for the User to demand any compensation. After said termination, the prohibitions on the use of the contents set forth above in this legal notice will remain in force."
+            },
+            {
+              "descript": "In case that any provision of this legal notice is declared null or unenforceable, in whole or in part, by any Court, Tribunal or competent administrative body, said nullity or inapplication will not affect the remaining provisions of this legal notice."
+            },
+            {
+              "descript": "The non-exercise or execution by FEBELINK of any right or condition contained in this legal notice will not constitute a waiver thereof, unless acknowledgment and agreement in writing by you."
+            }
+          ]
+        },
+        {
+          "title": "12.  APPLICABLE LEGISLATION AND COMPETENT JURISDICTION",
+          "items": [
+            {
+              "descript": "The current regulation will determine the laws that should rule and the jurisdiction that must know of the relations between FEBELINK and the Users of the Website and/or the Application. However, provided that said regulations foresee the possibility for the parties involved to submit to a specific jurisdiction, for any litigation issue arising from or related to this Website and/or the Application, the Spanish legislation in force at the time of the dispute will apply. Likewise, FEBELINK and the users, expressly waiving any other jurisdiction that may correspond to them, submit to the Courts and Tribunals of Malaga."
+            },
+            {
+              "descript": "Resolution of online litigation in consumer matters in accordance with Art. 14.1 of the Regulation (EU) 524/2013: The European Commission provides an online dispute resolution platform that is available at the following link: <a href=\"http://ec.europa.eu/consumers/odr/\">http://ec.europa.eu/consumers/odr/</a>."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "admin": {
+    "tokensUsers": {
+      "placeholder": "Manage User Tokens",
+      "placeholder_users": "Search User",
+      "public": "Public Key",
+      "num": "Tokens N°",
+      "phase": "Phase",
+      "payed": "Payed",
+      "obs": "Observations",
+      "retained": "Pnd. Send",
+      "date": "Release Date",
+      "actions": "Actions",
+      "create": "Create New Reservation",
+      "update": "Edit {{ name }} {{ surname }}",
+      "delete": {
+        "done": "Tokens deleted",
+        "error": "Could not delete"
+      },
+      "irreversible": " THIS ACTION IS NOT REVERSIBLE",
+      "purchase-date": "Date of payment",
+      "modal": {
+        "header": "{{ CRUD }} user tokens",
+        "body": "¿Are you sure you want to {{ CRUD }} tokens of {{name}}?{{ extra }}"
+      },
+      "loading": "Action Disabled during Loading",
+      "error": {
+        "some": "There was an error",
+        "num_tokens": "You must indicate the Tokens Number",
+        "phase_tokens": "You must indicate the Stage",
+        "retained": "You can't modify not retained Tokens"
+      }
+    },
+    "create": "Add",
+    "read": "Read",
+    "update": "Edit",
+    "delete": "Delete"
+  },
+  "kyc": {
+    "verify": "Verify Identity",
+    "start": {
+      "header": "Identity Verification and Proof of Life",
+      "title": "To continue, we will need to verify your identity.",
+      "subtitle": "It will only take a minute",
+      "toProceed": "To proceed with the capture of the document, select the issuing country",
+      "selectCountry": "Select the issuing country of the Document",
+      "noCountry": "No country found"
+    },
+    "docTypes": {
+      "idcard": "National ID Card",
+      "passport": "Passport",
+      "residencepermit": "Residence Permit",
+      "driverlicense": "Driver's License"
+    },
+    "verifying": "Verifying User",
+    "loading": "Processing the data",
+    "cancel": {
+      "title": "To continue you must complete the life test",
+      "message": "Do you want to retry so that you can continue with the process?"
+    },
+    "errors": {
+      "user": {
+        "title": "User not found",
+        "message": "You must first create an account to validate your identity"
+      },
+      "alice": {
+        "title": "It seems there was an error",
+        "message": "Do you want to retry so that you can continue with the process?"
+      },
+      "title": "You have errors in the validation of Proof of Life",
+      "document": {
+        "none": "You have not uploaded a document to validate",
+        "frontFields": "I have not been able to corroborate any field in the Front side of the document",
+        "backFields": "I have not been able to corroborate any field in the Back side of the document",
+        "err": "Check that the following fields of the <b>Document</b> do not have problems",
+        "name": "Name",
+        "surname": "Surname",
+        "birthdate": "Date of birth",
+        "legal_age": "Age of Majority",
+        "expire": "Date of Expiry",
+        "number": "Document Number",
+        "consistent": "There are at least 2 inconsistent fields between both sides of the document",
+        "expected": "The selected Document type and / or the issuing country do not match the uploaded Document"
+      },
+      "selfie": {
+        "none": "You have not taken the Selfie test",
+        "err": "The errors regarding the <b>Selfie</b> are:",
+        "is_real": "It has not passed the impersonation test (printed images, videos on screens, masks, among others)",
+        "face_match": "No relationship was found between the Selfie and the document photo"
+      }
+    },
+    "alert": {
+      "complete": {
+        "head": "Complete the KYC",
+        "msg": "This step will only take a moment and you have to do it only once. Thus we have a safer environment for the entire community"
+      },
+      "ios": {
+        "tile": "KYC Validation in Beta Phase",
+        "message": "Being in Development for iOS, it may have bugs. If you cannot finish the process, continue it from the browser at www.febelink.com"
+      }
+    },
+    "verified": "Life Verification Successfull",
+    "unverified": "Life Verification Failed"
+  },
+  "console": {
+    "warning": {
+      "title": "WARNING!",
+      "message": "This is a browser feature for developers. If you were asked to copy and paste something here, someone might want to take control of your account. Do not enter any script code without knowing what it does."
+    }
+  }
+}

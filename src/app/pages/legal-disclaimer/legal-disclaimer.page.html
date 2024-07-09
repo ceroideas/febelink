@@ -1,9 +1,9 @@
-<ion-header>
+<div>
   <ion-toolbar color="febelink">
     <ion-icon (click)="goBack()" slot="start" name="close"></ion-icon>
     <ion-title class="ion-text-center">{{ 'common.legal.warning' | translate }}</ion-title>
   </ion-toolbar>
-</ion-header>
+</div>
 
 <ion-content class="ion-padding">
 
@@ -12,7 +12,7 @@
   <p *ngFor="let descript of 'legal.warning.descript' | translate" [innerHTML]="descript | safeHtml"></p>
 
   <!-- Busca los puntos en i18n y los agrega recursivamete -->
-    <app-legal-point [item]="point" addBreak="true"
+    <app-legal-point [item]="point" [addBreak]="true"
         *ngFor="let point of 'legal.warning.points' | translate" ></app-legal-point>
   
   <br><br><br>

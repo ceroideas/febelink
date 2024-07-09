@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { TokensUser } from 'src/app/admin/models/tokens-user';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { AssetTypes } from 'src/app/models/wallet/offers.models';
-import { WalletParams } from 'src/app/models/wallet/params.model';
+import { TokensUser } from '../../admin/models/tokens-user';
+import { CryptoCurrency } from '../../models/wallet/currency.model';
+import { AssetTypes } from '../../models/wallet/offers.models';
+import { WalletParams } from '../../models/wallet/params.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,15 +30,17 @@ export class TkLimitSvc
         return 0
     }
 
-    qantAvailable( asset: CryptoCurrency, walletParams: WalletParams )
-    {
-        return this.qantAsset( asset, walletParams.userWallets )
-            - this.qantRetained( asset, walletParams.retainedTks )
+    qantAvailable(asset: CryptoCurrency, walletParams: WalletParams) {
+        const userWallets = walletParams.userWallets ?? []; // Provide default value if undefined
+        if (  walletParams.retainedTks)
+        return this.qantAsset(asset, userWallets) - this.qantRetained(asset, walletParams.retainedTks);
+        else    
+        return 
     }
-
     // The user has that amount available in their wallet => amount >= assetsQant - retained
     exceeds( amount: number, asset: CryptoCurrency, walletParams: WalletParams )
     {
-        return amount > this.qantAvailable( asset, walletParams )
+        const qantAvailable = this.qantAvailable(asset, walletParams) ?? 0;
+        return amount > qantAvailable;
     }
 }

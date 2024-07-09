@@ -13,9 +13,9 @@ import {CookiesComponent} from './cookies/cookies.component';
 import {SharePopoverComponent} from './share-popover/share-popover.component';
 import {SocialLoginComponent} from './social-login/social-login.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {environment} from 'src/environments/environment';
 import {PartialPopupComponent} from './partial-popup/partial-popup.component';
 import {FormsModule} from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [

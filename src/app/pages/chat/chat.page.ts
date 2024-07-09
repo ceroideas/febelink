@@ -3,13 +3,10 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
 import {
   AlertController,
-  IonContent,
-  Platform,
-  ToastController,
+  
 } from '@ionic/angular';
-import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
-import {ApiService} from 'src/app/services/api.service';
+import {ApiService} from '../../services/api.service';
 import {IonInfiniteScroll} from '@ionic/angular';
 import {Subscription} from 'rxjs';
 
@@ -20,46 +17,43 @@ declare var $: any;
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage {
+export class ChatPage implements OnInit{
   public message = '';
-  public messages = [];
-  public currentUser;
-  public timeout;
-  public user_id;
-  public user_name;
-  public person_name;
-  public person_id;
-  public room_id;
+  public messages:any[] = [];
+  public currentUser: any;
+  public timeout: any;
+  public user_id: any;
+  public user_name: any;
+  public person_name: any;
+  public person_id: any;
+  public room_id: any;
   public view_finish = true;
-  public create;
-  public empty_chat;
+  public create: any;
+  public empty_chat: any;
   public load_data = null;
-  public messageDateString;
-  public exist_old_messages;
-  public firstMessage;
+  public messageDateString: any;
+  public exist_old_messages: any;
+  public firstMessage: any;
   public finish_chat = false;
-  private reciveMessageSubscription: Subscription;
+  private reciveMessageSubscription: Subscription | undefined;
   @ViewChild(IonInfiniteScroll, {static: false})
-  infiniteScroll: IonInfiniteScroll;
-  @ViewChild('id_input_message', {static: false}) input_message: Input;
+  infiniteScroll: IonInfiniteScroll | undefined;
+  @ViewChild('id_input_message', {static: false}) input_message: Input | undefined;
 
   @ViewChild('content', {static: true}) private content: any;
 
-  userIdDemand: string;
-  demandId: number;
-  searchTitle: string;
+  userIdDemand: string ="";
+  demandId: number = 0;
+  searchTitle: string = "";
 
-  paramsQuery;
-  paramsUrl;
+  paramsQuery: any;
+  paramsUrl:any;
 
   constructor(
     private socket: Socket,
-    private platform: Platform,
     private route: ActivatedRoute,
-    private toastCtrl: ToastController,
     public alertController: AlertController,
     public ApiService: ApiService,
-    private navCtrl: NavController,
     private utiltySVC: UtilitiesService
   ) {
     // this.socket.connect();
@@ -69,21 +63,23 @@ export class ChatPage {
     // });
 
     this.route.params.subscribe((params) => {
-      this.user_name = params?.user_name;
-      this.person_name = params?.person_name;
-      this.person_id = this.route.snapshot?.params?.receiverId;
-      this.room_id = params?.roomId;
-      this.create = params?.create;
+      this.user_name = params?.['user_name'];
+
+      this.person_name = params?.['person_name'];
+      this.person_id = this.route.snapshot?.params?.['receiverId'];
+      this.room_id = params?.['roomId'];
+      this.create = params?.['create'];
       params['id_demandante']
         ? (this.userIdDemand = JSON.parse(params['id_demandante']))
         : (this.userIdDemand = this.user_id);
-      this.demandId = params?.demand_id;
-      this.searchTitle = params?.search_title;
+      this.demandId = params?.['demand_id'];
+      this.searchTitle = params?.['search_title'];
     });
   }
 
-  async ionViewWillEnter() {
+  async ngOnInit() {
     this.currentUser = await this.utiltySVC?.getUserData();
+
     this.user_id = this.currentUser?.id;
 
     this.person_id = this.route.snapshot?.paramMap.get('receiverId');
@@ -96,19 +92,19 @@ export class ChatPage {
 
     this.ApiService.getAllMessages(this.room_id).then((myObservable) => {
       myObservable.subscribe((response) => {
-        console.log(response)
         if (response.correct == true && response.message == 'Correct') {
+          //@ts-ignore
           this.load_data = true;
-          let new_messages = [];
+          let new_messages: any = [];
           if (response.result.length){
             this.firstMessage = response.result[0]['id'];
             this.finish_chat = response.result[0]['finish'];
           }
           
           response.result.forEach(function callback(
-            currentValue,
-            index,
-            array
+            currentValue: any,
+            index: any,
+            array: any
           ) {
             currentValue.timecreated = currentValue.timecreated * 1000;
             var message_hour = new Date(currentValue.timecreated).getHours();
@@ -170,7 +166,10 @@ export class ChatPage {
       .subscribe((message) => {
 
         console.log('He recibido el mesnaje: ', message);
+        //@ts-ignore
         var message_hour = new Date(message['timecreated']).getHours();
+        //@ts-ignore
+
         var message_min = new Date(message['timecreated']).getMinutes();
         let message_hour_reset;
 
@@ -187,19 +186,22 @@ export class ChatPage {
         } else {
           message_min_reset = message_min;
         }
+        //@ts-ignore
 
         message['createdAt'] = message_hour_reset + ':' + message_min_reset;
+        //@ts-ignore
+
         this.messages.push(message);
         this.scrollToBottomOnInit();
       });
   }
 
-  ionViewDidLeave() {
-    this.socket.disconnect();
-    this.reciveMessageSubscription.unsubscribe();
-  }
+  // ionViewDidLeave() {
+  //   this.socket.disconnect();
+  //   this.reciveMessageSubscription?.unsubscribe();
+  // }
 
-  async presentAlert(title, message, button) {
+  async presentAlert(title: any, message: any, button:any) {
     const alert = await this.alertController.create({
       header: title,
       message: '<p>' + message + '</p>',
@@ -269,7 +271,7 @@ export class ChatPage {
     }
   }
 
-  async setMessageDB(message, room, timecreated) {
+  async setMessageDB(message:any, room:any, timecreated:any) {
     await this.ApiService.setMessage(
       this.user_id,
       this.person_id,
@@ -292,7 +294,7 @@ export class ChatPage {
     // await this.ApiService.sendNotificacionNewMessage(this.person_id, this.message);
   }
 
-  async newMessageChat(person_id) {
+  async newMessageChat(person_id:any) {
     await this.socket.emit('new_update_room', person_id + 'user_login');
   }
 
@@ -392,6 +394,7 @@ export class ChatPage {
             setTimeout(() => {
               if (this.content.scrollToBottom) {
                 this.content.scrollToBottom();
+                //@ts-ignore
                 this.load_data = true;
               }
             }, 2);
@@ -434,7 +437,9 @@ export class ChatPage {
       return true;
     }
 
+    //@ts-ignore
     const d1 = new Date(this.messages[messageIndex - 1].timecreated);
+    //@ts-ignore
     const d2 = new Date(this.messages[messageIndex].timecreated);
 
     return (
@@ -462,12 +467,14 @@ export class ChatPage {
     const yesterday = dateYesterday;
 
     const wholeDate = new Date(
+       //@ts-ignore
       this.messages[messageIndex].timecreated
     ).toLocaleDateString('es-ES', options);
 
     this.messageDateString = wholeDate;
 
     if (
+       //@ts-ignore
       new Date(this.messages[messageIndex].timecreated).getFullYear() ===
       new Date().getFullYear()
     ) {
@@ -581,6 +588,7 @@ export class ChatPage {
       await this.ApiService.realizarOferta(
         this.searchTitle,
         this.message,
+         //@ts-ignore
         0,
         this.demandId
       )

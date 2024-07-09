@@ -1,0 +1,34 @@
+{
+    "profesiones": [
+        {
+            "id": "1",
+            "texto": "Fisioterapia",
+            "activo": false
+          },
+          {
+              "id": "2",
+              "texto": "Medicina homeopática",
+              "activo": false
+          },
+          {
+              "id": "3",
+              "texto": "Radiología",
+              "activo": false
+          },
+          {
+              "id": "4",
+              "texto": "Radiolpogía",
+              "activo": false
+          },
+          {
+              "id": "5",
+              "texto": "Test PCR",
+              "activo": false
+          },
+          {
+              "id": "6",
+              "texto": "Psicología",
+              "activo": false
+          }
+    ]
+}

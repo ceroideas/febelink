@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController,NavController, AlertController } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from './../../services/api.service';
+import { UtilitiesService } from './../../services/utilities.service';
 import {NavigationExtras} from "@angular/router";
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
@@ -43,7 +43,7 @@ export class InteriorOfertaPage implements OnInit {
   /**
    * Enviamos la respuesta al servidor
    */
-  async responderOferta(respuesta){
+  async responderOferta(respuesta: any){
     //Respuesta 0, oferta denegada, respuesta 1, oferta aceptada
     (await this.api.responderOferta(respuesta,this.oferta.id)).subscribe( async resp => {
 

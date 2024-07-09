@@ -15,7 +15,7 @@ import { testimonialData } from './data';
  */
 export class ClientsComponent implements OnInit {
 
-  testimonialData: Testimonial[];
+  testimonialData: Testimonial[]  | undefined;;
 
   constructor() { }
 

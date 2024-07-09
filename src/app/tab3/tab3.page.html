@@ -21,17 +21,17 @@
       <ion-item
         tappable
         lines="none"
-        *ngFor="let room of rooms | filter:mysearch.value"
+        *ngFor="let room of rooms | filter:(mysearch?.value ?? '')"
         (click)="navigateToChat(room?.chatRoomId, room?.receiverId, room?.receiverUsername)"
       >
         <ion-avatar slot="start">
-          <!-- <img src="assets/imgs/4.jpg" *ngIf="!room?.imagen" />
+           <img src="assets/imgs/4.jpg" *ngIf="!room?.imagen" />
           <ion-img
             [src]="room?.imagen"
             *ngIf="room?.imagen"
             appImgErrorFallback
-          ></ion-img> -->
-          <ion-badge color="danger">{{getUnreadMessages(room)}}</ion-badge>
+          ></ion-img>
+          <!-- <ion-badge color="danger">{{getUnreadMessages(room)}}</ion-badge> -->
         </ion-avatar>
         <ion-label>
           <div class="flex">

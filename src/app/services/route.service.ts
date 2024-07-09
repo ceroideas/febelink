@@ -7,9 +7,10 @@ import { filter } from "rxjs/operators";
   })
 export class RouteSvc
 {
-    url: string
+    url: string = ""
+    //@ts-ignore
     params: Params
-    listener: ( url: string, params: Params ) => any
+    listener: ((url: string, params: Params) => any) | undefined
 
     constructor(
         private router: Router
@@ -20,17 +21,20 @@ export class RouteSvc
     private catchEvents()
     {
       // To refresh list on routing to this page
+      
       this.router.events.pipe(
-        filter(( events: RouterEvent ) => events instanceof NavigationEnd )
-      ).subscribe(( val ) => {
-        let urlTree = this.router.parseUrl(this.router.url)
-        this.params = urlTree.queryParams
-        urlTree.queryParams = {}
-        urlTree.fragment = null // optional
-        this.url = urlTree.toString()
+        //@ts-ignore
+        //TODO: NOE
+        filter((events: RouterEvent): events is NavigationEnd => events instanceof NavigationEnd)
+      ).subscribe((val) => {
+        let urlTree = this.router.parseUrl(this.router.url);
+        this.params = urlTree.queryParams;
+        urlTree.queryParams = {};
+        urlTree.fragment = null; // optional
+        this.url = urlTree.toString();
 
-        if( this.listener )
-            this.listener( this.url, this.params )
+        if (this.listener)
+          this.listener(this.url, this.params);
       });
     }
 

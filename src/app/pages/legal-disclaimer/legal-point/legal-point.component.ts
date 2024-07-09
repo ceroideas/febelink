@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LegalPointComponent implements OnInit {
 
-  @Input() item;
+  @Input() item: any;
   @Input() addBreak: boolean = false;
 
   constructor() { }

@@ -10,4 +10,5 @@ Disallow: /services/
 Disallow: /notifications/
 Disallow: /privacy-policy/
 Disallow: /use-conditions/
+Disallow: /use-conditions/
 Sitemap: https://www.febelink.com/sitemap.xml

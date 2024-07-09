@@ -1,109 +1,108 @@
-import {WalletService} from './services/wallet/wallet.service';
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import {
-  Platform,
-  AlertController,
-  IonRouterOutlet,
-  IonNavLink,
-  MenuController,
-  ModalController,
-} from '@ionic/angular';
-import {SplashScreen} from '@awesome-cordova-plugins/splash-screen/ngx';
-import {
-  Push,
-  PushObject,
-  PushOptions,
-} from '@awesome-cordova-plugins/push/ngx';
-import {UtilitiesService} from './services/utilities.service';
-import {ApiService} from './services/api.service';
-import {Deeplinks} from '@awesome-cordova-plugins/deeplinks/ngx';
-import {NavController} from '@ionic/angular';
-import {TranslateConfigService} from './services/translate/translate-config.service';
-import {Storage} from '@ionic/storage';
-import {AuthenticationService} from './services/authentication/authentication.service';
-import {IUser} from './models/user.model';
-import {SuscribirsePage} from './pages/suscribirse/suscribirse.page';
-import {ISector, ISubSector} from './models/sector.model';
-import {NotificationService} from './services/notification.service';
-import {CryptoCurrency} from './models/wallet/currency.model';
-import {Observable} from 'rxjs';
-import {ILangDEFAULTS} from './models/langs.model';
-import {Meta, Title} from '@angular/platform-browser';
-// import { FrogedService } from './services/froged.service';
-import {ConsoleSvc} from './services/console.service';
-import {environment} from 'src/environments/environment';
-import {ServicesService} from './pages/servicios/services/services.service';
-import {DOCUMENT, Location} from '@angular/common';
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
-const GENERAL_TITLE =
-  'Febelink | El buscador universal de servicios profesionales';
-const GENERAL_DESC =
-  'Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.';
+import {CUSTOM_ELEMENTS_SCHEMA, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import { FirebaseApp, initializeApp } from "firebase/app";
+import {CommonModule, DOCUMENT, Location, NgIf, isPlatformBrowser} from '@angular/common';
+import { ConsoleSvc} from './services/console.service';
+import { ApiService } from './services/api.service';
+import { ISector, ISubSector } from './models/sector.model';
+import { CryptoCurrency } from './models/wallet/currency.model';
+import { IUser } from './models/user.model';
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { TranslateConfigService } from './services/translate/translate-config.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { ILangDEFAULTS } from './models/langs.model';
+
+
+import {
+  
+    Platform,
+    MenuController,
+    NavController,
+    AlertController,
+  
+  } from '@ionic/angular/standalone';
+import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
+import { NotificationService } from './services/notification.service';
+import { WalletService } from './services/wallet/wallet.service';
+import { UtilitiesService } from './services/utilities.service';
+import { SharedModule } from './shared/shared.module';
+import { ServicesService } from './pages/servicios/services/services.service';
+
+// import { IonicStorageModule } from '@ionic/storage';
+  
+    const GENERAL_TITLE =
+    'Febelink | El buscador universal de servicios profesionales';
+    const GENERAL_DESC =
+    'Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [
+      
+        SharedModule,
+       
+      
+    ],
+    providers: [
+    ],
+    host: {ngSkipHydration: 'true'},
+    schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
+
+
+
+
 export class AppComponent implements OnInit, OnDestroy {
   advertisement = false;
   currentYear = new Date().getFullYear();
   public userSubscription: any;
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
-  @ViewChild(IonRouterOutlet, {static: false}) routerOutlets: IonRouterOutlet;
   public visiblePro: boolean = false;
 
   public appPages = [
-    // NOTE: Hidden for the time being until Stripe development is completed.
-    /*
-    {
-        key: 'subscriptions',
-        url: '',
-        icon: 'calendar'
-    }
-    */
   ];
-  currentUser: IUser;
+  currentUser: IUser | undefined;
   showOpinions = true;
   showWallets = true;
-  userSector: ISector;
-  userSubsector: ISubSector;
+  userSector: ISector | undefined;
+  userSubsector: ISubSector | undefined;
   userSubscriptionDetails = 'ninguno';
   userFeedback = [];
   userWallets: CryptoCurrency[] = [];
-
+  
   onHome: boolean = true;
 
   firebaseApp: FirebaseApp;
 
   constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) public platformId: Object,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) private navigator: Navigator,
+    
+    private location: Location,
     public platform: Platform,
-    private splashScreen: SplashScreen,
-    private push: Push,
+    // private push: Push,
     private api: ApiService,
     private utilities: UtilitiesService,
     public alertCtrl: AlertController,
-    private router: Router,
-    private deeplinks: Deeplinks,
     private navCtrl: NavController,
     private translateService: TranslateConfigService,
-    private storage: Storage,
+    
+    // private storage: Storage,
     private menu: MenuController,
     public authenticationService: AuthenticationService,
-    private modalCtrl: ModalController,
     private notificationSvc: NotificationService,
     private walletService: WalletService,
-    private titleService: Title,
-    private metaService: Meta,
-    // private frogedSvc: FrogedService,
     private consoleSvc: ConsoleSvc,
     private servicesSvc: ServicesService,
-    @Inject(DOCUMENT) private document: Document,
-    private location: Location
+    
   ) {
 
     // Initialize Firebase
@@ -112,7 +111,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((e) => {
       /* To Know in SCSS which url is currently opened */
       if (this.document.body.dataset) {
-        this.document.body.dataset.url = this.location.path();
+        this.document.body.dataset['url'] = this.location.path();
       }
 
       if ( e instanceof NavigationEnd ) {
@@ -128,27 +127,44 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    navigator.serviceWorker.register("firebase-messaging-sw.js");
-    // this.displayAdvertisement();
-    this.initializeApp();
-    this.openCookieBanner();
-
-    // this.frogedSvc.track('public_key');
-
-    /* Show */
-    this.consoleSvc.warning();
+    if ( isPlatformBrowser(this.platformId) ) {
 
 
-    document.getElementById('notificationButton').addEventListener('click', () =>{
-      if (Notification.permission !== 'granted') {
-          Notification.requestPermission().then((permission) => {
-            this.handlePermission(permission);
-          });
-      } else {
-          console.log('Notification permission already granted');
-          // You can now proceed to show notifications
+      if ('serviceWorker' in navigator) {
+        try {
+          navigator.serviceWorker.register('/firebase-messaging-sw.js')
+            .then((registration) => {
+            })
+            .catch((error) => {
+            });
+        } catch (error) {
+        }
       }
-    });
+
+      // this.navigator.serviceWorker.register("firebase-messaging-sw.js");
+      // this.displayAdvertisement();
+      this.initializeApp();
+      this.openCookieBanner();
+  
+      // this.frogedSvc.track('public_key');
+  
+      /* Show */
+      this.consoleSvc.warning();
+
+      document.getElementById('notificationButton')?.addEventListener('click', () =>{
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission().then((permission) => {
+              this.handlePermission(permission);
+            });
+        } else {
+            // You can now proceed to show notifications
+        }
+      });
+    }
+
+
+
+  
   }
 
   displayAdvertisement() {
@@ -159,22 +175,45 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  gotoHome(){
+    this.router.navigate(['/home']);
+  }
+  gotoCart(){
+    this.router.navigate(['/cart']);
+  }
+  gotoChat(){
+    this.router.navigate(['/chat']);
+  }
+
   initializeApp() {
+
+    if ( localStorage.getItem('accessTokenInfo') !== undefined && localStorage.getItem('accessTokenInfo') !== null){
+      let accessTokenInfo = JSON.parse(JSON.stringify( localStorage.getItem('accessTokenInfo') ))
+      sessionStorage.setItem('accessTokenInfo', accessTokenInfo) 
+    }
+    if ( localStorage.getItem('userData') !== undefined && localStorage.getItem('userData') !== null){
+      let userData = JSON.parse(JSON.stringify( localStorage.getItem('userData') ))
+      sessionStorage.setItem('userData', userData) 
+      this.currentUser = userData;
+      this.authenticationService.login()
+
+    }
+
     this.platform.ready().then(() => {
       this.setupLanguage();
       this.platform.backButton.subscribe(() => {
         if (this.router.url === '' || this.router.url === '/listado') {
-          navigator['app'].exitApp();
+        //   navigator['app'].exitApp(); //TODO: NOE
         } else {
           this.navCtrl.back();
         }
       });
 
-      if (this.platform.is('cordova')) {
-        this.splashScreen.hide();
-        this.initDeeplinks();
-        this.router.navigate(['login']);
-      }
+      // if (this.platform.is('cordova')) {
+      //   // this.splashScreen.hide();
+      //   this.initDeeplinks();
+      //   this.router.navigate(['login']);
+      // }
       this.pushSetupFunction();
       // this.pushSetup();
       // this.userSubscription = this.api.getUserLogged().subscribe((item) => {
@@ -186,6 +225,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
     this.authenticationService.authenticationState.subscribe(async (state) => {
+
+     
       if (state) {
         this.menu.enable(true);
         this.getUserInfo();
@@ -197,12 +238,11 @@ export class AppComponent implements OnInit, OnDestroy {
           await this.walletService.getBalanceByUserId();
 
         this.userWallets = []; //Clear wallet just in case has another session info
-        serviceRequest.subscribe((response) => {
+        serviceRequest.subscribe((response: any) => {
           this.userWallets = response.data;
         });
       }
     });
-    // this.loginImplicito();
   }
 
   /** Update User Data when Menu clicked */
@@ -215,14 +255,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
       this.currentUser = userData;
 
+
       // Update in storage
       this.utilities.saveUserData(userData);
     });
   }
 
   async getMyProfessions() {
-    const {response, error} = await this.servicesSvc.userProfession();
-    if (response && response.length > 0) {
+    const { response } = await this.servicesSvc.userProfession();
+    if (response.professions && response.professions.length > 0) {
       this.visiblePro = true;
     }
   }
@@ -270,90 +311,90 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   backbutton() {
-    document.addEventListener('backbutton', () => {
-      if (this.routerOutlets && this.routerOutlets.canGoBack()) {
-        this.routerOutlets.pop();
-      } else if (this.router.url === environment.HOME_PAGE) {
-        navigator['app'].exitApp();
-      }
-    });
+    // document.addEventListener('backbutton', () => {
+    //   if (this.routerOutlets && this.routerOutlets.canGoBack()) {
+    //     this.routerOutlets.pop();
+    //   } else if (this.router.url === environment.HOME_PAGE) {
+    //     // navigator['app'].exitApp(); //TODO: NOE
+    //   }
+    // });
   }
 
   public initDeeplinks() {
-    this.deeplinks
-      .route({
-        '/busqueda/:id/:name': 'detalle-demanda',
-        '/busqueda/:id': 'detalle-demanda',
-        '/perfil/:id/:name': 'perfil-demandante',
-        '/menu/ofertas': 'ofertas',
-        '/#/busqueda/:id/:name': 'detalle-demanda',
-        '/#/busqueda/:id': 'detalle-demanda',
-        '/#/perfil/:id/:name': 'perfil-demandante',
-        '/#/menu/ofertas': 'ofertas',
-      })
-      .subscribe(
-        (match) => {
-          let id = match.$args.id;
-          const name = match.$args.nick || match.$args.name;
-          switch (match.$route) {
-            case 'detalle-demanda': {
-              id = Number(id);
-              setTimeout(() => {
-                const route: string[] = ['busqueda', id, name];
-                if (name) {
-                  route.push(name);
-                }
-                this.router.navigate(route, {
-                  queryParams: {id_demanda: id},
-                });
-              }, 500);
-              break;
-            }
-            case 'perfil-demandante': {
-              this.router.navigate(['perfil', id, name], {
-                queryParams: {id_perfil: id},
-              });
-              break;
-            }
-            case 'ofertas': {
-              this.router.navigate(['menu', 'ofertas']);
-              break;
-            }
-          }
-        },
-        (nomatch) => {
-          console.error('Got a deeplink that didn\'t match', nomatch);
-          const path = nomatch.$link.fragment;
-          const id = path.substring(path.lastIndexOf('/') + 1, path.length);
-          const route = path.substring(
-            path.lastIndexOf('#') + 2,
-            path.lastIndexOf('/')
-          );
-          if (route === 'busqueda') {
-            setTimeout(() => {
-              this.router.navigate(['busqueda/' + id], {
-                queryParams: {id_demanda: Number(id)},
-              });
-            }, 500);
-          } else if (route === 'perfil-demandante') {
-            setTimeout(() => {
-              this.router.navigate(['perfil-demandante'], {
-                queryParams: {id_perfil: id},
-              });
-            }, 500);
-          }
-        }
-      );
+    // this.deeplinks
+    //   .route({
+    //     '/busqueda/:id/:name': 'detalle-demanda',
+    //     '/busqueda/:id': 'detalle-demanda',
+    //     '/perfil/:id/:name': 'perfil-demandante',
+    //     '/menu/ofertas': 'ofertas',
+    //     '/#/busqueda/:id/:name': 'detalle-demanda',
+    //     '/#/busqueda/:id': 'detalle-demanda',
+    //     '/#/perfil/:id/:name': 'perfil-demandante',
+    //     '/#/menu/ofertas': 'ofertas',
+    //   })
+    //   .subscribe(
+    //     (match: any) => {
+    //       let id = match.$args.id;
+    //       const name = match.$args.nick || match.$args.name;
+    //       switch (match.$route) {
+    //         case 'detalle-demanda': {
+    //           id = Number(id);
+    //           setTimeout(() => {
+    //             const route: string[] = ['busqueda', id, name];
+    //             if (name) {
+    //               route.push(name);
+    //             }
+    //             this.router.navigate(route, {
+    //               queryParams: {id_demanda: id},
+    //             });
+    //           }, 500);
+    //           break;
+    //         }
+    //         case 'perfil-demandante': {
+    //           this.router.navigate(['perfil', id, name], {
+    //             queryParams: {id_perfil: id},
+    //           });
+    //           break;
+    //         }
+    //         case 'ofertas': {
+    //           this.router.navigate(['menu', 'ofertas']);
+    //           break;
+    //         }
+    //       }
+    //     },
+    //     (nomatch: any) => {
+    //       console.error('Got a deeplink that didn\'t match', nomatch);
+    //       const path = nomatch.$link.fragment;
+    //       const id = path.substring(path.lastIndexOf('/') + 1, path.length);
+    //       const route = path.substring(
+    //         path.lastIndexOf('#') + 2,
+    //         path.lastIndexOf('/')
+    //       );
+    //       if (route === 'busqueda') {
+    //         setTimeout(() => {
+    //           this.router.navigate(['busqueda/' + id], {
+    //             queryParams: {id_demanda: Number(id)},
+    //           });
+    //         }, 500);
+    //       } else if (route === 'perfil-demandante') {
+    //         setTimeout(() => {
+    //           this.router.navigate(['perfil-demandante'], {
+    //             queryParams: {id_perfil: id},
+    //           });
+    //         }, 500);
+    //       }
+    //     }
+    //   );
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    
+    // this.userSubscription.unsubscribe();
   }
 
 
 
-  handlePermission(permission) {
-    console.log(permission)
+  handlePermission(permission: any) {
     if (permission === 'granted') {
       // Initialize Firebase Cloud Messaging and get a reference to the service
       const messaging = getMessaging(this.firebaseApp);
@@ -372,8 +413,10 @@ export class AppComponent implements OnInit, OnDestroy {
       onMessage(messaging, (payload) => {
         if (   this.platform.is('ios')
           || this.platform.is('android')) {
-          navigator.serviceWorker.ready.then((registration) => {
+          this.navigator.serviceWorker.ready.then((registration) => {
+              //@ts-ignore
             registration.showNotification(payload.data?.title, {
+              //@ts-ignore
               body: payload.data?.message,
               icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
             });
@@ -381,7 +424,9 @@ export class AppComponent implements OnInit, OnDestroy {
             console.log('An error occurred while retrieving token. ', err);
           });
         } else {
+              //@ts-ignore
           const notification = new Notification(payload.data?.title, {
+            //@ts-ignore
             body: payload.data?.message,
             icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
           });
@@ -446,8 +491,10 @@ export class AppComponent implements OnInit, OnDestroy {
         onMessage(messaging, (payload) => {
           if (   this.platform.is('ios')
             || this.platform.is('android')) {
-            navigator.serviceWorker.ready.then((registration) => {
+            this.navigator.serviceWorker.ready.then((registration) => {
+                  //@ts-ignore
               registration.showNotification(payload.data?.title, {
+                  //@ts-ignore
                 body: payload.data?.message,
                 icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
               });
@@ -455,7 +502,10 @@ export class AppComponent implements OnInit, OnDestroy {
               console.log('An error occurred while retrieving token. ', err);
             });
           } else {
+
+                //@ts-ignore
             const notification = new Notification(payload.data?.title, {
+                //@ts-ignore
               body: payload.data?.message,
               icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
             });
@@ -478,7 +528,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
 
-  async pushAlert(title, message, id) {
+  async pushAlert(title: string, message: string, id: number) {
     const alert = await this.alertCtrl.create({
       header: title,
       subHeader: message,
@@ -486,7 +536,6 @@ export class AppComponent implements OnInit, OnDestroy {
         {
           text: 'Cerrar',
           handler: (data) => {
-            console.log('Cancel clicked');
           },
         },
         {
@@ -504,7 +553,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public loginImplicito(): void {
-    this.router.navigate([environment.HOME_PAGE]);
+    this.utilities.getUserData().then(async (userData) => {
+      console.log(userData)
+    if (userData) {
+      this.router.navigate([environment.HOME_PAGE]);
+    }
+    window.location.reload();
+   
+    });
   }
 
   /**
@@ -512,30 +568,39 @@ export class AppComponent implements OnInit, OnDestroy {
    */
 
   async logout() {
-    this.storage.remove('userData').then(async () => {
-      this.currentUser = null;
-      await this.menu.enable(false);
-      this.api.refreshTabs();
-      this.router.navigate(['login']);
-      this.authenticationService.logout();
-      this.utilities.showToast('Sesión cerrada con éxito');
-    });
-    // let alert = await this.alertCtrl.create({
-    //   header: 'Cerrar sesión',
-    //   message: '¿Estás seguro de que deseas cerrar sesión?',
-    //   buttons: [
-    //     {
-    //       text: 'Cancelar',
-    //       role: 'cancel',
-    //     },
-    //     {
-    //       text: 'Cerrar sesión',
-    //       handler: () => {
-    //       },
-    //     },
-    //   ],
+    //@ts-ignore
+    //TODO: NOE
+    // this.storage.remove('userData').then(async () => {
+    //   this.currentUser = undefined;
+    //   await this.menu.enable(false);
+    //   this.api.refreshTabs();
+    //   this.router.navigate(['login']);
+    //   this.authenticationService.logout();
+    //   this.utilities.showToast('Sesión cerrada con éxito');
     // });
-    // await alert.present();
+    let alert = await this.alertCtrl.create({
+      header: 'Cerrar sesión',
+      message: '¿Estás seguro de que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: () => {
+            this.menu.close();
+            sessionStorage.clear()
+            localStorage.clear()
+            window.location.href = 'home';
+           
+
+
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   // TODO: Use state management library to simplify data collection.
@@ -545,7 +610,7 @@ export class AppComponent implements OnInit, OnDestroy {
     await this.getUserSuscriptions();
     await this.getUserOpinions();
 
-    this.notificationSvc.getUnreadNotificationsCount();
+    // this.notificationSvc.getUnreadNotificationsCount();
     this.api.getUnreadMessages();
   }
 
@@ -561,14 +626,14 @@ export class AppComponent implements OnInit, OnDestroy {
       await this.api.obtenerSectores()
     ).toPromise();
     const userSectorsIds = await (
-      await this.api.obtenerSectoresPerfil(this.currentUser.id)
+      await this.api.obtenerSectoresPerfil(this.currentUser?.id)
     ).toPromise();
     const sectorId = userSectorsIds[0]?.id_sector;
     const subsectors: ISubSector[] = await (
       await this.api.obtenerSubSectores(sectorId)
     ).toPromise();
     const userSubsectorsIds = await (
-      await this.api.obtenerSubSectoresPerfil(this.currentUser.id)
+      await this.api.obtenerSubSectoresPerfil(this.currentUser?.id)
     ).toPromise();
     this.userSector = sectors.filter((sector) => sector.id === sectorId).pop();
     this.userSubsector = subsectors
@@ -580,7 +645,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async getUserSuscriptions() {
     const userSubscription = await this.utilities.getUserSubscription();
-    if (userSubscription.length !== 0) {
+    
+    if (userSubscription && userSubscription.length !== 0) {
       const userSubscriptionDetails =
         await this.utilities.getUserSubscriptionDetails();
       this.userSubscriptionDetails = userSubscriptionDetails?.name;
@@ -588,18 +654,21 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async showSubscriptionsModal() {
-    const suscribirseModal = await this.modalCtrl.create({
-      component: SuscribirsePage,
-    });
-    await suscribirseModal.present();
+    //TODO: NOE
+    // const suscribirseModal = await this.modalCtrl.create({
+    //   component: SuscribirsePage,
+    // });
+    // await suscribirseModal.present();
   }
 
   async getUserOpinions() {
     const result = await (
-      await this.api.opinionesPerfil(this.currentUser.reference)
+      await this.api.opinionesPerfil(this.currentUser?.reference)
     ).toPromise();
     this.userFeedback = [];
+    //@ts-ignore
     result.opinions.forEach((opinion, index) => {
+    //@ts-ignore
       this.userFeedback.push({count: opinion, type: result.types[index]});
     });
   }
@@ -608,7 +677,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate([route]).then(() => this.menu.close());
   }
 
-  onImgError(event) {
+  onImgError(event: any) {
     event.target.src = 'https://api.febelink.com/storage/users/default.png';
   }
 

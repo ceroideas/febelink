@@ -12,6 +12,9 @@ export interface IUser {
   role_id: number;
   nick: string;
   name: string;
+  surname?: string;
+  nombre?: string;
+  imageURL?: string;
   lastName?: string;
   email: string;
   avatar: string;

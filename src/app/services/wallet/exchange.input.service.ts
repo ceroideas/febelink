@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { iExchangeInput, ExchangeInput } from 'src/app/models/wallet/exchange.model';
+import { iExchangeInput, ExchangeInput } from './../../models/wallet/exchange.model';
 import { ToastSvc } from '../toast.service';
 
 @Injectable({
@@ -33,11 +33,12 @@ export class ExchangeInputSvc
                 qant = this.do( iEx, ExchangeInput.SELL_QANT )
                 break
         }
+        //@ts-ignore
         this.update( form, key, qant, iEx.maxDecimals )
     }
 
     private continue(
-        input: string, qant: number, key: string, maxDecimals: number, form: UntypedFormGroup
+        input: string, qant: any, key: string, maxDecimals: number, form: UntypedFormGroup
     ): boolean {
         if( !qant || Number.parseFloat( input || '0' ) <= qant )
             return true
@@ -48,7 +49,7 @@ export class ExchangeInputSvc
 
     }
 
-    public update( form: UntypedFormGroup, key: string, qant: number, maxDec: number, emit: boolean = false )
+    public update( form: UntypedFormGroup, key: any, qant: number, maxDec: number, emit: boolean = false )
     {
         form.patchValue({
             [ key ]: qant == 0 ? '' : qant.toFixed( maxDec )}

@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, PLATFORM_ID} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import { Location } from '@angular/common';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { CuentaProfesionalService } from 'src/app/pages/cuenta-profesional/Services/cuenta-profesional.service';
+import { DOCUMENT, Location, isPlatformBrowser } from '@angular/common';
+import { AuthenticationService } from './../../services/authentication/authentication.service';
+import { CuentaProfesionalService } from './../../pages/cuenta-profesional/Services/cuenta-profesional.service';
+import { getDocument, getWindow } from 'ssr-window';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,7 +11,7 @@ import { CuentaProfesionalService } from 'src/app/pages/cuenta-profesional/Servi
 })
 export class HeaderComponent {
 
-  @Input() currentUser;
+  @Input() currentUser : any;
 
 
   detached: boolean = false;
@@ -18,9 +19,14 @@ export class HeaderComponent {
   reduced: boolean = false;
   wide: boolean = false;
 
-  loadUser
-  user
+  loadUser: any = {}
+  user: any = {}
+
+  window = getWindow();
+  
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document,
     private router: Router,  
     private location: Location,
     private authenticationService: AuthenticationService,
@@ -45,26 +51,27 @@ export class HeaderComponent {
     })
   }
 
-  perfil;
-  homePage;
-  onImgError;
+  perfil: any = {}
+  homePage: any = {}
+  onImgError: any = {}
 
-  irA(value) {
-    window.location.href = value;
+  irA(value: any) {
+    this.window.location.href = value;
     // this.router.navigate([value]);
   };
 
   ngOnInit(){
-    console.log(this.currentUser)
-   window.addEventListener('scroll', this.scroll, true);
-   window.addEventListener('resize', this.scroll, true);
+    if ( isPlatformBrowser(this.platformId) ) {
+      this.window.addEventListener('scroll', this.scroll, true);
+      this.window.addEventListener('resize', this.scroll, true);
+    }
   }
 
   async navigateNewServices() {
     let url = 'registro';
     if (this.authenticationService.isAuthenticated()) {
       const {response} = await this.profAccountService.getMyProfessions();
-      if (response?.length > 0) {
+      if (response.professions?.length > 0) {
         url = 'services';
       } else {
         url = 'professions';
@@ -79,34 +86,13 @@ export class HeaderComponent {
   */
     scroll = (): void => {
 
-
-  // Obtén la referencia al elemento con id 'capa-2'
-    // const capa2Element = document.getElementsByClassName('search-content');
-
-    // for (var i = 0; i < capa2Element.length; i++) {
-    //   // Realizar alguna acción con cada elemento
-
-    //   const distanceY = capa2Element[i].scrollTop;
-    //   const shrinkOn = 100;
-    //   const innerW = window.innerWidth;
-  
-     
-    //   !this.detachBlock 
-    //     ? this.detached = distanceY > shrinkOn
-    //     : null;
-  
-    //   this.reduced = innerW <= 400;
-    // }
-
-    
-
-    const capa2Elements = document.getElementsByClassName('search-content');
+    const capa2Elements = this.document.getElementsByClassName('search-content');
 
     for (var i = 0; i < capa2Elements.length; i++) {
-      const distanceY = capa2Elements[i].scrollTop;;  // Usa window.pageYOffset para obtener la posición de desplazamiento de la ventana
+      const distanceY = capa2Elements[i].scrollTop;;  // Usa this.window.pageYOffset para obtener la posición de desplazamiento de la ventana
     
       const shrinkOn = 100;
-      const innerW = window.innerWidth;
+      const innerW = this.window.innerWidth;
     
       // Asumiendo que 'detachBlock' es una propiedad válida, de lo contrario, ajusta según tu lógica
       !this.detachBlock

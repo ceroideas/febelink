@@ -1,4 +1,4 @@
-import { TokensUser } from 'src/app/admin/models/tokens-user';
+import { TokensUser } from '../../admin/models/tokens-user';
 import { CryptoCurrency } from './currency.model';
 
 export interface WalletParams {

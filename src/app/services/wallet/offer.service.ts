@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CryptoCurrency } from 'src/app/models/wallet/currency.model';
-import { Offer, OffersFilter } from 'src/app/models/wallet/offers.models';
+import { CryptoCurrency } from '../../models/wallet/currency.model';
+import { Offer, OffersFilter } from '../../models/wallet/offers.models';
 import { HttpService, IHttpService } from '../http.service';
 
 @Injectable({

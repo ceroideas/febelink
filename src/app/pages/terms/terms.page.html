@@ -1,11 +1,11 @@
-<ion-header>
-  <ion-toolbar color="febelink">
-    <ion-icon (click)="goBack()" slot="start" name="close"></ion-icon>
+  <div  class="header-tab" color="febelink">
+    <ion-icon (click)="goBack()" slot="start" name="arrow-back-outline"></ion-icon>
     <ion-title class="ion-text-center">{{ 'common.legal.condsNterms' | translate }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+   
+  </div>
 
-<ion-content class="ion-padding">
+<div class="container-conditions ion-padding">
+
 
 
   <strong>{{ 'legal.terms.title' | translate }}</strong><br><br>
@@ -23,4 +23,4 @@
   </ol>
   <br><br>
 
-</ion-content>
+</div>

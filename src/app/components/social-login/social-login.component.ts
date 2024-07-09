@@ -5,15 +5,14 @@ import {
   SocialAuthService,
   SocialUser,
 } from '@abacritt/angularx-social-login';
-import {
-  Facebook,
-  FacebookLoginResponse,
-} from '@awesome-cordova-plugins/facebook/ngx';
-import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
-import { ApiService } from 'src/app/services/api.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+// import {
+//   Facebook,
+//   FacebookLoginResponse,
+// } from '@awesome-cordova-plugins/facebook/ngx';
+// import { GooglePlus } from '@awesome-cordova-plugins/google-plus/ngx';
+import { ApiService } from './../../services/api.service';
+import { UtilitiesService } from './../../services/utilities.service';
 import { Platform } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -23,16 +22,16 @@ import { DOCUMENT } from '@angular/common';
 })
 export class SocialLoginComponent {
   public URL = 'social-login';
-  public user: SocialUser;
-  public provider: string;
-  @Input() firstLogin: boolean;
-  @Input() redirect: string;
+  public user: SocialUser | null = null;
+  public provider: string| null = null;
+  @Input() firstLogin: boolean| null = null;
+  @Input() redirect: string| null = null;
 
   constructor(
     private authService: SocialAuthService,
     private platform: Platform,
-    private fb: Facebook,
-    private googlePlus: GooglePlus,
+    // private fb: Facebook,
+    // private googlePlus: GooglePlus,
     private utilities: UtilitiesService,
     private api: ApiService,
     @Inject(DOCUMENT) public document: Document
@@ -42,7 +41,7 @@ export class SocialLoginComponent {
    *  Get social data ( google/facebook) depending on platform
    *
    */
-  socialLogin(provider): void {
+  socialLogin(provider: any): void {
     // Native Android/iOS
     if (this.platform.is('cordova')) {
       if (provider === 'facebook') {
@@ -68,7 +67,6 @@ export class SocialLoginComponent {
           this.auth(formData);
         },
         (err) => {
-          console.log('Social Login error: ', err);
           this.utilities.showToast(
             'Social Login error: ' + JSON.stringify(err)
           );
@@ -82,15 +80,15 @@ export class SocialLoginComponent {
    *
    */
   loginFB() {
-    this.fb
-      .login(['public_profile', 'email'])
-      .then((res: FacebookLoginResponse) => {
-        this.getFBUserDetail(res.authResponse.userID);
-      })
-      .catch((e) => {
-        this.utilities.showToast('Error de conexión con el servidor');
-        console.log('Error logging into Facebook', e);
-      });
+    // this.fb
+    //   .login(['public_profile', 'email'])
+    //   .then((res: FacebookLoginResponse) => {
+    //     this.getFBUserDetail(res.authResponse.userID);
+    //   })
+    //   .catch((e) => {
+    //     this.utilities.showToast('Error de conexión con el servidor');
+    //     console.log('Error logging into Facebook', e);
+    //   });
   }
 
   /**
@@ -98,20 +96,21 @@ export class SocialLoginComponent {
    *
    */
   getFBUserDetail(userid: any) {
-    this.fb
-      .api('/' + userid + '/?fields=id,email,name,picture', ['public_profile'])
-      .then((data) => {
-        const formData = new FormData();
-        formData.append('email', data.email);
-        formData.append('name', data.name);
-        formData.append('facebook_id', data.id);
-        formData.append('role_id', '5');
-        this.auth(formData, this.firstLogin);
-      })
-      .catch((e) => {
-        console.log(e);
-        this.utilities.showToast('Error de conexión con el servidor');
-      });
+    // this.fb
+    //   .api('/' + userid + '/?fields=id,email,name,picture', ['public_profile'])
+    //   .then((data) => {
+    //     const formData = new FormData();
+    //     formData.append('email', data.email);
+    //     formData.append('name', data.name);
+    //     formData.append('facebook_id', data.id);
+    //     formData.append('role_id', '5');
+    //     //@ts-ignore
+    //     this.auth(formData, this.firstLogin);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     this.utilities.showToast('Error de conexión con el servidor');
+    //   });
   }
 
   /**
@@ -119,6 +118,7 @@ export class SocialLoginComponent {
    *
    */
   googlePlusLogin() {
+   
     /* this.googlePlus
       .login({
         webClientId: environment.WEB_CLIENT_ID,
@@ -143,13 +143,14 @@ export class SocialLoginComponent {
    *  User authentication with social data with Febelink API
    *
    */
-  async auth(formData, firstLogin?: boolean) {
+  async auth(formData: any, firstLogin?: boolean) {
     await this.utilities.showLoading();
 
     const authResponse = await this.api.login(
       formData,
       this.URL,
       firstLogin,
+      //@ts-ignore
       this.redirect
     );
 

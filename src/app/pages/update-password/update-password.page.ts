@@ -9,8 +9,7 @@ import {ApiService} from '../../services/api.service';
 import {UtilitiesService} from '../../services/utilities.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
-import {ILang, ILangDEFAULTS} from 'src/app/models/langs.model';
-import {TranslateConfigService} from 'src/app/services/translate/translate-config.service';
+import {TranslateConfigService} from './../../services/translate/translate-config.service';
 import {UserService} from '../../services/user.service';
 @Component({
   selector: 'app-update-password',
@@ -18,17 +17,18 @@ import {UserService} from '../../services/user.service';
   styleUrls: ['./update-password.page.scss'],
 })
 export class UpdatePasswordPage implements OnInit {
-  form: UntypedFormGroup;
+  //@ts-ignore
+  form: UntypedFormGroup ;
   sectores: any;
   subsectores: any;
   passwordType = 'password';
   passwordIcon = 'eye-off';
   passwordType2 = 'password';
   passwordIcon2 = 'eye-off';
-  partialRegisterEmail: string;
-  redirect: string;
-  promoCode: string;
-  token: string;
+  partialRegisterEmail: string = "";
+  redirect: string ="";
+  promoCode: string ="";
+  token: string  | null = "";
   constructor(
     public navCtrl: NavController,
     private formBuilder: UntypedFormBuilder,
@@ -75,7 +75,7 @@ export class UpdatePasswordPage implements OnInit {
   async submitForm() {
     let data ={
       token : this.token,
-      password: this.form.value.password
+      password: this.form?.value.password
     }
 
     await this.api.updatePasswornd(data).subscribe(data=>{

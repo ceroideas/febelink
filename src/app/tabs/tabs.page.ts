@@ -13,9 +13,9 @@ import { UnreadMessages } from '../models/unreadMessages';
 export class TabsPage {
   perfil: any;
   public refreshTabs: any;
-  notifCount: number;
-  totalUnreadMessages: number;
-  unreadMessages: UnreadMessages[];
+  notifCount: number = 0;
+  totalUnreadMessages: number= 0;
+  unreadMessages: UnreadMessages[] | undefined;
 
   constructor(
     private utilities: UtilitiesService,
@@ -45,7 +45,7 @@ export class TabsPage {
     });
   }
 
-  irA(p) {
+  irA(p:any) {
     if (this.perfil === null) {
       this.router.navigate(['login']);
     } else {

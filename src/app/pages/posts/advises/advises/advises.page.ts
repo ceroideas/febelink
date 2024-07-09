@@ -1,19 +1,19 @@
 import {Component, OnInit, ViewChild, HostListener} from '@angular/core';
 import {Params} from '@angular/router';
-import {LangBtnComponent} from 'src/app/components/langs/btn/btn.component';
-import {PaginationComponent} from 'src/app/components/pagination/pagination.component';
-import {SectorsComponent} from 'src/app/components/sectors/sectors.component';
-import {UserItemComponent} from 'src/app/components/user/item/item.component';
-import {UserFilterPopSvc} from 'src/app/components/user/services/user-filter.pop.service';
-import {ILang} from 'src/app/models/langs.model';
-import {IUser} from 'src/app/models/user.model';
-import {RouteSvc} from 'src/app/services/route.service';
-import {ToastSvc} from 'src/app/services/toast.service';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
+import {LangBtnComponent} from './../../../../components/langs/btn/btn.component';
+import {PaginationComponent} from './../../../../components/pagination/pagination.component';
+import {SectorsComponent} from './../../../../components/sectors/sectors.component';
+import {UserItemComponent} from './../../../../components/user/item/item.component';
+import {UserFilterPopSvc} from './../../../../components/user/services/user-filter.pop.service';
+import {ILang} from './../../../../models/langs.model';
+import {IUser} from './../../../../models/user.model';
+import {RouteSvc} from './../../../../services/route.service';
+import {ToastSvc} from './../../../../services/toast.service';
+import {UserSessionSvc} from './../../../../services/user-session.service';
 import {IAdviseFull, IAdviseFilter, ITopic} from '../models/advises.model';
 import {AdviseService} from '../services/advises.service';
 import {IonInfiniteScroll} from '@ionic/angular';
-import {SeoService} from 'src/app/services/seo.service';
+import {SeoService} from './../../../../services/seo.service';
 
 const GENERAL_TITLE = 'Feed Oráculo | Febelink ¿Qué necesitas?';
 const GENERAL_DESC = 'Trucos y consejos de servicios profesionales. El lugar donde compartir experiencias y soluciones';
@@ -23,29 +23,29 @@ const GENERAL_DESC = 'Trucos y consejos de servicios profesionales. El lugar don
   styleUrls: ['./advises.page.scss'],
 })
 export class AdvisesPage implements OnInit {
-  @ViewChild('pagination') pagination: PaginationComponent;
-  @ViewChild('sectors') sectors: SectorsComponent;
-  @ViewChild('lang') lang: LangBtnComponent;
-  @ViewChild('user') user: UserItemComponent;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild('pagination') pagination: PaginationComponent | null = null;
+  @ViewChild('sectors') sectors: SectorsComponent| null = null
+  @ViewChild('lang') lang: LangBtnComponent | null = null
+  @ViewChild('user') user: UserItemComponent| null = null
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll| null = null
 
-  searchTx: string;
-  showFilters: boolean;
+  searchTx: string| null = null
+  showFilters: boolean = false
   isLoading: boolean = true;
 
   iAdvises: IAdviseFull[] = [];
-  filter: string | number;
-  langSelected: ILang;
+  filter: string | number = "";
+  langSelected: ILang| null = null
   myPosts: boolean = false;
 
-  uid: number;
-  curUser: IUser;
+  uid: number| null = null
+  curUser: IUser| null = null
   activePage: number = 1;
   finishedSearch: boolean = false;
 
-  userNickSearch: string;
+  userNickSearch: string | null = null
 
-  topicSelected: ITopic;
+  topicSelected: ITopic | null = null
   topics = [
     {id: null, name: 'Todos'},
     {id: 1, name: 'Política'},
@@ -90,7 +90,7 @@ export class AdvisesPage implements OnInit {
     // To refresh list on routing to this page
     this.router.addListener((url: string, params: Params) => {
       if (['posts', '/posts/oracles', 'posts/oraculos'].includes(url)) {
-        this.uid = params?.uid;
+        this.uid = params?.['uid'];
       }
       this.getUser();
     });
@@ -101,7 +101,7 @@ export class AdvisesPage implements OnInit {
     this.curUser = await this.sessionSvc.get();
   }
 
-  async search(text: string | number = null) {
+  async search(text?: any) {
     console.log('buscando');
     this.filter = text != null ? text : this.filter;
 
@@ -143,7 +143,7 @@ export class AdvisesPage implements OnInit {
       content: this.filter,
     };
     this.activePage++;
-
+//@ts-ignore
     return filters;
   }
 
@@ -166,6 +166,8 @@ export class AdvisesPage implements OnInit {
 
   async userClicked() {
     const user = await this.userFilterPop.show('posts/oracles/users');
+//@ts-ignore
+
     this.user.user = user;
     this.userNickSearch = user.nick;
     this.clear2search();
@@ -183,6 +185,7 @@ export class AdvisesPage implements OnInit {
     this.finishedSearch = false;
     this.iAdvises = [];
   }
+//@ts-ignore
 
   clear2search(text: string | number = null, event?) {
     this.clearSearch();
@@ -194,7 +197,7 @@ export class AdvisesPage implements OnInit {
     }
   }
 
-  async triggerInfiniteSearch(event) {
+  async triggerInfiniteSearch(event: any) {
     await this.search();
     event.target.complete();
   }

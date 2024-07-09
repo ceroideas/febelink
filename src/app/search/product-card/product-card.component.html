@@ -1,6 +1,6 @@
 <!-- <ion-item lines="none"
           class="ion-no-padding ion-no-margin search-product keys-dropdown">
-  <a [href]="'/servicio/' + removeBlankSpace(data?.title) + '/detail/' + data?.id">
+  <a [href]="'/servicio/' + toSlug(data?.title ?? '')+ '/detail/' + data?.id">
     
     <div class="product-view">
       
@@ -59,12 +59,15 @@
   </div>
 </div>
 
-<a [href]="'/servicio/' + removeBlankSpace(data?.title) + '/detail/' + data?.id" *ngIf="!skeleton">
+<a [href]="'/servicio/' + toSlug(data?.title ?? '')+ '/detail/' + data?.id" *ngIf="!skeleton">
   <div class="slider-item">
     
       <div class="animation-card_image">
-          <img *ngIf="!data?.image" rc="assets/icon/svg/default_product.svg" alt="">
-          <img *ngIf="data?.image" [src]="data?.image"  alt="">
+          <img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg" alt="">
+          <img *ngIf="data?.image" [src]="urlWsrv + data?.image +'&w=1600&output=webp'"
+          alt="">
+     
+      
       </div>
       <div class="animation-card_content">
         <div class="username">{{data?.ownerUsername}}</div>
@@ -75,7 +78,12 @@
             <img *ngIf="data?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
             <i class="iconwhatsapp fa fa-whatsapp"></i>
             <div class="price">
-              {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
+
+
+                   
+              {{data?.unitPrice}}€ / {{ (data?.unitTypeId && unitTypes && unitTypes[data.unitTypeId - 1]?.shorthand) ?? 'N/A' }}
+
+
             </div>
             <button 
             >

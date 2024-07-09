@@ -1,28 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
-
+import { OlvidarContrasenaComponent } from './olvidar-contrasena.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from './../../shared/shared.module';
 import { OlvidarContrasenaPageRoutingModule } from './olvidar-contrasena-routing.module';
 
-import { OlvidarContrasenaPage } from './olvidar-contrasena.page';
-import { TranslateModule } from '@ngx-translate/core';
-import { ComponentsModule } from 'src/app/components/components.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
-    OlvidarContrasenaPageRoutingModule,
-    TranslateModule.forChild(),
-    ComponentsModule,
     SharedModule,
+    OlvidarContrasenaPageRoutingModule
   ],
-  declarations: [OlvidarContrasenaPage],
+  declarations: [OlvidarContrasenaComponent],
   exports: [ TranslateModule ],
 })
-export class OlvidarContrasenaPageModule {}
+export class OlvidarContrasenaModule {}

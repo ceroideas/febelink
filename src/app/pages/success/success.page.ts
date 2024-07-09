@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'src/app/models/subscription';
-import { ApiService } from 'src/app/services/api.service';
-import { TranslateConfigService } from 'src/app/services/translate/translate-config.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ApiService } from '../../services/api.service';
+import { TranslateConfigService } from '../../services/translate/translate-config.service';
+import { UtilitiesService } from '../../services/utilities.service';
+import { Subscription } from '../../models/subscription';
+type Info = {
+  title: string;
+  subtitle: string;
+  text: string;
+};
 
 @Component({
   selector: 'app-success',
   templateUrl: './success.page.html',
   styleUrls: ['./success.page.scss'],
 })
+
 export class SuccessPage implements OnInit {
   
   constructor(
@@ -21,10 +27,19 @@ export class SuccessPage implements OnInit {
     ) { }
     
   PREFIX = 'pages.success.';
-  info:{title:string, subtitle:string, text:string}
-  ref: string
+
+  info: Info = {
+    title: "",
+    subtitle: "",
+    text: "",
+  };
+
+  // info: any = {title:string , subtitle:string, text:string}
+  ref: string | null = null;
 
   ngOnInit() {
+
+
     this.info = {
       title: `${this.PREFIX}default.title`,
       subtitle: `${this.PREFIX}default.subtitle`,
@@ -35,15 +50,15 @@ export class SuccessPage implements OnInit {
 
     this.ref = this.activatedRoute.snapshot.paramMap.get('ref');
 
-    this.setTexts(this.ref);
-    this.acctionsDependingOnRef(this.ref);
+    this.setTexts(String(this.ref));
+    this.acctionsDependingOnRef(String(this.ref));
   }
 
   async acctionsDependingOnRef(ref:string) {
     switch (ref) {
       case 'subscription-pro':{
         
-        const subscriptionInfo:{subscription, subscription_details:Subscription} = await this.apiSvc.getUserSusbcription();
+        const subscriptionInfo:{subscription: any, subscription_details:Subscription} = await this.apiSvc.getUserSusbcription();
         await this.utilities.saveUserSubscription(subscriptionInfo.subscription);
         await this.utilities.saveUserSubscriptionDetails(subscriptionInfo.subscription_details);
         break;

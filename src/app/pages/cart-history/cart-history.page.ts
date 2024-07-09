@@ -1,26 +1,20 @@
 import {ServicesService} from './../servicios/services/services.service';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ApiService} from 'src/app/services/api.service';
-import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
+import {ApiService} from './../../services/api.service';
+// import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
 import {
   ModalController,
   PopoverController,
   Platform,
   AlertController,
 } from '@ionic/angular';
-import {PublicarOpinionPage} from '../publicar-opinion/publicar-opinion.page';
-import {GuidePage} from '../guide/guide.page';
-import {SharePopoverComponent} from 'src/app/components/share-popover/share-popover.component';
-import {environment} from 'src/environments/environment';
-import {UtilitiesService} from 'src/app/services/utilities.service';
-import {IUser} from 'src/app/models/user.model';
+import {UtilitiesService} from './../../services/utilities.service';
 import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
-import {UserService} from 'src/app/services/user.service';
-import {MailService} from 'src/app/services/mail.service';
-import {ReportService} from 'src/app/services/report.service';
-import {IReport} from 'src/app/models/report.model';
+import {AuthenticationService} from './../../services/authentication/authentication.service';
+import {UserService} from './../../services/user.service';
+import {MailService} from './../../services/mail.service';
+import {ReportService} from './../../services/report.service';
 import {CartService} from '../cart/services/cart.service';
 import {IServiceFull} from '../servicios/models/services.model';
 
@@ -33,8 +27,8 @@ export class CartHistoryPage implements OnInit {
   iCart: any;
   cancelServiceModalToggle = false;
   finishServiceModalToggle = false;
-  cartId: number;
-  productId: number;
+  cartId: number = 0;
+  productId: number = 0;
   indexValorarServicio: boolean = false;
   finValorarServicio: boolean = false;
   dragLogged: boolean = false;
@@ -42,16 +36,16 @@ export class CartHistoryPage implements OnInit {
   isCurso: boolean = false;
   isFinalizados: boolean = false;
   isNuevoServicio: boolean = false;
-  indexTerminarServicio: number;
-  indexCancelServicio: number;
+  indexTerminarServicio: number = 0;
+  indexCancelServicio: number = 0;
   indexTerminarServicioMobile: boolean = false;
   servicioAdded: boolean = false;
   unitTypes: any;
   iProducts: any;
   doUpdate: boolean = false;
-  editUpdate: number;
-  productIdTerminar: number;
-  cartIdTerminar: number;
+  editUpdate: number = 0;
+  productIdTerminar: number = 0;
+  cartIdTerminar: number = 0;
   isTemplate: boolean = false;
   showCancel: boolean = false;
   showFinish: boolean = false;
@@ -61,17 +55,9 @@ export class CartHistoryPage implements OnInit {
 
   peticions: any = []
   constructor(
-    private route: ActivatedRoute,
-    private api: ApiService,
-    private socialSharing: SocialSharing,
-    private platform: Platform,
-    private modalCtrl: ModalController,
     public popoverController: PopoverController,
     private router: Router,
     public alertController: AlertController,
-    private utilities: UtilitiesService,
-    private translateService: TranslateService,
-    private authSvc: AuthenticationService,
     public userSvc: UserService,
     public mailSvc: MailService,
     public reportSvc: ReportService,
@@ -86,14 +72,16 @@ export class CartHistoryPage implements OnInit {
   }
 
   async getfindServices() {
-    const {response, error} = await this.cartSvc.getFindServices();
-    this.peticions = response
-    console.log(response)
-    // this.iCart = response;
+    this.cartSvc.getFindServices().then(async (data: any) => {
+     this.peticions = data.response
+    })
+
   }
   async getHistoryCart() {
-    const {response, error} = await this.cartSvc.history();
-    this.iCart = response;
+    this.cartSvc.history().then(async (data: any) => {
+      this.iCart = data.response;
+    })
+    
   }
 
   public irA(p: string): void {
@@ -101,18 +89,17 @@ export class CartHistoryPage implements OnInit {
   }
 
   async cancelProduct() {
-    const {response, error} = await this.productSvc.cancel({
-      cartId: this.cartId,
-      productId: this.productId,
-    });
-
     this.toggleServiceModal();
 
-    if (response) {
-      this.getHistoryCart();
-    }
+    this.productSvc.cancel({
+      cartId: this.cartId,
+      productId: this.productId,
+      }).then(async (data: any) => {
+        if (data.response) {
+          this.getHistoryCart();
+        }
+      })
   }
-
 
   selectCart(){
     this.isCart = true;
@@ -124,9 +111,14 @@ export class CartHistoryPage implements OnInit {
     this.isPeticions = true;
   }
   toggleServiceModal(cartId?: number, productId?: number, index_cart?: number) {
-    this.showCancel = true
+    this.showCancel = true;
+    //@ts-ignore
     this.indexCancelServicio = index_cart
-    this.cartId = cartId;
+    if (cartId !== undefined) {
+        this.cartId = cartId;
+    }
+    //@ts-ignore
+
     this.productId = productId;
     this.cancelServiceModalToggle = !this.cancelServiceModalToggle;
   }
@@ -138,7 +130,11 @@ export class CartHistoryPage implements OnInit {
   }
 
   toggleFinishModal(cartId?: number, productId?: number) {
+    //@ts-ignore
+
     this.cartId = cartId;
+    //@ts-ignore
+
     this.productId = productId;
     this.finishServiceModalToggle = !this.finishServiceModalToggle;
   }
@@ -149,7 +145,10 @@ export class CartHistoryPage implements OnInit {
       productId: this.productId,
     };
 
-    const {response, error} = await this.productSvc.finish(productFinish);
+
+    this.productSvc.cancel(productFinish).then(async (response: any) => { })
+
+    
 
     this.getHistoryCart();
 
@@ -158,8 +157,14 @@ export class CartHistoryPage implements OnInit {
     this.indexTerminarServicioMobile = false;
     this.showFinish = false;
     this.showCancel = false;
+    //@ts-ignore
+
     this.indexTerminarServicio = null;
+    //@ts-ignore
+
     this.productIdTerminar = null;
+    //@ts-ignore
+
     this.cartIdTerminar = null;
     this.isDisponibles = false;
     this.isCurso = false;
@@ -169,10 +174,16 @@ export class CartHistoryPage implements OnInit {
   cancelarValorarServicio() {
     this.indexValorarServicio = false;
     this.indexTerminarServicioMobile = false;
+    //@ts-ignore
+
     this.indexTerminarServicio = null;
+    //@ts-ignore
+
     this.productIdTerminar = null;
     this.showFinish = false;
     this.showCancel = false;
+    //@ts-ignore
+
     this.cartIdTerminar = null;
   }
 
@@ -190,10 +201,16 @@ export class CartHistoryPage implements OnInit {
   }
 
   cancelarServicio() {
+    //@ts-ignore
+
     this.indexTerminarServicio = null;
     this.indexTerminarServicioMobile = false;
     this.dragLogged = false;
+    //@ts-ignore
+
     this.productIdTerminar = null;
+    //@ts-ignore
+
     this.cartIdTerminar = null;
     this.showFinish = false;
     this.showCancel = false;

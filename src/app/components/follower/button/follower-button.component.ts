@@ -1,9 +1,9 @@
-import {IUser} from 'src/app/models/user.model';
+import {IUser} from '../../../models/user.model';
 import {Component, Input, OnInit} from '@angular/core';
 import {FollowerService} from '../services/follower.service';
 import {IFollower} from '../models/follower.model';
-import {UserSessionSvc} from 'src/app/services/user-session.service';
-import {ToastSvc} from 'src/app/services/toast.service';
+import {UserSessionSvc} from '../../../services/user-session.service';
+import {ToastSvc} from '../../../services/toast.service';
 
 @Component({
   selector: 'app-follower-button',
@@ -12,13 +12,13 @@ import {ToastSvc} from 'src/app/services/toast.service';
 })
 export class FollowerButtonComponent implements OnInit {
 
-  @Input() user: IUser;
-  @Input() clase: string;
-  @Input() follower: IFollower;
+  @Input() user: IUser | undefined
+  @Input() clase: string = "";
+  @Input() follower: IFollower | undefined
   @Input() transparent: boolean = false;
 
   isLoading: boolean = false;
-  isLogged: boolean = null;
+  isLogged: boolean = false;
 
   constructor(
     private userSessionSvc: UserSessionSvc,
@@ -42,19 +42,20 @@ export class FollowerButtonComponent implements OnInit {
     this.isLoading = true;
 
     const {response, error} = await this.followerSvc.get(
+      //@ts-ignore
       await this.userSessionSvc.id(),
-      this.user?.id
+      Number(this.user?.id)
     );
 
     if (response) {
       this.follower = response;
     } else {
       this.follower = {
-        uid_follower: await this.userSessionSvc.id(),
-        uid_followed: this.user?.id,
+        uid_follower: Number(await this.userSessionSvc.id()),
+        uid_followed: Number(this.user?.id),
 
-        created_at: null,
-        canceled_at: null
+        created_at: "",
+        canceled_at: ""
       } as IFollower;
     }
 
@@ -73,27 +74,30 @@ export class FollowerButtonComponent implements OnInit {
     }
 
     this.isLoading = true;
-
-    const {response, error} = await this.followerSvc.toggle(this.follower);
-    if (error) {
-      this.toastSvc.show(error.message, true);
-    } else {
-      this.follower = response?.follower || this.follower;
-    }
-
-    this.isLoading = false;
+    if (this.follower !== undefined) {
+       const {response, error} = await this.followerSvc.toggle(this.follower);
+       if (error) {
+        this.toastSvc.show(error.message, true);
+      } else {
+        this.follower = response?.follower || this.follower;
+      }
+  
+      this.isLoading = false;
+   } 
+  
   }
 
   isFollowing(): boolean {
-    return this.follower?.created_at && !this.follower?.canceled_at;
+    
+    return Boolean(this.follower?.created_at && !this.follower?.canceled_at);
   }
 
   async isSame(): Promise<boolean> {
     return new Promise<boolean>(async resolve => {
-      if (await this.userSessionSvc.isUser(this.user.id)) {
-        this.toastSvc.show('common.follow.same', true)
-        resolve(true)
-      }
+      if (this.user && await this.userSessionSvc.isUser(this.user.id)) {
+        this.toastSvc.show('common.follow.same', true);
+        resolve(true);
+    }
 
       resolve(false)
     })

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertSvc} from 'src/app/services/alert.service';
-import {LoadingSvc} from 'src/app/services/loading.service';
-import {ToastSvc} from 'src/app/services/toast.service';
+import {AlertSvc} from '../../../services/alert.service';
+import {LoadingSvc} from '../../../services/loading.service';
+import {ToastSvc} from '../../../services/toast.service';
 import {KeywordService} from '../services/keyword.service';
 import {SectorService} from '../../../components/sectors/services/sectores.service';
 import {ISector} from '../../../models/sector.model';
+import { Location } from '@angular/common'
 
 interface LinkLocationKeys {
   id: number, 
@@ -33,20 +34,21 @@ interface LinkLocationKeys {
   selector: 'link-location-page',
   templateUrl: './link-location.page.html',
   styleUrls: ['./link-location.page.scss'],
+  host: {ngSkipHydration: 'true'},
 })
 
 export class LinkLocationPage implements OnInit {
 
   isLoading: boolean = false;
-  LinkLocationKeys: LinkLocationKeys[];
-  sectors: ISector[];
-  filter: string;
+  LinkLocationKeys: LinkLocationKeys[]  | undefined
+  sectors: ISector[]  | undefined
+  filter: string  | undefined
 
   showCreatekeyword: boolean = false;
 
   linklocations: any =[];
   linklocations_filtered: any =[];
-  locations: [];
+  locations: any = [];
  
 
   keyLinkLocation: any =  {
@@ -72,7 +74,8 @@ export class LinkLocationPage implements OnInit {
     public toastSvc: ToastSvc,
     public loadingSvc: LoadingSvc,
     private keywordService: KeywordService,
-    private sectorService: SectorService
+    private sectorService: SectorService,
+    private location: Location,
   ) {
   }
 
@@ -83,20 +86,25 @@ export class LinkLocationPage implements OnInit {
   }
 
   async readSector(){
-    const {response} = await this.keywordService.getSectorKeywords();
-    this.sectors = response;
+    this.keywordService.getSectorKeywords().then(async (response: any) => {
+      this.sectors = response.response;
+    })
+
   }
   async readLocations(){
-    const {response} = await this.keywordService.getLocationKeywords();
-    this.locations = response;
+    this.keywordService.getLocationKeywords().then(async (response: any) => {
+      this.locations = response.response;
+    })
+   
   }
 
   search_filter(event?: any){
     this.linklocations = this.linklocations_filtered;
     this.filter = event?.target?.value;
     if ( this.filter !== '' && this.filter !== undefined && this.filter !== null){
-      this.linklocations = this.linklocations.filter((sector) => {
+      this.linklocations = this.linklocations.filter((sector:any) => {
         if ( sector?.link !== '' && sector?.link !== undefined && sector?.link !== null){
+          if ( this.filter )
           return sector?.link?.toLowerCase().includes(this.filter.toLowerCase());
         }
       })
@@ -107,14 +115,21 @@ export class LinkLocationPage implements OnInit {
 
   async search(event?: any) {
     this.isLoading = true;
-    const {response} = await this.keywordService.getLinkLocationKeywords();
-    this.linklocations = response;
-    this.linklocations_filtered = this.linklocations;
+    this.keywordService.getLinkLocationKeywords().then(async (data: any) => {
+      this.linklocations = data.response;
+      this.linklocations_filtered = this.linklocations;
 
-    this.isLoading = false;
+      this.isLoading = false;
+    })
+  }
+  /**
+     * Close modal
+     */
+  public goBack(): void {
+    this.location.back();
   }
 
-  removeAccents(inputString) {
+  removeAccents(inputString: any) {
     // Normalize accented characters to their base form
     const normalizedString = inputString.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
     return normalizedString;

@@ -26,7 +26,8 @@ export class DateAgoPipe implements PipeTransform {
       return 'Ahora mismo';
     }
 
-    const intervals = {
+    let intervals: any = {}
+    intervals = {
       'año': 31536000,
       'mes': 2592000,
       'semana': 604800,

@@ -1,5 +1,3 @@
-
-
 <div id="search-content" class="search-content container-general">
   <div class="layer-gradient">
     <div class="eclipse"></div>
@@ -10,7 +8,9 @@
       <ng-container>
        <div class="card">
         <div class="image-profile">
-          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null" src="{{user?.avatar}}" 
+          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null"
+          [src]="urlWsrv + user?.avatar +'&w=800&output=webp'"
+          
           appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
           <img *ngIf="user?.avatar == undefined || user?.avatar === null" src="https://api.febelink.com/storage/users/default.png"  />
@@ -26,28 +26,20 @@
           {{user?.description}}
         </div>
         <div class="buttons-profile" *ngIf="!hideChat">
+          <div class="item-button follow">Seguir</div>
 
-          <div class="item-button">Seguir</div>
-
-         
-          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
-        </div>
-
-
-        <div class="buttons-profile" *ngIf="!hideChat">
-
-
-          <div class="item-button whatsapp chat"  (click)="registerClick(user?.id, idPerfil)" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
+          <div class="item-button whatsapp chat" (click)="registerClick(user?.id, idPerfil)" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
             <a title="Contacto telefónico" 
               aria-label="Chat on WhatsApp" 
               href="https://wa.me/34{{user?.phoneNumber}}" 
-              class="badge">
+              class="badge"
+              target="_blank">
                 <i class="fa fa-whatsapp"></i>
-                <span>WhatsApp</span>
             </a>
           </div>
+          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
         </div>
-
+          
         <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
 
         <div class="header-content-top-right" *ngIf="!hideChat">
@@ -98,13 +90,17 @@
           <div class="item-more" 
             
             *ngFor="let more of moreWorks">
-            <a [href]="'/servicio/' + removeBlankSpace(more?.title) + '/detail/' + more?.productId">
+            <a [href]="'/servicio/' + toSlug(more?.title) + '/detail/' + more?.productId">
              
               <div class="name-work">
                 <div>{{more.title}}</div>
               </div>
               <div class="texts-work">
-                <div class="image-work"><img src="{{more.images[0]}}"/></div>
+                <div class="image-work">
+
+                  <img
+                  [src]="urlWsrv + more.images[0] +'&w=800&output=webp'"/>
+                </div>
                 <div class="description-work"> 
                   <div class="description-more">
                     <ion-label [innerHtml]="more.description"></ion-label>
@@ -119,29 +115,7 @@
         
         </div>
       </div>
-      <!--ORACULO-->
-      <!-- <div class="section-perfil"  [ngClass]="{'sinmargen': iAdvises.length === 0}" >
-        <div class="oracle" *ngIf="iAdvises.length > 0">
-          <ion-row class="oracle-title">
-            <ion-label><span class="title-oracle">Publicaciones en Oráculo</span></ion-label>
-            <ion-label><p class="subtitle-oracle">Explora las Últimas Novedades: Mantente al día con sus publicaciones más recientes y descubre sus contenidos exclusivos</p></ion-label>
-          </ion-row>
-          <div class="container-oracle" >
-            <app-post-model2-component
-              *ngFor="let advise of iAdvises"
-              [id]="advise.id"
-              [iAdvise]="advise"
-              [showLang]="true"
-              [showSeePost]="true"
-            ></app-post-model2-component>
-           
-          </div>
-        </div>
-
-    
-      </div> -->
-
-       <!--SERVICIOS-->
+     
     </div>
   </div>
 

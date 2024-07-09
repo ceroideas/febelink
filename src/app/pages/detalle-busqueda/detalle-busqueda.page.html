@@ -1,9 +1,12 @@
 <!-- <partial-popup [displayToggle]="displayPartialSignUp"
                (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup> -->
-<div class="container-general">
+<div class="container-general" >
   <div class="container-detail-search">
     <div class="containter-left">
-      <ng-container *ngIf="detalle?.images?.length > 0">
+
+      
+      <div>
+        @if ( detalle?.images?.length > 0) {
         <swiper
           class="product-image-desktop"
           slideActiveClass="product-image-desktop"
@@ -11,26 +14,32 @@
           [navigation]="true"
           [thumbs]="{ swiper: thumbsSwiper }"
         >
-          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-            <ion-img [src]="imageURL" [alt]="detalle?.title"></ion-img>
-          </ng-template>
-        </swiper>
-        <!--              wrapperClass="gallery-thumbs"-->
-        <swiper
-          *ngIf="detalle?.images?.length > 1"
-          class="mySwiper"
-          (swiper)="thumbsSwiper = $event"
-          [slidesPerView]="detalle?.images?.length"
-          [freeMode]="true"
-          [watchSlidesProgress]="true"
-        >
-          <ng-template swiperSlide *ngFor="let imageURL of detalle?.images">
-            <img class="tam_img" [src]="imageURL"/>
-          </ng-template>
-        </swiper>
-      </ng-container>
+          @for ( imageURL of detalle?.images; track imageURL ) {
+              <ng-template swiperSlide >
 
+               
+                <ion-img  [src]="urlWsrv + imageURL +'&w=800&output=webp'" [alt]="detalle?.title"></ion-img>
+              </ng-template>
+          }
+        </swiper>
+         @if ( detalle?.images?.length > 1) {
+          <swiper
+            class="mySwiper"
+            (swiper)="thumbsSwiper = $event"
+            [slidesPerView]="detalle?.images?.length"
+            [freeMode]="true"
+            [watchSlidesProgress]="true"
+          >
+          @for ( imageURL of detalle?.images; track imageURL ) {
+            <ng-template swiperSlide >
+              <img class="tam_img"  [src]="urlWsrv + imageURL +'&w=800&output=webp'"/>
+            </ng-template>
+          }
+          </swiper>
+        }
 
+      }
+      </div>
       <div class="capsule-price">
         <div >
           <div class="price">
@@ -89,7 +98,7 @@
           <div
             class="chat-button"
             [ngSwitch]="detalle?.buttonName"
-            (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
+            (click)="buyNow(productId, productAmount)"
           >
             <span *ngSwitchCase="1">Más Información</span>
             <span *ngSwitchCase="2">Pedir Presupuesto</span>
@@ -107,99 +116,91 @@
       <div class="section-perfil">
         <!--AVATAR SECTION-->
         <div class="line-avatar">
-          <div class="avatar" (click)="irA('/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId)">
+          <div class="avatar" (click)="irA('/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId)">
             <ion-avatar class="avatar_dropdown">
-              <ion-img
-                *ngIf="!detalle?.ownerAvatar"
-                src="assets/icon/svg/default_avatar.svg"
-                class="default-avatar"
-              ></ion-img>
-              <ion-img
-                *ngIf="detalle?.ownerAvatar"
-                [src]="detalle?.ownerAvatar"
+              @if ( !detalle?.ownerAvatar) {
+                <ion-img
+                  src="assets/icon/svg/default_avatar.svg"
+                  class="default-avatar"
+                ></ion-img>
+              }
+              @if (detalle?.ownerAvatar) {
+                <ion-img
+                [src]="urlWsrv + detalle?.ownerAvatar +'&w=800&output=webp'"
                 [alt]="detalle?.ownerUsername + ' avatar'"
               ></ion-img>
+              }
+            
             </ion-avatar>
           </div>
           <div class="name-avatar">
             <div class="name">
-              <h2><a [routerLink]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
+              <h2><a [routerLink]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
             </div>
-            <a [href]="'/user/' + detalle?.ownerUsername + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
+            <a [href]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
           </div>
-          <!-- (click)="!authService.isAuthenticated()  ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
-          <!-- (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : createChat(detalle?.ownerUsername, detalle?.ownerUserId)" -->
           <div class="buttons-avatar buttondesktop">
             <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
-
             <div
               class="chat-button buttondesktop"
-              (click)="!authService.isAuthenticated() ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+              (click)="createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
             
               >
               Iniciar Chat
             </div>
-            <!-- * -->
-            <!--    -->
-        
+            @if (user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null) {
+              <div
+              (click)="registerClick(user?.id, productId )"
+                class="chat-button whatsapp buttondesktop"
+              >
+              <a title="Contacto telefónico" 
+                aria-label="Chat on WhatsApp" 
+                href="https://wa.me/34{{user?.phoneNumber}}" 
+                target="_blank"
+                class="badge">
+                <i class="fa fa-whatsapp"></i> <span>Whatsapp</span>
+              </a>
+              </div>
+            }
             <div
               class="follow-button buttondesktop"
               >
              Seguir
             </div>
-
-            <div
-            class="chat-button whatsapp buttondesktop"
-            (click)="registerClick(user?.id, productId )"
-            *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null"
-          >
-          <a title="Contacto telefónico" 
-            aria-label="Chat on WhatsApp" 
-            href="https://wa.me/34{{user?.phoneNumber}}"
-            class="badge">
-            <i class="fa fa-whatsapp"></i> <span>Whatsapp</span>
-          </a>
-        </div>
           </div>
-         
         </div>
         <div class="user-detail">{{user?.description}}</div>
         <div class="buttons-mobileavatar buttonmobile">
           <img  *ngIf="detalle?.verified === 1"  class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
-
           <div
             class="chat-button buttonmobile"
             (click)="!authService.isAuthenticated() ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
             >
             Iniciar Chat
           </div>
-          <!-- !-- *ngIf="user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null" --> 
-            <!--   -->
-          
+
+          @if (user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null) {
+            <div
+            (click)="registerClick(user?.id, productId )"
+              class="chat-button whatsapp buttonmobile"
+            >
+            
+              <a title="Contacto telefónico" 
+                aria-label="Chat on WhatsApp" 
+                href="https://wa.me/34{{user?.phoneNumber}}" 
+                target="_blank"
+                class="badge">
+                <i class="fa fa-whatsapp"></i>
+              </a>
+            </div>
+          }
           <div
             class="follow-button buttonmobile"
             >
            Seguir
           </div>
         </div>
-        <div class="buttons-mobileavatar buttonmobile">
-
-          
-          <div
-            class="chat-button whatsapp buttonmobile"
-            (click)="registerClick(user?.id, productId )"
-           >
-           <a title="Contacto telefónico" 
-            
-            aria-label="Chat on WhatsApp" 
-            href="https://wa.me/34{{user?.phoneNumber}}"
-            class="badge">
-            <i class="fa fa-whatsapp"></i>
-            <span>WhatsApp</span>
-          </a>
-          </div>
-         
-        </div>
+      
   
         <!--TITLE SECTION-->
         <div class="section-title">
@@ -246,79 +247,85 @@
         </div>
   
          <!--To whom-->
-         <div class="section-towhom" *ngIf="!!detalle?.whom">
-          <ion-row class="towhom-title">
-            <ion-label>
-              <!-- <h2>{{detalle?.towhom}}</h2> -->
-              <h2>A quien va dirigido</h2>
-            </ion-label>
-          </ion-row>
-          <ion-row class="towhom-description">
-            <ion-label [innerHtml]="detalle?.whom"></ion-label>
-          </ion-row>
-        </div>
+         @if (!!detalle?.whom) {
+          <div class="section-towhom">
+            <ion-row class="towhom-title">
+              <ion-label>
+                <!-- <h2>{{detalle?.towhom}}</h2> -->
+                <h2>A quien va dirigido</h2>
+              </ion-label>
+            </ion-row>
+            <ion-row class="towhom-description">
+              <ion-label [innerHtml]="detalle?.whom"></ion-label>
+            </ion-row>
+          </div>
+        }
 
         <!--OTHERS VIEW-->
-        <div class="section-others-view" *ngIf="othersView.length  > 0">
-          <ion-row class="others-view-title">
-            <ion-label>
-              <!-- <h2>{{detalle?.othersview}}</h2> -->
-              <h2>Otros usuarios también vieron</h2>
-            </ion-label>
-          </ion-row>
-  
-          <div class="grid-others-view">
-            <div class="item-others" 
-              *ngFor="let other of othersView |  slice: 0:4">
-              <a [href]="'/servicio/' + removeBlankSpace(other?.title) + '/detail/' + other?.id">
-                <div class="avatar-view">
-                  <div class="img-avatar">
-                    <img src="{{other.image}}"/>
-                  </div>
-                  <div class="name-avatar">
-                    <div class="name-other">{{other.ownerUsername}}</div>
-                    <div class="profession-other">{{other.title}}</div>
-                  </div>
-                </div>
-                <div class="description-view">
-                  <ion-label [innerHtml]="other.description"></ion-label>
-                </div>
-                <div class="rating-view">
-                  <div class="ion-no-margin list-stars-rating">
-                    <div class="stars">
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
-                      <ion-img
-                        class="icon_star"
-                        src="assets/icon/svg/icon_star.svg"
-                      ></ion-img>
+        @if (othersView.length  > 0) {
+          <div class="section-others-view">
+            <ion-row class="others-view-title">
+              <ion-label>
+                <!-- <h2>{{detalle?.othersview}}</h2> -->
+                <h2>Otros usuarios también vieron</h2>
+              </ion-label>
+            </ion-row>
+            <div class="grid-others-view">
+              @for (other of othersView | slice : 0 : 4; track other.id) {
+                <div class="item-others" 
+                >
+                  <a [href]="'/servicio/' + toSlug(other?.title) + '/detail/' + other?.id">
+                    <div class="avatar-view">
+                      <div class="img-avatar">
+                        <img src="{{other.image}}"/>
+                      </div>
+                      <div class="name-avatar">
+                        <div class="name-other">{{other.ownerUsername}}</div>
+                        <div class="profession-other">{{other.title}}</div>
+                      </div>
                     </div>
-                  
-                    <div class="detail-rating">
-                      ({{other.avgRating}}) valoraciones
+                    <div class="description-view">
+                      <ion-label [innerHtml]="other.description"></ion-label>
                     </div>
-                  </div>
+                    <div class="rating-view">
+                      <div class="ion-no-margin list-stars-rating">
+                        <div class="stars">
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                        </div>
+                      
+                        <div class="detail-rating">
+                          ({{other.avgRating}}) valoraciones
+                        </div>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-              </a>
+              }
+            
+            
             </div>
-           
-          
           </div>
-        </div>
+        }
+
   
         <!--MORE WORK THIS PROFESIONAL-->
         <div class="section-more-work" *ngIf="moreWorks.length">
@@ -329,244 +336,27 @@
           </ion-row>
   
           <div class="grid-more-work">
-            
-            <div class="item-more" 
-              
-              *ngFor="let more of moreWorks">
-              <a [href]="'/servicio/' + removeBlankSpace(more?.title) + '/detail/' + more?.productId">
-                <div class="name-work">
-                  <div>{{more.title}}</div>
-                </div>
-                <div class="description-more">
-                  <ion-label [innerHtml]="more.description"></ion-label>
-                </div>
-                <div class="more-view">
-                  Mostrar  <i class="fa fa-chevron-right"></i>
-                </div>
-              </a>
-            </div>
-         
+            @for (more of moreWorks; track more.id) {
+              <div class="item-more">
+                <a [href]="'/servicio/' + toSlug(more?.title) + '/detail/' + more?.productId">
+                  <div class="name-work">
+                    <div>{{more.title}}</div>
+                  </div>
+                  <div class="description-more">
+                    <ion-label [innerHtml]="more.description"></ion-label>
+                  </div>
+                  <div class="more-view">
+                    Mostrar  <i class="fa fa-chevron-right"></i>
+                  </div>
+                </a>
+              </div>
+            }
           </div>
         </div>
-  
       </div>
     </div>
   </div>
  
-  <!--RESEÑAS-->
-  <!-- <div class="reviews">
-    <ion-row class="reviews-title">
-      <ion-label><h2>Reseñas</h2></ion-label>
-    </ion-row>
-    <div class="container-reviews">
-      <div class="item-reviews">
-        <div class="avatar-view">
-          <div class="img-avatar">
-            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
-          </div>
-          <div class="name-avatar">
-            <div class="name-other">Jerome Bell</div>
-            <div class="rating-view">
-              <div class="ion-no-margin list-stars-rating">
-                <div class="stars">
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                </div>
-              
-                <div class="detail-rating">
-                  (123) valoraciones
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       
-        <div class="description-view">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-        </div>
-      </div>
-      <div class="item-reviews">
-        <div class="avatar-view">
-          <div class="img-avatar">
-            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
-          </div>
-          <div class="name-avatar">
-            <div class="name-other">Jerome Bell</div>
-            <div class="rating-view">
-              <div class="ion-no-margin list-stars-rating">
-                <div class="stars">
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                </div>
-              
-                <div class="detail-rating">
-                  (123) valoraciones
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       
-        <div class="description-view">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-        </div>
-      </div>
-      <div class="item-reviews">
-        <div class="avatar-view">
-          <div class="img-avatar">
-            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
-          </div>
-          <div class="name-avatar">
-            <div class="name-other">Jerome Bell</div>
-            <div class="rating-view">
-              <div class="ion-no-margin list-stars-rating">
-                <div class="stars">
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                </div>
-              
-                <div class="detail-rating">
-                  (123) valoraciones
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       
-        <div class="description-view">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-        </div>
-      </div>
-      <div class="item-reviews">
-        <div class="avatar-view">
-          <div class="img-avatar">
-            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"/>
-          </div>
-          <div class="name-avatar">
-            <div class="name-other">Jerome Bell</div>
-            <div class="rating-view">
-              <div class="ion-no-margin list-stars-rating">
-                <div class="stars">
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                </div>
-              
-                <div class="detail-rating">
-                  (123) valoraciones
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       
-        <div class="description-view">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  <!--ORACULO-->
-  <!-- <div class="oracle" *ngIf="iAdvises.length > 0">
-    <ion-row class="oracle-title">
-      <ion-label>
-        <h2 *ngIf="!otherTitelOracle">Contenidos en Oráculo</h2>
-        <h2 *ngIf="otherTitelOracle">Otros Contenidos en Oráculo</h2>
-      </ion-label>
-    </ion-row>
-    <div class="container-oracle" >
-
-      <div class="item-oracle" *ngFor="let oracle of iAdvises |  slice: 0:4">
-        <a [href]="'posts/oracle/'+ oracle?.id +'/'+ removeBlankSpace(oracle?.title)">
-          <div class="media">
-            <img src="{{oracle.media_url}}" onerror="this.style.display = 'none'"/>
-          </div>     
-          <div class="data">       
-            <div class="name-work">
-              <div>{{oracle.title}}</div>
-            </div>
-            <div class="description-more">
-              <ion-label [innerHtml]="oracle.content"></ion-label>
-            </div>
-            <div class="date">{{oracle.created_at | dateAgo}}</div>
-          </div>
-        </a>
-      </div>
-     
-    </div>
-  </div> -->
 
 
   <div class="capsule-price-mobile">

@@ -35,7 +35,7 @@ export class TypeofPipe implements PipeTransform {
   /**
    * Intenta devolver el tipo general de items que hay
    */
-  typeOfinArray( array ) {
+  typeOfinArray( array:any ) {
     let typeofs = [];
 
     for( let i = 0; i < array.length; i++ ) {

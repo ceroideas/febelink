@@ -12,12 +12,10 @@ import {UtilitiesService} from '../services/utilities.service';
 import {SuscribirsePage} from '../pages/suscribirse/suscribirse.page';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UntypedFormGroup, UntypedFormBuilder} from '@angular/forms';
-import {Chart} from 'chart.js';
-import {Camera, CameraOptions} from '@awesome-cordova-plugins/camera/ngx';
-import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
-import {Storage} from '@ionic/storage';
+// import {Camera, CameraOptions} from '@awesome-cordova-plugins/camera/ngx';
+// import {SocialSharing} from '@awesome-cordova-plugins/social-sharing/ngx';
+// import {Storage} from '@ionic/storage';
 import {SharePopoverComponent} from '../components/share-popover/share-popover.component';
-import {environment} from 'src/environments/environment';
 import {TranslateConfigService} from '../services/translate/translate-config.service';
 import {GeoPlacesApi} from '../services/geoplaces.service';
 import {GeoPlacesModel} from '../models/geoplaces.model';
@@ -25,7 +23,8 @@ import {
   VerificationComponent,
   VerifWhich,
 } from '../components/verification/verification.component';
-import {KycPopSvc} from '../services/kyc/kyc.pop.service';
+// import {KycPopSvc} from '../services/kyc/kyc.pop.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-tab4',
@@ -33,8 +32,8 @@ import {KycPopSvc} from '../services/kyc/kyc.pop.service';
   styleUrls: ['tab4.page.scss'],
 })
 export class Tab4Page {
-  @ViewChild('barCanvas', {static: true}) barCanvas: ElementRef;
-  @ViewChild(IonContent, {static: false}) content: IonContent;
+  @ViewChild('barCanvas', {static: true}) barCanvas: ElementRef | undefined;
+  @ViewChild(IonContent, {static: false}) content: IonContent | undefined;
 
   verifWhich = VerifWhich;
 
@@ -43,16 +42,16 @@ export class Tab4Page {
   opiniones: any;
   total_opinions: any;
   opinion_types: any;
-  form: UntypedFormGroup;
+  form: UntypedFormGroup | undefined;
   base64img: any;
   demandas: any[] = [];
-  sectores: any[];
+  sectores: any =[];
   sectoresPerfil: any[] = [];
   subSectoresPerfil: any[] = [];
   subsectores: any[];
   subscription: any;
   subscription_details: any;
-  barChart: Chart;
+  // barChart: Chart;
   typeDNI: string = 'password';
   typeAddress: string = 'password';
   loading: boolean = true;
@@ -64,13 +63,16 @@ export class Tab4Page {
   passwordIcon: string = 'eye-off';
   passwordType2: string = 'password';
   passwordIcon2: string = 'eye-off';
-  message: string;
-  existsDNI;
-  dniPrevio;
-  emailPrevio;
+  message: string = "";
+  existsDNI: string = "";
+
+  dniPrevio: string = "";
+
+  emailPrevio: string = "";
+
   emailVerified: boolean = false;
 
-  labelDoc: string;
+  labelDoc: string = "";
 
   constructor(
     private modalCtrl: ModalController,
@@ -81,15 +83,15 @@ export class Tab4Page {
     private router: Router,
     public platform: Platform,
     private elementRef: ElementRef,
-    private camera: Camera,
+    // private camera: Camera,
     private storage: Storage,
-    private socialSharing: SocialSharing,
+    // private socialSharing: SocialSharing,
     public popoverController: PopoverController,
     private actionSheet: ActionSheetController,
     private route: ActivatedRoute,
     private translateService: TranslateConfigService,
     private geoPlaces: GeoPlacesApi,
-    private kycPopSvc: KycPopSvc
+    // private kycPopSvc: KycPopSvc
   ) {
     if (this.platform.is('cordova')) {
       this.isNative = true;
@@ -100,9 +102,9 @@ export class Tab4Page {
     this.subsectores = [];
 
     this.route.queryParams.subscribe((params) => {
-      const navExtras = this.router.getCurrentNavigation().extras.state;
+      const navExtras = this.router.getCurrentNavigation()?.extras.state;
       if (navExtras) {
-        this.message = navExtras.msg;
+        this.message = navExtras['msg'];
         // console.log(navExtras);
       }
     });
@@ -136,9 +138,9 @@ export class Tab4Page {
           ) ||
         this.inputpass2.trim().length <= 0)
     ) {
-      document.getElementById('savebtn').removeAttribute('disabled');
+      document.getElementById('savebtn')?.removeAttribute('disabled');
     } else {
-      document.getElementById('savebtn').setAttribute('disabled', 'disabled');
+      document.getElementById('savebtn')?.setAttribute('disabled', 'disabled');
     }
     if (
       this.inputpass1
@@ -148,11 +150,11 @@ export class Tab4Page {
         ) ||
       this.inputpass1.trim().length <= 0
     ) {
-      document.getElementById('msgpass1').classList.add('hide');
-      document.getElementById('msgpass3').classList.add('hide');
+      document.getElementById('msgpass1')?.classList.add('hide');
+      document.getElementById('msgpass3')?.classList.add('hide');
     } else {
-      document.getElementById('msgpass1').classList.remove('hide');
-      document.getElementById('msgpass3').classList.remove('hide');
+      document.getElementById('msgpass1')?.classList.remove('hide');
+      document.getElementById('msgpass3')?.classList.remove('hide');
     }
 
     if (
@@ -163,11 +165,11 @@ export class Tab4Page {
         ) ||
       this.inputpass2.trim().length <= 0
     ) {
-      document.getElementById('msgpass2').classList.add('hide');
-      document.getElementById('msgpass4').classList.add('hide');
+      document.getElementById('msgpass2')?.classList.add('hide');
+      document.getElementById('msgpass4')?.classList.add('hide');
     } else {
-      document.getElementById('msgpass2').classList.remove('hide');
-      document.getElementById('msgpass4').classList.remove('hide');
+      document.getElementById('msgpass2')?.classList.remove('hide');
+      document.getElementById('msgpass4')?.classList.remove('hide');
     }
   }
 
@@ -187,7 +189,7 @@ export class Tab4Page {
   async ionViewWillEnter() {
     //await this.obtenerSectores();
     this.loadSuscriptions();
-    this.content.scrollToTop(1500);
+    this.content?.scrollToTop(1500);
   }
 
   initForm() {
@@ -205,7 +207,7 @@ export class Tab4Page {
           : this.perfil.descripcion,
       ],
 
-      direccion: [this.geoPlaces.place.address],
+      direccion: [this.geoPlaces.place?.address],
       direccion_resto: [
         this.perfil.direccion_resto == null ||
         this.perfil.direccion_resto == 'null'
@@ -227,7 +229,7 @@ export class Tab4Page {
       password: [''],
       passwordConfirmation: [''],
     });
-    this.form.get('sector').valueChanges.subscribe((id) => {
+    this.form?.get('sector')?.valueChanges.subscribe((id) => {
       if (Number(id) !== 0) {
         if (value !== Number(id)) {
           this.obtenerTodosSubSectores(Number(id));
@@ -274,7 +276,7 @@ export class Tab4Page {
       this.dniPrevio = this.perfil.dni;
       this.emailPrevio = this.perfil.email;
       this.emailVerified = this.isEmailVerified();
-      //this.form.get('first').setValue('some value');
+      //this.form?.get('first').setValue('some value');
 
       (await this.api.opinionesPerfil(data.reference)).subscribe((data) => {
         this.opiniones = data.opinions;
@@ -325,43 +327,43 @@ export class Tab4Page {
         barCanvasNativeEl = this.barCanvas.nativeElement;
       }
 
-      this.barChart = new Chart(barCanvasNativeEl, {
-        type: 'horizontalBar',
-        data: {
-          labels: this.opinion_types,
-          datasets: [
-            {
-              data: this.opiniones,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-              ],
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          legend: {
-            display: false,
-          },
-          drawTricks: false,
-          scales: {
-            xAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-        },
-      });
+      // this.barChart = new Chart(barCanvasNativeEl, {
+      //   type: 'horizontalBar',
+      //   data: {
+      //     labels: this.opinion_types,
+      //     datasets: [
+      //       {
+      //         data: this.opiniones,
+      //         backgroundColor: [
+      //           'rgba(255, 99, 132, 0.2)',
+      //           'rgba(54, 162, 235, 0.2)',
+      //           'rgba(255, 206, 86, 0.2)',
+      //         ],
+      //         borderColor: [
+      //           'rgba(255,99,132,1)',
+      //           'rgba(54, 162, 235, 1)',
+      //           'rgba(255, 206, 86, 1)',
+      //         ],
+      //         borderWidth: 1,
+      //       },
+      //     ],
+      //   },
+      //   options: {
+      //     legend: {
+      //       display: false,
+      //     },
+      //     drawTricks: false,
+      //     scales: {
+      //       xAxes: [
+      //         {
+      //           ticks: {
+      //             beginAtZero: true,
+      //           },
+      //         },
+      //       ],
+      //     },
+      //   },
+      // });
     }
   }
 
@@ -384,7 +386,7 @@ export class Tab4Page {
       if (verifSent)
         // Email controlled and saved on verification
       {
-        this.emailPrevio = this.form.get('email').value;
+        this.emailPrevio = this.form?.get('email')?.value;
       }
 
       this.submitForm();
@@ -400,14 +402,14 @@ export class Tab4Page {
     let response: any;
     const place = this.geoPlaces.getPlaceSelected();
 
-    const descripcion = this.form.get('descripcion').value;
-    const direccion_resto = this.form.get('direccion_resto').value;
+    const descripcion = this.form?.get('descripcion')?.value;
+    const direccion_resto = this.form?.get('direccion_resto')?.value;
 
     p = {
-      nick: this.form.get('nick').value,
+      nick: this.form?.get('nick')?.value,
       descripcion:
         descripcion == null || descripcion == 'null' ? '' : descripcion,
-      telefono: this.form.get('telefono').value,
+      telefono: this.form?.get('telefono')?.value,
 
       direccion: !place ? '' : place.address,
       direccion_resto:
@@ -415,19 +417,19 @@ export class Tab4Page {
           ? ''
           : direccion_resto,
 
-      country: !place ? '' : place.Country.short,
-      state: !place ? '' : place.State.long,
-      department: !place ? '' : place.Department.long,
-      locality: !place ? '' : place.Locality.long,
-      place_id: !place ? '' : place.place_id,
+      country: !place ? '' : place?.Country?.short,
+      state: !place ? '' : place?.State?.long,
+      department: !place ? '' : place?.Department?.long,
+      locality: !place ? '' : place?.Locality?.long,
+      place_id: !place ? '' : place?.place_id,
 
-      sector: this.form.get('sector').value,
-      sub_sector: this.form.get('sub_sector').value,
-      dni: this.form.get('dni').value,
-      email: this.form.get('email').value,
-      link_url: this.form.get('link_url').value,
-      password: this.form.get('password').value,
-      passwordConfirmation: this.form.get('passwordConfirmation').value,
+      sector: this.form?.get('sector')?.value,
+      sub_sector: this.form?.get('sub_sector')?.value,
+      dni: this.form?.get('dni')?.value,
+      email: this.form?.get('email')?.value,
+      link_url: this.form?.get('link_url')?.value,
+      password: this.form?.get('password')?.value,
+      passwordConfirmation: this.form?.get('passwordConfirmation')?.value,
     };
 
     // ToDo: Refactor this
@@ -542,6 +544,7 @@ export class Tab4Page {
                       }
 
                       //Show all the errors
+                      //@ts-ignore
                       arrayErrores = [].concat.apply([], arrayErrores);
 
                       let cadenaErrores = `<ul>`;
@@ -571,13 +574,13 @@ export class Tab4Page {
                 this.utilities.showToast(
                   this.translateService.instant('tabs.tab4.errors.id')
                 );
-                this.form.controls.dni.setValue(this.dniPrevio);
+                this.form?.controls['dni'].setValue(this.dniPrevio);
               }
             } else {
               this.utilities.showToast(
                 this.translateService.instant('tabs.tab4.errors.mailExists')
               );
-              this.form.controls.email.setValue(this.emailPrevio);
+              this.form?.controls['email'].setValue(this.emailPrevio);
             }
           },
           (err) => {
@@ -585,7 +588,7 @@ export class Tab4Page {
               this.utilities.showToast(
                 this.translateService.instant('tabs.tab4.errors.mailEmpty')
               );
-              this.form.controls.email.setValue(this.emailPrevio);
+              this.form?.controls['email'].setValue(this.emailPrevio);
             }
           }
         );
@@ -698,6 +701,7 @@ export class Tab4Page {
                     }
 
                     //Show all the errors
+                    //@ts-ignore
                     arrayErrores = [].concat.apply([], arrayErrores);
 
                     let cadenaErrores = `<ul>`;
@@ -728,13 +732,13 @@ export class Tab4Page {
               this.utilities.showToast(
                 this.translateService.instant('tabs.tab4.errors.id')
               );
-              this.form.controls.dni.setValue(this.dniPrevio);
+              this.form?.controls['dni'].setValue(this.dniPrevio);
             }
           } else {
             this.utilities.showToast(
               this.translateService.instant('tabs.tab4.errors.mailExists')
             );
-            this.form.controls.email.setValue(this.emailPrevio);
+            this.form?.controls['email'].setValue(this.emailPrevio);
           }
         },
         (err) => {
@@ -742,7 +746,7 @@ export class Tab4Page {
             this.utilities.showToast(
               this.translateService.instant('tabs.tab4.errors.mailEmpty')
             );
-            this.form.controls.email.setValue(this.emailPrevio);
+            this.form?.controls['email'].setValue(this.emailPrevio);
           }
         }
       );
@@ -827,27 +831,27 @@ export class Tab4Page {
    * Cambiar imagen de perfil
    */
   public attachImageNative(): void {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      mediaType: this.camera.MediaType.PICTURE,
-      encodingType: this.camera.EncodingType.JPEG,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      targetWidth: 1920,
-      targetHeight: 1080,
-      allowEdit: false,
-    };
-    this.camera
-      .getPicture(options)
-      .then((urlFoto) => {
-        this.base64img = 'data:image/jpeg;base64,' + urlFoto;
-      })
-      .catch((error) => {
-        this.utilities.showAlert(
-          this.translateService.instant('tabs.tab4.errors.image'),
-          error
-        );
-      });
+    // const options: CameraOptions = {
+    //   quality: 100,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   mediaType: this.camera.MediaType.PICTURE,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+    //   targetWidth: 1920,
+    //   targetHeight: 1080,
+    //   allowEdit: false,
+    // };
+    // this.camera
+    //   .getPicture(options)
+    //   .then((urlFoto) => {
+    //     this.base64img = 'data:image/jpeg;base64,' + urlFoto;
+    //   })
+    //   .catch((error) => {
+    //     this.utilities.showAlert(
+    //       this.translateService.instant('tabs.tab4.errors.image'),
+    //       error
+    //     );
+    //   });
   }
 
   attachImageWeb(): Promise<void> {
@@ -890,6 +894,7 @@ export class Tab4Page {
       if (fileReader && myFile) {
         fileReader.readAsDataURL(myFile);
         fileReader.onload = () => {
+          //@ts-ignore
           resolve(fileReader.result);
         };
 
@@ -946,7 +951,7 @@ export class Tab4Page {
    * Navegación a la demanda
    * @param demanda
    */
-  public detalleDemanda(demanda): void {
+  public detalleDemanda(demanda: any): void {
     this.router.navigate(['detalle-demanda'], {
       queryParams: {demanda: JSON.stringify(demanda)},
     });
@@ -966,14 +971,14 @@ export class Tab4Page {
           handler: () => {
             this.setSuspendedUser(this.perfil.id);
 
-            this.storage.remove('userData').then(() => {
-              this.api.refreshTabs();
-              this.router.navigate([environment.HOME_PAGE]);
-              //this.router.navigateByUrl( environment.HOME_PAGE );
-              this.utilities.showToast(
-                this.translateService.instant('tabs.tab4.labelDisableConfirmed')
-              );
-            });
+            // this.storage.remove('userData').then(() => {
+            //   this.api.refreshTabs();
+            //   this.router.navigate([environment.HOME_PAGE]);
+            //   //this.router.navigateByUrl( environment.HOME_PAGE );
+            //   this.utilities.showToast(
+            //     this.translateService.instant('tabs.tab4.labelDisableConfirmed')
+            //   );
+            // });
           },
         },
       ],
@@ -981,7 +986,7 @@ export class Tab4Page {
     await alert.present();
   }
 
-  async setSuspendedUser(user_id) {
+  async setSuspendedUser(user_id: any) {
     (await this.api.suspendedUser(user_id)).subscribe((response) => {
       // console.log(response);
     });
@@ -992,7 +997,7 @@ export class Tab4Page {
    * @param pass
    * @param confirm
    */
-  public comprobarContraseña(pass, confirm): boolean {
+  public comprobarContraseña(pass: any, confirm: any): boolean {
     return pass == confirm;
   }
 
@@ -1008,7 +1013,7 @@ export class Tab4Page {
         }
 
         setTimeout(() => {
-          this.form.get('sector').setValue(this.sectoresPerfil);
+          this.form?.get('sector')?.setValue(this.sectoresPerfil);
         }, 500);
 
         this.obtenerSectores();
@@ -1027,7 +1032,7 @@ export class Tab4Page {
         }
 
         setTimeout(() => {
-          this.form.get('sub_sector').setValue(this.subSectoresPerfil);
+          this.form?.get('sub_sector')?.setValue(this.subSectoresPerfil);
         }, 500);
       }
     );
@@ -1048,20 +1053,20 @@ export class Tab4Page {
    * Método para obtener los subsectores de un sector
    * @param id_sector
    */
-  async obtenerSubSectores(id_sector, addToForm = false) {
+  async obtenerSubSectores(id_sector: any, addToForm = false) {
     this.subsectores = [];
 
     (await this.api.obtenerSubSectores(id_sector)).subscribe((subsectores) => {
       this.subsectores = subsectores;
       if (addToForm) {
         if (this.subsectores.length > 0) {
-          this.form.patchValue({sub_sector: this.subsectores[0].id});
+          this.form?.patchValue({sub_sector: this.subsectores[0].id});
         }
       }
     });
   }
 
-  async obtenerTodosSubSectores(ids_sector, addToForm = false) {
+  async obtenerTodosSubSectores(ids_sector:any, addToForm = false) {
     this.subsectores = [];
 
     var subs_array = ids_sector.toString().split(',');
@@ -1074,7 +1079,7 @@ export class Tab4Page {
 
         if (addToForm) {
           if (this.subsectores.length > 0) {
-            this.form.patchValue({sub_sector: this.subsectores[0].id});
+            this.form?.patchValue({sub_sector: this.subsectores[0].id});
           }
         }
       });
@@ -1156,7 +1161,7 @@ export class Tab4Page {
     let url = 'https://www.febelink.com/perfil/' + this.perfil.reference;
     let message = 'Febelink \n' + subject + ' \n';
 
-    this.socialSharing.share(null, null, null, url);
+    // this.socialSharing.share('', '', '', url);
   }
 
   /**
@@ -1199,7 +1204,7 @@ export class Tab4Page {
    * Enviar notificación de recomendación a otro usuario
    * @param name
    */
-  async enviarRecomendacion(name) {
+  async enviarRecomendacion(name: any) {
     this.utilities.showLoading();
     (await this.api.existeUsuario(name)).subscribe(async (value) => {
       if (value) {
@@ -1241,7 +1246,7 @@ export class Tab4Page {
   /**
    * When input email changed, verify it
    */
-  public emailChanged(email) {
+  public emailChanged(email: any) {
     if (this.hasEmailChanged(email)) {
       this.emailVerified = false;
     } else {
@@ -1262,15 +1267,15 @@ export class Tab4Page {
   /**
    * Check if mail has changed
    */
-  hasEmailChanged(email: string = this.form.get('email').value): boolean {
+  hasEmailChanged(email: string = this.form?.get('email')?.value): boolean {
     return email !== this.perfil?.email;
   }
 
   /**
    * Alert to Verify email
    */
-  public async verify(which, onVerificationDone?: Function) {
-    const email = this.form.get('email').value;
+  public async verify(which: any, onVerificationDone?: Function) {
+    const email = this.form?.get('email')?.value;
     if (email === null || email === '') {
       this.utilities.showToast(
         this.translateService.instant('tabs.tab4.errors.mailEmpty')
@@ -1311,10 +1316,10 @@ export class Tab4Page {
   }
 
   async verifyKYC() {
-    if (await this.kycPopSvc.verify()) {
-      this.perfil.kyc_verified_at = new Date().toLocaleString();
-      this.utilities.saveUserData(this.perfil);
-    }
+    // if (await this.kycPopSvc.verify()) {
+    //   this.perfil.kyc_verified_at = new Date().toLocaleString();
+    //   this.utilities.saveUserData(this.perfil);
+    // }
   }
 
   verified(which: string) {

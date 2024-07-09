@@ -56,9 +56,9 @@ export class LinkPreviewComponent implements OnInit {
   private param_url: string = 'url';
 
   private obs: Array<Observable<Object>> = [];
-  private next: (value: any) => void;
-  private error: (error: any) => void;
-  private complete: () => void;
+  private next: (value: any) => void = () => {}; // Default value for next
+  private error: (error: any) => void = () => {}; // Default value for error
+  private complete: () => void = () => {}; // Default value for complete
 
   constructor(
     private http: HttpClient,
@@ -81,7 +81,7 @@ export class LinkPreviewComponent implements OnInit {
 
   OnResponse(next?: (value: any) => void): LinkPreviewComponent {
     // Response Callback
-    if (!next) {
+    if (!!next) {
       this.next = next;
     }
 
@@ -90,7 +90,7 @@ export class LinkPreviewComponent implements OnInit {
 
   OnError(error?: (error: any) => void): LinkPreviewComponent {
     // Error Callback
-    if (!error) {
+    if (!!error) {
       this.error = error;
     }
 
@@ -99,7 +99,7 @@ export class LinkPreviewComponent implements OnInit {
 
   OnComplete(complete?: () => void): LinkPreviewComponent {
     // Complete Callback
-    if (!complete) {
+    if (!!complete) {
       this.complete = complete;
     }
 
@@ -157,20 +157,20 @@ export class LinkPreviewComponent implements OnInit {
           this.urls[i].t =
             this.urls[i].t === null
               ? ''
-              : data['title']
-                ? data['title']
-                : this.title;
+              : (data as { title?: string }).title
+                ? (data as { title?: string }).title
+      : this.title;
           this.urls[i].d =
             this.urls[i].d === null
               ? ''
-              : data['description']
-                ? data['description']
+              : (data as { description?: string }).description
+                ? (data as { description?: string }).description
                 : this.description;
           this.urls[i].i =
             this.urls[i].i === null
               ? ''
-              : data['thumbnail_url']
-                ? data['thumbnail_url']
+              : (data as { thumbnail_url?: string }).thumbnail_url
+                ? (data as { thumbnail_url?: string }).thumbnail_url
                 : this.image;
           // this.urls[ i ].i = data[ 'image' ] ? data[ 'image' ] : this.image;
 
@@ -210,6 +210,6 @@ export class LinkPreviewComponent implements OnInit {
 
   // Lo agrego para que cuando lo clickeen abra en el target indicado ( e.g.: new tab )
   goTo(url: any) {
-    this.document.defaultView.open(url, this.target);
+    this.document.defaultView?.open(url, this.target);
   }
 }

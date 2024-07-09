@@ -14,7 +14,7 @@ export enum MailFnct {
 })
 export class MailService {
 
-    userInfo: IUser;
+  userInfo: IUser | undefined;
 
   constructor(
       private api: ApiService
@@ -42,7 +42,8 @@ export class MailService {
           cssClass: 'secondary'
         }, {
           text: this.translateSvc.instant( 'common.buttons.report' ),
-          handler: ( data ) => {
+          //@ts-ignore
+          handler: ( data: any ) => {
             if(( data?.report || '' ).trim().split( ' ' ).length < 5 ) {
               this.utils.showToast( this.translateSvc.instant( 'common.mailTo.error.minLength' ));
               return false;

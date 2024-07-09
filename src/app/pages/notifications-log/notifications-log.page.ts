@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Notification, NotifType } from 'src/app/models/notification';
-import { ModalController } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { TermsPage } from '../terms/terms.page';
+import { Notification, NotifType } from './../../models/notification';
+import { NotificationService } from './../../services/notification.service';
 
 @Component({
   selector: 'app-notifications-log',
@@ -19,7 +16,7 @@ export class NotificationsLogPage implements OnInit {
     private router: Router,
   ) {}
 
-  notifications: Notification[];
+  notifications: Notification[] = [] ;
   isLoading: boolean = false
 
   async ngOnInit() {
@@ -32,13 +29,13 @@ export class NotificationsLogPage implements OnInit {
     
     this.isLoading = true
     this.notifications = await this.notificationSvc.getNotificacionsLog();
-    this.notifications.map(notif => {
+    this.notifications.map((notif: any)=> {
       notif['open'] = false;
     });
     this.isLoading = false
   }
 
-  getIconByType(type: NotifType) {
+  getIconByType(type: NotifType | undefined) {
     switch (type) {
       case NotifType.Chat:
         return 'chatbubbles-outline';
@@ -55,7 +52,7 @@ export class NotificationsLogPage implements OnInit {
     if (notification.route) this.router.navigateByUrl(notification.route);
   }
 
-  async open(notif){
+  async open(notif: any){
     notif.open = !notif.open
     if (!notif.is_read) await this.notificationSvc.setNotificationAsReadById(notif.id);
     notif.is_read = 1;

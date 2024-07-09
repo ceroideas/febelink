@@ -6,6 +6,14 @@
           Pedir presupuesto gratis
         </h1>
 
+        <a title="Contacto telefónico" 
+          class="chat-button whatsapp buttondesktop"
+          aria-label="Chat on WhatsApp" 
+          href="https://wa.me/34601535903" 
+          target="_blank">
+          <i class="fa fa-whatsapp"></i> <span>Pedir presupuesto por Whatsapp</span>
+        </a>
+
         <p class="sections-add-service-subtitle">
           A veces la búsqueda de un servicio profesional es un problema difícil de solucionar. Requiere mucho tiempo y esfuerzo, preguntando, llamando y mandando mensajes. Nosotros lo buscamos por ti y lo ponemos en contacto contigo para que tú sólo tengas que seleccionar el que más te guste y disfrutar del servicio.
         </p>
@@ -33,7 +41,6 @@
         <div class="add-service-margin-input">
         <app-wysiwyg
           [html]="description"
-          [disabled]="isTemplate"
           [placeholder]="'Tip: Describe los detalles y preferencias de tu búsqueda'"
           (OnChange)="error.description = false;wysiwygChange( $event )"
           rows="6"
@@ -47,17 +54,26 @@
         <div class="add-service-label-input" [ngClass]="{'error': error.location === true}">Localidad *</div>
         <div class="add-service-margin-input">
           <ion-input
-            *ngIf="isTemplate"
-            [disabled]="isTemplate"
-            [(ngModel)]="location"
-            placeholder=""
-            class="padding-input-12 add-service-input"
-            (ionChange)="error.location = false"
-          ></ion-input>
-          <ion-select label="Default label" *ngIf="!isTemplate" [(ngModel)]="selectedValue" (ionChange)="onSelectChange($event)" placeholder="Selecciona una localizacion">
+          *ngIf="isTemplate"
+          [disabled]="isTemplate"
+          [(ngModel)]="location"
+          placeholder=""
+          class="padding-input-12 add-service-input"
+          (ionChange)="error.location = false"
+        ></ion-input>
+          <select  *ngIf="!isTemplate"  [(ngModel)] ="selectedValue"
+          name="valueCheck" class="selectlocation" (change)="onSelectChange($event)"> 
+          <option [ngValue]="undefined" disabled>Selecciona una localizacion </option>
+            <option *ngFor="let location of locations"
+            [ngValue]="location.id" > {{location.title}} </option>
+          </select>
+
+
+          <!-- 
+          <ion-select *ngIf="!isTemplate" [(ngModel)]="selectedValue" (ionChange)="onSelectChange($event)" placeholder="Selecciona una localizacion">
             <ion-select-option value="{{location.id}}" *ngFor="let location of locations">{{location.title}}</ion-select-option>
          
-          </ion-select>
+          </ion-select> -->
         </div>
         <div class="title-pie"></div>
       </div>
@@ -77,7 +93,7 @@
                     [pickType]="filePickType.IMAGE"
                     (OnFile)="images.length <= 4 ? fileSelected($event): null"
                   ></app-file-picker>
-                  <div class="icon-add" *ngIf="!isTemplate">
+                  <div class="icon-add">
                     <div class="picker" (click)=" error.images = false;filePickerDesktop.clicks()">
                       <span>Click here </span>to upload or drop media image
                     </div>
@@ -88,7 +104,8 @@
             <div class="visorPhotos" *ngIf="images.length > 0">
               <div class="item-photo" *ngFor="let imageURL of images; let i = index">
                 <img
-                  [src]="imageURL?.src"
+                
+                  [src]="imageURL.src"
                 /> 
                 <div
                   class="add-service-remove-div"
@@ -105,7 +122,7 @@
             </div>
           </div>
 
-          <div class="butttonaddphotos" *ngIf="images.length <= 4 && !isTemplate">
+          <div class="butttonaddphotos" *ngIf="images.length <= 4">
             <div (click)="error.images = false;filePickerDesktop.clicks()">Añadir Fotos</div>
           </div>
           <div class="title-pie">Peso máximo 3 Mb. Máximo 6 imágenes.</div>

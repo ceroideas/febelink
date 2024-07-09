@@ -23,6 +23,8 @@ export interface ISubSector {
     id: number;
     nombre: string;
     id_sector: number;
+    icon?: string,
+    keySearchParse?: string,
 }
 
 /**

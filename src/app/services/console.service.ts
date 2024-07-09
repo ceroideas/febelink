@@ -21,31 +21,30 @@ export interface IConsole
 })
 export class ConsoleSvc
 {
-    async log( iConsoles: IConsole | IConsole[] )
-    {
-        [].concat( iConsoles ).forEach( iConsole =>
-        {
-            const msg = `%c${iConsole.message}`
-            const style = `color: ${iConsole.color || 'white' }; font-size: ${iConsole.fontSize || 16}px`
-            switch( iConsole.type )
-            {
+    async log(iConsoles: IConsole | IConsole[]) {
+        // Convert single object to array if needed
+        const consolesArray = Array.isArray(iConsoles) ? iConsoles : [iConsoles];
+    
+        consolesArray.forEach(iConsole => {
+            const msg = `%c${iConsole.message}`;
+            const style = `color: ${iConsole.color || 'white'}; font-size: ${iConsole.fontSize || 16}px`;
+            switch (iConsole.type) {
                 case ConsoleType.TABLE:
-                    console.table( msg )
-                    break
+                    console.table(msg);
+                    break;
                 case ConsoleType.WARN:
-                    console.warn( msg, style )
-                    break
+                    console.warn(msg, style);
+                    break;
                 case ConsoleType.ERROR:
-                    console.error( msg, style )
-                    break
+                    console.error(msg, style);
+                    break;
                 case ConsoleType.INFO:
                 default:
-                    console.log( msg, style )
-                    break
+                    console.log(msg, style);
+                    break;
             }
         });
     }
-
     warning()
     {
         this.log([

@@ -13,7 +13,7 @@ import { serviceData } from './data';
  */
 export class ServicesComponent implements OnInit {
 
-  serviceData: Services[];
+  serviceData: Services[] | undefined ;
 
   constructor() { }
 

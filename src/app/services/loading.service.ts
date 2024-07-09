@@ -12,8 +12,8 @@ export class LoadingSvc {
 
     async show( message?: string, duration?: number ) {
         return ( await this.loadingCtrl.create({
-            message: message ? message : null,
-            duration: duration ? duration : null
+            message: message !== null ? message : undefined,
+            duration: duration !== null ? duration : undefined,
         })).present();
     }
 

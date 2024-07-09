@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class GoBuyTokensComponent {
 
   @Input() hideTitle: boolean = false;
-  @Input() lang: string;
+  @Input() lang: string = "";
 
   constructor( private router: Router ) { }
 

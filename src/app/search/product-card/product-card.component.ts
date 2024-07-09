@@ -1,6 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import { ChatService } from 'src/app/services/chat.service';
+import { ChatService } from '../../services/chat.service';
+
+import { toSlug } from '../../../utils/utils';
+import { environment } from '../../../environments/environment';
 
 export interface SearchProductCardType {
   id: number;
@@ -13,7 +16,6 @@ export interface SearchProductCardType {
   ownerUserId: number;
   ownerUsername: string;
   description: string;
-  subcription: number;
   verified: number;
 }
 
@@ -30,11 +32,15 @@ export interface PriceUnitType {
   styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent {
+  //@ts-ignore
   @Input() data: SearchProductCardType;
-  @Input() unitTypes: PriceUnitType[];
+  @Input() unitTypes: PriceUnitType[] = [];
 
   @Input() skeleton: boolean = false;
+  
+  toSlug = toSlug;
 
+  urlWsrv: string = environment.baseWebUrlWsrv;
   constructor(private router: Router, private chatService: ChatService) {}
 
   irA(p: string): void {
@@ -42,7 +48,6 @@ export class ProductCardComponent {
   }
 
   async createChat(ownerUsername: string, ownerUserId: number) {
-    alert(8)
     const {response, error} = await this.chatService.createChat(
       ownerUserId
     );
@@ -58,9 +63,5 @@ export class ProductCardComponent {
     if (error) {
       this.router.navigate([`chat`]);
     }
-  }
-
-  removeBlankSpace(term: string): string {
-    return term.replace(new RegExp(' ', 'g'), '-');
   }
 }

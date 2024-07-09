@@ -43,7 +43,7 @@
       <div class="filtros">
         <ion-item class="categorias">
           <ion-label>{{ 'common.labelSectors' | translate }}</ion-label>
-          <ionic-selectable
+          <!-- <ionic-selectable
             item-content
             [(ngModel)]="sector"
             itemValueField="id"
@@ -52,11 +52,11 @@
             [canSearch]="true"
             (onChange)="sectorChange($event)"
           >
-          </ionic-selectable>
+          </ionic-selectable> -->
         </ion-item>
         <ion-item class="categorias">
           <ion-label>{{ 'common.labelSubsectors' | translate }}</ion-label>
-          <ionic-selectable
+          <!-- <ionic-selectable
             item-content
             [(ngModel)]="subsector"
             itemValueField="id"
@@ -65,10 +65,11 @@
             [canSearch]="true"
             (onChange)="subSectorChange($event)"
           >
-          </ionic-selectable> </ion-item
+          </ionic-selectable> -->
+           </ion-item
         ><ion-item class="categorias">
           <ion-label>{{ 'common.labelProvince' | translate }}</ion-label>
-          <ionic-selectable
+          <!-- <ionic-selectable
             item-content
             [(ngModel)]="province"
             itemValueField="id"
@@ -77,11 +78,11 @@
             [canSearch]="true"
             (onChange)="provincesChange($event)"
           >
-          </ionic-selectable>
+          </ionic-selectable> -->
         </ion-item>
         <ion-item class="categorias">
           <ion-label>{{ 'common.labelTown' | translate }}</ion-label>
-          <ionic-selectable
+          <!-- <ionic-selectable
             item-content
             [(ngModel)]="town"
             itemValueField="id"
@@ -90,7 +91,7 @@
             [canSearch]="true"
             (onChange)="townsChange($event)"
           >
-          </ionic-selectable>
+          </ionic-selectable> -->
         </ion-item>
       </div>
     </ng-container>
