@@ -1,0 +1,45 @@
+    ion-card { cursor: default; }
+    
+    .header {
+        // border-bottom: 1px solid var(--color_line);
+
+        ion-label {
+            font-weight: 600;
+            font-size: 15px;
+            color: black;
+        }
+    }
+    ion-footer {
+        padding-bottom: 10px;
+    }
+    ion-header::after,
+    ion-footer::after {
+        background-image: none;
+    }
+
+    .content {
+        --padding-start: 10px;
+        --padding-end: 10px;
+    }
+
+    ion-input { font-size: 14px; }
+
+    .hint {
+        font-size: 14px;
+        justify-content: center;
+    }
+
+    .minners-fee {
+        margin-top: 10px;
+    }
+
+    .back-gray {
+        background-color: #f1f7fb;
+        box-shadow: none;
+        border: 1px solid #cddee7;
+    }
+
+    ion-input {
+        font-size: 14px;
+        border: 1px solid #afccdd;
+    }

@@ -1,0 +1,27 @@
+<div class="div-main-back-button">
+  <div (click)="backButton()" class="div-back-button-content">
+    <img src="assets/icon/svg/chevron-left.svg" class="div-back-button-svg"/> Volver
+  </div>
+</div>
+
+<ion-content [class]="'padding-top ' + (!isLoading && !iAdvise ? 'tx-center' : '' )">
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+
+  <app-post-component
+    *ngIf="!isLoading && iAdvise"
+    [id]="id"
+    [iAdvise]="iAdvise"
+    [showOpts]="true"
+    [showContent]="true"
+    [listComments]="true"
+  ></app-post-component>
+
+  <!-- No Items -->
+  <ion-label
+    class="hint pointer"
+    *ngIf="!isLoading && !iAdvise"
+    (click)="newOne()"
+    [innerHTML]="'pages.posts.advises.error.no-item' | translate"
+  ></ion-label>
+</ion-content>

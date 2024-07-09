@@ -1,0 +1,8 @@
+<div class="inline">
+  <ion-label [class]="'number ' + ( bold ? 'bold-6 ' : '' ) + classNbr" [color]="color">
+    {{{ value: number } | splitNumber }}
+  </ion-label>
+  <ion-label [class]="'decimal ' + ( bold ? 'bold-6 ' : '' ) + classFloat" [color]="color">
+    {{{ value: number, returnDecimal: true, round: round } | splitNumber }}
+  </ion-label>
+</div>

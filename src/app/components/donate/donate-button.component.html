@@ -1,0 +1,36 @@
+<!--<ion-button [class]="'w-full ' + ( clase || '' )" color="febelink" (click)="donate()" *ngIf="asButton" >
+  <img
+    slot="start"
+    density="ldpi"
+    src="assets/icon/svg/donate_w.svg"
+    class="marg-e10"
+    width="30px"
+    height="30px"
+  />
+  <ion-label>{{ text | translate }}</ion-label>
+</ion-button>
+
+<ion-grid class="no-margin no-padding" (click)="donate()" *ngIf="!asButton">
+  <ion-row class="align-center">
+    <ion-icon class="font-30 pointer" src="assets/icon/svg/donate.svg"></ion-icon>
+  </ion-row>
+  <ion-row class="align-center">
+    <ion-label class="font-14 pointer">{{ 'common.labelDonate' | translate }}</ion-label>
+  </ion-row>
+</ion-grid>-->
+
+<div class="mobile">
+  <div (click)="donate()">
+    <img src="assets/icon/svg/tip.svg" class="tip-svg" />Dar propina
+  </div>
+</div>
+<div class="desktop">
+  <div (click)="donate()">
+    <img src="assets/icon/svg/tip-blue.svg" class="tip-svg" />Dar propina
+  </div>
+</div>
+<!--
+<div (click)="donate()">
+  <img src="assets/icon/svg/tip.svg" style="width:14px;margin-right:13px;position:relative;top:2px;" />Dar propina
+</div>
+-->

@@ -1,0 +1,167 @@
+<!-- Services start -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="tx-center mb-5" id="content-sobre-nosotros">
+          <h5 class="text-primary text-uppercase small-title" id="mini-titular">
+            {{ 'landing.aboutUs.title' | translate }}
+          </h5>
+          <h1 class="mb-3" id="titular-seccion">
+            {{ 'landing.aboutUs.story' | translate }}
+          </h1>
+          <p id="text-sobre-nosotros">
+            {{ 'landing.aboutUs.description' | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center" *ngIf="trustedVideoUrl">
+      <iframe
+        width="255px"
+        height="300px"
+        [src]="trustedVideoUrl"
+        frameborder="0"
+      ></iframe>
+    </div>
+
+    <div id="clients">
+      <div class="row">
+        <div class="col-xl-4 col-sm-6">
+          <div class="tx-center p-4 mt-3">
+            <div class="avatar-md mx-auto mb-4">
+              <span class="avatar-title rounded-circle bg-soft-primary">
+                <img
+                  src="assets/landing/iIcon_Fb_A_PRESS.png"
+                  style="width: 64px; height: 64px"
+                />
+              </span>
+            </div>
+            <h5 class="font-24">{{ 'landing.aboutUs.press' | translate }}</h5>
+            <!-- <p class="mb-0 font-16">NOTICIAS</p>-->
+            <div id="icons-row-links">
+              <a href="{{ url_prensa[0].u }}" class="mb-0" target="_blank"
+                >CADENA SER</a
+              ><br />
+              <a href="{{ url_prensa[1].u }}" class="mb-0" target="_blank"
+                >EL ESPAÑOL</a
+              ><br />
+              <a href="{{ url_prensa[2].u }}" class="mb-0" target="_blank"
+                >CONFIDENCIAL DIGITAL</a
+              ><br />
+              <a
+                href="{{ url_prensa[3].u }}"
+                class="mb-0"
+                target="_blank"
+                style="font-size: 14px"
+                >COINTELEGRAPH</a
+              ><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-sm-6">
+          <div class="tx-center p-4 mt-3">
+            <div class="avatar-md mx-auto mb-4">
+              <span class="avatar-title rounded-circle bg-soft-primary">
+                <img
+                  src="assets/landing/iIcon_Fb_A_Blog.png"
+                  style="width: 64px; height: 64px"
+                />
+              </span>
+            </div>
+            <h5 class="font-24">{{ 'landing.aboutUs.blog' | translate }}</h5>
+            <!--<p class="mb-0 font-16">INFORMACIÓN</p>-->
+            <div id="icons-row-links">
+              <a href="{{ url_blog[0].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogFebelink' | translate
+              }}</a
+              ><br />
+              <a href="{{ url_blog[1].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogMedia' | translate
+              }}</a
+              ><br />
+              <a href="{{ url_blog[2].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogSearchEng' | translate
+              }}</a
+              ><br />
+              <a href="{{ url_blog[3].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.blogICO' | translate
+              }}</a
+              ><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-sm-6">
+          <div class="tx-center p-4 mt-3">
+            <div class="avatar-md mx-auto mb-4">
+              <span class="avatar-title rounded-circle bg-soft-primary">
+                <img
+                  src="assets/landing/iIcon_Fb_A_Podcast.png"
+                  style="width: 64px; height: 64px"
+                />
+              </span>
+            </div>
+            <h5 class="font-24">{{ 'landing.aboutUs.podcast' | translate }}</h5>
+            <!--<p class="mb-0 font-16">PROGRESO</p>-->
+            <div id="icons-row-links">
+              <!-- <a
+                href="https://escudodigital.com/tecnologia/febelink-buscador-profesional-con-red-social-creado-empresario-malagueno/"
+                class="mb-0"
+                target="_blank"
+                >ESCUDO DIGITAL</a
+              ><br />
+              <a
+                href="https://www.vidaeconomica.com/2021/08/empresario-malagueno-crea-google-de-los-negocios/"
+                class="mb-0"
+                target="_blank"
+                >VIDA ECONÓMICA</a
+              ><br />
+              <a
+                href="https://finanzasinversion.com/featured/aumentar-las-ventas-lo-que-aconsejan-los-expertos-de-febelink-para-encontrar-clientes/"
+                class="mb-0"
+                target="_blank"
+                >FINANZAS INVERSIÓN</a
+              ><br /> -->
+              <a href="{{ url_podcast[0].u }}" class="mb-0" target="_blank"
+                >SPOTIFY</a
+              ><br />
+              <a href="{{ url_podcast[1].u }}" class="mb-0" target="_blank"
+                >IVOOX</a
+              ><br />
+              <a href="{{ url_podcast[2].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.podcastBlockchain' | translate
+              }}</a
+              ><br />
+              <a href="{{ url_podcast[3].u }}" class="mb-0" target="_blank">{{
+                'landing.aboutUs.podcastInterview' | translate
+              }}</a
+              ><br />
+              <!-- <a
+                href="https://bitcoindaily.es/un-empresario-malagueno-crea-el-google-de-los-negocios-ser-malaga-hora-14-malaga"
+                class="mb-0"
+                target="_blank"
+                >BITCOIN DAILY</a
+              ><br /> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cinta de Links -->
+      <app-link-preview columns="4" [urls]="url_prensa"> </app-link-preview>
+      <app-link-preview columns="4" [urls]="url_blog"> </app-link-preview>
+      <app-link-preview columns="4" [urls]="url_podcast"> </app-link-preview>
+    </div>
+
+    <!-- end row -->
+
+    <!-- end row -->
+  </div>
+  <!-- end container -->
+</section>
+<!-- Services end -->
+
+<!-- end container -->

@@ -1,0 +1,369 @@
+ 
+<div id="search-content" class="search-content container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  <div class="servicios-sections-right ">
+    <div class="servicios-sections-cell-b">
+      <div
+        class="servicios-sections-title-b"
+        [ngClass]="{'servicios-sections-selected-b' : isCart}"
+        (click)="selectCart()"
+      >
+        Historial de Compras
+      </div>
+    </div>
+    <div class="servicios-sections-cell-b">
+      <div
+        class="servicios-sections-title-b"
+        [ngClass]="{'servicios-sections-selected-b' : isPeticions}"
+        (click)="selectPeticions()"
+      >
+        Mis Peticiones de Servicio
+      </div>
+    </div>
+  </div>
+  <div class="container-detail-search">
+    
+    <div class="containter-right">
+    
+      
+      <div class="content-wrapper-b" *ngIf="isCart">
+     
+        <div class="content-title-b">Historial de compras</div>
+        <div class="grid-cart">
+          <div *ngFor="let cart of iCart; let i = index" class="cart-block-b">
+            <div *ngFor="let item of cart.items"
+            >
+              <div class="superior">
+              
+                <div class="cart-date-b">
+                  <div class="date"> {{cart.buyDate}}</div>
+                  <div class="capsule">
+                    <div class="canceled" *ngIf="item.isCancelled">
+                      Cancelado
+                    </div>
+                    <div  *ngIf="item.finishDate">
+                      Finalizado</div>
+                      <div class="course" *ngIf="!item.finishDate">
+                        En curso</div>
+                  </div>
+                 </div>
+                <div class="item-title">{{item.product}}</div>
+              </div>
+              <div class="inferior">
+                <div class="item-content-carrito">
+                  <div>
+                    Cantidad: 1
+                  </div>
+                  <div class="buttons-list">
+  
+                      <div class="item-price">
+                        {{(item.productsTotalPrice).toLocaleString('es',
+                          {minimumFractionDigits: 2, maximumFractionDigits: 2})}} €
+                      </div>
+                      <div class="listbutton"   >
+                        <div
+                          *ngIf="!item.isCancelled && !item.finishDate "
+                          class="cancel-button"
+                          style=" margin-right: 1em;"
+                          (click)="toggleServiceModal(cart.cartId, item.productId, i)"
+                        >
+                          Cancelar
+                        </div>
+                        <div
+                        *ngIf="!item.isCancelled && !item.finishDate "
+                      >
+                        <div
+                          class="cancel-button finish"
+                          style=" background-color: #1B80F8;"
+                          (click)="terminarServicio(i,item.productId,cart.cartId)"
+                        >
+                          Terminar
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+            
+                </div>
+                <div *ngIf="indexTerminarServicio == i && showFinish">
+                  <div class="div-terminar-servicio">
+                    <div class="div-terminar-servicio-title">Terminar el servicio</div>
+                    <div class="div-terminar-servicio-subtitle">
+                      Tienes en curso este servicio todavía. ¿Quieres realmente terminar
+                      el servicio?
+                      <br/>Si has terminado el servicio confirmalo y posteriormente
+                      podrás valorar al cliente.
+                    </div>
+                  </div>
+                  <div class="div-terminar-servicio-buttons">
+                    <div
+                      class="div-terminar-servicio-button-secondary"
+                      (click)="cancelarServicio()"
+                    >
+                      Cancelar
+                    </div>
+                    <div
+                      class="div-terminar-servicio-button-primary"
+                      (click)="valorarServicio()"
+                    >
+                      Aceptar
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="indexCancelServicio == i && showCancel">
+                  <div class="div-terminar-servicio">
+                    <div class="div-terminar-servicio-title">Cancelar el servicio</div>
+                    <div class="div-terminar-servicio-subtitle">
+                      Tienes en curso este servicio. ¿Quieres realmente cancelar
+                      el servicio?
+                    </div>
+                  </div>
+                  <div class="div-terminar-servicio-buttons">
+                    <div
+                      class="div-terminar-servicio-button-secondary"
+                      (click)="toggleServiceModal()"
+                    >
+                      Cancelar
+                    </div>
+                    <div
+                      class="div-terminar-servicio-button-primary"
+                      (click)="cancelProduct()"
+                    >
+                      Aceptar
+                    </div>
+                  </div>
+                </div>
+              </div>
+                
+              
+            </div>
+          </div>
+        </div>
+        
+       
+      </div>
+      <div class="content-wrapper-b" *ngIf="isPeticions">
+     
+        <div class="content-title-b">Peticiones de Servicios</div>
+        <div class="grid-cart">
+          <div *ngFor="let item of peticions; let i = index" 
+          (click)="showDetailFindService(item)"
+            class="cart-block-b">
+           
+              <div class="superior">
+              
+                <div class="cart-date-b">
+                  <div class="date"> {{item.created_at}}</div>
+                  <div class="capsule">
+                    <div>
+                      {{item.location}}
+                    </div>
+                  </div>
+                 </div>
+                <div class="item-title">{{item.title}}</div>
+              </div>
+              <div class="inferior">
+                <div class="item-contentdescription">
+                  
+                  {{item.description}}
+            
+                </div>
+              </div>
+                
+              
+          </div>
+        </div>
+        
+       
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+
+</div>
+ 
+
+
+<div *ngIf="indexValorarServicio" class="desktop">
+  <div class="modal-back-background">
+    <div class="modal-front-content-b">
+      <div class="modal-back-close" (click)="cancelarValorarServicio()">
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+      </div>
+      <div class="modal-front-title-b text-align-center">
+        ¿Qué te ha parecido el cliente?
+      </div>
+      <div
+        class="modal-front-subtitle modal-subtitle-margin-b text-align-center"
+      >
+        Valora el servicio siendo 5 estrellas la mayor puntuación.
+      </div>
+      <div class="modal-front-rating">
+        <img
+          class="modal-rating-star"
+          src="assets/icon/svg/star-grey.svg"
+        /><img
+        class="modal-rating-star"
+        src="assets/icon/svg/star-grey.svg"
+      /><img
+        class="modal-rating-star"
+        src="assets/icon/svg/star-grey.svg"
+      /><img
+        class="modal-rating-star"
+        src="assets/icon/svg/star-grey.svg"
+      /><img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/>
+      </div>
+      <div class="modal-front-comment">Deja un comentario</div>
+      <div class="modal-front-textarea-div">
+        <ion-textarea
+          placeholder="Máximo 500 caracteres"
+          rows="6"
+          class="no-padding modal-front-textarea"
+        ></ion-textarea>
+      </div>
+      <div class="modal-button-primary-b" (click)="aceptarValorarServicio()">
+        Enviar
+      </div>
+      <div class="modal-button-secondary-b" (click)="cancelarValorarServicio()">
+        Cancelar
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="finValorarServicio" class="desktop">
+  <div class="modal-back-background">
+    <div class="modal-front-content-c">
+      <div class="modal-back-close-b" (click)="cerrarFinValorarServicio()">
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+      </div>
+      <div class="modal-full-check">
+        <img
+          src="assets/icon/svg/check-circle.svg"
+          class="modal-full-check-svg"
+        />
+      </div>
+      <div class="modal-full-title-b">
+        Tu valoración se ha realizado con éxito
+      </div>
+      <div class="modal-full-subtitle-b">
+        Muchas gracias por la valoración, ayudará al resto de profesionales.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="cancelServiceModalToggle" class="mobile modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">Cancelar el servicio</div>
+    <div class="modal-front-subtitle modal-subtitle-margin-a">
+      Tienes en curso este servicio. ¿Quieres realmente cancelar el
+      servicio?
+    </div>
+    <div class="modal-button-primary" (click)="cancelProduct()">Aceptar</div>
+    <div class="modal-button-secondary" (click)="toggleServiceModal()">
+      Cancelar
+    </div>
+  </div>
+</div>
+
+<div *ngIf="finishServiceModalToggle" class="mobile modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">Terminar el servicio</div>
+    <div class="modal-front-subtitle modal-subtitle-margin-a">
+      Tienes en curso este servicio todavía. ¿Quieres realmente terminar el
+      servicio?
+      <br/><br/>
+      Si has terminado el servicio confírmalo y posteriormente podrás valorar al
+      cliente.
+    </div>
+    <div class="modal-button-primary" (click)="valorarServicio()">Aceptar</div>
+    <div class="modal-button-secondary" (click)="toggleFinishModal()">
+      Cancelar
+    </div>
+  </div>
+</div>
+
+<div *ngIf="indexValorarServicio" class="mobile modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">¿Qué te ha parecido el cliente?</div>
+    <div class="modal-front-subtitle modal-subtitle-margin-b">
+      Valora el servicio siendo 5 estrellas la mayor puntuación.
+    </div>
+    <div class="modal-front-rating">
+      <img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/><img
+      class="modal-rating-star"
+      src="assets/icon/svg/star-grey.svg"
+    /><img
+      class="modal-rating-star"
+      src="assets/icon/svg/star-grey.svg"
+    /><img
+      class="modal-rating-star"
+      src="assets/icon/svg/star-grey.svg"
+    /><img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/>
+    </div>
+    <div class="modal-front-comment">Deja un comentario</div>
+    <div class="modal-front-textarea-div">
+      <ion-textarea
+        placeholder="Máximo 500 caracteres"
+        rows="6"
+        class="no-padding modal-front-textarea"
+      ></ion-textarea>
+    </div>
+    <div class="modal-button-primary" (click)="aceptarValorarServicio()">
+      Enviar
+    </div>
+    <div class="modal-button-secondary" (click)="cancelarValorarServicio()">
+      Cancelar
+    </div>
+  </div>
+</div>
+
+<div *ngIf="servicioAdded" class="mobile modal-background-full">
+  <div class="modal-full-close" (click)="closeServicioAdded()">
+    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+  </div>
+  <div class="modal-full-content">
+    <div class="modal-full-check">
+      <img
+        src="assets/icon/svg/check-circle.svg"
+        class="modal-full-check-svg"
+      />
+    </div>
+    <div class="modal-full-title">Tu servicio se ha creado con éxito</div>
+    <div class="modal-full-subtitle">
+      Puedes consultar tu nuevo servicio en la pestaña disponibles con el resto
+      de servicios.
+    </div>
+  </div>
+  <div class="modal-full-bottom">
+    <div class="modal-full-button-primary" (click)="closeServicioAdded()">
+      Ver mis servicios
+    </div>
+  </div>
+</div>
+
+<div *ngIf="finValorarServicio" class="mobile modal-background-full">
+  <div class="modal-full-close" (click)="cerrarFinValorarServicio()">
+    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+  </div>
+  <div class="modal-full-content">
+    <div class="modal-full-check">
+      <img
+        src="assets/icon/svg/check-circle.svg"
+        class="modal-full-check-svg"
+      />
+    </div>
+    <div class="modal-full-title">Tu valoración se ha realizado con éxito</div>
+    <div class="modal-full-subtitle">
+      Muchas gracias por la valoración, ayudará al resto de profesionales.
+    </div>
+  </div>
+  <div class="modal-full-bottom">
+    <div class="modal-full-button-primary" (click)="cerrarFinValorarServicio()">
+      Entendido
+    </div>
+  </div>
+</div>

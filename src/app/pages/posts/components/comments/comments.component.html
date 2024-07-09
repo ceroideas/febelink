@@ -1,0 +1,50 @@
+<div class="all-comments-main">
+  <div class="all-comments-user">
+    <ion-img
+        class="img-avatar-comment"
+        [src]="
+          iUser?.logo ||
+          iUser?.avatar ||
+          'https://api.febelink.com/storage/users/default.png'
+        "
+        appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+      ></ion-img>
+  </div>
+  <div class="all-comments-input">
+    <ion-input #inComment type="text" placeholder="Dejar comentario" class="padding-input-12 textarea-comment" 
+    (keyup.enter)="comment(inComment?.value ?? '')"
+
+    ></ion-input>
+  </div>
+</div>
+
+<ng-container *ngIf="(userComments?.length ?? 0) > 0 || ((iComments?.length ?? 0) > 0 && isVisible)"
+>
+
+  <app-loading
+  *ngIf="isLoading"
+  message="common.labelSearching"
+  ></app-loading>
+
+  <ng-container *ngIf="!isLoading && isVisible">
+    <!-- Comments done by user from ion-input -->
+    <app-comment-component
+      *ngFor="let iComment of userComments"
+      [post]="post?.id ?? 0"
+      [iComment]="iComment"
+      (OnDoEdit)="OnDoEdit($event)"
+      (OnDeleted)="OnDeleted($event)"
+    ></app-comment-component>
+  
+    <!-- Comments from DBs -->
+    <app-comment-component
+      *ngFor="let iComment of iComments"
+      [post]="post?.id ?? 0"
+      [iComment]="iComment"
+      (OnDoEdit)="OnDoEdit($event)"
+      (OnDeleted)="OnDeleted($event)"
+      (childSubmit)="childSubmit($event)"
+    ></app-comment-component>
+  </ng-container>
+
+</ng-container>

@@ -1,0 +1,12 @@
+<div class="rating">
+  <img *ngIf="rating !== undefined && rating>=0.5" class="servicios-rating-star" src="assets/icon/svg/star.svg"/>
+  <img *ngIf="rating !== undefined && rating>=1.5" class="servicios-rating-star" src="assets/icon/svg/star.svg"/>
+  <img *ngIf="rating !== undefined && rating>=2.5" class="servicios-rating-star" src="assets/icon/svg/star.svg"/>
+  <img *ngIf="rating !== undefined  && rating < 3.5"class="servicios-rating-star" src="assets/icon/svg/star.svg"/>
+  <img *ngIf="rating !== undefined && rating>=4.5" class="servicios-rating-star" src="assets/icon/svg/star.svg"/>
+  <img *ngIf="rating !== undefined && rating<4.5" class="servicios-rating-star" src="assets/icon/svg/star-grey.svg"/>
+  <img *ngIf="rating !== undefined && rating<3.5" class="servicios-rating-star" src="assets/icon/svg/star-grey.svg"/>
+  <img *ngIf="rating !== undefined && rating<2.5" class="servicios-rating-star" src="assets/icon/svg/star-grey.svg"/>
+  <img *ngIf="rating !== undefined && rating<1.5" class="servicios-rating-star" src="assets/icon/svg/star-grey.svg"/>
+  <img *ngIf="rating !== undefined && rating<0.5" class="servicios-rating-star" src="assets/icon/svg/star-grey.svg"/>
+</div>

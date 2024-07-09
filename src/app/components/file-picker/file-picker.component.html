@@ -1,0 +1,12 @@
+<form [class]="classWH + 'marg-se fmMedia ' + (classes || '')">
+  <!-- To Pick Files on Browsers -->
+  <input
+    #filePicker
+    type="file"
+    [accept]="pickType"
+    (change)="pickMedia(filePicker)"
+    enctype="multipart/form-data"
+  />
+
+ 
+</form>

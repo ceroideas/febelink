@@ -1,0 +1,58 @@
+<ion-grid >
+  <div *ngIf="isDetailsShowing && retainedTks &&  retainedTks.length > 0" class="line-b">
+    <!-- Balance Tks -->
+    <ion-row class="pointer bold-6" (click)="isDetailsShowing = false">
+      <ion-col size="6">
+        <ion-label color="febelink">{{ 'pages.wallet.balance.balance' | translate }}</ion-label>
+        <ion-icon class="margin-start" [name]="'chevron-' + ( isDetailsShowing ? 'up' : 'down' ) + '-outline'"></ion-icon>
+      </ion-col>
+      <ion-col size="6" class="tx-end padding-end bold-6">
+        <app-num-float
+          color="febelink"
+          [number]="asset?.amount ?? 0"
+          [round]="assetsMaxDecimals"
+        ></app-num-float>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Total Retained Tks -->
+    <ion-row class="pointer padding-start" (click)="isRetainedShowing = !isRetainedShowing">
+      <ion-col size="6">
+        <ion-label>{{ 'pages.wallet.balance.retained' | translate }}</ion-label>
+        <ion-icon class="margin-start" [name]="'chevron-' + ( isRetainedShowing ? 'up' : 'down' ) + '-outline'"></ion-icon>
+      </ion-col>
+      <ion-col size="6" class="tx-end padding-end bold-6">
+        <ion-label class="margin-end">-</ion-label>
+        <app-num-float [number]="sumRetainedTks" [round]="assetsMaxDecimals"></app-num-float>
+      </ion-col>
+    </ion-row>
+  
+    <!-- Sum Retained Tks -->
+    <ng-container *ngIf="isRetainedShowing">
+      <ion-row *ngFor="let retainedTk of retainedTks" class="box">
+        <ion-col size="6">
+          <ion-row><ion-label>{{ retainedTk?.phase_tokens }}</ion-label></ion-row>
+          <ion-row><ion-label>{{ retainedTk?.date }}</ion-label></ion-row>
+        </ion-col>
+        <ion-col size="6" class="center-v tx-end">
+          <app-num-float [number]="retainedTk.num_tokens" [round]="assetsMaxDecimals"></app-num-float>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </div>
+
+  <!-- Available Balance Tks => Show details only if has retainedTks -->
+  <ion-row class="pointer bold-6" (click)="isDetailsShowing = (retainedTks ?? []).length > 0">
+    <ion-col size="6">
+      <ion-label color="febelink">{{ 'pages.wallet.balance.balance-av' | translate }}</ion-label>
+      <ion-icon class="margin-start" [name]="'chevron-down-outline'" *ngIf="!isDetailsShowing && retainedTks && retainedTks.length > 0"></ion-icon>
+    </ion-col>
+    <ion-col size="6" class="tx-end padding-end bold-6">
+      <app-num-float
+        [number]="parseNumber()"
+        [round]="assetsMaxDecimals"
+        color="febelink"
+      ></app-num-float>
+    </ion-col>
+  </ion-row>
+</ion-grid>

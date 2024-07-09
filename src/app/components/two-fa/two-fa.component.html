@@ -1,0 +1,62 @@
+<ion-header color="febelink">
+  <ion-toolbar color="febelink">
+    <ion-title>{{ 'common.two-fa.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only (click)="onDismiss()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <form #form="ngForm" style="margin: auto;">
+    <ion-grid>
+      <!-- Loading -->
+      <div class="vertical-content align-center margin-top" *ngIf="isLoading">
+        <ion-row class="vertical-content">
+          <ion-spinner class="margin-end"></ion-spinner>
+          <ion-label class="margin-start">{{ loadingMsg }}</ion-label>
+        </ion-row>
+      </div>
+
+      <ng-container *ngIf="!isLoading">
+        
+        <ion-row>
+          <ion-label>{{ 'common.two-fa.message' | translate: { length: codeLength || 6 } }}</ion-label>
+        </ion-row>
+        <ion-row class="vertical-content align-center">
+          <ion-input
+            name="code" class="tx-center margin-end"
+            [placeholder]="'common.two-fa.type' | translate"
+            [(ngModel)]="code"
+            (ionChange)="verify2FAcode()"
+            debounce="500"
+            [readonly]="isVerifying"
+            [maxlength]="codeLength || 6"
+          >
+          </ion-input>
+          <ion-icon name="trash" class="margin-start" color="febelink" *ngIf="!isVerifying" (click)="clearCode()"></ion-icon>
+          <ion-spinner class="margin-start" color="febelink" *ngIf="isVerifying"></ion-spinner>
+        </ion-row>
+        <ion-row class="align-center" *ngIf="retries > 0 && !isLoading">
+          <ion-button fill="clear" class="resend ion-no-padding" (click)="generate2FAcode()">
+            <em>{{ 'common.two-fa.re-send' | translate }}</em>
+          </ion-button>
+        </ion-row>
+  
+        <!-- Expires in -->
+        <ion-row class="margin-top" *ngIf="minutes !== undefined">
+          <ion-label ng-controller="countDown">
+            {{ 'common.two-fa.expires' | translate: { min: ( counter?.min + ':' + ( counter?.sec | number: '2.0' ) ) } }}
+          </ion-label>
+      </ion-row>
+        
+        <!-- Error msg -->
+        <ion-row class="margin-top" *ngIf="error">
+          <ion-label class="error" color="danger"><i>{{ error }}</i></ion-label>
+        </ion-row>
+      </ng-container>
+    </ion-grid>
+  </form>
+</ion-content>

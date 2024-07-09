@@ -1,0 +1,59 @@
+<!-- Services start -->
+<section class="section bg-light" id="services">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="tx-center mb-5">
+          <h5
+            class="text-primary text-uppercase small-title"
+            id="mini-titular-sobre-nosotros"
+          >
+            ahhhhhhhh
+          </h5>
+          <h1 class="mb-3" id="titular-sobre-nosotros">
+            Titular Sección <br />Sobre Nosotros
+          </h1>
+          <p id="text-sobre-nosotros">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+            consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
+            velit esse molestie consequat, vel illum dolore eu feugiat nulla
+            facilisis at vero eros et accumsan et iusto odio dignissim qui
+            blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-4 col-sm-6" *ngFor="let item of serviceData">
+        <div class="tx-center p-4 mt-3">
+          <div class="avatar-md mx-auto mb-4">
+            <span class="avatar-title rounded-circle bg-soft-primary"> </span>
+          </div>
+          <h5 class="font-18">{{ item.title }}</h5>
+          <p class="mb-0">{{ item.text }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+
+    <div class="row mt-4">
+      <div class="col-lg-12">
+        <div class="tx-center">
+          <a
+            href="javascript: void(0);"
+            class="btn btn-success"
+            id="btn-sobre-nosotros"
+            >¿Botón a algún sitio?</a
+          >
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- end container -->
+</section>
+<!-- Services end -->

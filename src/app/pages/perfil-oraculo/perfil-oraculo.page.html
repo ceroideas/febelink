@@ -1,0 +1,124 @@
+<div id="search-content" class="search-content container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  <div class="container-detail-search">
+     <!--AVATAR SECTION-->
+    <div class="containter-left">
+      <ng-container>
+       <div class="card">
+        <div class="image-profile">
+          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null"
+          [src]="urlWsrv + user?.avatar +'&w=800&output=webp'"
+          
+          appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+          />
+          <img *ngIf="user?.avatar == undefined || user?.avatar === null" src="https://api.febelink.com/storage/users/default.png"  />
+        </div>
+        <div class="name-profile">
+          {{user?.name}}
+        </div>
+        <div class="subname-profile">
+          {{user?.email}}
+        </div>
+       
+        <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
+          {{user?.description}}
+        </div>
+        <div class="buttons-profile" *ngIf="!hideChat">
+          <div class="item-button follow">Seguir</div>
+
+          <div class="item-button whatsapp chat" (click)="registerClick(user?.id, idPerfil)" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
+            <a title="Contacto telefónico" 
+              aria-label="Chat on WhatsApp" 
+              href="https://wa.me/34{{user?.phoneNumber}}" 
+              class="badge"
+              target="_blank">
+                <i class="fa fa-whatsapp"></i>
+            </a>
+          </div>
+          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
+        </div>
+          
+        <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+
+        <div class="header-content-top-right" *ngIf="!hideChat">
+          <div class="block-action-top">
+            <img
+              src="assets/icon/svg/donate-blue.svg"
+              class="block-action-svg"
+            />Dar propina
+          </div>
+          <div class="block-action-top">
+            <img
+              src="assets/icon/svg/share-blue.svg"
+              class="block-action-svg"
+            />Compartir
+          </div>
+          <div class="block-action-top">
+            <img
+              src="assets/icon/svg/star-blue.svg"
+              class="block-action-svg"
+            />Valorar
+          </div>
+        
+        </div>
+      </div>
+
+      <div class="valoraciones">
+        <div class="title-valoraciones">
+          Valoraciones
+        </div>
+        <div class="container-valoraciones">
+          <div class="item-valor  item-valor-1">
+            No tiene valoraciones aún
+          </div>
+        </div>
+      </div>
+      </ng-container>
+
+    </div>
+    <div class="containter-right">
+      <!--SERVICIOS-->
+      <div class="section-more-work" *ngIf="moreWorks.length">
+        <ion-row class="more-work-title">
+          <ion-label><span class="title-oracle">Servicios de este profesional</span></ion-label>
+        </ion-row>
+
+        <div class="grid-more-work">
+          
+          <div class="item-more" 
+            
+            *ngFor="let more of moreWorks">
+            <a [href]="'/servicio/' + toSlug(more?.title) + '/detail/' + more?.productId">
+             
+              <div class="name-work">
+                <div>{{more.title}}</div>
+              </div>
+              <div class="texts-work">
+                <div class="image-work">
+
+                  <img
+                  [src]="urlWsrv + more.images[0] +'&w=800&output=webp'"/>
+                </div>
+                <div class="description-work"> 
+                  <div class="description-more">
+                    <ion-label [innerHtml]="more.description"></ion-label>
+                  </div>
+                  <div class="more-view">
+                    Mostrar  <i class="fa fa-chevron-right"></i>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+
+</div>

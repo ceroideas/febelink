@@ -1,0 +1,56 @@
+.upper { text-transform: uppercase; }
+.capper { text-transform: capitalize; }
+.lower { text-transform: lowercase; }
+
+.tx-start{ text-align: left; }
+.tx-center{ text-align: center; }
+.tx-end{ text-align: right; }
+.tx-top{ vertical-align: text-top; }
+.tx-bottom{ vertical-align: text-bottom; }
+.hint { opacity: 0.5; }
+.one-line, .lines-2, .lines-3, .lines-4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.one-line { -webkit-line-clamp: 1; line-clamp: 1; }
+.lines-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+.lines-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+.lines-4 { -webkit-line-clamp: 4; line-clamp: 4; }
+
+.bold-6 { font-weight: 600; }
+.bold-7 { font-weight: 700; }
+.bold-8 { font-weight: 800; }
+
+.decimal {
+    font-size: 10px;
+    opacity: 0.7;
+    vertical-align: super;
+}
+
+.tx-upper, .tx-cap-1st::first-letter { text-transform: uppercase; }
+.tx-lower, .tx-cap-1st { text-transform: lowercase; }
+.tx-cap, .tx-capitalize { text-transform: capitalize; }
+
+.tx-transp { color: transparent; }
+
+.font-12 { font-size: 12px; }
+.font-13 { font-size: 13px; }
+.font-14 { font-size: 14px; }
+.font-15 { font-size: 15px; }
+.font-16 { font-size: 16px; }
+.font-17 { font-size: 17px; }
+.font-18 { font-size: 18px; }
+.font-19 { font-size: 19px; }
+.font-20 { font-size: 20px; }
+.font-25 { font-size: 25px; }
+.font-30 { font-size: 30px; }
+.font-35 { font-size: 35px; }
+.font-40 { font-size: 40px; }
+
+.opacity-5 { opacity: 0.5; }
+.opacity-6 { opacity: 0.6; }
+.opacity-7 { opacity: 0.7; }
+.opacity-8 { opacity: 0.8; }
+.opacity-9 { opacity: 0.9; }

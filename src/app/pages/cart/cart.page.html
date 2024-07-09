@@ -1,0 +1,99 @@
+<ion-content>
+
+  <!-- Pantalla Contenido Carrito -->
+  <ng-container>
+    <div *ngIf="iCart?.items?.length>0" class="div-carrito-background">
+
+      <div class="carrito-items">
+        <div class="carrito-title">
+          Carrito
+        </div>
+
+        <div class="carrito-options">
+          <div class="carrito-elements">
+            {{iCart.items.length}} <span *ngIf="iCart.items.length==1">elemento</span><span
+            *ngIf="iCart.items.length!=1">elementos</span>
+          </div>
+          <div *ngIf="!isEditItems" class="carrito-edit" (click)="editItems()">
+            <img src="assets/icon/svg/pencil.svg" class="carrito-edit-svg"/>
+            Editar
+          </div>
+          <div *ngIf="isEditItems" class="carrito-edit" (click)="confirmEdit()">
+            Confirmar
+          </div>
+        </div>
+        <div>
+
+
+          <div *ngFor="let item of iCart.items; let i = index" class="div-carrito-item">
+            <!-- Editar Contenido Carrito -->
+            <div *ngIf="isEditItems && item.productAmount>1" class="edit-item"
+                 (click)="updateCart(item.productId,item.productAmount-1)">
+              <img src="assets/icon/svg/minus.svg" class="edit-item-svg size-minus"/>
+            </div>
+            <div *ngIf="isEditItems && item.productAmount==1" class="edit-item" (click)="updateCart(item.productId,0)">
+              <img src="assets/icon/svg/trash.svg" class="edit-item-svg size-trash"/>
+            </div>
+            <!-- --- -->
+            <div class="div-table-100">
+              <div class="display-cell-middle cell-number" [ngClass]="{'cell-number-edit' : isEditItems}">
+                <div class="cell-number-box">
+                  <span class="cell-number-text">{{item.productAmount}}</span>
+                </div>
+              </div>
+              <div class="display-cell-middle">
+                <div class="cell-item-title">{{item.product}}</div>
+                <div class="cell-item-subtitle">{{item.username}}</div>
+              </div>
+              <div class="display-cell-middle cell-price">
+                {{(item.productUnitPrice).toLocaleString('es', {minimumFractionDigits: 2, maximumFractionDigits: 2})}}€
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="carrito-buttons carrito-buttons-height-a">
+        <div class="carrito-button-primary" (click)="buyCart()">
+          Solicitar
+        </div>
+        <div class="carrito-button-secondary" (click)="goToBuscador()">
+          Seguir comprando
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <!-- Pantalla Carrito Vacío -->
+  <ng-container *ngIf="iCart">
+    <div *ngIf="iCart.items.length==0" class="div-carrito-background">
+
+      <div class="carrito-items-b position-relative">
+        <div class="carrito-title">
+          Carrito
+        </div>
+        <div class="div-no-items">
+          <div class="div-no-items-svg">
+            <img src="assets/icon/svg/cart.svg" class="no-items-svg"/>
+          </div>
+          <div class="div-no-items-title">
+            Tu carrito está vacío
+          </div>
+          <div class="div-no-items-subtitle">
+            Añade productos y servicios a tu carrito
+          </div>
+        </div>
+      </div>
+
+      <div class="carrito-buttons carrito-buttons-height-b">
+        <div class="carrito-button-secondary" (click)="goToBuscador()">
+          Seguir comprando
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+</ion-content>

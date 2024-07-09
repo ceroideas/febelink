@@ -1,0 +1,25 @@
+.stars {
+  color: var(--ion-color-star);
+  width: 25%;
+  float: left;
+  font-weight: bold;
+}
+
+.placeholder {
+  margin: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchQuestionLabel {
+  text-overflow: initial;
+  white-space: normal;
+  color: black;
+}
+
+.replyLimit {
+  display: block;
+  margin-bottom: 1em;
+  margin-left: 1em;
+}

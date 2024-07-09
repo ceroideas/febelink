@@ -1,0 +1,19 @@
+table, th, td {
+    padding: 10px;
+    border: 1px solid gray;
+    border-collapse: collapse;
+  }
+
+  a:hover {
+    cursor:pointer;
+}
+
+ion-icon{
+  width: 20px;
+  height: 20px;
+  margin-left: 10px ;
+}
+
+ion-icon:hover {
+  cursor:pointer;
+}

@@ -1,0 +1,43 @@
+ion-content{
+
+    .image {
+        height: 230px;
+        width: 80%;
+        margin: auto auto 10px auto;
+    }
+
+    .publicar{
+        margin-top:20px;
+    }
+
+    .stars{
+        color:var(--ion-color-star);
+        width: 25%;
+        float: left;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+
+.edit-image {
+    display: flex;
+    width: 100%;
+    position: relative;
+    span{
+        color:var(--ion-color-primary);
+        margin: auto;
+    }
+    .input-file{
+        width: 150px;
+        height: 20px;
+        position: absolute;
+        opacity: 0;
+        margin: auto;
+        right: 0;
+        left: 0;
+    }
+}
+
+.placeholder {
+    max-height: 200px;
+}

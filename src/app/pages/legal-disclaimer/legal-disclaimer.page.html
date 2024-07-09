@@ -1,0 +1,21 @@
+<div>
+  <ion-toolbar color="febelink">
+    <ion-icon (click)="goBack()" slot="start" name="close"></ion-icon>
+    <ion-title class="ion-text-center">{{ 'common.legal.warning' | translate }}</ion-title>
+  </ion-toolbar>
+</div>
+
+<ion-content class="ion-padding">
+
+  <!-- AVISO LEGAL DE FEBELINK -->
+  <strong>{{ 'legal.warning.title' | translate }}</strong><br><br>
+  <p *ngFor="let descript of 'legal.warning.descript' | translate" [innerHTML]="descript | safeHtml"></p>
+
+  <!-- Busca los puntos en i18n y los agrega recursivamete -->
+    <app-legal-point [item]="point" [addBreak]="true"
+        *ngFor="let point of 'legal.warning.points' | translate" ></app-legal-point>
+  
+  <br><br><br>
+  <p align="right">{{ currentYear }} © {{ 'common.legal.rights' | translate }}</p>
+  <p align="right">{{ 'common.legal.lastUpdate' | translate }}: 23 de julio de 2021.</p>
+</ion-content>

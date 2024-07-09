@@ -1,0 +1,30 @@
+<ion-item lines="none"
+          class="ion-no-padding ion-no-margin search-product keys-dropdown">
+  <a [href]="'/servicio/' + toSlug(data?.title) + '/detail/' + data?.id">
+    <div class="product-view">
+      <div class="avatar_dropdown" slot="start">
+        <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
+                 class="default-avatar"></ion-img>
+        <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
+      </div>
+      <div class="username">{{data?.ownerUsername}}</div>
+      <app-rating [rating]="0"></app-rating>
+      <div class="votes">({{data?.votes}} {{ 'tabs.tab1.search.valoraciones' | translate }})</div>
+    </div>
+    <div class="product-info">
+      <div class="title">
+        {{data?.title}}
+      </div>
+      <div class="price">
+        {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
+      </div>
+      <div
+        class="chat-button"
+        style="width: 100%"
+        (click)="createChat(data?.ownerUsername, data?.ownerUserId)"
+      >
+        Pide precio gratis
+      </div>
+    </div>
+  </a>
+</ion-item>

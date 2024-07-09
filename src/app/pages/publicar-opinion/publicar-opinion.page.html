@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="febelink">
+    <ion-title>Publicar Opinión</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <h2>Valoración</h2>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
+
+    <ion-list lines="none">
+      <ion-radio-group  formControlName="type_id">
+        <ion-item class="stars" *ngFor="let type of opinion_types">
+          <ion-label>{{ type.name }} <ion-icon name="star"></ion-icon></ion-label>
+          <ion-radio slot="end" value="{{ type.id }}"  checked></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-list lines="none">
+      <ion-radio-group  formControlName="subsector_id">
+        <ion-item *ngFor="let subsector of subsectores">
+          <ion-label>{{ subsector.sub_sector.nombre }}</ion-label>
+          <ion-radio slot="end" value="{{ subsector.sub_sector.id }}" checked></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+
+
+    <!--<ion-list radio-group no-lines formControlName="type_id">
+      <ion-item class="stars" *ngFor="let type of opinion_types">
+        <ion-label>{{ type.name }} <ion-icon name="star"></ion-icon></ion-label>
+        <ion-radio slot="start" value="{{ type.id }}" checked></ion-radio>
+      </ion-item>
+    </ion-list>-->
+    <!--<ion-list radio-group no-lines formControlName="subsector_id">
+      <ion-item *ngFor="let subsector of subsectores">
+        <ion-label>{{ subsector.sub_sector.nombre }}</ion-label>
+        <ion-radio slot="start" value="{{ subsector.sub_sector.id }}" checked></ion-radio>
+      </ion-item>
+    </ion-list>-->
+    <ion-button type="submit" class="enviar">Enviar opinión</ion-button>
+  </form>
+</ion-content>

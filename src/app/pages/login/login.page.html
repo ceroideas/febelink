@@ -1,0 +1,82 @@
+  <!-- Desktop version -->
+  <div class="desktop">
+    <div class="login-content-b">
+      <div class="login-wrapper-dark"></div>
+      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size" />
+
+      <div class="login-content-floating">
+        <div class="login-content-background">
+          <form
+            *ngIf="form"
+            [formGroup]="form"
+            (ngSubmit)="submitForm()"
+            (keyup.enter)="submitForm()"
+          >
+            <div class="login-content-title">
+              {{ 'pages.login.title' | translate }}
+            </div>
+            <div class="login-label-input">Correo electrónico</div>
+            <div class="login-input-margin">
+              <ion-input
+                type="email"
+                formControlName="email"
+                required
+                placeholder="Correo electrónico"
+                class="padding-input-12 login-input"
+              ></ion-input>
+            </div>
+            <div class="login-label-input">
+              {{ 'common.personal.pass' | translate }}
+            </div>
+            <div class="login-input-margin">
+              <ion-input
+                type="password"
+                (key.enter)="submitForm()"
+                [type]="passwordType"
+                formControlName="password"
+                required
+                placeholder="**********"
+                class="padding-input-12 login-input"
+              ></ion-input>
+            </div>
+            <div class="login-options-table">
+              <div class="login-options-left">
+                <ion-checkbox class="login-checkbox"></ion-checkbox>
+                <div class="login-checkbox-label">Recordar ahora</div>
+              </div>
+              <div class="login-options-right">
+                <div class="login-option-pass" (click)="openPassRemember()">
+                  Olvidé la contraseña
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              [disabled]="!form.valid"
+              class="login-button-connections login-button-back-a margin-bottom-button"
+            >
+              Iniciar sesión
+            </button>
+
+            <!-- <social-login
+              *ngIf="!platform.is('ios')"
+              [redirect]="redirect"
+            ></social-login> -->
+          </form>
+        </div>
+
+        <div class="login-content-background margin-top-content-bottom-b">
+          <div class="login-content-title-small">Nuevo usuario?</div>
+          <div
+            class="login-button-connections login-button-back-d"
+            (click)="openRegistro()"
+          >
+            {{ 'pages.login.register' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <app-footer></app-footer>
+  </div>
+

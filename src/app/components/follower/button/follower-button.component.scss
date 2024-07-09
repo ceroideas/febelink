@@ -1,0 +1,30 @@
+.image {
+    width: 180px;
+    margin: 40px auto 10px auto;
+}
+
+.container {
+    text-align: center;
+    padding: 0px 15px;
+    margin: auto;
+    
+    .text {
+        margin: 20px 0;
+        color: var(--ion-color-medium);
+        font-size: 16px;
+    }
+
+    ion-icon {
+        font-size: 60px;
+    }
+}
+
+.follower-btn-text-b {
+    font-weight: 500;font-size: 14px;line-height: 150%;color: #1B80F8;cursor:pointer;
+}
+.following-color {
+    color:#FF5A1F;
+}
+.follower-uppercase {
+    text-transform:uppercase;
+}

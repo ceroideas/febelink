@@ -1,0 +1,40 @@
+.desc{
+    font-size: 12px;
+    color:#95a5a6;
+}
+
+.share{
+    margin-right: 10px;
+    font-size: 12px;
+    color: #8b8b8b;
+    @media (min-width: 768px){
+        font-size: 13px;
+    }
+}
+
+.grid-card {
+    margin: 0 auto;
+    max-width: 1000px;
+
+    ion-card {
+        cursor: pointer;
+    }
+
+    .img-grid {
+        height: 150px;
+        width: 100%;
+        object-fit: cover;
+    }
+    .img-icon {
+        width: 24px;
+        height: 24px;
+    }
+    .card-desc {
+        min-height:80px;overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        color: #222;
+    }
+}

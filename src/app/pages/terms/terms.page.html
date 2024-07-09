@@ -1,0 +1,26 @@
+  <div  class="header-tab" color="febelink">
+    <ion-icon (click)="goBack()" slot="start" name="arrow-back-outline"></ion-icon>
+    <ion-title class="ion-text-center">{{ 'common.legal.condsNterms' | translate }}</ion-title>
+   
+  </div>
+
+<div class="container-conditions ion-padding">
+
+
+
+  <strong>{{ 'legal.terms.title' | translate }}</strong><br><br>
+
+  {{ 'legal.terms.pompadour' | translate }}
+  <br><br>
+
+  <strong>{{ 'legal.terms.subtitle' | translate }}</strong><br><br>
+
+  <ol>
+    <ng-container *ngFor="let li of 'legal.terms.li' | translate">
+      <li> {{ li }} </li>
+      <br>
+    </ng-container>
+  </ol>
+  <br><br>
+
+</div>

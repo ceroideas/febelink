@@ -1,0 +1,209 @@
+<div class="mobile">
+  <div class="div-main-post">
+    <div class="table-100">
+      <app-user-item
+        class="no-padding"
+        [id]="iAdvise?.uid ?? -1"
+        [user]="iAdvise"
+        [subtitle]="(iAdvise?.created_at || '')"
+
+        [OnClickShowProfile]="true"
+      ></app-user-item>
+      <div class="cell-dots-top">
+        <div class="follower-mobile">
+          <app-follower-button
+            [user]="postUser"
+            [transparent]="true"
+          ></app-follower-button>
+        </div>
+        <img
+          src="assets/icon/svg/menu-dots.svg"
+          (click)="options($event)"
+          class="cell-dots-top-svg"
+        />
+      </div>
+    </div>
+    <div
+      [innerHTML]="iAdvise.content"
+      class="content-post post-content-main"
+      [ngClass]="{ 'max-content-text': showSeePost }"
+    ></div>
+    <!--<div class="post-content-topic">#{{ topic }}</div>-->
+    <ion-row
+      class="marg-t10"
+      *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
+    >
+      <a (click)="watch()">
+        <!-- Image -->
+        <ion-img
+          class="h-social-media marg-se media"
+          [src]="iAdvise.media_url"
+          [alt]="iAdvise.media_url"
+          [title]="iAdvise.media_url"
+          *ngIf="
+          isPostVisible &&
+          iAdvise.media_url &&
+          (iAdvise.media_ext !== undefined && fileSvc.isImage(iAdvise.media_ext))
+        "
+        ></ion-img>
+
+        <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+        <video
+          playsinline
+          controls
+         
+          *ngIf=" (iAdvise.media_ext !== undefined && fileSvc.isVideo(iAdvise.media_ext))"
+          class="w-social-media h-social-media media-video media"
+          [src]="iAdvise.media_url + '#t=0.001'"
+          preload="metadata"
+        ></video>
+
+        <ngx-link-preview
+          *ngIf="!iAdvise.media_url"
+          class="modern media"
+          [apiRoute]="apiMetaTagUrl"
+          [getApiEndpoint$]="apiCallbackFn"
+          [links]="linksArray"
+          [showLinkUrl]="true"
+          [useHtmlLinkDefaultClickEvent]="true"
+        ></ngx-link-preview>
+      </a>
+    </ion-row>
+    <div class="post-main-reactions">
+      <div class="post-main-reactions-left">
+        <span *ngIf="iAdvise?.react_qant ?? 0 > 0">{{ iAdvise.react_qant }} </span
+        ><span *ngIf="!(iAdvise?.react_qant ?? 0 > 0)">0 </span>
+
+        <span *ngIf="iAdvise.react_qant == 1">Reacción</span
+        ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+      </div>
+      <div class="post-main-reactions-right">
+        <span *ngIf="iAdvise?.react_qant ?? 0 > 0"
+
+        >{{ iAdvise.comments_qant }} </span
+        ><span *ngIf="!(iAdvise?.react_qant ?? 0 > 0)">0 </span>
+        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
+        ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+      </div>
+    </div>
+
+    <app-post-bottom-bar-component
+      *ngIf="isPostVisible"
+      [id]="id"
+      [post]="iAdvise"
+      [showSeePost]="showSeePost"
+    ></app-post-bottom-bar-component>
+
+    <app-comments-component
+        #comments
+        [post]="iAdvise"
+        [listComments]="listComments"
+        [isVisible]="areCommentsVisible"
+        (OnCommentsVisible)="isPostVisible = false"
+    ></app-comments-component>
+  </div>
+</div>
+
+<div class="desktop">
+  <div class="div-main-post-b">
+    <div style="display: flex; width: 100%">
+      <app-user-item
+        class="no-padding"
+        style="width: 95%; display: block"
+        [id]="iAdvise?.uid ?? -1"
+        [user]="iAdvise"
+        [subtitle]="(iAdvise?.created_at || '')"
+
+        [OnClickShowProfile]="true"
+      ></app-user-item>
+      <div class="cell-dots-top-b">
+        <app-follower-button
+          [user]="postUser"
+          [transparent]="true"
+        ></app-follower-button>
+        <img
+          src="assets/icon/svg/menu-dots.svg"
+          (click)="options($event)"
+          class="cell-dots-top-svg"
+        />
+      </div>
+    </div>
+
+    <div
+      [innerHTML]="iAdvise.content"
+      class="content-post post-content-main"
+      [ngClass]="{ 'max-content-text-b': showSeePost }"
+    ></div>
+    <!--<div class="post-content-topic">#{{ topic }}</div>-->
+    <ion-row
+      class="marg-t10"
+      *ngIf="(isPostVisible && iAdvise.media_url) || linksArray.length > 0"
+    >
+      <a (click)="watch()">
+        <!-- Image -->
+        <ion-img
+          class="h-social-media marg-se media"
+          [src]="iAdvise.media_url"
+          [title]="iAdvise.media_url"
+          [alt]="iAdvise.media_url"
+          *ngIf="
+          isPostVisible &&
+          iAdvise.media_url &&
+          (iAdvise.media_ext !== undefined && fileSvc.isVideo(iAdvise.media_ext))
+
+        "
+        ></ion-img>
+
+        <!-- Video && '#t=0.001' is for telling the browser to skip the first millisecond of the video -->
+        <video
+          playsinline
+          controls
+          *ngIf="(iAdvise.media_ext !== undefined && fileSvc.isVideo(iAdvise.media_ext))"
+          class="w-social-media h-social-media media-video media"
+          [src]="iAdvise.media_url + '#t=0.001'"
+          preload="metadata"
+        ></video>
+
+        <ngx-link-preview
+          *ngIf="!iAdvise.media_url"
+          class="modern media"
+          [apiRoute]="apiMetaTagUrl"
+          [getApiEndpoint$]="apiCallbackFn"
+          [links]="linksArray"
+          [showLinkUrl]="true"
+          [useHtmlLinkDefaultClickEvent]="true"
+        ></ngx-link-preview>
+      </a>
+    </ion-row>
+    <div class="post-main-reactions-b">
+      <div class="post-main-reactions-left">
+        <span *ngIf="iAdvise?.react_qant ?? 0 > 0">{{ iAdvise.react_qant }} </span
+        ><span *ngIf="!(iAdvise?.react_qant ?? 0 > 0)">0 </span>
+        <span *ngIf="iAdvise.react_qant == 1">Reacción</span
+        ><span *ngIf="iAdvise.react_qant != 1">Reacciones</span>
+      </div>
+      <div class="post-main-reactions-right">
+        <span *ngIf="iAdvise?.comments_qant ?? 0 > 0"
+        >{{ iAdvise.comments_qant }} </span
+        ><span *ngIf="!(iAdvise?.comments_qant ?? 0 > 0)">0 </span>
+        <span *ngIf="iAdvise.comments_qant == 1">Comentario</span
+        ><span *ngIf="iAdvise.comments_qant != 1">Comentarios</span>
+      </div>
+    </div>
+
+    <app-post-bottom-bar-component
+      *ngIf="isPostVisible"
+      [id]="id"
+      [post]="iAdvise"
+      [showSeePost]="showSeePost"
+    ></app-post-bottom-bar-component>
+
+    <app-comments-component
+        #comments
+        [post]="iAdvise"
+        [listComments]="listComments"
+        [isVisible]="areCommentsVisible"
+        (OnCommentsVisible)="isPostVisible = false"
+    ></app-comments-component>
+  </div>
+</div>

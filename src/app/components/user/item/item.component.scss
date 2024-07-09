@@ -1,0 +1,54 @@
+.image {
+    width: 180px;
+    margin: 40px auto 10px auto;
+}
+
+.container {
+    text-align: center;
+    padding: 0px 15px;
+    margin: auto;
+    
+    .text {
+        margin: 20px 0;
+        color: var(--ion-color-medium);
+        font-size: 16px;
+    }
+
+    ion-icon {
+        font-size: 60px;
+    }
+}
+
+.user-item-main {
+    display:table-cell;vertical-align:middle;
+}
+.user-item-img-main {
+    width: 45px;height: 45px;
+}
+.user-item-img-main::part(image) {
+    border-radius:25px;
+  }
+  .user-item-img-main-b {
+      width: 52px;height: 52px;
+  }
+  .user-item-img-main-b::part(image) {
+      border-radius:26px;
+    }
+.user-item-text {
+    display:table-cell;vertical-align:middle;padding-left:16px;
+}
+.user-item-text-b {
+    display:table-cell;vertical-align:middle;padding-left:26px;
+}
+.user-item-text-name {
+    font-weight: 600;font-size: 14px;line-height: 150%;color: #111928;
+}
+.user-item-text-name-b {
+    font-weight: 600;font-size: 18px;line-height: 150%;color: #111928;
+}
+.user-item-text-date {
+    font-weight: 400;font-size: 12px;line-height: 150%;color: #6B7280;
+}
+.user-item-text-date-b {
+    font-weight: 400;font-size: 14px;line-height: 150%;color: #6B7280;
+}

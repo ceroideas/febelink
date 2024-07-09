@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" src="assets/icon/svg/back.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Searchbar -->
+    <ion-searchbar #searchBar
+      placeholder="{{ 'common.labelUser' | translate }}"
+      inputmode="text"
+      (keyup.enter)="search( searchBar.value )"
+      (ionChange)="search( searchBar.value )"
+      (ionClear)="search( searchBar.value )"
+      debounce="500"
+      [value]="searchTx"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="pad">
+  <!-- Loading -->
+  <app-loading [isLoading]="isLoading"></app-loading>
+
+  <!-- User's List -->
+  <ng-container *ngIf="!isLoading">
+    <app-user-item *ngFor="let user of list"
+      [user]="user"
+      (onUserClick)="userSelected( user )"
+    ></app-user-item>
+  </ng-container>
+
+  <!-- No Items -->
+  <ion-label *ngIf="!isLoading && list?.length == 0">{{ 'common.users.no-items' | translate }}</ion-label>
+</ion-content>
+
+<ion-footer
+  class="ion-no-border ion-text-center desktop"
+  no-border
+  color="transparent"
+  *ngIf="pagination && pagination.qPages && pagination.qPages > 1"
+>
+  <ion-toolbar color="febelink">
+    <!-- Pagination Bottom -->
+    <app-pagination #pagination [disabled]="isLoading" (onPageChange)="displayActivePage()">
+  </app-pagination>
+  </ion-toolbar>
+</ion-footer>

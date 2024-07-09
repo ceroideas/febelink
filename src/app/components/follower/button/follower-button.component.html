@@ -1,0 +1,31 @@
+<!--
+<ion-button
+  [class]="'w-full ' + ( clase || '' ) + ( !transparent ? '' : 'no-shadow no-pad no-marg' )"
+  [color]="!transparent ? 'febelink' : 'transparent'"
+  (click)="toggleFollow()"
+  *ngIf="isLogged"
+>
+  <!-- Spinner
+  <ion-spinner
+    class="marg-e"
+    [color]="!transparent ? '' : 'febelink'"
+    *ngIf="isLoading"
+  ></ion-spinner>
+
+  <!-- Label
+  <ion-label [color]="!transparent ? '' : 'febelink'">
+    {{ 'common.follow.' + ( !isFollowing() ? 'do' : 'cancel' ) | translate }}
+  </ion-label>
+</ion-button>
+-->
+
+<div class="mobile">
+  <div *ngIf="isLogged" (click)="toggleFollow()" class="follower-btn-text-b follower-uppercase" [ngClass]="{'following-color' : isFollowing()}">
+    {{ 'common.follow.' + ( !isFollowing() ? 'do' : 'cancel' ) | translate }}
+  </div>
+</div>
+<div class="desktop">
+  <div *ngIf="isLogged" (click)="toggleFollow()" class="follower-btn-text-b" [ngClass]="{'following-color' : isFollowing()}">
+    {{ 'common.follow.' + ( !isFollowing() ? 'do' : 'cancel' ) | translate }}
+  </div>
+</div>

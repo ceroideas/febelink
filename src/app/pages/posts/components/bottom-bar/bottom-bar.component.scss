@@ -1,0 +1,58 @@
+ion-img {
+    width: 100%; --width: 100%; max-width: 100%;
+    height: 25vh; --height: 25vh; max-height: 25vh;
+    object-fit: cover
+}
+
+ion-icon { width: 25px; }
+
+.table-main-reactions {
+    display:table;width:100%;
+}
+.table-main-reactions-b {
+    display:table;
+}
+.react-left {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
+}
+.react-left-svg {
+    width:14px;margin-right:13px;position:relative;top:2px;
+}
+.react-middle {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:center;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
+}
+.react-middle-svg {
+    width:14px;margin-right:13px;position:relative;top:2px;
+}
+.react-right-a {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:right;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
+}
+.react-right-a-svg {
+    width:14px;margin-right:13px;position:relative;top:2px;
+}
+.react-right-b {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:right;font-weight: 500;font-size: 14px;line-height: 150%;color: #374151;
+}
+.react-left-color {
+    color:#1C64F2;cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;font-weight: 500;font-size: 14px;line-height: 150%;
+}
+
+.react-left-b {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;padding-right:26px;font-weight: 500;font-size: 16px;line-height: 150%;color: #111928;
+}
+.react-middle-b {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;padding-right:26px;font-weight: 500;font-size: 16px;line-height: 150%;color: #111928;
+}
+.react-right-a-b {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;padding-right:26px;font-weight: 500;font-size: 16px;line-height: 150%;color: #111928;
+}
+.react-right-b-b {
+    cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;padding-right:26px;font-weight: 500;font-size: 16px;line-height: 150%;color: #111928;
+}
+.react-left-color-b {
+    color:#1C64F2;cursor:pointer;display:table-cell;vertical-align:middle;text-align:left;padding-right:26px;font-weight: 500;font-size: 16px;line-height: 150%;
+}
+
+a {
+    text-decoration: none;
+}

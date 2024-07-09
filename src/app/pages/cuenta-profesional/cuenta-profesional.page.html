@@ -1,0 +1,185 @@
+ <div id="search-content" class="search-content container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  <div class="container-section">
+    <div class="item1" size="8">
+      <ion-breadcrumbs mode="ios">
+        <ion-breadcrumb href="#">
+          <ion-label class="margin_left_breadcrumbs1">Inicio</ion-label>
+        </ion-breadcrumb>
+        <ion-breadcrumb href="#">
+          <ion-label class="margin_left_breadcrumbs2">Mis Profesiones</ion-label>
+        </ion-breadcrumb>
+      </ion-breadcrumbs>
+    </div>
+    <div  class="item2"size="4">
+     
+      <div>
+        <div  class="servicios-sections-cell-button">
+          <div class="servicios-sections-button-primary" button (click)="updateProfessions()">
+            Guardar cambios
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-detail-search">
+
+  
+     <!--AVATAR SECTION-->
+    <div class="containter-left">
+      <div class="card">
+          <div>
+            <div class="image-profile">
+              <img  src="assets/icon/svg/icon_logo_febelink.svg" 
+              />
+            </div>
+            
+            <ion-row class="flex_imagen_start name-profile" size="12">
+              <ion-col size="12">
+                <ion-label class="cuenta_text_label">Cuenta Profesional</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row class="flex_imagen_start description-profile" size="12">
+              <ion-col size="12">
+                <p class="p_text_grid">
+                  ¡Enhorabuena! Con la Cuenta Profesional los usuarios de Febelink pueden encontrarte por tu profesión
+                  y tu zona de trabajo.
+                </p>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="flex_imagen_start row_text_check capsule-active" size="12">
+              <ion-col class="margin_top_2_orange" size="9">
+                <ion-label class="label_orange">Activar cuenta profesional</ion-label>
+              </ion-col>
+              <ion-col class="margin_top_2_orange" size="2">
+                <ion-toggle style="height: 14px; width: 36px; padding-bottom: 0;" #toggleDesktop [checked]="professionList.length > 0"
+                            (ionChange)="changeCheck(toggleDesktop.checked)"></ion-toggle>
+              </ion-col>
+            </ion-row>
+          </div>
+      </div>
+
+    
+    </div>
+    <div class="containter-right">
+     
+      <div class="valoraciones">
+        <div class="item-valor  item-valor-1">
+          Los sectores ayudan a ubicarte y que los clientes te encuentren más fácil.
+        </div>
+        <div class="title-valoraciones">
+          ¿Dónde ejerces tu profesión?
+        </div>
+        <div class="div-profesions">
+          <div class="item-profesion">
+            <div class="form-group b">
+              <label for="ciudad">Provincia  </label>
+              <select  
+              #options
+                name="valueCheck" class="selectlocation" (change)="onSelectChange($event)"> 
+                <option *ngIf="locationSelectName == ''">---</option>
+                <option *ngIf="locationSelectName !==''">{{locationSelectName}}</option>
+                <option *ngFor="let location of locations"
+                  [value]="location.id"> {{location.title}} 
+                </option>
+            </select>
+            </div>
+            
+          </div>
+         
+          <div class="item-profesion">
+            <div class="form-group b">
+              <label for="ciudad">Ciudad  </label>
+              <input id="ciudad" [(ngModel)]="city"type="text">
+            </div>
+          </div>
+
+          <div class="item-profesion boton">
+            <div class="addButton" (click)="addLocation();  options.selectedIndex = 0; " >Añadir </div>
+            </div>
+
+         
+      </div>
+      <div >
+        <div
+          [ngClass]="{'checkbox_no_geo': professionList.length === 0, 'checkbox_geo_chip': professionList.length > 0}">
+          <ion-row *ngFor="let location of locationsProfessions" class="item-tip"
+                   style="background-color:rgba(225, 239, 254, 1); margin-top: 0.5em;" size="12">
+            <ion-col style="padding:1em;" size="10">
+              <ion-label style="color: #1E429F; margin-left: 1em">{{location.location}} - ({{location.city}})</ion-label>
+            </ion-col>
+            <ion-col style="padding:1em;" >
+              <ion-icon name="close" (click)="removeOfProfessionLocationList(location)"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div> 
+   
+        <div class="container-valoraciones">
+          <div class="title-valoraciones">
+            ¿Cúal es tu profesión?
+          </div>
+          <div class="item-valor  item-valor-1">
+            <div style="padding-top: 0px;" size="12">
+              <ion-searchbar
+              (ionChange)="searchProfession($event.target?.value ?? '')"
+              (ionInput)="searchProfession($event.target?.value ?? '')"
+              class="searchBar" #searchBarDesktop
+                animated="true"></ion-searchbar>
+              <div class="ion-no-padding" *ngIf="usersArrayFiltered" fixed="true">
+                <div *ngIf="usersArrayFiltered && usersArrayFiltered.length > 0">
+                  <div class="ion-no-padding" size="12" (clickOutside)="searchBarDesktop.value = null">
+                    <ng-container *ngFor="let professionType of usersArrayFiltered">
+                      <ion-item lines="none" (click)="addToProfessionList(professionType, checkboxDesktop.checked)">
+                        <ion-checkbox slot="start" #checkboxDesktop
+                                      [disabled]="this.professionList.length >= this.numProfessionAvaliable"
+                                      [checked]="isInProfessionList(professionType)"></ion-checkbox>
+                        <ion-label class="text_user_profesion">{{professionType?.name}}</ion-label>
+                      </ion-item>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRID DONDE EJERZO PROFESIONES -->
+       
+           <!-- <div class="addButton" (click)="addProffession(); searchBarDesktop.value = null">Agregar</div> -->
+        </div>
+        <div >
+          <div
+            [ngClass]="{'checkbox_no_geo': professionList.length === 0, 'checkbox_geo_chip': professionList.length > 0}">
+            <ion-row *ngFor="let profesion of professionList" class="item-tip"
+                     style="background-color:rgba(225, 239, 254, 1); margin-top: 0.5em;" size="12">
+              <ion-col style="padding:1em;" size="10">
+                <ion-label style="color: #1E429F; margin-left: 1em">{{profesion.name}}</ion-label>
+              </ion-col>
+              <ion-col style="padding:1em;" >
+                <ion-icon name="close" (click)="removeOfProfessionList(profesion)"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </div>  
+
+      <div  class="item2"size="4">
+        <div class="mobilesection">
+          <div  class="servicios-sections-cell-button">
+            <div class="servicios-sections-button-primary" button (click)="updateProfessions()">
+              Guardar cambios
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+
+</div>

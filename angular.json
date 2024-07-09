@@ -1,0 +1,223 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  
+  "newProjectRoot": "projects",
+  "projects": {
+    "febelink-web": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
+              "src/manifest.webmanifest",
+              "src/static_demanda.php",
+              "src/static_perfil.php",
+              "src/.htaccess",
+              "src/getstarted.html",
+              "src/sitemap.xml",
+              "src/robots.txt",
+              "src/ads.txt",
+              "src/firebase-messaging-sw.js",
+              "src/favicon.ico", "src/assets"
+            ],
+            "styles": [
+            
+              "src/global.scss",
+              "src/global/border.scss",
+              "src/global/box.scss",
+              "src/global/buttons.scss",
+              "src/global/colors.scss",
+              "src/global/froged.scss",
+              "src/global/icons.scss",
+              "src/global/margin.scss",
+              "src/global/padding.scss",
+              "src/global/pops.scss",
+              "src/global/position.scss",
+              "src/global/text.scss",
+              "./node_modules/@ionic/angular/css/core.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
+              "./node_modules/quill-emoji/dist/quill-emoji.css",
+              "./node_modules/quill-mention/dist/quill.mention.min.css"
+            ],
+          "scripts": [
+            "./node_modules/quill/dist/quill.min.js"
+        ],
+            "server": "src/main.server.ts",
+            "prerender": {
+              "discoverRoutes": true,
+              "routesFile": "src/routes.txt"
+            },
+            "ssr": {
+              "entry": "server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": false
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "8mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "30kb",
+                  "maximumError": "200kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+          
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "febelink-web:build:production"
+            },
+            "staging": {
+              "buildTarget": "febelink-web:build:staging"
+            },
+            "development": {
+              "buildTarget": "febelink-web:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "febelink-web:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
+              "src/manifest.webmanifest",
+              "src/static_demanda.php",
+              "src/static_perfil.php",
+              "src/.htaccess",
+              "src/getstarted.html",
+              "src/sitemap.xml",
+              "src/robots.txt",
+              "src/ads.txt",
+              "src/firebase-messaging-sw.js",
+            "src/favicon.ico", "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              {
+                  "input": "src/theme/variables.scss"
+                },
+                {
+                  "input": "src/global.scss"
+                },
+                "src/global/border.scss",
+                "src/global/box.scss",
+                "src/global/buttons.scss",
+                "src/global/colors.scss",
+                "src/global/froged.scss",
+                "src/global/icons.scss",
+                "src/global/margin.scss",
+                "src/global/padding.scss",
+                "src/global/pops.scss",
+                "src/global/position.scss",
+                "src/global/text.scss",
+                "./node_modules/quill/dist/quill.core.css",
+                "./node_modules/quill/dist/quill.bubble.css",
+                "./node_modules/quill/dist/quill.snow.css",
+                "./node_modules/quill-emoji/dist/quill-emoji.css",
+                "./node_modules/quill-mention/dist/quill.mention.min.css"
+          ],
+          "scripts": [
+            "./node_modules/quill/dist/quill.min.js"
+        ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "36147cd7-5171-4430-98a3-c5f8313d31d5",
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ]
+  },
+  "schematics": {
+    "@ionic/angular-toolkit:component": {
+      "styleext": "scss"
+    },
+    "@ionic/angular-toolkit:page": {
+      "styleext": "scss"
+    }
+  }
+}

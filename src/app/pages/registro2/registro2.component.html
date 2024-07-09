@@ -1,0 +1,169 @@
+   <!-- Desktop version -->
+   <div class="desktop">
+ 
+     <!--    <div class="login-header-b">
+           <div class="login-header-left">
+             <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo-b" />
+           </div>
+           <div class="login-header-right">
+             <app-lang-btn></app-lang-btn>
+           </div>
+         </div>-->
+ 
+     <div class="login-content-b">
+       <div class="login-wrapper-dark"></div>
+       <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size"/>
+ 
+       <div class="login-content-floating">
+ 
+         <div class="login-content-background">
+           <form
+             *ngIf="form"
+             [formGroup]="form"
+             (ngSubmit)="submitForm()"
+             (keyup.enter)="submitForm()">
+ 
+             <div class="login-content-title">
+               Crea tu cuenta
+             </div>
+             <div class="login-label-input">
+               Nombre de cuenta
+             </div>
+             <div class="login-input-margin">
+               <ion-input formControlName="name" required type="text" placeholder="Nombre de cuenta"
+                          class="padding-input-12 login-input"></ion-input>
+             </div>
+             <div class="login-label-input" *ngIf="!partialRegisterEmail">
+               Correo electrónico
+             </div>
+             <div class="login-input-margin" *ngIf="!partialRegisterEmail">
+               <ion-input formControlName="email" [required]="!partialRegisterEmail" type="email"
+                          placeholder="Correo electrónico"
+                          class="padding-input-12 login-input"></ion-input>
+             </div>
+             <div class="login-label-input">
+               {{ 'common.personal.pass' | translate }}
+             </div>
+             <div class="login-input-margin">
+               <ion-input [type]="passwordType" formControlName="password" required type="password" required
+                          placeholder="**********" class="padding-input-12 login-input"></ion-input>
+             </div>
+             <div class="login-options-table">
+               <div class="login-options-left">
+                 <ion-checkbox formControlName="privacyConditions" class="login-checkbox"></ion-checkbox>
+               </div>
+               <div class="login-options-b-right">
+                 <div class="login-option-conditions">
+                   He leido y acepto la <span class="login-link-conditions" (click)="openPrivacyPolicy()">política de privacidad</span>
+                   y <span class="login-link-conditions"
+                           (click)="openUseConditions()">las condiciones generales de uso</span>
+                 </div>
+               </div>
+             </div>
+             <button type="submit" class="login-button-connections login-button-back-a margin-bottom-button">
+               Registrarse
+             </button>
+ 
+             <!--            <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>-->
+           </form>
+         </div>
+ 
+         <div class="login-content-background margin-top-content-bottom-b">
+           <div class="login-content-title-small">
+             Ya tienes cuenta?
+           </div>
+           <div class="login-button-connections login-button-back-d" (click)="login()">
+             Iniciar sesión
+           </div>
+         </div>
+ 
+       </div>
+     </div>
+ 
+   </div>
+   <!-- Mobile version -->
+   <div class="mobile">
+     <div class="login-header">
+       <div class="login-header-left">
+         <img src="assets/imgs/logo.png" alt="logo" class="login-header-logo"/>
+       </div>
+       <div class="login-header-right">
+         <app-lang-btn></app-lang-btn>
+       </div>
+     </div>
+ 
+     <div class="login-img-back">
+       <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size"/>
+     </div>
+ 
+     <div class="login-content login-content-margin">
+       <div class="login-content-background">
+         <form
+           *ngIf="form"
+           [formGroup]="form"
+           (ngSubmit)="submitForm()"
+           (keyup.enter)="submitForm()">
+ 
+           <div class="login-content-title">
+             Crea tu cuenta
+           </div>
+           <div class="login-label-input">
+             Nombre de cuenta
+           </div>
+           <div class="login-input-margin">
+             <ion-input formControlName="name" required type="text" placeholder="Nombre de cuenta"
+                        class="padding-input-12 login-input"></ion-input>
+           </div>
+           <div class="login-label-input" *ngIf="!partialRegisterEmail">
+             Correo electrónico
+           </div>
+           <div class="login-input-margin" *ngIf="!partialRegisterEmail">
+             <ion-input formControlName="email" [required]="!partialRegisterEmail" type="email"
+                        placeholder="Correo electrónico"
+                        class="padding-input-12 login-input"></ion-input>
+           </div>
+           <div class="login-label-input">
+             {{ 'common.personal.pass' | translate }}
+           </div>
+           <div class="login-input-margin">
+             <ion-input [type]="passwordType" formControlName="password" required type="password" required
+                        placeholder="**********" class="padding-input-12 login-input"></ion-input>
+           </div>
+           <div class="login-options-table">
+             <div class="login-options-left">
+               <ion-checkbox formControlName="privacyConditions" class="login-checkbox"></ion-checkbox>
+             </div>
+             <div class="login-options-b-right">
+               <div class="login-option-conditions">
+                 He leido y acepto la <span class="login-link-conditions" (click)="openPrivacyPolicy()">política de privacidad</span>
+                 y <span class="login-link-conditions"
+                         (click)="openUseConditions()">las condiciones generales de uso</span>
+               </div>
+             </div>
+           </div>
+           <button type="submit" class="login-button-connections login-button-back-a margin-bottom-button">
+             Registrarse
+           </button>
+ 
+           <!--          <social-login *ngIf="!platform.is('ios')" firstLogin="true" [redirect]="redirect"></social-login>-->
+         </form>
+       </div>
+     </div>
+ 
+     <div class="login-content-bottom">
+       <div class="login-content-background">
+         <div class="login-content-title-small">
+           Ya tienes cuenta?
+         </div>
+         <div class="login-button-connections login-button-back-d" (click)="login()">
+           Iniciar sesión
+         </div>
+       </div>
+     </div>
+ 
+     <div class="login-footer-contact">
+       <a href="mailto:info@febelink.com" class="a-reset">{{ 'common.contactUs' | translate }}</a>
+     </div>
+   </div>
+ 
+ <app-footer> </app-footer>

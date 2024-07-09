@@ -1,0 +1,53 @@
+<div class="subscribe">
+  <p id="hero-texto">
+    {{ 'landing.whitelist.signUp' | translate }}
+  </p>
+
+  <form>
+    <div class="row align-center" id="input-newsletter">
+      <div class="col-md-3">
+        <div class="mt-3 mt-md-0">
+          <button
+            type="button"
+            class="btn btn-primary btn-block"
+            (click)="login()"
+            [disabled]="response?.id"
+          >
+            {{
+              (!response?.id
+                ? 'landing.whitelist.action.toDo'
+                : 'landing.whitelist.action.done'
+              ) | translate
+            }}
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mt-3 mt-md-0">
+          <a
+            type="application/pdf"
+            href="{{ 'assets/landing/febelink-whitepaper.' + lang + '.pdf' }}"
+            download="{{ 'febelink-whitepaper.' + lang + '.pdf' }}"
+            title="pdf"
+            target="_blank"
+            class="btn btn-block btn-download"
+          >
+            <ion-icon
+              name="download"
+              color="#76aadb"
+              role="img"
+              aria-label="download"
+            ></ion-icon>
+            {{ 'landing.whitelist.download' | translate }}
+          </a>
+        </div>
+      </div>
+      <div *ngIf="response" class="mt-3 col-md-12">
+        <p *ngIf="response.title" class="text-danger">{{ response.title }}</p>
+        <p *ngIf="response.id" class="text-success">
+          {{ 'landing.whitelist.success' | translate }}
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

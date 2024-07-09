@@ -1,0 +1,412 @@
+<!-- <partial-popup [displayToggle]="displayPartialSignUp"
+               (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup> -->
+<div class="container-general" >
+  <div class="container-detail-search">
+    <div class="containter-left">
+
+      
+      <div>
+        @if ( detalle?.images?.length > 0) {
+        <swiper
+          class="product-image-desktop"
+          slideActiveClass="product-image-desktop"
+          [spaceBetween]="10"
+          [navigation]="true"
+          [thumbs]="{ swiper: thumbsSwiper }"
+        >
+          @for ( imageURL of detalle?.images; track imageURL ) {
+              <ng-template swiperSlide >
+
+               
+                <ion-img  [src]="urlWsrv + imageURL +'&w=800&output=webp'" [alt]="detalle?.title"></ion-img>
+              </ng-template>
+          }
+        </swiper>
+         @if ( detalle?.images?.length > 1) {
+          <swiper
+            class="mySwiper"
+            (swiper)="thumbsSwiper = $event"
+            [slidesPerView]="detalle?.images?.length"
+            [freeMode]="true"
+            [watchSlidesProgress]="true"
+          >
+          @for ( imageURL of detalle?.images; track imageURL ) {
+            <ng-template swiperSlide >
+              <img class="tam_img"  [src]="urlWsrv + imageURL +'&w=800&output=webp'"/>
+            </ng-template>
+          }
+          </swiper>
+        }
+
+      }
+      </div>
+      <div class="capsule-price">
+        <div >
+          <div class="price">
+            <div class="number-price"><ion-label
+              >{{detalle?.productUnitPrice * productAmount}}
+                €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+              ></div>
+              <div class="capsuleline">
+                <div class="capsule-quantity">
+                  <div class="namequantity">Cantidad </div>
+                  <div class="line"> </div>
+                  <div class="result">
+                    <ion-item class="item_cantidad_border">
+                      <ion-select [(ngModel)]="productAmount" multiple="false">
+                        <ion-select-option [value]="1">1</ion-select-option>
+                        <ion-select-option [value]="2">2</ion-select-option>
+                        <ion-select-option [value]="3">3</ion-select-option>
+                        <ion-select-option [value]="4">4</ion-select-option>
+                        <ion-select-option [value]="5">5</ion-select-option>
+                        <ion-select-option [value]="6">6</ion-select-option>
+                        <ion-select-option [value]="7">7</ion-select-option>
+                        <ion-select-option [value]="8">8</ion-select-option>
+                        <ion-select-option [value]="9">9</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </div>
+                  <div class="icon"><i class="fa fa-chevron-down"></i></div>
+                
+                </div>
+                <div
+            class="flau"
+            >
+            Pagar con FLAU
+          </div>
+              </div>
+            
+        </div>
+        
+        </div>
+        <ion-row class="guarantee" (click)="irA('/use-conditions')">
+          <ion-img
+            src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
+          <div style="width: calc(100% - 4em - 12px); padding: 10px;    color: #000;">
+            <span>Con la garantía de Febelink.</span>
+            <br>
+            <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
+          </div>
+        </ion-row>
+        <div class="button-price">
+          <div
+            class="follow-button"
+            (click)="addToCart()"
+            >
+            Añadir Carrito
+          </div>
+          <div
+            class="chat-button"
+            [ngSwitch]="detalle?.buttonName"
+            (click)="buyNow(productId, productAmount)"
+          >
+            <span *ngSwitchCase="1">Más Información</span>
+            <span *ngSwitchCase="2">Pedir Presupuesto</span>
+            <span *ngSwitchCase="3">Hacer consulta</span>
+            <span *ngSwitchCase="4">Comprar ahora</span>
+            <span *ngSwitchDefault>Más Información</span>
+          </div>
+           
+        </div>
+      
+      </div>
+    </div>
+    <div class="containter-right">
+  
+      <div class="section-perfil">
+        <!--AVATAR SECTION-->
+        <div class="line-avatar">
+          <div class="avatar" (click)="irA('/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId)">
+            <ion-avatar class="avatar_dropdown">
+              @if ( !detalle?.ownerAvatar) {
+                <ion-img
+                  src="assets/icon/svg/default_avatar.svg"
+                  class="default-avatar"
+                ></ion-img>
+              }
+              @if (detalle?.ownerAvatar) {
+                <ion-img
+                [src]="urlWsrv + detalle?.ownerAvatar +'&w=800&output=webp'"
+                [alt]="detalle?.ownerUsername + ' avatar'"
+              ></ion-img>
+              }
+            
+            </ion-avatar>
+          </div>
+          <div class="name-avatar">
+            <div class="name">
+              <h2><a [routerLink]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
+            </div>
+            <a [href]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
+          </div>
+          <div class="buttons-avatar buttondesktop">
+            <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+            <div
+              class="chat-button buttondesktop"
+              (click)="createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            
+              >
+              Iniciar Chat
+            </div>
+            @if (user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null) {
+              <div
+              (click)="registerClick(user?.id, productId )"
+                class="chat-button whatsapp buttondesktop"
+              >
+              <a title="Contacto telefónico" 
+                aria-label="Chat on WhatsApp" 
+                href="https://wa.me/34{{user?.phoneNumber}}" 
+                target="_blank"
+                class="badge">
+                <i class="fa fa-whatsapp"></i> <span>Whatsapp</span>
+              </a>
+              </div>
+            }
+            <div
+              class="follow-button buttondesktop"
+              >
+             Seguir
+            </div>
+          </div>
+        </div>
+        <div class="user-detail">{{user?.description}}</div>
+        <div class="buttons-mobileavatar buttonmobile">
+          <img  *ngIf="detalle?.verified === 1"  class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
+          <div
+            class="chat-button buttonmobile"
+            (click)="!authService.isAuthenticated() ? irA('/login') : createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
+            >
+            Iniciar Chat
+          </div>
+
+          @if (user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null) {
+            <div
+            (click)="registerClick(user?.id, productId )"
+              class="chat-button whatsapp buttonmobile"
+            >
+            
+              <a title="Contacto telefónico" 
+                aria-label="Chat on WhatsApp" 
+                href="https://wa.me/34{{user?.phoneNumber}}" 
+                target="_blank"
+                class="badge">
+                <i class="fa fa-whatsapp"></i>
+              </a>
+            </div>
+          }
+          <div
+            class="follow-button buttonmobile"
+            >
+           Seguir
+          </div>
+        </div>
+      
+  
+        <!--TITLE SECTION-->
+        <div class="section-title">
+          <ion-row class="product-title">
+            <ion-label><h2>{{detalle?.title}}</h2></ion-label>
+          </ion-row>
+          <ion-row class="product-rating">
+            <ion-label class="content_item">
+              <div class="ion-no-margin list-stars-rating">
+                <div class="stars">
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                  <ion-img
+                    class="icon_star"
+                    src="assets/icon/svg/icon_star.svg"
+                  ></ion-img>
+                </div>
+              
+                <div class="detail-rating">
+                  ({{detalle?.ratingAmount}}) valoraciones
+                </div>
+              </div>
+            </ion-label>
+          </ion-row>
+        </div>
+  
+        <!--DESCRIPTION-->
+        <div class="section-description">
+          <ion-label [innerHtml]="detalle?.description"></ion-label>
+        </div>
+  
+         <!--To whom-->
+         @if (!!detalle?.whom) {
+          <div class="section-towhom">
+            <ion-row class="towhom-title">
+              <ion-label>
+                <!-- <h2>{{detalle?.towhom}}</h2> -->
+                <h2>A quien va dirigido</h2>
+              </ion-label>
+            </ion-row>
+            <ion-row class="towhom-description">
+              <ion-label [innerHtml]="detalle?.whom"></ion-label>
+            </ion-row>
+          </div>
+        }
+
+        <!--OTHERS VIEW-->
+        @if (othersView.length  > 0) {
+          <div class="section-others-view">
+            <ion-row class="others-view-title">
+              <ion-label>
+                <!-- <h2>{{detalle?.othersview}}</h2> -->
+                <h2>Otros usuarios también vieron</h2>
+              </ion-label>
+            </ion-row>
+            <div class="grid-others-view">
+              @for (other of othersView | slice : 0 : 4; track other.id) {
+                <div class="item-others" 
+                >
+                  <a [href]="'/servicio/' + toSlug(other?.title) + '/detail/' + other?.id">
+                    <div class="avatar-view">
+                      <div class="img-avatar">
+                        <img src="{{other.image}}"/>
+                      </div>
+                      <div class="name-avatar">
+                        <div class="name-other">{{other.ownerUsername}}</div>
+                        <div class="profession-other">{{other.title}}</div>
+                      </div>
+                    </div>
+                    <div class="description-view">
+                      <ion-label [innerHtml]="other.description"></ion-label>
+                    </div>
+                    <div class="rating-view">
+                      <div class="ion-no-margin list-stars-rating">
+                        <div class="stars">
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                          <ion-img
+                            class="icon_star"
+                            src="assets/icon/svg/icon_star.svg"
+                          ></ion-img>
+                        </div>
+                      
+                        <div class="detail-rating">
+                          ({{other.avgRating}}) valoraciones
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              }
+            
+            
+            </div>
+          </div>
+        }
+
+  
+        <!--MORE WORK THIS PROFESIONAL-->
+        <div class="section-more-work" *ngIf="moreWorks.length">
+          <ion-row class="more-work-title">
+            <ion-label>
+              <h2>Más servicios de este profesional</h2>
+            </ion-label>
+          </ion-row>
+  
+          <div class="grid-more-work">
+            @for (more of moreWorks; track more.id) {
+              <div class="item-more">
+                <a [href]="'/servicio/' + toSlug(more?.title) + '/detail/' + more?.productId">
+                  <div class="name-work">
+                    <div>{{more.title}}</div>
+                  </div>
+                  <div class="description-more">
+                    <ion-label [innerHtml]="more.description"></ion-label>
+                  </div>
+                  <div class="more-view">
+                    Mostrar  <i class="fa fa-chevron-right"></i>
+                  </div>
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+
+  <div class="capsule-price-mobile">
+    <div class="price">
+      <div class="number-price">
+        <ion-label
+        >{{detalle?.productUnitPrice * productAmount}}
+          €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+        >
+      </div>
+      <div class="capsule-quantity">
+        <div>Cantidad </div>
+        <div class="line"> </div>
+        <div class="result">
+          <ion-item class="item_cantidad_border">
+            <ion-select [(ngModel)]="productAmount" multiple="false">
+              <ion-select-option [value]="1">1</ion-select-option>
+              <ion-select-option [value]="2">2</ion-select-option>
+              <ion-select-option [value]="3">3</ion-select-option>
+              <ion-select-option [value]="4">4</ion-select-option>
+              <ion-select-option [value]="5">5</ion-select-option>
+              <ion-select-option [value]="6">6</ion-select-option>
+              <ion-select-option [value]="7">7</ion-select-option>
+              <ion-select-option [value]="8">8</ion-select-option>
+              <ion-select-option [value]="9">9</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="icon"><i class="fa fa-chevron-down"></i></div>
+      </div>
+    </div>
+    <div class="button-price">
+      <div
+        class="chat-button"
+        [ngSwitch]="detalle?.buttonName"
+        (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
+      >
+        <span *ngSwitchCase="1">Más Información</span>
+        <span *ngSwitchCase="2">Pedir Presupuesto</span>
+        <span *ngSwitchCase="3">Hacer consulta</span>
+        <span *ngSwitchCase="4">Comprar ahora</span>
+        <span *ngSwitchDefault>Más Información</span>
+      </div>
+      <div
+      class="flau"
+      >
+      Pagar con FLAU
+    </div>
+      
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

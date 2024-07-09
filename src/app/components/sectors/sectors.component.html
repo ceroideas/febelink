@@ -1,0 +1,47 @@
+<ion-grid class="no-padding">
+  <ion-row>
+    <!-- Sector -->
+    <ion-col class="ion-no-padding pad-e5" size="6" *ngIf="showSector">
+      <app-loading [isLoading]="sectors.length <= 0" message="common.labelSector"></app-loading>
+      <ion-item class="input" color="transparent" lines="none" *ngIf="sectors && sectors.length > 0">
+        <!-- Label -->
+        <ion-label position="floating">{{ 'common.labelSector' | translate }}</ion-label>
+        <!-- Select -->
+        <!-- <ionic-selectable
+          item-content
+          [(ngModel)]="sectorSlctd"
+          itemValueField="id"
+          itemTextField="nombre"
+          [items]="sectors"
+          [canSearch]="true"
+          [canClear]="true"
+          (onClose)="onCloseSector( $event )"
+          (onChange)="onChangeSector( $event )">
+        </ionic-selectable> -->
+      </ion-item>
+    </ion-col>
+
+    <!-- Subsector -->
+    <ion-col class="ion-no-padding pad-s5" [size]="showSector ? 6 : 12">
+      <app-loading
+        [isLoading]="subsectors.length <= 0"
+        [message]="'common.label' + ( showSector ? 'Subsector' : 'SectorNsub' )"
+      ></app-loading>
+      <ion-item class="input" color="transparent" lines="none" *ngIf="subsectors && subsectors.length>0">
+        <!-- Label -->
+        <ion-label position="floating">{{ 'common.label' + ( showSector ? 'Subsector' : 'SectorNsub' ) | translate }}</ion-label>
+        <!-- <ionic-selectable
+          item-content
+          [(ngModel)]="subsectorSlctd"
+          itemValueField="id"
+          itemTextField="nombre"
+          [items]="subsectors"
+          [canSearch]="true"
+          [canClear]="true"
+          (onClose)="onCloseSubsector( $event )"
+          (onChange)="onChangeSubsector( $event )">
+        </ionic-selectable> -->
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

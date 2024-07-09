@@ -1,0 +1,144 @@
+<ion-content>
+  <!--Navbar Start-->
+  <nav
+    class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark navbar-scr"
+    (window:scroll)="windowScroll()"
+    id="navbar"
+  >
+    <div class="container">
+      <!-- LOGO -->
+      <a class="logo text-uppercase" href="/">
+        <img
+          src="assets/landing/logo-dark.png"
+          alt=""
+          class="logo-dark"
+          height="40"
+        />
+      </a>
+
+      <app-lang-btn (onLangSelected)="onLangSelected( $event )"></app-lang-btn>
+
+      <ion-icon 
+      name="menu-outline"
+      class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleMenu()"
+      ></ion-icon>
+  
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+          <li class="nav-item">
+            <!--<a [ngxScrollTo]="'#section-newsletter'" href="javascript: void(0);" class="nav-link">Buy ICO</a> OJO -->
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('features')"
+              class="nav-link"
+              >Token</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('services')"
+              class="nav-link"
+              >About Us</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('clients')"
+              class="nav-link"
+              >RRSS</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="scrollTo('section-pricing')"
+              class="nav-link"
+              >Team</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+  <div
+    appScrollspy
+    [spiedTags]="['SECTION']"
+    (sectionChange)="onSectionChange($event)"
+  >
+    <!-- Hero section Start -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="hero-wrapper mb-4">
+              <div class="hero-title mb-4 align-center">
+                <ion-img src="assets/icon/febicon.png" class="center-v margin-end"></ion-img>
+                <h1>
+                  {{ 'landing.header.welcome1' | translate }}
+                  <br>
+                  (<span class="text-primary" id="hero-strong">{{ 'landing.header.welcome2' | translate }}</span>)
+                </h1>
+              </div>
+
+              <app-social-links></app-social-links>
+  
+              <app-whitelist lang="{{ langSelected?.lang }}"></app-whitelist>
+            </div>
+            
+            <div class="kSlider_show">
+              <div class="kSlider">
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+                <img/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- Hero section End -->
+  
+    <app-features></app-features>
+    <app-services></app-services>
+    <app-clients></app-clients>
+    <app-plans></app-plans>
+
+    <!-- Hero section Start -->
+    <section class="hero-section" id="home" style="padding-top: 0px;">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="hero-wrapper mb-4">
+              <app-social-links></app-social-links>
+
+              <app-whitelist lang="{{ langSelected?.lang }}"></app-whitelist>
+            </div>
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- Hero section End -->
+
+    
+    <app-footer></app-footer>
+  </div>
+</ion-content>

@@ -1,0 +1,68 @@
+
+
+<header>
+  <div  class="headerlogo" [ngClass]="{'detached': detached }">
+    <div class="containerHeader">
+      <div  class="left">
+        <a href="/">
+          <img  *ngIf="detached" src="assets/imgs/logo.png" alt="Logo Febelink"/>
+          <img  *ngIf="!detached " src="assets/imgs/logo.png" alt="Logo Febelink"/>
+        </a>
+      </div>
+      <!-- MENU DESKTOP -->
+      <div  class="right"  >
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " href="/">Home</a></div>
+        <!-- <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " [href]="'/oracles'" >Oraculo</a></div> -->
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " >Carrito</a></div>
+        <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
+        <div  class="menu secondary"[ngClass]="{'detached': detached}" >
+          <div class="item login " *ngIf="currentUser === undefined" (click)="irA('/login')" >
+            <i  class="fas fa-user-circle "></i> Acceder
+          </div>
+          <div class="item logged" *ngIf="currentUser !== undefined">
+            <ion-menu-button class="avatarmenu">
+              <ion-img [src]="currentUser?.logo || 'https://api.febelink.com/storage/users/default.png'"
+                   (error)="onImgError($event)"
+                   alt="Menu profile picture">
+              </ion-img>
+              <i class="fa fa-bars"></i>
+
+            </ion-menu-button>
+          </div>
+        </div>
+      </div>
+      <!-- MENU -->
+      <!-- <div class="menu-shadow" *ngIf="mobileMenu" (click)="closeMenu()" @inOutFade></div>
+      <div class="menulayer" *ngIf="mobileMenu" @inOutMenu>
+        <app-menu (closeRequest)="closeMenu()"></app-menu>
+      </div> -->
+  
+      <!-- BOTON MENU MOVIL -->
+      <div class="right mobile" 
+        [ngClass]="{'detached': detached  , 'reduced': reduced}"
+        >
+        <div  class="menu primary " [ngClass]="{'detached': detached}"><a   [ngClass]="{'sinlogged': currentUser }"class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
+     
+        <ion-buttons *ngIf="currentUser" buttons-start slot="start">
+          <ion-menu-button class="avatarmenu">
+            
+            <ion-img [src]="currentUser?.logo || 'https://api.febelink.com/storage/users/default.png'"
+                   (error)="onImgError($event)"
+                   alt="Menu profile picture">
+              </ion-img>
+              <i class="fa fa-bars"></i>
+          </ion-menu-button>
+        </ion-buttons>
+        <ion-buttons *ngIf="!currentUser" buttons-start slot="start">
+          <ion-menu-button class="avatarmenu"  (click)="irA('/login')">
+            <div class="buttonlogin-mobile login-mobile ">
+              <i  class="fas fa-user-circle "></i> 
+            </div>
+          </ion-menu-button>
+        </ion-buttons>
+      </div>
+    </div>
+  </div>
+</header>
+

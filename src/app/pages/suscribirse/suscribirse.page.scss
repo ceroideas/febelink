@@ -1,0 +1,115 @@
+ul {
+  font-size: 14px;
+  color: var(--ion-color-darken);
+  li{
+    margin-top: 10px;
+  }
+}
+
+.advantages{
+  display: flex;
+  margin-top: 10px;
+
+  .icon{
+    height: 50px;
+    display: flex;
+    margin-right: 10px;
+    ion-icon {
+      font-size: 30px;
+      color: var(--ion-color-success);
+    }   
+  }
+  .info{
+    // height: 50px;
+    p{
+      margin: 0;
+      font-size: 12px;
+      opacity: .8;
+    }
+  }
+
+}
+.container{
+  margin: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+
+.btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.selected {
+  background-color: #55abdd;
+  color: white;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
+  ion-card-title {
+    color: white;
+  }
+  h5{
+    color: #ececec;
+  }
+}
+
+ion-card-title ion-icon {
+  font-size: large;
+}
+
+#payment-form {
+  margin: 2em;
+}
+
+.free-message-box {
+  background-color: #32DB64;
+  border-radius: 5px;
+  font-weight: 400;
+  margin-top: 5px;
+}
+
+.free-message {
+  font-size: 15px;
+  color: white;
+  padding: 5px;
+  display: flex;
+}
+
+.text-removed {
+  text-decoration: line-through;
+  text-decoration-color: red;
+}
+
+.button_a {
+  color: white;
+  background: #55abdd;
+  text-decoration: none;
+  padding: 9px;
+  border-radius: 7px;
+}
+
+.ios.hidden_ios {
+  display: none;
+}
+
+.md.hidden_ios {
+  display: flex;
+}
+
+.ios.hidden_md {
+  display: flex;
+}
+
+.md.hidden_md {
+  display: none;
+}

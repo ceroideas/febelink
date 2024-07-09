@@ -1,0 +1,6 @@
+<ion-grid [class]="'center-v align-center marg-t10 ' + ( clase || '' )" *ngIf="isLoading">
+  <ion-row class="center-v align-center vertical-content">
+    <ion-spinner class="marg-e"></ion-spinner>
+    <ion-label class="marg-s">{{ message | translate }}</ion-label>
+  </ion-row>
+</ion-grid>

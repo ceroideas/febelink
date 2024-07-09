@@ -1,0 +1,13 @@
+import { TokensUser } from '../../admin/models/tokens-user';
+import { CryptoCurrency } from './currency.model';
+
+export interface WalletParams {
+  userWallets?: CryptoCurrency[];
+  publicKey?: string;
+  privateKey?: string;
+  retainedTks?: TokensUser[];
+  verified?: { account: boolean; mandatory: boolean; kyc: boolean };
+  minnersFee?: string;
+  stripeFee?: string;
+  assetsMaxDecimals?: number;
+}

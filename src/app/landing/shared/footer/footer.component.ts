@@ -1,0 +1,31 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss']
+})
+/**
+ * Footer component
+ */
+export class FooterComponent {
+
+  year = new Date().getFullYear();
+
+  constructor( private router: Router ) { }
+
+
+  public navegar(ruta: string){
+    this.router.navigate([ruta]);
+  }
+
+  async openPrivacyPolicy() {
+    this.navegar('privacy-policy');
+  }
+
+  async openUseConditions() {
+    this.navegar('use-conditions');
+  }
+
+}

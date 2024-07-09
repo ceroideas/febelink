@@ -1,0 +1,114 @@
+a{ text-decoration: none; outline: none;}
+.slider-item {
+  width: 100%;
+  max-width: 800px;
+  padding: 18px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: flex-start;
+  border: 1px solid #f5f5f5;
+  margin: auto;
+  margin-bottom: 15px;
+  gap: 15px;
+}
+.slider-item .animation-card_image {
+  flex-shrink: 0;
+}
+.slider-item .animation-card_image img {
+  width: 65px;
+  height: 65px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #efefef;
+}
+.slider-item .animation-card_content {
+  width: 100%;
+}
+.slider-item .animation-card_content .animation-card_content_title {
+  color: #282828;
+  font-size: 1.4rem;
+  margin: 6px 0;
+  font-weight: 500;
+  font-family: DM Sans,sans-serif;
+}
+.slider-item .animation-card_content .animation-card_content_description {
+  color: #696d74;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: normal;
+  line-height: 24px;
+  margin: 10px 0 0 0;
+}
+.slider-item .animation-card_content .animation-card_content_city {
+  font-size: 11px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #3575E2;
+  margin-right: 0;
+  margin-left: auto;
+  background-color: #eaf2ff;
+  font-weight: bold;
+  margin-right: 20px;
+  font-family: arial;
+
+}
+.iconsuperpro{
+  width: 30px;
+  margin: auto;
+  display: flex;
+  position: absolute;
+  top: 1px;
+  left: -35px;
+
+}
+.username{
+  font-size: 0.9rem;
+  color: #000;
+  font-weight: normal;
+}
+
+.votes{
+  font-size: 0.8rem;
+  color: #696d74;
+}
+
+.bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 30px;
+  position: relative;
+
+  .price{
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 600;
+
+    &.skeleton {
+      width: 35%;
+    }
+  }
+  button{
+    color: #3575E2;
+    background-color: #eaf2ff;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px 13px;
+  }
+}
+.iconwhatsapp{ position: absolute;
+  left: -69px;
+  font-size: 24px; color: #25D366;}
+ngx-skeleton-loader {
+  &::ng-deep {
+    .skeleton-loader {
+      margin-bottom: 0;
+    }
+  }
+}
+

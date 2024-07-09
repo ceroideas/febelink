@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-toolbar color="febelink">
+    <ion-title><ion-icon name={{titleIcon}} style="margin-right: 10px;"></ion-icon>{{title}}</ion-title>
+    <ion-buttons slot="end" style="margin-right: 20px;">
+      <ion-button (click)="closeModal()">X</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+
+</ion-content>
+
+<ion-footer color="febelink" class="ion-no-border" *ngIf="showLogo">
+  <ion-toolbar color="febelink" style="text-align: center;">
+
+    <ion-button size="small" [hidden]="currentIndex === 0" (click)="back()" style="margin-top: -5px;font-size: 10px;">
+      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+    </ion-button>
+
+    <span *ngFor="let page of pages;let i = index;" style="margin-right: 5px;">
+      <img *ngIf="currentIndex === i" src="assets/guide/circle-full.png" alt="" width="10px">
+      <img *ngIf="currentIndex !== i" src="assets/guide/circle-empty.png" alt="" width="10px">
+    </span>
+
+    <ion-button  size="small" [hidden]="currentIndex === 5" (click)="forward()" style="font-size: 10px;margin-top: -5px;">
+      <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+    </ion-button>
+
+  </ion-toolbar>
+</ion-footer>
+

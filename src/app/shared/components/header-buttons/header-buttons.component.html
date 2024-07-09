@@ -1,0 +1,172 @@
+<div class="header-buttons" [class]="currentTab == tabs.Search ? 'right' : ''">
+  <ion-buttons>
+    <!-- Token FLAU -->
+    <!--
+    <ion-button
+      *ngIf="perfil"
+      class="btn-header bt-br"
+      [class]="currentTab == tabs.ICO ? 'active' : ''"
+      (click)="irA('/wallet/buy-tokens/FLAU')">
+      <div class="grid-rows">
+        <img
+          class="marg-se"
+          slot="start"
+          density="ldpi"
+          src="assets/icon/febicon.png"
+          width="20px"
+          height="20px"
+        />
+        <ion-label class="responsive-max tx-cap" style="margin-left: 10px">
+          {{ 'menu.tabs.landingICO' | translate }}
+        </ion-label>
+      </div>
+    </ion-button>
+    -->
+
+    <div>
+      <ion-grid>
+        <ion-row class="margen_row desktop">
+          <a [href]="'/chat'" [title]="'menu.tabs.chat' | translate">
+            <ion-item *ngIf="currentUser" class="ion-no-padding pointer" lines="none">
+              <ion-img class="ion-padding-top ion-padding-left ion-padding-bottom"
+                      src="assets/icon/svg/chat_header.svg" alt="chat icon"></ion-img>
+              <ion-label class="ion-padding label_icon_menu desktop">{{ 'menu.tabs.chat' | translate }}</ion-label>
+            </ion-item>
+          </a>
+          <ion-item (click)="cartServiceShow.isToggleCart = !cartServiceShow.isToggleCart"
+                    class="ion-no-padding desktop pointer" lines="none" alt="cart icon">
+            <ion-img src="assets/icon/svg/cart_icon.svg"></ion-img>
+            <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.carro' | translate }}</ion-label>
+          </ion-item>
+          <a [href]="'/oracles'" [title]="'menu.tabs.advises' | translate">
+            <ion-item class="ion-no-padding desktop pointer" lines="none">
+              <ion-img src="assets/icon/svg/menu_eye.svg" alt="oracles eye icon"></ion-img>
+              <ion-img class="icono_parte_ojo" src="assets/icon/svg/menu_eye_dentro.svg" alt="eye icon"></ion-img>
+              <ion-label class="ion-padding">{{ 'menu.tabs.advises' | translate }}</ion-label>
+            </ion-item>
+          </a>
+          <a [href]="'/listado'" [title]="'menu.tabs.inicio' | translate">
+            <ion-item class="ion-no-padding desktop pointer" lines="none">
+              <ion-img src="assets/icon/svg/home_icon.svg" alt="home icon"></ion-img>
+              <ion-label class="ion-padding label_icon_menu">{{ 'menu.tabs.inicio' | translate }}</ion-label>
+            </ion-item>
+          </a>
+          <ion-item *ngIf="currentUser" (click)="irA('/notifications')" class="bell-menu" lines="none">
+            <ion-label class="ion-padding">
+              <ion-img class="ion-no-padding ion-no-margin" src="assets/icon/svg/bell.svg" alt="notification bell icon"></ion-img>
+            </ion-label>
+            <ion-badge class="header-notif-badge" color="primary" *ngIf="notifCount">{{notifCount}}</ion-badge>
+          </ion-item>
+        </ion-row>
+        <ion-row class="margen_row mobile">
+          <ion-item *ngIf="currentUser" (click)="irA('/chat')" lines="none">
+            <ion-img src="assets/icon/svg/chat_header.svg"></ion-img>
+          </ion-item>
+          <ion-item *ngIf="currentUser" (click)="irA('/notifications')" class="bell-menu" lines="none">
+            <ion-img src="assets/icon/svg/bell.svg"></ion-img>
+            <ion-badge class="header-notif-badge" color="primary" *ngIf="notifCount">{{notifCount}}</ion-badge>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Search -->
+      <!--
+      <ion-button
+        class="btn-header"
+        [class]="currentTab == tabs.Search ? 'active' : ''"
+        (click)="irA('/menu/todas')"
+        ><div class="grid-rows">
+          <ion-icon class="marg-se" slot="start" name="search"></ion-icon>
+          <ion-label class="responsive-max tx-cap">
+            {{ 'menu.tabs.searchEngine' | translate }}
+          </ion-label>
+        </div></ion-button
+      >
+      -->
+
+      <!-- Recommend -->
+      <!--
+      <ion-button
+        *ngIf="perfil"
+        class="btn-header"
+        [class]="currentTab == tabs.Recommend ? 'active' : ''"
+        (click)="irA('/menu/busquedas')"
+        ><div class="grid-rows">
+          <ion-icon class="marg-se" slot="start" name="heart"></ion-icon>
+          <ion-label class="responsive-max tx-cap">
+            {{ 'menu.tabs.recommend' | translate }}
+          </ion-label>
+          <ion-badge color="danger" slot="end">1</ion-badge>
+        </div></ion-button
+      >
+      -->
+
+      <!-- Login -->
+      <!--
+      <ion-button
+        class="btn-header"
+        (click)="irA('/login')"
+        *ngIf="perfil == null"
+        ><div class="grid-rows">
+          <ion-icon class="marg-se" slot="start" name="person"></ion-icon>
+          <ion-label class="tx-cap">{{
+            'menu.tabs.login' | translate
+          }}</ion-label>
+        </div></ion-button
+      >
+        -->
+      <!-- Register -->
+      <!--
+      <ion-button
+        class="btn-header"
+        (click)="irA('/registro')"
+        color="success"
+        *ngIf="perfil == null"
+        fill="solid"
+        style="--border-radius: 4px"
+        ><div class="grid-rows">
+          <ion-icon class="marg-se" slot="start" name="person"></ion-icon>
+          <ion-label class="tx-cap">{{
+            'menu.tabs.register' | translate
+          }}</ion-label>
+        </div></ion-button
+      >
+    -->
+    </div>
+
+    <!-- Share -->
+    <!--
+    <ion-button class="btn-header" (click)="shareFebelink($event)"
+      ><div class="grid-rows">
+        <ion-icon class="marg-se" slot="start" name="share-social"></ion-icon>
+        <span class="responsive-max tx-cap" translate>common.share</span>
+      </div></ion-button
+    >
+    -->
+    <!-- Notifications -->
+    <!--
+    <ion-button *ngIf="perfil" (click)="irA('/menu/notificaciones')">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-badge color="danger" slot="end" *ngIf="notifCount">{{
+        notifCount
+      }}</ion-badge>
+    </ion-button>
+    -->
+    <!-- Guide -->
+    <!--
+    <ion-button
+      size="large"
+      color="primary"
+      slot="icon-only"
+      (click)="openYTguide()"
+    >
+    <ion-icon style="font-size: x-large" name="information-circle"></ion-icon>
+    
+    </ion-button>
+    -->
+    <!-- Lang -->
+    <!-- <app-lang-btn></app-lang-btn> -->
+
+    <!-- Img Logo -->
+  </ion-buttons>
+</div>

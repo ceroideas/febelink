@@ -1,0 +1,65 @@
+<ion-card class="card ion-no-margin">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="0.2"><h2 class="line-str no-margin"></h2></ion-col>
+      <ion-col size="5.2" class="center-v">
+        <!-- Asset Buying -->
+        <ion-row class="vertical-content">
+          
+          <img class="abicon-25" [src]="offer?.selling.asset_code ? assetSvc.getImg(offer?.selling.asset_code) : ''"
+          />
+          <app-num-float
+            [number]="offer?.amount ?? 0"
+             [round]="walletParams.assetsMaxDecimals ?? 0"
+
+            classNbr="margin-start"
+            [bold]="true"
+          ></app-num-float>
+        </ion-row>
+
+        <!-- Asset Selling -->
+        <ion-row class="vertical-content">
+          <img class="abicon-25" 
+          
+          [src]="offer?.selling.asset_code ? assetSvc.getImg(offer?.selling.asset_code) : ''"
+          />
+          <app-num-float
+          [number]="offerSvc.calcBuy(offer?.amount ?? 0, offer?.price ?? 0, this.walletParams?.assetsMaxDecimals ?? 0)"
+
+           [round]="walletParams.assetsMaxDecimals ?? 0"
+
+            classNbr="margin-start"
+            [bold]="true"
+          ></app-num-float>
+        </ion-row>
+      </ion-col>
+      
+      <ion-col size="0.2"><h2 class="line no-margin"></h2></ion-col>
+      <ion-col size="5.6" class="center-v">
+        <!-- Date -->
+        <ion-row class="vertical-content align-center marg-b"><ion-label>
+          {{ offer?.last_modified_time | dateFormat: dateFormatType.DateTime: monthFormatType.Number }}
+        </ion-label></ion-row>
+
+        <!-- Buttons -->
+        <ion-row class="vertical-content align-center">
+          <ng-container *ngIf="isSelling || offer?.seller == walletParams?.publicKey">
+            <!-- Edit -->
+            <ion-col size="6" class="tx-center margin-top">
+              <ion-icon class="abicon" name="pencil-outline" (click)="edit()" color="febelink"></ion-icon>
+            </ion-col>
+            <!-- Delete -->
+            <ion-col size="6" class="tx-center margin-top">
+              <ion-icon class="abicon" name="trash-outline" (click)="delete()" color="febelink"></ion-icon>
+            </ion-col>
+          </ng-container>
+
+          <!-- Button Buy -->
+          <ion-button class="btn-fblink-rnd" (click)="buy()" *ngIf="!isSelling && offer?.seller != walletParams?.publicKey">
+            {{ 'pages.wallet.buy.button' | translate }}
+          </ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>

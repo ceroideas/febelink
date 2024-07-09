@@ -1,0 +1,282 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import '@ionic/angular/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
+@import '@ionic/angular/css/display.css';
+@import 'swiper/css';
+
+@import "swiper/css/free-mode";
+@import "swiper/css/navigation";
+@import "swiper/css/thumbs";
+
+body {
+  color: black;
+}
+
+.swiper-button-prev{
+  display: none;
+}
+
+.swiper-button-next{
+  display: none !important;
+}
+
+ionic-selectable-modal {
+  ion-header {
+    ion-toolbar {
+      --background: var(--ion-color-febelink);
+      color: white;
+    }
+  }
+}
+
+@media only screen and (min-height: 768px) and (min-width: 768px) {
+  .guide-modal .modal-wrapper {
+    left: calc(50% - (600px / 2));
+    top: calc(35% - (600px / 2));
+    position: absolute;
+    width: 600px;
+    height: 800px;
+  }
+}
+
+@media only screen and (max-height: 700px) and (min-width: 768px) {
+  .guide-modal .modal-wrapper {
+    left: calc(50% - (600px / 2));
+    top: calc(48% - (600px / 2));
+    position: absolute;
+    width: 600px;
+    height: 610px;
+  }
+}
+
+.results-list {
+  @media (min-width: 768px) {
+    padding: 0;
+    margin: 0;
+
+    ion-item {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
+        0 4px 4px rgba(0, 0, 0, 0.11), 0 6px 8px rgba(0, 0, 0, 0.11);
+
+      margin: 15px 10px;
+      border-radius: 7px;
+    }
+  }
+}
+
+.desktop {
+  // @media (max-width: 768px) {
+  //   display: none !important;
+  // }
+}
+.mobile {
+  // @media (min-width: 768px) {
+    display: none;
+  // }
+}
+.responsive-max {
+  @media (max-width: 1165px) {
+    display: none;
+  }
+}
+.responsive-min {
+  @media (min-width: 1165px) {
+    display: none;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.limit-size {
+  max-width: 768px;
+  margin: auto;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+  .alert-radio-group::-webkit-scrollbar,
+  .alert-checkbox-group::-webkit-scrollbar {
+    width: 1em;
+    display: block !important;
+  }
+
+  .alert-radio-group::-webkit-scrollbar-track,
+  .alert-checkbox-group::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .alert-radio-group::-webkit-scrollbar-thumb,
+  .alert-checkbox-group::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+
+  .landing-modal .modal-wrapper {
+    --border-radius: 7px;
+    --height: 460px;
+  }
+}
+
+// Para eliminar el **Powered By Google** en el Autocomplete de Google Places API
+.pac-container:after {
+  background-image: none !important;
+  height: 0px;
+}
+
+.line {
+  border: 0;
+  border-top: 3px solid rgba(0, 0, 0, 0.1);
+}
+.line-b {
+  border: 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-top {
+  vertical-align: text-top;
+}
+.text-bottom {
+  vertical-align: text-bottom;
+}
+.hint {
+  opacity: 0.5;
+}
+.one-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.decimal {
+  font-size: 10px;
+  opacity: 0.7;
+  vertical-align: super;
+}
+.pointer {
+  cursor: pointer;
+}
+
+/*Desaparecer chat externo - temporal*/
+div#fg_bubble {
+  display: none !important;
+}
+
+.input-icon-container {
+  height: 39px;
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  background: none;
+  padding: 0 10px;
+  border-radius: 5px;
+  width: 98%;
+  margin-top: 14px;
+  position: relative;
+  display: inline-block;
+
+  input{
+    border: none;
+    outline: none;
+  }
+}
+
+
+
+ion-input {
+  --border-radius: 20px;
+  --border-color: red;
+  --padding-start: 50px;
+  --padding-end: 50px;
+  /* --background for solid only*/
+  --background: purple;
+}
+
+ion-input{
+  background: red;
+  display: block;
+  outline: none;
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+}
+ion-input.aqua {
+  --background: aqua;
+}
+ion-input input.native-input{
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 12px;
+  outline: none;
+  background: transparent;
+}
+
+ion-searchbar{
+  width: 100%;
+  ::ng-deep{
+    .searchbar-search-icon { display:none; width:0; height:0; padding: 0; }
+    .searchbar-input.sc-ion-searchbar-md{padding: 0 !important;text-align: left;}
+    .searchbar-input.sc-ion-searchbar-ios {
+     background: none;
+     padding: 0;
+  }
+  }
+}
+.icon-input {
+  position: absolute;
+  right: 19px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #757575;
+  background: #fff;
+  cursor: pointer;
+}
+
+
+
+ion-searchbar {
+  --background: #141414;
+  --border-radius: 25px;
+  --color: white;
+  --icon-color: white;
+  --placeholder-color: white;
+}

@@ -1,0 +1,41 @@
+export const environment = {
+  production: true,
+  baseWebUrlWsrv: 'https://wsrv.nl?url=',
+  baseWebUrl: 'https://api.febelink.com/',
+  API_URL: 'https://api.febelink.com/api/',
+  API_URL_AUTH: 'https://api.febelink.com/api/auth/',
+  SOCKET_URL: 'https://febelink-chat.herokuapp.com/',
+
+  DOOFINDER_BASE_URL: 'https://eu1-search.doofinder.com/6/',
+  DOOFINDER_HASHID: '72a38bd66f322e35fa2c168a48117d02',
+  DOOFINDER_API_KEY: 'eu1-eb36910de5a685bff32fd906a8e4ffe2ce4f031a',
+
+  // SOCKET_URL: 'https://api.febelink.com:3425/',
+  WEB_CLIENT_ID:
+    '939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com',
+  FACEBOOK_ID: '895023747604792',
+  WEB_URL: 'https://www.febelink.com/',
+  stripe_publick_key: 'pk_live_26EQ8gc0INPEdZjy6Iy8DOnK004mMtUILK',
+  // GooglePlaces API
+  G_PLACES_API_KEY: 'AIzaSyB-s7c6IF_G7k30a0kxWFgM21PDy_dSSCs',
+  // Store Urls
+  GOOGLE_STORE:
+    'https://play.google.com/store/apps/details?id=com.xerintel.febelink54831',
+  APP_STORE:
+    'https://febelink.us19.list-manage.com/track/click?u=2c62737fce42bba9ebb2f5d05&id=f9ee5da0af&e=45535eea63',
+  // KYC Alice
+  KYC_SELFIE: true,
+  // Initial Page
+  HOME_PAGE: '',
+  FIREBASE_CONFIG: {
+    apiKey: "AIzaSyDbYXGGXYL21-NK-Ob8bNZAY-jcVwx4-7s",
+    authDomain: "febelink-app.firebaseapp.com",
+    databaseURL: "https://febelink-app.firebaseio.com",
+    projectId: "febelink-app",
+    storageBucket: "febelink-app.appspot.com",
+    messagingSenderId: "939891417028",
+    appId: "1:939891417028:web:fc2479f6487c6fd4afce91",
+    measurementId: "G-LL020HEJ1L"
+  },
+  FIREBASE_VAPID_KEY: 'BEiWoNPviKxsd2vXNfwP-N99b9EAaOfJSV9P-6894BcZwIdz_E4XUNVbaHbwoo21i3E2Q8b1RWwAQfv5fNGDirU'
+};

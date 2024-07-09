@@ -1,0 +1,168 @@
+
+
+<div id="search-content" class="search-content container-general">
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  <div class="container-detail-search">
+     <!--AVATAR SECTION-->
+    <div class="containter-left">
+      <ng-container>
+       <div class="card">
+        <div class="image-profile">
+          <img *ngIf="currentUser.avatar !== undefined && currentUser?.avatar !== null" src="{{currentUser?.avatar}}" 
+          appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+          />
+        </div>
+        <div class="name-profile">
+          {{currentUser?.nick}}
+        </div>
+        <div class="subname-profile">
+          {{user?.email}}
+        </div>
+       
+        <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
+          {{user?.description}}
+        </div>
+
+        <div class="buttons-profile">
+          <!-- <div class="item-button"></div> -->
+        </div>
+      </div>
+
+      <div class="valoraciones">
+        <div class="title-valoraciones">
+          Valoraciones
+        </div>
+        <div class="container-valoraciones">
+          <div class="item-valor  item-valor-1">
+            No tienes valoraciones aún
+          </div>
+        </div>
+      </div>
+      <div class="newbutton">
+        <div class="title-valoraciones" (click)="createPost()" >
+          Nueva Publicación <i class="fa fa-chevron-right"></i>
+        </div>
+      </div>
+      </ng-container>
+
+    </div>
+    
+  </div>
+
+  <app-footer></app-footer>
+
+</div>
+
+<div *ngIf="openRating" class="mobile modal-back-background">
+  <div class="modal-front-content">
+    <div class="modal-front-title">
+      ¿Qué te ha parecido el cliente?
+    </div>
+    <div class="modal-front-subtitle modal-subtitle-margin-b">
+      Valora el servicio siendo 5 estrellas la mayor puntuación.
+    </div>
+    <div class="modal-front-rating">
+      <img class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/><img class="modal-rating-star"
+                                                                               src="assets/icon/svg/star-grey.svg"/><img
+      class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/><img class="modal-rating-star"
+                                                                          src="assets/icon/svg/star-grey.svg"/><img
+      class="modal-rating-star" src="assets/icon/svg/star-grey.svg"/>
+    </div>
+    <div class="modal-front-comment">
+      Deja un comentario
+    </div>
+    <div class="modal-front-textarea-div">
+      <ion-textarea placeholder="Máximo 500 caracteres" rows="6" class="no-padding modal-front-textarea"></ion-textarea>
+    </div>
+    <div class="modal-button-primary" (click)="saveRating()">
+      Enviar
+    </div>
+    <div class="modal-button-secondary" (click)="openRating = !openRating">
+      Cancelar
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isRatingSaved" class="mobile modal-background-full">
+  <div class="modal-full-close" (click)="isRatingSaved = !isRatingSaved">
+    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+  </div>
+  <div class="modal-full-content">
+    <div class="modal-full-check">
+      <img src="assets/icon/svg/check-circle.svg" class="modal-full-check-svg"/>
+    </div>
+    <div class="modal-full-title">
+      Tu valoración se ha realizado con éxito
+    </div>
+    <div class="modal-full-subtitle">
+      Muchas gracias por la valoración, ayudará a otros usuarios a contratar a los profesionales
+    </div>
+  </div>
+  <div class="modal-full-bottom">
+    <div class="modal-full-button-primary" (click)="isRatingSaved = !isRatingSaved">
+      Entendido
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isBestChanged" class="mobile modal-background-full">
+  <div class="modal-full-close" (click)="isBestChanged = !isBestChanged">
+    <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+  </div>
+  <div class="modal-full-content">
+    <div class="modal-full-check">
+      <img src="assets/icon/svg/check-circle.svg" class="modal-full-check-svg"/>
+    </div>
+    <div class="modal-full-title">
+      The best ha sido concedido al profesional
+    </div>
+    <div class="modal-full-subtitle">
+      Solo podrás tener un the best profesional a la vez. Cada vez que concedas este título el anterior desaparecerá.
+    </div>
+  </div>
+  <div class="modal-full-bottom">
+    <div class="modal-full-button-primary" (click)="isBestChanged = !isBestChanged">
+      Entendido
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isRatingSaved" class="desktop">
+  <div class="modal-back-background">
+    <div class="modal-front-content-c">
+      <div class="modal-back-close-b" (click)="isRatingSaved = !isRatingSaved">
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+      </div>
+      <div class="modal-full-check">
+        <img src="assets/icon/svg/check-circle.svg" class="modal-full-check-svg"/>
+      </div>
+      <div class="modal-full-title-b">
+        Tu valoración se ha realizado con éxito
+      </div>
+      <div class="modal-full-subtitle-b">
+        Muchas gracias por la valoración, ayudará a otros usuarios a contratar a los profesionales
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isBestChanged" class="desktop">
+  <div class="modal-back-background">
+    <div class="modal-front-content-c">
+      <div class="modal-back-close-b" (click)="isBestChanged = !isBestChanged">
+        <img src="assets/icon/svg/close.svg" class="modal-full-close-svg"/>
+      </div>
+      <div class="modal-full-check">
+        <img src="assets/icon/svg/check-circle.svg" class="modal-full-check-svg"/>
+      </div>
+      <div class="modal-full-title-b">
+        The best ha sido concedido al profesional
+      </div>
+      <div class="modal-full-subtitle-b">
+        Solo podrás tener un the best profesional a la vez. Cada vez que concedas este título el anterior desaparecerá.
+      </div>
+    </div>
+  </div>
+</div>

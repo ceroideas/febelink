@@ -1,0 +1,24 @@
+<quill-editor
+    #quill
+    trackChanges="all"
+    [modules]="modules"
+    [ngModel]="contenido"
+    [placeholder]="placeholder"
+    (onEditorCreated)="created($event)"
+    [styles]="styles"
+    [readOnly]="readOnly"
+    (onFocus)="focus($event)"
+    (onEditorChanged)="changedEditor($event)"
+    (onBlur)="blur($event)"
+    ngDefaultControl
+></quill-editor>
+<!-- <pre><code>{{ content?.html }}</code></pre>
+<ion-label [innerHTML]="content?.html"></ion-label> -->
+<ngx-link-preview *ngIf="linksArray.length > 0"
+                  class="modern"
+                  [apiRoute]="apiMetaTagUrl"
+                  [getApiEndpoint$]="apiCallbackFn"
+                  [links]="linksArray"
+                  [showLinkUrl]="true"
+                  [useHtmlLinkDefaultClickEvent]="true"
+></ngx-link-preview>

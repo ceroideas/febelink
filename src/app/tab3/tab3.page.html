@@ -1,0 +1,80 @@
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefreshOffers($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- List of chats -->
+  <div class="limit-size">
+    <div class="content-filter">
+      <div class="autocomplete">
+        <ion-searchbar
+            #mysearch
+            placeholder="{{ 'common.searchPlaceholder' | translate }}"
+            debounce="500"
+            id="searchChat"
+        >
+        </ion-searchbar>
+      </div>
+    </div>
+
+    <ion-list *ngIf="!isLoading" class="results-list">
+      <ion-item
+        tappable
+        lines="none"
+        *ngFor="let room of rooms | filter:(mysearch?.value ?? '')"
+        (click)="navigateToChat(room?.chatRoomId, room?.receiverId, room?.receiverUsername)"
+      >
+        <ion-avatar slot="start">
+           <img src="assets/imgs/4.jpg" *ngIf="!room?.imagen" />
+          <ion-img
+            [src]="room?.imagen"
+            *ngIf="room?.imagen"
+            appImgErrorFallback
+          ></ion-img>
+          <!-- <ion-badge color="danger">{{getUnreadMessages(room)}}</ion-badge> -->
+        </ion-avatar>
+        <ion-label>
+          <div class="flex">
+            <h2>
+              <strong>{{this.currentUser?.id === room?.senderId ? room?.receiverUsername : room?.senderUsername}}</strong>
+            </h2>
+
+            <ng-template [ngIf]="room?.demanda" [ngIfElse]="offerReceived">
+              <div class="ion-text-end">
+                <span
+                  class="estado"
+                  [style]="{'background-color': getOfferBackgroundColor(room?.estado)}"
+                >{{room?.estado_oferta}}</span
+                >
+              </div>
+            </ng-template>
+            <ng-template #offerReceived>
+              <span
+                class="estado"
+                [style]="{'background-color': getOfferBackgroundColor(room?.estado)}"
+              >{{ getOfferText(room?.estado) }}</span
+              >
+            </ng-template>
+          </div>
+
+          <p>{{room?.demanda}}</p>
+          <p class="desc">{{room?.lastMessage}}</p>
+        </ion-label>
+        <div slot="end" class="ion-text-end"></div>
+        <!--        <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear"
+                            (click)="editItem(offer); $event.stopPropagation();" class="editBtn">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>-->
+        <!-- <ion-button
+          color="danger"
+          fill="clear"
+          (click)="deleteItem(room); $event.stopPropagation();"
+        >
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button> -->
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- END List of chats -->
+  <app-footer></app-footer>
+</ion-content>

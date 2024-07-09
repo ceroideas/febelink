@@ -1,0 +1,22 @@
+
+<div >
+  <ion-header color="febelink">
+    <ion-toolbar color="febelink">
+      <ion-title>{{ title }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button icon-only (click)="onDismiss()">
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <iframe
+    popover-class="yt"
+    width="100%"
+    height="100%"
+    [src]="trustedVideoUrl"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>

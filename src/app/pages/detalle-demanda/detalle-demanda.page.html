@@ -1,0 +1,196 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" class="desktop">
+      <ion-button class="btn-header" (click)="irA( '/' + homePage )">
+        <ion-icon slot="start" name="search"></ion-icon>
+        {{ 'menu.tabs.searchEngine' | translate }}
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/menu/busquedas')">
+        <ion-icon slot="start" name="heart"></ion-icon>
+        {{ 'menu.tabs.recommend' | translate }}
+      </ion-button>
+      <ion-button class="btn-header" (click)="irA('/menu/ofertas')">
+        <ion-icon slot="start" name="chatbubbles"></ion-icon>
+        {{ 'menu.tabs.chat' | translate }}
+      </ion-button>
+      <ion-button
+        *ngIf="perfil === null"
+        class="btn-header"
+        (click)="irA('/menu/perfil')"
+      >
+        <ion-icon slot="start" name="person"></ion-icon>
+        {{ (perfil !== null ? 'menu.tabs.profile' : 'menu.tabs.login') |
+        translate }}
+      </ion-button>
+    </ion-buttons>
+
+    <img src="assets/imgs/logo.png" alt="" class="logo" (click)="home()" />
+
+    <ion-buttons size="large" slot="end">
+      <ion-button
+        size="large"
+        color="primary"
+        slot="icon-only"
+        (click)="openGuide()"
+      >
+        <ion-icon style="font-size: x-large" name="information-circle">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="ion-text-center ion-padding-top" *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+    <p>Cargando...</p>
+  </div>
+
+  <div *ngIf="!isLoading" style="margin: 0 auto; max-width: 1000px">
+    <ion-grid fixed class="no-padding">
+      <ion-row>
+        <ion-col size="12" size-sm="6" class="no-padding">
+          <ion-slides>
+            <ion-slide>
+              <img
+                [src]="demanda?.imagen"
+                *ngIf="demanda?.imagen"
+                (error)="handleImgError( $event )"
+              />
+              <ion-img
+                src="assets/imgs/4.jpg"
+                *ngIf="!demanda?.imagen"
+                appImgErrorFallback
+              ></ion-img>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+        <ion-col size="12" size-sm="6" class="ion-padding">
+          <div class="apartado">
+            <h2 class="title">{{demanda?.nombre}}</h2>
+            <span class="ofertante" (click)="irAPerfil()"
+              ><em>{{demanda?.demandante}}</em></span
+            >
+          </div>
+
+          <hr />
+
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="irAPerfil()"
+          >
+            <ion-icon name="checkmark-circle" item-left></ion-icon>
+            &nbsp;VER PERFIL
+          </ion-button>
+
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="viewChat()"
+          >
+            <ion-icon name="chatbox-ellipses-outline" item-left></ion-icon>
+            &nbsp;CHAT
+          </ion-button>
+
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="share(demanda?.id,$event)"
+          >
+            <ion-icon name="share-social" item-left></ion-icon>
+            &nbsp;COMPARTIR
+          </ion-button>
+
+          <ion-button
+            class="btn-info"
+            expand="full"
+            color="febelink"
+            (click)="reportUser()"
+          >
+            <ion-icon name="alert-outline"></ion-icon>
+            &nbsp;{{ 'common.buttons.report' | translate }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <hr />
+          <div class="apartado">
+            <h2 class="title">Descripción</h2>
+            <em class="desc">{{demanda?.descripcion || "Sin Descripción"}}</em>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div *ngIf="demandasRelacionadas?.length>0">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <hr />
+            <div class="apartado">
+              <h2 class="title">Otras Búsquedas</h2>
+              <em class="desc"
+                >Búsquedas relacionadas que te pueden interesar</em
+              >
+              <ion-list class="results-list">
+                <ion-item
+                  lines="none"
+                  (click)="detalleDemanda(demanda)"
+                  *ngFor="let demanda of demandasRelacionadas"
+                >
+                  <ion-avatar slot="start">
+                    <img src="assets/imgs/4.jpg" *ngIf="!demanda?.imagen" />
+                    <ion-img
+                      [src]="demanda?.imagen"
+                      *ngIf="demanda?.imagen"
+                      appImgErrorFallback
+                    ></ion-img>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2><strong>{{demanda?.nombre}}</strong></h2>
+                    <em class="desc">{{demanda?.descripcion}}</em>
+
+                    <div class="social">
+                      <span class="share" *ngIf="demanda?.valoracion==null">
+                        <ion-icon name="star"></ion-icon> 0 / 5
+                      </span>
+                      <span class="share" *ngIf="demanda?.valoracion!=null">
+                        <ion-icon name="star"></ion-icon>
+                        {{demanda?.valoracion}} / 5
+                      </span>
+                      <span class="share">
+                        <ion-icon class="share" name="share-social"></ion-icon>
+                        <ion-icon class="share" name="eye"></ion-icon>
+                      </span>
+                    </div>
+                  </ion-label>
+                  <ion-label slot="end">
+                    <em style="padding: 5px">{{demanda?.user?.nick}}</em>
+                  </ion-label>
+                  <ion-icon
+                    slot="end"
+                    [color]="demanda.favorito ? 'danger' : 'grey'"
+                    [name]="demanda.favorito ? 'heart' : 'heart-outline'"
+                    (click)="demanda.favorito = !demanda.favorito; onClickAddToFavorites(demanda); $event.stopPropagation();"
+                  ></ion-icon>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

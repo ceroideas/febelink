@@ -1,0 +1,44 @@
+<!-- Pricing start -->
+<section class="section" id="section-pricing">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="tx-center mb-5" id="team-heading">
+          <h5 class="text-primary text-uppercase small-title" id="mini-titular">
+            {{ 'landing.aboutTeam.title' | translate }}
+          </h5>
+          <!--<h1 class="mb-3" id="titular-seccion">Equipo Especializado</h1>-->
+          <p id="text-newsletter">
+            {{ 'landing.aboutTeam.description' | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end row -->
+    <div class="kIdTeam">
+      <div class="kIdTeamChild">
+        <div class="row" id="team-row">
+          <div *ngFor="let tm of teamMembers" class="col-lg-3">
+            <div id="img_container">
+              <img src="{{ 'assets/landing/team_member_' + tm.pic + '.png' }}" id="team-image" />
+              <app-social-links
+                  id="social_linkedin"
+                  linkedin="{{ 'https://' + ( !tm.liTag ? 'www' : tm.liTag ) + '.linkedin.com/in/' + tm.linkedin }}">
+                </app-social-links>
+            </div>
+            <h1 class="mb-5" id="titular-team">
+              <span class="font-24">{{ tm.name }}</span>
+            </h1>
+            <p id="text-team">
+              {{ 'landing.aboutTeam.' + tm.tag | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- end row -->
+      
+    </div>
+  </div>
+  <!-- end container -->
+</section>
+<!-- Pricing end -->

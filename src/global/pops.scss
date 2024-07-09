@@ -1,0 +1,202 @@
+/* Default Pops */
+.pop-yt {
+    ion-backdrop {
+      --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+    }
+    .popover-content {
+      top: 5vh;
+      left: 5vw;
+      transform-origin: left top;
+      --width: 90vw;
+      --max-width: 90vw;
+      --height: 90vh;
+      --max-height: 90vh;
+      background: transparent;
+  
+      app-youtube-pop,
+      app-kyc-alice {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    @media (max-width: 768px){
+      .popover-content {
+        /* top: 10vh;
+        left: 10vw;
+        --width: 80vw;
+        --max-width: 80vw;
+        --height: 80vh;
+        --max-height: 80vh; */
+      }
+    }
+  }
+.pop-mobile-width {
+    ion-backdrop {
+        --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+    }
+    .popover-content{
+        // Mobile
+        @media (max-width: 430px){
+                width: 340px;
+                --width: 340px;
+        }
+
+        // Desktop
+        @media ( min-width: 430px ){
+            .popover-content{
+                width: 400px;
+                --width: 400px;
+            }
+        }
+    }
+
+    .modal-wrapper {
+        --max-width: 500px;
+        border-radius: 10px 10px 0px 0px;
+    
+        /* Desktop */
+        @media (max-width: 430px) {
+            margin: 20px auto 0px auto;
+        }
+        /* Mobile */
+        @media (min-width: 430px) {
+            margin: 10px 10px 0px 10px;
+        }
+    }
+}
+.modal-mobile {
+    ion-backdrop {
+        --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+    }
+    .modal-wrapper {
+        --max-width: 500px;
+        border-radius: 10px 10px 0px 0px;
+        
+        /* Desktop */
+        @media (min-width: 768px) {
+            margin: 20px auto 0px auto;
+        }
+        /* Mobile */
+        @media (max-width: 768px) {
+            margin: 10px 10px 0px 10px;
+        }
+    }
+}
+
+.alertSmallTitle { .alert-title { font-size: 18px; } }
+
+/* Width */
+.pop-w-300 {
+    .popover-content{
+        /* Desktop */
+        @media (max-width: 768px) {
+            max-width: 300px;
+            --max-width: 300px;
+        }
+        /* Mobile */
+        @media (min-width: 768px) {
+            max-width: 100%;
+            --max-width: 100%;
+        }
+        
+        width: 300px;
+        --width: 300px;
+    }
+
+    .modal-wrapper {
+        max-width: 300px;
+        --max-width: 300px;
+        
+        width: 300px;
+        --width: 300px;
+    }
+}
+.pop-w-400 {
+    .popover-content{
+        max-width: 400px;
+        --max-width: 400px;
+        
+        width: 400px;
+        --width: 400px;
+    }
+
+    .modal-wrapper {
+        max-width: 400px;
+        --max-width: 400px;
+        
+        width: 400px;
+        --width: 400px;
+    }
+}
+.pop-w-700 {
+    .popover-content{
+        /* Desktop */
+        @media (min-width: 768px) { max-width: 700px; --max-width: 700px; }
+        /* Mobile */
+        @media (max-width: 768px) { max-width: 90%; --max-width: 90%; }
+        
+        width: 700px; --width: 700px;
+    }
+
+    .modal-wrapper {
+        /* Desktop */
+        @media (min-width: 768px) { max-width: 700px; --max-width: 700px; }
+        /* Mobile */
+        @media (max-width: 768px) { max-width: 90%; --max-width: 90%; }
+        
+        width: 700px; --width: 700px;
+    }
+}
+
+/* Height */
+.pop-h-400 {
+    .popover-content{
+        max-height: 400px;
+        --max-height: 400px;
+        
+        height: 400px;
+        --height: 400px;
+    }
+
+    .modal-wrapper {
+        max-height: 400px;
+        --max-height: 400px;
+        
+        height: 400px;
+        --height: 400px;
+    }
+}
+.pop-h-80 {
+    .popover-content{
+        max-height: 80%; --max-height: 80%;
+        height: 80%; --height: 80%;
+    }
+    .modal-wrapper {
+        max-height: 80%; --max-height: 80%;
+        height: 80%; --height: 80%;
+    }
+}
+
+/* Border Radius */
+.pop-br-5 {
+    .popover-content{ border-radius: 5px; }
+
+    .modal-wrapper { border-radius: 5px; }
+}
+.pop-br-10 {
+    .popover-content{ border-radius: 10px 10px 10px 10px; }
+
+    .modal-wrapper { border-radius: 10px 10px 10px 10px; }
+}
+
+/* Opacity */
+.pop-opacity {
+    ion-backdrop {
+        --backdrop-opacity: var(--ion-backdrop-opacity, 0.8);
+    }
+}
+.pop-op-5 { ion-backdrop { --backdrop-opacity: var(--ion-backdrop-opacity, 0.5); } }
+.pop-op-6 { ion-backdrop { --backdrop-opacity: var(--ion-backdrop-opacity, 0.6); } }
+.pop-op-7 { ion-backdrop { --backdrop-opacity: var(--ion-backdrop-opacity, 0.7); } }
+
+#emoji-close-div { display: none; }

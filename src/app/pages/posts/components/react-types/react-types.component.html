@@ -1,0 +1,6 @@
+<div style="display:table;width:240px;padding:4px 6px;background: #FFFFFF;">
+  <div *ngFor="let reactType of reactTypes" style="cursor:pointer;display:table-cell;vertical-align:middle;text-align:center;font-weight: 500;font-size: 14px;line-height: 150%;color: #1C64F2;" (click)="reacted( reactType )">
+    <img [src]="reacts.img( reactType?.id )" style="width:14px;margin-right:6px;margin-left:8px;" />
+    {{ 'pages.posts.reacts.' + reactType.type | translate }}
+  </div>
+</div>

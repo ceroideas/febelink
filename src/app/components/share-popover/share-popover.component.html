@@ -1,0 +1,54 @@
+<ion-list lines="none">
+  <ion-item (click)="shareFB()" style="cursor:pointer" *ngIf="!isNative">
+
+    <ion-buttons slot="start">
+      <ion-button color="facebook" slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="logo-facebook"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>Facebook</p>
+
+  </ion-item>
+  <ion-item (click)="shareTwitter()" style="cursor:pointer" *ngIf="!isNative">
+
+    <ion-buttons slot="start">
+      <ion-button color="twitter" slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="logo-tumblr"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>Twitter</p>
+
+  </ion-item>
+  <ion-item (click)="shareLinkedin()" style="cursor:pointer" *ngIf="!isNative">
+
+    <ion-buttons slot="start">
+      <ion-button slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="logo-linkedin"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>Linkedin</p>
+  
+  </ion-item>
+
+  <!-- Social Sharing Native -->
+  <ion-item (click)="shareSocialNative()" class="pointer" *ngIf="isNative">
+
+    <ion-buttons slot="start">
+      <ion-button slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="share-social-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>{{ 'common.labelSocialShare' | translate }}</p>
+  
+  </ion-item>
+
+  <!-- Reference Oracle -->
+  <ion-item (click)="referenceOracle()" class="pointer" *ngIf="id_oracle">
+    <ion-buttons slot="start">
+      <ion-button slot="icon-only"> 
+        <ion-icon style="font-size: x-large;" name="bookmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <p>{{ 'common.labelReferenceOracle' | translate }}</p>
+  </ion-item>
+</ion-list>

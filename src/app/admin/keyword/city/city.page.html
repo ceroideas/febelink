@@ -1,0 +1,133 @@
+<div class="container-general">
+  <div class="title">
+    <ion-icon (click)="goBack()" slot="start" name="arrow-back-outline"></ion-icon>
+
+    <!-- <ion-back-button defaultHref="/admin"></ion-back-button>  -->
+    Panel de Administrador 
+    <span class="simbol">></span> 
+    <span class="span1">Gestion keyword - Ciudades</span>
+    <div class="button-add" (click)="showCreatekeyword = true"><i class="fa fa-plus"></i>Añadir</div>
+  </div>
+  <div class="buscador">
+    <ion-searchbar
+      [placeholder]="'Gestionar  busqueda de link'"
+      inputmode="text"
+      (keyup.enter)="search_filter($event)"
+      (ionChange)="search_filter($event)"
+      (ionClear)="search_filter($event)"
+      debounce="500"
+    ></ion-searchbar>
+  </div>
+  
+
+
+  <div class="container-admin">
+    <ion-content>
+      <!-- Loading -->
+      <div class="cargando-container" margin-top *ngIf="isLoading">
+        <ion-row>
+          <ion-spinner></ion-spinner>
+          <h4>{{ 'common.labelSearching' | translate }}</h4>
+        </ion-row>
+      </div>
+    
+      <div class="scroll-inner">
+        <table id="tokensUsersTable">
+          <tr>
+            <th style="width: 15%">Ubicacion</th>
+            <th style="width: 15%">Ciudad</th>
+            <th>Link</th>
+            <th>Titulo de Pagina</th>
+            <th>Meta Descripcion</th>
+            <th colspan="2" style="width: 10%">Acciones</th>
+          </tr>
+          <tr *ngFor="let keys of CityKeys">
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.locations_id.title}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.title}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.link}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.page_title}}</span>
+            </td>
+            <td [ngSwitch]="keys.isEdit">
+              <span *ngSwitchDefault>{{keys.meta_description}}</span>
+            </td>
+            <td class="edit">
+              <ion-icon name="create-outline" (click)="showEdit(keys)"></ion-icon>
+            </td>
+            <td class="delete">
+              <ion-icon
+                name="trash-outline"
+                (click)="delete(keys)"
+              ></ion-icon>
+            </td>
+          </tr>
+        </table>
+      </div>
+    
+      <!-- Pagination Bottom -->
+      <app-pagination
+        *ngIf="qPages > 1"
+        [qPages]="qPages"
+        [totalRecords]="totalRecords"
+        [recordsPerPage]="recordsPerPage"
+        [activePage]="activePage"
+        [disabled]="isLoading"
+        (onPageChange)="displayActivePage( $event )"
+      >
+      </app-pagination>
+    </ion-content>
+    
+  </div>
+</div>
+
+
+
+
+<!--  -->
+<div id="darkcreateKeywordController" *ngIf="showCreatekeyword"></div>
+<div id="createKeywordController" *ngIf="showCreatekeyword">
+  <div class="headerTitle">Crear Ciudad</div>
+  <div class="headerSubTitle">Introduce una ciudad y agregale un link</div>
+  <div class="containerKeyWord">
+    <div class="item-select" >
+      <label>Ubicacion: *</label>
+      <select   [(ngModel)]="keyCity.locations_id.id">
+        <option *ngFor="let location of locations" [value]="location.id">{{location.title}}</option>
+      </select>
+    </div>
+    <div class="item-select">
+      <label>Ciudad: *</label>
+      <input type="text" [(ngModel)]="keyCity.title" #newKeywordCity>
+    </div>
+    <div class="item-select">
+      <label>Keyword: *</label>
+      <input type="text" [(ngModel)]="keyCity.link" #newKeywordValue>
+    </div>
+    <div class="item-select"  >
+      <label>Titulo de Pagina: *</label>
+      <input type="text" [(ngModel)]="keyCity.page_title" #newKeywordPageLink>
+    </div>
+    <div class="item-select"  >
+      <label>Encabezado 1: *</label>
+      <input type="text" [(ngModel)]="keyCity.h1"  #newKeywordH1>
+    </div>
+    <div class="item-select"  >
+      <label>Meta Descripcion 1: *</label>
+      <input type="text" [(ngModel)]="keyCity.meta_description"  #newKeywordMeta>
+    </div>
+    <div class="buttons">
+      <ion-button color="light" (click)="restoreData()">Cancelar</ion-button>
+      <ion-button color="success" *ngIf="keyCity.id === ''" (click)="create(newKeywordCity.value, 
+        newKeywordValue.value, newKeywordH1.value, newKeywordPageLink.value, newKeywordMeta.value);">Añadir</ion-button>
+      <ion-button color="primary" *ngIf="keyCity.id !== ''" (click)="edit(newKeywordCity.value, 
+        newKeywordValue.value, newKeywordH1.value, newKeywordPageLink.value, newKeywordMeta.value);">Modificar</ion-button>
+    </div>
+  </div>
+  
+</div>

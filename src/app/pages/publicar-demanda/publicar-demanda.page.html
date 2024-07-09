@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="febelink">
+    <ion-title>Publicar Búsqueda</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+
+  <img [src]="base64img" *ngIf="base64img">
+  <img src="assets/imgs/photo.png" alt="" *ngIf="!srcFoto" class="placeholder" width="125" (click)="attachImage()"
+    height="125">
+ <input *ngIf="!isNative" class="input-file-demandas" type="file" accept="image/x-png,image/jpeg,image/gif" (change)="attachImage()" /> 
+   
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="submitForm()">
+
+
+
+    <ion-list lines="none">
+      <ion-radio-group  formControlName="ofertas_restantes">
+        <ion-list-header>
+          <ion-label>
+            <em>(Número máximo de ofertantes para la búsqueda)</em>
+          </ion-label>
+        </ion-list-header>
+    
+        <ion-item class="stars">
+          <ion-label>1</ion-label>
+          <ion-radio value="1" checked></ion-radio>
+        </ion-item>
+    
+        <ion-item class="stars">
+          <ion-label>3</ion-label>
+          <ion-radio value="3"></ion-radio>
+        </ion-item>
+    
+        <ion-item class="stars">
+          <ion-label>5</ion-label>
+          <ion-radio value="5"></ion-radio>
+        </ion-item>
+    
+        <ion-item class="stars">
+          <ion-label>&infin;</ion-label>
+          <ion-radio value="99"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+
+
+   <!-- <ion-list radio-group no-lines formControlName="ofertas_restantes">
+      <p tx-center><em>(Ofertantes máximos para la demanda)</em></p>
+      <ion-item class="stars">
+        <ion-radio slot="start" value="1" checked></ion-radio>
+        <ion-label>1
+        </ion-label>
+      </ion-item>
+      <ion-item class="stars">
+        <ion-radio slot="start" value="3"></ion-radio>
+        <ion-label>3
+        </ion-label>
+      </ion-item>
+      <ion-item class="stars">
+        <ion-radio slot="start" value="5"></ion-radio>
+        <ion-label>5
+        </ion-label>
+      </ion-item>
+      <ion-item class="stars">
+          <ion-radio slot="start" value="99"></ion-radio>
+          <ion-label>&infin;
+          </ion-label>
+        </ion-item>
+    </ion-list>-->
+
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item class="input" *ngIf="sectores?.length>0">
+      <ion-label position="floating">
+        Sector:
+      </ion-label>
+      <ion-select [(ngModel)]="sector" clearInput type="text" formControlName="sector">
+        <ion-select-option *ngFor="let sector of sectores" [value]="sector?.id">{{sector?.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="input" *ngIf="subsectores?.length>0">
+      <ion-label position="floating">
+        Subsector:
+      </ion-label>
+      <ion-select clearInput type="text" formControlName="sub_sector">
+        <ion-select-option *ngFor="let subsector of subsectores" [value]="subsector?.id">{{subsector?.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">
+        Descripción
+      </ion-label>
+      <ion-textarea rows="6" cols="20" formControlName="descripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-button type="submit" color="primary" class="publicar">Publicar</ion-button>
+  </form>
+</ion-content>

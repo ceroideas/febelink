@@ -1,0 +1,15 @@
+<ion-list>
+  <ng-container *ngFor="let asset of assetTypes; let i = index;">
+    <ion-item *ngIf="asset?.currency != except" detail (click)="onAssetSelected( asset )"
+        [class]="'asset-' + ( asset?.assetId ? 'en' : 'dis' ) + 'abled'"
+    >
+      <!-- Asset Icon -->
+      <ion-avatar slot="start" *ngIf="asset?.currency">
+        <img src="assets/icon/{{ asset?.currency?.toLowerCase() }}.png" width="50px" height="50px" />
+      </ion-avatar>
+      
+      <!-- Asset Name -->
+      <ion-label>{{ asset?.currency }}</ion-label>
+    </ion-item>
+  </ng-container>
+</ion-list>
