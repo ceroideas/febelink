@@ -17,6 +17,9 @@ export interface SearchProductCardType {
   ownerUsername: string;
   description: string;
   verified: number;
+  telefono: string;
+  provincia: string;
+  ciudad: string;
 }
 
 export interface PriceUnitType {
@@ -29,7 +32,7 @@ export interface PriceUnitType {
 @Component({
   selector: 'search-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.scss'],
+  styleUrls: ['./product-card.component.scss']
 })
 export class ProductCardComponent {
   //@ts-ignore

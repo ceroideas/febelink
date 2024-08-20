@@ -99,6 +99,10 @@ import { LoBuscamosPorTiPage } from '../pages/lo-buscamos-por-ti/lo-buscamos-por
 import { SearchComponent } from '../search/search.component';
 import { SearchCardComponent } from '../search/search-card/search-card.component';
 import { ProductCardComponent } from '../search/product-card/product-card.component';
+import { DropdownComponent } from '../components/dropdown/dropdown.component';
+import { LinksDropdownComponent } from '../components/links-dropdown/links-dropdown.component';
+
+import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles } from 'lucide-angular';
 
 @NgModule({
   declarations: [
@@ -134,10 +138,13 @@ import { ProductCardComponent } from '../search/product-card/product-card.compon
     UseConditionsPage,
     HeaderComponent,
     LoBuscamosPorTiPage,
-    SearchCardComponent, ProductCardComponent
+    SearchCardComponent, ProductCardComponent,
+    DropdownComponent,
+    LinksDropdownComponent
   ],
   imports: [
     CommonModule,
+    LucideAngularModule.pick({Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles}),
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
@@ -303,6 +310,9 @@ import { ProductCardComponent } from '../search/product-card/product-card.compon
     InteriorOfertaPage,
     PublicarOpinionPage,
     HeaderButtonsComponent,
+
+    DropdownComponent,
+    LinksDropdownComponent
     // FooterComponent,
     // HeaderComponent,
   ],

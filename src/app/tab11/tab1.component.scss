@@ -137,7 +137,7 @@
         // }
         .title1{
           // color: #4072A8;
-          color: #00328E;
+          color: #415ABD;
           font-family: "Staatliches", sans-serif;
           font-style: normal;
           font-size: 3.6rem;
@@ -163,7 +163,7 @@
           font-family: "Staatliches", sans-serif;
           font-weight: 500;
           font-size: 3.6rem;
-          color: #00328E;
+          color: #415ABD;
           margin-top: 0;
           @media (max-width: 700px) {
             font-size: 2.1rem;
@@ -253,7 +253,7 @@
           justify-content: center;
           align-items: center;
           div{
-            background-color: #104CBA;
+            background-color: #415ABD;
             color: #fff;
             width: 40px;
             height: 40px;
@@ -278,7 +278,7 @@
           color: black;
         }
         .link {
-          background-color: #104cba;
+          background-color: #415ABD;
           color: white;
           text-decoration: none;
           padding: 10px 16px;
@@ -389,7 +389,7 @@
                 overflow: hidden;
                 .text-top{
                   width: 180px;
-                  color: rgb(46, 73, 153);
+                  color: #415ABD;
                   position: absolute;
                   top: 2px;
                   left: 0px;
@@ -866,7 +866,7 @@
             justify-content: center;
             border-radius: 100px;
             align-items: center;
-            background-color: #0D33A5;
+            background-color: #415ABD;
             font-weight: bold;
             color: #fff;
             font-family: "Roboto", sans-serif;
@@ -1057,4 +1057,7 @@
     
   }
 
+  .sectors-dropdown {
+    max-height: calc(100vh - 460px);
+  }
 }

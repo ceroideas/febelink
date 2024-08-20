@@ -1,4 +1,4 @@
-import {Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef, Injectable, PLATFORM_ID, Inject,} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef, Injectable, PLATFORM_ID, Inject, ElementRef,} from '@angular/core';
 import {ApiService} from '../services/api.service';
 import {Platform} from '@ionic/angular';
 import {UtilitiesService} from '../services/utilities.service';
@@ -22,6 +22,8 @@ import { Title } from '@angular/platform-browser';
 import { Keywords } from '../interfaces/keywords';
 import { filter } from 'rxjs';
 import { IHttpService } from '../services/http.service';
+import { Subsector } from '../interfaces/subsector';
+import { Sector } from '../interfaces/sector';
 // // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
 
@@ -35,6 +37,9 @@ const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesional
   
 })
 export class Tab1Component implements OnInit  {
+
+  @ViewChild('selection') selection: ElementRef | undefined;
+
   currentYear = new Date().getFullYear();
   perfil: IUser | undefined;
   isLoading: boolean = false;
@@ -82,6 +87,16 @@ export class Tab1Component implements OnInit  {
   metaFilterLink :any =  [];
   cities:any = [];
   footerLinks:any =  [ ];
+
+  searchText2: string = '';
+
+  dropdownSectors: Sector[] = [];
+  filteredSectors: Sector[] = [];
+
+  currentSubSectorSelection: Subsector[] = [];
+
+  dropdownOpened: boolean = false;
+
   constructor(
     private api: ApiService,
     public platform: Platform,
@@ -95,6 +110,7 @@ export class Tab1Component implements OnInit  {
     private seoService: SeoService,
     private cdRef : ChangeDetectorRef,
     private keywordService: KeywordService,
+    private utilitiesService: UtilitiesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     
@@ -175,27 +191,6 @@ export class Tab1Component implements OnInit  {
     }
   }
 
-
-  search(){
-    if (this.searchTerm) {
-
-
-      this.searchTerm =  slugify(this.searchTerm, {
-        replacement: '-',  // replace spaces with replacement character, defaults to `-`
-        remove: /[*+~.()'"!:@]/g, // remove characters that match regex, defaults to `undefined`
-        lower: true,      // convert to lower case, defaults to `false`
-        strict: false,     // strip special characters except replacement, defaults to `false`
-        locale: 'es',      // language code of the locale to use
-        trim: true         // trim leading and trailing replacement chars, defaults to `true`
-      }
-      )
-    // You can construct the URL for the new route with the parameters
-      const targetRoute = `/listado/${this.searchTerm}`;
-
-      // Use the Router to navigate to the new route
-      this.router.navigate([targetRoute]);
-    }
-  }
   ionViewDidEnter() {
     this.loadData();
     this.recomendation();
@@ -266,6 +261,14 @@ export class Tab1Component implements OnInit  {
     this.locations = data.locations;
     this.locationLinks = data.locations
     this.locationFilterLinkFull = data.linklocations;
+
+    // Configure sector dropdown
+    this.dropdownSectors = JSON.parse(JSON.stringify(data.sector));
+    this.dropdownSectors.forEach((sector: Sector) => {
+      sector.subSectors = JSON.parse(JSON.stringify(data.subsector.filter((subsector: Subsector) => subsector.id_sector?.id === sector.id)));
+    });
+    this.filteredSectors = this.dropdownSectors;
+    this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));
   }
 
 
@@ -401,5 +404,88 @@ export class Tab1Component implements OnInit  {
   onIntroImageLoaded() {
     this.isIntroImageLoaded = true;
     this.cdRef.detectChanges();
+  }
+
+  checkSubsector(subsector: Subsector) {
+    subsector.checked = !subsector.checked;
+
+    if ( subsector.checked ) {
+      this.currentSubSectorSelection.push(subsector);
+    } else {
+      this.currentSubSectorSelection = this.currentSubSectorSelection.filter((item: Subsector) => item.id !== subsector.id);
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.cdRef.detectChanges();
+      this.selection?.nativeElement.scrollTo({
+        top: 0,
+        left: this.selection?.nativeElement.scrollWidth,
+        behavior: "smooth",
+      });
+
+      this.searchText2 = '';
+    }
+
+  }
+
+  filterDropdownItems() {
+    this.dropdownSectors.forEach((sector: Sector) => sector.subSectors.forEach((subsector: Subsector) => subsector.hidden = false));
+
+    if ( !!this.searchText2.trim() ) {
+      this.filteredSectors = this.dropdownSectors.filter((sector: Sector) => {
+        if ( sector.keySearch.some((key) => this.utilitiesService.normalizeString(key.key_name).includes(this.utilitiesService.normalizeString(this.searchText2))) ) {
+          return true;
+        } else if ( sector.subSectors.some((subsector: Subsector) => subsector.keySearch.some((key) => this.utilitiesService.normalizeString(key.key_name).includes(this.utilitiesService.normalizeString(this.searchText2)))) ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      this.filteredSectors.forEach((sector: Sector) =>
+        sector.subSectors
+          .filter((subsector: Subsector) => 
+            !subsector.keySearch.some((key) => this.utilitiesService.normalizeString(key.key_name).includes(this.utilitiesService.normalizeString(this.searchText2))) &&
+            !this.utilitiesService.normalizeString(subsector.nombre).includes(this.utilitiesService.normalizeString(this.searchText2))
+          )
+          .forEach((subsector: Subsector) => subsector.hidden = true)
+      );
+    } else {
+      this.filteredSectors = this.dropdownSectors;
+    }
+
+    this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));
+  }
+  
+  openDropdown() {
+    this.dropdownOpened = true;
+  }
+  closeDropdown() {
+    this.dropdownOpened = false;
+  }
+
+  search() {
+    let unchechedSubsectors: number[] = [];
+    let chechedSubsectors: number[] = [];
+
+    if ( this.searchText2.trim() !== '' ) {
+      const searchWords = this.searchText2.split(' ');
+
+      unchechedSubsectors = this.dropdownSectors
+      .map((sector: Sector) => 
+        sector.subSectors.filter((subsector: Subsector) => 
+          !subsector.hidden && 
+          !subsector.checked && 
+          subsector.keySearch.some((key) => searchWords.includes(key.key_name))
+        )
+      )
+      .flat()
+      .map((subsector: Subsector) => subsector.id);
+    }
+
+    chechedSubsectors = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
+
+    const subsectors = encodeURIComponent(JSON.stringify([...chechedSubsectors, ...unchechedSubsectors]));
+    this.router.navigate([`/listado`], { queryParams: {subsectors}});
   }
 }

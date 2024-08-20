@@ -1,17 +1,47 @@
-<div class="slider-item">
-  <div class="animation-card_image">
-    
-      <img *ngIf="!data?.imageURL" src="assets/icon/svg/default_product.svg" alt="">
-      
-      <img *ngIf="data?.imageURL" 
-      [src]="urlWsrv + data?.imageURL +'&w=1600&output=webp'"
-      alt="">
-  </div>
-  <div class="animation-card_content">
-      <h4 class="animation-card_content_title title-2">{{data?.title}}</h4>
-      <p class="animation-card_content_description p-2" [innerHtml]="data?.description"></p>
-      <div class="bottom">
-        <button class="animation-card_content_city" (click)="sendSearchContactRequest()">Pide precio gratis</button>
+<div class="skeleton" *ngIf="skeleton">
+  <div class="flex flex-row gap-3 sm:gap-6 bg-white rounded-[6px] border border-solid border-slate-200 flex-wrap sm:flex-nowrap">
+    <div class="w-full aspect-video sm:w-32 sm:aspect-square shrink-0 flex justify-center items-center">
+      <ngx-skeleton-loader class="w-full h-full" [theme]="{width: '100%', height: '100%', margin: 0}" />
+    </div>
+
+    <div class="flex flex-col gap-4 w-full p-5 sm:pl-0">
+      <div class="w-full">
+        <div class="text-neutral-700 text-sm font-primary">
+          <ngx-skeleton-loader count="1" appearance="line" class="block w-1/3" [theme]="{height: '14px', margin: 0}" />
+        </div>
+        <div class="text-neutral-600 text-base font-primary mt-2">
+          <ngx-skeleton-loader count="1" appearance="line" class="block w-full" [theme]="{height: '14px', margin: 0}" />
+          <ngx-skeleton-loader count="1" appearance="line" class="block w-3/4" [theme]="{height: '14px', margin: 0}" />
+        </div>
       </div>
+      
+      <div class="w-fit ml-auto flex flex-col shrink-0 justify-between">
+        <div class="text-right text-lg font-primary font-semibold">
+          <ngx-skeleton-loader count="1" appearance="line" class="block w-full ml-auto" [theme]="{margin: 0}" />
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<a [href]="'/pedir-presupuesto-gratis?query=' + query" *ngIf="!skeleton" class="cursor-pointer">
+  <div class="flex flex-row gap-3 sm:gap-6 bg-white rounded-[6px] overflow-hidden border border-solid border-slate-200 flex-wrap sm:flex-nowrap">
+    <div class="w-full aspect-video sm:w-32 sm:aspect-square shrink-0 flex justify-center items-center">
+      <img class="w-5/12 h-5/12 object-cover" *ngIf="!data?.imageURL" src="assets/icon/svg/default_product.svg" alt="">
+      <img class="w-full h-full object-cover" *ngIf="data?.imageURL" [src]="urlWsrv + data?.imageURL +'&w=1600&output=webp'" alt="">
+    </div>
+
+    <div class="flex flex-col gap-4 w-full p-5 sm:pl-0">
+      <div class="w-full">
+        <h4 class="text-lg font-primary">{{data?.title}}</h4>
+        <div class="description text-neutral-600 text-base font-primary mt-2" [innerHtml]="data?.description"></div>
+      </div>
+      
+      <div class="w-fit ml-auto flex flex-col shrink-0 justify-between">
+        <button class="w-fit px-3 py-0.5 bg-[#e2f5fd] text-primary text-center text-sm font-semibold rounded-full">
+          Pide precio gratis
+        </button>
+      </div>
+    </div>
+  </div>
+</a>

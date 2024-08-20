@@ -1,0 +1,73 @@
+<div class="dropdown relative" (clickOutside)="closeDropdown()">
+  <!-- Button -->
+  <button 
+    type="button" 
+    class="max-w-72 h-fit flex flex-row gap-4 rounded-[6px] text-left border border-solid border-slate-200 bg-white p-3 pl-4" 
+    (click)="toggleDropdown()" 
+  >
+    <div class="icon shrink-0">
+      <lucide-icon 
+        [name]="lucideIcon"
+        class="stroke-primary" 
+        [strokeWidth]="2"
+      ></lucide-icon>
+    </div>
+    <!-- @if ( currentDropdownItem ) {
+      <div class="selection w-full min-w-36 block truncate text-neutral-800 font-semibold">
+        {{ currentDropdownItem }}
+      </div>
+    } @else {
+      <div class="placeholder w-full min-w-36 text-neutral-500 block truncate">
+        {{ placeholder }}
+      </div>
+    } -->
+    <div class="chevron shrink-0">
+      <lucide-icon 
+        name="chevron-down"
+        class="stroke-primary" 
+        [strokeWidth]="2"
+      ></lucide-icon>
+    </div>
+  </button>
+  <!-- Dropdown -->
+  <div
+    class="absolute min-w-48 flex flex-col z-10 mt-1 py-0 max-h-56 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+    [ngClass]="{'!hidden': !opened}"
+    [ngStyle]="{ 'right': dropdownPosition === 'right' ? '0' : 'auto', 'left': dropdownPosition === 'left' ? '0' : 'auto' }"
+  >
+    <div *ngIf="withFilter" class="filter p-2 border-b border-solid border-slate-200">
+      <input 
+        #filterInput
+        type="text" 
+        class="w-full border border-solid border-slate-200 rounded-full text-neutral-800 font-semibold bg-white outline-none placeholder:text-neutral-500 placeholder:font-normal px-3 py-1" 
+        placeholder="Buscar..." 
+        [(ngModel)]="filterText" 
+        (input)="filterDropdownItems()"
+      />
+    </div>
+
+    <ul class="overflow-auto">
+    @for ( item of filteredDropdownItems; track item.title ) {
+      <li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900" id="listbox-option-0" role="option">
+        <button class="w-full h-full" (click)="item.action(); closeDropdown()">
+          <div class="flex items-center">
+            <span 
+              class="block truncate font-normal"
+              [ngClass]="{'!font-semibold': item.title === currentDropdownItem}"
+            >
+              {{item.title}}
+            </span>
+          </div>
+          @if ( item.title === currentDropdownItem ) {
+            <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-primary">
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+            </span>
+          }
+        </button>
+      </li>
+    }
+    </ul>
+  </div>
+</div>

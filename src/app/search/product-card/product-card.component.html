@@ -1,95 +1,89 @@
-<!-- <ion-item lines="none"
-          class="ion-no-padding ion-no-margin search-product keys-dropdown">
-  <a [href]="'/servicio/' + toSlug(data?.title ?? '')+ '/detail/' + data?.id">
-    
-    <div class="product-view">
-      
-      <div class="avatar_dropdown" slot="start">
-        <ion-img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg"
-                 class="default-avatar"></ion-img>
-        <ion-img *ngIf="data?.image" [src]="data?.image"></ion-img>
-      </div>
-      
-      <div class="username">{{data?.ownerUsername}}</div>
-      <app-rating [rating]="0"></app-rating>
-      
-      <div class="votes">({{data?.votes}} {{ 'tabs.tab1.search.valoraciones' }})</div>
-    </div>
-    
-    <div class="product-info">
-      
-      <div class="title">
-        {{data?.title}}
-      </div>
-      
-      <div class="price">
-        {{data?.unitPrice}}€ / {{unitTypes[data.unitTypeId - 1]?.shorthand}}
-      </div>
-      
-      <div
-        class="chat-button"
-        style="width: 100%"
-        (click)="createChat(data?.ownerUsername, data?.ownerUserId)"
-      >
-        Pide precio gratis
-      </div>
-    </div>
-  </a>
-</ion-item> -->
-<div class="slider-item skeleton" *ngIf="skeleton">
-  <div class="animation-card_image">
-    <ngx-skeleton-loader count="1" appearance="circle" />
-  </div>
-  <div class="animation-card_content">
-    <div class="username">
-      <ngx-skeleton-loader count="1" appearance="line" />
+<div class="skeleton" *ngIf="skeleton">
+  <div class="flex flex-row gap-5 bg-white rounded-[6px] border border-solid border-slate-200 p-5 flex-wrap sm:flex-nowrap">
+    <div class="w-20 h-20 shrink-0 border rounded overflow-hidden flex justify-center items-center">
+      <ngx-skeleton-loader class="w-full h-full" [theme]="{width: '100%', height: '100%', margin: 0}" />
     </div>
 
-      <h4 class="animation-card_content_title title-2">
-        <ngx-skeleton-loader count="1" appearance="line" />
-      </h4>
-      <div class="votes">
-        <ngx-skeleton-loader count="1" appearance="line" />
-      </div>  
-      <div class="bottom">
-        <div class="price skeleton">
-          <ngx-skeleton-loader count="1" appearance="line" />
-        </div>
+    <div class="w-full">
+      <div class="text-neutral-700 text-sm font-primary">
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-1/3" [theme]="{height: '14px', margin: 0}" />
       </div>
+      <h4 class="text-lg font-primary">
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-1/2" [theme]="{height: '14px', margin: 0}" />
+      </h4>
+      <div class="text-neutral-600 text-base font-primary mt-2">
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-full" [theme]="{height: '14px', margin: 0}" />
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-3/4" [theme]="{height: '14px', margin: 0}" />
+      </div>
+      <div class="badges flex gap-2 mt-2">
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-1/5" [theme]="{height: '14px', margin: 0}" />
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-1/5" [theme]="{height: '14px', margin: 0}" />
+      </div>
+    </div>
+    
+    <div class="w-full sm:w-40 flex flex-col justify-between">
+      <div class="text-right text-lg font-primary font-semibold">
+        <ngx-skeleton-loader count="1" appearance="line" class="block w-1/3 sm:w-full ml-auto" [theme]="{margin: 0}" />
+      </div>
+    </div>
   </div>
 </div>
 
-<a [href]="'/servicio/' + toSlug(data?.title ?? '')+ '/detail/' + data?.id" *ngIf="!skeleton">
-  <div class="slider-item">
+<a
+  [href]="'/servicio/' + toSlug(data?.title ?? '')+ '/detail/' + data?.id" 
+  *ngIf="!skeleton"
+  class="cursor-pointer"
+>
+  <div class="card flex flex-row gap-3 sm:gap-5 bg-white rounded-[6px] border border-solid border-slate-200 p-5 flex-wrap sm:flex-nowrap"
+    [ngClass]="{'verified': data?.verified}">
+    <div class="w-20 h-20 shrink-0 border rounded overflow-hidden flex justify-center items-center">
+      @if ( !data?.image ) {
+        <img class="w-7/12 h-7/12 object-cover" src="assets/icon/svg/default_product.svg" alt="">
+      } @else {
+        <img class="w-full h-full object-cover" [src]="urlWsrv + data?.image +'&w=1600&output=webp'" alt="">
+      }
+    </div>
+
+    <div class="w-full">
+      <div class="text-neutral-700 text-sm font-primary font-semibold">{{data?.ownerUsername}}</div>
+      <h4 class="text-lg font-primary font-bold">{{data?.title}}</h4>
+      @if ( !!data?.description && data?.description !== 'undefined' && data?.description !== 'null' ) {
+        <div class="description text-neutral-600 text-base font-primary mt-2" [innerHtml]="data?.description"></div>
+      }
+      <div class="badges flex flex-wrap gap-2 mt-2">
+        @if ( data?.verified === 1 ) {
+          <span class="inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 text-xs font-medium text-[#0095d8] ring-1 ring-inset ring-[#0095d8]">Profesional</span>
+        }
+        @if ( data?.telefono ) {
+          <span class="inline-flex items-center rounded-full bg-[#f3fff7] px-2 py-1 text-xs font-bold text-[#25D366] ring-1 ring-inset ring-[#25D366]">WhatsApp</span>
+        }
+        @if ( data?.provincia || data?.ciudad ) {
+          <span class="inline-flex items-center rounded-full bg-[#f3f7ff] px-2 py-1 text-xs font-bold text-analogous ring-1 ring-inset ring-analogous">
+            {{data?.provincia ? data.provincia : ''}} 
+            @if ( data?.ciudad && data?.provincia !== data.ciudad ) {
+              <lucide-icon 
+                name="dot"
+                class="stroke-analogous" 
+                [strokeWidth]="2"
+                [size]="18"
+              />
+              {{data.ciudad}}
+            }
+          </span>
+        }
+      </div>
+    </div>
     
-      <div class="animation-card_image">
-          <img *ngIf="!data?.image" src="assets/icon/svg/default_product.svg" alt="">
-          <img *ngIf="data?.image" [src]="urlWsrv + data?.image +'&w=1600&output=webp'"
-          alt="">
-     
-      
+    <div class="w-full sm:w-40 flex flex-col shrink-0 justify-between">
+      <!-- <div class="">({{data?.votes}} Valoraciones)</div>   -->
+      <!-- <img *ngIf="data?.verified === 1" class="" src="assets/imgs/pro1.png"  alt=""> -->
+      <!-- <i class="fa fa-whatsapp"></i> -->
+      <div class="text-right text-lg font-primary font-semibold">
+        {{data?.unitPrice}}€ / {{ (data?.unitTypeId && unitTypes && unitTypes[data.unitTypeId - 1]?.shorthand) ?? 'N/A' }}
       </div>
-      <div class="animation-card_content">
-        <div class="username">{{data?.ownerUsername}}</div>
-
-          <h4 class="animation-card_content_title title-2">{{data?.title}}</h4>
-          <div class="votes">({{data?.votes}} Valoraciones)</div>  
-          <div class="bottom">
-            <img *ngIf="data?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
-            <i class="iconwhatsapp fa fa-whatsapp"></i>
-            <div class="price">
-
-
-                   
-              {{data?.unitPrice}}€ / {{ (data?.unitTypeId && unitTypes && unitTypes[data.unitTypeId - 1]?.shorthand) ?? 'N/A' }}
-
-
-            </div>
-            <button 
-            >
-              Pide precio gratis
-            </button>
-          </div>
-      </div>
+      <button class="w-fit px-3 py-0.5 ml-auto bg-[#e2f5fd] text-primary text-center text-sm font-semibold rounded-full">
+        Pide precio gratis
+      </button>
+    </div>
   </div>
 </a>

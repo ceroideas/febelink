@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Meta, Title} from '@angular/platform-browser';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -17,6 +17,7 @@ import { IHttpService } from '../services/http.service';
 import slugify from "slugify";
 import { City } from '../interfaces/city';
 import { LinkCity } from '../interfaces/link-city';
+import { UtilitiesService } from '../services/utilities.service';
 const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
 const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
 
@@ -33,20 +34,17 @@ export interface SearchType {
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
+
+  @ViewChild('selection') selection: ElementRef | undefined;
+
   @Input() showSearchbar: boolean = true;
   @Input() searchText: string = '';
   @Input() searchText2: string = '';
   public data: any;
   @Input() type: string = '';
 
-  public slideOpts = {
-    initialSlide: 1,
-    speed: 400,
-  };
-
   recommendations:any;
   searchResponse: any = [];
-  offers: any = [];
   locationFilter: string = '';
   sectorFilter: string = '';
   cityFilter: string = '';
@@ -72,7 +70,6 @@ export class SearchComponent {
 
   services:any =[];
 
-  sectors:any =[];
   locations:any =[];
   locationLinks :any =[];
 
@@ -86,7 +83,6 @@ export class SearchComponent {
   email: string | null = null;
 
   locationSelected: any = {}
-  professions: any = []
   load: boolean = true;
 
   h1Title: string | undefined = undefined;
@@ -111,6 +107,60 @@ export class SearchComponent {
     title: string
   }[] = [];
 
+  currentProfessioanlLink: string | undefined = undefined;
+
+  subSectorDropdownItems: {
+    id: number,
+    sector_id: number,
+    link: string,
+    title: string
+  }[] = [];
+
+  provinceDropdownItems: {
+    id: number,
+    link: string,
+    title: string,
+    checked: boolean
+  }[] = [];
+
+  cityDropdownItems: {
+    id: number,
+    link: string,
+    title: string,
+    checked: boolean
+  }[] = [];
+
+  currentSubSectorSelection: Subsector[] = [];
+  currentProvinceDropdownItem: {id: number, title: string, link: string, checked: boolean}[] = [];
+  currentCityDropdownItem: {title: string, link: string, checked: boolean}[] = [];
+
+  subSectorDropdown: boolean = false;
+  provinceDropdown: boolean = false;
+  cityDropdown: boolean = false;
+
+  currentOrderDropdownItem: string | undefined = undefined;
+  orderDropdownItems: {title: string, action: () => any}[] = [
+    {title: 'Precio menor', action: () => this.orderOffers('asc')},
+    {title: 'Precio mayor', action: () => this.orderOffers('desc')},
+  ]
+
+  keywords: Keywords | undefined = undefined;
+
+  loading: boolean = false;
+  loadingOtherOffers: boolean = false;
+  
+  sectors: Sector[] = [];
+  filteredSectors: Sector[] = [];
+
+  dropdownOpened: boolean = false;
+
+  offers: any[] = [];
+  otherOffers: any[] = [];
+
+  otherOffersQuery: string = '';
+
+  subsectorsQuery: number[] | undefined = undefined;
+
   constructor(
     public searchService: SearchService,
     private router: Router,
@@ -121,83 +171,228 @@ export class SearchComponent {
     private meta: Meta,
     private keywordService: KeywordService,
     private seoService: SeoService,
+    private utilitiesService: UtilitiesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
-    this.professions = []
     this.searchText = this.actRouter.snapshot.paramMap.get('searchTerm') || '';
 
+    this.actRouter.queryParams.subscribe(params => {
+      if ( params['subsectors'] ) {
+        this.subsectorsQuery = JSON.parse(decodeURIComponent(params['subsectors']));
+      }
+    }); 
+
     this.keywordService.getData().then((data: IHttpService) => {
-      this.parseKeywords(data.response as Keywords);
+      this.keywords = data.response as Keywords;
+
+      // Configure sector dropdown
+      this.sectors = JSON.parse(JSON.stringify(data.response.sector));
+      this.sectors.forEach((sector: Sector) => {
+        sector.subSectors = JSON.parse(JSON.stringify(data.response.subsector.filter((subsector: Subsector) => subsector.id_sector?.id === sector.id)));
+      });
+      this.filteredSectors = this.sectors;
+      this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));
+
+      // Configure locations dropdown
+      this.provinceDropdownItems = this.keywords.locations
+      .filter((location: Location) => location.link !== undefined && location.link !== null && location.link !== '')
+      .map((location: Location) => {
+        return {
+          id: location.id,
+          link: location.link,
+          title: location.title,
+          checked: false
+        }
+      });
+
+      // Configure cities dropdown
+      this.cityDropdownItems = this.keywords.citys
+      .filter((city: City) => city.link !== undefined && city.link !== null && city.link !== '')
+      .map((city: City) => {
+        return {
+          id: city.id,
+          link: city.link,
+          title: city.title,
+          checked: false
+        }
+      });
+
+      this.parseKeywords(this.keywords);
+
+      if ( !this.restoreCurrentSearch() ) {
+        this.findOffers();
+
+        // if (isPlatformBrowser(this.platformId)) {
+        //   this.findOtherOffers();
+        // }
+      }
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      this.keywordService.getData(false).then((data: IHttpService) => {
-        this.parseKeywords(data.response as Keywords);
-       
-      });
+      this.loading = true;
     }
-    // PONE EN EL BUSCADOR EL TEXTO DE LA URL
-    this.searchText2 = this.searchText.replace(/-/g, ' ').toLowerCase()
   }
 
   parseKeywords(data: Keywords) {
-    let linkLocation: LinkLocation | undefined = undefined;
+    let subsector: Subsector | undefined = undefined;
     let location: Location | undefined = undefined;
     let city: City | undefined = undefined;
-    let sector: Sector | undefined = undefined;
-    let subsector: Subsector | undefined = undefined;
+    let linkLocation: LinkLocation | undefined = undefined;
+    let linkCity: LinkCity | undefined = undefined;
 
-
-    if ( (linkLocation = this.findIntoLinkLocation(data.linklocations, this.searchText)) !== undefined ) {
-      this.handleLinkLocationResult(linkLocation);
-      this.fillProfessionalLinksWithLinkLocations(data.linklocations, linkLocation.locations_id.id);
-    } else if ( (location = this.findIntoLocation(data.locations, this.searchText)) !== undefined ) {
-      this.handleLocationResult(location);
-      this.fillProfessionalLinksWithLinkLocations(data.linklocations, location.id);
-    } else if ( ( city = this.findIntoCity(data.citys, this.searchText)) !== undefined ) {
-      this.handleCityResult(city);
-      this.fillProfessionalLinksWithLinkLocationsCities(data.linkcitys, city.id);
-    } else if ( (sector = this.findIntoSector(data.sector, this.searchText)) !== undefined ) {
-      this.handleSectorResult(sector);
-      this.fillProfessionalLinksWithSubsectors(data.subsector);
-    } else if ( (subsector = this.findIntoSubsector(data.subsector, this.searchText)) !== undefined ) {
+    if ( (subsector = this.findIntoSubsector(data.subsector, this.searchText)) !== undefined ) {
+      // Activate badge
+      subsector.checked = false;
+      this.checkSubsector(subsector);
+      // Set SEO metadata
       this.handleSubsectorResult(subsector);
-      this.fillProfessionalLinksWithSubsectors(data.subsector);
-    } else {
-      const foundLocation = this.detectLocationIntoQuery(data.locations, this.searchText);
-      const foundCity = this.detectCityIntoQuery(data.citys, this.searchText);
-      if ( foundLocation !== undefined) {
-        this.handleLocationResult(foundLocation);
-        this.fillProfessionalLinksWithLinkLocations(data.linklocations, foundLocation.id);
-      } else if ( foundCity !== undefined) {
-        this.handleLocationResult(foundCity);
-        this.fillProfessionalLinksWithLinkLocationsCities(data.linkcitys, foundCity.id);
-        this.fillCityLinksWithLocations(data.citys, foundCity.locations_id.id);
-      }
-        else {
-        this.fillProfessionalLinksWithSubsectors(data.subsector);
-      }
+      // Set province links based on subsector
+      this.setProvinceLinksBasedOnSubsector(subsector, data.linklocations);
+      // Set city links based on subsector
+      this.setCityLinksBasedOnSubsector(subsector, data.linkcitys);
+    } else if ( (location = this.findIntoLocation(data.locations, this.searchText)) !== undefined ) {
+      // Activate badge
+      this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
+      this.currentProvinceDropdownItem.push({id: location.id, title: location.title, link: location.link, checked: true});
+      // Set SEO metadata
+      this.handleLocationResult(location);
+      // Set subsector links based on province
+      this.setSubsectorsBasedOnLocation(location!, data.linklocations);
+      // Set city links based on province
+      this.setCityLinksBasedOnProvince(location, data.citys, data.linkcitys);
+    } else if ( (city = this.findIntoCity(data.citys, this.searchText)) !== undefined ) {
+      // Get province of city
+      location = data.locations.find((location: Location) => location.id === city!.locations_id.id);
+      // Activate badge
+      this.cityDropdownItems.find((city: { id: number, link: string, title: string, checked: boolean }) => city.id === city!.id)!.checked = true;
+      this.currentCityDropdownItem.push({title: city.title, link: city.link, checked: true});
+      // Set SEO metadata
+      this.handleCityResult(city);
+      // Set subsector links based on city
+      this.setSubsectorsBasedOnCityOrLocation(city!, location!, data.linklocations, data.linkcitys);
+    } else if ( (linkLocation = this.findIntoLinkLocation(data.linklocations, this.searchText)) !== undefined ) {
+      // Get subsector
+      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === linkLocation!.id_sector.id);
+      // Get province
+      location = data.locations.find((location: Location) => location.id === linkLocation!.locations_id.id);
+      // Activate subsector badges
+      data.subsector
+      .filter((subsector: Subsector) => subsector.id_sector?.id === linkLocation!.id_sector.id && !!subsector.link)
+      .forEach((subsector: Subsector) => { subsector.checked = false; this.checkSubsector(subsector) });
+      // Activate province badge
+      this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
+      this.currentProvinceDropdownItem.push({id: location!.id, title: location!.title, link: location!.link, checked: true});
+      // Set SEO metadata
+      this.handleLinkLocationResult(linkLocation);
+      // Set subsector links based on province
+      this.setSubsectorsBasedOnLocation(location!, data.linklocations);
+      // Set province links based on subsector
+      this.setProvinceLinksBasedOnSubsector(subsector!, data.linklocations);
+      // Set city links based on subsector and province
+      this.setCityLinksBasedOnSubsectorAndProvince(subsector!, location!, data.citys, data.linkcitys);
+    } else if ( (linkCity = this.findIntoLinkCity(data.linkcitys, this.searchText)) !== undefined ) {
+      // Get subsector
+      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === linkCity!.sector_id.id);
+      // Get province
+      location = data.locations.find((location: Location) => location.id === linkCity!.locations_id.id);
+      // Get city
+      city = data.citys.find((city: City) => city.id === linkCity!.citys_id.id);
+      // Activate subsector badges
+      data.subsector
+      .filter((subsector: Subsector) => subsector.id_sector?.id === linkCity!.sector_id.id && !!subsector.link)
+      .forEach((subsector: Subsector) => { subsector.checked = false; this.checkSubsector(subsector) });
+      // Activate province badge
+      this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
+      this.currentProvinceDropdownItem.push({id: location!.id, title: location!.title, link: location!.link, checked: true});
+      // Activate city badge
+      this.cityDropdownItems.find((city: { id: number, link: string, title: string, checked: boolean }) => city.id === city!.id)!.checked = true;
+      this.currentCityDropdownItem.push({title: city!.title, link: city!.link, checked: true});
+      // Set SEO metadata
+      this.handleCityResult(city!);
+      // Set subsector links based on city or fallback province
+      this.setSubsectorsBasedOnCityOrLocation(city!, location!, data.linklocations, data.linkcitys);
+      // Set province links based on subsector
+      this.setProvinceLinksBasedOnSubsector(subsector!, data.linklocations);
+      // Set city links based on subsector
+      this.setCityLinksBasedOnSubsector(subsector!, data.linkcitys);
     }
-   
 
-
-    if ( location !== undefined) {
-      this.fillCityLinksWithLocations(data.citys,  location.id);
-    } else  if ( city !== undefined) {
-      this.fillCityLinksWithLocations(data.citys, city.locations_id.id);
-    }  else  if ( linkLocation !== undefined) {
-      this.fillCityLinksWithLocations(data.citys, linkLocation.locations_id.id);
-    } else {
-      this.fillLocationLinksWithLocations(data.locations);
-     
+    if ( isPlatformBrowser(this.platformId) ) {
+      this.subsectorsQuery?.forEach((subsectorId: number) => {
+        const subsector: Subsector | undefined = data.subsector.find((subsector: Subsector) => subsector.id === subsectorId);
+        if ( subsector ) {
+          this.checkSubsector(subsector);
+        }
+      })
     }
+  }
 
-    this.search()
+  setSubsectorsBasedOnLocation(location: Location, linkLocations: LinkLocation[]) {
+    this.sectors.forEach((sector: Sector) => {
+      sector.subSectors
+      .filter((subsector: Subsector) => !!subsector.link)
+      .forEach((subsector: Subsector) => {
+        subsector.link = linkLocations.find((linkLocation: LinkLocation) => 
+          linkLocation.locations_id.id === location.id &&
+          linkLocation.id_sector.id === subsector.id_sector.id
+        )?.link || subsector.link;
+      });
+    });
+  }
+  setSubsectorsBasedOnCityOrLocation(city: City, location: Location, linkLocations: LinkLocation[], linkCitys: LinkCity[]) {
+    this.sectors.forEach((sector: Sector) => {
+      sector.subSectors
+      .filter((subsector: Subsector) => !!subsector.link)
+      .forEach((subsector: Subsector) => {
+        subsector.link = linkCitys.find((linkCity: LinkCity) => 
+          linkCity.citys_id.id === city.id &&
+          linkCity.sector_id.id === subsector.id_sector.id
+        )?.link || 
+        linkLocations.find((linkLocation: LinkLocation) => 
+          linkLocation.locations_id.id === location.id &&
+          linkLocation.id_sector.id === subsector.id_sector.id
+        )?.link || 
+        subsector.link;
+      });
+    })
+  }
+  setProvinceLinksBasedOnSubsector(subsector: Subsector, linkLocations: LinkLocation[]) {
+    this.provinceDropdownItems.forEach((province: { id: number, link: string, title: string }) => {
+      province.link = linkLocations.find((linkLocation: LinkLocation) => 
+        province.id === linkLocation.locations_id.id &&
+        linkLocation.id_sector.id === subsector.id_sector.id
+      )?.link || province.link;
+    });
+  }
+  setCityLinksBasedOnSubsector(subsector: Subsector, linkCitys: LinkCity[]) {
+    this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
+      city.link = linkCitys.find((linkCity: LinkCity) => 
+        linkCity.citys_id.id === city.id &&
+        linkCity.sector_id.id === subsector.id_sector.id
+      )?.link || city.link;
+    });
+  }
+  setCityLinksBasedOnProvince(location: Location, cities: City[], linkCitys: LinkCity[]) {
+    this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
+  }
+  setCityLinksBasedOnSubsectorAndProvince(subsector: Subsector, location: Location, cities: City[], linkCitys: LinkCity[]) {
+    this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
+
+    this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
+      city.link = linkCitys.find((linkCity: LinkCity) => 
+        city.id === linkCity.citys_id.id &&
+        linkCity.locations_id.id === location.id &&
+        linkCity.sector_id.id === subsector.id_sector.id
+      )?.link || city.link;
+    });
   }
 
   findIntoLinkLocation(linkLocations: LinkLocation[], searchTerm: string): LinkLocation | undefined {
     return linkLocations.find((item: LinkLocation) => item.link === searchTerm);
+  }
+  findIntoLinkCity(linkCitys: LinkCity[], searchTerm: string): LinkCity | undefined { 
+    return linkCitys.find((item: LinkCity) => item.link === searchTerm);
   }
   findIntoLocation(locations: Location[], searchTerm: string): Location | undefined {
     return locations.find((item: Location) => item.link === searchTerm);
@@ -234,7 +429,6 @@ export class SearchComponent {
       }
     );
   }
-
   handleCityResult(city: Location) {
     this.h1Title = city.h1;
 
@@ -243,16 +437,6 @@ export class SearchComponent {
         title: city.page_title,
         description: city.meta_description,
         url: `https://febelink.com/listado/${city.link}`
-      }
-    );
-  }
-  handleSectorResult(sector: Sector) {
-    this.h1Title = sector.nombre;
-
-    this.seoService.generateTags(
-      {
-        title: sector.nombre,
-        url: `https://febelink.com/listado/${sector.link}`
       }
     );
   }
@@ -268,175 +452,248 @@ export class SearchComponent {
       }
     );
   }
-   fillProfessionalLinksWithSubsectors(subsectors: Subsector[]) {
-    this.professionalLinks = subsectors
-    .filter((subsector: Subsector) => subsector.link !== undefined && subsector.link !== null && subsector.link !== '')
-    .map((subsector: Subsector) => {
-      return {
-        link: subsector.link,
-        title: subsector.nombre
+
+  findOffers() {
+    this.closeDropdown();
+
+    this.loading = true;
+    this.cdRef.detectChanges();
+
+    let unchechedSubsectors: number[] = [];
+
+    if ( this.searchText2.trim() !== '' ) {
+      const searchWords = this.searchText2.split(' ');
+
+      unchechedSubsectors = this.sectors
+      .map((sector: Sector) => 
+        sector.subSectors.filter((subsector: Subsector) => 
+          !subsector.hidden && 
+          !subsector.checked && 
+          subsector.keySearch.some((key) => searchWords.includes(key.key_name))
+        )
+      )
+      .flat()
+      .map((subsector: Subsector) => subsector.id);
+    }
+
+    const subsectors: number[] = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
+    const provinces: number[] = this.currentProvinceDropdownItem.map((province: { id: number, title: string, link: string, checked: boolean }) => province.id);
+    const cities: string[] = this.currentCityDropdownItem.map((city: { title: string, link: string, checked: boolean }) => city.title);
+
+    this.searchService.findOffers([...subsectors, ...unchechedSubsectors], provinces, cities)
+    .then((data) => {
+      if ( data && data.response && data.response ) {
+        this.offers = data.response;
+      } else {
+        this.offers = [];
       }
-    });
-  }
-  fillProfessionalLinksWithLinkLocations(linkLocations: LinkLocation[], locationId: number) {
-    this.professionalLinks = linkLocations
-  
-    .filter((linkLocation: LinkLocation) => linkLocation.locations_id.id === locationId)
-    .map((linkLocation: LinkLocation) => {
-      return {
-        link: linkLocation.link,
-        title: linkLocation.title
-      }
-    });
-  }
 
-  fillProfessionalLinksWithLinkLocationsCities(linkLocations: LinkCity[], cityId: number) {
-    this.professionalLinks = linkLocations
-  
-    .filter((linkLocation: LinkCity) => linkLocation.citys_id.id === cityId)
-    .map((linkLocation: LinkCity) => {
-      return {
-        link: linkLocation.link,
-        title: linkLocation.title
-      }
-    });
-  }
-  fillLocationLinksWithLocations(locations: Location[]) {
-    this.provincesLinks = locations
-    .filter((location: Location) => location.link !== undefined && location.link !== null && location.link !== '')
-    .map((location: Location) => {
-      return {
-        link: location.link,
-        title: location.title
-      }
-    });
-  }
-
-  fillCityLinksWithLocations(cities: City[], province: number = 0) {
-    this.cityLinks = cities
-    .filter((city: City) => city.link !== undefined && city.link !== null && city.link !== '' && city.locations_id.id === province)
-    .map((city: City) => {
-      return {
-        link: city.link,
-        title: city.title
-      }
-    });
-  }
-
-  detectLocationIntoQuery(locations: Location[], searchTerm: string): Location | undefined {
-    const foundLocations = locations
-    .filter((location: Location) => {
-      return searchTerm.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(location.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())
-    });
-
-    return foundLocations ? foundLocations[0] : undefined;
-  }
-
-  detectCityIntoQuery(citys: City[], searchTerm: string): City | undefined {
-    const foundCitys = citys
-    .filter((city: City) => {
-      return searchTerm.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(city.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())
-    });
-
-    return foundCitys ? foundCitys[0] : undefined;
-  }
-  clear() {
-    this.searchText = '';
-    this.searchText2 = '';
-  }
-
-  getRecommendations() {
-
-    this.searchService.getRecommendations().then(async (response: any) => {
-      if (response) {
-        this.recommendations = response;
-  
-        // ToDo: Temporal SHUFFLE results
-        let shuffledResults = this.recommendations?.specialOffer;
-        var m = shuffledResults.length,
-          t,
-          i;
-        while (m) {
-          i = Math.floor(Math.random() * m--);
-          t = shuffledResults[m];
-          shuffledResults[m] = shuffledResults[i];
-          shuffledResults[i] = t;
-        }
-  
-        this.recommendations.specialOffer = shuffledResults;
-      }
+      this.loading = false;
+      this.cdRef.detectChanges();
     })
-  }
-
-  search(searchTerm?: string, updateFilter: boolean = true) {
-    let searchReplace =  this.searchText?.replace(/-/g, ' ').toLowerCase()
-
-    // this.searchService.doofinderSearch(searchReplace).then(async (data: any) => {
-    //   this.offers = data.results.map((offer: any) => {
-    //     return {
-    //       avgRating: offer.avgRating || offer.avgrating,
-    //       buttonName: offer.buttonName || offer.buttonname,
-    //       description : offer.description,
-    //       id: Number(offer.id),
-    //       image: offer.image || offer.image_link,
-    //       ownerUserId: offer.ownerUserId || offer.owneruserid,
-    //       owenrUsername: offer.owenrUsername || offer.owenrusername,
-    //       title: offer.title,
-    //       unitPrice: offer.unitPrice || offer.unitprice,
-    //       unitTypeId: offer.unitTypeId || offer.unittypeid,
-    //       verified: offer.verified,
-    //       whom: offer.whom,
-    //       provincia: offer.provincia,
-    //       ciudad: offer.ciudad
-    //     }
-    //   });
-    // })
-
-    this.searchService.getProfessionsByFilter(searchReplace).then( (data) => {
-    if (data.response !== undefined) {
-        const bestProfessionMatch: number[] = [];
-        data.response.forEach((elem: any) => {
-          bestProfessionMatch.push(elem.id);
-        });
-  
-        if (bestProfessionMatch.length > 0 || this.searchText) {
-          this.searchService.search(   searchReplace, bestProfessionMatch).then(async (data: any) => {
-            this.offers = data.response.offers;
-            this.searchResponse = data.response;
-          })
-        }
-      }
-    }).catch((error: any) => {
-      console.error("An error occurred:", error);
+    .catch((error: any) => {
+      this.loading = false;
+      this.cdRef.detectChanges();
     });
   }
+  findOtherOffers() {
+    this.loadingOtherOffers = true;
+    this.cdRef.detectChanges();
 
- 
-  search2() {
-    if (this.searchText2) {
-      let termino  =  slugify(this.searchText2)
+    let query = '';
 
-      const targetRoute = `/listado/${termino}`;
-      // Use the Router to navigate to the new route
-      this.router.navigate([targetRoute]);
-    }
-  }
+    query += this.currentSubSectorSelection.map((subsector: Subsector) => subsector.nombre).join(' ');
+    query += ' ' + this.currentProvinceDropdownItem.map((province: any) => province.title).join(' ');
+    query += ' ' + this.currentCityDropdownItem.map((city: any) => city.nombre).join(' ');
 
-  searchMoreResults() {
-    let otherResultAmount = this.searchResponse?.otherResults?.length;
+    this.otherOffersQuery = encodeURIComponent(query.trim());
 
-    if (otherResultAmount < 100 && this.searchText) {
-
-      this.searchService.searchMoreResults(  this.searchText, otherResultAmount + 1).then((response: any) => {
-        this.searchResponse.otherResults =
-        this.searchResponse.otherResults.concat(response);
+    if ( !!query.trim() ) {
+      this.searchService.findOtherOffers(query)
+      .then((data) => {
+        if ( data && data.response ) {
+          console.log(data.response);
+          this.otherOffers = data.response;
+        } else {
+          this.otherOffers = [];
+        }
+  
+        this.loadingOtherOffers = false;
+        this.cdRef.detectChanges();
       })
+      .catch((error: any) => {
+        this.loadingOtherOffers = false;
+        this.cdRef.detectChanges();
+      })
+    } else {
+      this.loadingOtherOffers = false;
+      this.cdRef.detectChanges();
     }
   }
 
+  checkSubsector(subsector: Subsector) {
+    subsector.checked = !subsector.checked;
 
+    if ( subsector.checked ) {
+      this.currentSubSectorSelection.push(subsector);
+    } else {
+      this.currentSubSectorSelection = this.currentSubSectorSelection.filter((item: Subsector) => item.id !== subsector.id);
+    }
 
-  public trackItem(index: number, item: any) {
-    return item.trackId;
+    if (isPlatformBrowser(this.platformId)) {
+      this.cdRef.detectChanges();
+      this.selection?.nativeElement.scrollTo({
+        top: 0,
+        left: this.selection?.nativeElement.scrollWidth,
+        behavior: "smooth",
+      });
+
+      // Filter offers
+      this.findOffers();
+      // this.findOtherOffers();
+      this.setMetadataBasedOnSelection();
+
+      this.searchText2 = '';
+      this.closeDropdown();
+    }
+
+    this.storeCurrentSearch();
+  }
+  provinceDropdownItemClicked(item: {title: string, link: string}) {
+    if (isPlatformBrowser(this.platformId)) {
+      // Filter offers
+      this.findOffers();
+      // this.findOtherOffers();
+      this.setMetadataBasedOnSelection();
+    }
+
+    this.storeCurrentSearch();
+  }
+  updateCurrentProvinceDropdownItem($event: any) {
+    this.currentProvinceDropdownItem = $event;
+  }
+  cityDropdownItemClicked(item: {title: string, link: string}) {
+    if (isPlatformBrowser(this.platformId)) {
+      // Filter offers
+      this.findOffers();
+      // this.findOtherOffers();
+      this.setMetadataBasedOnSelection();
+    }
+
+    this.storeCurrentSearch();
+  }
+
+  setMetadataBasedOnSelection() {
+    let url: string = 'https://febelink.com/listado/';
+
+    this.currentSubSectorSelection.length === 1 
+      ? this.h1Title = `Servicios de ${this.currentSubSectorSelection[0].nombre}`
+      : this.h1Title = 'Ofertas de servicios profesionales';
+
+    if ( this.currentCityDropdownItem.length === 1 ) {
+      this.h1Title = `${this.h1Title} en ${this.currentCityDropdownItem[0].title}`;
+      this.currentCityDropdownItem[0]?.link && (url = `${url}${this.currentCityDropdownItem[0].link}`);
+    } else if ( this.currentProvinceDropdownItem.length === 1 ) {
+      this.h1Title = `${this.h1Title} en ${this.currentProvinceDropdownItem[0].title}`;
+      this.currentProvinceDropdownItem[0]?.link && (url = `${url}${this.currentProvinceDropdownItem[0].link}`);
+    } else if (this.currentSubSectorSelection.length === 1 && this.currentSubSectorSelection[0]?.link ) {
+      url = `${url}${this.currentSubSectorSelection[0].link}`;
+    } else {
+      this.h1Title = `${this.h1Title} en España`;
+    }
+
+    this.seoService.generateTags(
+      {
+        title: this.h1Title,
+        url: url
+      }
+    );
+  }
+
+  filterDropdownItems() {
+    this.sectors.forEach((sector: Sector) => sector.subSectors.forEach((subsector: Subsector) => subsector.hidden = false));
+
+    if ( !!this.searchText2.trim() ) {
+      this.filteredSectors = this.sectors.filter((sector: Sector) => {
+        if ( sector.keySearch.some((key) => this.utilitiesService.normalizeString(key.key_name).includes(this.utilitiesService.normalizeString(this.searchText2))) ) {
+          return true;
+        } else if ( sector.subSectors.some((subsector: Subsector) => subsector.keySearch.some((key) => this.utilitiesService.normalizeString(key.key_name).includes(this.utilitiesService.normalizeString(this.searchText2)))) ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      this.filteredSectors.forEach((sector: Sector) =>
+        sector.subSectors
+          .filter((subsector: Subsector) => 
+            !subsector.keySearch.some((key) => this.utilitiesService.normalizeString(key.key_name).includes(this.utilitiesService.normalizeString(this.searchText2))) &&
+            !this.utilitiesService.normalizeString(subsector.nombre).includes(this.utilitiesService.normalizeString(this.searchText2))
+          )
+          .forEach((subsector: Subsector) => subsector.hidden = true)
+      );
+    } else {
+      this.filteredSectors = this.sectors;
+    }
+
+    this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));
+  }
+
+  openDropdown() {
+    this.dropdownOpened = true;
+  }
+  closeDropdown() {
+    this.dropdownOpened = false;
+  }
+
+  orderOffers(order: 'asc' | 'desc' = 'desc') {
+    if ( order === 'asc' ) {
+      this.currentOrderDropdownItem !== 'Precio menor' ? this.currentOrderDropdownItem = 'Precio menor' : this.currentOrderDropdownItem = undefined;
+      
+      if ( this.currentOrderDropdownItem === 'Precio menor' ) {
+        this.offers.sort((a: any, b: any) => Number(a.unitPrice) - Number(b.unitPrice));
+      } else {
+        this.offers.sort((a: any, b: any) => b.id - a.id);
+      }
+    } else if ( order === 'desc' ) {
+      this.currentOrderDropdownItem !== 'Precio mayor' ? this.currentOrderDropdownItem = 'Precio mayor' : this.currentOrderDropdownItem = undefined;
+      
+      if ( this.currentOrderDropdownItem === 'Precio mayor' ) {
+        this.offers.sort((a: any, b: any) => Number(b.unitPrice) - Number(a.unitPrice));
+      } else {
+        this.offers.sort((a: any, b: any) => b.id - a.id);
+      }
+    }
+  }
+
+  storeCurrentSearch() {
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem('currentSearch', JSON.stringify({
+        currentSubSectorSelection: this.currentSubSectorSelection,
+        currentProvinceDropdownItem: this.currentProvinceDropdownItem,
+        currentCityDropdownItem: this.currentCityDropdownItem
+      }));
+    }
+  }
+  restoreCurrentSearch(): boolean {
+    if (  isPlatformBrowser(this.platformId)) {
+      const currentSearch = JSON.parse(sessionStorage.getItem('currentSearch') || '{}');
+
+      this.currentSubSectorSelection = currentSearch.currentSubSectorSelection || [];
+      this.currentProvinceDropdownItem = currentSearch.currentProvinceDropdownItem || [];
+      this.currentCityDropdownItem = currentSearch.currentCityDropdownItem || [];
+
+      if ( this.currentSubSectorSelection.length || this.currentProvinceDropdownItem.length || this.currentCityDropdownItem.length ) {
+        this.findOffers();
+        // this.findOtherOffers();
+        this.setMetadataBasedOnSelection();
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    return false;
   }
 }

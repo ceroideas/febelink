@@ -1,3 +1,5 @@
+import { City } from "./city";
+
 export interface Location {
   h1: string;
   id: number;
@@ -6,4 +8,6 @@ export interface Location {
   page_title: string;
   title: string;
   updated_at: string;
+  checked: boolean;
+  cities?: City[]
 }

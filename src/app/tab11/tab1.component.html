@@ -1,5 +1,5 @@
 <!-- HEADER  -->
-  <div id="search-content" class="search-content layer-home">
+  <div id="search-content" class="search-content layer-home ">
   <div class="layer-img-header">
     <div class="header-shadow"></div>
      <img 
@@ -12,29 +12,164 @@
     <div class="eslogan section1">
       <h1 class="title1">Encuentra servicios profesionales en tu ciudad</h1>
     </div>
-    
-    <div class="search-capsule">
-      <div class="item-search">
-        <div class="item-search-terms">
-          <div class="result-search">
-            <ion-searchbar
-            id="search_scroll"
-            class="searchbar no-padding"
-            placeholder="{{ 'common.publishPlaceholder' | translate }}"
-            [(ngModel)]="searchTerm"
-            style="--box-shadow: none"
-            (keydown.enter)="search()"
-          ></ion-searchbar>
-          </div>
-        </div>
-      </div>
-      <div class="button-search" (click)="search()">
-        <div>
-          <i class="fa fa-search"></i>
-        </div>
-      </div>
-    </div>
 
+    <!-- Search input -->
+    <div class="w-full max-w-[800px] mx-auto px-6">
+      <div class="relative w-full flex flex-row rounded-[6px] border bg-white mt-6 mb-3 z-10" (clickOutside)="closeDropdown()">
+        <div class="icon px-4 flex items-center shrink-0">
+          <lucide-icon 
+            name="search"
+            class="stroke-primary" 
+            [strokeWidth]="2"
+          />
+        </div>
+
+        <div class="w-full flex gap-3 overflow-hidden">
+          <!-- Desktop selections -->
+          @if ( currentSubSectorSelection.length ) {
+          <div #selection class="selections scrollbar-hide shrink-0 w-fit max-w-[70%] overflow-auto items-center gap-2 hidden sm:flex">
+            @for ( sector of currentSubSectorSelection; track sector.id ) {
+            <span 
+              class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+              (click)="checkSubsector(sector)"
+            >
+              {{ sector.nombre }}
+              <lucide-icon 
+                name="X"
+                class="stroke-primary ml-0.5" 
+                [strokeWidth]="2"
+                [size]="18"
+              />
+            </span>
+            }
+          </div>
+          }
+
+          <input
+            type="text"
+            class="w-full text-neutral-800 font-semibold bg-white outline-none placeholder:text-neutral-500 placeholder:font-normal"
+            placeholder="¿Qué estás buscando?"
+            [(ngModel)]="searchText2"
+            (input)="filterDropdownItems()"
+            (keydown)="openDropdown()"
+          />
+        </div>
+
+        <!-- Search button -->
+        <div class="button p-2 border-l shrink-0">
+          <button 
+            class="button bg-analogous text-white px-8 py-2 rounded font-bold font-primary" 
+            (click)="search()"
+          >
+            Buscar
+          </button>
+        </div>
+
+        <!-- Dropdown -->
+        <div
+          class="sectors-dropdown absolute top-full flex flex-col z-10 mt-1 py-0 w-full rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          [ngClass]="{'!hidden': !dropdownOpened}"
+        >
+          <ul class="overflow-auto">
+            @for ( sector of filteredSectors; track sector.nombre ) {
+            <li class="relative cursor-default select-none pl-3 pr-9 text-gray-900 border-b py-3" id="listbox-option-0" role="option">
+              <button class="w-fit h-fit bg-neutral-100 ring-1 ring-inset ring-neutral-300 px-3 py-1 mb-1 rounded-full font-bold">
+                @if ( sector.link ) {
+                <a [href]="'/listado/' + sector.link" class="pointer-events-none">
+                  <div class="flex items-center">
+                    <span 
+                      class="block truncate font-normal"
+                    >
+                      {{sector.nombre}}
+                    </span>
+                  </div>
+                </a>
+                } @else {
+                <div class="pointer-events-none">
+                  <div class="flex items-center">
+                    <span 
+                      class="block truncate font-normal"
+                    >
+                      {{sector.nombre}}
+                    </span>
+                  </div>
+                </div>
+                }
+              </button>
+
+              <ul class="overflow-auto">
+                @for ( subsector of sector.subSectors; track subsector.nombre ) {
+                <li class="relative cursor-default select-none py-2 pl-1 pr-9  text-gray-900" 
+                  role="option"
+                  [ngClass]="{'hidden': subsector.hidden}"
+                  (click)="checkSubsector(subsector)">
+                  <button class="w-full h-full flex items-center gap-2">
+                    <div class="checkbox">
+                      <lucide-icon 
+                        *ngIf="!subsector.checked"
+                        name="square"
+                        class="stroke-primary" 
+                        [strokeWidth]="2"
+                      />
+                      <lucide-icon 
+                        *ngIf="subsector.checked"
+                        name="square-check-big"
+                        class="stroke-primary" 
+                        [strokeWidth]="2"
+                      />
+                    </div>
+                    @if ( subsector.link ) {
+                    <a [href]="'/listado/' + subsector.link" class="pointer-events-none">
+                      <div class="flex items-center">
+                        <span 
+                          class="block truncate font-normal"
+                        >
+                          {{subsector.nombre}}
+                        </span>
+                      </div>
+                    </a>
+                    } @else {
+                    <div class="pointer-events-none">
+                      <div class="flex items-center">
+                        <span 
+                          class="block truncate font-normal"
+                        >
+                          {{subsector.nombre}}
+                        </span>
+                      </div>
+                    </div>
+                    }
+                  </button>
+                </li>
+                }
+              </ul>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mobile selections -->
+      @if ( currentSubSectorSelection.length ) {
+      <div #selection class="selections flex-wrap scrollbar-hide shrink-0 w-full flex items-center gap-2 mb-3 sm:hidden z-10">
+        @for ( sector of currentSubSectorSelection; track sector.id ) {
+        <span 
+          class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+          (click)="checkSubsector(sector)"
+        >
+          {{ sector.nombre }}
+          <lucide-icon 
+            name="X"
+            class="stroke-primary ml-0.5" 
+            [strokeWidth]="2"
+            [size]="18"
+          />
+        </span>
+        }
+      </div>
+      }
+    </div>
+    
     <div class="search-for-you">
       <!-- <span class="hint">¿No encuentras lo que buscas?</span> -->
       <a href="/pedir-presupuesto-gratis" class="link">Pedir presupuesto gratis</a>

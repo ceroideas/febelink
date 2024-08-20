@@ -171,6 +171,19 @@ export class SearchService {
     return this.http.post('product/search/more', {searchTerm, searchIndex});
   }
 
+  async findOffers(subsectors: number[], provinces: number[], cities: string[]) {
+    return this.http.post('product/find', {
+      subsectors: JSON.stringify(subsectors),
+      provinces: JSON.stringify(provinces),
+      cities: JSON.stringify(cities),
+    }, false);
+  }
+  async findOtherOffers(searchTerm: string = '') {
+    return this.http.post('product/findOthers', {
+      searchTerm: searchTerm
+    });
+  }
+
   async contact4Search(searchTerm: string, link: string, searchTitle: string, searchDescription: string, email?: string) {
     return this.http.post('product/search/contact', {searchTerm, link, searchTitle, searchDescription, email});
   }

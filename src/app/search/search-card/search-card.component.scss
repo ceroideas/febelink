@@ -1,102 +1,15 @@
-a{ text-decoration: none; outline: none;}
-.slider-item {
-  width: 100%;
-  max-width: 800px;
-  padding: 18px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: flex-start;
-  border: 1px solid #f5f5f5;
-  margin: auto;
-  margin-bottom: 15px;
-  gap: 15px;
-}
-.slider-item .animation-card_image {
-  flex-shrink: 0;
-}
-.slider-item .animation-card_image img {
-  width: 65px;
-  height: 65px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1px solid #efefef;
-}
-.slider-item .animation-card_content {
-  width: 100%;
-}
-.slider-item .animation-card_content .animation-card_content_title {
-  color: #282828;
-  font-size: 1.4rem;
-  margin: 6px 0;
-  font-weight: 500;
-  font-family: DM Sans,sans-serif;
-}
-.slider-item .animation-card_content .animation-card_content_description {
-  color: #696d74;
-  font-size: 15px;
-  font-weight: normal;
-  letter-spacing: normal;
-  line-height: 24px;
-  margin: 10px 0 0 0;
-}
-.slider-item .animation-card_content .animation-card_content_city {
-  font-size: 11px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #3575E2;
-  margin-right: 0;
-  margin-left: auto;
-  background-color: #eaf2ff;
-  font-weight: bold;
-  margin-right: 20px;
-  font-family: arial;
-
-}
-.username{
-  font-size: 0.9rem;
-  color: #000;
-  font-weight: normal;
-}
-
-.votes{
-  font-size: 0.8rem;
-  color: #696d74;
-}
-
-.bottom {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-  margin-top: 30px;
-
-  .price{
-    color: #000000;
-    font-size: 1rem;
-    font-weight: 600;
-
-    &.skeleton {
-      width: 35%;
-    }
-  }
-  button{
-    color: #3575E2;
-    background-color: #eaf2ff;
-    border-radius: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 10px 13px;
-  }
-}
-
-ngx-skeleton-loader {
-  &::ng-deep {
-    .skeleton-loader {
-      margin-bottom: 0;
+:host {
+  .description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    
+    &::ng-deep{
+      * {
+        display: inline;
+        word-break: break-word;
+      }
     }
   }
 }
-

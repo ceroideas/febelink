@@ -20,6 +20,8 @@ export interface SearchCardType {
 export class SearchCardComponent {
   @Input() data: SearchCardType | null = null;
   @Input() searchTerm: string| null = null
+  @Input() skeleton: boolean = false;
+  @Input() query: string = '';
 
   urlWsrv: string = environment.baseWebUrlWsrv;
 

@@ -1,142 +1,288 @@
-<!-- HEADER  -->
-<div class="layer-home">
-  <div class="header-search">
-    <div class="titles">
-      @if (!h1Title) {
-        <h1 class="title-search">
-          Ofertas de servicios profesionales en <span>España</span> 
-        </h1>
-      } @else {
-        <h1 class="title-search">{{ h1Title }}</h1>
-      }
-      <p class="subtitle-search">Encuentra los mejores profesionales cerca de ti</p>
-    </div>
-    <div class="search-capsule">
-      <div class="capsule">
-        <div class="terms">
-          <ion-searchbar
-            id="search_scroll"
-            class="searchbar no-padding"
-            placeholder="{{ 'common.publishPlaceholder' | translate }}"
-            [(ngModel)]="searchText2"
-            style="--box-shadow: none"
-            (keydown.enter)="search2()"
-          ></ion-searchbar>
-        </div>
-        <div class="button-terms" (click)="search2()">Buscar</div>
-      </div>
-    </div>
-  </div>
+<!-- Search section -->
+<section class="search relative px-6 pt-32 mx-auto max-w-screen-xl z-1 xs:px-10">
+  <!-- Title -->
+  @if (!h1Title) {
+  <h1 class="text-black text-4xl font-bold mb-5 font-primary">
+    Ofertas de servicios profesionales en <span class="text-primary">España</span> 
+  </h1>
+  } @else {
+  <h1 class="text-black text-4xl font-bold mb-5 font-primary">{{ h1Title }}</h1>
+  }
+  <!-- Subtitle -->
+  <p class="text-black text-lg text-neutral-600">Encuentra los mejores profesionales cerca de ti</p>
 
-  <div class="container-search">
+  <!-- Search input -->
+  <div class="relative w-full flex flex-row rounded-[6px] border bg-white mt-6 mb-3" (clickOutside)="closeDropdown()">
+    <div class="icon px-4 flex items-center shrink-0">
+      <lucide-icon 
+        name="search"
+        class="stroke-primary" 
+        [strokeWidth]="2"
+      />
+    </div>
 
-    <!-- Left search links -->
-    <div class="left-search" >
-      <div class="title-left">Profesionales</div>
-      <div class="container-profession">
-        @for ( item of professionalLinks; track item.link ) {
-          <a [href]="'/listado/' + item.link"  >
-            <div class="item-profession" 
-              [ngClass]="{'selected': item.link === searchText}"
-            >
-              <i class="far fa-circle" *ngIf="item.link !== searchText"></i>
-              <i class="far fa-dot-circle"  *ngIf="item.link === searchText"></i>
-              {{item.title}}
-            </div>
-          </a>
+    <div class="w-full flex gap-3 overflow-hidden">
+      <!-- Desktop selections -->
+      @if ( currentSubSectorSelection.length ) {
+      <div #selection class="selections scrollbar-hide shrink-0 w-fit max-w-[70%] overflow-auto items-center gap-2 hidden sm:flex">
+        @for ( sector of currentSubSectorSelection; track sector.id ) {
+        <span 
+          class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+          (click)="checkSubsector(sector)"
+        >
+          {{ sector.nombre }}
+          <lucide-icon 
+            name="X"
+            class="stroke-primary ml-0.5" 
+            [strokeWidth]="2"
+            [size]="18"
+          />
+        </span>
         }
       </div>
+      }
+
+      <input
+        type="text"
+        class="w-full text-neutral-800 font-semibold bg-white outline-none placeholder:text-neutral-500 placeholder:font-normal"
+        placeholder="¿Qué estás buscando?"
+        [(ngModel)]="searchText2"
+        (input)="filterDropdownItems()"
+        (keydown)="openDropdown()"
+      />
     </div>
+
+    <!-- Search button -->
+    <div class="button p-2 border-l shrink-0">
+      <button 
+        class="button bg-primary text-white px-8 py-2 rounded font-bold font-primary" 
+        (click)="findOffers()"
+      >
+        Buscar
+      </button>
+    </div>
+
+    <!-- Dropdown -->
+    <div
+      class="sectors-dropdown absolute top-full flex flex-col z-10 mt-1 py-0 w-full rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+      [ngClass]="{'!hidden': !dropdownOpened}"
+    >
+      <ul class="overflow-auto">
+        @for ( sector of filteredSectors; track sector.nombre ) {
+        <li class="relative cursor-default select-none pl-3 pr-9 text-gray-900 border-b py-3" id="listbox-option-0" role="option">
+          <button class="w-fit h-fit bg-neutral-100 ring-1 ring-inset ring-neutral-300 px-3 py-1 mb-1 rounded-full font-bold">
+            @if ( sector.link ) {
+            <a [href]="'/listado/' + sector.link" class="pointer-events-none">
+              <div class="flex items-center">
+                <span 
+                  class="block truncate font-normal"
+                >
+                  {{sector.nombre}}
+                </span>
+              </div>
+            </a>
+            } @else {
+            <div class="pointer-events-none">
+              <div class="flex items-center">
+                <span 
+                  class="block truncate font-normal"
+                >
+                  {{sector.nombre}}
+                </span>
+              </div>
+            </div>
+            }
+          </button>
+
+          <ul class="overflow-auto">
+            @for ( subsector of sector.subSectors; track subsector.nombre ) {
+            <li class="relative cursor-default select-none py-2 pl-1 pr-9  text-gray-900" 
+              role="option"
+              [ngClass]="{'hidden': subsector.hidden}"
+              (click)="checkSubsector(subsector)">
+              <button class="w-full h-full flex items-center gap-2">
+                <div>
+                  <lucide-icon 
+                    *ngIf="!subsector.checked"
+                    name="square"
+                    class="stroke-primary" 
+                    [strokeWidth]="2"
+                  />
+                  <lucide-icon 
+                    *ngIf="subsector.checked"
+                    name="square-check-big"
+                    class="stroke-primary" 
+                    [strokeWidth]="2"
+                  />
+                </div>
+                @if ( subsector.link ) {
+                <a [href]="'/listado/' + subsector.link" class="pointer-events-none">
+                  <div class="flex items-center">
+                    <span 
+                      class="block truncate font-normal"
+                    >
+                      {{subsector.nombre}}
+                    </span>
+                  </div>
+                </a>
+                } @else {
+                <div class="pointer-events-none">
+                  <div class="flex items-center">
+                    <span 
+                      class="block truncate font-normal"
+                    >
+                      {{subsector.nombre}}
+                    </span>
+                  </div>
+                </div>
+                }
+              </button>
+            </li>
+            }
+          </ul>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mobile selections -->
+  @if ( currentSubSectorSelection.length ) {
+  <div #selection class="selections flex-wrap scrollbar-hide shrink-0 w-full flex items-center gap-2 mb-3 sm:hidden">
+    @for ( sector of currentSubSectorSelection; track sector.id ) {
+    <span 
+      class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+      (click)="checkSubsector(sector)"
+    >
+      {{ sector.nombre }}
+      <lucide-icon 
+        name="X"
+        class="stroke-primary ml-0.5" 
+        [strokeWidth]="2"
+        [size]="18"
+      />
+    </span>
+    }
+  </div>
+  }
+
+  <!-- Search attributes -->
+  <div class="dropdowns flex flex-row gap-3 flex-wrap sm:flex-nowrap">
+    <!-- Province -->
+    <app-links-dropdown
+      class="w-fit max-w-[40%] max-[876px]:w-full max-[876px]:max-w-full"
+      [dropdownItems]="provinceDropdownItems"
+      [currentDropdownItemSelection]="currentProvinceDropdownItem"
+      [placeholder]="'Provincia'"
+      [lucideIcon]="'map-pin'"
+      [softLinks]="true"
+      (itemClicked)="provinceDropdownItemClicked($event)"
+      (currentSelectionUpdated)="updateCurrentProvinceDropdownItem($event)"
+    />
     
-    <div class="center-search" >
-      <!-- @if ( searchResponse.offers?.length > 0 ) { -->
-        <div class="offers">
-          <div class="title-results" >Resultados</div>
-          <div class="container-capsule-results">
-            @for ( data of offers; track data.id ) {
-              <search-product-card
-                [data]="data"
-                [unitTypes]="unitTypes" 
-              ></search-product-card> 
-            }
-          </div>
-        </div>
-      <!-- } -->
+    <!-- City -->
+    @if ( cityDropdownItems.length ) {
+    <app-links-dropdown
+      class="w-fit max-w-[40%] max-[876px]:w-full max-[876px]:max-w-full"
+      [dropdownItems]="cityDropdownItems"
+      [currentDropdownItemSelection]="currentCityDropdownItem"
+      [placeholder]="'Ciudad'"
+      [lucideIcon]="'arrow-down-to-dot'"
+      [softLinks]="true"
+      (itemClicked)="cityDropdownItemClicked($event)"
+      (currentSelectionUpdated)="currentCityDropdownItem = $event"
+    />
+    }
+  </div>
 
-      @if ( searchResponse.otherResults?.length > 0 ) {
-        <div>
-          <div class="title-results"  >Resultados Similares</div>
-          <div class="container-capsule-results">
-            <div  >
-              @for ( data of searchResponse.otherResults; track data.id ) {
-                <search-card
-                  [data]="data"
-                  [searchTerm]="searchText"
-                ></search-card>
-              }
-            </div>
-          </div>
-          <div
-              *ngIf="searchResponse?.otherResults?.length < 100"
-              (click)="searchMoreResults()"
-              class="more-other-results-button"
-            >
-              Ver más resultados
-            </div>
+</section>
 
-            <p>{{metaDescription}}</p>
-        </div>
-      }
-   
+<!-- Offers -->
+<section class="result relative px-6 mx-auto max-w-screen-xl my-16 flex gap-6 z-1 max-[876px]:flex-col xs:px-10">
+  <div class="content w-full flex flex-col gap-6">
+    <div class="flex justify-between">
+      <h3 class="font-primary font-semibold text-[1.65rem]">Resultados</h3>
+      <!-- Order -->
+      <app-dropdown
+        *ngIf="offers.length"
+        [dropdownItems]="orderDropdownItems"
+        [currentDropdownItem]="currentOrderDropdownItem"
+        [placeholder]="'Ordenar'"
+        [lucideIcon]="'arrow-down-up'"
+        [dropdownPosition]="'right'"
+      />
     </div>
 
-
-    <div class="right-search">
-      @if ( provincesLinks.length  && !cityLinks.length) {
-        <div class="capsule-city">
-          <div class="title-foryou">Los mejores profesionales en España</div>
-          <div class="container-search-for-you">
-            @for ( item of provincesLinks; track item.link ) {
-              <div class="item-profession">
-                <a [href]="'/listado/' + item.link" >
-                  {{item.title}}
-                </a>
-              </div>
-            }
-          </div>
-        </div>
-      }
-      
-      @if ( cityLinks.length ) {
-        <div class="capsule-city">
-          <div class="title-foryou">Los mejores profesionales en tu ciudad</div>
-          <div class="container-search-for-you">
-            @for ( item of cityLinks; track item.link ) {
-              <div class="item-profession">
-                <a [href]="'/listado/' + item.link" >
-                  {{item.title}}
-                </a>
-              </div>
-            }
-          </div>
-        </div>
+    <div class="list flex flex-col gap-3" *ngIf="!loading">
+      @for ( data of offers; track data.id ) {
+        <search-product-card
+          [data]="data"
+          [unitTypes]="unitTypes" 
+        /> 
       }
 
-      <div class="search-for-you">
-        <h3 class="title-foryou">🚀 Pedir presupuesto gratis</h3>
-        <div class="container-search-for-you">
-          <p class="texts">
-            ¿No encuentras lo que buscas?
-            <br>
-            <br>
-            Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
-            Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
-          </p>
-          <a href="/lo-buscamos-por-ti" class="button">Buscar</a>
-        </div>
+      @if ( !offers.length ) {
+        <p class="text-neutral-600 text-lg font-primary">No se encontraron resultados</p>
+      }
+    </div>
+    <div class="list flex flex-col gap-3" *ngIf="loading">
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+    </div>
+
+    <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded"
+      *ngIf="!otherOffers.length && !loadingOtherOffers"
+      (click)="findOtherOffers()">
+      Ver otros resultados similares
+    </button>
+  </div>
+
+  <div class="side w-[270px] shrink-0 mx-0 max-[876px]:mx-auto">
+    <div class="bg-white rounded border border-solid border-slate-100 p-6">
+      <h3 class="font-semibold mb-4">🚀&nbsp;&nbsp;Pedir presupuesto gratis</h3>
+      <div class="text-sm text-neutral-600">
+        <p class="">
+          ¿No encuentras lo que buscas?
+          <br>
+          <br>
+          Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
+          Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
+        </p>
+        <a href="/pedir-presupuesto-gratis" class="block w-full mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded">Pedir presupuesto</a>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Other offers -->
+<section class="result relative px-6 mx-auto max-w-screen-xl my-16 flex gap-6 z-1 xs:px-10"
+  *ngIf="otherOffers.length || loadingOtherOffers">
+  <div class="content w-full flex flex-col gap-6">
+    <div class="flex justify-between">
+      <h3 class="font-primary font-semibold text-[1.65rem]">Resultados similares</h3>
+    </div>
+
+    <div class="list grid grid-cols-1 lg:grid-cols-2 gap-3" *ngIf="!loadingOtherOffers">
+      <ng-container *ngFor="let data of otherOffers">
+        <search-card
+          [data]="data"
+          [query]="otherOffersQuery"
+        />
+      </ng-container>
+    </div>
+    <div class="list grid grid-cols-1 lg:grid-cols-2 gap-3" *ngIf="loadingOtherOffers">
+      <search-card [skeleton]="true" /> 
+      <search-card [skeleton]="true" /> 
+      <search-card [skeleton]="true" /> 
+      <search-card [skeleton]="true" /> 
+      <search-card [skeleton]="true" /> 
+      <search-card [skeleton]="true" /> 
+    </div>
+  </div>
+</section>
 
 <app-footer></app-footer>

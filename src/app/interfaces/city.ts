@@ -7,4 +7,5 @@ export interface City {
   title: string;
   updated_at: string;
   locations_id: { id: number, title: string };
+  checked: boolean;
 }

@@ -1,0 +1,94 @@
+<div class="dropdown relative" (clickOutside)="closeDropdown()">
+  <!-- Button -->
+  <button 
+    type="button" 
+    class="w-full h-fit items-center flex flex-row gap-4 rounded-[6px] text-left border border-solid border-slate-200 bg-white p-3 pl-4" 
+    (click)="toggleDropdown()" 
+  >
+    <div class="icon shrink-0">
+      <lucide-icon 
+        [name]="lucideIcon"
+        class="stroke-primary" 
+        [strokeWidth]="2"
+      ></lucide-icon>
+    </div>
+    @if ( currentDropdownItemSelection.length ) {
+      <div #selection class="selections scrollbar-hide w-full overflow-auto flex items-center gap-2">
+      @for ( item of currentDropdownItemSelection; track item.title ) {
+        <span 
+          #selection
+          class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+          (click)="itemClick(item)"
+        >
+          {{ item.title }}
+          <lucide-icon 
+            name="X"
+            class="stroke-primary ml-0.5" 
+            [strokeWidth]="2"
+            [size]="18"
+          />
+        </span>
+      }
+      </div>
+    } @else {
+      <div class="placeholder w-full min-w-36 text-neutral-500 block truncate py-[4px]">
+        {{ placeholder }}
+      </div>
+    }
+    <div class="chevron shrink-0">
+      <lucide-icon 
+        name="chevron-down"
+        class="stroke-primary" 
+        [strokeWidth]="2"
+      ></lucide-icon>
+    </div>
+  </button>
+  <!-- Dropdown -->
+  <div
+    class="absolute flex flex-col z-10 mt-1 py-0 max-h-56 w-full rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+    [ngClass]="{'!hidden': !opened}"
+  >
+    <div class="filter p-2 border-b border-solid border-slate-200">
+      <input 
+        #filterInput
+        type="text" 
+        class="w-full border border-solid border-slate-200 rounded-full text-neutral-800 font-semibold bg-white outline-none placeholder:text-neutral-500 placeholder:font-normal px-3 py-1" 
+        placeholder="Buscar..." 
+        [(ngModel)]="filterText" 
+        (input)="filterDropdownItems()"
+      />
+    </div>
+
+    <ul class="overflow-auto">
+    @for ( item of filteredDropdownItems; track item.link ) {
+      <li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900" id="listbox-option-0" role="option">
+        <button class="w-full h-full flex items-center gap-2" (click)="softLinks ? itemClick(item) : null">
+          <div>
+            <lucide-icon 
+              *ngIf="!item.checked"
+              name="square"
+              class="stroke-primary" 
+              [strokeWidth]="2"
+            />
+            <lucide-icon 
+              *ngIf="item.checked"
+              name="square-check-big"
+              class="stroke-primary" 
+              [strokeWidth]="2"
+            />
+          </div>
+          <a [href]="'/listado/' + item.link" [ngClass]="{'pointer-events-none': softLinks}">
+            <div class="flex items-center">
+              <span 
+                class="block truncate font-normal"
+              >
+                {{item.title}}
+              </span>
+            </div>
+          </a>
+        </button>
+      </li>
+    }
+    </ul>
+  </div>
+</div>

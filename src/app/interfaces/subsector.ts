@@ -10,4 +10,6 @@ export interface Subsector {
   meta_description: string;
   nombre: string;
   page_title: string;
+  hidden: boolean;
+  checked: boolean;
 }
