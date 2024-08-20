@@ -77,6 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
   userWallets: CryptoCurrency[] = [];
   
   onHome: boolean = true;
+  onAdmin: boolean = false;
 
   firebaseApp: FirebaseApp;
 
@@ -116,12 +117,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
       if ( e instanceof NavigationEnd ) {
         const urlParts = e.url.split('/');
-     
+
         this.onHome = (e.url === '/' || urlParts.includes('user')
         || urlParts.includes('services')
         || urlParts.includes('wallet') || 
         urlParts.includes('profile')|| urlParts.includes('subscriptions')
         || urlParts.includes('professions'));
+
+        this.onAdmin = urlParts.includes('admin');
       } 
     });
   }

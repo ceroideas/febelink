@@ -332,7 +332,11 @@
      </ion-content>
    </ion-menu>
  
-   <app-header  id="notificationButton" [currentUser]="currentUser"></app-header>
+  <app-header
+    *ngIf="!onAdmin" 
+    id="notificationButton" 
+    [currentUser]="currentUser">
+  </app-header>
  
    <!-- <ion-router-outlet id="main-content"></ion-router-outlet> -->
    <router-outlet id="main-content"></router-outlet>

@@ -134,7 +134,7 @@ export class KeywordService {
   }
 
 
-   // Enlaces de ciudades
+   // Ciudades
    public getCityKeywords() {
     return this.http.get('getCity');
   }
@@ -143,7 +143,7 @@ export class KeywordService {
     return this.http.post('admin/createCitys', value);
   }
 
-  public updateCityKeyword(value: { location: number, city: string, link: string , h1: string,  pagetitle: string, metadescription: string}) {
+  public updateCityKeyword(value: { city: number, location: number, title: string, link: string , h1: string,  pagetitle: string, metadescription: string}) {
     return this.http.post('admin/updateCitys', value);
   }
 

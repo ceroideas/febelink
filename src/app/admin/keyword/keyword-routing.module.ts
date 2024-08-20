@@ -11,37 +11,14 @@ import { LinkFooterPage } from './link-footer/link-footer.page';
 import { ClicksPage } from './clicks/clicks.page';
 
 const routes: Routes = [
-  {
-    path: 'sector',
-    component: SectorPage
-  }, {
-    path: 'sub-sector',
-    component: SubSectorPage
-  }, 
-  {
-    path: 'location',
-    component: LocationPage
-  }, 
-  {
-    path: 'link-location',
-    component: LinkLocationPage
-  },
-  {
-    path: 'city',
-    component: CityPage
-  }, 
-  {
-    path: 'link-city',
-    component: LinkCityPage
-  },
-  {
-    path: 'link-footer',
-    component: LinkFooterPage
-  },
-  {
-    path: 'clicks',
-    component: ClicksPage
-  }
+  { path: 'sector', component: SectorPage}, 
+  { path: 'sub-sector', component: SubSectorPage }, 
+  { path: 'location', component: LocationPage }, 
+  { path: 'link-location', component: LinkLocationPage },
+  { path: 'city', component: CityPage }, 
+  { path: 'link-city', component: LinkCityPage },
+  { path: 'link-footer', component: LinkFooterPage },
+  { path: 'clicks', component: ClicksPage }
 ];
 
 @NgModule({

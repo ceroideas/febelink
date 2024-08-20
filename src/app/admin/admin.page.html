@@ -1,21 +1,46 @@
-<div class="container-admin">
-  <div class="container-img">
-    <img src="assets/imgs/img2.png">
-  </div>
-  <div class="container-panel">
-    <div class="grid-options" >
-      <div class="item-list" [routerLink]="option.link" *ngFor="let option of options">
-        <div class="box-icon">
-          <ion-icon slot="start" [name]="option.icon"></ion-icon>
-        </div>
-        <div class="label">
-          <div class="title-item">{{option.title}}</div>
-        </div>
-        <div class="icon-redirect">
-          <i class="fa fa-chevron-right"></i>
-        </div>
-      </div>
+<aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r" aria-label="Sidebar">
+  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
+    <div class="mt-4 first:mt-0">
+      <ul class="space-y-2 font-medium">
+          <li>
+            <a href="/" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+              <lucide-icon 
+                name="globe"
+                class="stroke-gray-500 transition duration-75 group-hover:stroke-gray-900" 
+                [strokeWidth]="2"
+              />
+              <span class="ms-3">Febelink</span>
+            </a>
+          </li>
+      </ul>
     </div>
+    @for(item of menu; track item.name) {
+      <div class="mt-4 first:mt-0">
+        <span class="text-xs text-neutral-500 font-semibold uppercase pl-2">{{item.name}}</span>
+        <ul class="space-y-2 font-medium">
+          @for(option of item.items; track option.title) {
+            <li [ngClass]="{
+              'pointer-events-none opacity-50': option.disabled,
+              'bg-gray-100 rounded-lg': currentRoute === option.link
+            }">
+              <a [routerLink]="option.link" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <lucide-icon 
+                  [name]="option.icon"
+                  class="stroke-gray-500 transition duration-75 group-hover:stroke-gray-900" 
+                  [strokeWidth]="2"
+                />
+                <span class="ms-3">{{option.title}}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </div>
-</div>
+</aside>
 
+@if ( isBrowser ) {
+  <div class="relative min-h-full p-4 sm:ml-64">
+    <router-outlet></router-outlet>
+  </div>
+}

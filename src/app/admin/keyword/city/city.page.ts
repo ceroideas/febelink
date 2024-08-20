@@ -178,7 +178,7 @@ export class CityPage implements OnInit {
         linkParse = link.replace(new RegExp(' ', 'g'), '-').toLowerCase();
         linkParse= this.removeAccents(linkParse)
 
-        await this.keywordService.updateCityKeyword({location:  this.keyCity.locations_id.id, city: title,  link: linkParse, h1, pagetitle, metadescription});
+        // await this.keywordService.updateCityKeyword({location:  this.keyCity.locations_id.id, city: title,  link: linkParse, h1, pagetitle, metadescription});
         await this.search();
         this.restoreData()
       } catch (e) {

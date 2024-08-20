@@ -1,0 +1,351 @@
+<div 
+  *ngIf="loading"
+  class="w-full h-full absolute top-0 left-0 flex justify-center items-center"  
+>
+  <span class="loading loading-ring loading-lg"></span>
+</div>
+
+<!-- Main list -->
+<div *ngIf="!loading" class="flex flex-col gap-4">
+  <!-- Statistics -->
+  <div class="cards flex flex-wrap gap-4">
+    <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
+      <span class="title mb-2 font-semibold">Enlaces</span>
+      <span class="data text-4xl font-bold">{{links.length}}</span>
+      <span class="aux text-neutral-400">Total</span>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions flex gap-4">
+    <!-- Filter -->
+    <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
+      <input 
+        type="text" 
+        class="w-full h-full bg-transparent outline-none" 
+        placeholder="Filtrar..."
+        (input)="filter($event)"
+      />
+    </div>
+    <!-- Buttons -->
+    <div class="buttons flex gap-4 shrink-0">
+      <!-- Export -->
+      <button 
+        class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
+        (click)="export()"
+      >
+        <lucide-icon
+          name="file-down"
+          class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+        <span class="px-2">Exportar</span>
+      </button>
+      <!-- Import -->
+      <button 
+        class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
+        (click)="import()"
+      >
+        <lucide-icon
+          name="file-up"
+          class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+        <span class="px-2">Importar</span>
+      </button>
+      <!-- Create -->
+      <button 
+        class="button flex justify-center items-center text-white ring-1 ring-inset ring-primary bg-primary/80 hover:enabled:bg-primary transition rounded-lg p-2 font-semibold"
+        (click)="showCreate()"
+      >
+        <lucide-icon
+          name="plus"
+          class="stroke-white transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="3"
+          [size]="20"
+        />
+        <span class="px-2">Crear</span>
+      </button>
+      <!-- Delete -->
+      <button 
+        class="button min-w-12 flex justify-center items-center text-white ring-1 ring-inset ring-red-600 bg-red-600/80 hover:enabled:bg-red-600 transition rounded-lg p-2 font-semibold disabled:opacity-30"
+        [disabled]="!someSelected"  
+        (click)="showMultipleDeleteModal()"
+      >
+        <lucide-icon
+          name="trash-2"
+          class="stroke-white transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <ul class="bg-white rounded-lg p-3 pb-1 shadow-default">
+    <!-- Header -->
+    <li class="sticky top-1 flex items-center gap-2 p-1 pr-3 bg-neutral-100 rounded font-semibold">
+      <span class="h-fit w-5 shrink-0"></span>
+      <span class="w-64 h-fit shrink-0">Título</span>
+      <span class="w-full h-fit">Enlace</span>
+      <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
+    </li>
+
+    <!-- Data -->
+    <li 
+      class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
+      *ngFor="let item of filteredLinks"
+      (click)="item.selected = !item.selected"
+    >
+      <!-- Select -->
+      <span class="h-fit w-5 shrink-0">
+        <lucide-icon 
+          *ngIf="item.selected"
+          name="square-check"
+          class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" 
+          [size]="20"
+        />
+        <lucide-icon 
+          *ngIf="!item.selected"
+          name="square"
+          class="stroke-gray-500 stroke-neutral-400 transition duration-75 group-hover:stroke-gray-900" 
+          [size]="20"
+        />
+      </span>
+      <!-- Title -->
+      <span class="w-64 shrink-0">{{ item.title }}</span>
+      <!-- Link -->
+      <button 
+        class="w-full truncate flex items-center gap-1 hover:opacity-50"
+        (click)="item.link && viewLink($event, item.link)"
+      >
+        {{ item.link }}
+        <lucide-icon
+          *ngIf="item.link"
+          name="link"
+          class="stroke-link transition duration-75 group-hover:stroke-gray-900" 
+          [size]="18"
+        />
+      </button>
+      <!-- Actions -->
+      <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
+        <!-- Edit -->
+        <button 
+          class="w-7 h-7 flex justify-center items-center"
+          (click)="showEdit($event, item)"
+        >
+          <lucide-icon 
+            name="pencil"
+            class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" 
+            [size]="20"
+          />
+        </button>
+        <!-- Delete -->
+        <button 
+          class="w-7 h-7 flex justify-center items-center"
+          (click)="showDelete($event, item)"
+        >
+          <lucide-icon 
+            name="trash-2"
+            class="stroke-gray-500 stroke-red-600 transition duration-75 group-hover:stroke-gray-900" 
+            [size]="20"
+          />
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Edit modal -->
+<dialog #editModal class="modal">
+  <div class="modal-box bg-white">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 *ngIf="!currentLink?.isNew" class="text-lg font-bold">Modificar</h3>
+    <h3 *ngIf="currentLink?.isNew" class="text-lg font-bold">Crear</h3>
+    
+    <div *ngIf="currentLink">
+      <!-- Title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Título*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentLink!.title"
+        />
+      </label>
+      <!-- Link -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Enlace*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [placeholder]="this.generateLink(currentLink?.title)"
+          [(ngModel)]="currentLink!.link"
+        />
+      </label>
+      <!-- H1 -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Encabezado H1*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [(ngModel)]="currentLink!.h1"
+        />
+      </label>
+      <!-- H2 -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Encabezado H2*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [(ngModel)]="currentLink!.h2"
+        />
+      </label>
+      <!-- Page title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Título de página*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [(ngModel)]="currentLink!.page_title"
+        />
+      </label>
+      <!-- Meta description -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Meta descripción*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [(ngModel)]="currentLink!.meta_description"
+        />
+      </label>
+    </div>
+
+    <!-- Action -->
+    <div class="modal-action">
+      <button 
+        class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
+        (click)="currentLink?.isNew ? create() : update()"
+        [disabled]="
+          (currentLink?.isNew && !canCreate) || 
+          (!currentLink?.isNew && !canUpdate) ||
+          loadingRequest
+        "
+      >
+        Guardar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<!-- Delete modal -->
+<dialog #deleteModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
+    <p class="py-4">¿Estas seguro que quieres eliminar el enlace <b>{{currentLink?.title}}</b>?</p>
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closeDeleteModal()"
+        [disabled]="loadingRequest"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-red-600 text-white hover:bg-red-700 transition"
+        (click)="delete()"
+        [disabled]="loadingRequest"
+      >
+        Eliminar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button [disabled]="loadingRequest">close</button>
+  </form>
+</dialog>
+
+<!-- Multiple delete modal -->
+<dialog #multipleDeleteModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
+    <p class="py-4">¿Estas seguro que quieres eliminar los enlaces seleccionados?</p>
+
+    <span 
+      class="block font-bold"
+      *ngFor="let link of selected"
+    >
+      {{link.title}}
+    </span>
+
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closeMultipleDeleteModal()"
+        [disabled]="loadingRequest"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-red-600 text-white hover:bg-red-700 transition"
+        (click)="deleteMultiple()"
+        [disabled]="loadingRequest"
+      >
+        Eliminar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button [disabled]="loadingRequest">close</button>
+  </form>
+</dialog>
+
+<!-- Import summary modal -->
+<dialog #importSummaryModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold">Resumen de importación</h3>
+    <p class="py-4">Se han detectado <b>{{importedLinks.length}}</b> enlaces, <b class="text-green-700">{{importedNewLinks.length}}</b> nuevo<span *ngIf="importedNewLinks.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedLinks.length}}</b> modificado<span *ngIf="importedModifiedLinks.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedLinks.length}}</b> eliminado<span *ngIf="importedDeletedLinks.length !== 1">s</span>.</p>
+
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closeImportSummaryModal()"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-green-600 text-white hover:bg-green-700 transition"
+        [disabled]="!importedNewLinks.length && !importedModifiedLinks.length && !importedDeletedLinks.length"
+        (click)="applyImport()"
+      >
+        Importar
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
