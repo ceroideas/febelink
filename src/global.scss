@@ -9,6 +9,10 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Core CSS required for Ionic components to work properly */
 @import '@ionic/angular/css/core.css';
 
@@ -32,6 +36,7 @@
 
 body {
   color: black;
+  background-color: white !important;
 }
 
 .swiper-button-prev{
