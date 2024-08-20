@@ -14,7 +14,7 @@ export class SeoService {
     title: 'Febelink | El buscador universal de servicios profesionales',
     description:
       'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic',
-    image: 'https://www.febelink.com/assets/imgs/febelink-share-img.png',
+    image: 'https://www.febelink.com/assets/imgs/febelinksuperpro.jpg',
     url: 'www.febelink.com',
   };
   seoPrevoius: SEOFebelink = {
@@ -43,8 +43,8 @@ export class SeoService {
     this.title.setTitle(seo.title);
 
     if ( seo.image == null || seo.image == undefined  || seo.image == ''  || seo.image == 'null' || seo.image == 'undefined' ) {
-      seo.image = 'https://www.febelink.com/assets/imgs/febelinksuperpro.png';
-      this.seoPrevoius.image = 'https://www.febelink.com/assets/imgs/febelinksuperpro.png';
+      seo.image = 'https://www.febelink.com/assets/imgs/febelinksuperpro.jpg';
+      this.seoPrevoius.image = 'https://www.febelink.com/assets/imgs/febelinksuperpro.jpg';
     }
 
     
