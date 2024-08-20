@@ -16,12 +16,7 @@ import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 
 // import {Facebook} from '@awesome-cordova-plugins/facebook/ngx';
 // import {GooglePlus} from '@awesome-cordova-plugins/google-plus/ngx';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-  GoogleLoginProvider,
-  FacebookLoginProvider,
-} from '@abacritt/angularx-social-login';
+import { SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { LoginPageModule } from './pages/login/login.module'
 import { NgxStripeModule } from 'ngx-stripe'
 import { InterestingLinksPageModule } from './pages/links/links.module'
@@ -50,12 +45,8 @@ export const appConfig: ApplicationConfig = {
             {
               id: GoogleLoginProvider.PROVIDER_ID,
               provider: new GoogleLoginProvider(
-                'clientId'
+                environment.WEB_CLIENT_ID
               )
-            },
-            {
-              id: FacebookLoginProvider.PROVIDER_ID,
-              provider: new FacebookLoginProvider('clientId')
             }
           ],
           onError: (err: any) => {

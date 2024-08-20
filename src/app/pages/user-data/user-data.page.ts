@@ -37,7 +37,7 @@ export class UserDataPage implements OnInit {
   public ciudad: string = "";
   public provincia: string = "";
   public direccion: string = "";
-  public telefono: string = "";
+  public telefono: string = "+34";
   public web: string = "";
   public idioma: string = "";
   public tarjetaCredito: string = "";
@@ -102,7 +102,14 @@ export class UserDataPage implements OnInit {
         this.form2?.controls['empresa'].setValue(data?.business) 
         this.form2?.controls['direccion'].setValue(data?.address) 
         this.form2?.controls['ciudad'].setValue(data?.city) 
-        this.form2?.controls['telefono'].setValue(data?.phoneNumber) 
+
+        //Verifico si tiene añadido el prefijo
+        if (data?.phoneNumber?.includes("+34")) {
+          this.form2?.controls['telefono'].setValue(data?.phoneNumber) 
+        } else {
+          this.form2?.controls['telefono'].setValue("+34" + data?.phoneNumber) 
+        }
+        
         this.form2?.controls['web'].setValue(data?.web) 
         this.form2?.controls['idioma'].setValue(data?.lang) 
         this.form2?.controls['tarjeta_credito'].setValue(data?.creditCard) 
@@ -177,21 +184,10 @@ export class UserDataPage implements OnInit {
     sessionStorage.setItem('productId', String(this.curUser?.id))
   }
   async onClickSubmit() {
-
     this.username = this.form?.get('username')?.value;
-    this.password = this.form?.get('password')?.value;
-    this.repeatPass = this.form?.get('repeatPass')?.value;
     this.description = this.form?.get('description')?.value;
 
     if (this.form?.valid) {
-
-      if (this.password == this.repeatPass) {
-        this.passIgual = true;
-      } else {
-        this.passIgual = false;
-      }
-
-
       if (this.username != null && this.description != null && this.password == '') {
         this.password = '';
       }
@@ -200,20 +196,50 @@ export class UserDataPage implements OnInit {
         if (this.password === '') {
           this.password = '';
         }
+      }
 
+      let datos = {
+        'username': this.username,
+        'password': '',
+        'description': this.description,
+        'avatarImage': this.iFile?.file
+      };
+
+      this.userDataService.updateBasicInfoUserData(datos)
+        .then(res => {
+          this.toastSvc.show('Información actualizada correctamente.');
+          this.avatarUrl = res.response.avatarImageURL;
+        })
+        .catch(err => {
+          this.toastSvc.show('Ha ocurrido un error inesperado durante la actualización. Por favor inténtelo de nuevo.');
+        });
+    }
+  }
+
+  async onSubmitNewPassword() {
+    this.username = this.form?.get('username')?.value;
+    this.description = this.form?.get('description')?.value;
+    this.password = this.form?.get('password')?.value;
+    this.repeatPass = this.form?.get('repeatPass')?.value;
+
+    if (this.form?.valid) {
+      if (this.password == this.repeatPass) {
+        this.passIgual = true;
+      } else {
+        this.passIgual = false;
       }
 
       if (this.passIgual) {
         let datos = {
           'username': this.username,
           'password': this.password,
-          'description': this.description,
+          'description': this.description || '',
           'avatarImage': this.iFile?.file
         };
 
         this.userDataService.updateBasicInfoUserData(datos)
           .then(res => {
-            this.toastSvc.show('Información actualizada correctamente.');
+            this.toastSvc.show('Contraseña guardada correctamente.');
             this.avatarUrl = res.response.avatarImageURL;
           })
           .catch(err => {

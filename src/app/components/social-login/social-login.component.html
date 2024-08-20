@@ -1,23 +1,11 @@
 <div class="button-separator margin-bottom-button">ó</div>
-<div
-  class="login-button-connections login-button-back-b margin-bottom-button"
-  (click)="socialLogin('facebook')"
->
-  {{ 'pages.registro.continueWith' | translate }}Facebook
-</div>
-<!-- <div class="login-button-connections login-button-back-c">
-  {{ 'pages.registro.continueWith' | translate }}Google
-</div> -->
 <asl-google-signin-button
   type="standard"
   shape="rectangular"
-  size="medium"
+  size="large"
   theme="outline"
   text="continue_with"
   locale="es-ES"
-  size="large"
   logo_alignment="left"
-  [width]="(document?.defaultView?.innerWidth ?? 0) < 900 ? 337 : 304"
-
->
+  [width]="(document?.defaultView?.innerWidth ?? 0) < 900 ? 337 : 304">
 </asl-google-signin-button>

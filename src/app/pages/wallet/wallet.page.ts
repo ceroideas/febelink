@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { WalletService } from '../../services/wallet/wallet.service';
 import { Observable } from 'rxjs';
 import {
@@ -56,10 +56,11 @@ export class WalletPage {
     private alertSvc: AlertSvc,
     private clipboardSvc: ClipboardSvc,
     private translateSvc: TranslateConfigService,
-    private accountSvc: AccountSvc
+    private accountSvc: AccountSvc,
+    private cdRef: ChangeDetectorRef
   ) {}
 
-  async ionViewWillEnter() {
+  async ngOnInit() {
     await this.getWalletInfo();
     await this.haveYouPurchased();
 
@@ -167,6 +168,7 @@ export class WalletPage {
     this.walletParams.assetsMaxDecimals = Number(
       response.assetsMaxDecimals || '0'
     );
+    this.cdRef.detectChanges();
   }
 
   async copyPublicKey() {

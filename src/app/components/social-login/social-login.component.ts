@@ -35,22 +35,18 @@ export class SocialLoginComponent {
     private utilities: UtilitiesService,
     private api: ApiService,
     @Inject(DOCUMENT) public document: Document
-  ) {}
+  ) {
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+    });
+  }
 
   /**
    *  Get social data ( google/facebook) depending on platform
    *
    */
+
   socialLogin(provider: any): void {
-    // Native Android/iOS
-    if (this.platform.is('cordova')) {
-      if (provider === 'facebook') {
-        this.loginFB();
-      } else {
-        this.googlePlusLogin();
-      }
-    } else {
-      // Web
       this.authService.signIn(this.getProvider(provider)).then(
         (data) => {
           const formData = new FormData();
@@ -72,7 +68,8 @@ export class SocialLoginComponent {
           );
         }
       );
-    }
+
+
   }
 
   /**
@@ -119,24 +116,24 @@ export class SocialLoginComponent {
    */
   googlePlusLogin() {
    
-    /* this.googlePlus
-      .login({
-        webClientId: environment.WEB_CLIENT_ID,
-        offline: true,
-      })
-      .then((data) => {
-        const formData = new FormData();
-        formData.append('email', data.email);
-        formData.append('name', data.displayName);
-        formData.append('google_id', data.userId);
-        formData.append('role_id', '5');
+    //  this.googlePlus
+    //   .login({
+    //     webClientId: environment.WEB_CLIENT_ID,
+    //     offline: true,
+    //   })
+    //   .then((data) => {
+    //     const formData = new FormData();
+    //     formData.append('email', data.email);
+    //     formData.append('name', data.displayName);
+    //     formData.append('google_id', data.userId);
+    //     formData.append('role_id', '5');
 
-        this.auth(formData, this.firstLogin);
-      })
-      .catch((err) => {
-        console.error(err);
-        this.utilities.showToast('Error de conexión con el servidor');
-      }); */
+    //     this.auth(formData, this.firstLogin);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     this.utilities.showToast('Error de conexión con el servidor');
+    //   }); 
   }
 
   /**

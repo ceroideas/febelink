@@ -75,6 +75,12 @@ export class LoBuscamosPorTiPage implements OnInit {
       }
     });
     this.id = this.route.snapshot.paramMap.get('id') || ''
+
+    this.route.queryParams.subscribe(params => {
+      if ( params['query'] ) {
+        this.title = decodeURIComponent(params['query']);
+      }
+    }); 
    
     if ( this.id !== ''){
         this.getfindServices()

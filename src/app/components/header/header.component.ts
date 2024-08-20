@@ -13,7 +13,6 @@ export class HeaderComponent {
 
   @Input() currentUser : any;
 
-
   detached: boolean = false;
   detachBlock: boolean = false;
   reduced: boolean = false;
@@ -36,11 +35,15 @@ export class HeaderComponent {
       if (event instanceof NavigationEnd) {
         const urlParts = event.url.split('/'); // Split the URL
      
-        if (event.url !== "/listado" && event.url !== "/" && !urlParts.includes('profile') 
-        && !urlParts.includes('services') 
-        && !urlParts.includes('wallet')  && !urlParts.includes('professions')  
-        && !urlParts.includes('subscriptions')
-         && !urlParts.includes('user')) {
+        if (
+          // event.url !== "/listado" && 
+          event.url !== "/search" && 
+          event.url !== "/" && 
+          !urlParts.includes('profile') 
+          && !urlParts.includes('services') 
+          && !urlParts.includes('wallet')  && !urlParts.includes('professions')  
+          && !urlParts.includes('subscriptions')
+          && !urlParts.includes('user')) {
           this.detachBlock = true;
           this.detached = true;
         } else {

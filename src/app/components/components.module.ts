@@ -1,8 +1,5 @@
 import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
   GoogleSigninButtonModule,
-  SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
 import {GoogleSigninButtDirective} from './social-login/google-sign-in-button.directive';
 import {NgModule} from '@angular/core';
@@ -41,24 +38,24 @@ import { environment } from '../../environments/environment';
     TranslateModule.forChild(),
     GoogleSigninButtonModule,
   ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.WEB_CLIENT_ID),
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: 'SocialAuthServiceConfig',
+  //     useValue: {
+  //       autoLogin: true,
+  //       providers: [
+  //         {
+  //           id: GoogleLoginProvider.PROVIDER_ID,
+  //           provider: new GoogleLoginProvider(environment.WEB_CLIENT_ID),
+  //         },
+  //         {
+  //           id: FacebookLoginProvider.PROVIDER_ID,
+  //           provider: new FacebookLoginProvider(environment.FACEBOOK_ID),
+  //         },
+  //       ],
+  //     } as SocialAuthServiceConfig,
+  //   },
+  // ],
 })
 export class ComponentsModule {
 }

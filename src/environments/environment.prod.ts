@@ -37,5 +37,8 @@ export const environment = {
     appId: "1:939891417028:web:fc2479f6487c6fd4afce91",
     measurementId: "G-LL020HEJ1L"
   },
-  FIREBASE_VAPID_KEY: 'BEiWoNPviKxsd2vXNfwP-N99b9EAaOfJSV9P-6894BcZwIdz_E4XUNVbaHbwoo21i3E2Q8b1RWwAQfv5fNGDirU'
+  FIREBASE_VAPID_KEY: 'BEiWoNPviKxsd2vXNfwP-N99b9EAaOfJSV9P-6894BcZwIdz_E4XUNVbaHbwoo21i3E2Q8b1RWwAQfv5fNGDirU',
+
+  xiltec_ai_url: 'https://ai-febelink.xiltec.es',
+  xiltec_ai_key: '4cd46e5a-fc09-4e66-af93-7be675869ea5',
 };
