@@ -15,6 +15,9 @@ import {
 } from '../../components/file-picker/models/file.model';
 import {iWYSIWYG} from './../../components/wysiwyg/models/wysiwyg.model';
 import { getWindow } from 'ssr-window';
+// @ts-ignore
+import { io, Socket } from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-servicios',
@@ -50,8 +53,9 @@ export class ServiciosPage implements OnInit {
   cartIdTerminar: any;
   isTemplate: boolean = false;
 
+  aiQuery: string = '';
   title: any
-  description: any;
+  description: any = '';
   whom: any;
   buttonName: any;
   unitPrice: any;
@@ -76,6 +80,12 @@ export class ServiciosPage implements OnInit {
 
   error: any = {}
   window = getWindow();
+
+  // @ts-ignore
+  socket: Socket;
+
+  aiGenerating: boolean = false;
+
   constructor(
     public platform: Platform,
     public popoverController: PopoverController,
@@ -88,8 +98,7 @@ export class ServiciosPage implements OnInit {
     private subService: SubscriptionService,
     private toastSvc: ToastSvc,
     public cref: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.unitTypes = [
@@ -117,6 +126,10 @@ export class ServiciosPage implements OnInit {
     this.getProducts();
     this.getProfessions();
     this.getNumServicesAvaliables();
+  }
+
+  ngOnDestroy() {
+    this.socket?.close()
   }
 
   async getNumServicesAvaliables() {
@@ -175,6 +188,7 @@ export class ServiciosPage implements OnInit {
     console.log(this.numbServicesAvaliable)
     if (this.numbServicesAvaliable > 0) {
       this.isNuevoServicio = true;
+      this.initializeSocket();
     } else {
       this.toastSvc.show(
         'Cambia a Plan SUPERPRO para poder crear ofertas activas adicionales.'
@@ -486,5 +500,45 @@ export class ServiciosPage implements OnInit {
   async removeProduct(productId: string) {
     await this.servicesSvc.removeProduct(productId);
     this.getProducts();
+  }
+
+  initializeSocket() {
+    this.socket = io(environment.xiltec_ai_url, {
+      reconnection: true,
+      autoConnect: false,
+      extraHeaders: {
+        'Authorization': environment.xiltec_ai_key
+      }
+    });
+
+    this.socket.connect();
+
+    this.socket.on('streamStart', () => {
+      
+    })
+
+    this.socket.on('stream', (data: string) => {
+      this.description += data;
+      this.cref.detectChanges();
+    })
+
+    this.socket.on('streamEnd', () => {
+      this.aiGenerating = false;
+      this.cref.detectChanges();
+    })
+
+    this.socket.on('error', (message: any) => {
+      
+    })
+  }
+
+  sendMessage() {
+    if ( this.aiQuery.trim() === '' ) return; // BREAK EXECUTION
+
+    this.aiGenerating = true;
+    this.description = '';
+    this.cref.detectChanges();
+
+    this.socket.emit('query', this.aiQuery);
   }
 }
