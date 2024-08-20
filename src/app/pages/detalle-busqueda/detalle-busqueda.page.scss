@@ -587,6 +587,8 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    border: none;
+                    background-color: transparent;
                   }
                   span{
                     font-size: 17px;
@@ -667,6 +669,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                border: none;
+                background-color: transparent;
               }
               span{
                 font-size: 17px;
@@ -706,6 +710,8 @@
             a{
               color: #fff;
               text-decoration: none;
+              border: none;
+              background-color: transparent;  
             }
           
           }
