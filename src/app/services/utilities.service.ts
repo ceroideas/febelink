@@ -452,6 +452,13 @@ export class UtilitiesService {
       .toLowerCase();
   }
 
+  normalizeString(str: string) {
+    return str
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036F]/g, '')
+      .toLowerCase();
+  }
+
   wait(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
