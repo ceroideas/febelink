@@ -16,5 +16,9 @@ export const answerOptions = (): {text: string, value: string}[] => {
 }
 
 export const toSlug = (text: string): string => {
-    return !!text ? slugify(text) : '';
+    return !!text ? slugify(text).toLocaleLowerCase() : '';
+}
+
+export const preventDefault = (event: any): void => {
+    event.preventDefault();
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BaseComponent } from '../base.component';
@@ -58,6 +58,7 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
   constructor(
     private router: Router,
     private keywordService: KeywordService,
+    private cdRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -77,14 +78,17 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
       this.visibleOnHome = this.subsectors.filter(item => item.imageURL).length
 
       this.loading = false;
+      this.cdRef.detectChanges();
     })
     .catch((error) => {
       this.loading = false;
+      this.cdRef.detectChanges();
     });
 
     this.keywordService.getSectorKeywords()
     .then((data: any) => {
       this.sectors = data.response;
+      this.cdRef.detectChanges();
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '../base.component';
@@ -62,6 +62,7 @@ export class ProvincesComponent extends BaseComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private keywordService: KeywordService,
+    private cdRef: ChangeDetectorRef
   ) {
     super();
 
@@ -88,8 +89,10 @@ export class ProvincesComponent extends BaseComponent implements OnInit {
         })
 
         this.loading = false;
+        this.cdRef.detectChanges();
       }).catch((error) => {
         this.loading = false;
+        this.cdRef.detectChanges();
       })
 
       if ( this.queryProvince ) {
@@ -99,6 +102,7 @@ export class ProvincesComponent extends BaseComponent implements OnInit {
     })
     .catch((error) => {
       this.loading = false;
+      this.cdRef.detectChanges();
     });
 
     this.loadingLinks = true;
@@ -106,6 +110,7 @@ export class ProvincesComponent extends BaseComponent implements OnInit {
     .then((data: any) => {
       this.generatedLinks = data.response;
       this.loadingLinks = false;
+      this.cdRef.detectChanges();
     })
   }
 

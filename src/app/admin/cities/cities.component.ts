@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BaseComponent } from '../base.component';
@@ -52,6 +52,7 @@ export class CitiesComponent extends BaseComponent implements OnInit {
   constructor(
     private router: Router,
     private keywordService: KeywordService,
+    private cdRef: ChangeDetectorRef
   ) { 
     super();
   }
@@ -69,14 +70,17 @@ export class CitiesComponent extends BaseComponent implements OnInit {
       this.filter({ target: { value: this.currentFilter } });
 
       this.loading = false;
+      this.cdRef.detectChanges();
     })
     .catch((error) => {
       this.loading = false;
+      this.cdRef.detectChanges();
     });
 
     this.keywordService.getLocationKeywords()
     .then((data: any) => {
       this.provinces = data.response;
+      this.cdRef.detectChanges();
     })
 
     this.loadingLinks = true;
@@ -84,6 +88,7 @@ export class CitiesComponent extends BaseComponent implements OnInit {
     .then((data: any) => {
       this.generatedLinks = data.response;
       this.loadingLinks = false;
+      this.cdRef.detectChanges();
     })
   }
 

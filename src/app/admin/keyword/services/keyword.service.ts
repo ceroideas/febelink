@@ -208,6 +208,9 @@ export class KeywordService {
 
   public listClickViews(){
     return this.http.get('admin/listClickViews');
- }
+  }
 
+  public getLinkData(link: string){
+    return this.http.post(`getDataLink`, {link});
+  }
 }

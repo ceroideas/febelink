@@ -1,5 +1,7 @@
 import { Component, ViewChild } from "@angular/core";
 
+import { toSlug } from '../../utils/utils';
+
 @Component({ template: '' })
 export abstract class BaseComponent {
 
@@ -56,7 +58,7 @@ export abstract class BaseComponent {
 
   generateLink(string: string | undefined, prefix: string = '', suffix: string = ''): string {
     if (!string) return '';
-    return `${prefix && prefix + '-'}${string.toLocaleLowerCase().replace(/ /g, '-')}${suffix && '-' + suffix}`;
+    return `${prefix && prefix + '-'}${toSlug(string).toLocaleLowerCase()}${suffix && '-' + suffix}`;
   }
 
   normalizeStringToCompare(string: string | undefined | null): string {

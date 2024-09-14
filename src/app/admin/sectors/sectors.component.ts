@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '../base.component';
@@ -60,6 +60,7 @@ export class SectorsComponent extends BaseComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private keywordService: KeywordService,
+    private cdRef: ChangeDetectorRef
   ) { 
     super();
 
@@ -93,9 +94,11 @@ export class SectorsComponent extends BaseComponent implements OnInit {
       }
 
       this.loading = false;
+      this.cdRef.detectChanges();
     })
     .catch((error) => {
       this.loading = false;
+      this.cdRef.detectChanges();
     });
   }
 
