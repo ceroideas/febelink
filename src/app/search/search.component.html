@@ -11,6 +11,26 @@
   <!-- Subtitle -->
   <p class="text-black text-lg text-neutral-600">Encuentra los mejores profesionales cerca de ti</p>
 
+  <!-- Mobile selections -->
+  @if ( currentSubSectorSelection.length ) {
+  <div #selection class="selections flex-wrap scrollbar-hide shrink-0 w-full flex items-center gap-2 mt-3 -mb-3 sm:hidden">
+    @for ( sector of currentSubSectorSelection; track sector.id ) {
+    <span 
+      class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+      (click)="checkSubsector(sector)"
+    >
+      {{ sector.nombre }}
+      <lucide-icon 
+        name="X"
+        class="stroke-primary ml-0.5" 
+        [strokeWidth]="2"
+        [size]="18"
+      />
+    </span>
+    }
+  </div>
+  }
+
   <!-- Search input -->
   <div class="relative w-full flex flex-row rounded-[6px] border bg-white mt-6 mb-3" (clickOutside)="closeDropdown()">
     <div class="icon px-4 flex items-center shrink-0">
@@ -116,7 +136,7 @@
                   />
                 </div>
                 @if ( subsector.link ) {
-                <a [href]="'/listado/' + subsector.link" class="pointer-events-none">
+                <a [href]="'/listado/' + subsector.link" class="" (click)="preventDefault($event)">
                   <div class="flex items-center">
                     <span 
                       class="block truncate font-normal"
@@ -146,39 +166,21 @@
     </div>
   </div>
 
-  <!-- Mobile selections -->
-  @if ( currentSubSectorSelection.length ) {
-  <div #selection class="selections flex-wrap scrollbar-hide shrink-0 w-full flex items-center gap-2 mb-3 sm:hidden">
-    @for ( sector of currentSubSectorSelection; track sector.id ) {
-    <span 
-      class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
-      (click)="checkSubsector(sector)"
-    >
-      {{ sector.nombre }}
-      <lucide-icon 
-        name="X"
-        class="stroke-primary ml-0.5" 
-        [strokeWidth]="2"
-        [size]="18"
-      />
-    </span>
-    }
-  </div>
-  }
-
   <!-- Search attributes -->
   <div class="dropdowns flex flex-row gap-3 flex-wrap sm:flex-nowrap">
     <!-- Province -->
-    <app-links-dropdown
-      class="w-fit max-w-[40%] max-[876px]:w-full max-[876px]:max-w-full"
-      [dropdownItems]="provinceDropdownItems"
-      [currentDropdownItemSelection]="currentProvinceDropdownItem"
-      [placeholder]="'Provincia'"
-      [lucideIcon]="'map-pin'"
-      [softLinks]="true"
-      (itemClicked)="provinceDropdownItemClicked($event)"
-      (currentSelectionUpdated)="updateCurrentProvinceDropdownItem($event)"
-    />
+    @if ( provinceDropdownItems.length ) {
+      <app-links-dropdown
+        class="w-fit max-w-[40%] max-[876px]:w-full max-[876px]:max-w-full"
+        [dropdownItems]="provinceDropdownItems"
+        [currentDropdownItemSelection]="currentProvinceDropdownItem"
+        [placeholder]="'Provincia'"
+        [lucideIcon]="'map-pin'"
+        [softLinks]="true"
+        (itemClicked)="provinceDropdownItemClicked($event)"
+        (currentSelectionUpdated)="updateCurrentProvinceDropdownItem($event)"
+      />
+    }
     
     <!-- City -->
     @if ( cityDropdownItems.length ) {
@@ -218,6 +220,7 @@
         <search-product-card
           [data]="data"
           [unitTypes]="unitTypes" 
+          (click)="storeCurrentSearch()"
         /> 
       }
 
@@ -266,7 +269,7 @@
       <h3 class="font-primary font-semibold text-[1.65rem]">Resultados similares</h3>
     </div>
 
-    <div class="list grid grid-cols-1 lg:grid-cols-2 gap-3" *ngIf="!loadingOtherOffers">
+    <div class="list grid grid-cols-1 lg:grid-cols-2 gap-3" *ngIf="!loadingOtherOffers || otherOffers.length">
       <ng-container *ngFor="let data of otherOffers">
         <search-card
           [data]="data"
@@ -282,6 +285,12 @@
       <search-card [skeleton]="true" /> 
       <search-card [skeleton]="true" /> 
     </div>
+
+    <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded"
+      *ngIf="otherOffers.length && !loadingOtherOffers"
+      (click)="findOtherOffers()">
+      Ver más resultados similares
+    </button>
   </div>
 </section>
 

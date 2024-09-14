@@ -21,6 +21,8 @@ import { UtilitiesService } from '../services/utilities.service';
 const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
 const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
 
+import { toSlug, preventDefault } from '../../utils/utils';
+
 export interface SearchType {
   services: SearchProductCardType[];
   offers: SearchProductCardType[];
@@ -77,7 +79,6 @@ export class SearchComponent {
   locationFilterLinkFull :any =[];
 
   metaFilterLink:any =[];
-  cities: any = [];
 
   displayPartialSignUp: boolean = false;
   email: string | null = null;
@@ -116,6 +117,7 @@ export class SearchComponent {
     title: string
   }[] = [];
 
+  provinces: Location[] = [];
   provinceDropdownItems: {
     id: number,
     link: string,
@@ -123,6 +125,7 @@ export class SearchComponent {
     checked: boolean
   }[] = [];
 
+  cities: City[] = [];
   cityDropdownItems: {
     id: number,
     link: string,
@@ -133,6 +136,12 @@ export class SearchComponent {
   currentSubSectorSelection: Subsector[] = [];
   currentProvinceDropdownItem: {id: number, title: string, link: string, checked: boolean}[] = [];
   currentCityDropdownItem: {title: string, link: string, checked: boolean}[] = [];
+
+  targetSubsector: Subsector | undefined = undefined;
+  targetLocation: Location | undefined = undefined;
+  targetCity: City | undefined = undefined
+  targetLinkLocation: LinkLocation | undefined = undefined;
+  targetLinkCity: LinkCity | undefined = undefined;
 
   subSectorDropdown: boolean = false;
   provinceDropdown: boolean = false;
@@ -159,7 +168,11 @@ export class SearchComponent {
 
   otherOffersQuery: string = '';
 
+  otherOffersStartIndex: number = 0;
+
   subsectorsQuery: number[] | undefined = undefined;
+
+  preventDefault = preventDefault;
 
   constructor(
     public searchService: SearchService,
@@ -176,6 +189,31 @@ export class SearchComponent {
   ) {
 
     this.searchText = this.actRouter.snapshot.paramMap.get('searchTerm') || '';
+
+    console.log(this.searchText)
+    
+    this.keywordService.getLinkData(this.searchText).then((data: any) => {
+      const response = data.response;
+
+      console.log(response)
+
+      if ( response.subsector?.length ) {
+        this.targetSubsector = response.subsector[0];
+        this.handleSubsectorResult(response.subsector[0]);
+      } else if ( response.locations?.length ) {
+        this.targetLocation = response.locations[0];
+        this.handleLocationResult(response.locations[0]);
+      } else if ( response.citys?.length ) {
+        this.targetCity = response.citys[0];
+        this.handleCityResult(response.citys[0]);
+      } else if ( response.linklocations?.length ) {
+        this.targetLinkLocation = response.linklocations[0];
+        this.handleLinkLocationResult(response.linklocations[0]);
+      } else if ( response.linkcitys?.length ) {
+        this.targetLinkCity = response.linkcitys[0];
+        this.handleLinkCityResult(response.linkcitys[0]);
+      }
+    })
 
     this.actRouter.queryParams.subscribe(params => {
       if ( params['subsectors'] ) {
@@ -195,8 +233,10 @@ export class SearchComponent {
       this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));
 
       // Configure locations dropdown
-      this.provinceDropdownItems = this.keywords.locations
+      this.provinces = this.keywords.locations
       .filter((location: Location) => location.link !== undefined && location.link !== null && location.link !== '')
+
+      this.provinceDropdownItems = this.provinces
       .map((location: Location) => {
         return {
           id: location.id,
@@ -207,8 +247,10 @@ export class SearchComponent {
       });
 
       // Configure cities dropdown
-      this.cityDropdownItems = this.keywords.citys
+      this.cities = this.keywords.citys
       .filter((city: City) => city.link !== undefined && city.link !== null && city.link !== '')
+
+      this.cityDropdownItems = this.cities
       .map((city: City) => {
         return {
           id: city.id,
@@ -222,10 +264,6 @@ export class SearchComponent {
 
       if ( !this.restoreCurrentSearch() ) {
         this.findOffers();
-
-        // if (isPlatformBrowser(this.platformId)) {
-        //   this.findOtherOffers();
-        // }
       }
     });
 
@@ -238,84 +276,76 @@ export class SearchComponent {
     let subsector: Subsector | undefined = undefined;
     let location: Location | undefined = undefined;
     let city: City | undefined = undefined;
-    let linkLocation: LinkLocation | undefined = undefined;
-    let linkCity: LinkCity | undefined = undefined;
 
-    if ( (subsector = this.findIntoSubsector(data.subsector, this.searchText)) !== undefined ) {
+    if ( this.targetSubsector && (subsector = this.findIntoSubsector(data.subsector, this.searchText)) !== undefined ) {
       // Activate badge
       subsector.checked = false;
-      this.checkSubsector(subsector);
-      // Set SEO metadata
-      this.handleSubsectorResult(subsector);
+      this.currentSubSectorSelection.push(subsector);
       // Set province links based on subsector
-      this.setProvinceLinksBasedOnSubsector(subsector, data.linklocations);
+      this.setProvinceLinksBasedOnSubsector(subsector);
       // Set city links based on subsector
-      this.setCityLinksBasedOnSubsector(subsector, data.linkcitys);
-    } else if ( (location = this.findIntoLocation(data.locations, this.searchText)) !== undefined ) {
+      this.setCityLinksBasedOnSubsector(subsector);
+    } else if ( this.targetLocation &&  (location = this.findIntoLocation(data.locations, this.searchText)) !== undefined ) {
       // Activate badge
       this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
       this.currentProvinceDropdownItem.push({id: location.id, title: location.title, link: location.link, checked: true});
-      // Set SEO metadata
-      this.handleLocationResult(location);
       // Set subsector links based on province
-      this.setSubsectorsBasedOnLocation(location!, data.linklocations);
+      this.setSubsectorsBasedOnLocation(location!);
       // Set city links based on province
-      this.setCityLinksBasedOnProvince(location, data.citys, data.linkcitys);
-    } else if ( (city = this.findIntoCity(data.citys, this.searchText)) !== undefined ) {
+      this.setCityLinksBasedOnProvince(location, data.citys);
+    } else if ( this.targetCity &&  (city = this.findIntoCity(data.citys, this.searchText)) !== undefined ) {
       // Get province of city
       location = data.locations.find((location: Location) => location.id === city!.locations_id.id);
-      // Activate badge
-      this.cityDropdownItems.find((city: { id: number, link: string, title: string, checked: boolean }) => city.id === city!.id)!.checked = true;
-      this.currentCityDropdownItem.push({title: city.title, link: city.link, checked: true});
-      // Set SEO metadata
-      this.handleCityResult(city);
-      // Set subsector links based on city
-      this.setSubsectorsBasedOnCityOrLocation(city!, location!, data.linklocations, data.linkcitys);
-    } else if ( (linkLocation = this.findIntoLinkLocation(data.linklocations, this.searchText)) !== undefined ) {
-      // Get subsector
-      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === linkLocation!.id_sector.id);
-      // Get province
-      location = data.locations.find((location: Location) => location.id === linkLocation!.locations_id.id);
-      // Activate subsector badges
-      data.subsector
-      .filter((subsector: Subsector) => subsector.id_sector?.id === linkLocation!.id_sector.id && !!subsector.link)
-      .forEach((subsector: Subsector) => { subsector.checked = false; this.checkSubsector(subsector) });
       // Activate province badge
       this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
       this.currentProvinceDropdownItem.push({id: location!.id, title: location!.title, link: location!.link, checked: true});
-      // Set SEO metadata
-      this.handleLinkLocationResult(linkLocation);
-      // Set subsector links based on province
-      this.setSubsectorsBasedOnLocation(location!, data.linklocations);
-      // Set province links based on subsector
-      this.setProvinceLinksBasedOnSubsector(subsector!, data.linklocations);
-      // Set city links based on subsector and province
-      this.setCityLinksBasedOnSubsectorAndProvince(subsector!, location!, data.citys, data.linkcitys);
-    } else if ( (linkCity = this.findIntoLinkCity(data.linkcitys, this.searchText)) !== undefined ) {
+      // Activate city badge
+      this.cityDropdownItems.find((city: { id: number, link: string, title: string, checked: boolean }) => city.id === city!.id)!.checked = true;
+      this.currentCityDropdownItem.push({title: city.title, link: city.link, checked: true});
+      // Set subsector links based on city
+      this.setSubsectorsBasedOnCity(city!);
+    } else if ( this.targetLinkLocation ) {
       // Get subsector
-      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === linkCity!.sector_id.id);
-      // Get province
-      location = data.locations.find((location: Location) => location.id === linkCity!.locations_id.id);
-      // Get city
-      city = data.citys.find((city: City) => city.id === linkCity!.citys_id.id);
+      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === this.targetLinkLocation!.sector_id);
+      // @ts-ignore Get province 
+      location = data.locations.find((location: Location) => location.id === this.targetLinkLocation!.locations_id);
       // Activate subsector badges
       data.subsector
-      .filter((subsector: Subsector) => subsector.id_sector?.id === linkCity!.sector_id.id && !!subsector.link)
-      .forEach((subsector: Subsector) => { subsector.checked = false; this.checkSubsector(subsector) });
+      .filter((s: Subsector) => s.id === subsector?.id && !!s.link)
+      .forEach((subsector: Subsector) => { subsector.checked = false; this.currentSubSectorSelection.push(subsector) });
+      // Activate province badge
+      this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
+      this.currentProvinceDropdownItem.push({id: location!.id, title: location!.title, link: location!.link, checked: true});
+      // Set subsector links based on province
+      this.setSubsectorsBasedOnLocation(location!);
+      // Set province links based on subsector
+      this.setProvinceLinksBasedOnSubsector(subsector!);
+      // Set city links based on subsector and province
+      this.setCityLinksBasedOnSubsectorAndProvince(subsector!, location!, data.citys, data.linkcitys);
+    } else if ( this.targetLinkCity ) {
+      // @ts-ignore Get subsector
+      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === this.targetLinkCity!.sector_id);
+      // @ts-ignore Get province
+      location = data.locations.find((location: Location) => location.id === this.targetLinkCity!.locations_id);
+      // @ts-ignore Get city
+      city = data.citys.find((city: City) => city.id === this.targetLinkCity!.citys_id);
+      // Activate subsector badges
+      data.subsector
+      // @ts-ignore Get
+      .filter((s: Subsector) => s.id === subsector.id && !!s.link)
+      .forEach((subsector: Subsector) => { subsector.checked = false; this.currentSubSectorSelection.push(subsector) });
       // Activate province badge
       this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
       this.currentProvinceDropdownItem.push({id: location!.id, title: location!.title, link: location!.link, checked: true});
       // Activate city badge
       this.cityDropdownItems.find((city: { id: number, link: string, title: string, checked: boolean }) => city.id === city!.id)!.checked = true;
       this.currentCityDropdownItem.push({title: city!.title, link: city!.link, checked: true});
-      // Set SEO metadata
-      this.handleCityResult(city!);
       // Set subsector links based on city or fallback province
-      this.setSubsectorsBasedOnCityOrLocation(city!, location!, data.linklocations, data.linkcitys);
+      this.setSubsectorsBasedOnCity(city!);
       // Set province links based on subsector
-      this.setProvinceLinksBasedOnSubsector(subsector!, data.linklocations);
+      this.setProvinceLinksBasedOnSubsector(subsector!);
       // Set city links based on subsector
-      this.setCityLinksBasedOnSubsector(subsector!, data.linkcitys);
+      this.setCityLinksBasedOnSubsector(subsector!);
     }
 
     if ( isPlatformBrowser(this.platformId) ) {
@@ -328,63 +358,44 @@ export class SearchComponent {
     }
   }
 
-  setSubsectorsBasedOnLocation(location: Location, linkLocations: LinkLocation[]) {
+  setSubsectorsBasedOnLocation(location: Location) {
     this.sectors.forEach((sector: Sector) => {
       sector.subSectors
       .filter((subsector: Subsector) => !!subsector.link)
       .forEach((subsector: Subsector) => {
-        subsector.link = linkLocations.find((linkLocation: LinkLocation) => 
-          linkLocation.locations_id.id === location.id &&
-          linkLocation.id_sector.id === subsector.id_sector.id
-        )?.link || subsector.link;
+        subsector.link = subsector.link.replace('españa', `${toSlug(location.title)}`).replace('españa', `${toSlug(location.title)}`);
       });
     });
   }
-  setSubsectorsBasedOnCityOrLocation(city: City, location: Location, linkLocations: LinkLocation[], linkCitys: LinkCity[]) {
+  setSubsectorsBasedOnCity(city: City) {
     this.sectors.forEach((sector: Sector) => {
       sector.subSectors
       .filter((subsector: Subsector) => !!subsector.link)
       .forEach((subsector: Subsector) => {
-        subsector.link = linkCitys.find((linkCity: LinkCity) => 
-          linkCity.citys_id.id === city.id &&
-          linkCity.sector_id.id === subsector.id_sector.id
-        )?.link || 
-        linkLocations.find((linkLocation: LinkLocation) => 
-          linkLocation.locations_id.id === location.id &&
-          linkLocation.id_sector.id === subsector.id_sector.id
-        )?.link || 
-        subsector.link;
+        subsector.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
       });
-    })
+    });
   }
-  setProvinceLinksBasedOnSubsector(subsector: Subsector, linkLocations: LinkLocation[]) {
+  setProvinceLinksBasedOnSubsector(subsector: Subsector) {
     this.provinceDropdownItems.forEach((province: { id: number, link: string, title: string }) => {
-      province.link = linkLocations.find((linkLocation: LinkLocation) => 
-        province.id === linkLocation.locations_id.id &&
-        linkLocation.id_sector.id === subsector.id_sector.id
-      )?.link || province.link;
+      province.link = subsector.link.replace('españa', `${toSlug(province.title)}`).replace('españa', `${toSlug(province.title)}`);
     });
+    // 1 españa
+    // 2 españa
   }
-  setCityLinksBasedOnSubsector(subsector: Subsector, linkCitys: LinkCity[]) {
+  setCityLinksBasedOnSubsector(subsector: Subsector) {
     this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
-      city.link = linkCitys.find((linkCity: LinkCity) => 
-        linkCity.citys_id.id === city.id &&
-        linkCity.sector_id.id === subsector.id_sector.id
-      )?.link || city.link;
+      city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
     });
   }
-  setCityLinksBasedOnProvince(location: Location, cities: City[], linkCitys: LinkCity[]) {
+  setCityLinksBasedOnProvince(location: Location, cities: City[]) {
     this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
   }
   setCityLinksBasedOnSubsectorAndProvince(subsector: Subsector, location: Location, cities: City[], linkCitys: LinkCity[]) {
     this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
 
     this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
-      city.link = linkCitys.find((linkCity: LinkCity) => 
-        city.id === linkCity.citys_id.id &&
-        linkCity.locations_id.id === location.id &&
-        linkCity.sector_id.id === subsector.id_sector.id
-      )?.link || city.link;
+      city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
     });
   }
 
@@ -415,6 +426,17 @@ export class SearchComponent {
         title: linkLocation.page_title,
         description: linkLocation.description,
         url: `https://febelink.com/listado/${linkLocation.link}`
+      }
+    );
+  }
+  handleLinkCityResult(linkCity: LinkCity) {
+    this.h1Title = linkCity.h1;
+
+    this.seoService.generateTags(
+      {
+        title: linkCity.page_title,
+        description: linkCity.description,
+        url: `https://febelink.com/listado/${linkCity.link}`
       }
     );
   }
@@ -488,6 +510,9 @@ export class SearchComponent {
         this.offers = [];
       }
 
+      this.otherOffers = [];
+      this.otherOffersStartIndex = 0;
+
       this.loading = false;
       this.cdRef.detectChanges();
     })
@@ -509,13 +534,14 @@ export class SearchComponent {
     this.otherOffersQuery = encodeURIComponent(query.trim());
 
     if ( !!query.trim() ) {
-      this.searchService.findOtherOffers(query)
+      this.searchService.findOtherOffers(query, this.otherOffersStartIndex)
       .then((data) => {
         if ( data && data.response ) {
-          console.log(data.response);
-          this.otherOffers = data.response;
+          this.otherOffers = [...this.otherOffers, ...data.response];
+          this.otherOffersStartIndex += 10;
         } else {
           this.otherOffers = [];
+          this.otherOffersStartIndex = 0;
         }
   
         this.loadingOtherOffers = false;
@@ -556,8 +582,6 @@ export class SearchComponent {
       this.searchText2 = '';
       this.closeDropdown();
     }
-
-    this.storeCurrentSearch();
   }
   provinceDropdownItemClicked(item: {title: string, link: string}) {
     if (isPlatformBrowser(this.platformId)) {
@@ -566,11 +590,10 @@ export class SearchComponent {
       // this.findOtherOffers();
       this.setMetadataBasedOnSelection();
     }
-
-    this.storeCurrentSearch();
   }
   updateCurrentProvinceDropdownItem($event: any) {
     this.currentProvinceDropdownItem = $event;
+    this.cityDropdownItems = this.cities.filter((city: City) => city.locations_id.id === this.currentProvinceDropdownItem[0].id);
   }
   cityDropdownItemClicked(item: {title: string, link: string}) {
     if (isPlatformBrowser(this.platformId)) {
@@ -579,8 +602,6 @@ export class SearchComponent {
       // this.findOtherOffers();
       this.setMetadataBasedOnSelection();
     }
-
-    this.storeCurrentSearch();
   }
 
   setMetadataBasedOnSelection() {
@@ -675,17 +696,21 @@ export class SearchComponent {
       }));
     }
   }
+  clearCurrentSearch() {
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.removeItem('currentSearch');
+    }
+  }
   restoreCurrentSearch(): boolean {
-    if (  isPlatformBrowser(this.platformId)) {
+    if ( isPlatformBrowser(this.platformId)) {
       const currentSearch = JSON.parse(sessionStorage.getItem('currentSearch') || '{}');
-
-      this.currentSubSectorSelection = currentSearch.currentSubSectorSelection || [];
-      this.currentProvinceDropdownItem = currentSearch.currentProvinceDropdownItem || [];
-      this.currentCityDropdownItem = currentSearch.currentCityDropdownItem || [];
-
-      if ( this.currentSubSectorSelection.length || this.currentProvinceDropdownItem.length || this.currentCityDropdownItem.length ) {
+      this.clearCurrentSearch();
+      
+      if ( currentSearch.currentSubSectorSelection?.length || currentSearch.currentProvinceDropdownItem?.length || currentSearch.currentCityDropdownItem?.length ) {
+        this.currentSubSectorSelection = currentSearch.currentSubSectorSelection || [];
+        this.currentProvinceDropdownItem = currentSearch.currentProvinceDropdownItem || [];
+        this.currentCityDropdownItem = currentSearch.currentCityDropdownItem || [];
         this.findOffers();
-        // this.findOtherOffers();
         this.setMetadataBasedOnSelection();
 
         return true;

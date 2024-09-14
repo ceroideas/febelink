@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { UtilitiesService } from '../../services/utilities.service';
+import { preventDefault } from '../../../utils/utils';
 
 @Component({
   selector: 'app-links-dropdown',
@@ -25,6 +26,8 @@ export class LinksDropdownComponent implements OnInit {
   opened: boolean = false;
 
   filterText: string = '';
+
+  preventDefault = preventDefault;
 
   constructor( 
     private utilities: UtilitiesService,

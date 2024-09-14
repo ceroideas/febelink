@@ -15,6 +15,26 @@
 
     <!-- Search input -->
     <div class="w-full max-w-[800px] mx-auto px-6">
+      <!-- Mobile selections -->
+      @if ( currentSubSectorSelection.length ) {
+      <div #selection class="selections relative flex-wrap scrollbar-hide shrink-0 w-full flex items-center gap-2 mt-3 -mb-3 sm:hidden z-10">
+        @for ( sector of currentSubSectorSelection; track sector.id ) {
+        <span 
+          class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
+          (click)="checkSubsector(sector)"
+        >
+          {{ sector.nombre }}
+          <lucide-icon 
+            name="X"
+            class="stroke-primary ml-0.5" 
+            [strokeWidth]="2"
+            [size]="18"
+          />
+        </span>
+        }
+      </div>
+      }
+
       <div class="relative w-full flex flex-row rounded-[6px] border bg-white mt-6 mb-3 z-10" (clickOutside)="closeDropdown()">
         <div class="icon px-4 flex items-center shrink-0">
           <lucide-icon 
@@ -104,7 +124,7 @@
                   [ngClass]="{'hidden': subsector.hidden}"
                   (click)="checkSubsector(subsector)">
                   <button class="w-full h-full flex items-center gap-2">
-                    <div class="checkbox">
+                    <div>
                       <lucide-icon 
                         *ngIf="!subsector.checked"
                         name="square"
@@ -119,7 +139,7 @@
                       />
                     </div>
                     @if ( subsector.link ) {
-                    <a [href]="'/listado/' + subsector.link" class="pointer-events-none">
+                    <a [href]="'/listado/' + subsector.link" class="" (click)="preventDefault($event)">
                       <div class="flex items-center">
                         <span 
                           class="block truncate font-normal"
@@ -148,26 +168,6 @@
           </ul>
         </div>
       </div>
-
-      <!-- Mobile selections -->
-      @if ( currentSubSectorSelection.length ) {
-      <div #selection class="selections flex-wrap scrollbar-hide shrink-0 w-full flex items-center gap-2 mb-3 sm:hidden z-10">
-        @for ( sector of currentSubSectorSelection; track sector.id ) {
-        <span 
-          class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
-          (click)="checkSubsector(sector)"
-        >
-          {{ sector.nombre }}
-          <lucide-icon 
-            name="X"
-            class="stroke-primary ml-0.5" 
-            [strokeWidth]="2"
-            [size]="18"
-          />
-        </span>
-        }
-      </div>
-      }
     </div>
     
     <div class="search-for-you">

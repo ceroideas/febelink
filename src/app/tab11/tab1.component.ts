@@ -17,6 +17,8 @@ import { DOCUMENT } from '@angular/common';
 
 import slugify from "slugify";
 
+import { preventDefault } from '../../utils/utils';
+
 import { isPlatformBrowser } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { Keywords } from '../interfaces/keywords';
@@ -96,6 +98,8 @@ export class Tab1Component implements OnInit  {
   currentSubSectorSelection: Subsector[] = [];
 
   dropdownOpened: boolean = false;
+
+  preventDefault = preventDefault;
 
   constructor(
     private api: ApiService,

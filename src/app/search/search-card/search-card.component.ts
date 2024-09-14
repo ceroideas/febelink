@@ -9,7 +9,7 @@ export interface SearchCardType {
   link: string;
   title: string;
   description: string;
-  imageURL: string;
+  imageURL: string | undefined;
 }
 
 @Component({
@@ -59,5 +59,9 @@ export class SearchCardComponent {
     //   await this.toastSvc.show('Ha ocurrido un error al enviar la solicitud. Por favor, inténtelo de nuevo y si el error ' +
     //     'persiste póngase en contacto con el equipo de soporte a través del email: info@febelink.com');
     // }
+  }
+
+  onImageError() {
+    this.data?.imageURL ? this.data.imageURL = undefined : null;
   }
 }
