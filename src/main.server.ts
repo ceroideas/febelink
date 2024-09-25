@@ -5,9 +5,6 @@ import { getDocument, getWindow } from "ssr-window";
 import 'localstorage-polyfill';
 
 global['localStorage'] = localStorage;
-
-
-
 global['document'] = getDocument();
 
 const bootstrap = () => bootstrapApplication(AppComponent, config);

@@ -8,9 +8,9 @@ export const environment = {
     baseWebUrlWsrv: 'https://wsrv.nl?url=',
 
   
-    // baseWebUrl: 'https://api.febelink.com/',
-    // API_URL: 'https://api.febelink.com/api/',
-    // API_URL_AUTH: 'https://api.febelink.com/api/auth/',
+    baseWebUrl: 'https://api.febelink.com/',
+    API_URL: 'https://api.febelink.com/api/',
+    API_URL_AUTH: 'https://api.febelink.com/api/auth/',
 /*
     baseWebUrl: 'http://apitest.febelink.com/',
     API_URL: 'http://apitest.febelink.com/api/',
@@ -21,9 +21,9 @@ export const environment = {
   // API_URL: 'http://localhost/api/',
   // API_URL_AUTH: 'http://localhost/api/auth/',
 
-    baseWebUrl: 'http://192.168.0.31/',
-    API_URL: 'http://192.168.0.31/api/',
-    API_URL_AUTH: 'http://192.168.0.31/api/auth/',
+    // baseWebUrl: 'http://192.168.0.31/',
+    // API_URL: 'http://192.168.0.31/api/',
+    // API_URL_AUTH: 'http://192.168.0.31/api/auth/',
 
     DOOFINDER_BASE_URL: 'https://eu1-search.doofinder.com/6/',
     DOOFINDER_HASHID: '72a38bd66f322e35fa2c168a48117d02',

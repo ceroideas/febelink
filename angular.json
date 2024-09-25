@@ -84,14 +84,6 @@
           },
           "configurations": {
             "production": {
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true,
-                  "inlineCritical": false
-                },
-                "fonts": false
-              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -107,11 +99,10 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "30kb",
-                  "maximumError": "200kb"
+                  "maximumError": "50kb"
                 }
               ],
-              "outputHashing": "all",
-              "serviceWorker": "ngsw-config.json"
+              "outputHashing": "all"
             },
           
             "development": {

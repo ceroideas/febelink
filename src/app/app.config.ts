@@ -9,7 +9,6 @@ import { HttpClient, HttpClientModule, provideHttpClient, withFetch } from '@ang
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // import { IonicStorage  Module } from '@ionic/storage'
 import { provideAnimations } from '@angular/platform-browser/animations'
-import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 
@@ -64,9 +63,6 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes), 
         provideAnimations(), 
         importProvidersFrom(
-            ServiceWorkerModule.register('ngsw-worker.js', {
-              enabled: environment.production,
-            }),
             InterestingLinksPageModule,
             SocketIoModule.forRoot(config),
             SharedModule,

@@ -189,9 +189,8 @@ export class SearchComponent {
   ) {
 
     this.searchText = this.actRouter.snapshot.paramMap.get('searchTerm') || '';
+    this.searchText = this.searchText.replace(/ñ/g, "ñ")
 
-    console.log(this.searchText)
-    
     this.keywordService.getLinkData(this.searchText).then((data: any) => {
       const response = data.response;
 
