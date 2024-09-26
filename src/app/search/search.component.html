@@ -17,7 +17,7 @@
     @for ( sector of currentSubSectorSelection; track sector.id ) {
     <span 
       class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
-      (click)="checkSubsector(sector)"
+      (click)="startLoading(); checkSubsector(sector)"
     >
       {{ sector.nombre }}
       <lucide-icon 
@@ -48,7 +48,7 @@
         @for ( sector of currentSubSectorSelection; track sector.id ) {
         <span 
           class="selection w-fit h-fit inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 whitespace-nowrap font-medium text-primary ring-1 ring-inset ring-primary cursor-pointer"
-          (click)="checkSubsector(sector)"
+          (click)="startLoading(); checkSubsector(sector)"
         >
           {{ sector.nombre }}
           <lucide-icon 
@@ -76,7 +76,7 @@
     <div class="button p-2 border-l shrink-0">
       <button 
         class="button bg-primary text-white px-8 py-2 rounded font-bold font-primary" 
-        (click)="findOffers()"
+        (click)="startLoading(); findOffers()"
       >
         Buscar
       </button>
@@ -119,7 +119,7 @@
             <li class="relative cursor-default select-none py-2 pl-1 pr-9  text-gray-900" 
               role="option"
               [ngClass]="{'hidden': subsector.hidden}"
-              (click)="checkSubsector(subsector)">
+              (click)="startLoading(); checkSubsector(subsector)">
               <button class="w-full h-full flex items-center gap-2">
                 <div>
                   <lucide-icon 

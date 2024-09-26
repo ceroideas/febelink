@@ -103,6 +103,7 @@ import { DropdownComponent } from '../components/dropdown/dropdown.component';
 import { LinksDropdownComponent } from '../components/links-dropdown/links-dropdown.component';
 
 import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles } from 'lucide-angular';
+import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDo
     LoBuscamosPorTiPage,
     SearchCardComponent, ProductCardComponent,
     DropdownComponent,
-    LinksDropdownComponent
+    LinksDropdownComponent,
+    PerfilOraculoPage
   ],
   imports: [
     CommonModule,
