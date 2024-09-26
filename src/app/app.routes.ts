@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core'
 import { Tab1Component } from './tab11/tab1.component'  
 import { UseConditionsPage } from './pages/use-conditions/use-conditions.page'
 import { LoBuscamosPorTiPage } from './pages/lo-buscamos-por-ti/lo-buscamos-por-ti.page'
+import { PerfilOraculoPage } from './pages/perfil-oraculo/perfil-oraculo.page'
 
 export const routes: Routes = [
  
@@ -261,10 +262,11 @@ export const routes: Routes = [
       },
       {
         path: 'user/:username/detail/:id',
-        loadChildren: () =>
-          import('./pages/perfil-oraculo/perfil-oraculo.module').then(
-            (m) => m.PerfilOraculoPageModule
-          ),
+        component: PerfilOraculoPage
+        // loadChildren: () =>
+        //   import('./pages/perfil-oraculo/perfil-oraculo.module').then(
+        //     (m) => m.PerfilOraculoPageModule
+        //   ),
       },
       {
         path: 'profile/public',

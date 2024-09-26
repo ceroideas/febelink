@@ -194,8 +194,6 @@ export class SearchComponent {
     this.keywordService.getLinkData(this.searchText).then((data: any) => {
       const response = data.response;
 
-      console.log(response)
-
       if ( response.subsector?.length ) {
         this.targetSubsector = response.subsector[0];
         this.handleSubsectorResult(response.subsector[0]);
@@ -474,11 +472,13 @@ export class SearchComponent {
     );
   }
 
-  findOffers() {
-    this.closeDropdown();
-
+  startLoading() {
     this.loading = true;
     this.cdRef.detectChanges();
+  }
+
+  findOffers() {
+    this.closeDropdown();
 
     let unchechedSubsectors: number[] = [];
 
@@ -557,7 +557,11 @@ export class SearchComponent {
   }
 
   checkSubsector(subsector: Subsector) {
-    subsector.checked = !subsector.checked;
+    if (this.currentSubSectorSelection.some((item: Subsector) => item.id === subsector.id)) {
+      subsector.checked = false;
+    } else {
+      subsector.checked = true;
+    }
 
     if ( subsector.checked ) {
       this.currentSubSectorSelection.push(subsector);
@@ -592,7 +596,7 @@ export class SearchComponent {
   }
   updateCurrentProvinceDropdownItem($event: any) {
     this.currentProvinceDropdownItem = $event;
-    this.cityDropdownItems = this.cities.filter((city: City) => city.locations_id.id === this.currentProvinceDropdownItem[0].id);
+    this.cityDropdownItems = this.cities.filter((city: City) => city.locations_id.id === this.currentProvinceDropdownItem[0]?.id);
   }
   cityDropdownItemClicked(item: {title: string, link: string}) {
     if (isPlatformBrowser(this.platformId)) {

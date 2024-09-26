@@ -75,7 +75,7 @@
         ],
             "server": "src/main.server.ts",
             "prerender": {
-              "discoverRoutes": true,
+              "discoverRoutes": false,
               "routesFile": "src/routes.txt"
             },
             "ssr": {
@@ -98,8 +98,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "30kb",
-                  "maximumError": "50kb"
+                  "maximumWarning": "150kb",
+                  "maximumError": "200kb"
                 }
               ],
               "outputHashing": "all"
