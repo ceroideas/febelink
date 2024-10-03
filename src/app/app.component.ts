@@ -202,29 +202,28 @@ export class AppComponent implements OnInit, OnDestroy {
 
     }
 
-    this.platform.ready().then(() => {
-      this.setupLanguage();
-      this.platform.backButton.subscribe(() => {
-        if (this.router.url === '' || this.router.url === '/listado') {
-        //   navigator['app'].exitApp(); //TODO: NOE
-        } else {
-          this.navCtrl.back();
-        }
-      });
+    // this.platform.ready().then(() => {
+    //   this.setupLanguage();
+    //   this.platform.backButton.subscribe(() => {
+    //     if (this.router.url === '' || this.router.url === '/listado') {
+    //     //   navigator['app'].exitApp(); //TODO: NOE
+    //     } else {
+    //       this.navCtrl.back();
+    //     }
+    //   });
 
-      // if (this.platform.is('cordova')) {
-      //   // this.splashScreen.hide();
-      //   this.initDeeplinks();
-      //   this.router.navigate(['login']);
-      // }
-      this.pushSetupFunction();
-      // this.pushSetup();
-      // this.userSubscription = this.api.getUserLogged().subscribe((item) => {
-      //   this.pushSetup();
-      // });
-    });
- 
+    //   // if (this.platform.is('cordova')) {
+    //   //   // this.splashScreen.hide();
+    //   //   this.initDeeplinks();
+    //   //   this.router.navigate(['login']);
+    //   // }
+    //   // this.pushSetup();
+    //   // this.userSubscription = this.api.getUserLogged().subscribe((item) => {
+    //   //   this.pushSetup();
+    //   // });
+    // });
 
+    this.pushSetupFunction();
 
 
     this.authenticationService.authenticationState.subscribe(async (state) => {
