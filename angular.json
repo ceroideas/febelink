@@ -47,7 +47,9 @@
               "src/robots.txt",
               "src/ads.txt",
               "src/firebase-messaging-sw.js",
-              "src/favicon.ico", "src/assets"
+              "src/favicon.ico", 
+              "src/assets",
+              "src/assets/.well-known"
             ],
             "styles": [
             
@@ -163,7 +165,9 @@
               "src/robots.txt",
               "src/ads.txt",
               "src/firebase-messaging-sw.js",
-            "src/favicon.ico", "src/assets"
+              "src/favicon.ico", 
+              "src/assets",
+              "src/assets/.well-known"
             ],
             "styles": [
               "src/styles.scss",

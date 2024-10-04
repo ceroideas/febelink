@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.febelink.app",
+      "sha256_cert_fingerprints": [
+        "0B:95:46:C0:21:D1:99:9E:D3:5D:16:D3:6F:CF:9E:51:C9:F6:DF:B8:CD:6E:39:DD:07:5B:6D:AC:FE:8A:A1:3C"
+      ]
+    }
+  }
+]
+

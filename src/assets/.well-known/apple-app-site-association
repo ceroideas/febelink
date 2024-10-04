@@ -1,0 +1,22 @@
+{
+  // This section enables Universal Links
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        // Example: "QQ57RJ5UTD.com.acme.myapp"
+        "appID": "PLLXNQPU8P.com.febelink.app",
+        // All paths that should support redirecting
+        "paths": ["/servicio/*", "/user/*"]
+      }
+    ]
+  },
+  // This section enables Apple Handoff
+  "activitycontinuation": {
+    "apps": ["PLLXNQPU8P.com.febelink.app"]
+  },
+  // This section enable Shared Web Credentials
+  "webcredentials": {
+    "apps": ["PLLXNQPU8P.com.febelink.app"]
+  }
+}
