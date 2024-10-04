@@ -38,6 +38,8 @@ export function app(): express.Express {
       res.redirect(301, `${protocol}://www.${headers.host}${originalUrl}`);
     }
 
+    console.log(`${req.socket.remoteAddress} - ${req.headers['user-agent']}`);
+
     commonEngine
       .render({
         bootstrap,

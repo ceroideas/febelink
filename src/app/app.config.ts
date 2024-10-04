@@ -34,51 +34,50 @@ function createTranslateLoader(http: HttpClient) {
     // options: { secure: true, rejectUnauthorized: false },
   };
 export const appConfig: ApplicationConfig = {
-    providers: [
-      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-      {
-        provide: 'SocialAuthServiceConfig',
-        useValue: {
-          autoLogin: false,
-          providers: [
-            {
-              id: GoogleLoginProvider.PROVIDER_ID,
-              provider: new GoogleLoginProvider(
-                environment.WEB_CLIENT_ID
-              )
-            }
-          ],
-          onError: (err: any) => {
-            console.error(err);
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.WEB_CLIENT_ID
+            )
           }
-        } as SocialAuthServiceConfig,
-      },
-      provideIonicAngular(),
-        provideHttpClient(withFetch()), 
-        provideClientHydration(
-          withHttpTransferCacheOptions({
-            includePostRequests: false,
-          }),
-        ), 
-        provideRouter(routes), 
-        provideAnimations(), 
-        importProvidersFrom(
-            InterestingLinksPageModule,
-            SocketIoModule.forRoot(config),
-            SharedModule,
-            HttpClientModule,
-            NgxStripeModule.forRoot(environment.stripe_publick_key),
-           
-            QuillModule.forRoot(),
-            TranslateModule.forRoot({
-                defaultLanguage: 'en',
-                loader: {
-                    provide: TranslateLoader,
-                    useFactory: createTranslateLoader,
-                    deps: [HttpClient]
-                }
-            }),
-        ),
+        ],
+        onError: (err: any) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    },
+    provideIonicAngular(),
+    provideHttpClient(withFetch()), 
+    provideClientHydration(
+      withHttpTransferCacheOptions({
+        includePostRequests: false,
+      }),
+    ), 
+    provideRouter(routes), 
+    provideAnimations(), 
+    importProvidersFrom(
+      InterestingLinksPageModule,
+      SocketIoModule.forRoot(config),
+      SharedModule,
+      HttpClientModule,
+      NgxStripeModule.forRoot(environment.stripe_publick_key),
       
-    ],
+      QuillModule.forRoot(),
+      TranslateModule.forRoot({
+        defaultLanguage: 'en',
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient]
+        }
+      }),
+    ),
+  ],
 }
