@@ -42,10 +42,12 @@ export class UtilitiesService {
     }
   }
 
-  async showToast(message: string) {
+  async showToast(message: string, color: string = 'dark') {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: 5000,
+      position: 'top',
+      color
     });
     toast.present();
   }

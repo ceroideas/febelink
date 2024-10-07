@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
   }
 
   async submitForm() {
-    // this.utilities.showLoading();
+    this.utilities.showLoading();
 
     const lang = (<ILang> (
       await ILangDEFAULTS.getCurrentLang(this.translateService)
@@ -79,18 +79,18 @@ export class LoginPage implements OnInit {
         this.utilities.dismissLoading();
       },
       (err) => {
-        console.log('ERROR', err);
-
         // credenciales incorrectas
         if (err.status === 401) {
           this.utilities.showToast(
-            this.translateService.instant('pages.login.errors.data')
+            this.translateService.instant('pages.login.errors.data'),
+            'danger'
           );
         }
         // 422 (email no válido)
         else if (err.status === 422) {
           this.utilities.showToast(
-            this.translateService.instant('pages.login.errors.email')
+            this.translateService.instant('pages.login.errors.email'),
+            'danger'
           );
         } else {
           this.utilities.showAlert(

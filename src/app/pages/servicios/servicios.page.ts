@@ -18,6 +18,7 @@ import { getWindow } from 'ssr-window';
 // @ts-ignore
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
+import { UtilitiesService } from '../../services/utilities.service';
 
 @Component({
   selector: 'app-servicios',
@@ -97,7 +98,8 @@ export class ServiciosPage implements OnInit {
     public servicesSvc: ServicesService,
     private subService: SubscriptionService,
     private toastSvc: ToastSvc,
-    public cref: ChangeDetectorRef
+    public cref: ChangeDetectorRef,
+    private utilitiesService: UtilitiesService
   ) {}
 
   ngOnInit() {
@@ -498,8 +500,28 @@ export class ServiciosPage implements OnInit {
   }
 
   async removeProduct(productId: string) {
-    await this.servicesSvc.removeProduct(productId);
-    this.getProducts();
+    await this.utilitiesService.showAlert(
+      'Eliminar servico', 
+      '¿Estás seguro de que deseas eliminar este servicio?',
+      undefined,
+      [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.servicesSvc.removeProduct(productId);
+            this.getProducts();
+          }
+        }
+      ]
+    );
+
+    
   }
 
   initializeSocket() {
