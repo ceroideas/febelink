@@ -8,6 +8,7 @@ export interface LinkCity {
   citys_id: { id: number, title: string };
   page_title: string;
   sector_id: { id: number, name: string };
+  subsector_id: { id: number, name: string };
   title: string;
   updated_at: string;
 }

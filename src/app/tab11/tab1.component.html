@@ -1,5 +1,5 @@
 <!-- HEADER  -->
-  <div id="search-content" class="search-content layer-home ">
+<div id="search-content" class="search-content layer-home ">
   <div class="layer-img-header">
     <div class="header-shadow"></div>
      <img 
@@ -95,7 +95,7 @@
             <li class="relative cursor-default select-none pl-3 pr-9 text-gray-900 border-b py-3" id="listbox-option-0" role="option">
               <button class="w-fit h-fit bg-neutral-100 ring-1 ring-inset ring-neutral-300 px-3 py-1 mb-1 rounded-full font-bold">
                 @if ( sector.link ) {
-                <a [href]="'/listado/' + sector.link" class="pointer-events-none">
+                <a [href]="'/' + basePath + '/' + sector.link" class="pointer-events-none">
                   <div class="flex items-center">
                     <span 
                       class="block truncate font-normal"
@@ -139,7 +139,7 @@
                       />
                     </div>
                     @if ( subsector.link ) {
-                    <a [href]="'/listado/' + subsector.link" class="" (click)="preventDefault($event)">
+                    <a [href]="'/' + basePath + '/' + subsector.link" class="" (click)="preventDefault($event)">
                       <div class="flex items-center">
                         <span 
                           class="block truncate font-normal"
@@ -183,7 +183,7 @@
       <div class="grid-container">
         @for ( sector of sectors; track sector.id ) {
           <div  class="grid-item">
-            <a class="link"  [href]="'listado/' + sector.link">
+            <a class="link"  [href]="basePath + '/' + sector.link">
               <div class="icon">
                 <img src="{{sector.imageURL}}"/>
               </div>
@@ -238,7 +238,7 @@
           @for ( location of locations; track location.id) {
             <div class="grid-item">
               <a
-                [href]="'/listado/' + location.link"
+                [href]="'/' + basePath + '/' + location.link"
               >
                 <div class="icon"><i class="fas fa-building"></i></div>
                 <div class="text" >

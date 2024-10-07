@@ -17,6 +17,7 @@ export class LinksDropdownComponent implements OnInit {
   @Input() placeholder: string = '';
   @Input() lucideIcon: string = '';
   @Input() softLinks: boolean = false;
+  @Input() basePath: 'listado' | 'servicios' = 'servicios';
   
   @Output() itemClicked = new EventEmitter<{title: string, link: string, checked: boolean}>();
   @Output() currentSelectionUpdated = new EventEmitter<{title: string, link: string, checked: boolean}[]>();

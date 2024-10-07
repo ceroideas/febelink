@@ -77,7 +77,7 @@
               [strokeWidth]="2"
             />
           </div>
-          <a [href]="'/listado/' + item.link" (click)="softLinks ? preventDefault($event) : null">
+          <a [href]="'/' + basePath + '/' + item.link" (click)="softLinks ? preventDefault($event) : null">
             <div class="flex items-center">
               <span 
                 class="block truncate font-normal"

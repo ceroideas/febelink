@@ -8,6 +8,7 @@ export interface LinkLocation {
   locations_id: { id: number, title: string };
   page_title: string;
   sector_id: number;
+  subsector_id: number;
   title: string;
   updated_at: string;
 }

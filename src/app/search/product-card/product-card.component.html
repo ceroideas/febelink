@@ -46,7 +46,7 @@
 
     <div class="w-full">
       <div class="text-neutral-700 text-sm font-primary font-semibold">{{data?.ownerUsername}}</div>
-      <h4 class="text-lg font-primary font-bold">{{data?.title}}</h4>
+      <h4 class="text-lg font-primary font-bold line-clamp-2">{{data?.title}}</h4>
       @if ( !!data?.description && data?.description !== 'undefined' && data?.description !== 'null' ) {
         <div class="description text-neutral-600 text-base font-primary mt-2" [innerHtml]="data?.description | safeHtml"></div>
       }

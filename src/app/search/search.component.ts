@@ -22,6 +22,7 @@ const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesion
 const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
 
 import { toSlug, preventDefault } from '../../utils/utils';
+import { environment } from '../../environments/environment';
 
 export interface SearchType {
   services: SearchProductCardType[];
@@ -172,7 +173,13 @@ export class SearchComponent {
 
   subsectorsQuery: number[] | undefined = undefined;
 
+  professionQuery: string = '';
+  provinceQuery: string = '';
+  cityQuery: string = '';
+
   preventDefault = preventDefault;
+
+  basePath: 'listado' | 'servicios' = 'servicios';
 
   constructor(
     public searchService: SearchService,
@@ -188,8 +195,29 @@ export class SearchComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
-    this.searchText = this.actRouter.snapshot.paramMap.get('searchTerm') || '';
-    this.searchText = this.searchText.replace(/ñ/g, "ñ")
+    this.professionQuery = this.actRouter.snapshot.paramMap.get('profession') || '';
+    this.provinceQuery = this.actRouter.snapshot.paramMap.get('province') || '';
+    this.cityQuery = this.actRouter.snapshot.paramMap.get('city') || '';
+
+    if ( this.professionQuery === 'profesionales' ) {
+      this.professionQuery = 'servicios-profesionales';
+    }
+
+    if ( this.professionQuery ) {
+      if ( this.provinceQuery && this.cityQuery ) {
+        this.searchText = `${this.professionQuery}-en-${this.cityQuery}`;
+      } else if ( this.provinceQuery && !this.cityQuery ) {
+        this.searchText = `${this.professionQuery}-en-${this.provinceQuery}`;
+      } else {
+        this.searchText = `${this.professionQuery}-en-españa`;
+      }
+      
+      this.basePath = 'servicios';
+    } else {
+      this.searchText = this.actRouter.snapshot.paramMap.get('searchTerm') || '';
+      this.searchText = this.searchText.replace(/ñ/g, "ñ");
+      this.basePath = 'listado';
+    }
 
     this.keywordService.getLinkData(this.searchText).then((data: any) => {
       const response = data.response;
@@ -225,6 +253,12 @@ export class SearchComponent {
       this.sectors = JSON.parse(JSON.stringify(data.response.sector));
       this.sectors.forEach((sector: Sector) => {
         sector.subSectors = JSON.parse(JSON.stringify(data.response.subsector.filter((subsector: Subsector) => subsector.id_sector?.id === sector.id)));
+        
+        sector.subSectors.forEach((subsector: Subsector) => {
+          if ( this.basePath === 'servicios' ) {
+            subsector.link = `${toSlug(subsector.link.replace('en-españa', '').replace('en-espana', '').replace('en-españa', ''))}`;
+          }
+        });
       });
       this.filteredSectors = this.sectors;
       this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));
@@ -282,6 +316,8 @@ export class SearchComponent {
       this.setProvinceLinksBasedOnSubsector(subsector);
       // Set city links based on subsector
       this.setCityLinksBasedOnSubsector(subsector);
+      // Set canonical metadata
+      this.basePath === 'listado' && this.seoService.setCanonical(`servicios/${toSlug(subsector.nombre)}`)
     } else if ( this.targetLocation &&  (location = this.findIntoLocation(data.locations, this.searchText)) !== undefined ) {
       // Activate badge
       this.provinceDropdownItems.find((province: { id: number, link: string, title: string, checked: boolean }) => province.id === location!.id)!.checked = true;
@@ -303,7 +339,7 @@ export class SearchComponent {
       this.setSubsectorsBasedOnCity(city!);
     } else if ( this.targetLinkLocation ) {
       // Get subsector
-      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === this.targetLinkLocation!.sector_id);
+      subsector = data.subsector.find((subsector: Subsector) => subsector.id === this.targetLinkLocation!.subsector_id);
       // @ts-ignore Get province 
       location = data.locations.find((location: Location) => location.id === this.targetLinkLocation!.locations_id);
       // Activate subsector badges
@@ -319,9 +355,11 @@ export class SearchComponent {
       this.setProvinceLinksBasedOnSubsector(subsector!);
       // Set city links based on subsector and province
       this.setCityLinksBasedOnSubsectorAndProvince(subsector!, location!, data.citys, data.linkcitys);
+      // Set canonical metadata
+      this.basePath === 'listado' && this.seoService.setCanonical(`servicios/${toSlug(subsector!.nombre)}/${toSlug(location!.title)}`);
     } else if ( this.targetLinkCity ) {
       // @ts-ignore Get subsector
-      subsector = data.subsector.find((subsector: Subsector) => subsector.id_sector.id === this.targetLinkCity!.sector_id);
+      subsector = data.subsector.find((subsector: Subsector) => subsector.id === this.targetLinkCity!.subsector_id);
       // @ts-ignore Get province
       location = data.locations.find((location: Location) => location.id === this.targetLinkCity!.locations_id);
       // @ts-ignore Get city
@@ -343,6 +381,8 @@ export class SearchComponent {
       this.setProvinceLinksBasedOnSubsector(subsector!);
       // Set city links based on subsector
       this.setCityLinksBasedOnSubsector(subsector!);
+      // Set canonical metadata
+      this.basePath === 'listado' && this.seoService.setCanonical(`servicios/${toSlug(subsector!.nombre)}/${toSlug(location!.title)}/${toSlug(city!.title)}`);
     }
 
     if ( isPlatformBrowser(this.platformId) ) {
@@ -360,7 +400,11 @@ export class SearchComponent {
       sector.subSectors
       .filter((subsector: Subsector) => !!subsector.link)
       .forEach((subsector: Subsector) => {
-        subsector.link = subsector.link.replace('españa', `${toSlug(location.title)}`).replace('españa', `${toSlug(location.title)}`);
+        if ( this.basePath === 'servicios' ) {
+          subsector.link = `${toSlug(subsector.nombre.toLocaleLowerCase())}/${this.provinceQuery}`;
+        } else {
+          subsector.link = subsector.link.replace('españa', `${toSlug(location.title)}`).replace('españa', `${toSlug(location.title)}`);
+        }
       });
     });
   }
@@ -369,30 +413,50 @@ export class SearchComponent {
       sector.subSectors
       .filter((subsector: Subsector) => !!subsector.link)
       .forEach((subsector: Subsector) => {
-        subsector.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+        if ( this.basePath === 'servicios' ) {
+          subsector.link = `${toSlug(subsector.nombre.toLocaleLowerCase())}/${this.cityQuery}`;
+        } else {
+          subsector.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+        }
       });
     });
   }
   setProvinceLinksBasedOnSubsector(subsector: Subsector) {
     this.provinceDropdownItems.forEach((province: { id: number, link: string, title: string }) => {
-      province.link = subsector.link.replace('españa', `${toSlug(province.title)}`).replace('españa', `${toSlug(province.title)}`);
+      if ( this.basePath === 'servicios' ) {
+        province.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(province.title.toLocaleLowerCase())}`;
+      } else {
+        province.link = subsector.link.replace('españa', `${toSlug(province.title)}`).replace('españa', `${toSlug(province.title)}`);
+      }
     });
-    // 1 españa
-    // 2 españa
   }
   setCityLinksBasedOnSubsector(subsector: Subsector) {
     this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
-      city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+      if ( this.basePath === 'servicios' ) {
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(city.title.toLocaleLowerCase())}`;
+      } else {
+        city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+      }
     });
   }
   setCityLinksBasedOnProvince(location: Location, cities: City[]) {
     this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
+
+    this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
+      if ( this.basePath === 'servicios' ) {
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(location.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
+      }
+    });
   }
   setCityLinksBasedOnSubsectorAndProvince(subsector: Subsector, location: Location, cities: City[], linkCitys: LinkCity[]) {
     this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
 
     this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
-      city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+      if ( this.basePath === 'servicios' ) {
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(location.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
+      } else {
+        city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+      }
     });
   }
 
@@ -422,7 +486,7 @@ export class SearchComponent {
       {
         title: linkLocation.page_title,
         description: linkLocation.description,
-        url: `https://febelink.com/listado/${linkLocation.link}`
+        url: `${environment.WEB_URL}${this.basePath}/${linkLocation.link}`
       }
     );
   }
@@ -433,7 +497,7 @@ export class SearchComponent {
       {
         title: linkCity.page_title,
         description: linkCity.description,
-        url: `https://febelink.com/listado/${linkCity.link}`
+        url: `${environment.WEB_URL}${this.basePath}/${linkCity.link}`
       }
     );
   }
@@ -444,7 +508,7 @@ export class SearchComponent {
       {
         title: location.page_title,
         description: location.meta_description,
-        url: `https://febelink.com/listado/${location.link}`
+        url: `${environment.WEB_URL}${this.basePath}/${location.link}`
       }
     );
   }
@@ -455,7 +519,7 @@ export class SearchComponent {
       {
         title: city.page_title,
         description: city.meta_description,
-        url: `https://febelink.com/listado/${city.link}`
+        url: `${environment.WEB_URL}${this.basePath}/${city.link}`
       }
     );
   }
@@ -466,8 +530,8 @@ export class SearchComponent {
       {
         title: subsector.page_title,
         description: subsector.meta_description,
-        url: `https://febelink.com/listado/${subsector.link}`,
-        image: `https://febelink.com/${subsector.imageURL}`
+        url: `${environment.WEB_URL}${this.basePath}/${subsector.link}`,
+        image: `${environment.WEB_URL}${subsector.imageURL}`
       }
     );
   }
@@ -608,7 +672,7 @@ export class SearchComponent {
   }
 
   setMetadataBasedOnSelection() {
-    let url: string = 'https://febelink.com/listado/';
+    let url: string = `${environment.WEB_URL}${this.basePath}/`;
 
     this.currentSubSectorSelection.length === 1 
       ? this.h1Title = `Servicios de ${this.currentSubSectorSelection[0].nombre}`
@@ -616,10 +680,14 @@ export class SearchComponent {
 
     if ( this.currentCityDropdownItem.length === 1 ) {
       this.h1Title = `${this.h1Title} en ${this.currentCityDropdownItem[0].title}`;
-      this.currentCityDropdownItem[0]?.link && (url = `${url}${this.currentCityDropdownItem[0].link}`);
+      if ( this.currentCityDropdownItem[0]?.link ) {
+        url = `${url}${this.currentCityDropdownItem[0].link}`;
+      }
     } else if ( this.currentProvinceDropdownItem.length === 1 ) {
       this.h1Title = `${this.h1Title} en ${this.currentProvinceDropdownItem[0].title}`;
-      this.currentProvinceDropdownItem[0]?.link && (url = `${url}${this.currentProvinceDropdownItem[0].link}`);
+      if ( this.currentProvinceDropdownItem[0]?.link ) {
+        url = `${url}${this.currentProvinceDropdownItem[0].link}`;
+      }
     } else if (this.currentSubSectorSelection.length === 1 && this.currentSubSectorSelection[0]?.link ) {
       url = `${url}${this.currentSubSectorSelection[0].link}`;
     } else {

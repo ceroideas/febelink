@@ -12,7 +12,7 @@ import SwiperCore, {Pagination, Thumbs} from 'swiper';
 import {SeoService} from '../services/seo.service';
 import { KeywordService } from '../admin/keyword/services/keyword.service';
 import { environment } from '../../environments/environment';
-import { answerOptions } from '../../utils/utils';
+import { answerOptions, toSlug } from '../../utils/utils';
 import { DOCUMENT } from '@angular/common';
 
 import slugify from "slugify";
@@ -26,6 +26,7 @@ import { filter } from 'rxjs';
 import { IHttpService } from '../services/http.service';
 import { Subsector } from '../interfaces/subsector';
 import { Sector } from '../interfaces/sector';
+import { Location } from '../interfaces/location';
 // // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
 
@@ -100,6 +101,8 @@ export class Tab1Component implements OnInit  {
   dropdownOpened: boolean = false;
 
   preventDefault = preventDefault;
+
+  basePath = 'servicios';
 
   constructor(
     private api: ApiService,
@@ -259,9 +262,23 @@ export class Tab1Component implements OnInit  {
 
   parseKeywords(data: Keywords) {
     this.services = data.sector;
+
+    data.subsector.forEach((subsector: Subsector) => {
+      if ( this.basePath === 'servicios' ) {
+        subsector.link = `${toSlug(subsector.link.replace('en-españa', '').replace('en-espana', '').replace('en-españa', ''))}`;
+      }
+    });
+
     this.sectors = data.subsector;
     this.sectors = this.sectors.filter((_se: any) => _se.imageURL !== null && _se.imageURL !== undefined && _se.imageURL !== '')
     this.sectors.sort((a: any, b: any) => a.nombre.localeCompare(b.nombre));
+
+    data.locations.forEach((location: Location) => {
+      if ( this.basePath === 'servicios' ) {
+        location.link = `profesionales/${toSlug(location.title)}`;
+      }
+    });
+
     this.locations = data.locations;
     this.locationLinks = data.locations
     this.locationFilterLinkFull = data.linklocations;
@@ -270,6 +287,12 @@ export class Tab1Component implements OnInit  {
     this.dropdownSectors = JSON.parse(JSON.stringify(data.sector));
     this.dropdownSectors.forEach((sector: Sector) => {
       sector.subSectors = JSON.parse(JSON.stringify(data.subsector.filter((subsector: Subsector) => subsector.id_sector?.id === sector.id)));
+    
+      sector.subSectors.forEach((subsector: Subsector) => {
+        if ( this.basePath === 'servicios' ) {
+          subsector.link = `${toSlug(subsector.link.replace('en-españa', '').replace('en-espana', '').replace('en-españa', ''))}`;
+        }
+      });
     });
     this.filteredSectors = this.dropdownSectors;
     this.filteredSectors = this.filteredSectors.filter((sector: Sector) => sector.subSectors.some((subsector: Subsector) => !subsector.hidden));

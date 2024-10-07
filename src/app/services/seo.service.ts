@@ -124,6 +124,13 @@ export class SeoService {
     }
   }
 
+  setCanonical(url: string) {
+    let link: HTMLLinkElement = this.dom.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    this.dom.head.appendChild(link);
+    link.setAttribute('href', environment.WEB_URL + url);
+  }
+
   addPageCanonical() {
     let link: HTMLLinkElement = this.dom.createElement('link');
     link.setAttribute('rel', 'canonical');

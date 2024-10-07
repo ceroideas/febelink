@@ -32,6 +32,18 @@ export const routes: Routes = [
         component: SearchComponent
       },
       {
+        path: 'servicios/:profession',
+        component: SearchComponent
+      },
+      {
+        path: 'servicios/:profession/:province',
+        component: SearchComponent
+      },
+      {
+        path: 'servicios/:profession/:province/:city',
+        component: SearchComponent
+      },
+      {
         path: 'user/:recommenderId',
         loadChildren: () =>
           import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
