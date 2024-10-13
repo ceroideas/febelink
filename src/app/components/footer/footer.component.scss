@@ -24,6 +24,10 @@
     ion-item {
       height: 2em;
 
+      &::part(native) {
+        padding: 0;
+      }
+
       ion-label {
         margin: 0;
       }
