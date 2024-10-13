@@ -91,16 +91,14 @@ export class PerfilOraculoPage implements OnInit {
   ) {
     this.route.paramMap.subscribe((params) => {
       this.idPerfil = params.get('id');
+      this.getUserDetail();
+      this.getProductUser()
     });
   }
 
   ngOnDestroy() {
   }
   async ngOnInit() {
-    
-    this.getUserDetail();
-    
-    this.getProductUser()
     this.ratings = [];
     this.bests = [];
     this.curUser = await this.sessionSvc.get();
@@ -125,10 +123,13 @@ export class PerfilOraculoPage implements OnInit {
           description: data.response.description,
           email: data.response.email,
           phoneNumber: data.response.phoneNumber,
-          date: '12 April at 09.28 PM', // ToDo: Remove this hardcoded value
+          // date: '12 April at 09.28 PM', // ToDo: Remove this hardcoded value
+          avatar: data.response.ownerAvatar,
+          verified: data.response.verified,
+          views: data.response.views,
         };
-
-        this.getProductDetail()
+        console.log(this.user)
+        // this.getProductDetail()
       }
     })
    
@@ -138,29 +139,27 @@ export class PerfilOraculoPage implements OnInit {
 
 
   async getProductUser() {
-
     this.profileUser.getUserProduct( this.idPerfil ).then(async (data: any) => {
       if (!!data.response)
         this.moreWorks = data.response.available;
     })
-
   }
 
 
-  async getProductDetail() {
-    if ( isPlatformBrowser(this.platformId) ) {
+  // async getProductDetail() {
+  //   if ( isPlatformBrowser(this.platformId) ) {
 
-      //@ts-ignore
-      const productId = JSON.parse(sessionStorage.getItem('productId'));
+  //     //@ts-ignore
+  //     const productId = JSON.parse(sessionStorage.getItem('productId'));
 
-      this.searchService.getProductDetail( productId ).then(async (data: any) => {
-        if (data.response) {
-          this.detalle = data.response;
-          this.user.avatar = data.response.ownerAvatar 
-        }
-      })
-   }
-  }
+  //     this.searchService.getProductDetail( productId ).then(async (data: any) => {
+  //       if (data.response) {
+  //         this.detalle = data.response;
+  //         this.user.avatar = data.response.ownerAvatar 
+  //       }
+  //     })
+  //  }
+  // }
 
   showFeed() {
     this.isFeed = true;

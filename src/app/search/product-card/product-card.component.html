@@ -59,8 +59,8 @@
         }
         @if ( data?.provincia || data?.ciudad ) {
           <span class="inline-flex items-center rounded-full bg-[#f3f7ff] px-2 py-1 text-xs font-bold text-analogous ring-1 ring-inset ring-analogous">
-            {{data?.provincia ? data.provincia : ''}} 
-            @if ( data?.ciudad && data?.provincia !== data.ciudad ) {
+            {{data?.provincia ? data.provincia : data?.ciudad ? data.ciudad : ''}} 
+            @if ( data?.provincia && data?.ciudad && data?.provincia !== data.ciudad ) {
               <lucide-icon 
                 name="dot"
                 class="stroke-analogous" 

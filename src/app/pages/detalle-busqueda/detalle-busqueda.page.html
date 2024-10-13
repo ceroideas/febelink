@@ -1,102 +1,118 @@
-<!-- <partial-popup [displayToggle]="displayPartialSignUp"
-               (partialLoginResponseEvent)="displayPartialSignUp = false; email = $event"></partial-popup> -->
-<div class="container-general" >
-  <div class="container-detail-search">
-    <div class="containter-left">
-
-      
+<!-- <div class="container-general" > -->
+<div class="search-content container">
+  <!-- Gradient -->
+  <div class="layer-gradient">
+    <div class="eclipse"></div>
+  </div>
+  
+  <!-- Content -->
+  <div class="relative max-w-[1300px] mx-auto -mt-[200px] mb-[100px] z-10 flex flex-col md:flex-row gap-6 px-4 pb-[120px] md:pb-0">
+    <!-- Media section -->
+    <div class="w-full md:w-96 flex flex-col shrink-0 gap-4">
+      <!-- Offer media -->
       <div>
         @if ( detalle?.images?.length > 0) {
         <swiper
-          class="product-image-desktop"
+          class="w-full rounded-lg"
           slideActiveClass="product-image-desktop"
           [spaceBetween]="10"
           [navigation]="true"
           [thumbs]="{ swiper: thumbsSwiper }"
         >
           @for ( imageURL of detalle?.images; track imageURL ) {
-              <ng-template swiperSlide >
-
-               
-                <ion-img  [src]="urlWsrv + imageURL +'&w=800&output=webp'" [alt]="detalle?.title"></ion-img>
-              </ng-template>
+            <ng-template swiperSlide >
+              <img 
+                class="w-full h-full object-cover"
+                [src]="urlWsrv + imageURL +'&w=800&output=webp'" 
+                [alt]="detalle?.title"
+              />
+            </ng-template>
           }
         </swiper>
-         @if ( detalle?.images?.length > 1) {
+
+        @if ( detalle?.images?.length > 1) {
           <swiper
-            class="mySwiper"
+            class="w-full mt-2"
             (swiper)="thumbsSwiper = $event"
             [slidesPerView]="detalle?.images?.length"
             [freeMode]="true"
+            [spaceBetween]="10"
             [watchSlidesProgress]="true"
           >
           @for ( imageURL of detalle?.images; track imageURL ) {
             <ng-template swiperSlide >
-              <img class="tam_img"  [src]="urlWsrv + imageURL +'&w=800&output=webp'"/>
+              <img 
+                class="rounded-lg w-full h-full object-cover"
+                [src]="urlWsrv + imageURL +'&w=800&output=webp'"
+              />
             </ng-template>
           }
           </swiper>
         }
-
       }
       </div>
-      <div class="capsule-price">
-        <div >
-          <div class="price">
-            <div class="number-price"><ion-label
-              >{{detalle?.productUnitPrice * productAmount}}
-                €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
-              ></div>
-              <div class="capsuleline">
-                <div class="capsule-quantity">
-                  <div class="namequantity">Cantidad </div>
-                  <div class="line"> </div>
-                  <div class="result">
-                    <ion-item class="item_cantidad_border">
-                      <ion-select [(ngModel)]="productAmount" multiple="false">
-                        <ion-select-option [value]="1">1</ion-select-option>
-                        <ion-select-option [value]="2">2</ion-select-option>
-                        <ion-select-option [value]="3">3</ion-select-option>
-                        <ion-select-option [value]="4">4</ion-select-option>
-                        <ion-select-option [value]="5">5</ion-select-option>
-                        <ion-select-option [value]="6">6</ion-select-option>
-                        <ion-select-option [value]="7">7</ion-select-option>
-                        <ion-select-option [value]="8">8</ion-select-option>
-                        <ion-select-option [value]="9">9</ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                  </div>
-                  <div class="icon"><i class="fa fa-chevron-down"></i></div>
-                
-                </div>
-                <div
-            class="flau"
-            >
+
+      <!-- Capsule -->
+      <div class="bg-white hidden p-6 rounded-xl shadow-xl md:flex flex-col gap-4 sticky top-[80px]">
+        <!-- Price -->
+        <div class="text-2xl text-black font-bold">
+          <span>
+            {{detalle?.productUnitPrice * productAmount}} €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}
+          </span>
+        </div>
+
+        <!-- Top content -->
+        <div class="flex gap-4">
+          <div class="flex-1 flex justify-center items-center p-1 border border-primary rounded-lg text-primary font-bold">
+            <div class="namequantity">Cantidad </div>
+            <div>
+              <ion-item>
+                <ion-select class="h-4" [(ngModel)]="productAmount" multiple="false">
+                  <ion-select-option [value]="1">1</ion-select-option>
+                  <ion-select-option [value]="2">2</ion-select-option>
+                  <ion-select-option [value]="3">3</ion-select-option>
+                  <ion-select-option [value]="4">4</ion-select-option>
+                  <ion-select-option [value]="5">5</ion-select-option>
+                  <ion-select-option [value]="6">6</ion-select-option>
+                  <ion-select-option [value]="7">7</ion-select-option>
+                  <ion-select-option [value]="8">8</ion-select-option>
+                  <ion-select-option [value]="9">9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="icon"><i class="fa fa-chevron-down"></i></div>
+          
+          </div>
+          <div class="flex-1 flex justify-center items-center p-1 rounded-lg text-white bg-primary font-bold opacity-50">
             Pagar con FLAU
           </div>
-              </div>
-            
-        </div>
+        </div>  
         
-        </div>
-        <ion-row class="guarantee" (click)="irA('/use-conditions')">
-          <ion-img
-            src="assets/imgs/guarantee.jpeg" alt="logo garantia febelink"></ion-img>
-          <div style="width: calc(100% - 4em - 12px); padding: 10px;    color: #000;">
-            <span>Con la garantía de Febelink.</span>
-            <br>
-            <span>Pago protegido hasta tu validación al finalizar el servicio.</span>
+        <!-- Febelink guarantee -->
+        <div
+          class="flex gap-4 border rounded-lg p-2"
+          (click)="irA('/use-conditions')">
+          <img 
+            class="w-16 h-16 rounded-lg"
+            src="assets/imgs/guarantee.jpeg" 
+            alt="logo garantia febelink" 
+          />
+          <div class="text-sm">
+            <p class="font-semibold text-neutral-700">Con la garantía de Febelink.</p>
+            <p class="text-neutral-600">Pago protegido hasta tu validación al finalizar el servicio.</p>
           </div>
-        </ion-row>
-        <div class="button-price">
+        </div>
+
+        <!-- Bottom content -->
+        <div class="flex gap-4">
           <div
-            class="follow-button"
+            class="flex-1 flex justify-center items-center p-1 border border-primary rounded-lg text-primary font-bold"
             (click)="addToCart()"
             >
             Añadir Carrito
           </div>
           <div
-            class="chat-button"
+            class="flex-1 flex justify-center items-center p-1 rounded-lg text-white bg-primary font-bold"
             [ngSwitch]="detalle?.buttonName"
             (click)="buyNow(productId, productAmount)"
           >
@@ -106,71 +122,65 @@
             <span *ngSwitchCase="4">Comprar ahora</span>
             <span *ngSwitchDefault>Más Información</span>
           </div>
-           
+          
         </div>
-      
       </div>
     </div>
-    <div class="containter-right">
-  
+
+    <!-- Main section -->
+    <div class="flex-1">
       <div class="section-perfil">
-        <!--AVATAR SECTION-->
-        <div class="line-avatar">
-          <div class="avatar" (click)="irA('/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId)">
-            <ion-avatar class="avatar_dropdown">
-              @if ( !detalle?.ownerAvatar) {
-                <ion-img
+        <!-- Profile -->
+        <div class="profile flex flex-col lg:flex-row justify-between items center">
+          <!-- User -->
+          <a 
+            class="flex-1 flex items-center gap-4"
+            [href]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId">
+            <!-- Avatar -->
+            <div class="w-12 h-12 shrink-0">
+              @if (!detalle?.ownerAvatar) {
+                <img
+                  class="w-full h-full rounded-full object-cover"
                   src="assets/icon/svg/default_avatar.svg"
-                  class="default-avatar"
-                ></ion-img>
+                />
               }
               @if (detalle?.ownerAvatar) {
-                <ion-img
-                [src]="urlWsrv + detalle?.ownerAvatar +'&w=800&output=webp'"
-                [alt]="detalle?.ownerUsername + ' avatar'"
-              ></ion-img>
+                <img
+                  class="w-full h-full rounded-full object-cover"
+                  [src]="urlWsrv + detalle?.ownerAvatar +'&w=800&output=webp'"
+                  [alt]="detalle?.ownerUsername + ' avatar'"
+                  appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+                />
               }
-            
-            </ion-avatar>
-          </div>
-          <div class="name-avatar">
-            <div class="name">
-              <h2><a [routerLink]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId">{{detalle?.ownerUsername}}</a></h2>
             </div>
-            <a [href]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId"class="button-perfil">Ver Perfil</a>
-          </div>
-          <div class="buttons-avatar buttondesktop">
-            <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
-            <div
-              class="chat-button buttondesktop"
-              (click)="createChat(detalle?.ownerUsername, detalle?.ownerUserId)"
-            
-              >
-              Iniciar Chat
+
+            <!-- Name -->
+            <div class="flex flex-col items-start">
+              <h2 class="font-bold text-base line-clamp-1">{{detalle?.ownerUsername}}</h2>
+              <app-rating-summary></app-rating-summary>
             </div>
-            @if (user?.phoneNumber && user?.phoneNumber !== 'null' && user?.phoneNumber !== null) {
-              <div
-              (click)="registerClick(user?.id, productId )"
-                class="chat-button whatsapp buttondesktop"
-              >
-              <a title="Contacto telefónico" 
-                aria-label="Chat on WhatsApp" 
-                href="https://wa.me/{{user?.phoneNumber}}" 
-                target="_blank"
-                class="badge">
-                <i class="fa fa-whatsapp"></i> <span>Whatsapp</span>
-              </a>
+          </a>
+
+          <!-- Buttons -->
+          <div class="flex items-center gap-4 shrink-0 mt-4 lg:mt-0">
+            <div>
+              <a class="w-fit px-3 py-1 flex items-center gap-2 rounded-lg block text-base font-semibold text-primary" [href]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId"><span>Ver perfil</span></a>
+            </div>
+            <button class="flex flex-row gap-2 items-center justify-center px-3 py-1 rounded-lg text-base font-semibold bg-primary items-center text-white" (click)="createChat(detalle?.ownerUsername, detalle?.ownerUserId)">
+              <ion-icon name="chatbubble-sharp" class="w-4 h-4 text-white text-xl"></ion-icon> <span>Chat</span>
+            </button>
+            <div>
+              <a class="w-fit px-3 py-1 flex items-center gap-2 rounded-lg block text-base font-semibold bg-[#25D366] text-white" href="https://wa.me/{{user.phoneNumber}}"><i class="fa fa-whatsapp"></i> <span>Whatsapp</span></a>
+            </div>
+            <!-- Views -->
+            @if ( detalle?.views ) {
+              <div class="w-fit">
+                <app-views-summary [views]="detalle.views"></app-views-summary>
               </div>
             }
-            <div
-              class="follow-button buttondesktop"
-              >
-             Seguir
-            </div>
           </div>
         </div>
-        <div class="user-detail">{{user?.description}}</div>
-        <div class="buttons-mobileavatar buttonmobile">
+        <!-- <div class="buttons-mobileavatar buttonmobile">
           <img  *ngIf="detalle?.verified === 1"  class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
           <div
             class="chat-button buttonmobile"
@@ -197,216 +207,83 @@
           <div
             class="follow-button buttonmobile"
             >
-           Seguir
+          Seguir
           </div>
-        </div>
-      
+        </div> -->
   
-        <!--TITLE SECTION-->
-        <div class="section-title">
-          <ion-row class="product-title">
-            <ion-label><h2>{{detalle?.title}}</h2></ion-label>
-          </ion-row>
-          <ion-row class="product-rating">
-            <ion-label class="content_item">
-              <div class="ion-no-margin list-stars-rating">
-                <div class="stars">
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                  <ion-img
-                    class="icon_star"
-                    src="assets/icon/svg/icon_star.svg"
-                  ></ion-img>
-                </div>
-              
-                <div class="detail-rating">
-                  ({{detalle?.ratingAmount}}) valoraciones
-                </div>
-              </div>
-            </ion-label>
-          </ion-row>
-        </div>
-  
-        <!--DESCRIPTION-->
-        <div class="section-description">
-          <ion-label [innerHtml]="detalle?.description"></ion-label>
-        </div>
-  
-         <!--To whom-->
-         @if (!!detalle?.whom) {
-          <div class="section-towhom">
-            <ion-row class="towhom-title">
-              <ion-label>
-                <!-- <h2>{{detalle?.towhom}}</h2> -->
-                <h2>A quien va dirigido</h2>
-              </ion-label>
-            </ion-row>
-            <ion-row class="towhom-description">
-              <ion-label [innerHtml]="detalle?.whom"></ion-label>
-            </ion-row>
+        <!-- Description -->
+        <section class="mt-4">
+          <div class="mb-4">
+            <h1 class="font-bold text-base">{{detalle?.title}}</h1>
           </div>
-        }
-
-        <!--OTHERS VIEW-->
-        @if (othersView.length  > 0) {
-          <div class="section-others-view">
-            <ion-row class="others-view-title">
-              <ion-label>
-                <!-- <h2>{{detalle?.othersview}}</h2> -->
-                <h2>Otros usuarios también vieron</h2>
-              </ion-label>
-            </ion-row>
-            <div class="grid-others-view">
-              @for (other of othersView | slice : 0 : 4; track other.id) {
-                <div class="item-others" 
-                >
-                  <a [href]="'/servicio/' + toSlug(other?.title) + '/detail/' + other?.id">
-                    <div class="avatar-view">
-                      <div class="img-avatar">
-                        <img src="{{other.image}}"/>
-                      </div>
-                      <div class="name-avatar">
-                        <div class="name-other">{{other.ownerUsername}}</div>
-                        <div class="profession-other">{{other.title}}</div>
-                      </div>
-                    </div>
-                    <div class="description-view">
-                      <ion-label [innerHtml]="other.description"></ion-label>
-                    </div>
-                    <div class="rating-view">
-                      <div class="ion-no-margin list-stars-rating">
-                        <div class="stars">
-                          <ion-img
-                            class="icon_star"
-                            src="assets/icon/svg/icon_star.svg"
-                          ></ion-img>
-                          <ion-img
-                            class="icon_star"
-                            src="assets/icon/svg/icon_star.svg"
-                          ></ion-img>
-                          <ion-img
-                            class="icon_star"
-                            src="assets/icon/svg/icon_star.svg"
-                          ></ion-img>
-                          <ion-img
-                            class="icon_star"
-                            src="assets/icon/svg/icon_star.svg"
-                          ></ion-img>
-                          <ion-img
-                            class="icon_star"
-                            src="assets/icon/svg/icon_star.svg"
-                          ></ion-img>
-                        </div>
-                      
-                        <div class="detail-rating">
-                          ({{other.avgRating}}) valoraciones
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              }
-            
-            
+          <p 
+            class="whitespace-pre-line text-base text-neutral-900" 
+            style="word-break: break-word;" 
+            [innerHtml]="detalle?.description"
+          ></p>
+        </section>
+  
+        <!--To whom-->
+        @if (!!detalle?.whom) {
+          <section class="mt-8">
+            <div class="mb-4">
+              <h2 class="font-bold text-base">A quién va dirigido</h2>
             </div>
-          </div>
+            <p 
+              class="whitespace-pre-line text-base text-neutral-900" 
+              style="word-break: break-word;" 
+              [innerHtml]="detalle?.whom"
+            ></p>
+          </section>
         }
 
-  
-        <!--MORE WORK THIS PROFESIONAL-->
-        <div class="section-more-work" *ngIf="moreWorks.length">
-          <ion-row class="more-work-title">
-            <ion-label>
-              <h2>Más servicios de este profesional</h2>
-            </ion-label>
-          </ion-row>
-  
-          <div class="grid-more-work">
-            @for (more of moreWorks; track more.id) {
-              <div class="item-more">
-                <a [href]="'/servicio/' + toSlug(more?.title) + '/detail/' + more?.productId">
-                  <div class="name-work">
-                    <div>{{more.title}}</div>
-                  </div>
-                  <div class="description-more">
-                    <ion-label [innerHtml]="more.description"></ion-label>
-                  </div>
-                  <div class="more-view">
-                    Mostrar  <i class="fa fa-chevron-right"></i>
-                  </div>
-                </a>
-              </div>
-            }
-          </div>
-        </div>
+        <!-- Offers -->
+        @if ( moreWorks.length > 0 ) {
+          <section class="mt-8">
+            <div class="mb-4">
+              <h2 class="font-bold text-base">Más servicios de este profesional</h2>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+              @for ( work of moreWorks; track work.productId ) {
+                <app-offer-card2 [offer]="work"></app-offer-card2>
+              }
+            </div>
+          </section>
+        }
       </div>
     </div>
-  </div>
- 
+  
+    <!-- Capsule mobile -->
+    <div class="fixed w-full border border-t bottom-0 left-0 bg-white flex p-4 rounded-xl shadow-xl md:hidden flex-row gap-4 z-10">
+      <!-- Price -->
+      <div class="flex-1 text-2xl text-black font-bold">
+        <span>
+          {{detalle?.productUnitPrice * productAmount}} €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}
+        </span>
+      </div>
 
-
-  <div class="capsule-price-mobile">
-    <div class="price">
-      <div class="number-price">
-        <ion-label
-        >{{detalle?.productUnitPrice * productAmount}}
-          €/{{unitTypes[detalle?.unitTypeId - 1]?.shorthand}}</ion-label
+      <!-- Right content -->
+      <div class="flex flex-col gap-2">
+        <div class="flex-1 flex justify-center items-center p-1 rounded-lg text-white bg-primary font-bold opacity-50">
+          Pagar con FLAU
+        </div>
+        <div
+          class="flex-1 flex justify-center items-center p-1 rounded-lg text-white bg-primary font-bold"
+          [ngSwitch]="detalle?.buttonName"
+          (click)="buyNow(productId, productAmount)"
         >
-      </div>
-      <div class="capsule-quantity">
-        <div>Cantidad </div>
-        <div class="line"> </div>
-        <div class="result">
-          <ion-item class="item_cantidad_border">
-            <ion-select [(ngModel)]="productAmount" multiple="false">
-              <ion-select-option [value]="1">1</ion-select-option>
-              <ion-select-option [value]="2">2</ion-select-option>
-              <ion-select-option [value]="3">3</ion-select-option>
-              <ion-select-option [value]="4">4</ion-select-option>
-              <ion-select-option [value]="5">5</ion-select-option>
-              <ion-select-option [value]="6">6</ion-select-option>
-              <ion-select-option [value]="7">7</ion-select-option>
-              <ion-select-option [value]="8">8</ion-select-option>
-              <ion-select-option [value]="9">9</ion-select-option>
-            </ion-select>
-          </ion-item>
+          <span *ngSwitchCase="1">Más Información</span>
+          <span *ngSwitchCase="2">Pedir Presupuesto</span>
+          <span *ngSwitchCase="3">Hacer consulta</span>
+          <span *ngSwitchCase="4">Comprar ahora</span>
+          <span *ngSwitchDefault>Más Información</span>
         </div>
-        <div class="icon"><i class="fa fa-chevron-down"></i></div>
+        
       </div>
-    </div>
-    <div class="button-price">
-      <div
-        class="chat-button"
-        [ngSwitch]="detalle?.buttonName"
-        (click)="!authService.isAuthenticated() && !email ? displayPartialSignUp = true : buyNow(productId, productAmount)"
-      >
-        <span *ngSwitchCase="1">Más Información</span>
-        <span *ngSwitchCase="2">Pedir Presupuesto</span>
-        <span *ngSwitchCase="3">Hacer consulta</span>
-        <span *ngSwitchCase="4">Comprar ahora</span>
-        <span *ngSwitchDefault>Más Información</span>
-      </div>
-      <div
-      class="flau"
-      >
-      Pagar con FLAU
-    </div>
-      
     </div>
   </div>
+
+  <!-- Footer -->
   <app-footer></app-footer>
 </div>

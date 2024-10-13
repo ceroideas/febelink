@@ -176,7 +176,7 @@ export class SearchService {
       subsectors: JSON.stringify(subsectors),
       provinces: JSON.stringify(provinces),
       cities: JSON.stringify(cities),
-    }, false);
+    });
   }
   async findOtherOffers(searchTerm: string = '', index: number = 0) {
     return this.http.post('product/findOthers', {

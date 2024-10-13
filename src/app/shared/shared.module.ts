@@ -105,6 +105,10 @@ import { LinksDropdownComponent } from '../components/links-dropdown/links-dropd
 import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles } from 'lucide-angular';
 import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
 
+import { OfferCard2Component } from '../components/offer-card2/offer-card2.component';
+import { RatingSummaryComponent } from '../components/rating-summary/rating-summary.component';
+import { ViewsSummaryComponent } from '../components/views-summary/views-summary.component';
+
 @NgModule({
   declarations: [
     ImgErrorFallbackDirective,
@@ -142,7 +146,10 @@ import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
     SearchCardComponent, ProductCardComponent,
     DropdownComponent,
     LinksDropdownComponent,
-    PerfilOraculoPage
+    PerfilOraculoPage,
+    OfferCard2Component,
+    RatingSummaryComponent,
+    ViewsSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -314,9 +321,13 @@ import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
     HeaderButtonsComponent,
 
     DropdownComponent,
-    LinksDropdownComponent
+    LinksDropdownComponent,
     // FooterComponent,
     // HeaderComponent,
+
+    OfferCard2Component,
+    RatingSummaryComponent,
+    ViewsSummaryComponent,
   ],
 })
 export class SharedModule {}

@@ -166,7 +166,9 @@ export class DetalleBusquedaPage implements OnInit {
 
     this.profileUser.getUserProduct(user).then((data: any) => {
       if (!!data.response)
-        this.moreWorks = data.response.available.slice(0, 4);
+        this.moreWorks = data.response.available
+        .filter((item: any) => item.productId !== Number(this.productId))
+        .slice(0, 4);
     })
     
   }

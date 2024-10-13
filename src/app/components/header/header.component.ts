@@ -43,7 +43,8 @@ export class HeaderComponent {
           && !urlParts.includes('services') 
           && !urlParts.includes('wallet')  && !urlParts.includes('professions')  
           && !urlParts.includes('subscriptions')
-          && !urlParts.includes('user')) {
+          && !urlParts.includes('user')
+          && !urlParts.includes('servicio')) {
           this.detachBlock = true;
           this.detached = true;
         } else {
@@ -94,9 +95,9 @@ export class HeaderComponent {
     for (var i = 0; i < capa2Elements.length; i++) {
       const distanceY = capa2Elements[i].scrollTop;;  // Usa this.window.pageYOffset para obtener la posición de desplazamiento de la ventana
     
-      const shrinkOn = 100;
+      const shrinkOn = 30;
       const innerW = this.window.innerWidth;
-    
+
       // Asumiendo que 'detachBlock' es una propiedad válida, de lo contrario, ajusta según tu lógica
       !this.detachBlock
         ? this.detached = distanceY > shrinkOn

@@ -1,124 +1,133 @@
-<div id="search-content" class="search-content container-general">
+<div class="search-content container">
+  <!-- Gradient -->
   <div class="layer-gradient">
     <div class="eclipse"></div>
   </div>
-  <div class="container-detail-search">
-     <!--AVATAR SECTION-->
-    <div class="containter-left">
-      <ng-container>
-       <div class="card">
-        <div class="image-profile">
-          <img *ngIf="user?.avatar !== undefined && user?.avatar !== null"
-          [src]="urlWsrv + user?.avatar +'&w=800&output=webp'"
-          
-          appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+
+  <!-- Content -->
+  <div class="relative max-w-[1300px] mx-auto -mt-[200px] mb-[100px] z-10 flex flex-col md:flex-row gap-6 px-4">
+    <!-- Profile section -->
+    <div class="w-full md:w-96 flex flex-col shrink-0 gap-4">
+      <div class="relative bg-white p-6 rounded-xl shadow-xl">
+        <!-- Avatar -->
+        <div class="w-32 h-32 mx-auto">
+          <img 
+            class="w-full h-full rounded-full object-cover"
+            *ngIf="user?.avatar !== undefined && user?.avatar !== null"
+            [src]="urlWsrv + user?.avatar +'&w=800&output=webp'"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
-          <img *ngIf="user?.avatar == undefined || user?.avatar === null" src="https://api.febelink.com/storage/users/default.png"  />
+          <img
+            class="rounded-full object-cover"
+            *ngIf="user?.avatar == undefined || user?.avatar === null" 
+            src="https://api.febelink.com/storage/users/default.png"  
+          />
         </div>
-        <div class="name-profile">
+
+        <!-- Name -->
+        <h1 class="font-bold text-center mt-2">
           {{user?.name}}
-        </div>
-        <div class="subname-profile">
-          {{user?.email}}
-        </div>
-       
-        <div class="description-profile" *ngIf="user?.description !== undefined && user?.description !== null && user?.description !== 'null'" >
-          {{user?.description}}
-        </div>
-        <div class="buttons-profile" *ngIf="!hideChat">
-          <div class="item-button follow">Seguir</div>
+        </h1>
 
-          <div class="item-button whatsapp chat" (click)="registerClick(user?.id, idPerfil)" *ngIf="user?.phoneNumber !== 'null' && user?.phoneNumber !== null">
-            <a title="Contacto telefónico" 
-              aria-label="Chat on WhatsApp" 
-              href="https://wa.me/{{user?.phoneNumber}}" 
-              class="badge"
-              target="_blank">
-                <i class="fa fa-whatsapp"></i>
-            </a>
-          </div>
-          <div class="item-button chat"  (click)="!authService.isAuthenticated()  ? irA('/login') : createChat()">Chat</div>
+        <!-- Rating -->
+        <div class="mt-2">
+          <app-rating-summary></app-rating-summary>
         </div>
-          
-        <img  *ngIf="detalle?.verified === 1" class="iconsuperpro" src="assets/imgs/pro1.png"  alt="">
 
-        <div class="header-content-top-right" *ngIf="!hideChat">
-          <div class="block-action-top">
-            <img
-              src="assets/icon/svg/donate-blue.svg"
-              class="block-action-svg"
-            />Dar propina
+        <!-- Views -->
+        @if ( user?.views ) {
+          <div class="mt-2">
+            <app-views-summary [views]="user.views"></app-views-summary>
           </div>
-          <div class="block-action-top">
-            <img
-              src="assets/icon/svg/share-blue.svg"
-              class="block-action-svg"
-            />Compartir
-          </div>
-          <div class="block-action-top">
-            <img
-              src="assets/icon/svg/star-blue.svg"
-              class="block-action-svg"
-            />Valorar
-          </div>
-        
+        }
+
+        <!-- Contact data -->
+        <div class="flex flex-col gap-3 mt-6">
+          @if ( user?.phoneNumber ) {
+            <div>
+              <span class="block text-xs font-bold uppercase text-neutral-500">Teléfono</span>
+              <a class="block text-base font-semibold text-primary" [href]="'tel:' + user.phoneNumber">{{user.phoneNumber}}</a>
+            </div>
+          }
+          @if ( user?.email ) {
+            <div>
+              <span class="block text-xs font-bold uppercase text-neutral-500">Email</span>
+              <a class="block text-base font-semibold text-primary" [href]="'mailto:' + user.email">{{user.email}}</a>
+            </div>
+          }
+          @if ( user?.phoneNumber ) {
+            <div>
+              <span class="block text-xs font-bold uppercase text-neutral-500">Whatsapp</span>
+              <a class="w-fit px-2 py-0.5 rounded-lg mt-1 block text-base font-semibold bg-[#25D366] text-white" href="https://wa.me/{{user.phoneNumber}}">Contactar por whatsapp</a>
+            </div>
+          }
+        </div>
+
+        <!-- Utility buttons -->
+        <div class="grid grid-cols-3 mt-10">
+          <button class="flex flex-col gap-2 items-center justify-center" (click)="!authService.isAuthenticated() ? irA('/login') : createChat()">
+            <ion-icon name="chatbubble-sharp" class="w-5 h-5 text-link text-xl"></ion-icon>
+            <span>Chat</span>
+          </button>
+          <button class="flex flex-col gap-2 items-center justify-center">
+            <img src="assets/icon/svg/donate-blue.svg" class="w-5 h-5" />
+            <span>Dar propina</span>
+          </button>
+          <button class="flex flex-col gap-2 items-center justify-center">
+            <img src="assets/icon/svg/share-blue.svg" class="w-5 h-5" />
+            <span>Compartir</span>
+          </button>
         </div>
       </div>
 
-      <div class="valoraciones">
-        <div class="title-valoraciones">
-          Valoraciones
-        </div>
-        <div class="container-valoraciones">
-          <div class="item-valor  item-valor-1">
-            No tiene valoraciones aún
-          </div>
-        </div>
-      </div>
-      </ng-container>
+      <!-- Ratings -->
+      <div class="bg-white p-6 rounded-xl shadow-xl">
+        <h3 class="font-semibold text-neutral-900">Valoraciones</h3>
+        <span class="text-sm italic text-neutral-600">Todavía no hay ninguna valoración</span>
 
+        <!-- <div class="flex items-center justify-center gap-1 mt-2">
+          <ion-icon name="star" class="text-primary text-2xl"></ion-icon>
+          <ion-icon name="star" class="text-primary text-2xl"></ion-icon>
+          <ion-icon name="star-half" class="text-primary text-2xl"></ion-icon>
+          <ion-icon name="star-outline" class="text-primary text-2xl"></ion-icon>
+          <ion-icon name="star-outline" class="text-primary text-2xl"></ion-icon>
+        </div>
+
+        <div class="bg-neutral-100 mx-auto w-fit px-3 py-1 rounded text-neutral-800 text-sm font-semibold mt-4">9 valoraciones</div> -->
+      </div>
     </div>
-    <div class="containter-right">
-      <!--SERVICIOS-->
-      <div class="section-more-work" *ngIf="moreWorks.length">
-        <ion-row class="more-work-title">
-          <ion-label><span class="title-oracle">Servicios de este profesional</span></ion-label>
-        </ion-row>
 
-        <div class="grid-more-work">
-          
-          <div class="item-more" 
-            
-            *ngFor="let more of moreWorks">
-            <a [href]="'/servicio/' + toSlug(more?.title) + '/detail/' + more?.productId">
-             
-              <div class="name-work">
-                <div>{{more.title}}</div>
-              </div>
-              <div class="texts-work">
-                <div class="image-work">
-
-                  <img
-                  [src]="urlWsrv + more.images[0] +'&w=800&output=webp'"/>
-                </div>
-                <div class="description-work"> 
-                  <div class="description-more">
-                    <ion-label [innerHtml]="more.description"></ion-label>
-                  </div>
-                  <div class="more-view">
-                    Mostrar  <i class="fa fa-chevron-right"></i>
-                  </div>
-                </div>
-              </div>
-            </a>
+    <!-- Main section -->
+    <div class="flex-1">
+      <!-- About -->
+      @if ( user?.description ) {
+        <section class="mb-8">
+          <div class="mb-4">
+            <h2 class="font-bold text-base">Sobre {{user?.name}}</h2>
           </div>
-        
-        </div>
-      </div>
-     
+          <p class="whitespace-pre-line text-base text-neutral-900" style="word-break: break-word;">
+            {{user?.description}}
+          </p>
+        </section>
+      }
+
+      <!-- Offers -->
+      @if ( moreWorks.length > 0 ) {
+        <section>
+          <div class="mb-4">
+            <h2 class="font-bold text-base">Servicios de este profesional</h2>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            @for ( work of moreWorks; track work.productId ) {
+              <app-offer-card2 [offer]="work"></app-offer-card2>
+            }
+          </div>
+        </section>
+      }
     </div>
   </div>
 
+  <!-- Footer -->
   <app-footer></app-footer>
-
 </div>
