@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {PopoverController, Platform, AlertController} from '@ionic/angular';
+import {PopoverController, Platform, AlertController, ModalController} from '@ionic/angular';
 import {UserService} from './../../services/user.service';
 import {MailService} from './../../services/mail.service';
 import {ReportService} from './../../services/report.service';
@@ -19,6 +19,8 @@ import { getWindow } from 'ssr-window';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
 import { UtilitiesService } from '../../services/utilities.service';
+import { RatingModalComponent } from '../../components/rating-modal/rating-modal.component';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-servicios',
@@ -39,7 +41,7 @@ export class ServiciosPage implements OnInit {
   isNuevoServicio: boolean = false;
   indexTerminarServicio: number= 0;
   indexTerminarServicioMobile: boolean = false;
-  indexValorarServicio: boolean = false;
+  // indexValorarServicio: boolean = false;
   finValorarServicio: boolean = false;
   servicioAdded: boolean = false;
   servicioError: boolean = false;
@@ -99,7 +101,9 @@ export class ServiciosPage implements OnInit {
     private subService: SubscriptionService,
     private toastSvc: ToastSvc,
     public cref: ChangeDetectorRef,
-    private utilitiesService: UtilitiesService
+    private utilitiesService: UtilitiesService,
+    private modalCtrl: ModalController,
+    private apiService: ApiService
   ) {}
 
   ngOnInit() {
@@ -155,6 +159,7 @@ export class ServiciosPage implements OnInit {
     const {response, error} = await this.servicesSvc.get();
     
     this.iProducts = response;
+    console.log(this.iProducts)
     response?.available?.forEach((elem: any) => {
       if (!elem.isTemplate && elem.isPublished) {
         this.numbServicesAvaliable = this.numbServicesAvaliable - 1;
@@ -359,10 +364,12 @@ export class ServiciosPage implements OnInit {
     this.cartIdTerminar = null;
   }
 
-  valorarServicio() {
-    this.indexValorarServicio = true;
-    this.finishServiceModalToggle = false;
-    this.dragLogged = false;
+  valorarServicio(userId: number) {
+    // this.indexValorarServicio = true;
+    // this.finishServiceModalToggle = false;
+    // this.dragLogged = false;
+
+    this.openRatingModal(userId);
   }
 
   async aceptarValorarServicio() {
@@ -376,7 +383,7 @@ export class ServiciosPage implements OnInit {
     this.getProducts();
 
     this.finValorarServicio = true;
-    this.indexValorarServicio = false;
+    // this.indexValorarServicio = false;
     this.indexTerminarServicioMobile = false;
     //@ts-ignore
     this.indexTerminarServicio = null;
@@ -388,7 +395,7 @@ export class ServiciosPage implements OnInit {
   }
 
   cancelarValorarServicio() {
-    this.indexValorarServicio = false;
+    // this.indexValorarServicio = false;
     this.indexTerminarServicioMobile = false;
     //@ts-ignore
 
@@ -562,5 +569,26 @@ export class ServiciosPage implements OnInit {
     this.cref.detectChanges();
 
     this.socket.emit('query', this.aiQuery);
+  }
+
+  async openRatingModal(userId: number, rateOnly: boolean = false) {
+    const modal = await this.modalCtrl.create({
+      cssClass: "fit-modal floating-modal",
+      component: RatingModalComponent,
+      componentProps: { mode: 'client' },
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      if ( !rateOnly ) {
+        this.aceptarValorarServicio();
+      }
+
+      if (data?.rating) {
+        this.apiService.rateUser(userId, data.rating, data.comment || '');
+      }
+    }
   }
 }

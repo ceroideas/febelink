@@ -108,6 +108,8 @@ import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
 import { OfferCard2Component } from '../components/offer-card2/offer-card2.component';
 import { RatingSummaryComponent } from '../components/rating-summary/rating-summary.component';
 import { ViewsSummaryComponent } from '../components/views-summary/views-summary.component';
+import { RatingModalComponent } from '../components/rating-modal/rating-modal.component';
+import { RatingCardComponent } from '../components/rating-card/rating-card.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +152,8 @@ import { ViewsSummaryComponent } from '../components/views-summary/views-summary
     OfferCard2Component,
     RatingSummaryComponent,
     ViewsSummaryComponent,
+    RatingModalComponent,
+    RatingCardComponent
   ],
   imports: [
     CommonModule,
@@ -328,6 +332,8 @@ import { ViewsSummaryComponent } from '../components/views-summary/views-summary
     OfferCard2Component,
     RatingSummaryComponent,
     ViewsSummaryComponent,
+    RatingModalComponent,
+    RatingCardComponent
   ],
 })
 export class SharedModule {}

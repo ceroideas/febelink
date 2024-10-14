@@ -285,3 +285,19 @@ ion-searchbar {
   --icon-color: white;
   --placeholder-color: white;
 }
+
+.fit-modal {
+  --width: fit-content;
+  --height: fit-content;
+
+  &.floating-modal {
+    &::part(content) {
+      background-color: transparent;
+    }
+  }
+  &.box-shadow-none {
+    &::part(content) {
+      box-shadow: none;
+    }
+  }
+}

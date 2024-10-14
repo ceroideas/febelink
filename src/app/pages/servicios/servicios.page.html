@@ -143,6 +143,14 @@
                     {{finalizado.serviceEndDate}}
                   </div>
                 </div>
+                <div class="more-view">
+                  <div
+                    class="servicios-item-button-secondary-b"
+                    (click)="openRatingModal(finalizado.clientUserId, true)"
+                  >
+                    Valorar
+                  </div>
+                </div>
               </div>
             </div>
           </a>
@@ -185,19 +193,19 @@
                 </div>
                 <div class="more-view">
                   <div
-                  class="cancel-button"
-                  style="width:120px;"
-                  (click)="toggleServiceModal(curso.cartId, curso.productId)"
-                >
-                  Cancelar
-                </div>
-                <div
-                  *ngIf="indexTerminarServicio!=i"
-                  class="servicios-item-button-secondary-b"
-                  (click)="terminarServicio(i,curso.productId,curso.cartId)"
-                >
-                  Terminar
-                </div>
+                    class="cancel-button"
+                    style="width:120px;"
+                    (click)="toggleServiceModal(curso.cartId, curso.productId)"
+                  >
+                    Cancelar
+                  </div>
+                  <div
+                    *ngIf="indexTerminarServicio!=i"
+                    class="servicios-item-button-secondary-b"
+                    (click)="terminarServicio(i,curso.productId,curso.cartId)"
+                  >
+                    Terminar
+                  </div>
                 </div>
               </div>
             </div>
@@ -222,7 +230,7 @@
               </div>
               <div
                 class="div-terminar-servicio-button-primary"
-                (click)="valorarServicio()"
+                (click)="valorarServicio(curso.clientUserId)"
               >
                 Aceptar
               </div>
@@ -626,7 +634,7 @@
   </div>
 </div>
 
-<div *ngIf="finishServiceModalToggle" class="mobile modal-back-background">
+<!-- <div *ngIf="finishServiceModalToggle" class="mobile modal-back-background">
   <div class="modal-front-content">
     <div class="modal-front-title">Terminar el servicio</div>
     <div class="modal-front-subtitle modal-subtitle-margin-a">
@@ -641,9 +649,9 @@
       Cancelar
     </div>
   </div>
-</div>
+</div> -->
 
-<div *ngIf="indexValorarServicio" class="mobile modal-back-background">
+<!-- <div *ngIf="indexValorarServicio" class="mobile modal-back-background">
   <div class="modal-front-content">
     <div class="modal-front-title">¿Qué te ha parecido el cliente?</div>
     <div class="modal-front-subtitle modal-subtitle-margin-b">
@@ -723,7 +731,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div *ngIf="finValorarServicio" class="desktop">
   <div class="modal-back-background">

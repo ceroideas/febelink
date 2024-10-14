@@ -106,12 +106,6 @@
         <!-- Bottom content -->
         <div class="flex gap-4">
           <div
-            class="flex-1 flex justify-center items-center p-1 border border-primary rounded-lg text-primary font-bold"
-            (click)="addToCart()"
-            >
-            Añadir Carrito
-          </div>
-          <div
             class="flex-1 flex justify-center items-center p-1 rounded-lg text-white bg-primary font-bold"
             [ngSwitch]="detalle?.buttonName"
             (click)="buyNow(productId, productAmount)"
@@ -157,7 +151,7 @@
             <!-- Name -->
             <div class="flex flex-col items-start">
               <h2 class="font-bold text-base line-clamp-1">{{detalle?.ownerUsername}}</h2>
-              <app-rating-summary></app-rating-summary>
+              <app-rating-summary [rating]="detalle?.rating || 0"></app-rating-summary>
             </div>
           </a>
 

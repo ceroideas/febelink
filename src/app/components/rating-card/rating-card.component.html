@@ -1,0 +1,38 @@
+<div class="py-3">
+  <!-- Profile -->
+  <div class="profile flex flex-col lg:flex-row justify-between items center">
+    <!-- User -->
+    <a 
+      class="flex-1 flex items-center gap-4">
+      <!-- Avatar -->
+      <div class="w-6 h-6 shrink-0">
+        @if (!rating?.avatarImageUrl) {
+          <img
+            class="w-full h-full rounded-full object-cover"
+            src="assets/icon/svg/default_avatar.svg"
+          />
+        }
+        @if (rating?.avatarImageUrl) {
+          <img
+            class="w-full h-full rounded-full object-cover"
+            [src]="urlWsrv + rating?.avatarImageUrl +'&w=800&output=webp'"
+            [alt]="rating?.who + ' avatar'"
+            appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
+          />
+        }
+      </div>
+
+      <!-- Name -->
+      <div class="flex flex-col items-start">
+        <h2 class="font-bold text-base line-clamp-1">{{rating?.who}}</h2>
+      </div>
+    </a>
+  </div>
+
+  <app-rating-summary [rating]="rating?.rating || 0" class="block w-fit my-2"></app-rating-summary>
+
+  <!-- Comment -->
+  <div class="comment">
+    <p class="text-sm text-neutral-500 line-clamp-3">{{rating?.comment}}</p>
+  </div>
+</div>

@@ -31,7 +31,6 @@ export class PerfilOraculoPage implements OnInit {
   idPerfil: any;
   user: any;
   iAdvises: IAdviseFull[] = [];
-  ratings: any;
   bests: any;
   isFeed: boolean = true;
   isRatings: boolean = false;
@@ -73,6 +72,15 @@ export class PerfilOraculoPage implements OnInit {
 
   viewTimeout: NodeJS.Timeout | undefined;
 
+  ratings: {
+    rating: number,
+    comment: string,
+    date: string,
+    who: string,
+    avatarImageUrl: string,
+  }[] = [];
+  totalRatings: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     public popoverController: PopoverController,
@@ -102,7 +110,6 @@ export class PerfilOraculoPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.ratings = [];
     this.bests = [];
     this.curUser = await this.sessionSvc.get();
    
@@ -113,6 +120,13 @@ export class PerfilOraculoPage implements OnInit {
           this.apiService.profileViewed(Number(this.idPerfil));
         }, 1000);
       }
+
+      this.apiService.getUserRatings(Number(this.idPerfil)).then((data: any) => {
+        if (data.response) {
+          this.ratings = data.response?.data?.slice(0, 10) || [];
+          this.totalRatings = data.response?.total || 0;
+        }
+      })
     }
   }
 
@@ -134,6 +148,7 @@ export class PerfilOraculoPage implements OnInit {
           avatar: data.response.ownerAvatar,
           verified: data.response.verified,
           views: data.response.views,
+          rating: data.response.rating,
         };
       }
     })
@@ -149,7 +164,6 @@ export class PerfilOraculoPage implements OnInit {
         this.moreWorks = data.response.available;
     })
   }
-
 
   // async getProductDetail() {
   //   if ( isPlatformBrowser(this.platformId) ) {

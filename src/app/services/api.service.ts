@@ -963,4 +963,16 @@ export class ApiService {
       productId: id,
     });
   }
+
+  public async rateUser(userId: number, rating: number, observation: string) {
+    return this.httpService.post('user/rating', {
+      userId,
+      rating,
+      observation,
+    });
+  }
+
+  public async getUserRatings(userId: number) {
+    return this.httpService.get('user/ratings/' + userId);
+  }
 }

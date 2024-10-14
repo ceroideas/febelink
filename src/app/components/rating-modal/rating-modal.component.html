@@ -1,0 +1,58 @@
+<div class="max-w-screen bg-white rounded-xl relative flex flex-col items-center gap-4 p-6">
+  <button 
+    (click)="close()" 
+    class="absolute top-2 right-2"
+  >
+    <ion-icon name="close-outline" class="text-black text-2xl"></ion-icon>
+  </button>
+
+  <p class="text-2xl text-primary">Tu opinión importa</p>
+
+  <div>
+    <p class="text-base text-neutral-400 text-center">Ayúdanos a mejorar nuestro servicio.</p>
+    <p class="text-base text-neutral-400 text-center">Valora siendo 5 estrellas la mayor puntuación.</p>
+  </div>
+
+  <div class="flex gap-6 mt-2 mb-2">
+    <button (click)="setRating(1)">
+      <ion-icon name="star-outline" *ngIf="rating < 1" class="text-primary text-4xl"></ion-icon>
+      <ion-icon name="star" *ngIf="rating >= 1" class="text-primary text-4xl"></ion-icon>
+    </button>
+    <button (click)="setRating(2)">
+      <ion-icon name="star-outline" *ngIf="rating < 2" class="text-primary text-4xl"></ion-icon>
+      <ion-icon name="star" *ngIf="rating >= 2" class="text-primary text-4xl"></ion-icon>
+    </button>
+    <button (click)="setRating(3)">
+      <ion-icon name="star-outline" *ngIf="rating < 3" class="text-primary text-4xl"></ion-icon>
+      <ion-icon name="star" *ngIf="rating >= 3" class="text-primary text-4xl"></ion-icon>
+    </button>
+    <button (click)="setRating(4)">
+      <ion-icon name="star-outline" *ngIf="rating < 4" class="text-primary text-4xl"></ion-icon>
+      <ion-icon name="star" *ngIf="rating >= 4" class="text-primary text-4xl"></ion-icon>
+    </button>
+    <button (click)="setRating(5)">
+      <ion-icon name="star-outline" *ngIf="rating < 5" class="text-primary text-4xl"></ion-icon>
+      <ion-icon name="star" *ngIf="rating >= 5" class="text-primary text-4xl"></ion-icon>
+    </button>
+  </div>
+
+  <textarea 
+    class="w-full h-32 border border-neutral-100 rounded px-3 py-2 resize-none" 
+    placeholder="Escribe tu opinión"
+    [(ngModel)]="comment"
+  ></textarea>
+
+  <button
+    (click)="rate()" 
+    class="w-48 bg-primary text-white font-bold py-3 rounded"
+  >
+    Enviar
+  </button>
+  
+  <button 
+    (click)="dismiss()" 
+    class="text-neutral-400"
+  >
+    Omitir
+  </button>
+</div>

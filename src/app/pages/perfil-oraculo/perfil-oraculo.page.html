@@ -31,7 +31,7 @@
 
         <!-- Rating -->
         <div class="mt-2">
-          <app-rating-summary></app-rating-summary>
+          <app-rating-summary [rating]="user?.rating || 0"></app-rating-summary>
         </div>
 
         <!-- Views -->
@@ -82,18 +82,25 @@
 
       <!-- Ratings -->
       <div class="bg-white p-6 rounded-xl shadow-xl">
-        <h3 class="font-semibold text-neutral-900">Valoraciones</h3>
-        <span class="text-sm italic text-neutral-600">Todavía no hay ninguna valoración</span>
+        @if ( !ratings.length ) {
+          <h3 class="font-semibold text-neutral-900">Valoraciones</h3>
+          <span class="text-sm italic text-neutral-600">Todavía no hay ninguna valoración</span>
+        } @else {
+          <div class="bg-neutral-100 mx-auto w-fit px-3 py-1 rounded text-neutral-800 text-sm font-semibold mt-1 mb-3">
+            @if ( totalRatings == 1 ) {
+              1 valoración
+            } @else {
+              {{totalRatings}} valoraciones
+            }
+          </div>
 
-        <!-- <div class="flex items-center justify-center gap-1 mt-2">
-          <ion-icon name="star" class="text-primary text-2xl"></ion-icon>
-          <ion-icon name="star" class="text-primary text-2xl"></ion-icon>
-          <ion-icon name="star-half" class="text-primary text-2xl"></ion-icon>
-          <ion-icon name="star-outline" class="text-primary text-2xl"></ion-icon>
-          <ion-icon name="star-outline" class="text-primary text-2xl"></ion-icon>
-        </div>
+          <ul>
+            <li *ngFor="let rating of ratings" class="border-b last:border-0">
+              <app-rating-card [rating]="rating"></app-rating-card>
+            </li>
+          </ul>
+        }
 
-        <div class="bg-neutral-100 mx-auto w-fit px-3 py-1 rounded text-neutral-800 text-sm font-semibold mt-4">9 valoraciones</div> -->
       </div>
     </div>
 
