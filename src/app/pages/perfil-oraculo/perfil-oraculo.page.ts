@@ -214,7 +214,7 @@ export class PerfilOraculoPage implements OnInit {
   }
 
   
-  async registerClick(user: any, profile: any){
+  async registerClick(profile: any){
     let userId = await this.sessionSvc.get();
     let data = {
       user: userId?.id,

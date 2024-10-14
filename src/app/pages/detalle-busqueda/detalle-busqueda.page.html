@@ -169,7 +169,7 @@
             <button class="flex flex-row gap-2 items-center justify-center px-3 py-1 rounded-lg text-base font-semibold bg-primary items-center text-white" (click)="createChat(detalle?.ownerUsername, detalle?.ownerUserId)">
               <ion-icon name="chatbubble-sharp" class="w-4 h-4 text-white text-xl"></ion-icon> <span>Chat</span>
             </button>
-            <div>
+            <div (click)="registerClick(productId)">
               <a class="w-fit px-3 py-1 flex items-center gap-2 rounded-lg block text-base font-semibold bg-[#25D366] text-white" href="https://wa.me/{{user.phoneNumber}}"><i class="fa fa-whatsapp"></i> <span>Whatsapp</span></a>
             </div>
             <!-- Views -->

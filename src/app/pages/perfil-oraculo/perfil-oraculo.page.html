@@ -56,7 +56,7 @@
             </div>
           }
           @if ( user?.phoneNumber ) {
-            <div>
+            <div (click)="registerClick(idPerfil)">
               <span class="block text-xs font-bold uppercase text-neutral-500">Whatsapp</span>
               <a class="w-fit px-2 py-0.5 rounded-lg mt-1 block text-base font-semibold bg-[#25D366] text-white" href="https://wa.me/{{user.phoneNumber}}">Contactar por whatsapp</a>
             </div>

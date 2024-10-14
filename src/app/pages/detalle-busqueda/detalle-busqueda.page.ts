@@ -281,7 +281,7 @@ export class DetalleBusquedaPage implements OnInit {
     })
   }
   
-  async registerClick(user1: any, publication: any){
+  async registerClick(publication: any){
 
     let userId = await this.sessionSvc.get();
     let data = {
