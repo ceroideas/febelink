@@ -11,6 +11,7 @@ import { TranslateConfigService } from './translate/translate-config.service';
 import { ILang, ILangDEFAULTS } from '../models/langs.model';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
+import {HttpService, IHttpService} from '../services/http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,7 @@ export class ApiService {
     private authenticationService: AuthenticationService,
     public translateSvc: TranslateConfigService,
     private platform: Platform,
+    private httpService: HttpService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -948,5 +950,17 @@ export class ApiService {
     const data = new FormData();
     data.append('code', code);
     return (await this._createData('verify2FAcode', data)).toPromise();
+  }
+
+  public async profileViewed(id: number) {
+    return this.httpService.post('user/updateUserViews', {
+      userId: id,
+    });
+  }
+
+  public async offerViewed(id: number) {
+    return this.httpService.post('product/updateProductViews', {
+      productId: id,
+    });
   }
 }

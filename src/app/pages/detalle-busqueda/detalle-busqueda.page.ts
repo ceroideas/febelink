@@ -15,6 +15,7 @@ import { SeoService } from '../../services/seo.service';
 
 import { toSlug } from '../../../utils/utils';
 import { environment } from '../../../environments/environment';
+import { ApiService } from '../../services/api.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs]);
@@ -72,6 +73,7 @@ export class DetalleBusquedaPage implements OnInit {
     {id: 13, name: 'Presupuesto', shorthand: 'presupuesto', lang: 'ES'},
   ]; // ToDo: Get this from the priceType Collection
 
+  viewTimeout: NodeJS.Timeout | undefined;
   
   constructor( public searchService: SearchService, public router: Router, private route: ActivatedRoute,
               private cartService: CartService, private chatService: ChatService, public authService: AuthenticationService, 
@@ -81,6 +83,7 @@ export class DetalleBusquedaPage implements OnInit {
               public sessionSvc: UserSessionSvc,
               private title : Title,
               private seoService: SeoService,
+              private apiService: ApiService,
               @Inject(PLATFORM_ID) private platformId: Object) {
 
                
@@ -99,10 +102,21 @@ export class DetalleBusquedaPage implements OnInit {
     });
   }
 
-
   ngOnInit() {
-   
     this.getProductDetail(this.productId);
+
+    if ( this.productId ) {
+      if ( isPlatformBrowser(this.platformId) ) {
+        this.viewTimeout = setTimeout(() => {
+          // Register offer view
+          this.apiService.offerViewed(this.productId);
+        }, 1000);
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    this.viewTimeout && clearTimeout(this.viewTimeout);
   }
 
  

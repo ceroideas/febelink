@@ -17,6 +17,7 @@ import { UserSessionSvc } from './../../services/user-session.service';
 import { environment } from '../../../environments/environment';
 
 import { toSlug } from '../../../utils/utils';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -69,6 +70,9 @@ export class PerfilOraculoPage implements OnInit {
   ]; // ToDo: HARDCODED! Fetch this info from DB
   public detalle: any;
   curUser: any;
+
+  viewTimeout: NodeJS.Timeout | undefined;
+
   constructor(
     private route: ActivatedRoute,
     public popoverController: PopoverController,
@@ -87,6 +91,7 @@ export class PerfilOraculoPage implements OnInit {
     public authService: AuthenticationService, 
     public sessionSvc: UserSessionSvc,
     public cdref: ChangeDetectorRef,
+    private apiService: ApiService,
     @Inject(PLATFORM_ID) public platformId: Object,
   ) {
     this.route.paramMap.subscribe((params) => {
@@ -96,21 +101,23 @@ export class PerfilOraculoPage implements OnInit {
     });
   }
 
-  ngOnDestroy() {
-  }
   async ngOnInit() {
     this.ratings = [];
     this.bests = [];
     this.curUser = await this.sessionSvc.get();
    
-    // if (this.curUser !== undefined &&  Number(this.curUser.id) == Number(this.idPerfil)) {
-    //   this.hideChat = true;
-    // } else {
-    //   this.hideChat = false;
-    // }
+    if ( this.idPerfil ) {
+      if ( isPlatformBrowser(this.platformId) ) {
+        this.viewTimeout = setTimeout(() => {
+          // Register profile view
+          this.apiService.profileViewed(Number(this.idPerfil));
+        }, 1000);
+      }
+    }
+  }
 
-    // this.cdref.detectChanges();
-    
+  ngOnDestroy() {
+    this.viewTimeout && clearTimeout(this.viewTimeout);
   }
 
   async getUserDetail() {
@@ -128,8 +135,6 @@ export class PerfilOraculoPage implements OnInit {
           verified: data.response.verified,
           views: data.response.views,
         };
-        console.log(this.user)
-        // this.getProductDetail()
       }
     })
    
