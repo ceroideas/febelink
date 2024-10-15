@@ -17,6 +17,7 @@ import {MailService} from './../../services/mail.service';
 import {ReportService} from './../../services/report.service';
 import {CartService} from '../cart/services/cart.service';
 import {IServiceFull} from '../servicios/models/services.model';
+import { RatingModalComponent } from '../../components/rating-modal/rating-modal.component';
 
 @Component({
   selector: 'app-cart-history',
@@ -54,6 +55,8 @@ export class CartHistoryPage implements OnInit {
   isPeticions: boolean = false;
 
   peticions: any = []
+  modalCtrl: any;
+  apiService: any;
   constructor(
     public popoverController: PopoverController,
     private router: Router,
@@ -123,10 +126,12 @@ export class CartHistoryPage implements OnInit {
     this.cancelServiceModalToggle = !this.cancelServiceModalToggle;
   }
 
-  valorarServicio() {
-    this.indexValorarServicio = true;
-    this.finishServiceModalToggle = false;
-    this.dragLogged = false;
+  valorarServicio(userId: number) {
+    // this.indexValorarServicio = true;
+    // this.finishServiceModalToggle = false;
+    // this.dragLogged = false;
+
+    this.openRatingModal(userId);
   }
 
   toggleFinishModal(cartId?: number, productId?: number) {
@@ -228,4 +233,24 @@ export class CartHistoryPage implements OnInit {
     this.router.navigate(['pedir-presupuesto-gratis/'+item.id])
   }
   
+  async openRatingModal(userId: number, rateOnly: boolean = false) {
+    const modal = await this.modalCtrl.create({
+      cssClass: "fit-modal floating-modal",
+      component: RatingModalComponent,
+      componentProps: { mode: 'client' },
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      if ( !rateOnly ) {
+        this.aceptarValorarServicio();
+      }
+
+      if (data?.rating) {
+        this.apiService.rateUser(userId, data.rating, data.comment || '');
+      }
+    }
+  }
 }

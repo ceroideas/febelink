@@ -105,7 +105,7 @@
                     </div>
                     <div
                       class="div-terminar-servicio-button-primary"
-                      (click)="valorarServicio()"
+                      (click)="valorarServicio(item.clientUserId)"
                     >
                       Aceptar
                     </div>
@@ -269,7 +269,7 @@
   </div>
 </div>
 
-<div *ngIf="finishServiceModalToggle" class="mobile modal-back-background">
+<!-- <div *ngIf="finishServiceModalToggle" class="mobile modal-back-background">
   <div class="modal-front-content">
     <div class="modal-front-title">Terminar el servicio</div>
     <div class="modal-front-subtitle modal-subtitle-margin-a">
@@ -284,7 +284,7 @@
       Cancelar
     </div>
   </div>
-</div>
+</div> -->
 
 <div *ngIf="indexValorarServicio" class="mobile modal-back-background">
   <div class="modal-front-content">
