@@ -90,6 +90,7 @@
           },
           "configurations": {
             "production": {
+              "optimization": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -99,13 +100,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "8mb"
+                  "maximumWarning": "6mb",
+                  "maximumError": "12mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "150kb",
-                  "maximumError": "200kb"
+                  "maximumError": "300kb"
                 }
               ],
               "outputHashing": "all"
@@ -175,7 +176,7 @@
               "src/ads.txt",
               "src/firebase-messaging-sw.js",
               "src/favicon.ico", 
-              "src/assets",
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss",

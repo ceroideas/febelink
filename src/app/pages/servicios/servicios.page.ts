@@ -159,7 +159,6 @@ export class ServiciosPage implements OnInit {
     const {response, error} = await this.servicesSvc.get();
     
     this.iProducts = response;
-    console.log(this.iProducts)
     response?.available?.forEach((elem: any) => {
       if (!elem.isTemplate && elem.isPublished) {
         this.numbServicesAvaliable = this.numbServicesAvaliable - 1;

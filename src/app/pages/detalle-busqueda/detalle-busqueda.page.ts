@@ -251,8 +251,8 @@ export class DetalleBusquedaPage implements OnInit {
     } else {
       this.cartService.buyNow(productId, productAmount, this.email).then(
         (response: any) => {
-          window.location.href = response
-  
+          this.router.navigate([`cart/history`]);
+          // window.location.href = response
         })
     }
 

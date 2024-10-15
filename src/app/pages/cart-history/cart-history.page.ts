@@ -55,7 +55,6 @@ export class CartHistoryPage implements OnInit {
   isPeticions: boolean = false;
 
   peticions: any = []
-  modalCtrl: any;
   apiService: any;
   constructor(
     public popoverController: PopoverController,
@@ -65,7 +64,8 @@ export class CartHistoryPage implements OnInit {
     public mailSvc: MailService,
     public reportSvc: ReportService,
     public cartSvc: CartService,
-    private productSvc: ServicesService
+    private productSvc: ServicesService,
+    private modalCtrl: ModalController
   ) {
   }
 
@@ -83,6 +83,7 @@ export class CartHistoryPage implements OnInit {
   async getHistoryCart() {
     this.cartSvc.history().then(async (data: any) => {
       this.iCart = data.response;
+      this.iCart = this.iCart.filter((item: any) => item.items.length);
     })
     
   }
