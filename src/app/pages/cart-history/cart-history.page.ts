@@ -55,7 +55,6 @@ export class CartHistoryPage implements OnInit {
   isPeticions: boolean = false;
 
   peticions: any = []
-  apiService: any;
   constructor(
     public popoverController: PopoverController,
     private router: Router,
@@ -65,7 +64,8 @@ export class CartHistoryPage implements OnInit {
     public reportSvc: ReportService,
     public cartSvc: CartService,
     private productSvc: ServicesService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private apiService: ApiService,
   ) {
   }
 
