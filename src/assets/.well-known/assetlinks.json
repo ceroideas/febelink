@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.febelink.app",
       "sha256_cert_fingerprints": [
-        "0B:95:46:C0:21:D1:99:9E:D3:5D:16:D3:6F:CF:9E:51:C9:F6:DF:B8:CD:6E:39:DD:07:5B:6D:AC:FE:8A:A1:3C"
+        "0B:95:46:C0:21:D1:99:9E:D3:5D:16:D3:6F:CF:9E:51:C9:F6:DF:B8:CD:6E:39:DD:07:5B:6D:AC:FE:8A:A1:3C",
+        "93:A0:CD:AE:A7:FB:B7:F2:FF:D2:EF:96:D8:EF:60:1A:BA:3E:96:46:9B:74:D1:3E:87:69:CA:62:DD:CA:0C:07"
       ]
     }
   }
