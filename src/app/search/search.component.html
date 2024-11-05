@@ -83,7 +83,7 @@
     </div>
 
     <!-- Dropdown -->
-    <div
+    <div data-nosnippet
       class="sectors-dropdown absolute top-full flex flex-col z-10 mt-1 py-0 w-full rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
       [ngClass]="{'!hidden': !dropdownOpened}"
     >
@@ -94,7 +94,7 @@
             @if ( sector.link ) {
             <a [href]="'/' + basePath + '/' + sector.link" class="pointer-events-none">
               <div class="flex items-center">
-                <span 
+                <span data-nosnippet
                   class="block truncate font-normal"
                 >
                   {{sector.nombre}}
@@ -104,7 +104,7 @@
             } @else {
             <div class="pointer-events-none">
               <div class="flex items-center">
-                <span 
+                <span data-nosnippet
                   class="block truncate font-normal"
                 >
                   {{sector.nombre}}
@@ -138,7 +138,7 @@
                 @if ( subsector.link ) {
                 <a [href]="'/' + basePath + '/' + subsector.link" class="" (click)="preventDefault($event)">
                   <div class="flex items-center">
-                    <span 
+                    <span data-nosnippet
                       class="block truncate font-normal"
                     >
                       {{subsector.nombre}}
@@ -148,7 +148,7 @@
                 } @else {
                 <div class="pointer-events-none">
                   <div class="flex items-center">
-                    <span 
+                    <span data-nosnippet
                       class="block truncate font-normal"
                     >
                       {{subsector.nombre}}
