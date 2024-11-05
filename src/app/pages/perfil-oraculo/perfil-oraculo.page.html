@@ -64,7 +64,7 @@
         </div>
 
         <!-- Utility buttons -->
-        <div class="grid grid-cols-3 mt-10">
+        <div class="grid grid-cols-2 mt-10 gap-y-4">
           <button class="flex flex-col gap-2 items-center justify-center" (click)="!authService.isAuthenticated() ? irA('/login') : createChat()">
             <ion-icon name="chatbubble-sharp" class="w-5 h-5 text-link text-xl"></ion-icon>
             <span>Chat</span>
@@ -76,6 +76,10 @@
           <button class="flex flex-col gap-2 items-center justify-center">
             <img src="assets/icon/svg/share-blue.svg" class="w-5 h-5" />
             <span>Compartir</span>
+          </button>
+          <button class="flex flex-col gap-2 items-center justify-center" (click)="!authService.isAuthenticated() ? irA('/login') : openRatingModal()">
+            <ion-icon name="star" class="w-5 h-5 text-link text-xl"></ion-icon>
+            <span>Valorar</span>
           </button>
         </div>
       </div>

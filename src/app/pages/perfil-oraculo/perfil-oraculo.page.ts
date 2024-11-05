@@ -2,7 +2,7 @@ import {ChatService} from './../../services/chat.service';
 import {HttpClient} from '@angular/common/http';
 import {ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PopoverController, AlertController} from '@ionic/angular';
+import {PopoverController, AlertController, ModalController} from '@ionic/angular';
 import {FileService} from './../../components/file-picker/services/file.service';
 import {MailService} from './../../services/mail.service';
 import {ReportService} from './../../services/report.service';
@@ -18,6 +18,7 @@ import { environment } from '../../../environments/environment';
 
 import { toSlug } from '../../../utils/utils';
 import { ApiService } from '../../services/api.service';
+import { RatingModalComponent } from '../../components/rating-modal/rating-modal.component';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -77,7 +78,7 @@ export class PerfilOraculoPage implements OnInit {
     comment: string,
     date: string,
     who: string,
-    avatarImageUrl: string,
+    avatarImageURL: string,
   }[] = [];
   totalRatings: number = 0;
 
@@ -100,6 +101,7 @@ export class PerfilOraculoPage implements OnInit {
     public sessionSvc: UserSessionSvc,
     public cdref: ChangeDetectorRef,
     private apiService: ApiService,
+    private modalCtrl: ModalController,
     @Inject(PLATFORM_ID) public platformId: Object,
   ) {
     this.route.paramMap.subscribe((params) => {
@@ -121,12 +123,7 @@ export class PerfilOraculoPage implements OnInit {
         }, 1000);
       }
 
-      this.apiService.getUserRatings(Number(this.idPerfil)).then((data: any) => {
-        if (data.response) {
-          this.ratings = data.response?.data?.slice(0, 10) || [];
-          this.totalRatings = data.response?.total || 0;
-        }
-      })
+      this.getRatings();
     }
   }
 
@@ -135,8 +132,6 @@ export class PerfilOraculoPage implements OnInit {
   }
 
   async getUserDetail() {
-
-
     this.userDataService.getUserDetail( this.idPerfil ).then(async (data: any) => {
       if (data.response) {
         this.user = {
@@ -155,6 +150,14 @@ export class PerfilOraculoPage implements OnInit {
    
   }
 
+  getRatings() {
+    this.apiService.getUserRatings(Number(this.idPerfil)).then((data: any) => {
+      if (data.response) {
+        this.ratings = data.response?.data?.slice(0, 10) || [];
+        this.totalRatings = data.response?.total || 0;
+      }
+    })
+  }
  
 
 
@@ -241,5 +244,25 @@ export class PerfilOraculoPage implements OnInit {
   }
   backButton() {
     this.location.back();
+  }
+
+  async openRatingModal() {
+    const modal = await this.modalCtrl.create({
+      cssClass: "fit-modal floating-modal",
+      component: RatingModalComponent,
+      componentProps: { mode: 'client', hideSkipButton: true },
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      if (data?.rating) {
+        this.apiService.rateUser(Number(this.idPerfil), data.rating, data.comment || '').then((data: any) => {
+          this.getUserDetail();
+          this.getRatings();
+        });
+      }
+    }
   }
 }

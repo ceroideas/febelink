@@ -50,6 +50,7 @@
   </button>
   
   <button 
+    *ngIf="!hideSkipButton"
     (click)="dismiss()" 
     class="text-neutral-400"
   >

@@ -12,7 +12,7 @@ export class RatingCardComponent implements OnInit {
     comment: string,
     date: string,
     who: string,
-    avatarImageUrl: string,
+    avatarImageURL: string,
   } | undefined;
 
   urlWsrv: string = environment.baseWebUrlWsrv;

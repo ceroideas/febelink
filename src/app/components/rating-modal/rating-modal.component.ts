@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
 export class RatingModalComponent implements OnInit {
 
   @Input() mode: 'client' | 'professional' = 'client';
+  @Input() hideSkipButton: boolean = false;
 
   public rating: number = 5;
   public comment: string = '';

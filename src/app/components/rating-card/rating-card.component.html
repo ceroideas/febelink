@@ -6,16 +6,16 @@
       class="flex-1 flex items-center gap-4">
       <!-- Avatar -->
       <div class="w-6 h-6 shrink-0">
-        @if (!rating?.avatarImageUrl) {
+        @if (!rating?.avatarImageURL) {
           <img
             class="w-full h-full rounded-full object-cover"
             src="assets/icon/svg/default_avatar.svg"
           />
         }
-        @if (rating?.avatarImageUrl) {
+        @if (rating?.avatarImageURL) {
           <img
             class="w-full h-full rounded-full object-cover"
-            [src]="urlWsrv + rating?.avatarImageUrl +'&w=800&output=webp'"
+            [src]="urlWsrv + rating?.avatarImageURL +'&w=800&output=webp'"
             [alt]="rating?.who + ' avatar'"
             appImgErrorFallback="https://api.febelink.com/storage/users/default.png"
           />
