@@ -32,6 +32,10 @@ export const routes: Routes = [
         component: SearchComponent
       },
       {
+        path: 'servicios',
+        component: SearchComponent
+      },
+      {
         path: 'servicios/:profession',
         component: SearchComponent
       },

@@ -289,7 +289,7 @@ export class LoBuscamosPorTiPage implements OnInit {
     const normalizedString = this.title.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
     if (this.title) {
       // You can construct the URL for the new route with the parameters
-        const targetRoute = `/listado/${normalizedString}`;
+        const targetRoute = `/servicios/${normalizedString}`;
   
         // Use the Router to navigate to the new route
         this.router.navigate([targetRoute]);

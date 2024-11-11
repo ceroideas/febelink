@@ -170,7 +170,7 @@ export class Tab1Page  {
 
     if (this.searchTerm) {
     // You can construct the URL for the new route with the parameters
-      const targetRoute = `/listado/${this.searchTerm}`;
+      const targetRoute = `/servicios/${this.searchTerm}`;
 
       // Use the Router to navigate to the new route
       this.router.navigate([targetRoute]);

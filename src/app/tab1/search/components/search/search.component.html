@@ -358,7 +358,7 @@
           <ng-container *ngFor="let city of cities">
           <span><ion-icon name="location-outline"></ion-icon> <a
             (click)="changeMetaFilterCity(city.sector_id.name, city.link,  city.locations_id.id, city.id)"
-            [href]="'/listado/' + city.link"
+            [href]="'/servicios/' + city.link"
           >
           <!-- -->
           {{city.title}}
@@ -475,7 +475,7 @@
           <ng-container *ngFor="let location of locationFilterLink">
         <span><ion-icon name="location-outline"></ion-icon> <a
           (click)="changeMetaFilter(location.id_sector.name, location.link,  location.id)"
-          [href]="'/listado/' + location.link"
+          [href]="'/servicios/' + location.link"
         >
         <!-- -->
           {{location.title}}
@@ -698,7 +698,7 @@
       <ng-container *ngFor="let location of locationFilterLink">
         <span><ion-icon name="location-outline"></ion-icon> <a
           (click)="changeMetaFilter(location.id_sector.name, location.link,  location.id)"
-          [href]="'/listado/' + location.link"
+          [href]="'/servicios/' + location.link"
         >{{location.title}}</a>
         </span>
         <!--  -->
@@ -709,7 +709,7 @@
     <h2>Todos los servicios profesionales en un mismo sitio</h2>
     <div id="services-container">
       <ng-container *ngFor="let service of services | slice:0:10">
-        <a class="service" (click)="changeTitles(service)" [routerLink]="'/listado/' + service.search_term">
+        <a class="service" (click)="changeTitles(service)" [routerLink]="'/servicios/' + service.search_term">
           <img [src]="service.icon">
           <span>{{service.nombre}}</span>
         </a>
@@ -752,7 +752,7 @@
     <div class="sector-container">
       <ng-container *ngFor="let sector of sectors | slice:0:10">
         <!--  -->
-        <a (click)="changeFilterImg(sector)" [routerLink]="'/listado/' + sector.link" [style.background-image]="'url(' + sector.imageURL + ')'">
+        <a (click)="changeFilterImg(sector)" [routerLink]="'/servicios/' + sector.link" [style.background-image]="'url(' + sector.imageURL + ')'">
           <header>
             <h3>{{sector.nombre}}</h3>
           </header>
@@ -767,7 +767,7 @@
         <ng-container *ngFor="let location of locationLinks; trackBy: trackItem">
         <span><ion-icon name="location-outline"></ion-icon> <a
           (click)="changeFilter(location.title, location.link)"
-          [href]="'/listado/' + location.link"
+          [href]="'/servicios/' + location.link"
         >{{location.title}}</a>
         </span>
         </ng-container>

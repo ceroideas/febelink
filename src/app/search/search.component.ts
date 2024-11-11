@@ -544,12 +544,12 @@ export class SearchComponent {
   findOffers() {
     this.closeDropdown();
 
-    let unchechedSubsectors: number[] = [];
+    let uncheckedSubsectors: number[] = [];
 
     if ( this.searchText2.trim() !== '' ) {
       const searchWords = this.searchText2.split(' ');
 
-      unchechedSubsectors = this.sectors
+      uncheckedSubsectors = this.sectors
       .map((sector: Sector) => 
         sector.subSectors.filter((subsector: Subsector) => 
           !subsector.hidden && 
@@ -565,7 +565,7 @@ export class SearchComponent {
     const provinces: number[] = this.currentProvinceDropdownItem.map((province: { id: number, title: string, link: string, checked: boolean }) => province.id);
     const cities: string[] = this.currentCityDropdownItem.map((city: { title: string, link: string, checked: boolean }) => city.title);
 
-    this.searchService.findOffers([...subsectors, ...unchechedSubsectors], provinces, cities)
+    this.searchService.findOffers([...subsectors, ...uncheckedSubsectors], provinces, cities)
     .then((data) => {
       if ( data && data.response && data.response ) {
         this.offers = data.response;

@@ -492,13 +492,13 @@ export class Tab1Component implements OnInit  {
   }
 
   search() {
-    let unchechedSubsectors: number[] = [];
-    let chechedSubsectors: number[] = [];
+    let uncheckedSubsectors: number[] = [];
+    let checkedSubsectors: number[] = [];
 
     if ( this.searchText2.trim() !== '' ) {
       const searchWords = this.searchText2.split(' ');
 
-      unchechedSubsectors = this.dropdownSectors
+      uncheckedSubsectors = this.dropdownSectors
       .map((sector: Sector) => 
         sector.subSectors.filter((subsector: Subsector) => 
           !subsector.hidden && 
@@ -510,9 +510,9 @@ export class Tab1Component implements OnInit  {
       .map((subsector: Subsector) => subsector.id);
     }
 
-    chechedSubsectors = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
+    checkedSubsectors = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
 
-    const subsectors = encodeURIComponent(JSON.stringify([...chechedSubsectors, ...unchechedSubsectors]));
-    this.router.navigate([`/listado`], { queryParams: {subsectors}});
+    const subsectors = encodeURIComponent(JSON.stringify([...checkedSubsectors, ...uncheckedSubsectors]));
+    this.router.navigate([`/servicios`], { queryParams: {subsectors}});
   }
 }
