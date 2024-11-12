@@ -100,7 +100,12 @@
 
           <ul>
             <li *ngFor="let rating of ratings" class="border-b last:border-0">
-              <app-rating-card [rating]="rating"></app-rating-card>
+              <app-rating-card 
+                [rating]="rating"
+                [canDelete]="curUser?.id === rating.idUser"
+                (deleteRating)="deleteRating(rating)"
+              >
+              </app-rating-card>
             </li>
           </ul>
         }

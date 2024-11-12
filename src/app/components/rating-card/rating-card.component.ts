@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { Rating } from '../../interfaces/rating';
 
 @Component({
   selector: 'app-rating-card',
@@ -7,13 +8,10 @@ import { environment } from '../../../environments/environment';
 })
 export class RatingCardComponent implements OnInit {
 
-  @Input() rating: {
-    rating: number,
-    comment: string,
-    date: string,
-    who: string,
-    avatarImageURL: string,
-  } | undefined;
+  @Input() rating: Rating | undefined;
+  @Input() canDelete: boolean = false;
+
+  @Output() deleteRating = new EventEmitter<void>();
 
   urlWsrv: string = environment.baseWebUrlWsrv;
 

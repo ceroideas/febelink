@@ -19,6 +19,7 @@ import { environment } from '../../../environments/environment';
 import { toSlug } from '../../../utils/utils';
 import { ApiService } from '../../services/api.service';
 import { RatingModalComponent } from '../../components/rating-modal/rating-modal.component';
+import { Rating } from '../../interfaces/rating';
 
 @Component({
   selector: 'app-perfil-oraculo',
@@ -73,13 +74,7 @@ export class PerfilOraculoPage implements OnInit {
 
   viewTimeout: NodeJS.Timeout | undefined;
 
-  ratings: {
-    rating: number,
-    comment: string,
-    date: string,
-    who: string,
-    avatarImageURL: string,
-  }[] = [];
+  ratings: Rating[] = [];
   totalRatings: number = 0;
 
   constructor(
@@ -102,6 +97,7 @@ export class PerfilOraculoPage implements OnInit {
     public cdref: ChangeDetectorRef,
     private apiService: ApiService,
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     @Inject(PLATFORM_ID) public platformId: Object,
   ) {
     this.route.paramMap.subscribe((params) => {
@@ -114,7 +110,7 @@ export class PerfilOraculoPage implements OnInit {
   async ngOnInit() {
     this.bests = [];
     this.curUser = await this.sessionSvc.get();
-   
+
     if ( this.idPerfil ) {
       if ( isPlatformBrowser(this.platformId) ) {
         this.viewTimeout = setTimeout(() => {
@@ -155,6 +151,7 @@ export class PerfilOraculoPage implements OnInit {
       if (data.response) {
         this.ratings = data.response?.data?.slice(0, 10) || [];
         this.totalRatings = data.response?.total || 0;
+        this.cdref.detectChanges();
       }
     })
   }
@@ -215,8 +212,6 @@ export class PerfilOraculoPage implements OnInit {
   }
 
   async createChat() {
-
-
     this.chatService.createChat( this.idPerfil ).then(async (response: any) => {
       if (response) {
         this.router.navigate([`chat/${response?.id}`], {
@@ -258,11 +253,34 @@ export class PerfilOraculoPage implements OnInit {
 
     if (role === 'confirm') {
       if (data?.rating) {
-        this.apiService.rateUser(Number(this.idPerfil), data.rating, data.comment || '').then((data: any) => {
+        this.apiService.rateUser(Number(this.idPerfil), data.rating, data.comment || '', true).then((data: any) => {
           this.getUserDetail();
           this.getRatings();
         });
       }
     }
+  }
+
+  async deleteRating(rating: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Eliminar valoración',
+      message: '¿Estas seguro que quieres eliminar la valoración?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.apiService.deleteRating(rating.id).then((data: any) => {
+              this.getRatings();
+            });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

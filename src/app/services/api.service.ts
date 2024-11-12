@@ -964,15 +964,20 @@ export class ApiService {
     });
   }
 
-  public async rateUser(userId: number, rating: number, observation: string) {
+  public async rateUser(userId: number, rating: number, observation: string, profile?: boolean) {
     return this.httpService.post('user/rating', {
       userId,
       rating,
       observation,
+      profile: profile ? 1 : 0,
     });
   }
 
   public async getUserRatings(userId: number) {
     return this.httpService.get('user/ratings/' + userId);
+  }
+
+  public async deleteRating(id: number) {
+    return this.httpService.delete('user/delete/rating/' + id);
   }
 }

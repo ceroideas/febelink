@@ -23,9 +23,16 @@
       </div>
 
       <!-- Name -->
-      <div class="flex flex-col items-start">
+      <div class="flex flex-col flex-1 items-start">
         <h2 class="font-bold text-base line-clamp-1">{{rating?.who}}</h2>
       </div>
+
+      <!-- Delete button -->
+      @if ( canDelete ) {
+        <button class="flex flex-col gap-2 items-center justify-center" (click)="deleteRating ? deleteRating.emit() : null">
+          <ion-icon name="trash-outline" class="w-5 h-5 text-red-700 text-xl"></ion-icon>
+        </button>
+      }
     </a>
   </div>
 
@@ -33,6 +40,6 @@
 
   <!-- Comment -->
   <div class="comment">
-    <p class="text-sm text-neutral-500 line-clamp-3">{{rating?.comment}}</p>
+    <p class="text-base text-neutral-600">{{rating?.comment}}</p>
   </div>
 </div>
