@@ -7,6 +7,7 @@ import { Tab1Component } from './tab11/tab1.component'
 import { UseConditionsPage } from './pages/use-conditions/use-conditions.page'
 import { LoBuscamosPorTiPage } from './pages/lo-buscamos-por-ti/lo-buscamos-por-ti.page'
 import { PerfilOraculoPage } from './pages/perfil-oraculo/perfil-oraculo.page'
+import { LandingComponent } from './pages/landing/landing.component'
 
 export const routes: Routes = [
  
@@ -19,8 +20,10 @@ export const routes: Routes = [
         ],
       },
       { path: 'home', redirectTo: '', pathMatch: 'full' },
-
-
+      {
+        path: 'que-es-febelink',
+        component: LandingComponent
+      },
       // ESTAS SON LAS RUTAS PARA EL LISTADO PARA EL FILTRO
       {
         path: 'listado',

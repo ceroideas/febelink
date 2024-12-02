@@ -102,7 +102,7 @@ import { ProductCardComponent } from '../search/product-card/product-card.compon
 import { DropdownComponent } from '../components/dropdown/dropdown.component';
 import { LinksDropdownComponent } from '../components/links-dropdown/links-dropdown.component';
 
-import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles } from 'lucide-angular';
+import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle } from 'lucide-angular';
 import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
 
 import { OfferCard2Component } from '../components/offer-card2/offer-card2.component';
@@ -110,6 +110,7 @@ import { RatingSummaryComponent } from '../components/rating-summary/rating-summ
 import { ViewsSummaryComponent } from '../components/views-summary/views-summary.component';
 import { RatingModalComponent } from '../components/rating-modal/rating-modal.component';
 import { RatingCardComponent } from '../components/rating-card/rating-card.component';
+import { LandingComponent } from '../pages/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -153,11 +154,12 @@ import { RatingCardComponent } from '../components/rating-card/rating-card.compo
     RatingSummaryComponent,
     ViewsSummaryComponent,
     RatingModalComponent,
-    RatingCardComponent
+    RatingCardComponent,
+    LandingComponent
   ],
   imports: [
     CommonModule,
-    LucideAngularModule.pick({Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles}),
+    LucideAngularModule.pick({Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle}),
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
@@ -333,7 +335,8 @@ import { RatingCardComponent } from '../components/rating-card/rating-card.compo
     RatingSummaryComponent,
     ViewsSummaryComponent,
     RatingModalComponent,
-    RatingCardComponent
+    RatingCardComponent,
+    LandingComponent
   ],
 })
 export class SharedModule {}
