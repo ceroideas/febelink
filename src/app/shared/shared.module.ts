@@ -102,7 +102,7 @@ import { ProductCardComponent } from '../search/product-card/product-card.compon
 import { DropdownComponent } from '../components/dropdown/dropdown.component';
 import { LinksDropdownComponent } from '../components/links-dropdown/links-dropdown.component';
 
-import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle } from 'lucide-angular';
+import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle, Star, Eye } from 'lucide-angular';
 import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
 
 import { OfferCard2Component } from '../components/offer-card2/offer-card2.component';
@@ -111,6 +111,7 @@ import { ViewsSummaryComponent } from '../components/views-summary/views-summary
 import { RatingModalComponent } from '../components/rating-modal/rating-modal.component';
 import { RatingCardComponent } from '../components/rating-card/rating-card.component';
 import { LandingComponent } from '../pages/landing/landing.component';
+import { EmploymentComponent } from '../pages/employment/employment.component';
 
 @NgModule({
   declarations: [
@@ -155,11 +156,12 @@ import { LandingComponent } from '../pages/landing/landing.component';
     ViewsSummaryComponent,
     RatingModalComponent,
     RatingCardComponent,
-    LandingComponent
+    LandingComponent,
+    EmploymentComponent
   ],
   imports: [
     CommonModule,
-    LucideAngularModule.pick({Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle}),
+    LucideAngularModule.pick({Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle, Star, Eye}),
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
@@ -336,7 +338,8 @@ import { LandingComponent } from '../pages/landing/landing.component';
     ViewsSummaryComponent,
     RatingModalComponent,
     RatingCardComponent,
-    LandingComponent
+    LandingComponent,
+    EmploymentComponent
   ],
 })
 export class SharedModule {}

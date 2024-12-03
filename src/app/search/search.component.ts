@@ -23,6 +23,7 @@ const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesional
 
 import { toSlug, preventDefault } from '../../utils/utils';
 import { environment } from '../../environments/environment';
+import { Employment } from '../interfaces/employment';
 
 export interface SearchType {
   services: SearchProductCardType[];
@@ -181,6 +182,13 @@ export class SearchComponent {
 
   basePath: 'listado' | 'servicios' = 'servicios';
 
+  currentLinkType: 'none' | 'subsector' | 'location' | 'city' | 'linklocation' | 'linkcity' = 'none';
+
+  employmentLinks: {
+    link: string,
+    title: string
+  }[] = [];
+
   constructor(
     public searchService: SearchService,
     private router: Router,
@@ -292,6 +300,8 @@ export class SearchComponent {
       });
 
       this.parseKeywords(this.keywords);
+
+      this.generateEmploymentLinks();
 
       if ( !this.restoreCurrentSearch() ) {
         this.findOffers();
@@ -482,6 +492,8 @@ export class SearchComponent {
   handleLinkLocationResult(linkLocation: LinkLocation) {
     this.h1Title = linkLocation.h1;
 
+    this.currentLinkType = 'linklocation';
+
     this.seoService.generateTags(
       {
         title: linkLocation.page_title,
@@ -492,6 +504,8 @@ export class SearchComponent {
   }
   handleLinkCityResult(linkCity: LinkCity) {
     this.h1Title = linkCity.h1;
+
+    this.currentLinkType = 'linkcity';
 
     this.seoService.generateTags(
       {
@@ -504,6 +518,8 @@ export class SearchComponent {
   handleLocationResult(location: Location) {
     this.h1Title = location.h1;
 
+    this.currentLinkType = 'location';
+
     this.seoService.generateTags(
       {
         title: location.page_title,
@@ -515,6 +531,8 @@ export class SearchComponent {
   handleCityResult(city: Location) {
     this.h1Title = city.h1;
 
+    this.currentLinkType = 'city';
+
     this.seoService.generateTags(
       {
         title: city.page_title,
@@ -525,6 +543,8 @@ export class SearchComponent {
   }
   handleSubsectorResult(subsector: Subsector) {
     this.h1Title = subsector.h1;
+
+    this.currentLinkType = 'subsector';
 
     this.seoService.generateTags(
       {
@@ -791,5 +811,114 @@ export class SearchComponent {
     }
 
     return false;
+  }
+
+  generateEmploymentLinks() {
+    let employments: (Employment | undefined)[] = [];
+    let employment: Employment | undefined = undefined;
+    let shuffled: any[] = [];
+    let selected: any[] = [];
+
+    switch ( this.currentLinkType ) {
+      case 'subsector':
+        employment = this.sectors
+          .map((sector: Sector) => sector.subSectors)
+          .flat()
+          .find((subsector: Subsector) => subsector.id === this.targetSubsector?.id)?.employment;
+
+        shuffled = this.provinces.sort(() => 0.5 - Math.random());
+        selected = shuffled.slice(0, 20).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+
+        this.employmentLinks = selected.map((location: Location) => {
+          return {
+            link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(location.title)}`,
+            title: `${location.title}`
+          }
+        });
+        break;
+      case 'location':
+        employments = this.sectors
+          .map((sector: Sector) => sector.subSectors)
+          .flat()
+          .map((subsector: Subsector) => subsector.employment)
+        
+        shuffled = employments.sort(() => 0.5 - Math.random());
+        selected = shuffled.slice(0, 20).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+        
+        this.employmentLinks = selected.map((employment: Employment) => {
+          return {
+            link: `trabajos/${toSlug(employment.title)}/${toSlug(this.targetLocation?.title || '')}`,
+            title: `${employment.title}`
+          }
+        });
+        break;
+      case 'city':
+        employments = this.sectors
+          .map((sector: Sector) => sector.subSectors)
+          .flat()
+          .map((subsector: Subsector) => subsector.employment)
+        
+        shuffled = employments.sort(() => 0.5 - Math.random());
+        selected = shuffled.slice(0, 20).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+        
+        this.employmentLinks = selected.map((employment: Employment) => {
+          return {
+            link: `trabajos/${toSlug(employment.title)}/${toSlug(this.targetCity?.locations_id.title || '')}/${toSlug(this.targetCity?.title || '')}`,
+            title: `${employment.title}`
+          }
+        });
+        break;
+      case 'linklocation':
+        employment = this.sectors
+          .map((sector: Sector) => sector.subSectors)
+          .flat()
+          .find((subsector: Subsector) => subsector.id === this.targetLinkLocation?.subsector_id)?.employment;
+
+        shuffled = this.provinces.sort(() => 0.5 - Math.random());
+        selected = shuffled.slice(0, 20).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+
+        this.employmentLinks = selected.map((location: Location) => {
+          return {
+            link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(location.title)}`,
+            title: `${location.title}`
+          }
+        });
+        break;
+      case 'linkcity':
+        employment = this.sectors
+          .map((sector: Sector) => sector.subSectors)
+          .flat()
+          .find((subsector: Subsector) => subsector.id === Number(this.targetLinkCity?.subsector_id))?.employment;
+
+        const province = this.provinces.find((province: Location) => province.id === Number(this.targetLinkCity?.locations_id));
+        const cities = this.cities.filter((city: City) => city.locations_id.id === province?.id);
+
+        shuffled = this.provinces.sort(() => 0.5 - Math.random());
+        selected = shuffled.slice(0, 20).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+
+        this.employmentLinks = cities.slice(0, 20).map((city: City, index: number) => {
+          return {
+            link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(city.locations_id.title)}/${toSlug(city.title)}`,
+            title: `${city.title}`
+          }
+        });
+        break;
+      default:
+        employments = this.sectors
+          .map((sector: Sector) => sector.subSectors)
+          .flat()
+          .map((subsector: Subsector) => subsector.employment)
+        
+        shuffled = employments.sort(() => 0.5 - Math.random());
+        selected = shuffled.slice(0, 20).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+        
+        this.employmentLinks = selected.map((employment: Employment) => {
+          return {
+            link: `trabajos/${toSlug(employment.title)}`,
+            title: `${employment.title}`
+          }
+        });
+        break;
+    }
   }
 }

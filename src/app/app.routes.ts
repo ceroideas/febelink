@@ -8,6 +8,7 @@ import { UseConditionsPage } from './pages/use-conditions/use-conditions.page'
 import { LoBuscamosPorTiPage } from './pages/lo-buscamos-por-ti/lo-buscamos-por-ti.page'
 import { PerfilOraculoPage } from './pages/perfil-oraculo/perfil-oraculo.page'
 import { LandingComponent } from './pages/landing/landing.component'
+import { EmploymentComponent } from './pages/employment/employment.component'
 
 export const routes: Routes = [
  
@@ -49,6 +50,22 @@ export const routes: Routes = [
       {
         path: 'servicios/:profession/:province/:city',
         component: SearchComponent
+      },
+      {
+        path: 'trabajos',
+        component: EmploymentComponent
+      },
+      {
+        path: 'trabajos/:profession',
+        component: EmploymentComponent
+      },
+      {
+        path: 'trabajos/:profession/:province',
+        component: EmploymentComponent
+      },
+      {
+        path: 'trabajos/:profession/:province/:city',
+        component: EmploymentComponent
       },
       {
         path: 'user/:recommenderId',

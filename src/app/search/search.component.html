@@ -246,18 +246,38 @@
     </button>
   </div>
 
-  <div class="side w-[270px] shrink-0 mx-0 max-[876px]:mx-auto">
-    <div class="bg-white rounded border border-solid border-slate-100 p-6">
-      <h3 class="font-semibold mb-4">🚀&nbsp;&nbsp;Pedir presupuesto gratis</h3>
-      <div class="text-sm text-neutral-600">
-        <p class="">
-          ¿No encuentras lo que buscas?
-          <br>
-          <br>
-          Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
-          Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
-        </p>
-        <a href="/pedir-presupuesto-gratis" class="block w-full mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded">Pedir presupuesto</a>
+  <div class="side w-[270px] shrink-0 mx-0 max-[876px]:mx-auto flex flex-col gap-6">
+    <div>
+      <div class="bg-white rounded border border-solid border-slate-100 p-6">
+        <h3 class="font-semibold mb-4">🚀&nbsp;&nbsp;Pedir presupuesto gratis</h3>
+        <div class="text-sm text-neutral-600">
+          <p class="">
+            ¿No encuentras lo que buscas?
+            <br>
+            <br>
+            Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
+            Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
+          </p>
+          <a href="/pedir-presupuesto-gratis" class="block w-full mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded">Pedir presupuesto</a>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="bg-white rounded border border-solid border-slate-100 p-6">
+        <h3 class="font-semibold mb-4">Ofertas de trabajo</h3>
+        <div class="text-sm text-neutral-600">
+          <p class="">
+            Encuentra las mejores ofertas de trabajo en tu ciudad.
+          </p>
+          <ul class="mt-2">
+            @for ( employment of employmentLinks; track employment.title ) {
+              <li>
+                <a [href]="employment.link" class="text-primary cursor-pointer hover:underline font-semibold">{{employment.title}}</a>
+              </li>
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </div>

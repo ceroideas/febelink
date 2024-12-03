@@ -48,11 +48,21 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
   }
 
   get canCreate(): boolean {
-    return !!this.currentSubsector?.isNew && !!this.currentSubsector?.id_sector  && !!this.currentSubsector?.id_sector.id && !!this.currentSubsector?.nombre;
+    return !!this.currentSubsector?.isNew && !!this.currentSubsector?.id_sector  && 
+      !!this.currentSubsector?.id_sector.id && !!this.currentSubsector?.nombre &&
+      (
+        !this.currentSubsector?.employment?.status ||
+        (!!this.currentSubsector?.employment?.status && !!this.currentSubsector?.employment?.title)
+      );
   }
 
   get canUpdate(): boolean {
-    return !this.currentSubsector?.isNew && !!this.currentSubsector?.id_sector  && !!this.currentSubsector?.id_sector.id && !!this.currentSubsector?.nombre;
+    return !this.currentSubsector?.isNew && !!this.currentSubsector?.id_sector  && 
+      !!this.currentSubsector?.id_sector.id && !!this.currentSubsector?.nombre &&
+      (
+        !this.currentSubsector?.employment?.status ||
+        (!!this.currentSubsector?.employment?.status && !!this.currentSubsector?.employment?.title)
+      )
   }
 
   constructor(
@@ -112,7 +122,19 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
       hidden: false,
       checked: false,
       isNew: true,
-      keyWords: ''
+      keyWords: '',
+      employment: {
+        id: 0,
+        id_sub_sector: 0,
+        imageURL: '',
+        link: '',
+        updated_at: '',
+        status: false,
+        title: '',
+        h1: '',
+        page_title: '',
+        meta_description: ''
+      }
     };
     this.showCreateModal();
   }
@@ -124,6 +146,7 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
   showEdit(event: any, item: Subsector) {
     event.stopPropagation();
     this.currentSubsector = JSON.parse(JSON.stringify(item));
+    this.currentSubsector?.employment && (this.currentSubsector!.employment.status = !!this.currentSubsector!.employment.title);
     !this.currentSubsector?.id_sector?.id && (this.currentSubsector!.id_sector = { id: 0, name: '' });
     this.showEditModal();
   }
@@ -147,11 +170,11 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
     let csvContent = "data:text/csv;charset=utf-8,";
 
     // Add header
-    csvContent += 'Sector;Nombre;Enlace;H1;Icono;Meta descripción;Título de página;Palabras clave\n';
+    csvContent += 'Sector;Nombre;Enlace;H1;Icono;Meta descripción;Título de página;Palabras clave;Nombre empleo;Link empleo;H1 empleo;Titulo de página empleo;Meta descripción empleo\n';
 
     // Add data
     const subsectorsCsv = this.filteredSubsectors.map(item => {
-      return `${item.id_sector?.name || ''};${item.nombre || ''};${item.link || ''};${item.h1 || ''};${item.imageURL || ''};${item.meta_description || ''};${item.page_title || ''};${item.keySearch.map(key => key.key_name).join(',') || ''}`;
+      return `${item.id_sector?.name || ''};${item.nombre || ''};${item.link || ''};${item.h1 || ''};${item.imageURL || ''};${item.meta_description || ''};${item.page_title || ''};${item.keySearch.map(key => key.key_name).join(',') || ''};${item.employment?.title || ''};${item.employment?.link || ''};${item.employment?.h1 || ''};${item.employment?.page_title || ''};${item.employment?.meta_description || ''}`;
     })
 
     // Add data to csv
@@ -178,12 +201,26 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
         const lines = csv.split('\n');
         lines.shift(); // Remove header
         const subsectors = lines.map((line: string) => {
-          const [sector, name, link, h1, icon, meta_description, page_title, keySearch] = line.split(';');
-          return { sector, name, link, h1, icon, meta_description, page_title, keySearch };
+          const [sector, name, link, h1, icon, meta_description, page_title, keySearch, nameEmployment, linkEmployment, h1Employment, pagetitleEmployment, metadescriptionEmployment] = line.split(';');
+          return { sector, name, link, h1, icon, meta_description, page_title, keySearch, nameEmployment, linkEmployment, h1Employment, pagetitleEmployment, metadescriptionEmployment };
         });
 
         // Parse data
-        this.importedSubsectors = subsectors.map((subsector: { sector: string, name: string, link: string, h1: string, icon: string, meta_description: string, page_title: string, keySearch: string }) => {
+        this.importedSubsectors = subsectors.map((subsector: { 
+          sector: string, 
+          name: string, 
+          link: string, 
+          h1: string, 
+          icon: string, 
+          meta_description: string, 
+          page_title: string, 
+          keySearch: string,
+          nameEmployment: string,
+          linkEmployment: string,
+          h1Employment: string,
+          pagetitleEmployment: string,
+          metadescriptionEmployment: string
+        }) => {
           return {
             id: 0,
             h1: subsector.h1,
@@ -194,6 +231,14 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
             meta_description: subsector.meta_description,
             nombre: subsector.name,
             page_title: subsector.page_title,
+            employment: {
+              status: !!subsector.nameEmployment,
+              title: subsector.nameEmployment,
+              link: subsector.linkEmployment,
+              h1: subsector.h1Employment,
+              page_title: subsector.pagetitleEmployment,
+              meta_description: subsector.metadescriptionEmployment
+            }
           };
         });
 
@@ -216,7 +261,12 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
                  this.normalizeStringToCompare(currentSubsector!.h1) !== this.normalizeStringToCompare(subsector.h1) ||
                  this.normalizeStringToCompare(currentSubsector!.meta_description) !== this.normalizeStringToCompare(subsector.meta_description) ||
                  this.normalizeStringToCompare(currentSubsector!.page_title) !== this.normalizeStringToCompare(subsector.page_title) ||
-                 currentSubsector!.keySearch.map(key => key.key_name).join(',') !== subsector.keySearch.map(key => key.key_name).join(',');
+                 currentSubsector!.keySearch.map(key => key.key_name).join(',') !== subsector.keySearch.map(key => key.key_name).join(',') ||
+                 this.normalizeStringToCompare(currentSubsector!.employment?.title) !== this.normalizeStringToCompare(subsector.employment?.title) ||
+                 this.normalizeStringToCompare(currentSubsector!.employment?.link) !== this.normalizeStringToCompare(subsector.employment?.link) ||
+                 this.normalizeStringToCompare(currentSubsector!.employment?.h1) !== this.normalizeStringToCompare(subsector.employment?.h1) ||
+                 this.normalizeStringToCompare(currentSubsector!.employment?.page_title) !== this.normalizeStringToCompare(subsector.employment?.page_title) ||
+                 this.normalizeStringToCompare(currentSubsector!.employment?.meta_description) !== this.normalizeStringToCompare(subsector.employment?.meta_description);
         });
 
         // Check for deleted sectors
@@ -309,7 +359,12 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
         imageURL: this.currentSubsector?.imageURL || '', 
         h1: this.currentSubsector?.h1 || this.generateH1(this.currentSubsector!.nombre), 
         pagetitle: this.currentSubsector?.page_title || this.generatePageTitle(this.currentSubsector!.nombre), 
-        metadescription: this.currentSubsector?.meta_description || this.generateMetaDescription(this.currentSubsector!.nombre)
+        metadescription: this.currentSubsector?.meta_description || this.generateMetaDescription(this.currentSubsector!.nombre),
+        nameEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.title : undefined,
+        linkEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.link || this.generateLink(this.currentSubsector!.nombre, '', 'en-españa') : undefined,
+        h1Employment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.h1 || this.generateH1(this.currentSubsector!.nombre) : undefined,
+        pagetitleEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.page_title || this.generatePageTitle(this.currentSubsector!.nombre) : undefined,
+        metadescriptionEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.meta_description || this.generateMetaDescription(this.currentSubsector!.nombre) : undefined
       });
 
       // Update deleted key search
@@ -346,7 +401,12 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
         imageURL: subsector.imageURL || '', 
         h1: subsector.h1 || this.generateH1(subsector.nombre), 
         pagetitle: subsector.page_title || this.generatePageTitle(subsector.nombre), 
-        metadescription: subsector.meta_description || this.generateMetaDescription(subsector.nombre)
+        metadescription: subsector.meta_description || this.generateMetaDescription(subsector.nombre),
+        nameEmployment: subsector.employment?.status ? subsector.employment?.title : undefined,
+        linkEmployment: subsector.employment?.status ? subsector.employment?.link || this.generateLink(subsector.nombre, '', 'en-españa') : undefined,
+        h1Employment: subsector.employment?.status ? subsector.employment?.h1 || this.generateH1(subsector.nombre) : undefined,
+        pagetitleEmployment: subsector.employment?.status ? subsector.employment?.page_title || this.generatePageTitle(subsector.nombre) : undefined,
+        metadescriptionEmployment: subsector.employment?.status ? subsector.employment?.meta_description || this.generateMetaDescription(subsector.nombre) : undefined
       });
     }
 
@@ -360,7 +420,12 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
         imageURL: subsector.imageURL || '', 
         h1: subsector.h1 || this.generateH1(subsector.nombre), 
         pagetitle: subsector.page_title || this.generatePageTitle(subsector.nombre), 
-        metadescription: subsector.meta_description || this.generateMetaDescription(subsector.nombre)
+        metadescription: subsector.meta_description || this.generateMetaDescription(subsector.nombre),
+        nameEmployment: subsector.employment?.status ? subsector.employment?.title : undefined,
+        linkEmployment: subsector.employment?.status ? subsector.employment?.link || this.generateLink(subsector.nombre, '', 'en-españa') : undefined,
+        h1Employment: subsector.employment?.status ? subsector.employment?.h1 || this.generateH1(subsector.nombre) : undefined,
+        pagetitleEmployment: subsector.employment?.status ? subsector.employment?.page_title || this.generatePageTitle(subsector.nombre) : undefined,
+        metadescriptionEmployment: subsector.employment?.status ? subsector.employment?.meta_description || this.generateMetaDescription(subsector.nombre) : undefined
       });
 
       // Get new key search

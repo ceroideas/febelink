@@ -70,11 +70,39 @@ export class KeywordService {
     return this.http.get('getSubsector/1');
   }
 
-  public addSubSectorKeyword(value: { sector: number,name: string, link: string ,  keySearch: any, imageURL: string, h1: string,  pagetitle: string, metadescription: string}) {
+  public addSubSectorKeyword(value: { 
+    sector: number,
+    name: string, 
+    link: string, 
+    keySearch: any, 
+    imageURL: string, 
+    h1: string, 
+    pagetitle: string, 
+    metadescription: string,
+    linkEmployment?: string,
+    nameEmployment?: string,
+    h1Employment?: string,
+    pagetitleEmployment?: string,
+    metadescriptionEmployment?: string
+  }) {
     return this.http.post('admin/createSubsector', value);
   }
 
-  public updateSubSectorKeyword(value: { sector: number, subsector: number, name: string, link: string , imageURL: string , h1: string,  pagetitle: string, metadescription: string}) {
+  public updateSubSectorKeyword(value: { 
+    sector: number, 
+    subsector: number, 
+    name: string, 
+    link: string , 
+    imageURL: string, 
+    h1: string, 
+    pagetitle: string, 
+    metadescription: string,
+    linkEmployment?: string,
+    nameEmployment?: string,
+    h1Employment?: string,
+    pagetitleEmployment?: string,
+    metadescriptionEmployment?: string
+  }) {
     return this.http.post('admin/updateSubsector', value);
   }
 

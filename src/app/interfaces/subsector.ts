@@ -1,3 +1,4 @@
+import { Employment } from "./employment";
 import { KeySearch } from "./sector";
 
 export interface Subsector {
@@ -12,4 +13,5 @@ export interface Subsector {
   page_title: string;
   hidden: boolean;
   checked: boolean;
+  employment?: Employment;
 }

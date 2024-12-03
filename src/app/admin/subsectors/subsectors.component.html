@@ -361,7 +361,73 @@
           <span class="label-text-alt">Puedes añadir varias palabras separadas por comas</span>
         </div>
       </label>
+
+      <!-- Employment -->
+      <h3 class="text-lg font-bold">Trabajos</h3>
+
+      <!-- Status -->
+      <div class="px-1 py-2 flex justify-start items-center gap-4">
+        <span class="label-text text-neutral-500">Estado</span>
+        <input 
+          type="checkbox" 
+          class="toggle" 
+          [(ngModel)]="currentSubsector!.employment!.status"
+        />
+      </div>
+      
+      <!-- Title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Título*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [disabled]="!currentSubsector?.employment?.status"
+          [(ngModel)]="currentSubsector!.employment!.title"
+        />
+      </label>
+      <!-- H1 -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Encabezado H1</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [placeholder]="this.generateH1(currentSubsector?.employment?.title)"
+          [disabled]="!currentSubsector?.employment?.status"
+          [(ngModel)]="currentSubsector!.employment!.h1"
+        />
+      </label>
+      <!-- Page title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Título de página</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [placeholder]="this.generatePageTitle(currentSubsector?.employment?.title)"
+          [disabled]="!currentSubsector?.employment?.status"
+          [(ngModel)]="currentSubsector!.employment!.page_title"
+        />
+      </label>
+      <!-- Meta description -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Meta descripción</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100"
+          [placeholder]="this.generateMetaDescription(currentSubsector?.employment?.title)"
+          [disabled]="!currentSubsector?.employment?.status"
+          [(ngModel)]="currentSubsector!.employment!.meta_description"
+        />
+      </label>
     </div>
+
 
     <!-- Action -->
     <div class="modal-action">
