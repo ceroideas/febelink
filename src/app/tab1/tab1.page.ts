@@ -414,7 +414,6 @@ export class Tab1Page  {
 
 
   async changeSectorFilter(sectorFilter: any) {
-    console.log(this.sessionStorage)
    this.sessionStorage?.setItem('nenenenenne', '11');
 
 

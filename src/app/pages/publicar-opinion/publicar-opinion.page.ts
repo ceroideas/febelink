@@ -41,7 +41,6 @@ export class PublicarOpinionPage implements OnInit {
       (await this.api.getSubSectores(this.navParams.get('id_demandante'))).subscribe( (subsectores: any[]) => {
 
         this.subsectores = subsectores;
-        console.log(this.subsectores);
         this.opinion_types = res[0];
 
       });

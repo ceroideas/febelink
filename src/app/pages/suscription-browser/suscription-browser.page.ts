@@ -46,7 +46,6 @@ export class SuscriptionBrowserPage implements OnInit {
           this.selected = 1; //NEW
         }
 
-        console.log(this.subscription);
         if (this.subscription != null) {
           this.selected = this.subscription[0].stripe_plan;
         }

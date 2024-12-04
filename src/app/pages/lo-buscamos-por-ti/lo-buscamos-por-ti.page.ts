@@ -150,7 +150,6 @@ export class LoBuscamosPorTiPage implements OnInit {
 
   }
   onSelect(hero: any): void {
-    console.log(hero)
   }
   onSelectChange($event: any){
   

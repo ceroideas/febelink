@@ -79,7 +79,6 @@ export class SectorPage implements OnInit {
 
   
     this.keywordService.getSectorKeywords().then((response: any) => {
-      console.log(response.response)
       this.sectorKeys = response.response;
       if ( this.sectorKeys)
         this.sectorKeys.forEach((sector: any) => { 

@@ -100,7 +100,6 @@ export class AssistantFormComponent implements OnInit {
     return descripcion;
   }
   ofertas_restantes(): string {
-    console.log({ value: this.form?.value });
     const { ofertas_restantes } = this.form?.value;
     return ofertas_restantes;
   }

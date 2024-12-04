@@ -59,7 +59,6 @@ export class PublicarDemandaPage implements OnInit {
       sub_sector: [''],
     });
     this.form.get('sector').valueChanges.subscribe((id) => {
-      console.log(id);
       this.obtenerSubSectores(id);
     });
   }

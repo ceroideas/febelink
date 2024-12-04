@@ -191,7 +191,6 @@ export class ServiciosPage implements OnInit {
   }
 
   selectNuevoServicio() {
-    console.log(this.numbServicesAvaliable)
     if (this.numbServicesAvaliable > 0) {
       this.isNuevoServicio = true;
       this.initializeSocket();

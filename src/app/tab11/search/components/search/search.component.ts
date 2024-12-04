@@ -188,9 +188,6 @@ export class SearchComponent implements AfterViewInit {
     //@ts-ignore
 
           const cityLink = this.cities.find((item: any) => Number(item.citys_id) === Number(this.cityFilter));
-
-          console.log( this.cities)
-          console.log( cityLink)
        }, 2000);
        
 
@@ -274,7 +271,6 @@ export class SearchComponent implements AfterViewInit {
   }
 
   segmentChanged(event: any) {
-    console.log(event);
   }
 
   public irA(p: string): void {
@@ -366,13 +362,6 @@ export class SearchComponent implements AfterViewInit {
     sectorLink = this.sectors.find((item: any) => 
       item.link.replace(/ /g, '').replace(/-/g, '').toLowerCase() === this.searchText?.replace(/ /g, '').replace(/-/g, '').toLowerCase()
     )
-
-
-    console.log('filterlink', filterLink);
-    console.log('locationlink', locationLink);
-    console.log('citieslink', citiesLink);
-    console.log('sectorlink', sectorLink)
-   
 
     if ( filterLink ) {
       let metaLink: any = {}
@@ -502,11 +491,6 @@ export class SearchComponent implements AfterViewInit {
   }
 
   async changeMetaFilter(metaFilter: string, link: string , id?: string) {
-
-    console.log(metaFilter)
-    console.log(link)
-    console.log(id)
-
     sessionStorage.removeItem("metaLocationFilter"); 
     sessionStorage.removeItem("IdMetaFilter"); 
     await this.searchService.setMetaLocationFilter(metaFilter);

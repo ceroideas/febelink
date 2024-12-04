@@ -236,7 +236,6 @@ export class WalletPage {
   }
 
   transaction(operation: any) {
-    console.log('operation:', operation);
   }
 
   async balance() {

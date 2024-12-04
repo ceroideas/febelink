@@ -36,8 +36,6 @@ export class OfertantesPage implements OnInit {
 
     (await this.api.getBiddersByScore( this.sector )).subscribe( ofertantes => {
 
-      console.log("OFERTANTES", ofertantes);
-
       for (let ofertante of ofertantes) {
         if (ofertante.logo != null) {
           if (!ofertante.logo.includes("http://") && !ofertante.logo.includes("https://"))

@@ -113,7 +113,6 @@ export class LinkCityPage implements OnInit {
   }
   async readCitysLocation(){
     this.keywordService.getCityLocation(this.locationSelect).then(async (response: any) => {
-      console.log(response)
       this.citys = response.response;
     })
 
@@ -149,7 +148,6 @@ export class LinkCityPage implements OnInit {
   async search(event?: any) {
     this.isLoading = true;
     this.keywordService.getLinkCityKeywords().then(async (response: any) => {
-      console.log()
       this.linkcity = response.response;
       this.linkcity_filtered = this.linkcity;
   

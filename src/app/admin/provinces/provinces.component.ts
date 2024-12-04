@@ -364,8 +364,6 @@ export class ProvincesComponent extends BaseComponent implements OnInit {
 
     // Create new provinces
     for( let province of this.importedNewProvinces ) {
-      console.log(province)
-
       const data = await this.keywordService.addLocationKeyword({
         title: province.title, 
         link: province.link || this.generateLink(province.title, 'servicios-profesionales-en'),

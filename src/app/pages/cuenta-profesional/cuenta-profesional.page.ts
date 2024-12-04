@@ -57,8 +57,6 @@ export class CuentaProfesionalPage implements OnInit {
 
     this.keywordService.getLocationKeywords().then((response: any) => {
       this.locations =response.response;
-      console.log(response.response)
-
 
       this.locations = response.response
       .filter((location_aux: any) =>  location_aux.title !== 'España')
@@ -98,25 +96,17 @@ export class CuentaProfesionalPage implements OnInit {
         
         this.locationsProfessions.push({ locationId:location.locationId, location: location.location, city: location.city });
       });
-
-     
-      console.log(this.locationsProfessions)
-
     }
     
   }
 
   onSelectChange($event: any){
-    console.log($event.target.value)
     this.locationSelect  = $event.target.value
 
     
 
     let location = this.locations.filter((location:any)=> location.id === Number(this.locationSelect))[0];
     this.locationSelectName  = location.title
-
-    console.log( this.locationSelectName)
-
   }
 
   async getNumProfessionAvaliables() {
@@ -241,7 +231,6 @@ export class CuentaProfesionalPage implements OnInit {
 
     const adaptedPayloadLocation: number[] = [];
     this.locationsProfessions.forEach((elem) => {
-      console.log(elem.locationId)
       //@ts-ignore
       adaptedPayloadLocation.push(elem.locationId);
     });

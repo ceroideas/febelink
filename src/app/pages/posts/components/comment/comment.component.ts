@@ -52,7 +52,6 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.iComment)
   }
 
   /* ngOnChanges( changes: SimpleChanges ): void {

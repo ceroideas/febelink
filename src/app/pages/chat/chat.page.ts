@@ -159,13 +159,11 @@ export class ChatPage implements OnInit{
     });
 
     const connectionLog = await this.socket.emit('create', this.room_id);
-    console.log(`Me he conectado a ${this.room_id}: `, connectionLog);
 
     this.reciveMessageSubscription = this.socket
       .fromEvent('message')
       .subscribe((message) => {
 
-        console.log('He recibido el mesnaje: ', message);
         //@ts-ignore
         var message_hour = new Date(message['timecreated']).getHours();
         //@ts-ignore
@@ -258,8 +256,6 @@ export class ChatPage implements OnInit{
         user: this.user_id,
         timecreated: timestamp,
       });
-
-      console.log('Mensaje enviado: ', messageSocketResponse);
 
       // @ts-ignore
       this.input_message.setFocus();

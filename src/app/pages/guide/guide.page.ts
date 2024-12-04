@@ -167,7 +167,6 @@ export class GuidePage implements OnInit, OnDestroy {
     // this.currentIndex = await this.slides.getActiveIndex();
     this.title = this.pages[this.currentIndex].name;
     this.titleIcon = this.pages[this.currentIndex].icon;
-    console.log('Current index is', this.currentIndex);
   
     setTimeout(() => {
      
@@ -192,8 +191,6 @@ export class GuidePage implements OnInit, OnDestroy {
     if(this.guideChecked) {
 
       (await this.api.noShowAgain(null)).subscribe( (res: any )=> {
-
-        console.log("SAVE GUIDE",res.actualizado);
         this.utilities.saveUserData(res.actualizado);
 
       });

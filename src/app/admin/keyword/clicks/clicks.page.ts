@@ -55,7 +55,6 @@ export class ClicksPage implements OnInit {
     this.isLoading = true;
     // this.filter = event?.target?.value || this.filter || '';
     this.keywordService.listClickViews().then(async (response: any) => {
-      console.log(response.response)
       this.profiles = response.response.profile;
       this.publications = response.response.publication;
       this.isLoading = false;

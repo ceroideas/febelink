@@ -210,7 +210,6 @@ export class SuscribirsePage implements OnInit {
 
   async openStripe(stripe_plan: any) {
     this.selected = stripe_plan;
-    console.log(this.selected);
   }
 
   public closeModal(): void {
@@ -227,7 +226,6 @@ export class SuscribirsePage implements OnInit {
   }
 
   async paySubscription(idSelectedSubscription: number) {
-    console.log(idSelectedSubscription);
     await this.utilities.showLoading();
     //@ts-ignore
     const myNewPlan: Subscription = this.subscriptions?.filter(
@@ -236,7 +234,6 @@ export class SuscribirsePage implements OnInit {
     if (myNewPlan.price > 0) {
       try {
         const checkout = await this.api.paySubscription(idSelectedSubscription);
-        console.log(checkout);
         if (checkout.externalCheckoutUrl)
           window.location.href = checkout.externalCheckoutUrl;
         else this.utilities.showToast(checkout.message);

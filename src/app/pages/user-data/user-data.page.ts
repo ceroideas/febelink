@@ -127,7 +127,6 @@ export class UserDataPage implements OnInit {
   } 
 
   onSelect(hero: any): void {
-    console.log(hero)
   }
   onSelectChange($event: any){
     this.provincia = $event.target.value
@@ -254,7 +253,6 @@ export class UserDataPage implements OnInit {
   }
 
   fileSelected(file: any) {
-    console.log(file)
     this.avatarUrl = file.src
     this.iFile = file;
   }

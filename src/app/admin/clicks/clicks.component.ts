@@ -56,7 +56,6 @@ export class ClicksComponent implements OnInit {
     !refresh && (this.loading = true);
 
     this.keywordService.listClickViews().then(async (response: any) => {
-      console.log(response.response)
       this.profiles = response.response.profile.sort((a: any, b: any) => b.numProfile - a.numProfile);
       this.publications = response.response.publication.sort((a: any, b: any) => b.numPublication - a.numPublication);
       this.filter({ target: { value: this.currentFilter } });

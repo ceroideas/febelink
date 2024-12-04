@@ -157,7 +157,6 @@ export class Registro2Component  implements OnInit{
     }
   
     async submitForm() {
-      console.log('Revisión: ', this.form?.controls);
       if (this.form?.valid) {
         await this.utilities.showLoading();
   

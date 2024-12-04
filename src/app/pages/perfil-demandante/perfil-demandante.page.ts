@@ -235,7 +235,6 @@ export class PerfilDemandantePage implements OnInit {
    * Modal para valorar el perfil
    */
   async opinionModal() {
-    console.log(this.currentUser?.id);
     if (this.currentUser?.id != undefined) {
       // If User has main data completed
       if (this.userSvc.checkUserDataComplete(this.currentUser)) {

@@ -556,7 +556,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public loginImplicito(): void {
     this.utilities.getUserData().then(async (userData) => {
-      console.log(userData)
     if (userData) {
       this.router.navigate([environment.HOME_PAGE]);
     }

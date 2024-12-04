@@ -102,7 +102,6 @@ export class AdvisesPage implements OnInit {
   }
 
   async search(text?: any) {
-    console.log('buscando');
     this.filter = text != null ? text : this.filter;
 
     const {response, error} = await this.adviseSvc.list(

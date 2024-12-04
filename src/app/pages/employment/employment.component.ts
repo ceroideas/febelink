@@ -48,8 +48,6 @@ export class EmploymentComponent implements OnInit {
       this.provinces = data.response.locations;
       this.cities = data.response.citys;
 
-      console.log(this.employments);
-
       let pageTitle: string = 'Trabajo en Febelink';
       let metaDescription: string = 'Encuentra ofertas de trabajo en Febelink';
 
