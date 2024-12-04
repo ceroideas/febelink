@@ -38,7 +38,7 @@ export function app(): express.Express {
       res.redirect(301, `${protocol}://www.${headers.host}${originalUrl}`);
     }
 
-    console.log(`${req.socket.remoteAddress} - ${req.headers['user-agent']}`);
+    // console.log(`${req.socket.remoteAddress} - ${req.headers['user-agent']}`);
 
     commonEngine
       .render({
@@ -47,6 +47,7 @@ export function app(): express.Express {
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
         providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+        inlineCriticalCss: false
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));

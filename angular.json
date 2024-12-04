@@ -76,9 +76,9 @@
               "./node_modules/quill-emoji/dist/quill-emoji.css",
               "./node_modules/quill-mention/dist/quill.mention.min.css"
             ],
-          "scripts": [
-            "./node_modules/quill/dist/quill.min.js"
-        ],
+            "scripts": [
+              "./node_modules/quill/dist/quill.min.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": {
               "discoverRoutes": false,
@@ -86,11 +86,23 @@
             },
             "ssr": {
               "entry": "server.ts"
+            },
+            "optimization": {
+              "styles": {
+                "inlineCritical": false
+              }
             }
           },
           "configurations": {
             "production": {
-              "optimization": false,
+              "optimization": {
+                "scripts": true,
+                "fonts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                }
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
