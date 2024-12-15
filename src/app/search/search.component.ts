@@ -132,6 +132,7 @@ export class SearchComponent {
     id: number,
     link: string,
     title: string,
+    locations_id: { id: number, title: string },
     checked: boolean
   }[] = [];
 
@@ -274,6 +275,7 @@ export class SearchComponent {
       // Configure locations dropdown
       this.provinces = this.keywords.locations
       .filter((location: Location) => location.link !== undefined && location.link !== null && location.link !== '')
+      .sort((a: Location, b: Location) => a.title.localeCompare(b.title))
 
       this.provinceDropdownItems = this.provinces
       .map((location: Location) => {
@@ -288,6 +290,7 @@ export class SearchComponent {
       // Configure cities dropdown
       this.cities = this.keywords.citys
       .filter((city: City) => city.link !== undefined && city.link !== null && city.link !== '')
+      .sort((a: City, b: City) => a.title.localeCompare(b.title))
 
       this.cityDropdownItems = this.cities
       .map((city: City) => {
@@ -295,9 +298,11 @@ export class SearchComponent {
           id: city.id,
           link: city.link,
           title: city.title,
+          locations_id: city.locations_id,
           checked: false
         }
       });
+      this.cityDropdownItems.sort((a, b) => a.title.localeCompare(b.title));
 
       this.parseKeywords(this.keywords);
 
@@ -441,9 +446,17 @@ export class SearchComponent {
     });
   }
   setCityLinksBasedOnSubsector(subsector: Subsector) {
-    this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
+    this.cities.forEach((city: City) => {
       if ( this.basePath === 'servicios' ) {
-        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(city.title.toLocaleLowerCase())}`;
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(city.locations_id.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
+      } else {
+        city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+      }
+    });
+
+    this.cityDropdownItems.forEach((city: { id: number, link: string, title: string, locations_id: { id: number, title: string } }) => {
+      if ( this.basePath === 'servicios' ) {
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(city.locations_id.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
       } else {
         city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
       }
@@ -451,7 +464,13 @@ export class SearchComponent {
   }
   setCityLinksBasedOnProvince(location: Location, cities: City[]) {
     this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
+    this.cityDropdownItems.sort((a, b) => a.title.localeCompare(b.title));
 
+    this.cities.forEach((city: City) => {
+      if ( this.basePath === 'servicios' ) {
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(city.locations_id.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
+      }
+    });
     this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
       if ( this.basePath === 'servicios' ) {
         city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(location.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
@@ -460,7 +479,15 @@ export class SearchComponent {
   }
   setCityLinksBasedOnSubsectorAndProvince(subsector: Subsector, location: Location, cities: City[], linkCitys: LinkCity[]) {
     this.cityDropdownItems = cities.filter((city: City) => city.locations_id.id === location.id);
+    this.cityDropdownItems.sort((a, b) => a.title.localeCompare(b.title));
 
+    this.cities.forEach((city: City) => {
+      if ( this.basePath === 'servicios' ) {
+        city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(city.locations_id.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
+      } else {
+        city.link = subsector.link.replace('españa', `${toSlug(city.title)}`).replace('españa', `${toSlug(city.title)}`);
+      }
+    });
     this.cityDropdownItems.forEach((city: { id: number, link: string, title: string }) => {
       if ( this.basePath === 'servicios' ) {
         city.link = `${this.professionQuery === 'servicios-profesionales' ? 'profesionales' : this.professionQuery}/${toSlug(location.title.toLocaleLowerCase())}/${toSlug(city.title.toLocaleLowerCase())}`;
@@ -713,6 +740,18 @@ export class SearchComponent {
     } else {
       this.h1Title = `${this.h1Title} en España`;
     }
+
+    this.cityDropdownItems = this.cities
+    .filter((city: City) => this.currentProvinceDropdownItem.some((item: any) => item.id === city.locations_id.id))
+    .map((city: City) => {
+      return {
+        id: city.id,
+        link: city.link,
+        title: city.title,
+        locations_id: city.locations_id,
+        checked: false
+      }
+    });
 
     this.seoService.generateTags(
       {
