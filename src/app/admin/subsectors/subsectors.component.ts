@@ -299,7 +299,12 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
         imageURL: this.currentSubsector?.imageURL || '', 
         h1: this.currentSubsector?.h1 || this.generateH1(this.currentSubsector!.nombre), 
         pagetitle: this.currentSubsector?.page_title || this.generatePageTitle(this.currentSubsector!.nombre), 
-        metadescription: this.currentSubsector?.meta_description || this.generateMetaDescription(this.currentSubsector!.nombre)
+        metadescription: this.currentSubsector?.meta_description || this.generateMetaDescription(this.currentSubsector!.nombre),
+        nameEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.title : undefined,
+        linkEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.link || this.generateLink(this.currentSubsector!.nombre, '', 'en-españa') : undefined,
+        h1Employment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.h1 || this.generateH1(this.currentSubsector!.nombre) : undefined,
+        pagetitleEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.page_title || this.generatePageTitle(this.currentSubsector!.nombre) : undefined,
+        metadescriptionEmployment: this.currentSubsector?.employment?.status ? this.currentSubsector?.employment?.meta_description || this.generateMetaDescription(this.currentSubsector!.nombre) : undefined
       });
 
       this.getData(true);
