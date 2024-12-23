@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 import { KeywordService } from '../../admin/keyword/services/keyword.service';
 import { IHttpService } from '../../services/http.service';
 import { SeoService } from '../../services/seo.service';
+import { SearchforyouService } from '../../services/searchforyou.service';
 
 import { Keywords } from '../../interfaces/keywords';
 import { Employment } from '../../interfaces/employment';
 import { Subsector } from '../../interfaces/subsector';
 import { Location } from '../../interfaces/location';
 import { City } from '../../interfaces/city';
+import { AskForBudget } from '../../interfaces/ask-for-budget';
+
 import { toSlug } from '../../../utils/utils';
+import { ServicesService } from '../servicios/services/services.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'app-employment',
@@ -25,6 +31,8 @@ export class EmploymentComponent implements OnInit {
   provinces: Location[] = [];
   cities: City[] = [];
 
+  requests: AskForBudget[] = [];
+
   professionQuery: string = '';
   provinceQuery: string = '';
   cityQuery: string = '';
@@ -33,10 +41,22 @@ export class EmploymentComponent implements OnInit {
   province: Location | undefined = undefined;
   city: City | undefined = undefined;
 
+  isProfessional: boolean = false;
+  isAuthenticated: boolean = false;
+
+  actionButton1Text: string = '¡Registrarme ya!';
+  actionButton2Text: string = 'Recibe ofertas como estas';
+
+  actionLink: string = '/registro';
+
   constructor(
+    @Inject(PLATFORM_ID) public platformId: Object,
     private actRouter: ActivatedRoute,
     private keywordService: KeywordService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private searchForYouService: SearchforyouService,
+    private servicesSvc: ServicesService,
+    public authenticationService: AuthenticationService,
   ) {
     this.professionQuery = this.actRouter.snapshot.paramMap.get('profession') || '';
     this.provinceQuery = this.actRouter.snapshot.paramMap.get('province') || '';
@@ -52,7 +72,7 @@ export class EmploymentComponent implements OnInit {
       let metaDescription: string = 'Encuentra ofertas de trabajo en Febelink';
 
       if (this.professionQuery) {
-        this.employment = this.employments.find((employment: Employment) => toSlug(employment.title).toLocaleLowerCase() === this.professionQuery);
+        this.employment = this.employments.find((employment: Employment) => toSlug(employment?.title).toLocaleLowerCase() === this.professionQuery);
         pageTitle = `Trabajos de ${this.employment?.title} en Febelink`;
         metaDescription = this.employment?.meta_description || '';
       }
@@ -71,9 +91,35 @@ export class EmploymentComponent implements OnInit {
         title: pageTitle,
         description: metaDescription,
       })
+
+      this.searchForYouService.getAllRequests([this.employment?.id_sub_sector || 0], [this.province?.id || 0])
+      .then((data: any) => {
+        this.requests = data.response;
+      })
+      .catch((error) => {
+      });
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if ( isPlatformBrowser(this.platformId) ) {
+      if (this.authenticationService.isAuthenticated()) {
+        this.isAuthenticated = true;
 
+        this.actionButton1Text = 'Activa tu cuenta profesional';
+        this.actionButton2Text = 'Activa tu cuenta profesional';
+        this.actionLink = '/professions';
+
+        this.servicesSvc.userProfession()
+        .then((data: any) => {
+          if (data.response.professions && data.response.professions.length > 0) {
+            this.isProfessional = true;
+            this.actionButton1Text = 'Ofrece tus servicios';
+            this.actionButton2Text = 'Ofrece tus servicios';
+            this.actionLink = '/services';
+          } 
+        })
+      }
+    }
+  }
 }

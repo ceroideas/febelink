@@ -1,6 +1,6 @@
 <!-- Intro -->
 <section
-  class="w-full bg-primary mt-20 mb-10 shadow-lg"
+  class="w-full bg-primary mt-20 shadow-lg"
 >
   <div class="relative px-6 py-12 mx-auto max-w-screen-xl z-1 xs:px-10">
     @if ( !employment ) {
@@ -12,13 +12,16 @@
     <div class="flex flex-col md:flex-row gap-10">
       <!-- Register -->
       <div class="w-72 mx-auto lg:w-fit h-fit shrink-0 px-12 py-10 flex flex-col gap-8 bg-neutral-100 rounded-lg shadow-lg">
-        <p class="text-xl font-semibold text-center">Registrate para recibir ofertas de trabajo</p>
+        <div>
+          <p class="text-2xl font-semibold text-center">Recibe nuevas ofertas de trabajos</p>
+          <p class="text-lg font-semibold text-center text-neutral-500">Registrate para recibir ofertas de trabajo</p>
+        </div>
         <img class="mx-auto aspect-square w-28" src="assets/icon/febicon.png"/>
         <a 
-          class="w-fit block mx-auto px-4 py-3 ring-2 ring-primary ring-offset-2 ring-offset-neutral-100 font-bold text-white bg-primary rounded-lg uppercase cursor-pointer"
-          href="/registro"
+          class="w-fit block mx-auto px-4 py-3 ring-2 ring-primary ring-offset-2 ring-offset-neutral-100 font-bold text-white text-center bg-primary rounded-lg uppercase cursor-pointer"
+          [href]="actionLink"
         >
-          Registrarme ya!
+          {{actionButton1Text}}
         </a>
       </div>
       <!-- Text -->
@@ -47,14 +50,73 @@
               Descarga nuestra APP y recibe notificaciones de ofertas de trabajo de {{employment.title}} cerca de ti.
             </h3>
           }
+
+          <div class="py-3 flex flex-row justify-start items-center gap-6">
+            <div>
+              <a target="_blank" href="https://apps.apple.com/es/app/febelink/id6714484198">
+                <img class="h-12 my-0.5 object-contain" src="assets/app/apple-es.png"/>
+              </a>
+            </div>
+            <div>
+              <a target="_blank" href="https://play.google.com/store/apps/details?id=com.febelink.app">
+                <img class="h-12 my-0.5 object-contain" src="assets/app/google-es.png"/>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Results -->
+@if ( requests.length ) {
+  <section class="bg-neutral-100 py-14">
+    <!-- Title -->
+    <h2 class="text-black text-center text-3xl font-semibold mb-12 font-primary">Últimas ofertas de trabajo</h2>
+    <!-- List -->
+    <ul class="max-w-[90vw] w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      @for ( request of requests; track request.id ) {
+        <li class="bg-white shadow rounded-xl px-7 py-7">
+          <div class="badges flex flex-wrap gap-2">
+            <!-- Sector and subsector -->
+            <span class="inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 text-xs font-medium text-[#0095d8] ring-1 ring-inset ring-[#0095d8]">
+              <p>{{request.sector}}</p>
+              <lucide-icon 
+                name="dot"
+                class="stroke-analogous" 
+                [strokeWidth]="2"
+                [size]="18"
+              />
+              <p>{{request.subsector}}</p>
+            </span>
+            <!-- Location -->
+            <span class="inline-flex items-center rounded-full bg-[#f3f7ff] px-2 py-1 text-xs font-bold text-analogous ring-1 ring-inset ring-analogous">
+              {{request.location}}
+            </span>
+          </div>
+          <!-- Description -->
+          <div class="mt-4">
+            <span class="text-sm text-neutral-500">Descripción de la oferta:</span>
+            <p>
+              <span class="font-bold">{{request.description}}</span>
+            </p>
+          </div>
+        </li>      
+      }
+    </ul>
+    <!-- Action -->
+    <a 
+      class="w-fit block mx-auto mt-12 px-4 py-3 ring-2 ring-primary ring-offset-2 ring-offset-neutral-100 font-bold text-white text-center bg-primary rounded-lg uppercase cursor-pointer"
+      [href]="actionLink"
+    >
+      {{actionButton2Text}}
+    </a>
+  </section>
+}
+
 <!-- Features -->
-<section class="mb-20">
+<section class="mb-20 pt-10">
   <div class="relative px-6 py-12 mx-auto max-w-screen-xl z-1 xs:px-10">
     <!-- Title -->
     <h2 class="text-black text-center text-3xl font-semibold mb-12 font-primary">Ventajas de buscar oportunidades en Febelink</h2>
