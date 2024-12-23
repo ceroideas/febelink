@@ -30,6 +30,9 @@ export class LoginPage implements OnInit {
 
   defaultTitle = 'Iniciar sesión';
   generalTitle = this.defaultTitle;
+
+  loading: boolean = false;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private api: ApiService,
@@ -56,11 +59,10 @@ export class LoginPage implements OnInit {
 
     this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
     this.title.setTitle(this.defaultTitle);
-
   }
 
   async submitForm() {
-    this.utilities.showLoading();
+    this.loading = true;
 
     const lang = (<ILang> (
       await ILangDEFAULTS.getCurrentLang(this.translateService)
@@ -75,8 +77,7 @@ export class LoginPage implements OnInit {
     //@ts-ignore
     this.api.login(formData, 'login', null, this.redirect).subscribe(
       (res) => {
-     
-        this.utilities.dismissLoading();
+        this.loading = false;
       },
       (err) => {
         // credenciales incorrectas
@@ -98,7 +99,7 @@ export class LoginPage implements OnInit {
             this.translateService.instant('pages.login.errors.message')
           );
         }
-        this.utilities.dismissLoading();
+        this.loading = false;
       }
     );
   }

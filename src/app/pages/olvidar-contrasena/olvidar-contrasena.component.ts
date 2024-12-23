@@ -24,6 +24,9 @@ export class OlvidarContrasenaComponent implements OnInit {
 
   homePage: string = "";
 
+  loading: boolean = false;
+  recoverySent: boolean = false;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
@@ -62,7 +65,7 @@ export class OlvidarContrasenaComponent implements OnInit {
    * Enviar la contraseña al servidor
    */
   async submitForm() {
-    await this.utilities.showLoading();
+    this.loading = true;
     const email = this.form?.get('email')?.value;
     try {
       let resp = await this.api.recuperarContraseña(
@@ -73,11 +76,13 @@ export class OlvidarContrasenaComponent implements OnInit {
       this.utilities.showToast(
         'Su solicitud de restablecimiento de contraseña ha sido enviada correctamente.'
       );
+
+      this.recoverySent = true;
     } catch (e) {
       this.utilities.showToast('Se ha producido un error');
       console.log(e);
     } finally {
-      this.utilities.dismissLoading();
+      this.loading = false;
     }
   }
 

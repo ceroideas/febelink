@@ -43,6 +43,9 @@ export class Registro2Component  implements OnInit{
   
     defaultTitle = 'Crea tu cuenta';
     generalTitle = this.defaultTitle;
+
+    loading: boolean = false;
+
     constructor(
       public navCtrl: NavController,
       private formBuilder: UntypedFormBuilder,

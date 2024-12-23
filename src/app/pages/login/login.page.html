@@ -1,82 +1,118 @@
-  <!-- Desktop version -->
-  <div class="desktop">
-    <div class="login-content-b">
-      <div class="login-wrapper-dark"></div>
-      <img src="assets/imgs/login-febelink.jpg" class="login-img-back-size" />
+<section class="max-w-[1200px] min-h-screen mx-auto flex justify-center items-center">
+  <img src="assets/imgs/login-febelink.jpg" class="fixed max-w-none w-[calc(100vw+40px)] h-[calc(100vh+40px)] top-[-20px] left-[-20px] -z-10 blur-md brightness-50" />
 
-      <div class="login-content-floating">
-        <div class="login-content-background">
-          <form
-            *ngIf="form"
-            [formGroup]="form"
-            (ngSubmit)="submitForm()"
-            (keyup.enter)="submitForm()"
-          >
-            <div class="login-content-title">
-              {{ 'pages.login.title' | translate }}
-            </div>
-            <div class="login-label-input">Correo electrónico</div>
-            <div class="login-input-margin">
-              <ion-input
-                type="email"
-                formControlName="email"
-                required
-                placeholder="Correo electrónico"
-                class="padding-input-12 login-input"
-              ></ion-input>
-            </div>
-            <div class="login-label-input">
-              {{ 'common.personal.pass' | translate }}
-            </div>
-            <div class="login-input-margin">
-              <ion-input
-                type="password"
-                (key.enter)="submitForm()"
-                [type]="passwordType"
-                formControlName="password"
-                required
-                placeholder="**********"
-                class="padding-input-12 login-input"
-              ></ion-input>
-            </div>
-            <div class="login-options-table">
-              <div class="login-options-left">
-                <ion-checkbox class="login-checkbox"></ion-checkbox>
-                <div class="login-checkbox-label">Recordar ahora</div>
-              </div>
-              <div class="login-options-right">
-                <div class="login-option-pass" (click)="openPassRemember()">
-                  Olvidé la contraseña
-                </div>
-              </div>
-            </div>
-            <button
-              type="submit"
-              [disabled]="!form.valid"
-              class="login-button-connections login-button-back-a margin-bottom-button"
-            >
-              Iniciar sesión
-            </button>
-
-            <social-login
-              *ngIf="!platform.is('ios')"
-              [redirect]="redirect"
-            ></social-login>
-          </form>
+  <div class="flex flex-col-reverse items-center lg:items-start pt-12 lg:pt-0 lg:flex-row gap-8 px-8">
+    <div class="flex-1">
+      <div>
+        <div class="flex items-start gap-2 my-8">
+          <svg class="w-6 pt-0.5 fill-primary brightness-150 shrink-0" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          <div>
+            <h3 class="font-bold text-lg text-white">No tienes limites</h3>
+            <p class="text-neutral-300">Imagina un mundo donde la comunicación sea
+              tan rápida, directa y eficiente que puedas alcanzar
+              cualquier meta sin restricciones.
+              Ya sea personal o profesional, Febelink está diseñado
+              para que avances sin detenerte.</p>
+          </div>
         </div>
-
-        <div class="login-content-background margin-top-content-bottom-b">
-          <div class="login-content-title-small">Nuevo usuario?</div>
-          <div
-            class="login-button-connections login-button-back-d"
-            (click)="openRegistro()"
-          >
-            {{ 'pages.login.register' | translate }}
+        <div class="flex items-start gap-2 my-8">
+          <svg class="w-6 pt-0.5 fill-primary brightness-150 shrink-0" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          <div>
+            <h3 class="font-bold text-lg text-white">Consigue todos tus propósitos</h3>
+            <p class="text-neutral-300">Ya sea comunicarte, crecer o conectar con
+              las personas clave, Febelink está aquí para ayudarte
+              a alcanzar todas tus metas.
+              Tú imaginas, nosotros te llevamos.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-2 my-8">
+          <svg class="w-6 pt-0.5 fill-primary brightness-150 shrink-0" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          <div>
+            <h3 class="font-bold text-lg text-white">Con Febelink eres libre</h3>
+            <p class="text-neutral-300">Libérate de las barreras. Habla con quien quieras,
+              cuando quieras, de forma directa y sin rodeos.
+              ¡La libertad de comunicarte está a tu alcance!</p>
           </div>
         </div>
       </div>
     </div>
-     
-    <app-footer></app-footer>
-  </div>
+    <div class="w-[500px] max-w-[90vw] shrink-0">
+      <div class="shadow-md rounded-lg bg-white p-8">
+        <h1 class="font-bold text-2xl">
+          Iniciar sesión
+        </h1>
+        <div class="my-4 flex justify-center">
+          <social-login
+            *ngIf="!platform.is('ios')"
+            [redirect]="redirect"
+          ></social-login>
 
+          <!-- <button class="btn w-full px-4 py-3 border-[1px] border-solid border-neutral-200 rounded-lg flex justify-center items-center gap-2 hover:bg-neutral-100">
+            <svg class="w-6" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g><path d="M20.3081 10.2303C20.3081 9.55056 20.253 8.86711 20.1354 8.19836H10.7031V12.0492H16.1046C15.8804 13.2911 15.1602 14.3898 14.1057 15.0879V17.5866H17.3282C19.2205 15.8449 20.3081 13.2728 20.3081 10.2303Z" fill="#3F83F8"></path><path d="M10.7019 20.0006C13.3989 20.0006 15.6734 19.1151 17.3306 17.5865L14.1081 15.0879C13.2115 15.6979 12.0541 16.0433 10.7056 16.0433C8.09669 16.0433 5.88468 14.2832 5.091 11.9169H1.76562V14.4927C3.46322 17.8695 6.92087 20.0006 10.7019 20.0006V20.0006Z" fill="#34A853"></path><path d="M5.08857 11.9169C4.66969 10.6749 4.66969 9.33008 5.08857 8.08811V5.51233H1.76688C0.348541 8.33798 0.348541 11.667 1.76688 14.4927L5.08857 11.9169V11.9169Z" fill="#FBBC04"></path><path d="M10.7019 3.95805C12.1276 3.936 13.5055 4.47247 14.538 5.45722L17.393 2.60218C15.5852 0.904587 13.1858 -0.0287217 10.7019 0.000673888C6.92087 0.000673888 3.46322 2.13185 1.76562 5.51234L5.08732 8.08813C5.87733 5.71811 8.09302 3.95805 10.7019 3.95805V3.95805Z" fill="#EA4335"></path></g><defs><clipPath id="clip0_13183_10121"><rect width="20" height="20" fill="white" transform="translate(0.5)"></rect></clipPath></defs>
+            </svg>                            
+            Acceder con Google
+          </button> -->
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="w-full h-0.5 bg-neutral-200 "></div>
+          <div class="shrink-0 text-neutral-400">ó</div>
+          <div class="w-full h-0.5 bg-neutral-200 "></div>
+        </div>
+        <form 
+          *ngIf="form"
+          class="" 
+          [formGroup]="form"
+          (ngSubmit)="submitForm()"
+        >
+          <div>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text text-neutral-500">Correo electrónico</span>
+              </div>
+              <input 
+                type="text" 
+                class="input input-bordered w-full bg-neutral-100" 
+                formControlName="email"
+              />
+            </label>
+          </div>
+          <div>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text text-neutral-500">Contraseña</span>
+              </div>
+              <input 
+                type="password" 
+                class="input input-bordered w-full bg-neutral-100" 
+                formControlName="password"
+              />
+            </label>
+          </div>
+          <div class="my-4 flex items-center justify-between">
+            <label class="label cursor-pointer w-fit flex gap-2">
+              <input type="checkbox" class="checkbox" />
+              <span class="label-text">Recordar credenciales</span>
+            </label>
+
+            <a routerLink="/olvidar-contrasena" class="text-primary text-sm font-bold hover:underline">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+          <button 
+            type="submit" 
+            class="btn mb-6 w-full bg-primary text-white transition hover:bg-primary hover:brightness-90"
+          >
+            <span *ngIf="!loading">Iniciar sesión</span>
+            <span *ngIf="loading" class="loading loading-ring loading-lg"></span>
+          </button>
+          <p class="text-sm">
+            ¿Todavía no tienes cuenta? <a routerLink="/registro" class="text-primary font-bold hover:underline">Crea una cuenta ahora</a>
+          </p>
+        </form>
+      </div>
+    </div>              
+  </div>
+</section>
+
+<app-footer></app-footer>
