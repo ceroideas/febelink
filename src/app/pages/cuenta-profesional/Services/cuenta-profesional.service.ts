@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService, IHttpService } from './../../../services/http.service';
-import { ProfessionType } from '../cuenta-profesional.page';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,7 @@ export class CuentaProfesionalService {
     return this.http.post('collections/profession/filter', { filterTerm });
   }
 
-  async updateProfessions(professions: ProfessionType[], locations: any[]) {
+  async updateProfessions(professions: any[], locations: any[]) {
     return this.http.put('user/profession', {
       professions: JSON.stringify(professions),
       locations: JSON.stringify(locations),

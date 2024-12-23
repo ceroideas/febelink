@@ -5,13 +5,10 @@ import { SubscriptionService } from '../suscripciones/Services/subscription.serv
 import { ToastSvc } from '../../services/toast.service';
 import { KeywordService } from '../../admin/keyword/services/keyword.service';
 import { AlertSvc } from '../../services/alert.service';
-import { getWindow } from 'ssr-window';
-
-export interface ProfessionType {
-  id: number;
-  name: string;
- 
-}
+import { IHttpService } from '../../services/http.service';
+import { Keywords } from '../../interfaces/keywords';
+import { Subsector } from '../../interfaces/subsector';
+import { Location } from '../../interfaces/location';
 
 export interface locationType {
   locationId?: number;
@@ -25,23 +22,19 @@ export interface locationType {
   styleUrls: ['./cuenta-profesional.page.scss'],
 })
 export class CuentaProfesionalPage implements OnInit {
-  public checkProfesional: boolean = false;
-  public profesionalDatos: any = null;
-  public usersArrayFiltered: ProfessionType[] |undefined;
-  public searchText: boolean = false;
-  public checkMdodel: boolean = false;
-
-  professionList: ProfessionType[] = [];
-  locationsProfessions: locationType[] = [];
   numProfessionAvaliable: number = 2;
 
-  locations: any = []
-  locationSelect: number = 0
-  city: string = ""
-  locationSelectName: string = ""
-  profession_aux: any
+  isProfessional: boolean = false;
 
-  window = getWindow();
+  allProvinces: Location[] = [];
+  allSubsectors: Subsector[] = [];
+  myProvinces: {location: Location | undefined, city: string}[] = [];
+  mySubsectors: Subsector[] = [];
+
+  province: number | string | undefined = undefined;
+  city: string = '';
+  subsector: number | string | undefined = undefined;
+
   constructor(
     private profAccountService: CuentaProfesionalService,
     private subService: SubscriptionService,
@@ -52,61 +45,38 @@ export class CuentaProfesionalPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.locationsProfessions = []
-    this.locations= []
-
-    this.keywordService.getLocationKeywords().then((response: any) => {
-      this.locations =response.response;
-
-      this.locations = response.response
-      .filter((location_aux: any) =>  location_aux.title !== 'España')
-      .map((location_aux: any) => {
-        return location_aux
-      });
-
-
-
-      let allLocation = response.response
-      .filter((location_aux: any) =>  location_aux.title == 'España')
-      .map((location_aux: any) => {
-        return location_aux
-      })[0];
-
-      this.locations.unshift(allLocation)
-
-
-    })
-    await this.getMyProfessions();
     await this.getNumProfessionAvaliables();
 
-  }
+    this.keywordService.getData()
+    .then((data: IHttpService) => {
+      const aux = (data.response as Keywords);
+      const provinces = aux.locations
+        .filter((location: Location) =>  location.title !== 'España')
+        .sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+      const subsectors = aux.subsector.sort((a: Subsector, b: Subsector) => a.nombre.localeCompare(b.nombre));
 
-  async getMyProfessions() {
-    this.locationsProfessions = []
-    const { response } = await this.profAccountService.getMyProfessions();
-    if (response) {
-      
-      response.professions.map((e:any) => {
-        this.professionList.push({ id: e.subSectorId, name: e.subSectorName });
-      });
-    
-      response.locations.map((location:any) => {
+      this.allProvinces = provinces;
+      this.allSubsectors = subsectors;
 
+      // Get professions
+      this.profAccountService.getMyProfessions()
+      .then(async (data: any) => {
+        const result = data.response;
+        const myProfessions = result.professions;
+        const myLocations = result.locations;
 
+        console.log(myProfessions, myLocations);
         
-        this.locationsProfessions.push({ locationId:location.locationId, location: location.location, city: location.city });
+        if ( !myProfessions.length && !myLocations.length ) {
+          this.isProfessional = false;
+        } else {
+          this.isProfessional = true;
+
+          this.myProvinces = myLocations.map((location: any) => ({ location: provinces.find((l: Location) => l.id === location.locationId), city: location.city }));
+          this.mySubsectors = myProfessions.map((profession: any) => subsectors.find((s: Subsector) => s.id === profession.subSectorId));
+        }
       });
-    }
-    
-  }
-
-  onSelectChange($event: any){
-    this.locationSelect  = $event.target.value
-
-    
-
-    let location = this.locations.filter((location:any)=> location.id === Number(this.locationSelect))[0];
-    this.locationSelectName  = location.title
+    });
   }
 
   async getNumProfessionAvaliables() {
@@ -122,134 +92,57 @@ export class CuentaProfesionalPage implements OnInit {
         if (elem.subscriptionName === 'sub-prof') {
           this.numProfessionAvaliable += elem.amount;
         }
+
+        console.log(this.numProfessionAvaliable);
       });
     }
   }
 
-  async changeCheck(checked: boolean) {
-    this.checkProfesional = checked;
-  }
-
-  async searchProfession(filterTerm: string) {
-    if (filterTerm) {
-      const { response } = await this.profAccountService.getProfessionsByFilter(
-        filterTerm
-      );
-
-      if (response) {
-        this.usersArrayFiltered = response;
-        this.searchText = true;
-      }
-    } else {
+  addLocation = () => {
+    console.log
+    if (this.province && this.city) {
+      this.myProvinces = [...this.myProvinces, { location: this.allProvinces.find((location) => location.id === Number(this.province)), city: this.city }]
       
-      this.usersArrayFiltered = undefined;
-      this.searchText = false;
+      this.saveProfessionalAccount(this.isProfessional, this.myProvinces, this.mySubsectors);
+      
+      this.province = undefined;
+      this.city = '';
     }
   }
+  deleteLocation = (index: number) => {
+    this.myProvinces = this.myProvinces.filter((_, i) => i !== index);
+    this.saveProfessionalAccount(this.isProfessional, this.myProvinces, this.mySubsectors);
+  }
 
-  async addToProfessionList(profession: ProfessionType, checked: boolean) {
-   
-   
-      if (checked && this.professionList.length <= this.numProfessionAvaliable) {
-        this.profession_aux = profession
-        this.professionList.push(this.profession_aux);
-  
-      } else {
-        const index = this.professionList.indexOf(profession);
-        if (index >= 0) {
-          this.professionList.splice(index, 1);
-        }
+  addSubsector = () => {
+    if (this.subsector) {
+      const found = this.allSubsectors.find((s) => s.id === Number(this.subsector));
+
+      if ( found ) {
+        this.mySubsectors = [...this.mySubsectors, found]
+
+        this.saveProfessionalAccount(this.isProfessional, this.myProvinces, this.mySubsectors);
+        
+        this.subsector = undefined;
       }
-    
-    
-  }
-
-  removeOfProfessionList(profession: ProfessionType) {
-    const index = this.professionList.indexOf(profession);
-    if (index !== -1) {
-      this.professionList.splice(index, 1);
     }
   }
-
-  removeOfProfessionLocationList(location: locationType){
-    const index = this.locationsProfessions.indexOf(location);
-    if (index !== -1) {
-      this.locationsProfessions.splice(index, 1);
-    }
+  deleteSubsector = (index: number) => {
+    this.mySubsectors = this.mySubsectors.filter((_, i) => i !== index);
+    this.saveProfessionalAccount(this.isProfessional, this.myProvinces, this.mySubsectors);
   }
 
-
-  addProffession(){
-    this.professionList.push(this.profession_aux);
-
-    this.usersArrayFiltered = undefined;
-    this.searchText = false;
+  onToggleProfessional = () => {
+    this.saveProfessionalAccount(this.isProfessional, this.myProvinces, this.mySubsectors);
   }
 
-
-
-  async addLocation(){
-
-    if ( this.locationSelectName !== 'España' && this.city !== '' ) {
-      let citySelect = JSON.parse(JSON.stringify(this.city))
-      let locationSelect = JSON.parse(JSON.stringify(this.locationSelect))
-      let locationSelectName = JSON.parse(JSON.stringify(this.locationSelectName))
-      this.locationsProfessions.push({locationId:locationSelect,location:locationSelectName,city:citySelect});
-      this.city = ""
-      this.locationSelect = 0
-      this.locationSelectName = ""
-      this.crdef.detectChanges()
-    
-    } else if ( this.locationSelectName == 'España' ) {
-      let citySelect = JSON.parse(JSON.stringify(this.city))
-      let locationSelect = JSON.parse(JSON.stringify(this.locationSelect))
-      let locationSelectName = JSON.parse(JSON.stringify(this.locationSelectName))
-      this.locationsProfessions.push({locationId:locationSelect,location:locationSelectName,city:citySelect});
-      this.city = ""
-      this.locationSelect = 0
-      this.locationSelectName = ""
-      this.crdef.detectChanges()
+  saveProfessionalAccount = (newStatus: boolean, newLocations: {location: Location | undefined, city: string}[], newProfessions: (Subsector | undefined)[]) => {
+    if ( !newStatus ) {
+      this.profAccountService.updateProfessions([], []).then();
     } else {
-      if (!await this.alertSvc.confirm({
-        title: 'Formulario Incompleto',
-        msg: `Rellena una provincia y una ciudad para las profesiones`
-      })) {
-        return; // Cancel button
-      }
+      const parsedLocations = newLocations.map((location) => ({ locationId: location.location?.id, location: location.location?.title, city: location.city }));
+      const parsedProfessions = newProfessions.map((profession) => ({ id: profession?.id, name: profession?.nombre }));
+      this.profAccountService.updateProfessions(parsedProfessions, parsedLocations).then();
     }
-    
-    
-
-  }
-  async updateProfessions() {
-
-    const adaptedPayload: number[] = [];
-    this.professionList.forEach((elem) => {
-      adaptedPayload.push(elem.id);
-    });
-
-
-    const adaptedPayloadLocation: number[] = [];
-    this.locationsProfessions.forEach((elem) => {
-      //@ts-ignore
-      adaptedPayloadLocation.push(elem.locationId);
-    });
-    const { response } = await this.profAccountService.updateProfessions(
-      this.professionList, 
-      this.locationsProfessions
-    );
-    if (response) {
-      this.toastSvc.show('Profesiones actualizadas correctamente.');
-
-      // this.window.location.reload();
-    }
-  }
-
-  isInProfessionList(profession: ProfessionType): boolean {
-    return (
-      this.professionList.find((prof) => {
-        return prof.id === profession.id && prof.name === profession.name;
-      }) != undefined
-    );
   }
 }

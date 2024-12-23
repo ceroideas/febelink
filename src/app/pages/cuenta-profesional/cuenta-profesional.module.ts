@@ -8,12 +8,16 @@ import { CuentaProfesionalPageRoutingModule } from './cuenta-profesional-routing
 import { CuentaProfesionalPage } from './cuenta-profesional.page';
 import { SharedModule } from '../../shared/shared.module';
 
+import { LucideAngularModule, Dot, Trash2 } from 'lucide-angular';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
-    CuentaProfesionalPageRoutingModule
+    CuentaProfesionalPageRoutingModule,
+    LucideAngularModule.pick({Dot, Trash2}),
+
   ],
   declarations: [CuentaProfesionalPage]
 })

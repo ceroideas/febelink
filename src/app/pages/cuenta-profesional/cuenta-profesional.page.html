@@ -1,185 +1,154 @@
- <div id="search-content" class="search-content container-general">
-  <div class="layer-gradient">
-    <div class="eclipse"></div>
-  </div>
-  <div class="container-section">
-    <div class="item1" size="8">
-      <ion-breadcrumbs mode="ios">
-        <ion-breadcrumb href="#">
-          <ion-label class="margin_left_breadcrumbs1">Inicio</ion-label>
-        </ion-breadcrumb>
-        <ion-breadcrumb href="#">
-          <ion-label class="margin_left_breadcrumbs2">Mis Profesiones</ion-label>
-        </ion-breadcrumb>
-      </ion-breadcrumbs>
-    </div>
-    <div  class="item2"size="4">
-     
-      <div>
-        <div  class="servicios-sections-cell-button">
-          <div class="servicios-sections-button-primary" button (click)="updateProfessions()">
-            Guardar cambios
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="container-detail-search">
-
-  
-     <!--AVATAR SECTION-->
-    <div class="containter-left">
-      <div class="card">
-          <div>
-            <div class="image-profile">
-              <img  src="assets/icon/svg/icon_logo_febelink.svg" 
-              />
-            </div>
-            
-            <ion-row class="flex_imagen_start name-profile" size="12">
-              <ion-col size="12">
-                <ion-label class="cuenta_text_label">Cuenta Profesional</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row class="flex_imagen_start description-profile" size="12">
-              <ion-col size="12">
-                <p class="p_text_grid">
-                  ¡Enhorabuena! Con la Cuenta Profesional los usuarios de Febelink pueden encontrarte por tu profesión
-                  y tu zona de trabajo.
-                </p>
-              </ion-col>
-            </ion-row>
-
-            <ion-row class="flex_imagen_start row_text_check capsule-active" size="12">
-              <ion-col class="margin_top_2_orange" size="9">
-                <ion-label class="label_orange">Activar cuenta profesional</ion-label>
-              </ion-col>
-              <ion-col class="margin_top_2_orange" size="2">
-                <ion-toggle style="height: 14px; width: 36px; padding-bottom: 0;" #toggleDesktop [checked]="professionList.length > 0"
-                            (ionChange)="changeCheck(toggleDesktop.checked)"></ion-toggle>
-              </ion-col>
-            </ion-row>
-          </div>
-      </div>
-
+<section class="w-full mt-24 mb-20">
+  <div class="max-w-[90vw] w-[600px] mx-auto shadow rounded-lg p-8">
+    <h1 class="mb-6 font-bold text-center text-xl">Cuenta profesional de <span class="text-primary">Febelink</span></h1>
     
-    </div>
-    <div class="containter-right">
-     
-      <div class="valoraciones">
-        <div class="item-valor  item-valor-1">
-          Los sectores ayudan a ubicarte y que los clientes te encuentren más fácil.
+    <!-- Form -->
+    <div class="flex flex-col gap-4">
+      <!-- Activate -->
+      <div>
+        <div class="form-control bg-neutral-100 rounded-lg px-3 py-1">
+          <label class="label cursor-pointer">
+            <span class="label-text">Activar cuenta profesional</span>
+            <input 
+              type="checkbox" 
+              class="toggle" 
+              [(ngModel)]="isProfessional" 
+              (change)="onToggleProfessional()"
+            />
+          </label>
         </div>
-        <div class="title-valoraciones">
-          ¿Dónde ejerces tu profesión?
-        </div>
-        <div class="div-profesions">
-          <div class="item-profesion">
-            <div class="form-group b">
-              <label for="ciudad">Provincia  </label>
-              <select  
-              #options
-                name="valueCheck" class="selectlocation" (change)="onSelectChange($event)"> 
-                <option *ngIf="locationSelectName == ''">---</option>
-                <option *ngIf="locationSelectName !==''">{{locationSelectName}}</option>
-                <option *ngFor="let location of locations"
-                  [value]="location.id"> {{location.title}} 
-                </option>
-            </select>
-            </div>
-            
-          </div>
-         
-          <div class="item-profesion">
-            <div class="form-group b">
-              <label for="ciudad">Ciudad  </label>
-              <input id="ciudad" [(ngModel)]="city"type="text">
-            </div>
-          </div>
 
-          <div class="item-profesion boton">
-            <div class="addButton" (click)="addLocation();  options.selectedIndex = 0; " >Añadir </div>
-            </div>
-
-         
+        <p class="mt-2 px-2 text-sm text-neutral-600">Con la Cuenta Profesional los usuarios de Febelink pueden encontrarte por tu profesión y tu zona de trabajo. Con la Cuenta Profesional los usuarios de Febelink pueden encontrarte por tu profesión y tu zona de trabajo.</p>
       </div>
-      <div >
-        <div
-          [ngClass]="{'checkbox_no_geo': professionList.length === 0, 'checkbox_geo_chip': professionList.length > 0}">
-          <ion-row *ngFor="let location of locationsProfessions" class="item-tip"
-                   style="background-color:rgba(225, 239, 254, 1); margin-top: 0.5em;" size="12">
-            <ion-col style="padding:1em;" size="10">
-              <ion-label style="color: #1E429F; margin-left: 1em">{{location.location}} - ({{location.city}})</ion-label>
-            </ion-col>
-            <ion-col style="padding:1em;" >
-              <ion-icon name="close" (click)="removeOfProfessionLocationList(location)"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </div>
-      </div> 
-   
-        <div class="container-valoraciones">
-          <div class="title-valoraciones">
-            ¿Cúal es tu profesión?
-          </div>
-          <div class="item-valor  item-valor-1">
-            <div style="padding-top: 0px;" size="12">
-              <ion-searchbar
-              (ionChange)="searchProfession($event.target?.value ?? '')"
-              (ionInput)="searchProfession($event.target?.value ?? '')"
-              class="searchBar" #searchBarDesktop
-                animated="true"></ion-searchbar>
-              <div class="ion-no-padding" *ngIf="usersArrayFiltered" fixed="true">
-                <div *ngIf="usersArrayFiltered && usersArrayFiltered.length > 0">
-                  <div class="ion-no-padding" size="12" (clickOutside)="searchBarDesktop.value = null">
-                    <ng-container *ngFor="let professionType of usersArrayFiltered">
-                      <ion-item lines="none" (click)="addToProfessionList(professionType, checkboxDesktop.checked)">
-                        <ion-checkbox slot="start" #checkboxDesktop
-                                      [disabled]="this.professionList.length >= this.numProfessionAvaliable"
-                                      [checked]="isInProfessionList(professionType)"></ion-checkbox>
-                        <ion-label class="text_user_profesion">{{professionType?.name}}</ion-label>
-                      </ion-item>
-                    </ng-container>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- GRID DONDE EJERZO PROFESIONES -->
-       
-           <!-- <div class="addButton" (click)="addProffession(); searchBarDesktop.value = null">Agregar</div> -->
-        </div>
-        <div >
-          <div
-            [ngClass]="{'checkbox_no_geo': professionList.length === 0, 'checkbox_geo_chip': professionList.length > 0}">
-            <ion-row *ngFor="let profesion of professionList" class="item-tip"
-                     style="background-color:rgba(225, 239, 254, 1); margin-top: 0.5em;" size="12">
-              <ion-col style="padding:1em;" size="10">
-                <ion-label style="color: #1E429F; margin-left: 1em">{{profesion.name}}</ion-label>
-              </ion-col>
-              <ion-col style="padding:1em;" >
-                <ion-icon name="close" (click)="removeOfProfessionList(profesion)"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </div>
-        </div>
-      </div>  
+      <!-- Warning -->
+      <p class="px-2 text-sm text-orange-700 font-bold">Es necesario que añadas al menos una profesión y una ubicación para que tu cuenta profesional se mantenga activa.</p>
+    
+      <!-- Location -->
+      <div [ngClass]="{'opacity-50': !isProfessional}">
+        <p class="mb-2 uppercase text-xs font-bold text-neutral-500">¿Dónde ejerces tu profesión?</p>
 
-      <div  class="item2"size="4">
-        <div class="mobilesection">
-          <div  class="servicios-sections-cell-button">
-            <div class="servicios-sections-button-primary" button (click)="updateProfessions()">
-              Guardar cambios
+        <span *ngIf="!myProvinces.length" class="w-full block my-4 text-xs text-center text-neutral-500">No has añadido ninguna ubicación</span>
+
+        <div *ngIf="myProvinces.length" class="flex flex-row flex-wrap gap-2 my-4">
+          <button 
+            *ngFor="let location of myProvinces; let index = index"
+            class="flex flex-row items-center rounded-full bg-[#f3f7ff] px-2 py-1 text-base font-bold border-[1px] border-solid border-[#415ABD] self-start"
+            (click)="deleteLocation(index)"
+            [disabled]="!isProfessional"
+          >
+            <span class="text-[#415ABD]">{{location.location?.title}}</span>
+            <lucide-icon 
+              name="dot"
+              class="stroke-analogous" 
+              [strokeWidth]="2"
+              [size]="18"
+            />
+            <span class="text-[#415ABD]">{{location.city}}</span>
+            <lucide-icon 
+              name="trash2"
+              class="stroke-red-600 ml-1" 
+              [strokeWidth]="2"
+              [size]="18"
+            />
+          </button>
+        </div>
+
+        <div class="bg-neutral-100 rounded-lg p-3">
+          <p class="mb-2 uppercase text-xs font-bold text-neutral-500">Añade más ubicaciones</p>
+
+          <!-- Province -->
+          <label class="form-control w-full">
+            <div class="label">
+              <span class="label-text">Provincia *</span>
             </div>
-          </div>
+            <select 
+              class="select select-bordered bg-neutral-100 text-base"
+              [disabled]="!isProfessional"
+              [(ngModel)]="province"
+            >
+              <option disabled>Elige provincia</option>
+              <option *ngFor="let province of allProvinces" [value]="province.id">{{province.title}}</option>
+            </select>
+          </label>
+
+          <!-- City -->
+          <label class="form-control w-full error">
+            <div class="label">
+              <span class="label-text">Ciudad *</span>
+            </div>
+            <input 
+              type="text" 
+              class="input input-bordered w-full bg-neutral-100" 
+              [disabled]="!isProfessional"
+              [(ngModel)]="city"
+            />
+          </label>
+
+          <!-- Button -->
+          <button 
+            class="btn bg-primary w-full mt-4 text-white hover:bg-primary/80 disabled:text-neutral-400"
+            [disabled]="!isProfessional"
+            (click)="addLocation()"
+          >
+            Añadir
+          </button>
+        </div>
+      </div>
+
+      <!-- Subsectors -->
+      <div [ngClass]="{'opacity-50': !isProfessional}">
+        <p class="mb-2 uppercase text-xs font-bold text-neutral-500">¿Cuál es tu profesión?</p>
+
+        <span *ngIf="!mySubsectors.length" class="w-full block my-4 text-xs text-center text-neutral-500">No has añadido ninguna profesión</span>
+
+        <div *ngIf="mySubsectors.length" class="flex flex-row flex-wrap gap-2 my-4">
+          <button 
+            *ngFor="let subsector of mySubsectors; let index = index"
+            class="flex flex-row items-center rounded-full bg-[#e8f8ff] px-2 py-1 text-base font-bold border-[1px] border-solid border-[#0095d8] self-start"
+            (click)="deleteSubsector(index)"
+            [disabled]="!isProfessional"
+          >
+            <span class="text-[#0095d8]">{{subsector.nombre}}</span>
+            <lucide-icon 
+              name="trash2"
+              class="stroke-red-600 ml-1" 
+              [strokeWidth]="2"
+              [size]="18"
+            />
+          </button>
+        </div>
+
+        <div class="bg-neutral-100 rounded-lg p-3">
+          <p class="mb-2 uppercase text-xs font-bold text-neutral-500">Añade más profesiones</p>
+
+          <!-- Subsector -->
+          <label class="form-control w-full error">
+            <div class="label">
+              <span class="label-text label-error">Profesión *</span>
+            </div>
+            <select 
+              class="select select-bordered bg-neutral-100 text-base"
+              [disabled]="!isProfessional"
+              [(ngModel)]="subsector"
+            >
+              <option disabled>Elige profesión</option>
+              <option *ngFor="let subsector of allSubsectors" [value]="subsector.id">{{subsector.nombre}}</option>
+            </select>
+          </label>
+
+          <!-- Button -->
+          <button 
+            class="btn bg-primary w-full mt-4 text-white hover:bg-primary/80 disabled:text-neutral-400"
+            (click)="addSubsector()"
+            [disabled]="!isProfessional || numProfessionAvaliable <= mySubsectors.length"
+          >
+            Añadir
+          </button>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <app-footer></app-footer>
-
-</div>
+<app-footer></app-footer>
