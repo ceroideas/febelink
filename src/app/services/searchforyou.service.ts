@@ -25,7 +25,7 @@ export class SearchforyouService {
   }
 
   async getAllRequests(subsectors: number[], provinces: number[]): Promise<IHttpService> {
-    return this.http.get('getAllFindServices', {
+    return this.http.post('getAllFindServices', {
       subsectors: JSON.stringify(subsectors),
       provinces: JSON.stringify(provinces),
     }, true);

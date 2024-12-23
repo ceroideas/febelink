@@ -92,7 +92,7 @@ export class EmploymentComponent implements OnInit {
         description: metaDescription,
       })
 
-      this.searchForYouService.getAllRequests([this.employment?.id_sub_sector || 0], [this.province?.id || 0])
+      this.searchForYouService.getAllRequests(this.employment?.id_sub_sector ? [this.employment?.id_sub_sector] : [], this.province?.id ? [this.province?.id] : [])
       .then((data: any) => {
         this.requests = data.response;
       })
