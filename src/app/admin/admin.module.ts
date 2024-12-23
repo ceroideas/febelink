@@ -13,6 +13,7 @@ import { ProvincesComponent } from './provinces/provinces.component';
 import { CitiesComponent } from './cities/cities.component';
 import { ClicksComponent } from './clicks/clicks.component';
 import { FooterLinksComponent } from './footer-links/footer-links.component';
+import { BudgetsComponent } from './budgets/budgets.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { FooterLinksComponent } from './footer-links/footer-links.component';
     ProvincesComponent,
     CitiesComponent,
     ClicksComponent,
-    FooterLinksComponent
+    FooterLinksComponent,
+    BudgetsComponent
   ]
 })
 export class AdminPageModule {}

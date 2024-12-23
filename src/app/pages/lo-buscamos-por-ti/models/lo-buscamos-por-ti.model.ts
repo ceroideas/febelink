@@ -6,6 +6,7 @@ export interface ISearchFull {
   email?: string;
   phone?: string;
   location?: string;
+  subsector?: string;
   title?: string;
   description?: string;
   isTemplate?: number;

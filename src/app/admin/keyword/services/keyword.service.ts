@@ -85,6 +85,12 @@ export class KeywordService {
     pagetitleEmployment?: string,
     metadescriptionEmployment?: string
   }) {
+    !value.linkEmployment && delete value.linkEmployment;
+    !value.nameEmployment && delete value.nameEmployment;
+    !value.h1Employment && delete value.h1Employment;
+    !value.pagetitleEmployment && delete value.pagetitleEmployment;
+    !value.metadescriptionEmployment && delete value.metadescriptionEmployment
+
     return this.http.post('admin/createSubsector', value);
   }
 

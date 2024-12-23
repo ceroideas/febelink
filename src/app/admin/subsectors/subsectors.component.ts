@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseComponent } from '../base.component';
 
@@ -39,6 +39,8 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
 
   currentSubsector: Subsector | undefined = undefined;
 
+  querySubsector: string | undefined = undefined;
+
   get someSelected(): boolean {
     return this.filteredSubsectors.some(item => item.selected);
   }
@@ -67,10 +69,15 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private keywordService: KeywordService,
     private cdRef: ChangeDetectorRef
   ) {
     super();
+
+    this.route.queryParams.subscribe(params => {
+      this.querySubsector = params['subsector'];
+    });
   }
 
   ngOnInit() {
@@ -86,6 +93,11 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
       this.filter({ target: { value: this.currentFilter } });
       this.keywordsCount = this.subsectors.map(item => item.keySearch).flat().length;
       this.visibleOnHome = this.subsectors.filter(item => item.imageURL).length
+
+      if ( this.querySubsector ) {
+        this.currentSubsector = this.subsectors.find(item => item.id === Number(this.querySubsector));
+        this.showEditModal();
+      }
 
       this.loading = false;
       this.cdRef.detectChanges();

@@ -15,4 +15,19 @@ export class SearchforyouService {
   async create(seacrh: ISearchFull): Promise<IHttpService> {
     return this.http.post('findService', seacrh);
   }
+
+  async delete(id: number): Promise<IHttpService> {
+    return this.http.delete(`deleteFindService/${id}`);
+  }
+
+  async update(seacrh: ISearchFull): Promise<IHttpService> {
+    return this.http.post('updateFindService', seacrh);
+  }
+
+  async getAllRequests(subsectors: number[], provinces: number[]): Promise<IHttpService> {
+    return this.http.get('getAllFindServices', {
+      subsectors: JSON.stringify(subsectors),
+      provinces: JSON.stringify(provinces),
+    }, true);
+  }
 }

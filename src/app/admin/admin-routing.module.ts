@@ -9,6 +9,7 @@ import { ProvincesComponent } from './provinces/provinces.component';
 import { CitiesComponent } from './cities/cities.component';
 import { ClicksComponent } from './clicks/clicks.component';
 import { FooterLinksComponent } from './footer-links/footer-links.component';
+import { BudgetsComponent } from './budgets/budgets.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
       { path: 'provinces', component: ProvincesComponent },
       { path: 'cities', component: CitiesComponent },
       { path: 'clicks', component: ClicksComponent },
-      { path: 'footer-links', component: FooterLinksComponent }
+      { path: 'footer-links', component: FooterLinksComponent },
+      { path: 'budget', component: BudgetsComponent },
     ]
   },
   

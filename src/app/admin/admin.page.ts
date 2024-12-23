@@ -40,6 +40,12 @@ export class AdminPage {
       ]
     },
     {
+      name: 'Trabajos',
+      items: [
+        {title: 'Solicitudes', icon: 'briefcase-business', link: '/admin/budget'}
+      ]
+    },
+    {
       name: 'Analítica',
       items: [
         {title: 'Clicks', icon: 'mouse-pointer-click', link: '/admin/clicks'},

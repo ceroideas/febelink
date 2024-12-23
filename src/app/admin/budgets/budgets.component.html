@@ -1,0 +1,351 @@
+<div 
+  *ngIf="loading"
+  class="w-full h-full absolute top-0 left-0 flex justify-center items-center"  
+>
+  <span class="loading loading-ring loading-lg"></span>
+</div>
+
+<!-- Main list -->
+<div *ngIf="!loading" class="flex flex-col gap-4">
+  <!-- Statistics -->
+  <div class="cards flex flex-wrap gap-4">
+    <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
+      <span class="title mb-2 font-semibold">Peticiones</span>
+      <span class="data text-4xl font-bold">{{askForBudgets.length}}</span>
+      <span class="aux text-neutral-400">Total</span>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions flex gap-4">
+    <!-- Filter -->
+    <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
+      <input 
+        type="text" 
+        class="w-full h-full bg-transparent outline-none" 
+        placeholder="Filtrar..."
+        (input)="filter($event)"
+      />
+    </div>
+    <!-- Buttons -->
+    <div class="buttons flex gap-4 shrink-0">
+      <!-- Export -->
+      <button 
+        class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
+        (click)="export()"
+      >
+        <lucide-icon
+          name="file-down"
+          class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+        <span class="px-2">Exportar</span>
+      </button>
+      <!-- Import -->
+      <button 
+        class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
+        (click)="import()"
+      >
+        <lucide-icon
+          name="file-up"
+          class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+        <span class="px-2">Importar</span>
+      </button>
+      <!-- Create -->
+      <button 
+        class="button flex justify-center items-center text-white ring-1 ring-inset ring-primary bg-primary/80 hover:enabled:bg-primary transition rounded-lg p-2 font-semibold"
+        (click)="showCreate()"
+      >
+        <lucide-icon
+          name="plus"
+          class="stroke-white transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="3"
+          [size]="20"
+        />
+        <span class="px-2">Crear</span>
+      </button>
+      <!-- Delete -->
+      <button 
+        class="button min-w-12 flex justify-center items-center text-white ring-1 ring-inset ring-red-600 bg-red-600/80 hover:enabled:bg-red-600 transition rounded-lg p-2 font-semibold disabled:opacity-30"
+        [disabled]="!someSelected"  
+        (click)="showMultipleDeleteModal()"
+      >
+        <lucide-icon
+          name="trash-2"
+          class="stroke-white transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <ul class="bg-white rounded-lg p-3 pb-1 shadow-default">
+    <!-- Header -->
+    <li class="sticky top-1 flex items-center gap-2 p-1 pr-3 bg-neutral-100 rounded font-semibold">
+      <span class="h-fit w-5 shrink-0"></span>
+      <span class="w-full h-fit">Descripción</span>
+      <span class="w-64 h-fit shrink-0">Profesión</span>
+      <span class="w-64 h-fit shrink-0">Provincia</span>
+      <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
+    </li>
+
+    <!-- Data -->
+    <li 
+      class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
+      *ngFor="let item of filteredAskForBudgets"
+      (click)="item.selected = !item.selected"
+    >
+      <!-- Select -->
+      <span class="h-fit w-5 shrink-0">
+        <lucide-icon 
+          *ngIf="item.selected"
+          name="square-check"
+          class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" 
+          [size]="20"
+        />
+        <lucide-icon 
+          *ngIf="!item.selected"
+          name="square"
+          class="stroke-gray-500 stroke-neutral-400 transition duration-75 group-hover:stroke-gray-900" 
+          [size]="20"
+        />
+      </span>
+      <!-- Title -->
+      <span class="w-full line-clamp-1">{{ item.description }}</span>
+      <!-- Subsector -->
+      <button 
+        class="w-64 shrink-0 flex items-center gap-1 hover:opacity-50"
+        (click)="viewSubsector($event, item)"
+      >
+        {{ item.subsector || '-' }}
+        <lucide-icon 
+          name="arrow-up-right"
+          class="stroke-link transition duration-75 group-hover:stroke-gray-900" 
+          [size]="18"
+        />
+      </button>
+      <!-- Location -->
+      <button 
+        class="w-64 shrink-0 flex items-center gap-1 hover:opacity-50"
+        (click)="viewLocation($event, item)"
+      >
+        {{ item.location || '-' }}
+        <lucide-icon 
+          name="arrow-up-right"
+          class="stroke-link transition duration-75 group-hover:stroke-gray-900" 
+          [size]="18"
+        />
+      </button>
+      <!-- Actions -->
+      <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
+        <!-- Edit -->
+        <button 
+          class="w-7 h-7 flex justify-center items-center"
+          (click)="showEdit($event, item)"
+        >
+          <lucide-icon 
+            name="pencil"
+            class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" 
+            [size]="20"
+          />
+        </button>
+        <!-- Delete -->
+        <button 
+          class="w-7 h-7 flex justify-center items-center"
+          (click)="showDelete($event, item)"
+        >
+          <lucide-icon 
+            name="trash-2"
+            class="stroke-gray-500 stroke-red-600 transition duration-75 group-hover:stroke-gray-900" 
+            [size]="20"
+          />
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Edit modal -->
+<dialog #editModal class="modal">
+  <div class="modal-box bg-white">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 *ngIf="!currentAskForBudget?.isNew" class="text-lg font-bold">Modificar</h3>
+    <h3 *ngIf="currentAskForBudget?.isNew" class="text-lg font-bold">Crear</h3>
+    
+    <div *ngIf="currentAskForBudget">
+      <!-- Title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Descripción*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentAskForBudget!.description"
+        />
+      </label>
+      <!-- Subsector -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Profesión*</span>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="currentAskForBudget!.subsector_id"
+        >
+          <option disabled>Elige profesión</option>
+          <option *ngFor="let subsector of subsectors" [value]="subsector.id">{{subsector.nombre}}</option>
+        </select>
+      </label>
+      <!-- Province -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Provincia*</span>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="currentAskForBudget!.location_id"
+        >
+          <option disabled>Elige provincia</option>
+          <option *ngFor="let province of provinces" [value]="province.id">{{province.title}}</option>
+        </select>
+      </label>
+
+      <!-- Contact data -->
+      <ng-container *ngIf="!currentAskForBudget?.isNew && !!currentAskForBudget.name">
+        <div class="contact-data mt-4">
+          <h3 class="text-lg font-bold mb-2">Datos de contacto</h3>
+          <div class="data flex flex-col gap-2">
+            <label class="form-control w-full">
+              {{currentAskForBudget.name}}
+            </label>  
+            <label class="form-control w-full">
+              {{currentAskForBudget.email}}
+            </label>  
+            <label class="form-control w-full">
+              {{currentAskForBudget.phone}}
+            </label>  
+          </div>
+        </div>
+      </ng-container> 
+    </div>
+
+    <!-- Action -->
+    <div class="modal-action">
+      <button 
+        class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
+        (click)="currentAskForBudget?.isNew ? create() : update()"
+        [disabled]="
+          (currentAskForBudget?.isNew && !canCreate) || 
+          (!currentAskForBudget?.isNew && !canUpdate) ||
+          loadingRequest
+        "
+      >
+        Guardar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<!-- Delete modal -->
+<dialog #deleteModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
+    <p class="py-4">¿Estas seguro que quieres eliminar el petición <b>{{currentAskForBudget?.description}}</b>?</p>
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closeDeleteModal()"
+        [disabled]="loadingRequest"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-red-600 text-white hover:bg-red-700 transition"
+        (click)="delete()"
+        [disabled]="loadingRequest"
+      >
+        Eliminar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button [disabled]="loadingRequest">close</button>
+  </form>
+</dialog>
+
+<!-- Multiple delete modal -->
+<dialog #multipleDeleteModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
+    <p class="py-4">¿Estas seguro que quieres eliminar los peticiones seleccionados?</p>
+
+    <span 
+      class="block font-bold"
+      *ngFor="let item of selected"
+    >
+      {{item.description}}
+    </span>
+
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closeMultipleDeleteModal()"
+        [disabled]="loadingRequest"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-red-600 text-white hover:bg-red-700 transition"
+        (click)="deleteMultiple()"
+        [disabled]="loadingRequest"
+      >
+        Eliminar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button [disabled]="loadingRequest">close</button>
+  </form>
+</dialog>
+
+<!-- Import summary modal -->
+<dialog #importSummaryModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold">Resumen de importación</h3>
+    <p class="py-4">Se han detectado <b>{{importedAskForBudgets.length}}</b> peticioneses, <b class="text-green-700">{{importedNewAskForBudgets.length}}</b> nuevo<span *ngIf="importedNewAskForBudgets.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedAskForBudgets.length}}</b> modificado<span *ngIf="importedModifiedAskForBudgets.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedAskForBudgets.length}}</b> eliminado<span *ngIf="importedDeletedAskForBudgets.length !== 1">s</span>.</p>
+
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closeImportSummaryModal()"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-green-600 text-white hover:bg-green-700 transition"
+        [disabled]="!importedNewAskForBudgets.length && !importedModifiedAskForBudgets.length && !importedDeletedAskForBudgets.length"
+        (click)="applyImport()"
+      >
+        Importar
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

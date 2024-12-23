@@ -24,6 +24,7 @@ const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesional
 import { toSlug, preventDefault } from '../../utils/utils';
 import { environment } from '../../environments/environment';
 import { Employment } from '../interfaces/employment';
+import { ModalService } from '../services/modal.service';
 
 export interface SearchType {
   services: SearchProductCardType[];
@@ -201,6 +202,7 @@ export class SearchComponent {
     private keywordService: KeywordService,
     private seoService: SeoService,
     private utilitiesService: UtilitiesService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
@@ -959,5 +961,9 @@ export class SearchComponent {
         });
         break;
     }
+  }
+
+  askForBudget() {
+    this.modalService.openAskForBudgetModal();
   }
 }
