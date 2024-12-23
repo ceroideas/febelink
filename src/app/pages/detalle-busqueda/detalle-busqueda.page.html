@@ -156,7 +156,7 @@
           </a>
 
           <!-- Buttons -->
-          <div class="flex items-center gap-4 shrink-0 mt-4 lg:mt-0">
+          <div class="flex items-center gap-4 flex-wrap justify-center shrink-0 mt-4 lg:mt-0">
             <div>
               <a class="w-fit px-3 py-1 flex items-center gap-2 rounded-lg block text-base font-semibold text-primary" [href]="'/user/' + toSlug(detalle?.ownerUsername) + '/detail/' + detalle?.ownerId"><span>Ver perfil</span></a>
             </div>
@@ -172,6 +172,14 @@
                 <app-views-summary [views]="detalle.views"></app-views-summary>
               </div>
             }
+            <!-- Favorite -->
+            <button class="text-primary flex justify-center items-center gap-1" (click)="toggleFavorite()">
+              @if ( detalle?.favorite ){
+                <ion-icon name="heart" class="text-2xl text-red-500"></ion-icon>
+              } @else {
+                <ion-icon name="heart-outline" class="text-2xl"></ion-icon>
+              }
+            </button>
           </div>
         </div>
         <!-- <div class="buttons-mobileavatar buttonmobile">

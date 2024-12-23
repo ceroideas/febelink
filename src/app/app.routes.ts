@@ -9,6 +9,7 @@ import { LoBuscamosPorTiPage } from './pages/lo-buscamos-por-ti/lo-buscamos-por-
 import { PerfilOraculoPage } from './pages/perfil-oraculo/perfil-oraculo.page'
 import { LandingComponent } from './pages/landing/landing.component'
 import { EmploymentComponent } from './pages/employment/employment.component'
+import { FavoritesComponent } from './pages/favorites/favorites.component'
 
 export const routes: Routes = [
  
@@ -34,6 +35,10 @@ export const routes: Routes = [
       {
         path: 'listado/:searchTerm',
         component: SearchComponent
+      },
+      {
+        path: 'favoritos',
+        component: FavoritesComponent
       },
       {
         path: 'servicios',

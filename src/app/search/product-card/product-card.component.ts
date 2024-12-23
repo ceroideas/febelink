@@ -4,6 +4,8 @@ import { ChatService } from '../../services/chat.service';
 
 import { toSlug } from '../../../utils/utils';
 import { environment } from '../../../environments/environment';
+import { FavoriteService } from '../../services/favorite.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 export interface SearchProductCardType {
   id: number;
@@ -20,6 +22,7 @@ export interface SearchProductCardType {
   telefono: string;
   provincia: string;
   ciudad: string;
+  favorite: boolean;
 }
 
 export interface PriceUnitType {
@@ -44,7 +47,12 @@ export class ProductCardComponent {
   toSlug = toSlug;
 
   urlWsrv: string = environment.baseWebUrlWsrv;
-  constructor(private router: Router, private chatService: ChatService) {}
+  constructor(
+    private router: Router, 
+    private chatService: ChatService,
+    private favoriteService: FavoriteService,
+    public authService: AuthenticationService
+  ) {}
 
   irA(p: string): void {
     this.router.navigate([p]);
@@ -65,6 +73,17 @@ export class ProductCardComponent {
 
     if (error) {
       this.router.navigate([`chat`]);
+    }
+  }
+
+  toggleFavorite($event: any) {
+    $event.preventDefault();
+    
+    if (this.authService.isAuthenticated()) {
+      this.data.favorite = !this.data.favorite;
+      this.favoriteService.toggleFavorite(this.data.id);
+    } else {
+      this.router.navigate([`login`]);
     }
   }
 }

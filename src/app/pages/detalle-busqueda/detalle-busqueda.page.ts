@@ -16,6 +16,7 @@ import { SeoService } from '../../services/seo.service';
 import { toSlug } from '../../../utils/utils';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../../services/api.service';
+import { FavoriteService } from '../../services/favorite.service';
 
 // install Swiper modules
 SwiperCore.use([Thumbs]);
@@ -84,6 +85,7 @@ export class DetalleBusquedaPage implements OnInit {
               private title : Title,
               private seoService: SeoService,
               private apiService: ApiService,
+              private favoriteService: FavoriteService,
               @Inject(PLATFORM_ID) private platformId: Object) {
 
                
@@ -289,5 +291,14 @@ export class DetalleBusquedaPage implements OnInit {
       user: userId?.id
     }
     const {response, error} = await this.searchService.registerClick(data);
+  }
+
+  toggleFavorite() {
+    if (this.authService.isAuthenticated()) {
+      this.detalle.favorite = !this.detalle.favorite;
+      this.favoriteService.toggleFavorite(this.productId);
+    } else {
+      this.router.navigate([`login`]);
+    }
   }
 }

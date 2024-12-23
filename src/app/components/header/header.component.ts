@@ -83,6 +83,14 @@ export class HeaderComponent {
     }
     this.router.navigate([url]);
   }
+  
+  async navigateToFavorites() {
+    if (this.authenticationService.isAuthenticated()) {
+      this.router.navigate(['favoritos']);
+    } else {
+      this.router.navigate(['registro']);
+    }
+  }
 
   /**
    * handleButtonFilter()

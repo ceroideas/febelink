@@ -143,7 +143,7 @@ export class Tab3Page implements OnInit {
 
   async deleteOffer(offer: IOffer) {
     if (offer?.type === Type.Favorite) {
-      (await this.api.unFavouriteDemand({id: offer.id})).subscribe(
+      (await this.api.unFavoriteDemand({id: offer.id})).subscribe(
         (result) => {
           this.utilities.showToast(
             this.translateService.instant('tabs.tab2.messageRemovedFavorite')

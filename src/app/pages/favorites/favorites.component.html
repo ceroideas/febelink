@@ -1,0 +1,53 @@
+<!-- Search section -->
+<section class="search relative px-6 pt-32 mx-auto max-w-screen-xl z-1 xs:px-10">
+  <!-- Title -->
+  <h1 class="text-black text-4xl font-bold mb-5 font-primary">
+    Estas son tus oferas <span class="text-primary">Favoritas</span> 
+  </h1>
+</section>
+
+<!-- Offers -->
+<section class="result relative px-6 mx-auto max-w-screen-xl my-16 flex gap-6 z-1 max-[876px]:flex-col xs:px-10">
+  <div class="content w-full flex flex-col gap-6">
+    <div class="list flex flex-col gap-3" *ngIf="!loading">
+      @for ( data of offers; track data.id ) {
+        <search-product-card
+          [data]="data"
+          [unitTypes]="unitTypes"
+        /> 
+      }
+
+      @if ( !offers.length ) {
+        <p class="text-neutral-600 text-lg font-primary">Todavía no has añadido ninguna oferta a tus favoritos</p>
+      }
+    </div>
+    <div class="list flex flex-col gap-3" *ngIf="loading">
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+      <search-product-card [skeleton]="true" /> 
+    </div>
+  </div>
+
+  <div class="side w-[270px] shrink-0 mx-0 max-[876px]:mx-auto flex flex-col gap-6">
+    <div>
+      <div class="bg-white rounded border border-solid border-slate-100 p-6">
+        <h3 class="font-semibold mb-4">🚀&nbsp;&nbsp;Pedir presupuesto gratis</h3>
+        <div class="text-sm text-neutral-600">
+          <p class="">
+            ¿No encuentras lo que buscas?
+            <br>
+            <br>
+            Nuestro equipo está dispuesto  ha  encontrar la información que necesitas. 
+            Si tienes alguna preferencia adicional o detalle específico, no dudes en hacérnoslo saber.
+          </p>
+          <button class="block w-full mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded" (click)="askForBudget()">Pedir presupuesto</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

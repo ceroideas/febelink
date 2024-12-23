@@ -21,7 +21,7 @@ export class DemandaService {
     // Add to favorites.
     if (demand.favorito) {
       this.utilities.showLoading();
-      (await this.api.favouriteDemand(p)).subscribe(result => {
+      (await this.api.favoriteDemand(p)).subscribe(result => {
         this.utilities.dismissLoading();
         this.utilities.showToast(this.translateService.instant("tabs.tab2.messageAddedFavorite"));
 
@@ -33,7 +33,7 @@ export class DemandaService {
     // Remove from favorites.
     else {
       this.utilities.showLoading();
-      (await this.api.unFavouriteDemand(p)).subscribe(result => {
+      (await this.api.unFavoriteDemand(p)).subscribe(result => {
         this.utilities.dismissLoading();
         this.utilities.showToast(this.translateService.instant("tabs.tab2.messageRemovedFavorite"));
       },err => {

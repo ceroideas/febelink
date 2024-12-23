@@ -265,7 +265,7 @@ export class ApiService {
    * Añadir a favoritos una demanda.
    * @param params
    */
-  favouriteDemand(params: any) {
+  favoriteDemand(params: any) {
     const formData = new FormData();
     formData.append('id', params.id);
     return this._createData('favorite', formData);
@@ -275,7 +275,7 @@ export class ApiService {
    * Eliminar de favoritos una demanda.
    * @param params
    */
-  unFavouriteDemand(params: any) {
+  unFavoriteDemand(params: any) {
     const formData = new FormData();
     formData.append('id', params.id);
     return this._createData('unfavorite', formData);

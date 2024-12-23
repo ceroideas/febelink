@@ -101,6 +101,7 @@ import { SearchCardComponent } from '../search/search-card/search-card.component
 import { ProductCardComponent } from '../search/product-card/product-card.component';
 import { DropdownComponent } from '../components/dropdown/dropdown.component';
 import { LinksDropdownComponent } from '../components/links-dropdown/links-dropdown.component';
+import { FavoritesComponent } from '../pages/favorites/favorites.component';
 
 import { LucideAngularModule, Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle, Star, Eye } from 'lucide-angular';
 import { PerfilOraculoPage } from '../pages/perfil-oraculo/perfil-oraculo.page';
@@ -157,7 +158,8 @@ import { EmploymentComponent } from '../pages/employment/employment.component';
     RatingModalComponent,
     RatingCardComponent,
     LandingComponent,
-    EmploymentComponent
+    EmploymentComponent,
+    FavoritesComponent
   ],
   imports: [
     CommonModule,
@@ -339,7 +341,8 @@ import { EmploymentComponent } from '../pages/employment/employment.component';
     RatingModalComponent,
     RatingCardComponent,
     LandingComponent,
-    EmploymentComponent
+    EmploymentComponent,
+    FavoritesComponent
   ],
 })
 export class SharedModule {}

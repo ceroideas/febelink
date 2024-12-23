@@ -74,16 +74,24 @@
       </div>
     </div>
     
-    <div class="w-full sm:w-40 flex flex-col shrink-0 justify-between">
+    <div class="w-full sm:w-48 flex flex-col shrink-0 justify-between">
       <!-- <div class="">({{data?.votes}} Valoraciones)</div>   -->
       <!-- <img *ngIf="data?.verified === 1" class="" src="assets/imgs/pro1.png"  alt=""> -->
       <!-- <i class="fa fa-whatsapp"></i> -->
       <div class="text-right text-lg font-primary font-semibold">
         {{data?.unitPrice}}€ / {{ (data?.unitTypeId && unitTypes && unitTypes[data.unitTypeId - 1]?.shorthand) ?? 'N/A' }}
       </div>
-      <button class="w-fit px-3 py-0.5 ml-auto bg-[#e2f5fd] text-primary text-center text-sm font-semibold rounded-full">
-        Pide precio gratis
-      </button>
+      <div class="w-fit ml-auto flex flex-row gap-2">
+        <span class="px-3 py-0.5 bg-[#e2f5fd] text-primary text-center text-sm font-semibold rounded-full">Pide precio gratis</span>
+
+        <button class="text-primary flex justify-center items-center gap-1" (click)="toggleFavorite($event)">
+          @if ( data?.favorite ){
+            <ion-icon name="heart" class="text-2xl text-red-500"></ion-icon>
+          } @else {
+            <ion-icon name="heart-outline" class="text-2xl"></ion-icon>
+          }
+        </button>
+      </div>
     </div>
   </div>
 </a>
