@@ -4,1095 +4,193 @@
     <div class="eclipse"></div>
   </div>
   <div class="container-detail-search">
-  <!-- <ion-content class="background-content"> -->
-
-    <!-- Mobile version -->
-    <div class="mobile">
-      <div class="div-main-back-button">
-        <div class="breadcrumbs-text">
-          <img src="assets/icon/svg/home.svg" class="breadcrumbs-home-svg"/>
-          Inicio
-          <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg"/>
-          Mi suscripción
-        </div>
-      </div>
-
-      <div class="title-suscription">
-        Mi suscripción
-      </div>
-
-      <div *ngIf="!suscriptionChange && subLoaded" class="wrapper-content">
-        <div *ngIf="subscriptions?.length == 0" class="box-suscription">
-          <div class="box-title">
-            Suscripción <BR>FREE
-          </div>
-          <div class="box-price-a">
-            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-             1 Profesión
-            </div>
-          </div>
-
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              3 Ofertas de servicios
-            </div>
-          </div>
-          <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-            Cambiar
-          </div>
-        </div>
-
-     
-        <ng-container *ngFor="let sub of subscriptions">
-          <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription">
-            <div class="box-title-b">
-              Suscripción<br>PRO
-            </div>
-            <div class="table-offer">
-              <div class="table-offer-left">
-                <span class="box-price-b-big text-cross-line">29,95€</span>/mes
-              </div>
-            </div>
-            <div class="box-offer-custom">
-              Prueba 2 meses por sólo 9,95€/mes
-            </div>
-            
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Obtén la marca PRO en tu perfil
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Boton Whatsapp directo
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Boton llamada directa
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-               PROMO: añade 2 Profesiones y 3 Ofertas
-              </div>
-            </div>
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
-            </div>
-          </div>
-          <div *ngIf="sub.subscriptionName == 'sub-plus'" class="box-suscription border-wrapper">
-            <div class="box-title-b">
-              Suscripción<br>PLUS
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Añade tus Servicios y Ofertas Personalizadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Aporta tu valor añadido
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Diferénciate con tus mejores virtudes
-              </div>
-            </div>
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select" placeholder="1"
-                            cancelText="Cancelar" okText="Aceptar">
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
-            </div>
-          </div>
-          <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper">
-            <div class="box-title-b">
-              Suscripción<br> Profesiones
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
-            </div>
-            
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Añade profesiones relacionadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Amplía el campo de tus actividades
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Incrementa tus posibilidades de venta
-              </div>
-            </div>
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select" placeholder="1"
-                            cancelText="Cancelar"
-                            okText="Aceptar">
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
-            </div>
-          </div>
-         
-        </ng-container>
-      </div>
-
-      <div *ngIf="suscriptionChange" class="wrapper-content">
-        <div *ngIf="subscriptions.length == 0" class="box-suscription">
-          <div class="box-title-b">
-            Suscripción<br>PRO
-          </div>
-          <div class="table-offer">
-            <div class="table-offer-left">
-              <span class="box-price-b-big text-cross-line">29,95€</span>/mes
-            </div>
-          </div>
-          <div class="box-offer-custom">
-           Prueba 2 meses por sólo 9,95€/mes
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Edita las plantillas con tus servicios
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Obtén la marca PRO en tu perfil
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              PROMO: añade una Profesión y una Oferta extra
-            </div>
-          </div>
-          <div class="box-button-primary"
-        
-              (click)="subscribe('sub-pro', 1)">
-            Seleccionar
-          </div>
-        </div>
-        <ng-container>
-          <div *ngIf="proUser" class="box-suscription border-wrapper">
-            <div class="box-title-b">
-              Suscripción<br>PLUS
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Añade tus Servicios y Ofertas Personalizadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Aporta tu valor añadido
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Diferénciate con tus mejores virtudes
-              </div>
-            </div>
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [value]="findSubscription('sub-plus')?.amount"
-                            [disabled]="!suscriptionChange" class="price-select" placeholder="- Selecciona una cantidad -"
-                            cancelText="Cancelar" okText="Aceptar" #plus>
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div *ngIf="plus.value" class="box-button-primary"
-                (click)="subscribe('sub-plus', plus.value)">
-              Seleccionar
-            </div>
-          </div>
-          <div *ngIf="proUser" class="box-suscription border-wrapper">
-            <div class="box-title-b">
-              Suscripción<br> Profesiones
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">9,95€</span>/mes por Oferta
-            </div>
-            <div class="box-offer">
-              Gratis
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Añade profesiones relacionadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Amplía el campo de tus actividades
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Incrementa tus posibilidades de venta
-              </div>
-            </div>
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [value]="findSubscription('sub-prof')?.amount"
-                            [disabled]="!suscriptionChange" class="price-select" placeholder="- Selecciona una cantidad -"
-                            cancelText="Cancelar"
-                            okText="Aceptar"
-                            #prof>
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div *ngIf="prof.value" class="box-button-primary"
-                (click)="subscribe('sub-prof', prof.value)">
-              Seleccionar
-            </div>
-          </div>
-          <div *ngIf="proUser" class="box-suscription border-wrapper">
-            <div class="box-title-b">
-              Disponibilidad Geográfica
-            </div>
-            <div class="box-price-b">
-              <ng-container *ngIf="geoDisp.value != 'sub-range-country'">
-                <span class="box-price-b-big text-cross-line">9,95€</span>/mes
-              </ng-container>
-              <ng-container *ngIf="geoDisp.value == 'sub-range-country'">
-                <span class="box-price-b-big text-cross-line">19,95€</span>/mes
-              </ng-container>
-            </div>
-            <!-- <div class="box-offer">
-              Gratis
-            </div> -->
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Extiende el alcance de tu actividad
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Expande tu negocio
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Completa tus resultados
-              </div>
-            </div>
-            <div class="box-quantity">
-              Alcance
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [value]="findSubscription('sub-range')?.subscriptionName" #geoDisp
-                            [disabled]="!suscriptionChange" class="price-select"
-                            placeholder="- Selecciona un rango -" cancelText="Cancelar" okText="Aceptar">
-                  <ion-select-option selected disabled>- Selecciona un rango -</ion-select-option>
-                  <ion-select-option value="sub-range-region">Regional</ion-select-option>
-                  <ion-select-option value="sub-range-country">Nacional</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div *ngIf="geoDisp.value" class="box-button-primary"
-                (click)="subscribe(geoDisp.value, 1)">
-              Seleccionar
-            </div>
-          </div>
-        </ng-container>
-
-      </div>
-
-      <div  class="box-suscription box-height1">
-        <div class="box-title">
-          Suscripción<br>Súper PRO
-        </div>
-        <!-- <div class="box-price-a">
-          <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-        </div> -->
-        <!-- <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Los mejores profesionales de cada sector en cada localidad.
-          </div>
-        </div>
-        <div class="box-button disabled">
-          Solicita más información
-        </div> -->
-
-        <div class="box-price-b">
-          <span class="box-price-b-big">99,00€</span>/mes
-        </div>
-        <div class="table-options">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Los mejores profesionales de cada sector en cada localidad.
-          </div>
-        </div>
-
-        
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Configuración de beneficios Súper Pro
-          </div>
-        </div>
-        <div class="table-options-b">
-          <div class="table-cell-left">
-            <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-          </div>
-          <div class="table-cell-right">
-            Perfil Verificado
-          </div>
-        </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Incluir videos
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Botón WhatsApp
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Botón llamada
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              5 Profesiones y 5 Ofertas
-            </div>
-          </div>
-       
-        <div class="table-options">
-      
-          <div *ngIf="!findSubscription('superpro')" class="position-bottom" >
-            <div  class="box-button-primary"
-            
-                (click)="subscribe('superpro', 1)">
-              Seleccionar
-            </div>
-          </div>
-          <!-- <div *ngIf="findSubscription('superpro')"  >
-            <div 
-            class="super"
-             
-               >
-              Ya tienes la subscripcion SUPER PRO
-            </div>
-          </div> -->
-
-        
-      </div>
-      </div>
-
-    </div>
-
-    <!-- ------------------------ -->
-    <!-- Desktop version -->
     <div class="desktop wfull">
       <div class="div-main-back-button-b">
-        <div class="breadcrumbs-text-b">
+        <div class="breadcrumbs-text-b flex">
           Inicio
           <img src="assets/icon/svg/chevron-right.svg" class="breadcrumbs-next-svg-b"/>
           <span class="breadcrumbs-color-blue">Mi suscripción</span>
         </div>
       </div>
 
-      <div class="title-suscription-b">
-        Mi suscripción
-      </div>
-
-      <div *ngIf="!suscriptionChange && subLoaded" style="display:block;float:left;padding:0px 60px 24px 60px;">
-        <div *ngIf="subscriptions?.length == 0" class="box-suscription box-same-height">
-          <div class="box-title">
-            Suscripción <br>Free
-          </div>
-          <div class="box-price-a">
-            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              1 Profesion
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              3 Ofertas de Servicios
-            </div>
-          </div>
-          <div class="position-bottom">
-            <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-              Cambiar
-            </div>
-          </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div class="rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10">
+          <h3 id="tier-hobby" class="text-base/7 font-semibold text-indigo-600">Free</h3>
+          <p class="mt-4 flex items-baseline gap-x-2">
+            <span class="text-5xl font-semibold tracking-tight text-gray-900">0€</span>
+            <span class="text-base text-gray-500">/mes</span>
+          </p>
+          <p class="mt-6 text-base/7 text-gray-600">
+            Disfruta de nuestra suscripción gratuita con acceso limitado a nuestras funciones.
+          </p>
+          <!-- <a href="#" aria-describedby="tier-hobby" class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10">Seleccionar</a> -->
+          <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              2 profesiones
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              3 ofertas de servicios
+            </li>
+          </ul>
         </div>
 
-
-
-        <ng-container *ngFor="let sub of subscriptions">
-          <div *ngIf="sub.subscriptionName == 'sub-pro'" class="box-suscription border-wrapper-b box-same-height">
-            <div class="box-title-b">
-              Suscripción<br>PRO
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big text-cross-line">29,95€</span>/mes
-            </div>
-            <div class="box-offer-custom">
-             Prueba 2 meses por sólo 9,95€/mes
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-               Obtén la marca PRO en tu perfil
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-               Botón WhatsApp directo
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Boton llamada directa
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-               PROMO: añade 2 Profesiones y 3 Ofertas
-              </div>
-            </div>
-            <div class="position-bottom">
-              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-                Cambiar
-              </div>
-            </div>
-          </div>
-          <div *ngIf="sub.subscriptionName == 'sub-plus'" class="box-suscription border-wrapper-b box-same-height">
-            <div class="box-title-b">
-              Suscripción<br>PLUS
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big ">9,95€</span>/mes por Oferta
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Añade tus Servicios y Ofertas Personalizadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Aporta tu valor añadido
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Diferénciate con tus mejores virtudes
-              </div>
-            </div>
-            <div class="position-bottom">
-              <div class="box-quantity">
-                Cantidad
-              </div>
-              <div class="padding-select">
-                <ion-item class="no-padding modal-add-price-select">
-                  <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select"
-                              placeholder="1" cancelText="Cancelar" okText="Aceptar">
-                    <ion-select-option [value]="1">1</ion-select-option>
-                    <ion-select-option [value]="2">2</ion-select-option>
-                    <ion-select-option [value]="3">3</ion-select-option>
-                    <ion-select-option [value]="4">4</ion-select-option>
-                    <ion-select-option [value]="5">5</ion-select-option>
-                    <ion-select-option [value]="6">6</ion-select-option>
-                    <ion-select-option [value]="7">7</ion-select-option>
-                    <ion-select-option [value]="8">8</ion-select-option>
-                    <ion-select-option [value]="9">9</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </div>
-              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-                Cambiar
-              </div>
-            </div>
-          </div>
-          <div *ngIf="sub.subscriptionName == 'sub-prof'" class="box-suscription border-wrapper-b box-same-height">
-            <div class="box-title-b">
-              Suscripción<br>Profesiones
-            </div>
-            <div class="box-price-b">
-              <span class="box-price-b-big">9,95€</span>/mes por Oferta
-            </div>
-            <!-- <div class="box-offer">
-              Gratis
-            </div> -->
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Añade profesiones relacionadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Amplía el campo de tus actividades
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Incrementa tus posibilidades de venta
-              </div>
-            </div>
-            <div class="position-bottom">
-              <div class="box-quantity">
-                Cantidad
-              </div>
-              <div class="padding-select">
-                <ion-item class="no-padding modal-add-price-select">
-                  <ion-select [(ngModel)]="sub.amount" [disabled]="!suscriptionChange" class="price-select"
-                              placeholder="1" cancelText="Cancelar" okText="Aceptar">
-                    <ion-select-option [value]="1">1</ion-select-option>
-                    <ion-select-option [value]="2">2</ion-select-option>
-                    <ion-select-option [value]="3">3</ion-select-option>
-                    <ion-select-option [value]="4">4</ion-select-option>
-                    <ion-select-option [value]="5">5</ion-select-option>
-                    <ion-select-option [value]="6">6</ion-select-option>
-                    <ion-select-option [value]="7">7</ion-select-option>
-                    <ion-select-option [value]="8">8</ion-select-option>
-                    <ion-select-option [value]="9">9</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </div>
-              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-                Cambiar
-              </div>
-            </div>
-          </div>
-          <!-- <div *ngIf="sub.subscriptionName.includes('sub-range')"
-              class="box-suscription border-wrapper-b box-same-height">
-            <div class="box-title-b">
-              Disponibilidad Geográfica
-            </div>
-            <div class="box-price-b">
-              <ng-container *ngIf="sub.subscriptionName == 'sub-range-region'">
-                <span class="box-price-b-big ">9,95€</span>/mes
-              </ng-container>
-              <ng-container *ngIf="sub.subscriptionName == 'sub-range-country'">
-                <span class="box-price-b-big ">19,95€</span>/mes
-              </ng-container>
-            </div>
-            <div class="box-offer">
-              Gratis
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Extiende el alcance de tu actividad
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Expande tu negocio
-              </div>
-            </div>
-            <div class="table-options">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Completa tus resultados
-              </div>
-            </div>
-            <div class="position-bottom">
-              <div class="box-quantity">
-                Cantidad
-              </div>
-              <div class="padding-select">
-                <ion-item class="no-padding modal-add-price-select">
-                  <ion-select [(ngModel)]="sub.subscriptionName" [disabled]="!suscriptionChange" class="price-select"
-                              placeholder="1" cancelText="Cancelar" okText="Aceptar">
-                    <ion-select-option value="sub-range-region">Regional</ion-select-option>
-                    <ion-select-option value="sub-range-country">Nacional</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </div>
-              <div class="box-button" (click)="suscriptionChange = !suscriptionChange">
-                Cambiar
-              </div>
-            </div>
-          </div> -->
-        </ng-container>
-      </div>
-
-      <div *ngIf="suscriptionChange" style="display:block;float:left;padding:0px 60px 24px 60px;">
-        <div *ngIf="subscriptions?.length == 0" class="box-suscription border-wrapper-b box-same-height">
-          <div class="box-title-b">
-            Suscripción<br>PRO
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big ">29,95€</span>/mes
-          </div>
-          <div class="box-offer-custom">
-            Prueba 2 meses por sólo 9,95€/mes
-          </div>
-          
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Obtén la marca PRO en tu perfil
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Boton WhatsApp directo
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-            Boton llamada directa
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              PROMO: añade una 2 Profesionesy 3 Ofertas
-            </div>
-          </div>
-          <div class="box-button-primary"
-              (click)="subscribe('sub-pro', 1)">
+        <div class="rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10">
+          <h3 id="tier-hobby" class="text-base/7 font-semibold text-indigo-600">Pro</h3>
+          <p class="mt-4 flex items-baseline gap-x-2">
+            <span class="text-5xl font-semibold tracking-tight text-gray-900">14,95€</span>
+            <span class="text-base text-gray-500">/mes</span>
+          </p>
+          <p class="mt-6 text-base/7 text-gray-600">
+            Disfruta de nuestra suscripción Pro con acceso a todas nuestras funciones avanzadas.
+          </p>
+          <button 
+            *ngIf="!findSubscription('sub-pro')"
+            class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
+            (click)="subscribe('sub-pro', 1)"
+          >
             Seleccionar
-          </div>
-        </div>
-        <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
-          <div class="box-title-b">
-            Suscripción<br>PLUS
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big ">9,95€</span>/mes por Oferta
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Añade tus Servicios y Ofertas Personalizadas
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Aporta tu valor añadido
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Diferénciate con tus mejores virtudes
-            </div>
-          </div>
-          <div class="position-bottom">
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [value]="findSubscription('sub-plus')?.amount" [disabled]="!suscriptionChange"
-                            class="price-select"
-                            placeholder="- Selecciona una cantidad -" cancelText="Cancelar" okText="Aceptar" #plusDesktop>
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div *ngIf="plusDesktop.value" class="box-button-primary"
-                (click)="subscribe('sub-plus', plusDesktop.value)">
-              Seleccionar
-            </div>
-          </div>
-        </div>
-        <div *ngIf="proUser" class="box-suscription border-wrapper-b box-same-height">
-          <div class="box-title-b">
-            Suscripción<br> Profesiones
-          </div>
-          <div class="box-price-b">
-            <span class="box-price-b-big ">9,95€</span>/mes por Oferta
-          </div>
-          <!-- <div class="box-offer">
-            Gratis
-          </div> -->
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Añade profesiones relacionadas
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Amplía el campo de tus actividades
-            </div>
-          </div>
-          <div class="table-options">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
+          </button>
+          <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Consigue la marca profesional
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Aparece en las primeras posiciones
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
               Incrementa tus posibilidades de venta
-            </div>
-          </div>
-          <div class="position-bottom">
-            <div class="box-quantity">
-              Cantidad
-            </div>
-            <div class="padding-select">
-              <ion-item class="no-padding modal-add-price-select">
-                <ion-select [value]="findSubscription('sub-prof')?.amount" [disabled]="!suscriptionChange"
-                            class="price-select"
-                            placeholder="- Selecciona una cantidad -" cancelText="Cancelar" okText="Aceptar" #profDesktop>
-                  <ion-select-option [value]="1">1</ion-select-option>
-                  <ion-select-option [value]="2">2</ion-select-option>
-                  <ion-select-option [value]="3">3</ion-select-option>
-                  <ion-select-option [value]="4">4</ion-select-option>
-                  <ion-select-option [value]="5">5</ion-select-option>
-                  <ion-select-option [value]="6">6</ion-select-option>
-                  <ion-select-option [value]="7">7</ion-select-option>
-                  <ion-select-option [value]="8">8</ion-select-option>
-                  <ion-select-option [value]="9">9</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <div *ngIf="profDesktop.value" class="box-button-primary"
-                (click)="subscribe('sub-prof', profDesktop.value)">
-              Seleccionar
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
-      
+
+        <div class="relative rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10 scale-105 border-primary border-2 border-solid">
+          <div class="w-full absolute top-0 left-0 flex justify-center">
+            <span class="bg-primary text-white rounded-b-lg px-2 py-1 uppercase font-bold text-xs">Más popular</span>
+          </div>
+
+          <h3 id="tier-hobby" class="text-base/7 font-semibold text-indigo-600">Plus</h3>
+          <p class="mt-4 flex items-baseline gap-x-2">
+            <span class="text-5xl font-semibold tracking-tight text-gray-900 line-through">29,95€</span>
+            <span class="text-base text-gray-500">/mes</span>
+          </p>
+          <p class="bg-[#91F3B2] text-[#1E429F] font-bold px-3 py-1 rounded-lg mt-3">
+            Prueba 2 meses por sólo 9,95€/mes
+          </p>
+          <p class="mt-6 text-base/7 text-gray-600">
+            Disfruta de nuestra suscripción Plus con acceso a funciones exclusivas y beneficios adicionales.
+          </p>
+          <button 
+            *ngIf="!findSubscription('sub-plus')"
+            class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
+            (click)="subscribe('sub-plus', 1)"
+          >
+            Seleccionar
+          </button>
+          <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Consigue la marca profesional
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Aparece en las primeras posiciones
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Incrementa tus posibilidades de venta
+            </li>
+            <li class="flex gap-x-3"> 
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Añade 2 profesiones adicionales
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Añade 3 ofertas de servicios adicionales
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10">
+          <h3 id="tier-hobby" class="text-base/7 font-semibold text-indigo-600">Súper Pro</h3>
+          <p class="mt-4 flex items-baseline gap-x-2">
+            <span class="text-5xl font-semibold tracking-tight text-gray-900">99€</span>
+            <span class="text-base text-gray-500">/mes</span>
+          </p>
+          <p class="mt-6 text-base/7 text-gray-600">
+            Disfruta de nuestra suscripción Súper Pro con acceso a todas nuestras funciones premium y beneficios exclusivos.
+          </p>
+          <button 
+            *ngIf="!findSubscription('superpro')"
+            class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10"
+            (click)="subscribe('superpro', 1)"
+          >
+            Seleccionar
+          </button>
+          <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Obtén la marca Súper Pro y Perfil Verificado
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Campañas de marketing digital personalizadas
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Aparece en las primeras posiciones
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Multiplica tus posibilidades de venta
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Añade 2 profesiones adicionales
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Añade 3 ofertas de servicios adicionales
+            </li>
+          </ul>
+        </div>
       </div>
-
-      <div  style="display:block;float:left;padding:0px 60px 24px 60px;">
-        <div  class="box-suscription box-same-height">
-          <div class="box-title">
-            Suscripción<br>Súper PRO
-          </div>
-          <!-- <div class="box-price-a">
-            <span class="box-price-a-big">0</span><span class="box-price-a-med">€</span>/mes
-          </div> -->
-          <div class="box-price-b">
-            <span class="box-price-b-big">99,00€</span>/mes
-          </div>
-        
-          <!-- <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/card-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Edita las plantillas con tus servicios
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Obtén la marca SUPER PRO en tu perfil
-            </div>
-          </div> -->
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Los mejores profesionales de cada sector en cada localidad.
-            </div>
-          </div>
-          <div class="table-options-b">
-            <div class="table-cell-left">
-              <img src="assets/icon/svg/happy-green.svg" class="table-cell-img"/>
-            </div>
-            <div class="table-cell-right">
-              Obtén la marca PRO en tu perfil Verificado
-            </div>
-          </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Campañas de marketing digital personalizadas
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Botón WhatsApp directo
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Botón llamada directa
-              </div>
-            </div>
-            <div class="table-options-b">
-              <div class="table-cell-left">
-                <img src="assets/icon/svg/security-green.svg" class="table-cell-img"/>
-              </div>
-              <div class="table-cell-right">
-                Incluye vídeos
-              </div>
-            </div>
-         
-          <div class="table-options">
-        
-          <div *ngIf="!findSubscription('superpro')" class="position-bottom" >
-            <div  class="box-button-primary"
-            
-                (click)="subscribe('superpro', 1)">
-              Seleccionar
-            </div>
-          </div>
-          <!-- <div *ngIf="findSubscription('superpro')"  >
-            <div 
-            class="super"
-             
-               >
-              Ya tienes la subscripcion SUPER PRO
-            </div>
-          </div> -->
-
-          
-            
-          
-          
-        </div>
-
-       
-        </div>
     </div>
-    </div>
-  <!-- </ion-content> -->
   </div>
 </div>
