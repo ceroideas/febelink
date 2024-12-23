@@ -1,0 +1,148 @@
+<div class="bg-white px-7 py-6 overflow-auto">
+  <div class="close">
+    <button 
+      class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+      (click)="close()"
+    >
+      ✕
+    </button>
+  </div>
+
+  <h2 class="text-2xl font-semibold pl-2 text-neutral-800 mb-2">
+    Pedir presupuesto gratis
+  </h2>
+
+  <button 
+    class="rounded-lg bg-[#25D366] px-3 py-1 text-base font-bold flex flex-row items-center gap-2 self-start"
+  >
+    <i class="fa fa-whatsapp text-2xl text-white"></i> <span class="text-white font-semibold">Pedir presupuesto por WhatsApp</span>
+  </button>
+
+  <p class="py-4 text-neutral-700">
+    A veces la búsqueda de un servicio profesional es un problema difícil de solucionar. Requiere mucho tiempo y esfuerzo, preguntando, llamando y mandando mensajes. Nosotros lo buscamos por ti y lo ponemos en contacto contigo para que tú sólo tengas que seleccionar el que más te guste y disfrutar del servicio.
+  </p>
+
+  <!-- Subsector -->
+  <label class="form-control w-full error">
+    <div class="label">
+      <span class="label-text label-error">Profesional *</span>
+    </div>
+    <select 
+      class="select select-bordered bg-neutral-100 text-base"
+      [class.select-error]="subsectorError"
+      [(ngModel)]="subsector"
+    >
+      <option disabled>Elige profesión</option>
+      <option *ngFor="let subsector of subsectors" [value]="subsector.id">{{subsector.nombre}}</option>
+    </select>
+  </label>
+  <!-- Title -->
+  <label class="form-control w-full error">
+    <div class="label">
+      <span class="label-text">¿Qué necesitas? *</span>
+    </div>
+    <input 
+      type="text" 
+      class="input input-bordered w-full bg-neutral-100" 
+      [class.input-error]="titleError"
+      [(ngModel)]="title"
+    />
+  </label>
+  <!-- City -->
+  <label class="form-control w-full">
+    <div class="label">
+      <span class="label-text">Donde *</span>
+    </div>
+    <select 
+      class="select select-bordered bg-neutral-100 text-base"
+      [class.select-error]="locationError"
+      [(ngModel)]="location"
+    >
+      <option disabled>Elige provincia</option>
+      <option *ngFor="let location of locations" [value]="location.id">{{location.title}}</option>
+    </select>
+  </label>
+
+  <!-- Not logged user data -->
+  <ng-container *ngIf="!currentUser.email">
+    <!-- User data -->
+    <p class="text-neutral-700 text-sm font-semibold mt-4">Datos de contacto</p>
+    <!-- Name -->
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text">Nombre *</span>
+      </div>
+      <input 
+        type="text" 
+        class="input input-bordered w-full bg-neutral-100" 
+        [class.input-error]="nameError"
+        [(ngModel)]="name"
+      />
+    </label>
+    <!-- Email -->
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text">Email *</span>
+      </div>
+      <input 
+        type="text" 
+        class="input input-bordered w-full bg-neutral-100" 
+        [class.input-error]="emailError"
+        [(ngModel)]="email"
+      />
+    </label>
+    <!-- Phone -->
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text">Teléfono *</span>
+      </div>
+      <input 
+        type="text" 
+        class="input input-bordered w-full bg-neutral-100" 
+        [class.input-error]="phoneError"
+        [(ngModel)]="phone"
+      />
+    </label>
+  </ng-container>
+
+  <!-- Error -->
+  <p class="text-red-500 text-sm font-semibold mt-6" *ngIf="formError">
+    Por favor, rellena todos los campos obligatorios.
+  </p>
+
+  <!-- Action -->
+  <div class="modal-action">
+    <button 
+      class="btn disabled:text-neutral-400"
+      (click)="close()"
+    >
+      Cerrar
+    </button>
+    <button 
+      class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
+      [disabled]="loadingRequest"
+      (click)="sendRequest()"
+    >
+      Pedir presupuesto
+      <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+    </button>
+  </div>
+</div>
+
+<dialog #dataSentInfoModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold text-green-600">¡Recibido!</h3>
+    <p class="py-4">Hemos recibido tu petición, nos pondremos en contacto contigo lo antes posible.</p>
+    <div class="modal-action">
+      <button 
+        class="btn bg-green-600 text-white hover:bg-green-700 transition"
+        (click)="closeDataSentModal()"
+      >
+        Continuar
+      </button>
+    </div>
+  </div>
+  <form method="dialog">
+    <button>close</button>
+  </form>
+</dialog>

@@ -27,6 +27,7 @@ import { IHttpService } from '../services/http.service';
 import { Subsector } from '../interfaces/subsector';
 import { Sector } from '../interfaces/sector';
 import { Location } from '../interfaces/location';
+import { ModalService } from '../services/modal.service';
 // // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
 
@@ -118,6 +119,7 @@ export class Tab1Component implements OnInit  {
     private cdRef : ChangeDetectorRef,
     private keywordService: KeywordService,
     private utilitiesService: UtilitiesService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     
@@ -514,5 +516,9 @@ export class Tab1Component implements OnInit  {
 
     const subsectors = encodeURIComponent(JSON.stringify([...checkedSubsectors, ...uncheckedSubsectors]));
     this.router.navigate([`/servicios`], { queryParams: {subsectors}});
+  }
+
+  askForBudget() {
+    this.modalService.openAskForBudgetModal();
   }
 }

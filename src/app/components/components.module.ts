@@ -13,7 +13,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {PartialPopupComponent} from './partial-popup/partial-popup.component';
 import {FormsModule} from '@angular/forms';
 import { environment } from '../../environments/environment';
-
+import { AskForBudgetComponent } from './ask-for-budget/ask-for-budget.component';
 @NgModule({
   declarations: [
     MenuComponent,
@@ -21,7 +21,8 @@ import { environment } from '../../environments/environment';
     SharePopoverComponent,
     SocialLoginComponent,
     GoogleSigninButtDirective,
-    PartialPopupComponent
+    PartialPopupComponent,
+    AskForBudgetComponent
   ],
   exports: [
     MenuComponent,
@@ -29,7 +30,8 @@ import { environment } from '../../environments/environment';
     SharePopoverComponent,
     SocialLoginComponent,
     TranslateModule,
-    PartialPopupComponent
+    PartialPopupComponent,
+    AskForBudgetComponent
   ],
   imports: [
     FormsModule,
