@@ -38,6 +38,16 @@ export class SocialLoginComponent {
   ) {
     this.authService.authState.subscribe((user) => {
       this.user = user;
+
+      if (this.user) {
+        const formData = new FormData();
+        formData.append('email', user.email);
+        formData.append('name', user.name);
+        formData.append('role_id', '5');
+        formData.append('google_id', user.id);
+
+        this.auth(formData);
+      }
     });
   }
 
@@ -173,5 +183,9 @@ export class SocialLoginComponent {
     } else {
       return GoogleLoginProvider.PROVIDER_ID;
     }
+  }
+
+  loginWithGoogle() {
+    this.socialLogin('google');
   }
 }
