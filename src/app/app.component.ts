@@ -184,6 +184,9 @@ export class AppComponent implements OnInit, OnDestroy {
   gotoCart(){
     this.router.navigate(['/cart']);
   }
+  gotoFavorites(){
+    this.router.navigate(['/favoritos']);
+  }
   gotoChat(){
     this.router.navigate(['/chat']);
   }
