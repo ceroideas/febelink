@@ -77,7 +77,7 @@
     <!-- List -->
     <ul class="max-w-[90vw] w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
       @for ( request of requests; track request.id ) {
-        <li class="bg-white shadow rounded-xl px-7 py-7">
+        <li class="bg-white shadow rounded-xl px-7 py-7" (click)="goToRegister()">
           <div class="badges flex flex-wrap gap-2">
             <!-- Sector and subsector -->
             <span class="inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 text-xs font-medium text-[#0095d8] ring-1 ring-inset ring-[#0095d8]">

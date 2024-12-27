@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 import { KeywordService } from '../../admin/keyword/services/keyword.service';
@@ -57,6 +57,7 @@ export class EmploymentComponent implements OnInit {
     private searchForYouService: SearchforyouService,
     private servicesSvc: ServicesService,
     public authenticationService: AuthenticationService,
+    private router: Router
   ) {
     this.professionQuery = this.actRouter.snapshot.paramMap.get('profession') || '';
     this.provinceQuery = this.actRouter.snapshot.paramMap.get('province') || '';
@@ -120,6 +121,12 @@ export class EmploymentComponent implements OnInit {
           } 
         })
       }
+    }
+  }
+
+  goToRegister() {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/registro']);
     }
   }
 }
