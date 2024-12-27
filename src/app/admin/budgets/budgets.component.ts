@@ -298,6 +298,7 @@ export class BudgetsComponent extends BaseComponent implements OnInit {
     try {
       // Update sector
       await this.searchForYouService.update({
+        id: this.currentAskForBudget?.id,
         location: this.currentAskForBudget?.location_id.toString(),
         subsector: this.currentAskForBudget?.subsector_id.toString(),
         description: this.currentAskForBudget!.description,
