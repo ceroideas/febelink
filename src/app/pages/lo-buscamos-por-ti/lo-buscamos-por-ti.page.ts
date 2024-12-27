@@ -1,18 +1,15 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import {
-  FilePickType,
-  IFile,
-} from '../../components/file-picker/models/file.model';
-import {iWYSIWYG} from './../../components/wysiwyg/models/wysiwyg.model';
-import { ISearchFull } from './models/lo-buscamos-por-ti.model';
-import { SearchforyouService } from './../../services/searchforyou.service';
-import { KeywordService } from './../../admin/keyword/services/keyword.service';
-import { ApiService } from './../../services/api.service';
-import { IUser } from './../../models/user.model';
-import { UtilitiesService } from './../../services/utilities.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CartService } from '../cart/services/cart.service';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { KeywordService } from '../../admin/keyword/services/keyword.service';
+
+import { UtilitiesService } from '../../services/utilities.service';
+import { ModalService } from '../../services/modal.service';
+import { SearchforyouService } from '../../services/searchforyou.service';
+
+import { Subsector } from '../../interfaces/subsector';
+import { Location } from '../../interfaces/location';
+
 @Component({
   selector: 'app-lo-buscamos-por-ti',
   templateUrl: './lo-buscamos-por-ti.page.html',
@@ -20,279 +17,160 @@ import { CartService } from '../cart/services/cart.service';
 })
 export class LoBuscamosPorTiPage implements OnInit {
 
-  //@ts-ignore
-  iFile: IFile ;
-  filePickType = FilePickType;
+  @ViewChild('dataSentInfoModal') dataSentInfoModal: any;
+    
+  subsector: number = 0;
+  subsectors: Subsector[] = [];
 
-  error: any = {}
+  location: number = 0;
+  locations: Location[] = [];
 
-  servicioFinsish: boolean = false;
-  servicioAdded: boolean = false;
-  servicioError: boolean = false;
-  servicioAddedOther: boolean = false;
-  loadSend: boolean = false;
-  title: string = ""
-  description: string = ""
-  name: string = ""
-  email: string = ""
-  phone: string = ""
-  location: string = ""
+  title: string = "";
+  name: string = "";
+  email: string = "";
+  phone: string = "";
 
-  images: IFile[] = [];
+  subsectorError: boolean = false;
+  locationError: boolean = false;
+  titleError: boolean = false;
+  nameError: boolean = false;
+  emailError: boolean = false;
+  phoneError: boolean = false;
 
-  editorText: string =""
-  isTemplate: boolean = false;
-  disabled: boolean = false;
-  locations: any = [];
-  peticions: any = {}
-  selectedValue: any;
   currentUser: any = {
     nick: null,
     email: null,
     telefono: null
   }
-  //@ts-ignore
-  id;
-  constructor(  private router: Router, private route: ActivatedRoute,  private utilities: UtilitiesService,  
-    public cartSvc: CartService,
-    private api: ApiService, private keywordService: KeywordService, private modalCtrl: ModalController,  public servicesSvc: SearchforyouService,  public cref: ChangeDetectorRef ) { 
-    this.route.fragment.subscribe(fragment => {
-      if (!!fragment) {
-          // Check if 'search' property exists in 'fragment' object
-          if (fragment.hasOwnProperty('search')) {
-              try {
-                //@ts-ignore
-                  const jsonObject = JSON.parse(fragment.search);
-                  // Retrieve the value of the 'title' property
-                  const title = jsonObject.title;
-                  this.title = title;
-              } catch (error) {
-                  console.error('Error parsing JSON:', error);
-              }
-          } else {
-              console.error('Fragment does not contain the "search" property.');
-          }
-      }
+
+  loading: boolean = true;
+  loadingRequest: boolean = false;
+
+  formError: boolean = false;
+
+  EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/g;
+  MOBILE_PHONE_REGEX_ES = /^((6|7){1}[0-9]{8})$/g;
+
+  constructor(
+    private keywordService: KeywordService,
+    private cdRef: ChangeDetectorRef,
+    private utilities: UtilitiesService,
+    private modalService: ModalService,
+    private servicesSvc: SearchforyouService,
+    private router: Router
+  ) { }
+
+  async ngOnInit() {
+    this.currentUser = {...(await this.utilities.getUserData())};
+
+    this.keywordService.getSubSectorAll()
+    .then((data: any) => {
+      this.subsectors = data.response;
+
+      this.loading = false;
+      this.cdRef.detectChanges();
+    })
+    .catch((error) => {
+      this.loading = false;
+      this.cdRef.detectChanges();
     });
-    this.id = this.route.snapshot.paramMap.get('id') || ''
 
-    this.route.queryParams.subscribe(params => {
-      if ( params['query'] ) {
-        this.title = decodeURIComponent(params['query']);
-      }
-    }); 
-   
-    if ( this.id !== ''){
-        this.getfindServices()
-    }
-  }
-
-  ngOnInit() {
-    this.readLocations()
-    this.readUser();
-  }
-
-  async getfindServices() {
-    this.cartSvc.getFindService(this.id).then(async (data: any) => {
-      this.peticions = data.response;
-      this.title = data.response.title
-      this.description = data.response.description
-      this.images = data.response.images
-      this.location = data.response.location
-
-      this.isTemplate = true
-     })
-    
-  }
-  async readLocations(){
-
-    this.keywordService.getLocationKeywords().then(async (data: any) => {
+    this.keywordService.getLocationKeywords()
+    .then(async (data: any) => {
       this.locations = data.response;
     })
-
-
+    .catch((error) => {
+      this.loading = false;
+      this.cdRef.detectChanges();
+    });
   }
 
-  async readUser(){
+  close() {
+    this.modalService.close();
+  }
 
-  this.currentUser = {...(await this.utilities.getUserData())};
+  formValid() {
+    let allOk = true;
 
-  if ( this.currentUser?.email  !== undefined){
-
-    //@ts-ignore
-    if ( this.currentUser?.nick == undefined || this.currentUser?.nick == null){
-      this.name = "-";
+    if (this.subsector === 0) {
+      allOk = false;
+      this.subsectorError = true;
     } else {
-     //@ts-ignore
-      this.name = this.currentUser?.nick;
+      this.subsectorError = false;
     }
 
-    //@ts-ignore
-
-    if ( this.currentUser?.email === undefined || this.currentUser?.email == null){
-      this.email =  "";
+    if (this.location === 0) {
+      allOk = false;
+      this.locationError = true;
     } else {
-      //@ts-ignore
-      this.email = this.currentUser?.email;
+      this.locationError = false;
     }
 
-    //@ts-ignore
-    if ( this.currentUser?.telefono === undefined || this.currentUser?.telefono == null){
-      this.phone = "-";
+    if (this.title.trim() === "") {
+      allOk = false;
+      this.titleError = true;
     } else {
-      //@ts-ignore
-      this.phone = this.currentUser?.telefono;
+      this.titleError = false;
     }
 
-  }
-
-  
-
-  }
-  onSelect(hero: any): void {
-  }
-  onSelectChange($event: any){
-  
-    this.error.location = false;
-  }
-  clearImageByIndex(index: any) {
-    this.images = this.images.filter(img=> img !== index)
-    this.cref.detectChanges()
-  }
-
-  fileSelected(iFile: IFile) {
-    this.images.push( iFile)
-  }
-
-  wysiwygChange(content: iWYSIWYG) {
-    //@ts-ignore
-    this.editorText = content.html;
-  }
-
-  cancelNuevoServicio() {
-    let url  = '/';
-    this.router.navigate([url]);
-  }
-
-  async sendServicio(){
-
-
-      if (  (this.title != undefined && this.title !== null) &&
-        (this.editorText != undefined && this.editorText !== null) && 
-        (this.name != undefined && this.name !== null) &&
-        (this.email != undefined && this.email !== null ) &&
-        // (this.selectedValue != undefined && this.selectedValue !== null ) &&
-        (this.phone != undefined && this.phone !== null) ){
-        this.loadSend = true
-
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(this.editorText, 'text/html');
-
-        var productCreate: ISearchFull = {
-          title: this.title,
-          //@ts-ignore
-          description: doc.body.textContent,
-          images: this.images,
-          name: this.name,
-          email: this.email,
-          phone: this.phone,
-          location: this.selectedValue,
-        };
-    
-        const {response, error} = await this.servicesSvc.create(productCreate);
-
-        setTimeout(() => {
-          this.loadSend = false
-          this.servicioAdded = true;
-        }, 2000);
-        
-    
-        this.images = []
-   
-       
+    if ( !this.currentUser?.email ) {
+      if ( this.name.trim() === "" ) {
+        allOk = false;
+        this.nameError = true;
       } else {
-    
-
-        if (  (this.title == undefined || this.title == null || this.title == "") ){
-          this.error.title = true;
-        }
-
-        if (  (this.editorText == undefined || this.editorText == null || this.editorText == "") ){
-          this.error.description = true;
-        }
-
-        if (  (this.selectedValue == undefined || this.selectedValue == null || this.selectedValue == "") ){
-          this.error.location = true;
-        }
-
-        if ( this.currentUser?.email == undefined){
-
-          if (  (this.name == undefined || this.name == null || this.name == "") ){
-            this.error.name = true;
-          }
-  
-          if (  (this.email == undefined || this.email == null || this.email == "") ){
-            this.error.email = true;
-          }
-  
-          if (  (this.phone == undefined || this.phone == null || this.phone == "") ){
-            this.error.phone = true;
-          }
-        }
-        this.loadSend = false
-        this.servicioError = true;
-        this.servicioAdded = false;
-
-        this.servicioFinsish = false;
-       
-        
+        this.nameError = false;
       }
-       
-  }
-    
-  finish(){
-    this.servicioAdded = false;
-    this.servicioFinsish = true;
-  }
 
-  closeSearch(){
-    this.images = []
-    this.isTemplate = false;
-    this.servicioAdded = false;
-    this.servicioFinsish = false;
+      if ( this.email.trim() === "" || this.email.trim().match(this.EMAIL_REGEX) === null ) {
+        allOk = false;
+        this.emailError = true;
+      } else {
+        this.emailError = false;
+      }
 
-    this.title = "";
-    this.description = "";
-    this.editorText = "";
-    this.name = "";
-    this.email = "";
-    this.phone = "";
-    this.location = "";
-    this.selectedValue = null;
+      if ( this.phone.trim() === "" || this.phone.trim().match(this.MOBILE_PHONE_REGEX_ES) === null ) {
+        allOk = false;
+        this.phoneError = true;
+      } else {
+        this.phoneError = false;
+      }
+    }
 
-    window.scrollTo(0, 0);
+    this.formError = !allOk;
 
-  }
-  closeServicioError(){
-    this.servicioAdded = false;
-    this.servicioAddedOther = false;
-    this.servicioError = false;
+    return allOk
   }
 
-  goToHome(){
+  sendRequest() {
+    if ( !this.formValid() ) {
+      return;   // BREAK EXECUTION
+    }
+
+    this.loadingRequest = true;
+
+    this.servicesSvc.create({
+      name: !this.currentUser?.email ? this.name : undefined,
+      email: !this.currentUser?.email ? this.email : undefined,
+      phone: !this.currentUser?.email ? this.phone : undefined,
+      location: this.location.toString(),
+      subsector: this.subsector.toString(),
+      description: this.title,
+    }).then((response: any) => {
+
+    }).catch((error) => {
+
+    }).finally(() => {
+      this.showDataSentModal();
+      this.loadingRequest = false;
+    });
+  }
+
+  showDataSentModal() {
+    this.dataSentInfoModal.nativeElement.showModal();
+  }
+  closeDataSentModal() {
+    this.dataSentInfoModal.nativeElement.close();
+    this.close();
     this.router.navigate(['/']);
   }
-
-  gotoSearch(){
-
-    const normalizedString = this.title.normalize("NFD").replace(/[\u0300-\u036f&&[^\u00f1]]/g, "");
-    if (this.title) {
-      // You can construct the URL for the new route with the parameters
-        const targetRoute = `/servicios/${normalizedString}`;
-  
-        // Use the Router to navigate to the new route
-        this.router.navigate([targetRoute]);
-      }
-  }
-
 }

@@ -1,7 +1,7 @@
 import { IFile } from "../../../components/file-picker/models/file.model";
 
 export interface ISearchFull {
-  
+  id?: number;
   name?: string;
   email?: string;
   phone?: string;
