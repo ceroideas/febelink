@@ -23,7 +23,7 @@ export const routes: Routes = [
       },
       { path: 'home', redirectTo: '', pathMatch: 'full' },
       {
-        path: 'que-es-febelink',
+        path: 'app',
         component: LandingComponent
       },
       // ESTAS SON LAS RUTAS PARA EL LISTADO PARA EL FILTRO
