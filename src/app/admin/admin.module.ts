@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminPage } from './admin.page';
 import { SharedModule } from '../shared/shared.module';
 
-import { LucideAngularModule, MousePointerClick, Map, MapPin, Factory, BriefcaseBusiness, Link, Wallet, Pencil, Trash2, Image, ArrowDownToDot, Plus, Square, SquareCheck, X, FileDown, FileUp, ArrowUpRight, Globe, Eye } from 'lucide-angular';
+import { LucideAngularModule, MousePointerClick, Map, MapPin, Factory, Briefcase, BriefcaseBusiness, Link, Wallet, Pencil, Trash2, Image, ArrowDownToDot, Plus, Square, SquareCheck, X, FileDown, FileUp, ArrowUpRight, Globe, Eye, UsersRound } from 'lucide-angular';
 
 import { SectorsComponent } from './sectors/sectors.component';
 import { SubsectorsComponent } from './subsectors/subsectors.component';
@@ -14,13 +14,15 @@ import { CitiesComponent } from './cities/cities.component';
 import { ClicksComponent } from './clicks/clicks.component';
 import { FooterLinksComponent } from './footer-links/footer-links.component';
 import { BudgetsComponent } from './budgets/budgets.component';
+import { ShadowUsersComponent } from './shadow-users/shadow-users.component';
+import { ShadowProductsComponent } from './shadow-products/shadow-products.component';
 
 @NgModule({
   imports: [
     SharedModule,
     FormsModule,
     AdminPageRoutingModule,
-    LucideAngularModule.pick({MousePointerClick, Map, MapPin, Factory, BriefcaseBusiness, Link, Wallet, Pencil, Trash2, Image, ArrowDownToDot, Plus, Square, SquareCheck, X, FileDown, FileUp, ArrowUpRight, Globe, Eye}),
+    LucideAngularModule.pick({MousePointerClick, Map, MapPin, Factory, Briefcase, BriefcaseBusiness, Link, Wallet, Pencil, Trash2, Image, ArrowDownToDot, Plus, Square, SquareCheck, X, FileDown, FileUp, ArrowUpRight, Globe, Eye, UsersRound}),
   ],
   declarations: [
     AdminPage, 
@@ -30,7 +32,9 @@ import { BudgetsComponent } from './budgets/budgets.component';
     CitiesComponent,
     ClicksComponent,
     FooterLinksComponent,
-    BudgetsComponent
+    BudgetsComponent,
+    ShadowUsersComponent,
+    ShadowProductsComponent
   ]
 })
 export class AdminPageModule {}

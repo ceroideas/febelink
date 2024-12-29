@@ -40,6 +40,13 @@ export class AdminPage {
       ]
     },
     {
+      name: 'Usuarios y servicios',
+      items: [
+        {title: 'Usuarios', icon: 'users-round', link: '/admin/shadow-users'},
+        {title: 'Servicios', icon: 'briefcase', link: '/admin/shadow-products'},
+      ]
+    },
+    {
       name: 'Trabajos',
       items: [
         {title: 'Solicitudes', icon: 'briefcase-business', link: '/admin/budget'}

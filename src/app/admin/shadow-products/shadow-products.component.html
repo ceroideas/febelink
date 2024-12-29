@@ -10,8 +10,8 @@
   <!-- Statistics -->
   <div class="cards flex flex-wrap gap-4">
     <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
-      <span class="title mb-2 font-semibold">Peticiones</span>
-      <span class="data text-4xl font-bold">{{askForBudgets.length}}</span>
+      <span class="title mb-2 font-semibold">Servicios</span>
+      <span class="data text-4xl font-bold">{{ownProducts.length}}</span>
       <span class="aux text-neutral-400">Total</span>
     </div>
   </div>
@@ -89,16 +89,16 @@
     <!-- Header -->
     <li class="sticky top-1 flex items-center gap-2 p-1 pr-3 bg-neutral-100 rounded font-semibold">
       <span class="h-fit w-5 shrink-0"></span>
+      <span class="w-48 h-fit shrink-0">Título</span>
       <span class="w-full h-fit">Descripción</span>
-      <span class="w-64 h-fit shrink-0">Profesión</span>
-      <span class="w-64 h-fit shrink-0">Provincia</span>
+      <span class="w-48 h-fit shrink-0">Usuario</span>
       <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
     </li>
 
     <!-- Data -->
     <li 
       class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
-      *ngFor="let item of filteredAskForBudgets"
+      *ngFor="let item of filteredOwnProducts"
       (click)="item.selected = !item.selected"
     >
       <!-- Select -->
@@ -117,23 +117,12 @@
         />
       </span>
       <!-- Title -->
+      <span class="w-48 shrink-0 line-clamp-1">{{ item.title }}</span>
+      <!-- Description -->
       <span class="w-full line-clamp-1">{{ item.description }}</span>
-      <!-- Subsector -->
-      <button 
-        class="w-64 shrink-0 flex items-center gap-1 hover:opacity-50 text-left"
-        (click)="viewSubsector($event, item)"
-      >
-        {{ item.subsector || '-' }}
-        <lucide-icon 
-          name="arrow-up-right"
-          class="stroke-link transition duration-75 group-hover:stroke-gray-900" 
-          [size]="18"
-        />
-      </button>
       <!-- Location -->
-      <button 
-        class="w-64 shrink-0 flex items-center gap-1 hover:opacity-50"
-        (click)="viewLocation($event, item)"
+      <!-- <button 
+        class="w-48 shrink-0 flex items-center gap-1 hover:opacity-50"
       >
         {{ item.location || '-' }}
         <lucide-icon 
@@ -141,7 +130,7 @@
           class="stroke-link transition duration-75 group-hover:stroke-gray-900" 
           [size]="18"
         />
-      </button>
+      </button> -->
       <!-- Actions -->
       <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
         <!-- Edit -->
@@ -177,11 +166,36 @@
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <h3 *ngIf="!currentAskForBudget?.isNew" class="text-lg font-bold">Modificar</h3>
-    <h3 *ngIf="currentAskForBudget?.isNew" class="text-lg font-bold">Crear</h3>
+    <h3 *ngIf="!currentOwnProduct?.isNew" class="text-lg font-bold">Modificar</h3>
+    <h3 *ngIf="currentOwnProduct?.isNew" class="text-lg font-bold">Crear</h3>
     
-    <div *ngIf="currentAskForBudget">
+    <div *ngIf="currentOwnProduct">
+      <!-- User -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Usuario*</span>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="currentOwnProduct!.userId"
+          (change)="getAvailableProfessions()"
+        >
+          <option disabled>Elige usuario</option>
+          <option *ngFor="let user of ownUsers" [value]="user.id">{{user.nick}}</option>
+        </select>
+      </label>
       <!-- Title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Título*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnProduct!.title"
+        />
+      </label>
+      <!-- Description -->
       <label class="form-control w-full">
         <div class="label">
           <span class="label-text text-neutral-500">Descripción*</span>
@@ -189,7 +203,7 @@
         <input 
           type="text" 
           class="input input-bordered w-full bg-neutral-100" 
-          [(ngModel)]="currentAskForBudget!.description"
+          [(ngModel)]="currentOwnProduct!.description"
         />
       </label>
       <!-- Subsector -->
@@ -199,53 +213,59 @@
         </div>
         <select 
           class="select select-bordered bg-neutral-100 text-base"
-          [(ngModel)]="currentAskForBudget!.subsector_id"
+          [(ngModel)]="currentOwnProduct!.subSectorId"
         >
-          <option disabled>Elige profesión</option>
-          <option *ngFor="let subsector of subsectors" [value]="subsector.id">{{subsector.nombre}}</option>
+          <option disabled>Elige profesion</option>
+          <option *ngFor="let profession of availableProfessions" [value]="profession.subSectorId">{{profession.subSectorName}}</option>
         </select>
       </label>
-      <!-- Province -->
+      <!-- Price -->
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text text-neutral-500">Provincia*</span>
+          <span class="label-text text-neutral-500">Precio*</span>
+        </div>
+        <input 
+          type="number" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnProduct!.productUnitPrice"
+        />
+      </label>
+      <!-- Price type -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Precio por*</span>
         </div>
         <select 
           class="select select-bordered bg-neutral-100 text-base"
-          [(ngModel)]="currentAskForBudget!.location_id"
+          [(ngModel)]="currentOwnProduct!.unitTypeId"
         >
-          <option disabled>Elige provincia</option>
-          <option *ngFor="let province of provinces" [value]="province.id">{{province.title}}</option>
+          <option disabled>Elige tipo</option>
+          <option *ngFor="let type of unitTypes" [value]="type.id">{{type.name}}</option>
         </select>
       </label>
-
-      <!-- Contact data -->
-      <ng-container *ngIf="!currentAskForBudget?.isNew && !!currentAskForBudget.name">
-        <div class="contact-data mt-4">
-          <h3 class="text-lg font-bold mb-2">Datos de contacto</h3>
-          <div class="data flex flex-col gap-2">
-            <label class="form-control w-full">
-              {{currentAskForBudget.name}}
-            </label>  
-            <label class="form-control w-full">
-              {{currentAskForBudget.email}}
-            </label>  
-            <label class="form-control w-full">
-              {{currentAskForBudget.phone}}
-            </label>  
-          </div>
+      <!-- Button name -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Texto boton*</span>
         </div>
-      </ng-container> 
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="currentOwnProduct!.buttonName"
+        >
+          <option disabled>Elige tipo</option>
+          <option *ngFor="let type of buttonNameMapped" [value]="type.id">{{type.name}}</option>
+        </select>
+      </label>
     </div>
 
     <!-- Action -->
     <div class="modal-action">
       <button 
         class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
-        (click)="currentAskForBudget?.isNew ? create() : update()"
+        (click)="currentOwnProduct?.isNew ? create() : update()"
         [disabled]="
-          (currentAskForBudget?.isNew && !canCreate) || 
-          (!currentAskForBudget?.isNew && !canUpdate) ||
+          (currentOwnProduct?.isNew && !canCreate) || 
+          (!currentOwnProduct?.isNew && !canUpdate) ||
           loadingRequest
         "
       >
@@ -263,7 +283,7 @@
 <dialog #deleteModal class="modal">
   <div class="modal-box bg-white">
     <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
-    <p class="py-4">¿Estas seguro que quieres eliminar el petición <b>{{currentAskForBudget?.description}}</b>?</p>
+    <p class="py-4">¿Estas seguro que quieres eliminar el servicio <b>{{currentOwnProduct?.description}}</b>?</p>
     <div class="modal-action">
       <button 
         class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
@@ -327,7 +347,7 @@
 <dialog #importSummaryModal class="modal">
   <div class="modal-box bg-white">
     <h3 class="text-lg font-bold">Resumen de importación</h3>
-    <p class="py-4">Se han detectado <b>{{importedAskForBudgets.length}}</b> peticioneses, <b class="text-green-700">{{importedNewAskForBudgets.length}}</b> nuevo<span *ngIf="importedNewAskForBudgets.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedAskForBudgets.length}}</b> modificado<span *ngIf="importedModifiedAskForBudgets.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedAskForBudgets.length}}</b> eliminado<span *ngIf="importedDeletedAskForBudgets.length !== 1">s</span>.</p>
+    <p class="py-4">Se han detectado <b>{{importedOwnProducts.length}}</b> peticiones, <b class="text-green-700">{{importedNewOwnProducts.length}}</b> nuevo<span *ngIf="importedNewOwnProducts.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedOwnProducts.length}}</b> modificado<span *ngIf="importedModifiedOwnProducts.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedOwnProducts.length}}</b> eliminado<span *ngIf="importedDeletedOwnProducts.length !== 1">s</span>.</p>
 
     <div class="modal-action">
       <button 
@@ -338,7 +358,7 @@
       </button>
       <button 
         class="btn bg-green-600 text-white hover:bg-green-700 transition"
-        [disabled]="!importedNewAskForBudgets.length && !importedModifiedAskForBudgets.length && !importedDeletedAskForBudgets.length"
+        [disabled]="!importedNewOwnProducts.length && !importedModifiedOwnProducts.length && !importedDeletedOwnProducts.length"
         (click)="applyImport()"
       >
         Importar
