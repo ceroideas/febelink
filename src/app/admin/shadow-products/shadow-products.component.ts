@@ -19,6 +19,7 @@ interface OwnProduct {
   subsector: string;
   subSectorId: number;
   userId: number;
+  userName?: string;
   productUnitPrice: number;
   unitTypeId: number;
   buttonName: number;
@@ -107,20 +108,23 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     !refresh && (this.loading = true);
 
     this.loading = false;
-    this.shadowProductsService.get().then((data: any) => {
-      this.ownProducts = data.response;
+
+    Promise.all([
+      this.shadowProductsService.get(),
+      this.shadowUsersService.get(),
+    ]).then(([productsdata, usersData]) => {
+      this.ownUsers = usersData.response;
       this.filter({ target: { value: this.currentFilter } });
 
-      this.loading = false;
-      this.cdRef.detectChanges();
-    })
-    .catch((error) => {
-      this.loading = false;
-      this.cdRef.detectChanges();
-    });
+      this.ownProducts = productsdata.response;
 
-    this.shadowUsersService.get().then((data: any) => {
-      this.ownUsers = data.response;
+      this.ownProducts.forEach((item: any) => {
+        item.userId = item.ownerUserId;
+        item.userName = item.ownerUsername;
+        item.subSectorId = item.sub_sector_id;
+        item.productUnitPrice = Number(item.unitPrice);
+      });
+
       this.filter({ target: { value: this.currentFilter } });
 
       this.loading = false;
@@ -178,6 +182,7 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
   showEdit(event: any, item: OwnProduct) {
     event.stopPropagation();
     this.currentOwnProduct = JSON.parse(JSON.stringify(item));
+    this.getAvailableProfessions();
     this.showEditModal();
   }
   showDelete(event: any, item: OwnProduct) {

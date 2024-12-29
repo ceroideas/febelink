@@ -343,13 +343,13 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
         id: this.currentOwnUser?.id,
         nick: this.currentOwnUser?.nick,
         descripcion: this.currentOwnUser?.descripcion,
-        locations: this.currentOwnUser?.location,
-        professions: this.currentOwnUser?.profession.map(item => {
+        locations: JSON.stringify(this.currentOwnUser?.location),
+        professions: JSON.stringify(this.currentOwnUser?.profession.map(item => {
           return {
             id: item.subSectorId,
             name: item.subSectorName,
           }
-        }),
+        })),
       });
 
       this.getData(true);
