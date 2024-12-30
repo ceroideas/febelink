@@ -194,88 +194,90 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
   }
   
   export() {
-    // let csvContent = "data:text/csv;charset=utf-8,";
+    let csvContent = "data:text/csv;charset=utf-8,";
 
-    // // Add header
-    // csvContent += 'Título;Descripcion;Profesión;Provincia;Ciudad\n';
+    // Add header
+    csvContent += 'Nombre;Descripción;Profesiones;Ubicaciones\n';
 
-    // // Add data
-    // const itemsCsv = this.filteredOwnUsers.map(item => {
-    //   return `${item.title};${item.descripcion};${item.subsector};${item.location};${item.city}`;
-    // })
+    // Add data
+    const itemsCsv = this.filteredOwnUsers.map(item => {
+      return `${item.nick};${item.descripcion};${item.profession.map(subitem => subitem.subSectorName).join(',')};${item.location.map(subitem => subitem.city).join(',')}`;
+    })
 
-    // // Add data to csv
-    // csvContent += itemsCsv.join('\n');
+    // Add data to csv
+    csvContent += itemsCsv.join('\n');
 
-    // // Download csv
-    // const encodedUri = encodeURI(csvContent);
-    // const link = document.createElement("a");
-    // link.setAttribute("href", encodedUri);
-    // link.setAttribute("download", "servicios_propios.csv");
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
+    // Download csv
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "usuarios_propios.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
   import() {
-    // const input = document.createElement('input');
-    // input.type = 'file';
-    // input.accept = '.csv';
-    // input.onchange = (event: any) => {
-    //   const file = event.target.files[0];
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     const csv = e.target.result;
-    //     const lines = csv.split('\n');
-    //     lines.shift(); // Remove header
-    //     const items = lines.map((line: string) => {
-    //       const [descripcion, subsector, location] = line.split(';');
-    //       return { descripcion, subsector, location };
-    //     });
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const csv = e.target.result;
+        const lines = csv.split('\n');
+        lines.shift(); // Remove header
+        const items = lines.map((line: string) => {
+          const [nick, descripcion, professions, locations] = line.split(';');
+          return { nick, descripcion, professions, locations };
+        });
 
-    //     // Parse data
-    //     this.importedOwnUsers = items.map((
-    //       item: { title: string, descripcion: string, subsector: string, location: string, city: string }
-    //     ) => {
-    //       return {
-    //         title: item.title,
-    //         descripcion: item.descripcion,
-    //         subsector: item.subsector,
-    //         location: item.location,
-    //         location_id: this.provinces.find(province => province.title === item.location)?.id || 0,
-    //         subsector_id: this.subsectors.find(subsector => subsector.nombre === item.subsector)?.id || 0,
-    //         city: item.city,
-    //       }
-    //     })
+        // Parse data
+        this.importedOwnUsers = items.map((
+          item: { nick: string, descripcion: string, professions: string, locations: string }
+        ) => {
+          const cities = this.cities.filter(city => item.locations.split(',').includes(city.title));
+          const subsectors = this.subsectors.filter(subsector => item.professions.split(',').includes(subsector.nombre));
 
-    //     // Check for new own product
-    //     this.importedNewOwnUsers = this.importedOwnUsers.filter((item: OwnUser) => 
-    //       !this.ownUsers.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city)
-    //     );
+          return {
+            id: 0,
+            nick: item.nick,
+            descripcion: item.descripcion,
+            location: cities.map(city => { return { locationId: city.locations_id.id, location: city.locations_id.title, city: city.title } }),
+            profession: subsectors.map(subsector => { return { subSectorId: subsector.id, subSectorName: subsector.nombre } }),
+          }
+        })
 
-    //     // Check for modified own product
-    //     this.importedModifiedOwnUsers = this.importedOwnUsers
-    //     .filter((item: OwnUser) => 
-    //       !!this.ownUsers.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city)
-    //     )
-    //     .filter((item: OwnUser) => {
-    //       // Check if sector has been modified
-    //       const currentOwnUser = this.ownUsers.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city);
-    //       return currentOwnUser!.title !== item.title || 
-    //              currentOwnUser!.descripcion !== item.descripcion
-    //     });
+        // Check for new own product
+        this.importedNewOwnUsers = this.importedOwnUsers.filter((item: OwnUser) => 
+          !this.ownUsers.find(subitem => subitem.nick === item.nick)
+        );
 
-    //     // Check for deleted own product
-    //     this.importedDeletedOwnUsers = this.ownUsers.filter((item: OwnUser) => 
-    //       !this.importedOwnUsers.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city)
-    //     );
+        // Check for modified own product
+        this.importedModifiedOwnUsers = this.importedOwnUsers
+        .filter((item: OwnUser) => 
+          !!this.ownUsers.find(subitem => subitem.nick === item.nick)
+        )
+        .filter((item: OwnUser) => {
+          // Check if data has been modified
+          const currentOwnUser = this.ownUsers.find(subitem => subitem.nick === item.nick);
+          return currentOwnUser!.descripcion !== item.descripcion || 
+                 currentOwnUser!.profession.map(item => item.subSectorId).sort().join(',') !== item.profession.map(item => item.subSectorId).sort().join(',') ||
+                 currentOwnUser!.location.map(item => item.locationId).sort().join(',') !== item.location.map(item => item.locationId).sort().join(',')
+        });
 
-    //     this.importSummaryModal.nativeElement.showModal();
-    //   }
-    //   reader.readAsText(file);
-    // }
-    // document.body.appendChild(input);
-    // input.click();
-    // document.body.removeChild(input);
+        // Check for deleted own product
+        this.importedDeletedOwnUsers = this.ownUsers.filter((item: OwnUser) => 
+          !this.importedOwnUsers.find(subitem => subitem.nick === item.nick)
+        );
+
+        this.importSummaryModal.nativeElement.showModal();
+      }
+      reader.readAsText(file);
+    }
+    document.body.appendChild(input);
+    input.click();
+    document.body.removeChild(input);
   }
 
   async create() {
@@ -284,7 +286,7 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
     try {
       await this.shadowUsersService.create({
         nick: this.currentOwnUser?.nick,
-        descripcion: this.currentOwnUser?.descripcion,
+        description: this.currentOwnUser?.descripcion,
         locations: this.currentOwnUser?.location,
         professions: this.currentOwnUser?.profession.map(item => {
           return {
@@ -342,9 +344,9 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
       await this.shadowUsersService.update({
         id: this.currentOwnUser?.id,
         nick: this.currentOwnUser?.nick,
-        descripcion: this.currentOwnUser?.descripcion,
-        locations: JSON.stringify(this.currentOwnUser?.location),
-        professions: JSON.stringify(this.currentOwnUser?.profession.map(item => {
+        description: this.currentOwnUser?.descripcion,
+        locations: JSON.stringify(this.currentOwnUser?.location.filter(item => !item.removed)),
+        professions: JSON.stringify(this.currentOwnUser?.profession.filter(item => !item.removed).map(item => {
           return {
             id: item.subSectorId,
             name: item.subSectorName,
@@ -362,34 +364,47 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
     }
   }
   async applyImport() {
-    // this.loadingRequest = true;
+    this.loadingRequest = true;
 
-    // // Create new own product
-    // for(let item of this.importedNewOwnUsers) {
-    //   await this.searchForYouService.create({
-    //     location: item?.location_id.toString(),
-    //     subsector: item?.subsector_id.toString(),
-    //     descripcion: item!.descripcion,
-    //   });
-    // };
+    // Create new own product
+    for(let item of this.importedNewOwnUsers) {
+      await this.shadowUsersService.create({
+        nick: item?.nick,
+        description: item?.descripcion,
+        locations: item?.location,
+        professions: item?.profession.map(item => {
+          return {
+            id: item.subSectorId,
+            name: item.subSectorName,
+          }
+        }),
+      });
+    };
 
-    // // Update modified own product
-    // for(let item of this.importedModifiedOwnUsers) {
-    //   await this.searchForYouService.update({
-    //     location: item?.location_id.toString(),
-    //     subsector: item?.subsector_id.toString(),
-    //     descripcion: item!.descripcion,
-    //   });
-    // };
+    // Update modified own product
+    for(let item of this.importedModifiedOwnUsers) {
+      await this.shadowUsersService.update({
+        id: this.ownUsers.find(subitem => subitem.nick === item.nick)?.id,
+        nick: item?.nick,
+        description: item?.descripcion,
+        locations: JSON.stringify(item?.location),
+        professions: JSON.stringify(item?.profession.map(item => {
+          return {
+            id: item.subSectorId,
+            name: item.subSectorName,
+          }
+        })),
+      });
+    };
 
-    // // Delete deleted own product
-    // for(let item of this.importedDeletedOwnUsers) {
-    //   await this.searchForYouService.delete(item.id!);
-    // };
+    // Delete deleted own product
+    for(let item of this.importedDeletedOwnUsers) {
+      await this.shadowUsersService.delete(item.id!);
+    };
 
-    // this.getData(true);
+    this.getData(true);
 
-    // this.loadingRequest = false;
-    // this.closeImportSummaryModal()
+    this.loadingRequest = false;
+    this.closeImportSummaryModal()
   }
 }

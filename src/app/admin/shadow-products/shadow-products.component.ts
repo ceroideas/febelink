@@ -112,16 +112,21 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     Promise.all([
       this.shadowProductsService.get(),
       this.shadowUsersService.get(),
-    ]).then(([productsdata, usersData]) => {
+      this.keywordService.getSubSectorAll(),
+      this.keywordService.getLocationKeywords()
+    ]).then(([productsdata, usersData, subsectorsData, locationsData]) => {
       this.ownUsers = usersData.response;
       this.filter({ target: { value: this.currentFilter } });
 
       this.ownProducts = productsdata.response;
+      this.subsectors = subsectorsData.response;
+      this.provinces = locationsData.response;
 
       this.ownProducts.forEach((item: any) => {
         item.userId = item.ownerUserId;
         item.userName = item.ownerUsername;
         item.subSectorId = item.sub_sector_id;
+        item.subsector = this.subsectors.find(subsector => subsector.id === item.subSectorId)?.nombre || '';
         item.productUnitPrice = Number(item.unitPrice);
       });
 
@@ -134,18 +139,6 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       this.loading = false;
       this.cdRef.detectChanges();
     });
-
-    this.keywordService.getLocationKeywords()
-    .then((data: any) => {
-      this.provinces = data.response;
-      this.cdRef.detectChanges();
-    })
-
-    this.keywordService.getSubSectorAll()
-    .then((data: any) => {
-      this.subsectors = data.response;
-      this.cdRef.detectChanges();
-    })
   }
 
   filter(event: any) {
@@ -200,88 +193,99 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
   }
 
   export() {
-    // let csvContent = "data:text/csv;charset=utf-8,";
+    let csvContent = "data:text/csv;charset=utf-8,";
 
-    // // Add header
-    // csvContent += 'Título;Descripcion;Profesión;Provincia;Ciudad\n';
+    // Add header
+    csvContent += 'Usuario propio;Título;Descripcion;Profesión;Precio;Precio por;Texto boton\n';
 
-    // // Add data
-    // const itemsCsv = this.filteredOwnProducts.map(item => {
-    //   return `${item.title};${item.description};${item.subsector};${item.location};${item.city}`;
-    // })
+    // Add data
+    const itemsCsv = this.filteredOwnProducts.map(item => {
+      return `${item.userName};${item.title};${item.description};${item.subsector};${item.productUnitPrice};${this.unitTypes.find(subitem => subitem.id === item.unitTypeId)?.name};${this.buttonNameMapped.find(subitem => subitem.id === item.buttonName)?.name}`;
+    })
 
-    // // Add data to csv
-    // csvContent += itemsCsv.join('\n');
+    // Add data to csv
+    csvContent += itemsCsv.join('\n');
 
-    // // Download csv
-    // const encodedUri = encodeURI(csvContent);
-    // const link = document.createElement("a");
-    // link.setAttribute("href", encodedUri);
-    // link.setAttribute("download", "servicios_propios.csv");
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
+    // Download csv
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "servicios_propios.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
   import() {
-    // const input = document.createElement('input');
-    // input.type = 'file';
-    // input.accept = '.csv';
-    // input.onchange = (event: any) => {
-    //   const file = event.target.files[0];
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     const csv = e.target.result;
-    //     const lines = csv.split('\n');
-    //     lines.shift(); // Remove header
-    //     const items = lines.map((line: string) => {
-    //       const [description, subsector, location] = line.split(';');
-    //       return { description, subsector, location };
-    //     });
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const csv = e.target.result;
+        const lines = csv.split('\n');
+        lines.shift(); // Remove header
+        const items = lines.map((line: string) => {
+          const [user, title, description, subsector, price, priceType, buttonName] = line.split(';');
+          return { user, title, description, subsector, price, priceType, buttonName };
+        });
 
-    //     // Parse data
-    //     this.importedOwnProducts = items.map((
-    //       item: { title: string, description: string, subsector: string, location: string, city: string }
-    //     ) => {
-    //       return {
-    //         title: item.title,
-    //         description: item.description,
-    //         subsector: item.subsector,
-    //         location: item.location,
-    //         location_id: this.provinces.find(province => province.title === item.location)?.id || 0,
-    //         subsector_id: this.subsectors.find(subsector => subsector.nombre === item.subsector)?.id || 0,
-    //         city: item.city,
-    //       }
-    //     })
+        console.log(this.subsectors);
 
-    //     // Check for new own product
-    //     this.importedNewOwnProducts = this.importedOwnProducts.filter((item: OwnProduct) => 
-    //       !this.ownProducts.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city)
-    //     );
+        // Parse data
+        this.importedOwnProducts = items.map((
+          item: { user: string, title: string, description: string, subsector: string, price: string, priceType: string, buttonName: string }
+        ) => {
+          return {
+            id: 0,
+            title: item.title,
+            description: item.description,
+            subsector: item.subsector,
+            subSectorId: this.subsectors.find(subsector => subsector.nombre === item.subsector)?.id || 0,
+            userId: this.ownUsers.find(subitem => subitem.nick === item.user)?.id || 0,
+            userName: item.user,
+            productUnitPrice: Number(item.price),
+            unitTypeId: this.unitTypes.find(subitem => this.normalizeStringToCompare(subitem.name) === this.normalizeStringToCompare(item.priceType))?.id || 0,
+            buttonName: this.buttonNameMapped.find(subitem => this.normalizeStringToCompare(subitem.name) === this.normalizeStringToCompare(item.buttonName))?.id || 0,
+          }
+        })
 
-    //     // Check for modified own product
-    //     this.importedModifiedOwnProducts = this.importedOwnProducts
-    //     .filter((item: OwnProduct) => 
-    //       !!this.ownProducts.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city)
-    //     )
-    //     .filter((item: OwnProduct) => {
-    //       // Check if sector has been modified
-    //       const currentOwnProduct = this.ownProducts.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city);
-    //       return currentOwnProduct!.title !== item.title || 
-    //              currentOwnProduct!.description !== item.description
-    //     });
+        console.log(items);
+        console.log(this.importedOwnProducts);
 
-    //     // Check for deleted own product
-    //     this.importedDeletedOwnProducts = this.ownProducts.filter((item: OwnProduct) => 
-    //       !this.importedOwnProducts.find(subitem => subitem.location === item.location && subitem.subsector === item.subsector && subitem.city === item.city)
-    //     );
+        // Check for new own product
+        this.importedNewOwnProducts = this.importedOwnProducts.filter((item: OwnProduct) => 
+          !this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)
+        );
 
-    //     this.importSummaryModal.nativeElement.showModal();
-    //   }
-    //   reader.readAsText(file);
-    // }
-    // document.body.appendChild(input);
-    // input.click();
-    // document.body.removeChild(input);
+        // Check for modified own product
+        this.importedModifiedOwnProducts = this.importedOwnProducts
+        .filter((item: OwnProduct) => 
+          !!this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)
+        )
+        .filter((item: OwnProduct) => {
+          // Check if sector has been modified
+          const currentOwnProduct = this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description);
+          return this.normalizeStringToCompare(currentOwnProduct!.subsector) !== this.normalizeStringToCompare(item.subsector) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.userName) !== this.normalizeStringToCompare(item.userName) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.productUnitPrice.toString()) !== this.normalizeStringToCompare(item.productUnitPrice.toString()) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.unitTypeId.toString()) !== this.normalizeStringToCompare(item.unitTypeId.toString()) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.buttonName.toString()) !== this.normalizeStringToCompare(item.buttonName.toString())
+        });
+
+        // Check for deleted own product
+        this.importedDeletedOwnProducts = this.ownProducts.filter((item: OwnProduct) => 
+          !this.importedOwnProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)
+        );
+
+        this.importSummaryModal.nativeElement.showModal();
+      }
+      reader.readAsText(file);
+    }
+    document.body.appendChild(input);
+    input.click();
+    document.body.removeChild(input);
   }
 
   async create() {
@@ -323,20 +327,20 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     }
   }
   async deleteMultiple() {
-    // this.loadingRequest = true;
+    this.loadingRequest = true;
 
-    // try {
-    //   for ( let item of this.selected ) {
-    //     await this.searchForYouService.delete(item.id!);
-    //   }
+    try {
+      for ( let item of this.selected ) {
+        await this.shadowProductsService.delete(item.id!);
+      }
 
-    //   this.getData(true);
+      this.getData(true);
 
-    //   this.loadingRequest = false;
-    //   this.multipleDeleteModal.nativeElement.close();
-    // } catch (error) {
-    //   this.loadingRequest = false;
-    // }
+      this.loadingRequest = false;
+      this.multipleDeleteModal.nativeElement.close();
+    } catch (error) {
+      this.loadingRequest = false;
+    }
   }
   async update() {
     this.loadingRequest = true;
@@ -364,34 +368,43 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     }
   }
   async applyImport() {
-    // this.loadingRequest = true;
+    this.loadingRequest = true;
 
-    // // Create new own product
-    // for(let item of this.importedNewOwnProducts) {
-    //   await this.searchForYouService.create({
-    //     location: item?.location_id.toString(),
-    //     subsector: item?.subsector_id.toString(),
-    //     description: item!.description,
-    //   });
-    // };
+    // Create new own product
+    for(let item of this.importedNewOwnProducts) {
+      await this.shadowProductsService.create({
+        userId: item?.userId,
+        productUnitPrice: item?.productUnitPrice,
+        unitTypeId: item?.unitTypeId,
+        subSectorId: item?.subSectorId,
+        title: item?.title,
+        description: item?.description,
+        buttonName: item?.buttonName,
+      });
+    };
 
-    // // Update modified own product
-    // for(let item of this.importedModifiedOwnProducts) {
-    //   await this.searchForYouService.update({
-    //     location: item?.location_id.toString(),
-    //     subsector: item?.subsector_id.toString(),
-    //     description: item!.description,
-    //   });
-    // };
+    // Update modified own product
+    for(let item of this.importedModifiedOwnProducts) {
+      await this.shadowProductsService.update({
+        id: this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)?.id,
+        userId: item?.userId,
+        productUnitPrice: item?.productUnitPrice,
+        unitTypeId: item?.unitTypeId,
+        subSectorId: item?.subSectorId,
+        title: item?.title,
+        description: item?.description,
+        buttonName: item?.buttonName,
+      });
+    };
 
-    // // Delete deleted own product
-    // for(let item of this.importedDeletedOwnProducts) {
-    //   await this.searchForYouService.delete(item.id!);
-    // };
+    // Delete deleted own product
+    for(let item of this.importedDeletedOwnProducts) {
+      await this.shadowProductsService.delete(this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)?.id!);
+    };
 
-    // this.getData(true);
+    this.getData(true);
 
-    // this.loadingRequest = false;
-    // this.closeImportSummaryModal()
+    this.loadingRequest = false;
+    this.closeImportSummaryModal()
   }
 }

@@ -63,6 +63,6 @@ export abstract class BaseComponent {
 
   normalizeStringToCompare(string: string | undefined | null): string {
     if (!string) return '';
-    return string;
+    return string.toLocaleLowerCase();
   }
 }
