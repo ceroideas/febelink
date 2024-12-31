@@ -17,9 +17,9 @@
   </div>
 
   <!-- Actions -->
-  <div class="actions flex gap-4">
+  <div class="actions flex flex-col-reverse items-end gap-4">
     <!-- Filter -->
-    <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
+    <div class="w-full h-10 bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
       <input 
         type="text" 
         class="w-full h-full bg-transparent outline-none" 
@@ -42,6 +42,19 @@
         />
         <span class="px-2">Exportar</span>
       </button>
+      <!-- Export pack -->
+      <button 
+        class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
+        (click)="export()"
+      >
+        <lucide-icon
+          name="file-down"
+          class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+        <span class="px-2">Exportar pack</span>
+      </button>
       <!-- Import -->
       <button 
         class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
@@ -55,6 +68,19 @@
         />
         <span class="px-2">Importar</span>
       </button>
+      <!-- Import pack -->
+      <button 
+        class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
+        (click)="importPack()"
+      >
+        <lucide-icon
+          name="file-up"
+          class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="2"
+          [size]="20"
+        />
+        <span class="px-2">Importar pack</span>
+      </button>
       <!-- Create -->
       <button 
         class="button flex justify-center items-center text-white ring-1 ring-inset ring-primary bg-primary/80 hover:enabled:bg-primary transition rounded-lg p-2 font-semibold"
@@ -67,6 +93,19 @@
           [size]="20"
         />
         <span class="px-2">Crear</span>
+      </button>
+      <!-- Create pack -->
+      <button 
+        class="button flex justify-center items-center text-white ring-1 ring-inset ring-primary bg-primary/80 hover:enabled:bg-primary transition rounded-lg p-2 font-semibold"
+        (click)="showCreatePack()"
+      >
+        <lucide-icon
+          name="plus"
+          class="stroke-white transition duration-75 group-hover:stroke-gray-900" 
+          [strokeWidth]="3"
+          [size]="20"
+        />
+        <span class="px-2">Crear pack</span>
       </button>
       <!-- Delete -->
       <button 
@@ -254,6 +293,208 @@
       <button 
         class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
         (click)="currentOwnProduct?.isNew ? create() : update()"
+        [disabled]="
+          (currentOwnProduct?.isNew && !canCreate) || 
+          (!currentOwnProduct?.isNew && !canUpdate) ||
+          loadingRequest
+        "
+      >
+        Guardar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<!-- Edit modal pack -->
+<dialog #editPackModal class="modal">
+  <div class="modal-box bg-white">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 *ngIf="!currentOwnProduct?.isNew" class="text-lg font-bold">Modificar</h3>
+    <h3 *ngIf="currentOwnProduct?.isNew" class="text-lg font-bold">Crear</h3>
+    
+    <div *ngIf="currentOwnProduct">
+      <p class="pl-1 mt-6 text-sm uppercase text-slate-500 font-bold">Profesional</p>
+      <!-- Nick -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Nombre*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnUser!.nick"
+        />
+      </label>
+      <!-- Descripcion -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Descripción</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnUser!.descripcion"
+        />
+      </label>
+      <!-- Phone -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Teléfono</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnUser!.phone"
+        />
+      </label>
+      <!-- Email -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Email*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnUser!.email"
+        />
+      </label>
+      <!-- Subsector -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Profesión*</span>
+        </div>
+        <div 
+          *ngIf="currentOwnUser?.profession?.length"
+          class="flex flex-wrap gap-2 mb-2"
+        >
+          <button 
+            class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20 transition"
+            [ngClass]="{'bg-red-50 text-red-700 ring-red-600/20': profession.removed}"
+            *ngFor="let profession of currentOwnUser?.profession"
+            (click)="profession.removed = !profession.removed"
+          >
+            {{profession.subSectorName}}
+            <lucide-icon
+              name="x"
+              class="ml-0.5"
+              [size]="16"
+            />
+          </button>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="selectedSubsectorId"
+          (change)="addSubsector()"
+        >
+          <option disabled>Elige profesión</option>
+          <option *ngFor="let subsector of subsectors" [value]="subsector.id">{{subsector.nombre}}</option>
+        </select>
+      </label>
+      <!-- Location -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Ubicación*</span>
+        </div>
+        <div 
+          *ngIf="currentOwnUser?.location?.length"
+          class="flex flex-wrap gap-2 mb-2"
+        >
+          <button 
+            class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20 transition"
+            [ngClass]="{'bg-red-50 text-red-700 ring-red-600/20': location.removed}"
+            *ngFor="let location of currentOwnUser?.location"
+            (click)="location.removed = !location.removed"
+          >
+            {{location.location}} - {{location.city}}
+            <lucide-icon
+              name="x"
+              class="ml-0.5"
+              [size]="16"
+            />
+          </button>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="selectedCityId"
+          (change)="addLocation()"
+        >
+          <option disabled>Elige ciudad</option>
+          <option *ngFor="let city of cities" [value]="city.id">{{city.locations_id.title}} - {{city.title}}</option>
+        </select>
+      </label>
+      <p class="pl-1 mt-6 text-sm uppercase text-slate-500 font-bold">Servicio</p>
+      <!-- Title -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Título*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnProduct!.title"
+        />
+      </label>
+      <!-- Description -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Descripción</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnProduct!.description"
+        />
+      </label>
+      <!-- Price -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Precio*</span>
+        </div>
+        <input 
+          type="number" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnProduct!.productUnitPrice"
+        />
+      </label>
+      <!-- Price type -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Precio por*</span>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="currentOwnProduct!.unitTypeId"
+        >
+          <option disabled>Elige tipo</option>
+          <option *ngFor="let type of unitTypes" [value]="type.id">{{type.name}}</option>
+        </select>
+      </label>
+      <!-- Button name -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Texto boton*</span>
+        </div>
+        <select 
+          class="select select-bordered bg-neutral-100 text-base"
+          [(ngModel)]="currentOwnProduct!.buttonName"
+        >
+          <option disabled>Elige tipo</option>
+          <option *ngFor="let type of buttonNameMapped" [value]="type.id">{{type.name}}</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Action -->
+    <div class="modal-action">
+      <button 
+        class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
+        (click)="currentOwnProduct?.isNew ? createPack() : updatePack()"
         [disabled]="
           (currentOwnProduct?.isNew && !canCreate) || 
           (!currentOwnProduct?.isNew && !canUpdate) ||

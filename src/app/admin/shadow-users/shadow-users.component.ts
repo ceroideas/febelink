@@ -19,6 +19,8 @@ export interface OwnUser {
   id?: number;
   nick: string;
   descripcion?: string;
+  phone?: string;
+  email: string;
   location: {locationId: number, location: string, city: string, removed?: boolean}[];
   profession: {subSectorId: number, subSectorName: string, removed?: boolean}[];
   selected?: boolean;
@@ -105,7 +107,6 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
     this.keywordService.getCityKeywords()
     .then((data: any) => {
       this.cities = data.response.sort((a: City, b: City) => a.locations_id.title.localeCompare(b.locations_id.title));
-      this.filter({ target: { value: this.currentFilter } });
 
       this.loading = false;
       this.cdRef.detectChanges();
@@ -129,6 +130,8 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
       id: 0,
       nick: '',
       descripcion: '',
+      phone: '',
+      email: '',
       location: [],
       profession: [],
       isNew: true,
@@ -197,11 +200,11 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
     let csvContent = "data:text/csv;charset=utf-8,";
 
     // Add header
-    csvContent += 'Nombre;Descripción;Profesiones;Ubicaciones\n';
+    csvContent += 'Nombre;Descripción;Teléfono;Email;Profesiones;Ubicaciones\n';
 
     // Add data
     const itemsCsv = this.filteredOwnUsers.map(item => {
-      return `${item.nick};${item.descripcion};${item.profession.map(subitem => subitem.subSectorName).join(',')};${item.location.map(subitem => subitem.city).join(',')}`;
+      return `${item.nick};${item.descripcion};${item.phone};${item.email};${item.profession.map(subitem => subitem.subSectorName).join(',')};${item.location.map(subitem => subitem.city).join(',')}`;
     })
 
     // Add data to csv
@@ -228,13 +231,13 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
         const lines = csv.split('\n');
         lines.shift(); // Remove header
         const items = lines.map((line: string) => {
-          const [nick, descripcion, professions, locations] = line.split(';');
-          return { nick, descripcion, professions, locations };
+          const [nick, descripcion, phone, email, professions, locations] = line.split(';');
+          return { nick, descripcion, phone, email, professions, locations };
         });
 
         // Parse data
         this.importedOwnUsers = items.map((
-          item: { nick: string, descripcion: string, professions: string, locations: string }
+          item: { nick: string, descripcion: string, phone: string, email: string, professions: string, locations: string }
         ) => {
           const cities = this.cities.filter(city => item.locations.split(',').includes(city.title));
           const subsectors = this.subsectors.filter(subsector => item.professions.split(',').includes(subsector.nombre));
@@ -243,6 +246,8 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
             id: 0,
             nick: item.nick,
             descripcion: item.descripcion,
+            phone: item.phone,
+            email: item.email,
             location: cities.map(city => { return { locationId: city.locations_id.id, location: city.locations_id.title, city: city.title } }),
             profession: subsectors.map(subsector => { return { subSectorId: subsector.id, subSectorName: subsector.nombre } }),
           }
@@ -250,25 +255,27 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
 
         // Check for new own product
         this.importedNewOwnUsers = this.importedOwnUsers.filter((item: OwnUser) => 
-          !this.ownUsers.find(subitem => subitem.nick === item.nick)
+          !this.ownUsers.find(subitem => subitem.email === item.email)
         );
 
         // Check for modified own product
         this.importedModifiedOwnUsers = this.importedOwnUsers
         .filter((item: OwnUser) => 
-          !!this.ownUsers.find(subitem => subitem.nick === item.nick)
+          !!this.ownUsers.find(subitem => subitem.email === item.email)
         )
         .filter((item: OwnUser) => {
           // Check if data has been modified
-          const currentOwnUser = this.ownUsers.find(subitem => subitem.nick === item.nick);
-          return currentOwnUser!.descripcion !== item.descripcion || 
+          const currentOwnUser = this.ownUsers.find(subitem => subitem.email === item.email);
+          return currentOwnUser!.nick !== item.nick || 
+                 currentOwnUser!.phone !== item.phone || 
+                 currentOwnUser!.descripcion !== item.descripcion || 
                  currentOwnUser!.profession.map(item => item.subSectorId).sort().join(',') !== item.profession.map(item => item.subSectorId).sort().join(',') ||
                  currentOwnUser!.location.map(item => item.locationId).sort().join(',') !== item.location.map(item => item.locationId).sort().join(',')
         });
 
         // Check for deleted own product
         this.importedDeletedOwnUsers = this.ownUsers.filter((item: OwnUser) => 
-          !this.importedOwnUsers.find(subitem => subitem.nick === item.nick)
+          !this.importedOwnUsers.find(subitem => subitem.email === item.email)
         );
 
         this.importSummaryModal.nativeElement.showModal();
@@ -287,6 +294,8 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
       await this.shadowUsersService.create({
         nick: this.currentOwnUser?.nick,
         description: this.currentOwnUser?.descripcion,
+        phone: this.currentOwnUser?.phone,
+        email: this.currentOwnUser?.email,
         locations: this.currentOwnUser?.location,
         professions: this.currentOwnUser?.profession.map(item => {
           return {
@@ -345,6 +354,8 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
         id: this.currentOwnUser?.id,
         nick: this.currentOwnUser?.nick,
         description: this.currentOwnUser?.descripcion,
+        phone: this.currentOwnUser?.phone,
+        email: this.currentOwnUser?.email,
         locations: JSON.stringify(this.currentOwnUser?.location.filter(item => !item.removed)),
         professions: JSON.stringify(this.currentOwnUser?.profession.filter(item => !item.removed).map(item => {
           return {
@@ -371,6 +382,8 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
       await this.shadowUsersService.create({
         nick: item?.nick,
         description: item?.descripcion,
+        phone: item?.phone,
+        email: item?.email,
         locations: item?.location,
         professions: item?.profession.map(item => {
           return {
@@ -384,9 +397,11 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
     // Update modified own product
     for(let item of this.importedModifiedOwnUsers) {
       await this.shadowUsersService.update({
-        id: this.ownUsers.find(subitem => subitem.nick === item.nick)?.id,
+        id: this.ownUsers.find(subitem => subitem.email === item.email)?.id,
         nick: item?.nick,
         description: item?.descripcion,
+        phone: item?.phone,
+        email: item?.email,
         locations: JSON.stringify(item?.location),
         professions: JSON.stringify(item?.profession.map(item => {
           return {
@@ -399,7 +414,7 @@ export class ShadowUsersComponent extends BaseComponent implements OnInit {
 
     // Delete deleted own product
     for(let item of this.importedDeletedOwnUsers) {
-      await this.shadowUsersService.delete(item.id!);
+      await this.shadowUsersService.delete(this.ownUsers.find(subitem => subitem.email === item.email)?.id!);
     };
 
     this.getData(true);

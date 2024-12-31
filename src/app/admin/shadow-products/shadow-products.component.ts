@@ -10,6 +10,8 @@ import { ShadowProductsService } from '../../services/shadow-products.service';
 
 import { Subsector } from '../../interfaces/subsector';
 import { Location } from '../../interfaces/location';
+import { City } from '../../interfaces/city';
+
 import { OwnUser } from '../shadow-users/shadow-users.component';
 
 interface OwnProduct {
@@ -35,8 +37,10 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
 
   @ViewChild('keywordsModal') keywordsModal: any;
   @ViewChild('subsectorsModal') subsectorsModal: any;
+  @ViewChild('editPackModal') editPackModal: any;
 
   provinces: Location[] = [];
+  cities: City[] = [];
   subsectors: Subsector[] = [];
   ownUsers: OwnUser[] = [];
   ownProducts: OwnProduct[] = [];
@@ -48,7 +52,11 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
 
   availableProfessions: {subSectorId: number, subSectorName: string, removed?: boolean}[] = [];
 
+  currentOwnUser: OwnUser | undefined = undefined;
   currentOwnProduct: OwnProduct | undefined = undefined;
+
+  selectedSubsectorId: number = 0;
+  selectedCityId: number | undefined = undefined;
 
   unitTypes = [
     {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
@@ -113,14 +121,16 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       this.shadowProductsService.get(),
       this.shadowUsersService.get(),
       this.keywordService.getSubSectorAll(),
-      this.keywordService.getLocationKeywords()
-    ]).then(([productsdata, usersData, subsectorsData, locationsData]) => {
+      this.keywordService.getLocationKeywords(),
+      this.keywordService.getCityKeywords()
+    ]).then(([productsdata, usersData, subsectorsData, locationsData, citiesData]) => {
       this.ownUsers = usersData.response;
       this.filter({ target: { value: this.currentFilter } });
 
       this.ownProducts = productsdata.response;
       this.subsectors = subsectorsData.response;
       this.provinces = locationsData.response;
+      this.cities = citiesData.response.sort((a: City, b: City) => a.locations_id.title.localeCompare(b.locations_id.title));
 
       this.ownProducts.forEach((item: any) => {
         item.userId = item.ownerUserId;
@@ -162,6 +172,31 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     };
     this.showCreateModal();
   }
+  showCreatePack() {
+    this.currentOwnUser = {
+      id: 0,
+      nick: '',
+      descripcion: '',
+      phone: '',
+      email: '',
+      location: [],
+      profession: [],
+      isNew: true,
+    };
+    this.currentOwnProduct = {
+      id: 0,
+      title: '',
+      description: '',
+      subsector: '',
+      subSectorId: 0,
+      userId: 0,
+      productUnitPrice: 0,
+      unitTypeId: 0,
+      buttonName: 0,
+      isNew: true,
+    };
+    this.editPackModal.nativeElement.showModal();
+  }
   showKeywords(event: any, item: OwnProduct) {
     event.stopPropagation();
     this.currentOwnProduct = item;
@@ -182,6 +217,36 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     event.stopPropagation();
     this.currentOwnProduct = item;
     this.showDeleteModal();
+  }
+
+  addSubsector() {
+    const subsector = this.subsectors.find(subsector => subsector.id === Number(this.selectedSubsectorId));
+    if ( subsector ) {
+      this.currentOwnUser?.profession.push({ subSectorId: subsector.id, subSectorName: subsector.nombre });
+    }
+
+    setTimeout(() => {
+      this.selectedSubsectorId = 0;
+      this.cdRef.detectChanges();
+    });
+  }
+  addLocation() {
+    const city = this.cities.find(city => city.id === Number(this.selectedCityId));
+
+    if ( city ) {
+      const location = this.provinces.find(location => location.id === city?.locations_id.id);
+      
+      if ( location ) {
+        this.currentOwnUser?.location.push(
+          { locationId: location.id, location: location.title, city: city.title }
+        );
+      }
+    }
+
+    setTimeout(() => {
+      this.selectedCityId = undefined;
+      this.cdRef.detectChanges();
+    });
   }
 
   getAvailableProfessions() {
@@ -214,6 +279,9 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+  exportPack() {
+
   }
   import() {
     const input = document.createElement('input');
@@ -287,6 +355,9 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     input.click();
     document.body.removeChild(input);
   }
+  importPack() {
+
+  }
 
   async create() {
     this.loadingRequest = true;
@@ -306,6 +377,43 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
 
       this.loadingRequest = false;
       this.editModal.nativeElement.close();
+      this.currentOwnProduct = undefined;
+    } catch (error) {
+      this.loadingRequest = false;
+    }
+  }
+  async createPack() {
+    this.loadingRequest = true;
+
+    try {
+      const user = await this.shadowUsersService.create({
+        nick: this.currentOwnUser?.nick,
+        description: this.currentOwnUser?.descripcion,
+        phone: this.currentOwnUser?.phone,
+        email: this.currentOwnUser?.email,
+        locations: this.currentOwnUser?.location,
+        professions: this.currentOwnUser?.profession.map(item => {
+          return {
+            id: item.subSectorId,
+            name: item.subSectorName,
+          }
+        }),
+      })
+
+      await this.shadowProductsService.create({
+        userId: user.response.id,
+        productUnitPrice: this.currentOwnProduct?.productUnitPrice,
+        unitTypeId: this.currentOwnProduct?.unitTypeId,
+        subSectorId: this.currentOwnUser?.profession[0].subSectorId,
+        title: this.currentOwnProduct?.title,
+        description: this.currentOwnProduct?.description,
+        buttonName: this.currentOwnProduct?.buttonName,
+      });
+
+      this.getData(true);
+
+      this.loadingRequest = false;
+      this.editPackModal.nativeElement.close();
       this.currentOwnProduct = undefined;
     } catch (error) {
       this.loadingRequest = false;
@@ -367,7 +475,72 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       this.loadingRequest = false;
     }
   }
+  async updatePack() {
+    this.loadingRequest = true;
+
+    try {
+      // Update sector
+      await this.shadowProductsService.update({
+        id: this.currentOwnProduct?.id,
+        userId: this.currentOwnProduct?.userId,
+        productUnitPrice: this.currentOwnProduct?.productUnitPrice,
+        unitTypeId: this.currentOwnProduct?.unitTypeId,
+        subSectorId: this.currentOwnProduct?.subSectorId,
+        title: this.currentOwnProduct?.title,
+        description: this.currentOwnProduct?.description,
+        buttonName: this.currentOwnProduct?.buttonName,
+      });
+
+      this.getData(true);
+
+      this.loadingRequest = false;
+      this.editModal.nativeElement.close();
+      this.currentOwnProduct = undefined;
+    } catch (error) {
+      this.loadingRequest = false;
+    }
+  }
   async applyImport() {
+    this.loadingRequest = true;
+
+    // Create new own product
+    for(let item of this.importedNewOwnProducts) {
+      await this.shadowProductsService.create({
+        userId: item?.userId,
+        productUnitPrice: item?.productUnitPrice,
+        unitTypeId: item?.unitTypeId,
+        subSectorId: item?.subSectorId,
+        title: item?.title,
+        description: item?.description,
+        buttonName: item?.buttonName,
+      });
+    };
+
+    // Update modified own product
+    for(let item of this.importedModifiedOwnProducts) {
+      await this.shadowProductsService.update({
+        id: this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)?.id,
+        userId: item?.userId,
+        productUnitPrice: item?.productUnitPrice,
+        unitTypeId: item?.unitTypeId,
+        subSectorId: item?.subSectorId,
+        title: item?.title,
+        description: item?.description,
+        buttonName: item?.buttonName,
+      });
+    };
+
+    // Delete deleted own product
+    for(let item of this.importedDeletedOwnProducts) {
+      await this.shadowProductsService.delete(this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)?.id!);
+    };
+
+    this.getData(true);
+
+    this.loadingRequest = false;
+    this.closeImportSummaryModal()
+  }
+  async applyPackImport() {
     this.loadingRequest = true;
 
     // Create new own product

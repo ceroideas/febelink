@@ -119,7 +119,7 @@
       </span>
       <!-- Nick -->
       <span class="w-48 shrink-0 line-clamp-1">{{ item.nick }}</span>
-      <!-- descripcion -->
+      <!-- Descripcion -->
       <span class="w-full line-clamp-1">{{ item.descripcion }}</span>
       <!-- Subsector -->
       <button 
@@ -183,7 +183,7 @@
           [(ngModel)]="currentOwnUser!.nick"
         />
       </label>
-      <!-- descripcion -->
+      <!-- Descripcion -->
       <label class="form-control w-full">
         <div class="label">
           <span class="label-text text-neutral-500">Descripción</span>
@@ -192,6 +192,28 @@
           type="text" 
           class="input input-bordered w-full bg-neutral-100" 
           [(ngModel)]="currentOwnUser!.descripcion"
+        />
+      </label>
+      <!-- Phone -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Teléfono</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnUser!.phone"
+        />
+      </label>
+      <!-- Email -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text text-neutral-500">Email*</span>
+        </div>
+        <input 
+          type="text" 
+          class="input input-bordered w-full bg-neutral-100" 
+          [(ngModel)]="currentOwnUser!.email"
         />
       </label>
       <!-- Subsector -->
