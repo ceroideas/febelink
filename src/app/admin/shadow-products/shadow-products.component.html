@@ -45,7 +45,7 @@
       <!-- Export pack -->
       <button 
         class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold"
-        (click)="export()"
+        (click)="exportPack()"
       >
         <lucide-icon
           name="file-down"
@@ -543,7 +543,7 @@
 <dialog #multipleDeleteModal class="modal">
   <div class="modal-box bg-white">
     <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
-    <p class="py-4">¿Estas seguro que quieres eliminar los peticiones seleccionados?</p>
+    <p class="py-4">¿Estas seguro que quieres eliminar los servicios seleccionados?</p>
 
     <span 
       class="block font-bold"
@@ -579,7 +579,7 @@
 <dialog #importSummaryModal class="modal">
   <div class="modal-box bg-white">
     <h3 class="text-lg font-bold">Resumen de importación</h3>
-    <p class="py-4">Se han detectado <b>{{importedOwnProducts.length}}</b> peticiones, <b class="text-green-700">{{importedNewOwnProducts.length}}</b> nuevo<span *ngIf="importedNewOwnProducts.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedOwnProducts.length}}</b> modificado<span *ngIf="importedModifiedOwnProducts.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedOwnProducts.length}}</b> eliminado<span *ngIf="importedDeletedOwnProducts.length !== 1">s</span>.</p>
+    <p class="py-4">Se han detectado <b>{{importedOwnProducts.length}}</b> servicios, <b class="text-green-700">{{importedNewOwnProducts.length}}</b> nuevo<span *ngIf="importedNewOwnProducts.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedOwnProducts.length}}</b> modificado<span *ngIf="importedModifiedOwnProducts.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedOwnProducts.length}}</b> eliminado<span *ngIf="importedDeletedOwnProducts.length !== 1">s</span>.</p>
 
     <div class="modal-action">
       <button 
@@ -594,6 +594,34 @@
         (click)="applyImport()"
       >
         Importar
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<!-- Import summary pack modal -->
+<dialog #importSummaryPackModal class="modal">
+  <div class="modal-box bg-white">
+    <h3 class="text-lg font-bold">Resumen de importación</h3>
+    <p class="py-4">Se han detectado <b>{{importedOwnProducts.length}}</b> servicios, <b class="text-green-700">{{importedNewOwnProducts.length}}</b> nuevo<span *ngIf="importedNewOwnProducts.length !== 1">s</span>, <b class="text-orange-600">{{importedModifiedOwnProducts.length}}</b> modificado<span *ngIf="importedModifiedOwnProducts.length !== 1">s</span>  y <b class="text-red-600">{{importedDeletedOwnProducts.length}}</b> eliminado<span *ngIf="importedDeletedOwnProducts.length !== 1">s</span>.</p>
+
+    <div class="modal-action">
+      <button 
+        class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition"
+        (click)="closePackImportSummaryModal()"
+      >
+        Cancelar
+      </button>
+      <button 
+        class="btn bg-green-600 text-white hover:bg-green-700 transition"
+        [disabled]="(!importedNewOwnProducts.length && !importedModifiedOwnProducts.length && !importedDeletedOwnProducts.length) || loadingRequest"
+        (click)="applyPackImport()"
+      >
+        Importar
+        <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
       </button>
     </div>
   </div>

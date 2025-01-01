@@ -38,6 +38,7 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
   @ViewChild('keywordsModal') keywordsModal: any;
   @ViewChild('subsectorsModal') subsectorsModal: any;
   @ViewChild('editPackModal') editPackModal: any;
+  @ViewChild('importSummaryPackModal') importSummaryPackModal: any;
 
   provinces: Location[] = [];
   cities: City[] = [];
@@ -49,6 +50,10 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
   importedNewOwnProducts: OwnProduct[] = [];
   importedModifiedOwnProducts: OwnProduct[] = [];
   importedDeletedOwnProducts: OwnProduct[] = [];
+  importedOwnUsers: OwnUser[] = [];
+  importedNewOwnUsers: OwnUser[] = [];
+  importedModifiedOwnUsers: OwnUser[] = [];
+  importedDeletedOwnUsers: OwnUser[] = [];
 
   availableProfessions: {subSectorId: number, subSectorName: string, removed?: boolean}[] = [];
 
@@ -125,7 +130,6 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       this.keywordService.getCityKeywords()
     ]).then(([productsdata, usersData, subsectorsData, locationsData, citiesData]) => {
       this.ownUsers = usersData.response;
-      this.filter({ target: { value: this.currentFilter } });
 
       this.ownProducts = productsdata.response;
       this.subsectors = subsectorsData.response;
@@ -281,7 +285,32 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     document.body.removeChild(link);
   }
   exportPack() {
+    let csvContent = "data:text/csv;charset=utf-8,";
 
+    // Add header
+    csvContent += 'Nombre;Descripción usuario;Teléfono;Email;Profesiones;Ubicaciones;Título;Descripcion servicio;Precio;Precio por;Texto boton\n';
+
+    // Add data
+    const itemsCsv = this.filteredOwnProducts.map(item => {
+      const owner = this.ownUsers.find(subitem => subitem.id === item.userId);
+      if ( owner ) {
+        return `${owner.nick};${owner.descripcion};${owner.phone};${owner.email};${owner.profession.map(subitem => subitem.subSectorName).join(',')};${owner.location.map(subitem => subitem.city).join(',')};${item.title};${item.description};${item.productUnitPrice};${this.unitTypes.find(subitem => subitem.id === item.unitTypeId)?.name};${this.buttonNameMapped.find(subitem => subitem.id === item.buttonName)?.name}`;
+      } else {
+        return null
+      }
+    })
+
+    // Add data to csv
+    csvContent += itemsCsv.join('\n');
+
+    // Download csv
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "pack_usuarios_servicios.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
   import() {
     const input = document.createElement('input');
@@ -298,8 +327,6 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
           const [user, title, description, subsector, price, priceType, buttonName] = line.split(';');
           return { user, title, description, subsector, price, priceType, buttonName };
         });
-
-        console.log(this.subsectors);
 
         // Parse data
         this.importedOwnProducts = items.map((
@@ -318,9 +345,6 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
             buttonName: this.buttonNameMapped.find(subitem => this.normalizeStringToCompare(subitem.name) === this.normalizeStringToCompare(item.buttonName))?.id || 0,
           }
         })
-
-        console.log(items);
-        console.log(this.importedOwnProducts);
 
         // Check for new own product
         this.importedNewOwnProducts = this.importedOwnProducts.filter((item: OwnProduct) => 
@@ -356,7 +380,128 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     document.body.removeChild(input);
   }
   importPack() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const csv = e.target.result;
+        const lines = csv.split('\n');
+        lines.shift(); // Remove header
+        const items = lines.map((line: string) => {
+          const [nick, descripcion, phone, email, professions, locations, title, description, price, priceType, buttonName] = line.split(';');
+          return { nick, descripcion, phone, email, professions, locations, title, description, price, priceType, buttonName };
+        });
 
+        // Parse products data
+        this.importedOwnProducts = items.map((
+          item: { nick: string, descripcion: string, phone: string, email: string, professions: string, locations: string, title: string, description: string, price: string, priceType: string, buttonName: string }
+        ) => {
+          const subsectors = this.subsectors.filter(subsector => item.professions.split(',').includes(subsector.nombre));
+
+          return {
+            id: 0,
+            title: item.title,
+            description: item.description,
+            subsector: subsectors[0].nombre,
+            subSectorId: subsectors[0]?.id || 0,
+            userId: this.ownUsers.find(subitem => subitem.nick === item.nick)?.id || 0,
+            userName: item.nick,
+            productUnitPrice: Number(item.price),
+            unitTypeId: this.unitTypes.find(subitem => this.normalizeStringToCompare(subitem.name) === this.normalizeStringToCompare(item.priceType))?.id || 0,
+            buttonName: this.buttonNameMapped.find(subitem => this.normalizeStringToCompare(subitem.name) === this.normalizeStringToCompare(item.buttonName))?.id || 0,
+          }
+        })
+
+        // Parse users data
+        this.importedOwnUsers = items.map((
+          item: { nick: string, descripcion: string, phone: string, email: string, professions: string, locations: string, title: string, description: string, price: string, priceType: string, buttonName: string }
+        ) => {
+          const cities = this.cities.filter(city => item.locations.split(',').includes(city.title));
+          const subsectors = this.subsectors.filter(subsector => item.professions.split(',').includes(subsector.nombre));
+
+          return {
+            id: 0,
+            nick: item.nick,
+            descripcion: item.descripcion,
+            phone: item.phone,
+            email: item.email,
+            location: cities.map(city => { return { locationId: city.locations_id.id, location: city.locations_id.title, city: city.title } }),
+            profession: subsectors.map(subsector => { return { subSectorId: subsector.id, subSectorName: subsector.nombre } }),
+          }
+        })
+
+        /**
+         * Products checks
+         */
+
+        // Check for new own product
+        this.importedNewOwnProducts = this.importedOwnProducts.filter((item: OwnProduct) => 
+          !this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)
+        );
+
+        // Check for modified own product
+        this.importedModifiedOwnProducts = this.importedOwnProducts
+        .filter((item: OwnProduct) => 
+          !!this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)
+        )
+        .filter((item: OwnProduct) => {
+          // Check if sector has been modified
+          const currentOwnProduct = this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description);
+          return this.normalizeStringToCompare(currentOwnProduct!.subsector) !== this.normalizeStringToCompare(item.subsector) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.userName) !== this.normalizeStringToCompare(item.userName) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.productUnitPrice.toString()) !== this.normalizeStringToCompare(item.productUnitPrice.toString()) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.unitTypeId.toString()) !== this.normalizeStringToCompare(item.unitTypeId.toString()) ||
+                 this.normalizeStringToCompare(currentOwnProduct!.buttonName.toString()) !== this.normalizeStringToCompare(item.buttonName.toString())
+        });
+
+        // Check for deleted own product
+        this.importedDeletedOwnProducts = this.ownProducts.filter((item: OwnProduct) => 
+          !this.importedOwnProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)
+        );
+
+        /**
+         * Users checks
+         */
+
+        // Check for new own user
+        this.importedNewOwnUsers = this.importedOwnUsers.filter((item: OwnUser) => 
+          !this.ownUsers.find(subitem => subitem.email === item.email)
+        );
+
+        // Check for modified own user
+        this.importedModifiedOwnUsers = this.importedOwnUsers
+        .filter((item: OwnUser) => 
+          !!this.ownUsers.find(subitem => subitem.email === item.email)
+        )
+        .filter((item: OwnUser) => {
+          // Check if data has been modified
+          const currentOwnUser = this.ownUsers.find(subitem => subitem.email === item.email);
+          return currentOwnUser!.nick !== item.nick || 
+                 currentOwnUser!.phone !== item.phone || 
+                 currentOwnUser!.descripcion !== item.descripcion || 
+                 currentOwnUser!.profession.map(item => item.subSectorId).sort().join(',') !== item.profession.map(item => item.subSectorId).sort().join(',') ||
+                 currentOwnUser!.location.map(item => item.locationId).sort().join(',') !== item.location.map(item => item.locationId).sort().join(',')
+        });
+
+        // Check for deleted own user
+        this.importedDeletedOwnUsers = this.ownUsers.filter((item: OwnUser) => 
+          !this.importedOwnUsers.find(subitem => subitem.email === item.email)
+        );
+
+        this.importSummaryPackModal.nativeElement.showModal();
+      }
+      reader.readAsText(file);
+    }
+    document.body.appendChild(input);
+    input.click();
+    document.body.removeChild(input);
+  }
+
+  closePackImportSummaryModal() {
+    this.importSummaryPackModal.nativeElement.close();
   }
 
   async create() {
@@ -545,39 +690,35 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
 
     // Create new own product
     for(let item of this.importedNewOwnProducts) {
+      const importedUser = this.importedNewOwnUsers.find(subitem => subitem.nick === item.userName)
+      const user = await this.shadowUsersService.create({
+        nick: importedUser?.nick,
+        description: importedUser?.descripcion,
+        phone: importedUser?.phone,
+        email: importedUser?.email,
+        locations: importedUser?.location,
+        professions: importedUser?.profession.map(item => {
+          return {
+            id: item.subSectorId,
+            name: item.subSectorName,
+          }
+        }),
+      })
+
       await this.shadowProductsService.create({
-        userId: item?.userId,
+        userId: user.response.id,
         productUnitPrice: item?.productUnitPrice,
         unitTypeId: item?.unitTypeId,
-        subSectorId: item?.subSectorId,
+        subSectorId: importedUser?.profession[0].subSectorId,
         title: item?.title,
         description: item?.description,
         buttonName: item?.buttonName,
       });
-    };
-
-    // Update modified own product
-    for(let item of this.importedModifiedOwnProducts) {
-      await this.shadowProductsService.update({
-        id: this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)?.id,
-        userId: item?.userId,
-        productUnitPrice: item?.productUnitPrice,
-        unitTypeId: item?.unitTypeId,
-        subSectorId: item?.subSectorId,
-        title: item?.title,
-        description: item?.description,
-        buttonName: item?.buttonName,
-      });
-    };
-
-    // Delete deleted own product
-    for(let item of this.importedDeletedOwnProducts) {
-      await this.shadowProductsService.delete(this.ownProducts.find(subitem => subitem.title === item.title && subitem.description === item.description)?.id!);
     };
 
     this.getData(true);
 
     this.loadingRequest = false;
-    this.closeImportSummaryModal()
+    this.closePackImportSummaryModal()
   }
 }
