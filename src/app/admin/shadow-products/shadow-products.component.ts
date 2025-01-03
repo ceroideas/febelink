@@ -102,6 +102,14 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     return !this.currentOwnProduct?.isNew && !!this.currentOwnProduct?.title && !!this.currentOwnProduct?.description;
   }
 
+  get canCreatePack(): boolean {
+    return !!this.currentOwnProduct?.isNew && !!this.currentOwnUser?.nick && !!this.currentOwnUser?.descripcion && this.currentOwnUser?.location.length > 0 && this.currentOwnUser?.profession.length > 0;
+  }
+
+  get canUpdatePack(): boolean {
+    return !this.currentOwnProduct?.isNew && !!this.currentOwnUser?.nick && !!this.currentOwnUser?.descripcion && this.currentOwnUser?.location.length > 0 && this.currentOwnUser?.profession.length > 0;
+  }
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -170,8 +178,8 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       subSectorId: 0,
       userId: 0,
       productUnitPrice: 0,
-      unitTypeId: 0,
-      buttonName: 0,
+      unitTypeId: 13,
+      buttonName: 1,
       isNew: true,
     };
     this.showCreateModal();
@@ -195,8 +203,8 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       subSectorId: 0,
       userId: 0,
       productUnitPrice: 0,
-      unitTypeId: 0,
-      buttonName: 0,
+      unitTypeId: 13,
+      buttonName: 1,
       isNew: true,
     };
     this.editPackModal.nativeElement.showModal();
@@ -294,7 +302,7 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
     const itemsCsv = this.filteredOwnProducts.map(item => {
       const owner = this.ownUsers.find(subitem => subitem.id === item.userId);
       if ( owner ) {
-        return `${owner.nick};${owner.descripcion};${owner.phone};${owner.email};${owner.profession.map(subitem => subitem.subSectorName).join(',')};${owner.location.map(subitem => subitem.city).join(',')};${item.title};${item.description};${item.productUnitPrice};${this.unitTypes.find(subitem => subitem.id === item.unitTypeId)?.name};${this.buttonNameMapped.find(subitem => subitem.id === item.buttonName)?.name}`;
+        return `${owner.nick};${owner.descripcion};${owner.phone || ''};${owner.email || ''};${owner.profession.map(subitem => subitem.subSectorName).join(',')};${owner.location.map(subitem => subitem.city).join(',')};${item.title || ''};${item.description || ''};${item.productUnitPrice || 0};${this.unitTypes.find(subitem => subitem.id === item.unitTypeId)?.name || ''};${this.buttonNameMapped.find(subitem => subitem.id === item.buttonName)?.name || ''}`;
       } else {
         return null
       }
@@ -511,11 +519,11 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       await this.shadowProductsService.create({
         userId: this.currentOwnProduct?.userId,
         productUnitPrice: this.currentOwnProduct?.productUnitPrice,
-        unitTypeId: this.currentOwnProduct?.unitTypeId,
+        unitTypeId: this.currentOwnProduct?.unitTypeId || 13,
         subSectorId: this.currentOwnProduct?.subSectorId,
         title: this.currentOwnProduct?.title,
         description: this.currentOwnProduct?.description,
-        buttonName: this.currentOwnProduct?.buttonName,
+        buttonName: this.currentOwnProduct?.buttonName || 1,
       });
 
       this.getData(true);
@@ -548,11 +556,11 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
       await this.shadowProductsService.create({
         userId: user.response.id,
         productUnitPrice: this.currentOwnProduct?.productUnitPrice,
-        unitTypeId: this.currentOwnProduct?.unitTypeId,
+        unitTypeId: this.currentOwnProduct?.unitTypeId || 13,
         subSectorId: this.currentOwnUser?.profession[0].subSectorId,
-        title: this.currentOwnProduct?.title,
-        description: this.currentOwnProduct?.description,
-        buttonName: this.currentOwnProduct?.buttonName,
+        title: this.currentOwnProduct?.title || this.currentOwnUser?.nick,
+        description: this.currentOwnProduct?.description || this.currentOwnUser?.descripcion,
+        buttonName: this.currentOwnProduct?.buttonName || 1,
       });
 
       this.getData(true);
@@ -707,12 +715,12 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
 
       await this.shadowProductsService.create({
         userId: user.response.id,
-        productUnitPrice: item?.productUnitPrice,
-        unitTypeId: item?.unitTypeId,
+        productUnitPrice: item?.productUnitPrice || 0,
+        unitTypeId: item?.unitTypeId || 13,
         subSectorId: importedUser?.profession[0].subSectorId,
-        title: item?.title,
-        description: item?.description,
-        buttonName: item?.buttonName,
+        title: item?.title || importedUser?.nick,
+        description: item?.description || importedUser?.descripcion,
+        buttonName: item?.buttonName || 1,
       });
     };
 

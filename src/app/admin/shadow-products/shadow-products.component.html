@@ -334,7 +334,7 @@
       <!-- Descripcion -->
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text text-neutral-500">Descripción</span>
+          <span class="label-text text-neutral-500">Descripción*</span>
         </div>
         <input 
           type="text" 
@@ -356,7 +356,7 @@
       <!-- Email -->
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text text-neutral-500">Email*</span>
+          <span class="label-text text-neutral-500">Email</span>
         </div>
         <input 
           type="text" 
@@ -432,11 +432,12 @@
       <!-- Title -->
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text text-neutral-500">Título*</span>
+          <span class="label-text text-neutral-500">Título</span>
         </div>
         <input 
           type="text" 
           class="input input-bordered w-full bg-neutral-100" 
+          [placeholder]="currentOwnUser?.nick"
           [(ngModel)]="currentOwnProduct!.title"
         />
       </label>
@@ -448,6 +449,7 @@
         <input 
           type="text" 
           class="input input-bordered w-full bg-neutral-100" 
+          [placeholder]="currentOwnUser?.descripcion"
           [(ngModel)]="currentOwnProduct!.description"
         />
       </label>
@@ -496,8 +498,8 @@
         class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400"
         (click)="currentOwnProduct?.isNew ? createPack() : updatePack()"
         [disabled]="
-          (currentOwnProduct?.isNew && !canCreate) || 
-          (!currentOwnProduct?.isNew && !canUpdate) ||
+          (currentOwnProduct?.isNew && !canCreatePack) || 
+          (!currentOwnProduct?.isNew && !canUpdatePack) ||
           loadingRequest
         "
       >

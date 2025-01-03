@@ -49,7 +49,7 @@
               <a class="block text-base font-semibold text-primary" [href]="'tel:' + user.phoneNumber">{{user.phoneNumber}}</a>
             </div>
           }
-          @if ( user?.email ) {
+          @if ( user?.email && !user.email.includes('@febelink.es') ) {
             <div>
               <span class="block text-xs font-bold uppercase text-neutral-500">Email</span>
               <a class="block text-base font-semibold text-primary" [href]="'mailto:' + user.email">{{user.email}}</a>
