@@ -553,15 +553,18 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
         }),
       })
 
-      await this.shadowProductsService.create({
-        userId: user.response.id,
-        productUnitPrice: this.currentOwnProduct?.productUnitPrice,
-        unitTypeId: this.currentOwnProduct?.unitTypeId || 13,
-        subSectorId: this.currentOwnUser?.profession[0].subSectorId,
-        title: this.currentOwnProduct?.title || this.currentOwnUser?.nick,
-        description: this.currentOwnProduct?.description || this.currentOwnUser?.descripcion,
-        buttonName: this.currentOwnProduct?.buttonName || 1,
-      });
+      for( let profession of this.currentOwnUser!.profession ) {
+        await this.shadowProductsService.create({
+          userId: user.response.id,
+          productUnitPrice: this.currentOwnProduct?.productUnitPrice,
+          unitTypeId: this.currentOwnProduct?.unitTypeId || 13,
+          subSectorId: profession.subSectorId,
+          title: this.currentOwnProduct?.title || this.currentOwnUser?.nick,
+          description: this.currentOwnProduct?.description || this.currentOwnUser?.descripcion,
+          buttonName: this.currentOwnProduct?.buttonName || 1,
+        });
+      }
+      
 
       this.getData(true);
 
@@ -713,15 +716,19 @@ export class ShadowProductsComponent extends BaseComponent implements OnInit {
         }),
       })
 
-      await this.shadowProductsService.create({
-        userId: user.response.id,
-        productUnitPrice: item?.productUnitPrice || 0,
-        unitTypeId: item?.unitTypeId || 13,
-        subSectorId: importedUser?.profession[0].subSectorId,
-        title: item?.title || importedUser?.nick,
-        description: item?.description || importedUser?.descripcion,
-        buttonName: item?.buttonName || 1,
-      });
+      for( let profession of importedUser!.profession ) {
+        await this.shadowProductsService.create({
+          userId: user.response.id,
+          productUnitPrice: item?.productUnitPrice || 0,
+          unitTypeId: item?.unitTypeId || 13,
+          subSectorId: profession.subSectorId,
+          title: item?.title || importedUser?.nick,
+          description: item?.description || importedUser?.descripcion,
+          buttonName: item?.buttonName || 1,
+        });
+      }
+
+
     };
 
     this.getData(true);
