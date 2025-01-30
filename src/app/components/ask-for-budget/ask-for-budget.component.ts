@@ -76,6 +76,7 @@ export class AskForBudgetComponent implements OnInit {
     this.keywordService.getLocationKeywords()
     .then(async (data: any) => {
       this.locations = data.response;
+      this.locations.sort((a, b) => a.title.localeCompare(b.title));
     })
     .catch((error) => {
       this.loading = false;

@@ -282,6 +282,7 @@ export class Tab1Component implements OnInit  {
     });
 
     this.locations = data.locations;
+    this.locations.sort((a: Location, b: Location) => a.title.localeCompare(b.title));
     this.locationLinks = data.locations
     this.locationFilterLinkFull = data.linklocations;
 
