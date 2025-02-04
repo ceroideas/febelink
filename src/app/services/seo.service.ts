@@ -40,7 +40,7 @@ export class SeoService {
 
     //@ts-ignore
     
-    this.title.setTitle(seo.title);
+    this.title.setTitle(seo.title || this.seoPrevoius.title);
 
     if ( seo.image == null || seo.image == undefined  || seo.image == ''  || seo.image == 'null' || seo.image == 'undefined' ) {
       seo.image = 'https://www.febelink.com/assets/imgs/febelinksuperpro.jpg';

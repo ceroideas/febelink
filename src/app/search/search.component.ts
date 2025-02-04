@@ -18,8 +18,6 @@ import slugify from "slugify";
 import { City } from '../interfaces/city';
 import { LinkCity } from '../interfaces/link-city';
 import { UtilitiesService } from '../services/utilities.service';
-const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
-const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
 
 import { toSlug, preventDefault } from '../../utils/utils';
 import { environment } from '../../environments/environment';

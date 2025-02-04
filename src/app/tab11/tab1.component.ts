@@ -31,9 +31,6 @@ import { ModalService } from '../services/modal.service';
 // // install Swiper modules
 SwiperCore.use([Thumbs, Pagination]);
 
-const GENERAL_TITLE = 'Febelink | Ofertas de servicios profesionales';
-const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic	 ';
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.component.html',
@@ -133,7 +130,7 @@ export class Tab1Component implements OnInit  {
       });
     }
     
-    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+    this.seoService.generateTags({});
 
     this.activatedRoute.paramMap.subscribe((params) => {
       if (params.get('searchTerm') !== null && params.get('searchTerm') !== undefined && params.get('searchTerm') !== "" ){

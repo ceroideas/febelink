@@ -31,11 +31,6 @@ import { SharedModule } from './shared/shared.module';
 import { ServicesService } from './pages/servicios/services/services.service';
 
 // import { IonicStorageModule } from '@ionic/storage';
-  
-    const GENERAL_TITLE =
-    'Febelink | El buscador universal de servicios profesionales';
-    const GENERAL_DESC =
-    'Febelink es el buscador universal de servicios profesionales, el sitio donde encontrar soluciones en una comunidad global. Tanto si necesitas asesorías, reformas, belleza y estética, salud o formación, hay un servicio para ti en Febelink. Busca, compara y compra en un clic.';
 
 @Component({
     selector: 'app-root',

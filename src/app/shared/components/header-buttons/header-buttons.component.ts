@@ -15,7 +15,6 @@ import { YouTubePopComponent } from './../../../components/youtube/popover/pop.c
 import { CartServiceShow } from '../../../services/cart.service';
 import { SeoService } from './../../../services/seo.service';
 
-const GENERAL_TITLE = 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales';
 const GENERAL_DESC = 'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic ';
 
 
@@ -119,7 +118,7 @@ export class HeaderButtonsComponent implements OnInit {
     if (p === '/oracles') {
       this.seoSvc.generateTags({title: GENERAL_TITLE_ORACULO, description: GENERAL_DESC_ORACULO});
     } else  {
-      this.seoSvc.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+      this.seoSvc.generateTags({description: GENERAL_DESC});
     }
     
     this.router.navigate([p]);

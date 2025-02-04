@@ -13,7 +13,6 @@ import { Title } from '@angular/platform-browser';
 // import {environment} from 'src/environments/environment';
 
 
-const GENERAL_TITLE = 'Febelink | Ofertas de servicios profesionales';
 const GENERAL_DESC = 'Iniciar sesión en Febelink, el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
 
 @Component({
@@ -57,7 +56,7 @@ export class LoginPage implements OnInit {
     });
     this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
 
-    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+    this.seoService.generateTags({description: GENERAL_DESC});
     this.title.setTitle(this.defaultTitle);
   }
 

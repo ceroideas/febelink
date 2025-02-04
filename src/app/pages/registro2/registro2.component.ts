@@ -17,7 +17,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { SeoService } from '../../services/seo.service';
 import { Title } from '@angular/platform-browser';
 
-const GENERAL_TITLE = 'Febelink | Ofertas de servicios profesionales';
 const GENERAL_DESC = 'Crea tu cuenta en Febelink, el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
 
 @Component({
@@ -68,7 +67,7 @@ export class Registro2Component  implements OnInit{
      */
     public ngOnInit(): void {
 
-    this.seoService.generateTags({title: GENERAL_TITLE, description: GENERAL_DESC});
+    this.seoService.generateTags({description: GENERAL_DESC});
     this.title.setTitle(this.defaultTitle);
 
       this.activatedRoute.queryParams.subscribe((params: any) => {
