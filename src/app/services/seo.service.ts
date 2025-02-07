@@ -11,9 +11,9 @@ import { environment } from '../../environments/environment';
 })
 export class SeoService {
   seoDEFAULT: SEOFebelink = {
-    title: 'Febelink ¿Qué necesitas? Ofertas de servicios profesionales',
+    title: 'Febelink | Ofertas de servicios',
     description:
-      'Febelink es el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic',
+      'Febelink, ofertas de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic',
     image: 'https://www.febelink.com/assets/imgs/febelinksuperpro.jpg',
     url: 'www.febelink.com',
   };

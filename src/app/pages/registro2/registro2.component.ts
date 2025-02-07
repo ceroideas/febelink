@@ -17,7 +17,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { SeoService } from '../../services/seo.service';
 import { Title } from '@angular/platform-browser';
 
-const GENERAL_DESC = 'Crea tu cuenta en Febelink, el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
+const GENERAL_DESC = 'Crea tu cuenta en Febelink, ofertas de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
 
 @Component({
     selector: 'app-registro2',

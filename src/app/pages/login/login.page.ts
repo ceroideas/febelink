@@ -13,7 +13,7 @@ import { Title } from '@angular/platform-browser';
 // import {environment} from 'src/environments/environment';
 
 
-const GENERAL_DESC = 'Iniciar sesión en Febelink, el buscador universal de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
+const GENERAL_DESC = 'Iniciar sesión en Febelink, ofertas de de servicios profesionales. Encuentra asesores, reformas, estética, salud o formación. Busca, compara y compra en un clic';
 
 @Component({
   selector: 'app-login',
