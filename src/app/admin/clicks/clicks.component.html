@@ -9,35 +9,65 @@
   <a 
     role="tab" 
     class="tab text-black"
-    [ngClass]="{ 'bg-primary text-white': activeTab === 'profiles' }"
-    (click)="activeTab = 'profiles'"
+    [ngClass]="{ 'bg-primary text-white': activeTab === 'profilesWhatsapp' }"
+    (click)="activeTab = 'profilesWhatsapp'"
   >
-    Perfiles
+    Clicks Whatsapp perfiles
   </a>
   <a 
     role="tab" 
     class="tab text-black"
-    [ngClass]="{ 'bg-primary text-white': activeTab === 'publications' }"
-    (click)="activeTab = 'publications'"
+    [ngClass]="{ 'bg-primary text-white': activeTab === 'publicationsWhatsapp' }"
+    (click)="activeTab = 'publicationsWhatsapp'"
   >
-    Publicaciones
+    Clicks Whatsapp publicaciones
+  </a>
+  <a 
+    role="tab" 
+    class="tab text-black"
+    [ngClass]="{ 'bg-primary text-white': activeTab === 'profilesViews' }"
+    (click)="activeTab = 'profilesViews'"
+  >
+    Visitas perfiles
+  </a>
+  <a 
+    role="tab" 
+    class="tab text-black"
+    [ngClass]="{ 'bg-primary text-white': activeTab === 'publicationsViews' }"
+    (click)="activeTab = 'publicationsViews'"
+  >
+    Visitas publicaciones
   </a>
 </div>
 
 <!-- Main list -->
 <div *ngIf="!loading" class="flex flex-col gap-4">
   <!-- Statistics -->
-  <div class="cards flex flex-wrap gap-4" *ngIf="activeTab === 'profiles'">
+  <div class="cards flex flex-wrap gap-4" *ngIf="activeTab === 'profilesWhatsapp'">
     <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
       <span class="title mb-2 font-semibold">Clicks</span>
-      <span class="data text-4xl font-bold">{{totalProfileClicks}}</span>
+      <span class="data text-4xl font-bold">{{totalProfileWhatsappClicks}}</span>
       <span class="aux text-neutral-400">Total</span>
     </div>
   </div>
-  <div class="cards flex flex-wrap gap-4" *ngIf="activeTab === 'publications'">
+  <div class="cards flex flex-wrap gap-4" *ngIf="activeTab === 'profilesViews'">
+    <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
+      <span class="title mb-2 font-semibold">Visitas</span>
+      <span class="data text-4xl font-bold">{{totalProfileViews}}</span>
+      <span class="aux text-neutral-400">Total</span>
+    </div>
+  </div>
+  <div class="cards flex flex-wrap gap-4" *ngIf="activeTab === 'publicationsWhatsapp'">
     <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
       <span class="title mb-2 font-semibold">Clicks</span>
-      <span class="data text-4xl font-bold">{{totalPublicationClicks}}</span>
+      <span class="data text-4xl font-bold">{{totalPublicationWhatsappClicks}}</span>
+      <span class="aux text-neutral-400">Total</span>
+    </div>
+  </div>
+  <div class="cards flex flex-wrap gap-4" *ngIf="activeTab === 'publicationsViews'">
+    <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
+      <span class="title mb-2 font-semibold">Visitas</span>
+      <span class="data text-4xl font-bold">{{totalPublicationViews}}</span>
       <span class="aux text-neutral-400">Total</span>
     </div>
   </div>
@@ -55,10 +85,10 @@
     </div>
   </div>
 
-  <!-- Table profiles -->
+  <!-- Table profiles whatsapp clicks -->
   <ul 
     class="bg-white rounded-lg p-3 pb-1 shadow-default"
-    *ngIf="activeTab === 'profiles'"
+    *ngIf="activeTab === 'profilesWhatsapp'"
   >
     <!-- Header -->
     <li class="sticky top-1 flex items-center gap-2 p-1 px-3 bg-neutral-100 rounded font-semibold">
@@ -70,7 +100,7 @@
     <!-- Data -->
     <li 
       class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
-      *ngFor="let item of filteredProfiles"
+      *ngFor="let item of filteredProfilesWhatsappClicks"
     >
       <!-- Title -->
       <span class="w-full h-fit">{{ item.nick }}</span>
@@ -101,10 +131,56 @@
     </li>
   </ul>
 
-  <!-- Table publications -->
+  <!-- Table profiles views -->
   <ul 
     class="bg-white rounded-lg p-3 pb-1 shadow-default"
-    *ngIf="activeTab === 'publications'"
+    *ngIf="activeTab === 'profilesViews'"
+  >
+    <!-- Header -->
+    <li class="sticky top-1 flex items-center gap-2 p-1 px-3 bg-neutral-100 rounded font-semibold">
+      <span class="w-full h-fit">Perfil</span>
+      <span class="w-32 h-fit shrink-0 text-right">Visitas</span>
+      <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
+    </li>
+
+    <!-- Data -->
+    <li 
+      class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
+      *ngFor="let item of filteredProfilesViews"
+    >
+      <!-- Title -->
+      <span class="w-full h-fit">{{ item.nick }}</span>
+      <!-- Keywords -->
+      <span 
+        class="w-32 shrink-0 text-right disabled:opacity-50" 
+      >
+        <span 
+          class="rounded-full px-2 py-1 pt-1 text-xs font-medium ring-1 ring-inset bg-green-50 text-green-700 ring-green-600/20 shrink-0"
+        >
+          {{item.views}}
+        </span>
+      </span>
+      <!-- Actions -->
+      <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
+        <!-- Edit -->
+        <button 
+          class="w-7 h-7 flex justify-center items-center"
+          (click)="showProfile(item)"
+        >
+          <lucide-icon 
+            name="eye"
+            class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" 
+            [size]="20"
+          />
+        </button>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Table publications whatsapp clicks -->
+  <ul 
+    class="bg-white rounded-lg p-3 pb-1 shadow-default"
+    *ngIf="activeTab === 'publicationsWhatsapp'"
   >
     <!-- Header -->
     <li class="sticky top-1 flex items-center gap-2 p-1 px-3 bg-neutral-100 rounded font-semibold">
@@ -116,7 +192,7 @@
     <!-- Data -->
     <li 
       class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
-      *ngFor="let item of filteredPublications"
+      *ngFor="let item of filteredPublicationsWhatsappClicks"
     >
       <!-- Title -->
       <span class="w-full h-fit">{{ item.title }}</span>
@@ -128,6 +204,52 @@
           class="rounded-full px-2 py-1 pt-1 text-xs font-medium ring-1 ring-inset bg-green-50 text-green-700 ring-green-600/20 shrink-0"
         >
           {{item.numPublication}}
+        </span>
+      </span>
+      <!-- Actions -->
+      <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
+        <!-- Edit -->
+        <button 
+          class="w-7 h-7 flex justify-center items-center"
+          (click)="showPublication(item)"
+        >
+          <lucide-icon 
+            name="eye"
+            class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" 
+            [size]="20"
+          />
+        </button>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Table publications views -->
+  <ul 
+    class="bg-white rounded-lg p-3 pb-1 shadow-default"
+    *ngIf="activeTab === 'publicationsViews'"
+  >
+    <!-- Header -->
+    <li class="sticky top-1 flex items-center gap-2 p-1 px-3 bg-neutral-100 rounded font-semibold">
+      <span class="w-full h-fit">Publicación</span>
+      <span class="w-32 h-fit shrink-0 text-right">Visitas</span>
+      <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
+    </li>
+
+    <!-- Data -->
+    <li 
+      class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer"
+      *ngFor="let item of filteredPublicationsViews"
+    >
+      <!-- Title -->
+      <span class="w-full h-fit">{{ item.title }}</span>
+      <!-- Keywords -->
+      <span 
+        class="w-32 shrink-0 text-right disabled:opacity-50" 
+      >
+        <span 
+          class="rounded-full px-2 py-1 pt-1 text-xs font-medium ring-1 ring-inset bg-green-50 text-green-700 ring-green-600/20 shrink-0"
+        >
+          {{item.views}}
         </span>
       </span>
       <!-- Actions -->

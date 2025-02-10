@@ -26,19 +26,25 @@ interface Sector extends LegacySector {
 })
 export class ClicksComponent implements OnInit {
 
-  profiles: any = [];
-  publications: any = [];
-  filteredProfiles: any[] = [];
-  filteredPublications: any[] = [];
+  profilesWhatsappClicks: any = [];
+  profilesViews: any = [];
+  publicationsWhatsappClicks: any = [];
+  publicationsViews: any = [];
+  filteredProfilesWhatsappClicks: any[] = [];
+  filteredProfilesViews: any[] = [];
+  filteredPublicationsWhatsappClicks: any[] = [];
+  filteredPublicationsViews: any[] = [];
 
-  totalProfileClicks: number = 0;
-  totalPublicationClicks: number = 0;
+  totalProfileWhatsappClicks: number = 0;
+  totalProfileViews: number = 0;
+  totalPublicationWhatsappClicks: number = 0;
+  totalPublicationViews: number = 0;
 
   loading: boolean = false;
 
   currentFilter: string = '';
 
-  activeTab: 'profiles' | 'publications' = 'profiles';
+  activeTab: 'profilesWhatsapp' | 'publicationsWhatsapp' | 'profilesViews' | 'publicationsViews' = 'profilesWhatsapp';
 
   toSlug = toSlug;
 
@@ -56,12 +62,17 @@ export class ClicksComponent implements OnInit {
     !refresh && (this.loading = true);
 
     this.keywordService.listClickViews().then(async (response: any) => {
-      this.profiles = response.response.profile.sort((a: any, b: any) => b.numProfile - a.numProfile);
-      this.publications = response.response.publication.sort((a: any, b: any) => b.numPublication - a.numPublication);
+      this.profilesWhatsappClicks = [...response.response.profile.sort((a: any, b: any) => b.numProfile - a.numProfile)];
+      this.publicationsWhatsappClicks = [...response.response.publication.sort((a: any, b: any) => b.numPublication - a.numPublication)];
+      this.profilesViews = [...response.response.profile.sort((a: any, b: any) => b.views - a.views)];
+      this.publicationsViews = [...response.response.publication.sort((a: any, b: any) => b.views - a.views)];
+      
       this.filter({ target: { value: this.currentFilter } });
 
-      this.totalProfileClicks = this.profiles.reduce((acc: number, profile: any) => acc + profile.numProfile, 0);
-      this.totalPublicationClicks = this.publications.reduce((acc: number, publication: any) => acc + publication.numPublication, 0);
+      this.totalProfileWhatsappClicks = this.profilesWhatsappClicks.reduce((acc: number, profile: any) => acc + profile.numProfile, 0);
+      this.totalProfileViews = this.profilesViews.reduce((acc: number, profile: any) => acc + profile.views, 0);
+      this.totalPublicationWhatsappClicks = this.publicationsWhatsappClicks.reduce((acc: number, publication: any) => acc + publication.numPublication, 0);
+      this.totalPublicationViews = this.publicationsViews.reduce((acc: number, publication: any) => acc + publication.views, 0);
 
       this.loading = false;
     })
@@ -83,10 +94,16 @@ export class ClicksComponent implements OnInit {
   filter(event: any) {
     const value = event.target.value;
     this.currentFilter = value;
-    this.filteredProfiles = this.profiles.filter((profile: any) => 
+    this.filteredProfilesWhatsappClicks = this.profilesWhatsappClicks.filter((profile: any) => 
       profile.nick?.toLowerCase().includes(value.toLowerCase())
     );
-    this.filteredPublications = this.publications.filter((publication: any) => 
+    this.filteredProfilesViews = this.profilesViews.filter((profile: any) => 
+      profile.nick?.toLowerCase().includes(value.toLowerCase())
+    );
+    this.filteredPublicationsWhatsappClicks = this.publicationsWhatsappClicks.filter((publication: any) => 
+      publication.title?.toLowerCase().includes(value.toLowerCase())
+    )
+    this.filteredPublicationsViews = this.publicationsViews.filter((publication: any) => 
       publication.title?.toLowerCase().includes(value.toLowerCase())
     )
   }
