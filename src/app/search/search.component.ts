@@ -635,36 +635,39 @@ export class SearchComponent {
     this.loadingOtherOffers = true;
     this.cdRef.detectChanges();
 
-    let query = '';
+    let uncheckedSubsectors: number[] = [];
 
-    query += this.currentSubSectorSelection.map((subsector: Subsector) => subsector.nombre).join(' ');
-    query += ' ' + this.currentProvinceDropdownItem.map((province: any) => province.title).join(' ');
-    query += ' ' + this.currentCityDropdownItem.map((city: any) => city.nombre).join(' ');
+    if ( this.searchText2.trim() !== '' ) {
+      const searchWords = this.searchText2.split(' ');
 
-    this.otherOffersQuery = encodeURIComponent(query.trim());
+      uncheckedSubsectors = this.sectors
+      .map((sector: Sector) => 
+        sector.subSectors.filter((subsector: Subsector) => 
+          !subsector.hidden && 
+          !subsector.checked && 
+          subsector.keySearch.some((key) => searchWords.includes(key.key_name))
+        )
+      )
+      .flat()
+      .map((subsector: Subsector) => subsector.id);
+    }
 
-    if ( !!query.trim() ) {
-      this.searchService.findOtherOffers(query, this.otherOffersStartIndex)
-      .then((data) => {
-        if ( data && data.response ) {
-          this.otherOffers = [...this.otherOffers, ...data.response];
-          this.otherOffersStartIndex += 10;
-        } else {
-          this.otherOffers = [];
-          this.otherOffersStartIndex = 0;
-        }
-  
-        this.loadingOtherOffers = false;
-        this.cdRef.detectChanges();
-      })
-      .catch((error: any) => {
-        this.loadingOtherOffers = false;
-        this.cdRef.detectChanges();
-      })
-    } else {
+    const subsectors: number[] = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
+
+    this.searchService.findOtherOffers([...subsectors, ...uncheckedSubsectors], this.otherOffersStartIndex)
+    .then((data) => {
+      if ( data && data.response ) {
+        this.otherOffers = [...this.otherOffers, ...data.response];
+        this.otherOffersStartIndex += 10;
+      } else {
+        this.otherOffers = [];
+        this.otherOffersStartIndex = 0;
+      }
+    })
+    .finally(() => {
       this.loadingOtherOffers = false;
       this.cdRef.detectChanges();
-    }
+    })
   }
 
   checkSubsector(subsector: Subsector) {

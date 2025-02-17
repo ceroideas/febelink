@@ -178,9 +178,9 @@ export class SearchService {
       cities: JSON.stringify(cities),
     });
   }
-  async findOtherOffers(searchTerm: string = '', index: number = 0) {
+  async findOtherOffers(subsectors: number[], index: number = 0) {
     return this.http.post('product/findOthers', {
-      searchTerm: searchTerm,
+      subsectors: JSON.stringify(subsectors),
       index
     });
   }
