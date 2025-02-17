@@ -11,9 +11,11 @@ import {SharePopoverComponent} from './share-popover/share-popover.component';
 import {SocialLoginComponent} from './social-login/social-login.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {PartialPopupComponent} from './partial-popup/partial-popup.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { AskForBudgetComponent } from './ask-for-budget/ask-for-budget.component';
+
 @NgModule({
   declarations: [
     MenuComponent,
@@ -34,6 +36,7 @@ import { AskForBudgetComponent } from './ask-for-budget/ask-for-budget.component
     AskForBudgetComponent
   ],
   imports: [
+    NgSelectModule,
     FormsModule,
     CommonModule,
     IonicModule,

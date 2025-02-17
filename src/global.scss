@@ -34,6 +34,10 @@
 @import "swiper/css/navigation";
 @import "swiper/css/thumbs";
 
+@import "@ng-select/ng-select/themes/default.theme.css";
+// ... or 
+// @import "@ng-select/ng-select/themes/material.theme.css";
+
 body {
   color: black;
   background-color: white !important;
@@ -298,6 +302,22 @@ ion-searchbar {
   &.box-shadow-none {
     &::part(content) {
       box-shadow: none;
+    }
+  }
+}
+
+.ng-select {
+  padding: 0;
+
+  .ng-select-container {
+    height: 100% !important;
+    background-color: transparent;
+    border-radius: 8px;
+    border-color: inherit !important;
+    border-width: 0px;
+
+    .ng-input {
+      top: 9px !important;
     }
   }
 }

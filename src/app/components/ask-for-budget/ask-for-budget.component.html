@@ -27,14 +27,15 @@
     <div class="label">
       <span class="label-text label-error">Profesional *</span>
     </div>
-    <select 
-      class="select select-bordered bg-neutral-100 text-base"
+    <ng-select 
+      class="input input-bordered bg-neutral-100 text-base"
       [class.select-error]="subsectorError"
       [(ngModel)]="subsector"
     >
-      <option disabled>Elige profesión</option>
-      <option *ngFor="let subsector of subsectors" [value]="subsector.id">{{subsector.nombre}}</option>
-    </select>
+      @for (subsector of subsectors; track subsector.id) {
+        <ng-option [value]="subsector.id">{{subsector.nombre}}</ng-option>
+      }
+    </ng-select>
   </label>
   <!-- Title -->
   <label class="form-control w-full error">
@@ -53,14 +54,16 @@
     <div class="label">
       <span class="label-text">Donde *</span>
     </div>
-    <select 
-      class="select select-bordered bg-neutral-100 text-base"
+
+    <ng-select 
+      class="input input-bordered bg-neutral-100 text-base"
       [class.select-error]="locationError"
       [(ngModel)]="location"
     >
-      <option disabled>Elige provincia</option>
-      <option *ngFor="let location of locations" [value]="location.id">{{location.title}}</option>
-    </select>
+      @for (location of locations; track location.id) {
+        <ng-option [value]="location.id">{{location.title}}</ng-option>
+      }
+    </ng-select>
   </label>
 
   <!-- Not logged user data -->

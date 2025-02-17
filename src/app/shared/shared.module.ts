@@ -114,6 +114,8 @@ import { RatingCardComponent } from '../components/rating-card/rating-card.compo
 import { LandingComponent } from '../pages/landing/landing.component';
 import { EmploymentComponent } from '../pages/employment/employment.component';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 @NgModule({
   declarations: [
     ImgErrorFallbackDirective,
@@ -164,6 +166,7 @@ import { EmploymentComponent } from '../pages/employment/employment.component';
   imports: [
     CommonModule,
     LucideAngularModule.pick({Search, Factory, MapPin, ArrowDownToDot, ChevronDown, ArrowDownUp, Square, SquareCheckBig, X, ArrowRight, Dot, Sparkles, Infinity, Goal, Circle, Star, Eye}),
+    NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
     PipesModule,

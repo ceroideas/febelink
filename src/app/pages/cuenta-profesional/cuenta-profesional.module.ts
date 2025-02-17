@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { CuentaProfesionalPageRoutingModule } from './cuenta-profesional-routing.module';
 
@@ -13,6 +13,7 @@ import { LucideAngularModule, Dot, Trash2 } from 'lucide-angular';
 @NgModule({
   imports: [
     CommonModule,
+    NgSelectModule,
     FormsModule,
     SharedModule,
     CuentaProfesionalPageRoutingModule,

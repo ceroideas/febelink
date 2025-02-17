@@ -18,10 +18,10 @@ export class AskForBudgetComponent implements OnInit {
 
   @ViewChild('dataSentInfoModal') dataSentInfoModal: any;
   
-  subsector: number = 0;
+  subsector: number | undefined = undefined;
   subsectors: Subsector[] = [];
 
-  location: number = 0;
+  location: number | undefined = undefined;
   locations: Location[] = [];
 
   title: string = "";
@@ -91,14 +91,14 @@ export class AskForBudgetComponent implements OnInit {
   formValid() {
     let allOk = true;
 
-    if (this.subsector === 0) {
+    if (!this.subsector) {
       allOk = false;
       this.subsectorError = true;
     } else {
       this.subsectorError = false;
     }
 
-    if (this.location === 0) {
+    if (!this.location) {
       allOk = false;
       this.locationError = true;
     } else {
@@ -151,8 +151,8 @@ export class AskForBudgetComponent implements OnInit {
       name: !this.currentUser?.email ? this.name : undefined,
       email: !this.currentUser?.email ? this.email : undefined,
       phone: !this.currentUser?.email ? this.phone : undefined,
-      location: this.location.toString(),
-      subsector: this.subsector.toString(),
+      location: this.location?.toString(),
+      subsector: this.subsector?.toString(),
       description: this.title,
     }).then((response: any) => {
 

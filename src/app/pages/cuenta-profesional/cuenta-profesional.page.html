@@ -62,14 +62,16 @@
             <div class="label">
               <span class="label-text">Provincia *</span>
             </div>
-            <select 
-              class="select select-bordered bg-neutral-100 text-base"
+
+            <ng-select 
+              class="input input-bordered bg-neutral-100 text-base"
               [disabled]="!isProfessional"
               [(ngModel)]="province"
             >
-              <option disabled>Elige provincia</option>
-              <option *ngFor="let province of allProvinces" [value]="province.id">{{province.title}}</option>
-            </select>
+              @for (province of allProvinces; track province.id) {
+                <ng-option [value]="province.id">{{province.title}}</ng-option>
+              }
+            </ng-select>
           </label>
 
           <!-- City -->
@@ -127,14 +129,16 @@
             <div class="label">
               <span class="label-text label-error">Profesión *</span>
             </div>
-            <select 
-              class="select select-bordered bg-neutral-100 text-base"
+
+            <ng-select 
+              class="input input-bordered bg-neutral-100 text-base"
               [disabled]="!isProfessional"
               [(ngModel)]="subsector"
             >
-              <option disabled>Elige profesión</option>
-              <option *ngFor="let subsector of allSubsectors" [value]="subsector.id">{{subsector.nombre}}</option>
-            </select>
+              @for (subsector of allSubsectors; track subsector.id) {
+                <ng-option [value]="subsector.id">{{subsector.nombre}}</ng-option>
+              }
+            </ng-select>
           </label>
 
           <!-- Button -->
