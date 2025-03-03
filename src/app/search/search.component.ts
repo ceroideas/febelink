@@ -869,7 +869,7 @@ export class SearchComponent {
           .find((subsector: Subsector) => subsector.id === this.targetSubsector?.id)?.employment;
 
         shuffled = this.provinces.sort(() => 0.5 - Math.random());
-        selected = shuffled.slice(0, 50).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+        selected = shuffled.sort((a: Location, b: Location) => a.title.localeCompare(b.title));
 
         this.employmentLinks = selected.map((location: Location) => {
           return {
@@ -917,7 +917,7 @@ export class SearchComponent {
           .find((subsector: Subsector) => subsector.id === this.targetLinkLocation?.subsector_id)?.employment;
 
         shuffled = this.provinces.sort(() => 0.5 - Math.random());
-        selected = shuffled.slice(0, 50).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+        selected = shuffled.sort((a: Location, b: Location) => a.title.localeCompare(b.title));
 
         this.employmentLinks = selected.map((location: Location) => {
           return {
@@ -936,9 +936,9 @@ export class SearchComponent {
         const cities = this.cities.filter((city: City) => city.locations_id.id === province?.id);
 
         shuffled = this.provinces.sort(() => 0.5 - Math.random());
-        selected = shuffled.slice(0, 50).sort((a: Location, b: Location) => a.title.localeCompare(b.title));
+        selected = shuffled.sort((a: Location, b: Location) => a.title.localeCompare(b.title));
 
-        this.employmentLinks = cities.slice(0, 50).map((city: City, index: number) => {
+        this.employmentLinks = cities.map((city: City, index: number) => {
           return {
             link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(city.locations_id.title)}/${toSlug(city.title)}`,
             title: `${city.title}`
