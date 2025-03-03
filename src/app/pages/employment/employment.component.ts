@@ -74,19 +74,22 @@ export class EmploymentComponent implements OnInit {
 
       if (this.professionQuery) {
         this.employment = this.employments.find((employment: Employment) => toSlug(employment?.title).toLocaleLowerCase() === this.professionQuery);
-        pageTitle = `Trabajos de ${this.employment?.title} en Febelink`;
+        pageTitle = this.employment?.page_title || '';
         metaDescription = this.employment?.meta_description || '';
       }
       if ( this.provinceQuery ) {
         this.province = this.provinces.find((location: Location) => toSlug(location.title).toLocaleLowerCase() === this.provinceQuery);
-        pageTitle = `Trabajos de ${this.employment?.title} en ${this.province?.title}`;
-        metaDescription = `Encuentra ofertas de trabajo de ${this.employment?.title} en ${this.province?.title}`; 
+        pageTitle = this.province?.page_title || '';
+        metaDescription = this.province?.meta_description || '';
       }
       if ( this.cityQuery ) {
         this.city = this.cities.find((city: City) => toSlug(city.title).toLocaleLowerCase() === this.cityQuery);
-        pageTitle = `Trabajos de ${this.employment?.title} en ${this.city?.title}`;
-        metaDescription = `Encuentra ofertas de trabajode ${this.employment?.title} en ${this.city?.title}`;
+        pageTitle = this.city?.page_title || '';
+        metaDescription = this.city?.meta_description || '';
       }
+
+      console.log(pageTitle);
+      console.log(metaDescription);
 
       this.seoService.generateTags({
         title: pageTitle,
