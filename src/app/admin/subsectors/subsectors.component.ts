@@ -174,7 +174,7 @@ export class SubsectorsComponent extends BaseComponent implements OnInit {
   }
   viewLink(event: any, link: string) {
     event.stopPropagation();
-    const url = this.router.serializeUrl(this.router.createUrlTree([`listado/${link}`], {}));
+    const url = this.router.serializeUrl(this.router.createUrlTree([`servicios/${link.replace('-en-espana', '')}/espana`], {}));
     window.open(url, '_blank');
   }
 
