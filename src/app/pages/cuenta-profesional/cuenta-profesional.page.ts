@@ -51,7 +51,7 @@ export class CuentaProfesionalPage implements OnInit {
     .then((data: IHttpService) => {
       const aux = (data.response as Keywords);
       const provinces = aux.locations
-        .filter((location: Location) =>  location.title !== 'España')
+        // .filter((location: Location) =>  location.title !== 'España')
         .sort((a: Location, b: Location) => a.title.localeCompare(b.title));
       const subsectors = aux.subsector.sort((a: Subsector, b: Subsector) => a.nombre.localeCompare(b.nombre));
 
@@ -65,8 +65,6 @@ export class CuentaProfesionalPage implements OnInit {
         const myProfessions = result.professions;
         const myLocations = result.locations;
 
-        console.log(myProfessions, myLocations);
-        
         if ( !myProfessions.length && !myLocations.length ) {
           this.isProfessional = false;
         } else {

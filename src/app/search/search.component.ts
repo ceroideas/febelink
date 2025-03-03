@@ -278,6 +278,7 @@ export class SearchComponent {
       .sort((a: Location, b: Location) => a.title.localeCompare(b.title))
 
       this.provinceDropdownItems = this.provinces
+      .filter((location: Location) =>  location.title !== 'España')
       .map((location: Location) => {
         return {
           id: location.id,
