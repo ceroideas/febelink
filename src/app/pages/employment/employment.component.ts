@@ -127,6 +127,12 @@ export class EmploymentComponent implements OnInit {
   goToRegister() {
     if (!this.isAuthenticated) {
       this.router.navigate(['/registro']);
+    } else {
+      if (this.isProfessional) {
+        this.router.navigate(['/services']);
+      } else {
+        this.router.navigate(['/professions']);
+      }
     }
   }
 }
