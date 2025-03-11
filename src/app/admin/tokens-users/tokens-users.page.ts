@@ -57,14 +57,14 @@ export class TokensUsersPage implements OnInit {
     this.isLoading = true;
     this.filter = event?.target?.value || this.filter || '';
 
-    // this.tokensUsersSvc.getTokensUsers( this.activePage, this.filter).then(async (response: any) => {
-    //   this.tokensUsers = response.items;
-    //   this.tkPhases = response.tkPhases;
-    //   this.totalRecords = response.totalRecords;
-    //   this.recordsPerPage = response.limit;
-    //   this.qPages = response.qPages;
-    //   this.isLoading = false;
-    // })
+    this.tokensUsersSvc.getTokensUsers( this.activePage, this.filter).then(async (response: any) => {
+      this.tokensUsers = response.items;
+      this.tkPhases = response.tkPhases;
+      this.totalRecords = response.totalRecords;
+      this.recordsPerPage = response.limit;
+      this.qPages = response.qPages;
+      this.isLoading = false;
+    })
 
    
   }
