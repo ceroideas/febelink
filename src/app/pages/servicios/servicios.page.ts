@@ -153,6 +153,7 @@ export class ServiciosPage implements OnInit {
         }
       });
     }
+   
   }
 
   async getProducts() {
@@ -160,10 +161,16 @@ export class ServiciosPage implements OnInit {
     
     this.iProducts = response;
     response?.available?.forEach((elem: any) => {
-      if (!elem.isTemplate && elem.isPublished) {
+
+    //  if (!elem.isTemplate && elem.isPublished) {
         this.numbServicesAvaliable = this.numbServicesAvaliable - 1;
-      }
+
+     // }
+
     });
+   if (this.numbServicesAvaliable <=0 )
+    this.isNuevoServicio = false;
+
   }
 
   async getProfessions() {
@@ -191,10 +198,12 @@ export class ServiciosPage implements OnInit {
   }
 
   selectNuevoServicio() {
-    if (this.numbServicesAvaliable > 0) {
+   
+    if (this.numbServicesAvaliable > 0 ) {
       this.isNuevoServicio = true;
       this.initializeSocket();
     } else {
+      this.isNuevoServicio = false;
       this.toastSvc.show(
         'Cambia a Plan SUPERPRO para poder crear ofertas activas adicionales.'
       );
