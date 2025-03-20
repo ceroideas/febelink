@@ -81,17 +81,12 @@ export class CuentaProfesionalPage implements OnInit {
     const { response } = await this.subService.getMySubscriptions();
     if (response) {
       response.forEach((elem: Subscription) => {
-        if (elem.subscriptionName === 'sub-pro') {
-          this.numProfessionAvaliable = 3;
+        if (elem.subscriptionName === 'sub-plus') {
+          this.numProfessionAvaliable = 4;
         }
         if (elem.subscriptionName === 'superpro') {
-          this.numProfessionAvaliable = 5;
+          this.numProfessionAvaliable = 6;
         }
-        if (elem.subscriptionName === 'sub-prof') {
-          this.numProfessionAvaliable += elem.amount;
-        }
-
-        console.log(this.numProfessionAvaliable);
       });
     }
   }

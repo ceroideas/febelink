@@ -142,14 +142,11 @@ export class ServiciosPage implements OnInit {
     const {response} = await this.subService.getMySubscriptions();
     if (response) {
       response.forEach((elem: Subscription) => {
-        if (elem.subscriptionName === 'sub-pro') {
-          this.numbServicesAvaliable = 2;
+        if (elem.subscriptionName === 'sub-plus') {
+          this.numbServicesAvaliable = 6;
         }
         if (elem.subscriptionName === 'superpro') {
-          this.numbServicesAvaliable = 5;
-        }
-        if (elem.subscriptionName === 'sub-plus') {
-          this.numbServicesAvaliable += elem.amount;
+          this.numbServicesAvaliable = 9;
         }
       });
     }
