@@ -88,9 +88,6 @@ export class EmploymentComponent implements OnInit {
         metaDescription = this.city?.meta_description || '';
       }
 
-      console.log(pageTitle);
-      console.log(metaDescription);
-
       this.seoService.generateTags({
         title: pageTitle,
         description: metaDescription,

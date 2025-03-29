@@ -92,7 +92,6 @@ export class CuentaProfesionalPage implements OnInit {
   }
 
   addLocation = () => {
-    console.log
     if (this.province && this.city) {
       this.myProvinces = [...this.myProvinces, { location: this.allProvinces.find((location) => location.id === Number(this.province)), city: this.city }]
       
