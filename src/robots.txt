@@ -43,6 +43,14 @@ User-agent: Bingbot
 Crawl-delay: 7
 Allow: /*.xml$
 
+# Disable OpenAI's crawler
+User-agent: GPTBot
+Disallow: /
+
+# Disable Amazon's crawler
+User-agent: Amazonbot
+Disallow: /
+
 # Configuración para bots agresivos
 User-agent: AhrefsBot
 Crawl-delay: 30
