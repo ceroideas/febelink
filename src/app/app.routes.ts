@@ -26,16 +26,6 @@ export const routes: Routes = [
         path: 'app',
         component: LandingComponent
       },
-      // ESTAS SON LAS RUTAS PARA EL LISTADO PARA EL FILTRO
-      {
-        path: 'listado',
-        component: SearchComponent
-       
-      },
-      {
-        path: 'listado/:searchTerm',
-        component: SearchComponent
-      },
       {
         path: 'favoritos',
         component: FavoritesComponent
@@ -343,14 +333,6 @@ export const routes: Routes = [
           import('./pages/cuenta-profesional/cuenta-profesional.module').then(
             (m) => m.CuentaProfesionalPageModule
           ),
-      },
-      {
-        path: 'search',
-        component: SearchComponent
-      },
-      {
-        path: 'search/:searchTerm',
-        component: SearchComponent
       },
    
 ]
