@@ -414,7 +414,7 @@ select{
 }
 
 .grid2{
-  grid-template-columns: repeat(2, 1fr) !important;
+  // grid-template-columns: repeat(2, 1fr) !important;
 }
 .textarea-group label,
 .form-group label {
@@ -533,7 +533,6 @@ select{
     grid-gap: 7px;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
-  
     margin-bottom: 18px;
 	}
 
