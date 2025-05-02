@@ -175,7 +175,7 @@ export class SearchService {
     return this.http.post('product/find', {
       subsectors: JSON.stringify(subsectors),
       provinces: JSON.stringify(provinces),
-      cities: JSON.stringify(cities),
+      cities: JSON.stringify(cities)
     });
   }
   async findOtherOffers(subsectors: number[], index: number = 0) {

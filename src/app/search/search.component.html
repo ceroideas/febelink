@@ -218,7 +218,7 @@
     </div>
 
     <div class="list flex flex-col gap-3" *ngIf="!loading">
-      @for ( data of offers; track data.id ) {
+      @for ( data of displayedRecords; track data.id ) {
         <search-product-card
           [data]="data"
           [unitTypes]="unitTypes" 
@@ -226,9 +226,14 @@
         /> 
       }
 
-      @if ( !offers.length ) {
+      @if ( !displayedRecords.length ) {
         <p class="text-neutral-600 text-lg font-primary">No se encontraron resultados</p>
       }
+	    @if ( displayedRecords.length && !isMovil) {
+            <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-success text-center text-base text-white font-semibold rounded btn-fw" (click)="loadMoreResults()">
+              Ver más resultados
+            </button>
+        }
     </div>
     <div class="list flex flex-col gap-3" *ngIf="loading">
       <search-product-card [skeleton]="true" /> 
@@ -241,7 +246,7 @@
 
     <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded"
       *ngIf="!otherOffers.length && !loadingOtherOffers"
-      (click)="findOtherOffers()">
+      (click)="findOtherOffers()" id="buttonResults">
       Ver otros resultados similares
     </button>
   </div>
