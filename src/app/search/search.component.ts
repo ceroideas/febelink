@@ -595,11 +595,13 @@ export class SearchComponent {
     //Test ceroideas poagination
     allRecords: any[] = [];
     displayedRecords: any[] = [];
-    chunkSize = 20;
+    chunkSize = 10;
     isLoading = false;
     currentIndex = 0;
+    currentPage: number = 1;
     @ViewChild('buttonResults') buttonResults!: ElementRef<HTMLButtonElement>;
     @ViewChild('divResults') divResults!: ElementRef<HTMLDivElement>;
+
 
     ngAfterViewInit():void {
         this.isMovil = window.innerWidth <= 768 ? true : false;
@@ -609,6 +611,49 @@ export class SearchComponent {
                 appSearchElement.addEventListener('scroll', this.onScrollVerify.bind(this));
             }
         }, 0);
+    }
+
+    get totalPages(): number {
+      return Math.ceil(this.allRecords.length / this.chunkSize);
+    }
+
+    get paginatedData(): any[] {
+        const start = (this.currentPage - 1) * this.chunkSize;
+        const end = start + this.chunkSize;
+        return this.allRecords.slice(start, end);
+    }
+
+    changePage(page: number | string) {
+      if (page === '...') return;
+      this.currentPage = page as number;
+    }
+
+    previousPage() {
+        if (this.currentPage > 1) this.currentPage--;
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPages) this.currentPage++;
+    }
+
+    get visiblePages(): (number | string)[] {
+        const total = this.totalPages;
+        const current = this.currentPage;
+        const pages: (number | string)[] = [];
+
+        if (total <= 7) {
+          for (let i = 1; i <= total; i++) pages.push(i);
+        } else {
+          if (current <= 4) {
+            pages.push(1, 2, 3, 4, 5, '...', total);
+          } else if (current >= total - 3) {
+            pages.push(1, '...', total - 4, total - 3, total - 2, total - 1, total);
+          } else {
+            pages.push(1, '...', current - 1, current, current + 1, '...', total);
+          }
+        }
+
+        return pages;
     }
 
     onScrollVerify() {
