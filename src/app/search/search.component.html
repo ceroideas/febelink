@@ -218,7 +218,7 @@
     </div>
 
     <div class="list flex flex-col gap-3" *ngIf="!loading">
-      @for ( data of offers; track data.id ) {
+      @for ( data of paginatedData; track data.id ) {
         <search-product-card
           [data]="data"
           [unitTypes]="unitTypes" 
@@ -226,9 +226,27 @@
         /> 
       }
 
-      @if ( !offers.length ) {
+      @if ( !paginatedData.length ) {
         <p class="text-neutral-600 text-lg font-primary">No se encontraron resultados</p>
       }
+	    @if ( paginatedData.length && !isMovil) {
+            <!-- <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-success text-center text-base text-white font-semibold rounded btn-fw" (click)="loadMoreResults()">
+              Ver más resultados
+            </button> -->
+           <div class="pagination">
+  <button (click)="previousPage()" [disabled]="currentPage === 1">«</button>
+
+  <button
+    *ngFor="let page of visiblePages"
+    (click)="changePage(page)"
+    [class.active]="currentPage === page"
+    [disabled]="page === '...'">
+    {{ page }}
+  </button>
+
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">»</button>
+</div>
+        }
     </div>
     <div class="list flex flex-col gap-3" *ngIf="loading">
       <search-product-card [skeleton]="true" /> 
@@ -241,7 +259,7 @@
 
     <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-primary text-center text-base text-white font-semibold rounded"
       *ngIf="!otherOffers.length && !loadingOtherOffers"
-      (click)="findOtherOffers()">
+      (click)="findOtherOffers()" id="buttonResults">
       Ver otros resultados similares
     </button>
   </div>

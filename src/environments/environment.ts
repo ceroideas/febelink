@@ -35,7 +35,7 @@ export const environment = {
   WEB_CLIENT_ID:
     '939891417028-okph50b82lar7ftt6sivk6h441p6gm1d.apps.googleusercontent.com',
   FACEBOOK_ID: '895023747604792',
-  WEB_URL: 'http://localhost/',
+  WEB_URL: 'https://www.febelink.com/',
   stripe_publick_key: 'pk_test_9BatjAPV71ZLV0LLXxtvgMaT00zyRzltzM',
 
   // GooglePlaces API

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, PLATFORM_ID, ViewChild, HostListener } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Meta, Title} from '@angular/platform-browser';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -188,6 +188,8 @@ export class SearchComponent {
     link: string,
     title: string
   }[] = [];
+
+  isMovil: boolean = false;
 
   constructor(
     public searchService: SearchService,
@@ -589,49 +591,149 @@ export class SearchComponent {
     this.cdRef.detectChanges();
   }
 
-  findOffers() {
-    this.closeDropdown();
 
-    let uncheckedSubsectors: number[] = [];
+    //Test ceroideas poagination
+    allRecords: any[] = [];
+    displayedRecords: any[] = [];
+    chunkSize = 10;
+    isLoading = false;
+    currentIndex = 0;
+    currentPage: number = 1;
+    @ViewChild('buttonResults') buttonResults!: ElementRef<HTMLButtonElement>;
+    @ViewChild('divResults') divResults!: ElementRef<HTMLDivElement>;
 
-    if ( this.searchText2.trim() !== '' ) {
-      const searchWords = this.searchText2.split(' ');
 
-      uncheckedSubsectors = this.sectors
-      .map((sector: Sector) => 
-        sector.subSectors.filter((subsector: Subsector) => 
-          !subsector.hidden && 
-          !subsector.checked && 
-          subsector.keySearch.some((key) => searchWords.includes(key.key_name))
-        )
-      )
-      .flat()
-      .map((subsector: Subsector) => subsector.id);
+    ngAfterViewInit():void {
+        this.isMovil = window.innerWidth <= 768 ? true : false;
+        setTimeout(() => {
+            const appSearchElement = document.querySelector('app-search');
+            if (appSearchElement) {
+                appSearchElement.addEventListener('scroll', this.onScrollVerify.bind(this));
+            }
+        }, 0);
     }
 
-    const subsectors: number[] = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
-    const provinces: number[] = this.currentProvinceDropdownItem.map((province: { id: number, title: string, link: string, checked: boolean }) => province.id);
-    const cities: string[] = this.currentCityDropdownItem.map((city: { title: string, link: string, checked: boolean }) => city.title);
+    get totalPages(): number {
+      return Math.ceil(this.allRecords.length / this.chunkSize);
+    }
 
-    this.searchService.findOffers([...subsectors, ...uncheckedSubsectors], provinces, cities)
-    .then((data) => {
-      if ( data && data.response && data.response ) {
-        this.offers = data.response;
-      } else {
-        this.offers = [];
-      }
+    get paginatedData(): any[] {
+        const start = (this.currentPage - 1) * this.chunkSize;
+        const end = start + this.chunkSize;
+        return this.allRecords.slice(start, end);
+    }
 
-      this.otherOffers = [];
-      this.otherOffersStartIndex = 0;
+    changePage(page: number | string) {
+      if (page === '...') return;
+      this.currentPage = page as number;
+    }
 
-      this.loading = false;
-      this.cdRef.detectChanges();
-    })
-    .catch((error: any) => {
-      this.loading = false;
-      this.cdRef.detectChanges();
-    });
-  }
+    previousPage() {
+        if (this.currentPage > 1) this.currentPage--;
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPages) this.currentPage++;
+    }
+
+    get visiblePages(): (number | string)[] {
+        const total = this.totalPages;
+        const current = this.currentPage;
+        const pages: (number | string)[] = [];
+
+        if (total <= 7) {
+          for (let i = 1; i <= total; i++) pages.push(i);
+        } else {
+          if (current <= 4) {
+            pages.push(1, 2, 3, 4, 5, '...', total);
+          } else if (current >= total - 3) {
+            pages.push(1, '...', total - 4, total - 3, total - 2, total - 1, total);
+          } else {
+            pages.push(1, '...', current - 1, current, current + 1, '...', total);
+          }
+        }
+
+        return pages;
+    }
+
+    onScrollVerify() {
+        const button = document.getElementById('buttonResults');
+        if (button) {
+            const rect = button.getBoundingClientRect();
+            const distanciaAlBoton = rect.top;
+
+            if (distanciaAlBoton >= 0 && distanciaAlBoton <= window.innerHeight) {
+                if(this.isMovil){
+                    this.loadNextChunk();
+                }
+            }
+        }
+    }
+
+    loadNextChunk() {
+        if (this.currentIndex >= this.allRecords.length) {
+          return;
+        }
+
+        const nextRecords = this.allRecords.slice(this.currentIndex, this.currentIndex + this.chunkSize);
+        this.displayedRecords = [...this.displayedRecords, ...nextRecords];
+
+        this.currentIndex += this.chunkSize;
+    }
+
+    loadMoreResults() {
+        this.loadNextChunk();
+    }
+    //End Ceroideas test pagination
+
+    findOffers() {
+        this.isLoading = true;
+        this.closeDropdown();
+        let uncheckedSubsectors: number[] = [];
+
+        if ( this.searchText2.trim() !== '' ) {
+          const searchWords = this.searchText2.split(' ');
+
+          uncheckedSubsectors = this.sectors
+          .map((sector: Sector) => 
+            sector.subSectors.filter((subsector: Subsector) => 
+              !subsector.hidden && 
+              !subsector.checked && 
+              subsector.keySearch.some((key) => searchWords.includes(key.key_name))
+            )
+          )
+          .flat()
+          .map((subsector: Subsector) => subsector.id);
+        }
+
+        const subsectors: number[] = this.currentSubSectorSelection.map((subsector: Subsector) => subsector.id);
+        const provinces: number[] = this.currentProvinceDropdownItem.map((province: { id: number, title: string, link: string, checked: boolean }) => province.id);
+        const cities: string[] = this.currentCityDropdownItem.map((city: { title: string, link: string, checked: boolean }) => city.title);
+
+        this.searchService.findOffers([...subsectors, ...uncheckedSubsectors], provinces, cities)
+        .then((data) => {
+          console.log(data, 'data');
+          if ( data && data.response && data.response ) {
+            // this.offers = data.response;
+            this.allRecords = data.response;
+            this.loadNextChunk();
+            this.isLoading = false;
+          } else {
+            this.allRecords = [];
+            // this.offers = [];
+          }
+
+          this.otherOffers = [];
+          this.otherOffersStartIndex = 0;
+
+          this.loading = false;
+          this.cdRef.detectChanges();
+        })
+        .catch((error: any) => {
+          this.loading = false;
+          this.cdRef.detectChanges();
+        });
+    }
   findOtherOffers() {
     this.loadingOtherOffers = true;
     this.cdRef.detectChanges();
@@ -806,17 +908,21 @@ export class SearchComponent {
       this.currentOrderDropdownItem !== 'Precio menor' ? this.currentOrderDropdownItem = 'Precio menor' : this.currentOrderDropdownItem = undefined;
       
       if ( this.currentOrderDropdownItem === 'Precio menor' ) {
-        this.offers.sort((a: any, b: any) => Number(a.unitPrice) - Number(b.unitPrice));
+        this.allRecords.sort((a: any, b: any) => Number(a.unitPrice) - Number(b.unitPrice));
+        // this.offers.sort((a: any, b: any) => Number(a.unitPrice) - Number(b.unitPrice));
       } else {
-        this.offers.sort((a: any, b: any) => b.id - a.id);
+        this.allRecords.sort((a: any, b: any) => b.id - a.id);
+        // this.offers.sort((a: any, b: any) => b.id - a.id);
       }
     } else if ( order === 'desc' ) {
       this.currentOrderDropdownItem !== 'Precio mayor' ? this.currentOrderDropdownItem = 'Precio mayor' : this.currentOrderDropdownItem = undefined;
       
       if ( this.currentOrderDropdownItem === 'Precio mayor' ) {
-        this.offers.sort((a: any, b: any) => Number(b.unitPrice) - Number(a.unitPrice));
+        this.allRecords.sort((a: any, b: any) => Number(b.unitPrice) - Number(a.unitPrice));
+        // this.offers.sort((a: any, b: any) => Number(b.unitPrice) - Number(a.unitPrice));
       } else {
-        this.offers.sort((a: any, b: any) => b.id - a.id);
+        this.allRecords.sort((a: any, b: any) => b.id - a.id);
+        // this.offers.sort((a: any, b: any) => b.id - a.id);
       }
     }
   }
