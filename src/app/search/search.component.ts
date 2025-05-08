@@ -623,6 +623,10 @@ export class SearchComponent {
         return this.allRecords.slice(start, end);
     }
 
+    get displayedData(): any[] {
+        return this.isMovil ? this.displayedRecords : this.paginatedData;
+    }
+
     changePage(page: number | string) {
       if (page === '...') return;
       this.currentPage = page as number;
@@ -633,7 +637,17 @@ export class SearchComponent {
     }
 
     nextPage() {
-        if (this.currentPage < this.totalPages) this.currentPage++;
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+
+            const nextChunk = this.paginatedData;
+
+            if (this.isMovil) {
+                this.displayedRecords = [...this.displayedRecords, ...nextChunk];
+            } else {
+                this.displayedRecords = nextChunk;
+            }
+        }
     }
 
     get visiblePages(): (number | string)[] {
@@ -661,10 +675,11 @@ export class SearchComponent {
         if (button) {
             const rect = button.getBoundingClientRect();
             const distanciaAlBoton = rect.top;
+            console.log(distanciaAlBoton);
 
-            if (distanciaAlBoton >= 0 && distanciaAlBoton <= window.innerHeight) {
+            if (distanciaAlBoton >= 0 && distanciaAlBoton <= window.innerHeight + 2000) {
                 if(this.isMovil){
-                    this.loadNextChunk();
+                    this.nextPage();
                 }
             }
         }

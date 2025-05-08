@@ -218,7 +218,7 @@
     </div>
 
     <div class="list flex flex-col gap-3" *ngIf="!loading">
-      @for ( data of paginatedData; track data.id ) {
+      @for ( data of displayedData; track data.id ) {
         <search-product-card
           [data]="data"
           [unitTypes]="unitTypes" 
@@ -226,10 +226,10 @@
         /> 
       }
 
-      @if ( !paginatedData.length ) {
+      @if ( !displayedData.length ) {
         <p class="text-neutral-600 text-lg font-primary">No se encontraron resultados</p>
       }
-	    @if ( paginatedData.length && !isMovil) {
+	    @if ( displayedData.length && !isMovil) {
             <!-- <button class="block w-fit mx-auto mt-4 px-3 py-2 button bg-success text-center text-base text-white font-semibold rounded btn-fw" (click)="loadMoreResults()">
               Ver más resultados
             </button> -->
