@@ -601,7 +601,7 @@ export class SearchComponent {
     currentPage: number = 1;
     @ViewChild('buttonResults') buttonResults!: ElementRef<HTMLButtonElement>;
     @ViewChild('divResults') divResults!: ElementRef<HTMLDivElement>;
-
+    @ViewChild('searchTop') searchTop!: ElementRef;
 
     ngAfterViewInit():void {
         this.isMovil = window.innerWidth <= 768 ? true : false;
@@ -613,8 +613,12 @@ export class SearchComponent {
         }, 0);
     }
 
+    scrollToSearch() {
+        this.searchTop?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     get totalPages(): number {
-      return Math.ceil(this.allRecords.length / this.chunkSize);
+        return Math.ceil(this.allRecords.length / this.chunkSize);
     }
 
     get paginatedData(): any[] {
@@ -628,12 +632,14 @@ export class SearchComponent {
     }
 
     changePage(page: number | string) {
-      if (page === '...') return;
-      this.currentPage = page as number;
+        if (page === '...') return;
+        this.currentPage = page as number;
+        this.scrollToSearch();
     }
 
     previousPage() {
         if (this.currentPage > 1) this.currentPage--;
+        this.scrollToSearch();
     }
 
     nextPage() {
@@ -648,6 +654,7 @@ export class SearchComponent {
                 this.displayedRecords = nextChunk;
             }
         }
+        this.scrollToSearch();
     }
 
     get visiblePages(): (number | string)[] {
@@ -655,15 +662,24 @@ export class SearchComponent {
         const current = this.currentPage;
         const pages: (number | string)[] = [];
 
-        if (total <= 7) {
+        if (total <= 10) {
           for (let i = 1; i <= total; i++) pages.push(i);
         } else {
-          if (current <= 4) {
-            pages.push(1, 2, 3, 4, 5, '...', total);
-          } else if (current >= total - 3) {
-            pages.push(1, '...', total - 4, total - 3, total - 2, total - 1, total);
+          if (current <= 10) {
+            pages.push(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
           } else {
-            pages.push(1, '...', current - 1, current, current + 1, '...', total);
+            pages.push(
+                1, 
+                current - 7, 
+                current - 6, 
+                current - 5, 
+                current - 4, 
+                current - 3, 
+                current - 2, 
+                current - 1, 
+                current, 
+                current + 1,
+            );
           }
         }
 
@@ -675,7 +691,6 @@ export class SearchComponent {
         if (button) {
             const rect = button.getBoundingClientRect();
             const distanciaAlBoton = rect.top;
-            console.log(distanciaAlBoton);
 
             if (distanciaAlBoton >= 0 && distanciaAlBoton <= window.innerHeight + 2000) {
                 if(this.isMovil){
