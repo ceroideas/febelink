@@ -1,4 +1,5 @@
 <!-- Search section -->
+<div #searchTop></div>
 <section class="search relative px-6 pt-32 mx-auto max-w-screen-xl z-1 xs:px-10">
   <!-- Title -->
   @if (!h1Title) {
@@ -240,7 +241,7 @@
     *ngFor="let page of visiblePages"
     (click)="changePage(page)"
     [class.active]="currentPage === page"
-    [disabled]="page === '...'">
+    >
     {{ page }}
   </button>
 
