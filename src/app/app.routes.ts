@@ -10,6 +10,7 @@ import { PerfilOraculoPage } from './pages/perfil-oraculo/perfil-oraculo.page'
 import { LandingComponent } from './pages/landing/landing.component'
 import { EmploymentComponent } from './pages/employment/employment.component'
 import { FavoritesComponent } from './pages/favorites/favorites.component'
+import { IsAdminGuard } from './guards/is-admin.guard'
 
 export const routes: Routes = [
  
@@ -229,6 +230,7 @@ export const routes: Routes = [
       },
       {
         path: 'admin',
+        canActivate: [IsAdminGuard],
         loadChildren: () =>
           import('./admin/admin.module').then((m) => m.AdminPageModule),
       },
