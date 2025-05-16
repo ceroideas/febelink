@@ -634,7 +634,9 @@ export class SearchComponent {
     changePage(page: number | string) {
         if (page === '...') return;
         this.currentPage = page as number;
-        this.scrollToSearch();
+        if (!this.isMovil) {
+            this.scrollToSearch();
+        }
     }
 
     previousPage() {
@@ -652,9 +654,9 @@ export class SearchComponent {
                 this.displayedRecords = [...this.displayedRecords, ...nextChunk];
             } else {
                 this.displayedRecords = nextChunk;
+                this.scrollToSearch();
             }
         }
-        this.scrollToSearch();
     }
 
     get visiblePages(): (number | string)[] {
