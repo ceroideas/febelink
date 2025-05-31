@@ -12,6 +12,7 @@ import { FooterLinksComponent } from './footer-links/footer-links.component';
 import { BudgetsComponent } from './budgets/budgets.component';
 import { ShadowUsersComponent } from './shadow-users/shadow-users.component';
 import { ShadowProductsComponent } from './shadow-products/shadow-products.component';
+import { AutomationsComponent } from './automations/automations.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
       { path: 'footer-links', component: FooterLinksComponent },
       { path: 'budget', component: BudgetsComponent },
       { path: 'shadow-users', component: ShadowUsersComponent },
-      { path: 'shadow-products', component: ShadowProductsComponent }
+      { path: 'shadow-products', component: ShadowProductsComponent },
+      { path: 'automations', component: AutomationsComponent }
     ]
   },
   
