@@ -94,7 +94,7 @@ export class SocialLoginComponent {
     //   })
     //   .catch((e) => {
     //     this.utilities.showToast('Error de conexión con el servidor');
-    //     console.log("test ceroideas",'Error logging into Facebook', e);
+    //     console.log('Error logging into Facebook', e);
     //   });
   }
 
@@ -115,7 +115,7 @@ export class SocialLoginComponent {
     //     this.auth(formData, this.firstLogin);
     //   })
     //   .catch((e) => {
-    //     console.log("test ceroideas",e);
+    //     console.log(e);
     //     this.utilities.showToast('Error de conexión con el servidor');
     //   });
   }
@@ -166,7 +166,7 @@ export class SocialLoginComponent {
     authResponse.subscribe(
       (results) => {},
       (err) => {
-        console.log("test ceroideas",'Auth error: ', err);
+        console.log('Auth error: ', err);
         this.utilities.showToast('Error de conexión con el servidor');
         this.utilities.dismissLoading();
       }

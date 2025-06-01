@@ -40,7 +40,7 @@ export class ConsoleSvc
                     break;
                 case ConsoleType.INFO:
                 default:
-                    console.log("test ceroideas",msg, style);
+                    console.log(msg, style);
                     break;
             }
         });

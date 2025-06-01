@@ -23,7 +23,7 @@ export class NotificationService {
     const notifListObs: Observable<any> = await this.api._getData(
       'getNotificationsByUserId'
     );
-    // console.log("test ceroideas",await notifListObs.pipe(first()).toPromise());
+    // console.log(await notifListObs.pipe(first()).toPromise());
     return notifListObs.pipe(first()).toPromise();
   }
 

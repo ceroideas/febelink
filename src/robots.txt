@@ -65,6 +65,9 @@ User-agent: Baiduspider
 Crawl-delay: 40
 Disallow: /
 
+User-agent: Meta-ExternalAgent
+Disallow: /
+
 # Mapas del sitio
 Sitemap: https://www.febelink.com/sitemap.xml
 

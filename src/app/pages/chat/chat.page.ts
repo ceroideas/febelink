@@ -589,7 +589,7 @@ export class ChatPage implements OnInit{
         this.demandId
       )
     ).subscribe((resp) => {
-      console.log("test ceroideas",'submitOffer', resp);
+      console.log('submitOffer', resp);
     });
   }
 }

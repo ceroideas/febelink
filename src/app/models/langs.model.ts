@@ -59,7 +59,7 @@ export function getLangParam( id: number | string ) {
     // To save Lang selected
     static saveLang( lang: ILang ) {
       // storage.set( ILangDEFAULTS.key, lang ).then(() => {})
-      //   .catch(error => console.log("test ceroideas", 'There was an error on saving Lang:', error ));
+      //   .catch(error => console.log( 'There was an error on saving Lang:', error ));
       try {
         localStorage.setItem(ILangDEFAULTS.key, JSON.stringify(lang));
       } catch (error) {

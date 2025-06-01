@@ -65,7 +65,7 @@ export class CartPage implements OnInit {
       this.cartSvc.getActiveCart().subscribe((value) => {
         this.iCart = value;
         this.cdRef.detectChanges();
-        console.log("test ceroideas",'Carrito offline', this.iCart);
+        console.log('Carrito offline', this.iCart);
       });
     }
   }

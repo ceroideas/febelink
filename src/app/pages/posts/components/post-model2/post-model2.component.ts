@@ -295,7 +295,7 @@ export class PostModel2Component implements OnInit, AfterViewInit {
   public apiCallbackFn = (route: any) => {
     return this.http.get(route).pipe(
       catchError((error: any) => {
-        console.log("test ceroideas",'ups', error);
+        console.log('ups', error);
         // You can handle the error here or rethrow it if necessary
         return throwError(error); // Rethrow the error if needed
       })

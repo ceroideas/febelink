@@ -746,7 +746,7 @@ export class SearchComponent {
 
         this.searchService.findOffers([...subsectors, ...uncheckedSubsectors], provinces, cities)
         .then((data) => {
-          console.log("test ceroideas 1","filter", 'data');
+          console.log("filter", 'data');
           if ( data && data.response && data.response ) {
             // this.offers = data.response;
             this.allRecords = data.response;

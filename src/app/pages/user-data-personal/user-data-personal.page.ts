@@ -75,10 +75,10 @@ export class UserDataPersonalPage implements OnInit {
 
       this.userDataPersonalService.updatePersonalDataUser(datos)
         .then(res => {
-          //console.log("test ceroideas",'Datos guardados con éxito : '+res);
+          //console.log('Datos guardados con éxito : '+res);
         })
         .catch(err => {
-          //console.log("test ceroideas",'Error al enviar los datos'+err);
+          //console.log('Error al enviar los datos'+err);
         });
     }
   }

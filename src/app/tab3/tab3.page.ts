@@ -54,7 +54,7 @@ export class Tab3Page implements OnInit {
       unreadMessages?.forEach((room) => {
         this.unreadMessages.set(+room.room_id, room.unread);
       });
-      // console.log("test ceroideas","unreadNotificationsCount", this.unreadMessages);
+      // console.log("unreadNotificationsCount", this.unreadMessages);
     });
 
     await this.getUserProfile();
@@ -162,7 +162,7 @@ export class Tab3Page implements OnInit {
           this.getOffers();
         },
         (err) => {
-          console.log("test ceroideas",err);
+          console.log(err);
           this.utilities.showToast(
             this.translateService.instant('tabs.tab3.errorRemoveOffer')
           );
@@ -174,7 +174,7 @@ export class Tab3Page implements OnInit {
           this.getOffers();
         },
         (err) => {
-          console.log("test ceroideas",err);
+          console.log(err);
           this.utilities.showToast(
             this.translateService.instant('tabs.tab3.errorRemoveSearch')
           );

@@ -101,7 +101,7 @@ export class SearchComponent implements AfterViewInit {
     /*this.actRouter.params.subscribe(val => {
       this.locationFilter = this.searchService.getLocationFilter();
       this.locationFilterLink = this.locationFilterLink.filter(link => link.locations_id.title === this.locationFilter);
-      console.log("test ceroideas",this.locationFilter, this.locationFilterLink);
+      console.log(this.locationFilter, this.locationFilterLink);
     });*/
 
  

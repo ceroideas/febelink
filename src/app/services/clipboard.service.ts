@@ -26,7 +26,7 @@ export class ClipboardSvc {
       try {
         await navigator.clipboard.writeText(value);
       } catch (err) {
-        console.log("test ceroideas",'Error on Clipboard: ', err);
+        console.log('Error on Clipboard: ', err);
         success = false;
       }
     } else {
@@ -40,7 +40,7 @@ export class ClipboardSvc {
       try {
         success = document.execCommand('copy');
       } catch (err) {
-        console.log("test ceroideas",'Error on Clipboard: ', err);
+        console.log('Error on Clipboard: ', err);
         success = false;
       }
 
@@ -56,7 +56,7 @@ export class ClipboardSvc {
     //     try {
     //       await navigator.clipboard.writeText(value);
     //     } catch (err) {
-    //       console.log("test ceroideas",'Error on Clipboard: ', err);
+    //       console.log('Error on Clipboard: ', err);
     //       success = false;
     //     }
     //   } else {
@@ -70,7 +70,7 @@ export class ClipboardSvc {
     //     try {
     //       success = document.execCommand('copy');
     //     } catch (err) {
-    //       console.log("test ceroideas",'Error on Clipboard: ', err);
+    //       console.log('Error on Clipboard: ', err);
     //       success = false;
     //     }
 
