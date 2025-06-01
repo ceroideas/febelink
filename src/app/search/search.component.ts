@@ -604,7 +604,9 @@ export class SearchComponent {
     @ViewChild('searchTop') searchTop!: ElementRef;
 
     ngAfterViewInit():void {
-        this.isMovil = window.innerWidth <= 768 ? true : false;
+        if (isPlatformBrowser(this.platformId)) {
+            this.isMovil = window.innerWidth <= 768 ? true : false;
+        }
         setTimeout(() => {
             const appSearchElement = document.querySelector('app-search');
             if (appSearchElement) {

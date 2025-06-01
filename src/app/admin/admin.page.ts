@@ -64,6 +64,13 @@ export class AdminPage {
         {title: 'Reservas y Airdrops', icon: 'wallet', link: '/admin/tokens-users'},
         {title: 'Enlaces de footer', icon: 'link', link: '/admin/footer-links'},
       ]
+    },
+    {
+      name: 'Notificaciones push',
+      items: [
+        {title: 'Automatizaciones', icon: 'wallet', link: '/admin/automations'},
+        {title: 'Envio de notificaciones', icon: 'link', link: '/admin/sendnotifications'},
+      ]
     }
   ]
 
