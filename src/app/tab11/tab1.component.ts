@@ -120,9 +120,9 @@ export class Tab1Component implements OnInit  {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     
-    this.keywordService.getData().then((data: IHttpService) => {
+    /*this.keywordService.getData().then((data: IHttpService) => {
       this.parseKeywords(data.response as Keywords);
-    });
+    });*/
 
     if (isPlatformBrowser(this.platformId)) {
       this.keywordService.getData(false).then((data: IHttpService) => {
