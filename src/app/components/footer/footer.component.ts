@@ -26,15 +26,15 @@ export class FooterComponent implements OnInit{
 
 
   async ngOnInit() {
-    /*this.keywordService.getData().then((data: IHttpService) => {
+    this.keywordService.getData().then((data: IHttpService) => {
       this.footerLinks = (data.response as Keywords).links;
-    });*/
+    });
 
-    if (isPlatformBrowser(this.platformId)) {
+    /*if (isPlatformBrowser(this.platformId)) {
       this.keywordService.getData(false).then((data: IHttpService) => {
         this.footerLinks = (data.response as Keywords).links;
       });
-    }
+    }*/
   }
 
 

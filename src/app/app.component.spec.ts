@@ -7,7 +7,7 @@ import { SiteStatusService } from './core/services/site-status.service'
 import { ActivatedRoute } from '@angular/router'
 
 describe('AppComponent', () => {
-    console.log('AppComponent test - INIT')
+    console.log("test ceroideas",'AppComponent test - INIT')
     let fixture: AppComponent
 
     beforeEach(async () => {
@@ -28,12 +28,12 @@ describe('AppComponent', () => {
     })
 
     it('should create the app component', () => {
-        console.log('AppComponent - should create the app component')
+        console.log("test ceroideas",'AppComponent - should create the app component')
         expect(fixture).toBeTruthy()
     })
 
     it('should contain app-menu, router-outlet, and app-footer elements in the template', () => {
-        console.log(
+        console.log("test ceroideas",
             'AppComponent - should contain app-menu, router-outlet, and app-footer elements in the template'
         )
         // const compiled = fixture.nativeElement as HTMLElement
@@ -45,7 +45,7 @@ describe('AppComponent', () => {
         // expect(routerOutletElement).toBeTruthy()
         // expect(footerElement).toBeTruthy()
     })
-    console.log('AppComponent test - STOP')
+    console.log("test ceroideas",'AppComponent test - STOP')
 })
 
 // Estes testes cobrem os seguintes cenários:

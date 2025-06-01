@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HomeComponent } from './home.component'
 
 describe('HomeComponent', () => {
-    console.log('HomeComponent test - INIT')
+    console.log("test ceroideas",'HomeComponent test - INIT')
     let component: HomeComponent
     let fixture: ComponentFixture<HomeComponent>
 

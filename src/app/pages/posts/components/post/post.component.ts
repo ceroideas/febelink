@@ -292,7 +292,7 @@ export class PostComponent implements OnInit, AfterViewInit {
   public apiCallbackFn = (route: any) => {
     return this.http.get(route).pipe(
       catchError((error: any) => {
-        console.log('ups', error);
+        console.log("test ceroideas",'ups', error);
         // You can handle the error here or rethrow it if necessary
         return throwError(error); // Rethrow the error if needed
       })

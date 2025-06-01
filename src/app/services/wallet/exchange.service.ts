@@ -88,7 +88,7 @@ export class ExchangeService {
         }
 
         if( answer?.error )
-            console.log({ error: answer?.error });
+            console.log("test ceroideas",{ error: answer?.error });
 
         this.toastSvc.show(( answer?.error
                 ? answer?.error?.error?.message || answer?.error?.message

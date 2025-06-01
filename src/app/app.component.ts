@@ -406,7 +406,7 @@ export class AppComponent implements OnInit, OnDestroy {
           await this.api.guardarTokenDeRegistro(currentToken)
         // }
       }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
+        console.log("test ceroideas",'An error occurred while retrieving token. ', err);
       });
 
       
@@ -421,7 +421,7 @@ export class AppComponent implements OnInit, OnDestroy {
               icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
             });
           }).catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
+            console.log("test ceroideas",'An error occurred while retrieving token. ', err);
           });
         } else {
               //@ts-ignore
@@ -442,7 +442,7 @@ export class AppComponent implements OnInit, OnDestroy {
         
       });
     } else {
-      console.log('Unable to get permission to notify.');
+      console.log("test ceroideas",'Unable to get permission to notify.');
     }
   } 
 
@@ -484,7 +484,7 @@ export class AppComponent implements OnInit, OnDestroy {
             await this.api.guardarTokenDeRegistro(currentToken)
           // }
         }).catch((err) => {
-          console.log('An error occurred while retrieving token. ', err);
+          console.log("test ceroideas",'An error occurred while retrieving token. ', err);
         });
 
         
@@ -499,7 +499,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 icon: "assets/icon/febicon.png" // Opcional: añadir un ícono a la notificación
               });
             }).catch((err) => {
-              console.log('An error occurred while retrieving token. ', err);
+              console.log("test ceroideas",'An error occurred while retrieving token. ', err);
             });
           } else {
 
@@ -521,7 +521,7 @@ export class AppComponent implements OnInit, OnDestroy {
           
         });
       } else {
-        console.log('Unable to get permission to notify.');
+        console.log("test ceroideas",'Unable to get permission to notify.');
       }
     });
   }

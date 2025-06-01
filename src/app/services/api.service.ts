@@ -246,12 +246,12 @@ export class ApiService {
   //  * @param user_id
   //  */
   // public suspendedUser(user_id:number) {
-  //   console.log('ytsgdfgd')
+  //   console.log("test ceroideas",'ytsgdfgd')
   //   const formData = new FormData();
   //   formData.append('user_id', user_id);
   //   formData.append('platform', this.utilities.getPlatform());
   //
-  //   console.log( this._createData('suspended-user', formData));
+  //   console.log("test ceroideas", this._createData('suspended-user', formData));
   // }
 
   /**

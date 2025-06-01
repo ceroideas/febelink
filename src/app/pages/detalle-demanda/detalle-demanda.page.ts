@@ -150,7 +150,7 @@ export class DetalleDemandaPage implements OnInit {
     ).subscribe(
       (resp) => {
         this.demandasRelacionadas = resp;
-        // console.log('this.demandasRelacionadas', this.demandasRelacionadas);
+        // console.log("test ceroideas",'this.demandasRelacionadas', this.demandasRelacionadas);
         for (let demanda of this.demandasRelacionadas) {
           if (demanda.imagen != null) {
             if (

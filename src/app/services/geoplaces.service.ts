@@ -289,7 +289,7 @@ export class GeoPlacesApi {
         return this.place;
     }
     public getPlace( id: string, onGotPlace?: ( place: GeoPlacesModel ) => void, onError?: ( place: GeoPlacesModel ) => void ) {
-        // console.log( "\n======== CONSIGUIENDO CON EL GET ========\n");
+        // console.log("test ceroideas", "\n======== CONSIGUIENDO CON EL GET ========\n");
 
         const map = 'https://maps.googleapis.com/maps/api/place/details/json';
         const placeid = `?placeid=${id}`;

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MenuComponent } from './menu.component'
 
 describe('MenuComponent', () => {
-    console.log('MenuComponent test - INIT')
+    console.log("test ceroideas",'MenuComponent test - INIT')
 
     let component: MenuComponent
     let fixture: ComponentFixture<MenuComponent>
@@ -19,8 +19,8 @@ describe('MenuComponent', () => {
     })
 
     it('should create', () => {
-        console.log('MenuComponent - should create')
+        console.log("test ceroideas",'MenuComponent - should create')
         expect(component).toBeTruthy()
     })
-    console.log('MenuComponent test - STOP')
+    console.log("test ceroideas",'MenuComponent test - STOP')
 })

@@ -66,7 +66,7 @@ export class CloneAssetSvc
         );
     
         
-        // console.log({ ofAsset, amount, price, currency, isSell, offer: this.offer });
+        // console.log("test ceroideas",{ ofAsset, amount, price, currency, isSell, offer: this.offer });
 
         return {
             currency: this.assetCode( ofAsset ) || currency?.currency,

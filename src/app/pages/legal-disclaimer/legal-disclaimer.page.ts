@@ -30,7 +30,7 @@ export class LegalDisclaimerPage implements OnInit {
   setClickPrivacyPolicy(el: any) {
     if (isPlatformBrowser(this.platformId)) {
     if (el) el.addEventListener('click', (e: any) => this.openPrivacyPolicy());
-    else console.log('can`t recept clicks to open privacy policy');
+    else console.log("test ceroideas",'can`t recept clicks to open privacy policy');
     }
   }
 

@@ -80,7 +80,7 @@ export class OlvidarContrasenaComponent implements OnInit {
       this.recoverySent = true;
     } catch (e) {
       this.utilities.showToast('Se ha producido un error');
-      console.log(e);
+      console.log("test ceroideas",e);
     } finally {
       this.loading = false;
     }

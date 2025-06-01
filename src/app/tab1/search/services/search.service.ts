@@ -36,7 +36,7 @@ export class SearchService {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          console.log('Error al obtener los datos: ' + error);
+          console.log("test ceroideas",'Error al obtener los datos: ' + error);
           reject(error);
         });
     });*/
@@ -75,7 +75,7 @@ export class SearchService {
         .subscribe(data => {
           resolve(data);
         }, error => {
-          console.log('Error al obtener los datos recomendados: ' + error);
+          console.log("test ceroideas",'Error al obtener los datos recomendados: ' + error);
           reject(error);
         });
     });*/
@@ -88,7 +88,7 @@ export class SearchService {
          .subscribe(data => {
            resolve(data);
          }, error => {
-           console.log('Error al obtener los datos recomendados: ' + error);
+           console.log("test ceroideas",'Error al obtener los datos recomendados: ' + error);
            reject(error);
          });
      });*/

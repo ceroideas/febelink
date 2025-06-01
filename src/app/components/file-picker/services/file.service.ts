@@ -42,7 +42,7 @@ export class FileService {
     //       if (!this.exceedsSize(iFile.file)) resolve(iFile);
     //     })
     //     .catch((error) => {
-    //       console.log('image.service. error', error);
+    //       console.log("test ceroideas",'image.service. error', error);
     //       this.toastSvc.show('tabs.tab4.errors.image', true);
     //     });
     // });
@@ -92,7 +92,7 @@ export class FileService {
       format: this.isVideo(ext) ? FilePickType.VIDEO : FilePickType.IMAGE,
       ext: ext,
     };
-    // console.log({ mediaURI, fileName, src })
+    // console.log("test ceroideas",{ mediaURI, fileName, src })
     return iFile;
   }
 

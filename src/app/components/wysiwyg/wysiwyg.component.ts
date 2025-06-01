@@ -99,7 +99,7 @@ export class WYSIWYGComponent implements OnInit, AfterViewInit {
   }
 
   changedEditor(event: EditorChangeContent | EditorChangeSelection) {
-    // console.log('editor-change', event)
+    // console.log("test ceroideas",'editor-change', event)
     if (event?.event == 'text-change') {
       this.content = {
           html: event?.editor?.root?.innerHTML ?? event?.html ?? undefined,

@@ -91,7 +91,7 @@ export class BuyTokensComponent implements OnInit {
           return;
         }
         const userLanding:UserLanding = response.data.userCompleteData;
-        // console.log(userLanding);
+        // console.log("test ceroideas",userLanding);
         this.landingSvc.setUser(userLanding);
         const lang = (<ILang> await ILangDEFAULTS.getCurrentLang( this.translateService )).lang;
 
@@ -120,7 +120,7 @@ export class BuyTokensComponent implements OnInit {
           const res = await responseObs.pipe(first()).toPromise();
 
           this.saveInSession(profile, userLanding);
-          // console.log(res);
+          // console.log("test ceroideas",res);
           
           if(!res.success){
             let errorMsg = res.message;
@@ -178,7 +178,7 @@ export class BuyTokensComponent implements OnInit {
   }
 
   // tokensToFiat(event){
-  //   console.log("tokensToFiat");    
+  //   console.log("test ceroideas","tokensToFiat");    
   //   let tokens = event.target.value;
   //   tokens = Math.round(tokens * 100) / 100
   //   this.numTokens = tokens;

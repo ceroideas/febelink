@@ -68,7 +68,7 @@ export class SuscribirsePage implements OnInit {
         //@ts-ignore
         this.selected = this.myCurrentPlan?.id;
         // this.setupStripe();
-        // console.log(this.selected);
+        // console.log("test ceroideas",this.selected);
       });
     });
 
@@ -191,9 +191,9 @@ export class SuscribirsePage implements OnInit {
 
   //                     (await this.api.subscribe(this.selected, result.token.id)).subscribe(async response => {
 
-  //                         console.log(response);
+  //                         console.log("test ceroideas",response);
   //                         await this.utilities.saveUserSubscription(response.subscription);
-  //                         console.log(result.token.id);
+  //                         console.log("test ceroideas",result.token.id);
   //                         this.card.clear();
   //                         this.subscription = await this.utilities.getUserSubscription();
   //                         this.utilities.dismissLoading();

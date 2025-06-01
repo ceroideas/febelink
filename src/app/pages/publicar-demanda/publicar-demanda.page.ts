@@ -98,7 +98,7 @@ export class PublicarDemandaPage implements OnInit {
           )
         ).subscribe(
           async (resp) => {
-            console.log('Demanda publicada', resp);
+            console.log("test ceroideas",'Demanda publicada', resp);
             if (p.sector !== -1) {
               (
                 await this.api.enviarNotificacionAOfertantes(
@@ -108,7 +108,7 @@ export class PublicarDemandaPage implements OnInit {
                   p.sub_sector
                 )
               ).subscribe((resp) => {
-                console.log('Notificacion enviada correctamente');
+                console.log("test ceroideas",'Notificacion enviada correctamente');
               });
             }
 
@@ -166,7 +166,7 @@ export class PublicarDemandaPage implements OnInit {
       .then((urlFoto) => {
         this.srcFoto = this.sanitizer.bypassSecurityTrustUrl(urlFoto);
         this.base64img = 'data:image/jpeg;base64,' + urlFoto;
-        console.log(urlFoto);
+        console.log("test ceroideas",urlFoto);
       })
       .catch((error) => {
         this.utilities.showAlert('Error al obtener imagen', error);
@@ -195,7 +195,7 @@ export class PublicarDemandaPage implements OnInit {
       }
 
       this.base64img = await this.convert(myFile);
-      console.log(`Your base64 image is ${this.base64img}`);
+      console.log("test ceroideas",`Your base64 image is ${this.base64img}`);
 
       this.srcFoto = true;
 
@@ -228,7 +228,7 @@ export class PublicarDemandaPage implements OnInit {
     (await this.api.obtenerSectores()).subscribe((sectores) => {
       this.sectores = sectores;
       this.sectores.push({ id: -1, nombre: 'Otros' });
-      console.log('SECTORES', this.sectores);
+      console.log("test ceroideas",'SECTORES', this.sectores);
       if (this.sectorId !== undefined) {
         this.sector = this.sectorId;
       } else {
@@ -257,7 +257,7 @@ export class PublicarDemandaPage implements OnInit {
    * Comprobar que los campos están rellenados
    */
   public comprobarCamposPerfil(): boolean {
-    console.log(this.perfil);
+    console.log("test ceroideas",this.perfil);
     if (
       this.perfil.user.dni &&
       this.perfil.user.telefono &&
@@ -277,7 +277,7 @@ export class PublicarDemandaPage implements OnInit {
       if (this.perfil !== null) {
         (await this.api.obtenerPerfil(perfil.reference)).subscribe((perfil) => {
           this.perfil = perfil;
-          console.log(this.perfil);
+          console.log("test ceroideas",this.perfil);
         });
       }
     });

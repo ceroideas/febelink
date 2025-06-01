@@ -105,7 +105,7 @@ export class Tab4Page {
       const navExtras = this.router.getCurrentNavigation()?.extras.state;
       if (navExtras) {
         this.message = navExtras['msg'];
-        // console.log(navExtras);
+        // console.log("test ceroideas",navExtras);
       }
     });
   }
@@ -305,7 +305,7 @@ export class Tab4Page {
 
           this.utilities.getUserSubscriptionDetails().then( subscription_details => {
 
-            console.log("SUSCRIPTION DETAILS", subscription_details);
+            console.log("test ceroideas","SUSCRIPTION DETAILS", subscription_details);
 
             this.subscription_details = subscription_details;
 
@@ -988,7 +988,7 @@ export class Tab4Page {
 
   async setSuspendedUser(user_id: any) {
     (await this.api.suspendedUser(user_id)).subscribe((response) => {
-      // console.log(response);
+      // console.log("test ceroideas",response);
     });
   }
 

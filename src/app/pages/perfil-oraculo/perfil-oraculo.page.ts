@@ -203,7 +203,7 @@ export class PerfilOraculoPage implements OnInit {
     try {
       return this.http.get(route);
     } catch (error) {
-      console.log('ups', error);
+      console.log("test ceroideas",'ups', error);
     }
   };
 

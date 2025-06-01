@@ -46,7 +46,7 @@ export class UserDataFormComponent implements OnInit, AfterViewInit {
           this.userData.place_id = place?.place_id;
       })
       .OnError(( err ) => {
-          console.log( 'Got this err', err );
+          console.log("test ceroideas", 'Got this err', err );
           this.userData.address = undefined;
           this.userData.country = undefined;
           this.userData.state = undefined;
