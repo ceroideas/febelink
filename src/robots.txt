@@ -68,6 +68,16 @@ Disallow: /
 User-agent: Meta-ExternalAgent
 Disallow: /
 
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+
 # Mapas del sitio
 Sitemap: https://www.febelink.com/sitemap.xml
 
