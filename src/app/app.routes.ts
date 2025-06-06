@@ -336,7 +336,7 @@ export const routes: Routes = [
             (m) => m.CuentaProfesionalPageModule
           ),
       },
-   
+   { path: '**', redirectTo: '/servicios' },
 ]
 
 

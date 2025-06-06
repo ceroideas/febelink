@@ -6,8 +6,8 @@
     <!-- Statistics -->
     <div class="cards flex flex-wrap gap-4">
         <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
-            <span class="title mb-2 font-semibold">Automatizaciones</span>
-            <span class="data text-4xl font-bold">{{automations.length}}</span>
+            <span class="title mb-2 font-semibold">Notificaciones enviadas</span>
+            <span class="data text-4xl font-bold" *ngIf="notifications">{{notifications.length}}</span>
             <span class="aux text-neutral-400">Total</span>
         </div>
     </div>
@@ -45,7 +45,6 @@
         <!-- Header -->
         <li class="sticky top-1 flex items-center gap-2 p-1 pr-3 bg-neutral-100 rounded font-semibold">
             <!-- <span class="h-fit w-5 shrink-0"></span> -->
-            <span class="w-64 h-fit">Tipo</span>
             <span class="w-64 h-fit shrink-0">Sector</span>
             <span class="w-64 h-fit shrink-0">Profesion</span>
             <span class="w-64 h-fit shrink-0">Provincia</span>
@@ -54,23 +53,12 @@
             <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
         </li>
         <!-- Data -->
-        <li class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer" *ngFor="let item of automations">
+        <li class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer" *ngFor="let item of notifications">
             <!-- Select -->
-           <!--  <span class="h-fit w-5 shrink-0">
+            <!--  <span class="h-fit w-5 shrink-0">
                 <lucide-icon *ngIf="item.selected" name="square-check" class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" [size]="20" />
                 <lucide-icon *ngIf="!item.selected" name="square" class="stroke-gray-500 stroke-neutral-400 transition duration-75 group-hover:stroke-gray-900" [size]="20" />
             </span> -->
-
-            <!-- Title -->
-            <span class="w-48 h-fit">
-                <span *ngIf="item.type == 1">
-                    Luego de 24 horas de busqueda
-                </span>
-                <span *ngIf="item.type == 2">
-                    Luego de guardar en Favoritos
-                </span>
-            </span>
-
             <!-- Subsector -->
             <button class="w-56 h-fit shrink-0 flex items-center hover:opacity-50 text-left">
                 <span *ngIf="item.sector_type == 1">
@@ -89,7 +77,6 @@
                     {{ item.profession_info.nombre }}
                 </span>
             </button>
-
             <button class="w-64 shrink-0 flex items-center gap-1 hover:opacity-50">
                 <span *ngIf="item.province_type == 1">
                     Todos las provincias
@@ -98,10 +85,8 @@
                     {{ item.province_info.title }}
                 </span>
             </button>
-
             <span class="w-64 line-clamp-1">{{ item.message_title }}</span>
             <span class="w-64 line-clamp-1">{{ item.message_content }}</span>
-
             <!-- Actions -->
             <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
                 <!-- Edit -->
@@ -124,17 +109,7 @@
         </form>
         <h3 *ngIf="!isNewRegister" class="text-lg font-bold">Modificar</h3>
         <h3 *ngIf="isNewRegister" class="text-lg font-bold">Crear</h3>
-        <div [formGroup]="automationForm">
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text text-neutral-500">Tipo de automatizacion*</span>
-                </div>
-                <select class="select select-bordered bg-neutral-100 text-base" formControlName="type">
-                    <option disabled>Elige una opción</option>
-                    <option value="1">Recordatorio luego de 24 horas de busqueda</option>
-                    <option value="2">Recordatorio luego de guardar en Favoritos</option>
-                </select>
-            </label>
+        <div [formGroup]="notificationForm">
             <label class="form-control w-full">
                 <div class="label">
                     <span class="label-text text-neutral-500">Sector*</span>
@@ -167,7 +142,7 @@
             </label>
             <label class="form-control w-full">
                 <div class="label">
-                    <span class="label-text text-neutral-500">Titulo del aviso*</span> <br>
+                    <span class="label-text text-neutral-500">Titulo de la notificacion*</span> <br>
                 </div>
                 <span>
                     Usa las etiqueta <code>[SECTORNAME]</code>, <code>[PROFESSIONNAME]</code> y <code>[PROVINCENAME]</code> para mostrar el dato correspondiente.
@@ -176,7 +151,7 @@
             </label>
             <label class="form-control w-full">
                 <div class="label">
-                    <span class="label-text text-neutral-500">Contenido del aviso*</span> <br>
+                    <span class="label-text text-neutral-500">Contenido de la notificacion*</span>
                 </div>
                 <span>
                     Usa las etiqueta <code>[SECTORNAME]</code>, <code>[PROFESSIONNAME]</code> y <code>[PROVINCENAME]</code> para mostrar el dato correspondiente.
@@ -185,7 +160,7 @@
             </label>
             <label class="form-control w-full">
                 <div class="label">
-                    <span class="label-text text-neutral-500">Accion del aviso*</span>
+                    <span class="label-text text-neutral-500">Accion de la notificacion*</span>
                 </div>
                 <select class="select select-bordered bg-neutral-100 text-base" formControlName="message_click_action">
                     <option disabled>Elige una opción</option>
@@ -196,7 +171,7 @@
             </label>
         </div>
         <div class="modal-action">
-            <button class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400" [disabled]="automationForm.invalid" (click)="sendAutomation()">
+            <button class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400" [disabled]="notificationForm.invalid" (click)="sendNotification()">
                 Guardar
                 <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
             </button>
@@ -215,7 +190,7 @@
             <button class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition" [disabled]="loadingRequest">
                 Cancelar
             </button>
-            <button class="btn bg-red-600 text-white hover:bg-red-700 transition"  [disabled]="loadingRequest">
+            <button class="btn bg-red-600 text-white hover:bg-red-700 transition" [disabled]="loadingRequest">
                 Eliminar
                 <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
             </button>

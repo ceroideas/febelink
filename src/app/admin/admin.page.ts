@@ -69,7 +69,7 @@ export class AdminPage {
       name: 'Notificaciones push',
       items: [
         {title: 'Automatizaciones', icon: 'wallet', link: '/admin/automations'},
-        {title: 'Envio de notificaciones', icon: 'link', link: '/admin/sendnotifications'},
+        {title: 'Envio de notificaciones', icon: 'link', link: '/admin/notifications'},
       ]
     }
   ]
