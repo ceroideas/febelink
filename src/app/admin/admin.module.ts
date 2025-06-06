@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AdminPageRoutingModule } from './admin-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminPage } from './admin.page';
 import { SharedModule } from '../shared/shared.module';
@@ -16,12 +16,16 @@ import { FooterLinksComponent } from './footer-links/footer-links.component';
 import { BudgetsComponent } from './budgets/budgets.component';
 import { ShadowUsersComponent } from './shadow-users/shadow-users.component';
 import { ShadowProductsComponent } from './shadow-products/shadow-products.component';
+import { AutomationsComponent } from './automations/automations.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+
 
 @NgModule({
   imports: [
     SharedModule,
     FormsModule,
     AdminPageRoutingModule,
+    ReactiveFormsModule,
     LucideAngularModule.pick({MousePointerClick, Map, MapPin, Factory, Briefcase, BriefcaseBusiness, Link, Wallet, Pencil, Trash2, Image, ArrowDownToDot, Plus, Square, SquareCheck, X, FileDown, FileUp, ArrowUpRight, Globe, Eye, UsersRound}),
   ],
   declarations: [
@@ -34,7 +38,9 @@ import { ShadowProductsComponent } from './shadow-products/shadow-products.compo
     FooterLinksComponent,
     BudgetsComponent,
     ShadowUsersComponent,
-    ShadowProductsComponent
+    ShadowProductsComponent,
+    AutomationsComponent,
+    NotificationsComponent
   ]
 })
 export class AdminPageModule {}

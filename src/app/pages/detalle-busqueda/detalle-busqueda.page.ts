@@ -58,6 +58,7 @@ export class DetalleBusquedaPage implements OnInit {
   }
   otherTitelOracle: boolean = false;
   titleProduct: string = ""
+  whsmsg: string = "Hola, he encontrado este servicio en WhatsApp y quiero más información"
   unitTypes = [
     {id: 1, name: 'Día', shorthand: 'día', lang: 'ES'},
     {id: 2, name: 'Mes', shorthand: 'mes', lang: 'ES'},
@@ -301,4 +302,9 @@ export class DetalleBusquedaPage implements OnInit {
       this.router.navigate([`login`]);
     }
   }
+
+    getWhatsappLink(phoneNumber: string): string {
+        const mensaje = 'Hola, He encontrado este servicio en WhatsApp y quiero más información.';
+        return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(mensaje)}`;
+    }
 }

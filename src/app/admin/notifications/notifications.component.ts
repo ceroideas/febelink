@@ -13,10 +13,12 @@ import { Location } from '../../interfaces/location';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-automations',
-    templateUrl: './automations.component.html',
+    selector: 'app-notifications',
+    templateUrl: './notifications.component.html',
+    styleUrls: ['./notifications.component.scss'],
 })
-export class AutomationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit {
+
     @ViewChild('keywordsModal') keywordsModal: any;
     @ViewChild('subsectorsModal') subsectorsModal: any;
     @ViewChild('editModal') editModal: any;
@@ -24,14 +26,14 @@ export class AutomationsComponent implements OnInit {
     provinces: Location[] = [];
     subsectors: Subsector[] = [];
     sectors: Sector[] = [];
-    automations:any;
+    notifications:any;
 
     loading: boolean = false;
     someSelected: boolean = false;
     loadingRequest: boolean = false;
     isNewRegister: boolean = true;
 
-    automationForm = new FormGroup({
+    notificationForm = new FormGroup({
         type: new FormControl(1, Validators.required),
         sector_type: new FormControl(1, Validators.required),
         profession_type: new FormControl(1, Validators.required),
@@ -54,7 +56,7 @@ export class AutomationsComponent implements OnInit {
     ngOnInit() {
         this.getData();
 
-        this.automationForm.get('sector_type')?.valueChanges.subscribe(valor => {   
+        this.notificationForm.get('sector_type')?.valueChanges.subscribe(valor => {   
             this.searchForYouService.getProfessions(valor).then((data: any) => {
                 this.subsectors = data.response.data;
                 this.cdRef.detectChanges();
@@ -68,8 +70,8 @@ export class AutomationsComponent implements OnInit {
     getData(refresh: boolean = false) {
         !refresh && (this.loading = true);
 
-        this.searchForYouService.getAutomations([], []).then((data: any) => {
-            this.automations = data.response.data;
+        this.searchForYouService.getNotifications([], []).then((data: any) => {
+            this.notifications = data.response.data;
 
             this.loading = false;
             this.cdRef.detectChanges();
@@ -116,12 +118,12 @@ export class AutomationsComponent implements OnInit {
         this.editModal.nativeElement.showModal();
     }
 
-    sendAutomation(){
+    sendNotification(){
         this.loadingRequest = true;
 
-        let form = this.automationForm.value;
+        let form = this.notificationForm.value;
         try {
-            this.searchForYouService.createAutomation(form);
+            this.searchForYouService.createNotification(form);
 
             this.getData(true);
             this.loadingRequest = false;
@@ -130,4 +132,5 @@ export class AutomationsComponent implements OnInit {
             this.loadingRequest = false;
         }
     }
+    
 }

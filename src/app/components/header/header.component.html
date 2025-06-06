@@ -3,7 +3,7 @@
     <div class="containerHeader">
       <div  class="left">
         <a href="/">
-          <img  *ngIf="detached" src="assets/imgs/logo.png" alt="Logo Febelink"/>
+          <img  *ngIf="detached" src="assets/imgs/logo.png" alt="Logo Febelink22"/>
           <img  *ngIf="!detached " src="assets/imgs/logo.png" alt="Logo Febelink"/>
         </a>
       </div>
@@ -14,7 +14,26 @@
         <!-- <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " >Carrito</a></div> -->
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item" (click)="navigateToFavorites()">Favoritos</a></div>
         <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div>
+
+        <!-- Ceroideas start -->
+            <div  class="menu primary " [ngClass]="{'detached': detached}">
+                <a target="_blank" title="Qué es Febelink | Descargar App" href="https://febelink.com/app" class="item">
+                    Qué es febelink?
+                </a>
+            </div>
+            <div  class="menu primary " [ngClass]="{'detached': detached}">
+                <a target="_blank" href="https://apps.apple.com/es/app/febelink/id6714484198">
+                    <img class="h-12 my-0.5 object-contain img_download_app" src="assets/app/apple-es.png"/>
+                </a>
+            </div>
+            <div  class="menu primary " [ngClass]="{'detached': detached}">
+                <a target="_blank" href="https://play.google.com/store/apps/details?id=com.febelink.app">
+                    <img class="h-12 my-0.5 object-contain img_download_app2" src="assets/app/google-es.png"/>
+                </a>
+            </div>
+        <!-- Ceroideas end -->
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
+
         <div  class="menu secondary"[ngClass]="{'detached': detached}" >
           <div class="item login " *ngIf="currentUser === undefined" (click)="irA('/login')" >
             <i  class="fas fa-user-circle "></i> Acceder
@@ -41,7 +60,21 @@
       <div class="right mobile" 
         [ngClass]="{'detached': detached  , 'reduced': reduced}"
         >
-        <div  class="menu primary " [ngClass]="{'detached': detached}"><a   [ngClass]="{'sinlogged': currentUser }"class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}">
+            <a target="_blank" href="https://apps.apple.com/es/app/febelink/id6714484198" class="img-link-mobile">
+                <img class="h-12 my-0.5 object-contain img_download_app_bootom120" src="assets/app/apple-es.png"/>
+            </a>
+        </div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}">
+            <a target="_blank" href="https://play.google.com/store/apps/details?id=com.febelink.app" class="img-link-mobile2">
+                <img class="h-12 my-0.5 object-contain img_download_app_bootom120" src="assets/app/google-es.png"/>
+            </a>
+        </div>
+        <div  class="menu primary " [ngClass]="{'detached': detached}">
+            <a   [ngClass]="{'sinlogged': currentUser }"class="item login" (click)="navigateNewServices()">
+                Ofrece tus servicios
+            </a>
+        </div>
      
         <ion-buttons *ngIf="currentUser" buttons-start slot="start">
           <ion-menu-button class="avatarmenu">

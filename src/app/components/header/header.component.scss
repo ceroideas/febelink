@@ -200,6 +200,9 @@ ion-thumbnail {
         background-color: #ffffffe6;
         backdrop-filter: blur(5px);
         transition: background-color .5s;
+        @media (max-width:768px) {
+            height:140px;
+        }
 
         .item{
           color: #333 !important;
@@ -218,14 +221,20 @@ ion-thumbnail {
                 transform: translateX(0) translateY(-25px) scale(.9);
                
               }
+              img{
+                @media (max-width: 700px) {
+                    top:-25px;
+                }
+              }
             }
           }
           .right{
             padding-top: 0px;
             transition: all .3s;
+
             &.mobile{
             
-              top: 10px;
+              top: 62px;
             }
           }
         }
@@ -329,7 +338,7 @@ ion-thumbnail {
             padding-top: 0px;
   
             &.mobile{
-              top: 22px;
+              top: 50px;
             }
           }
           
@@ -524,4 +533,14 @@ ion-image{
   
     }
   }
+}
+
+.img_download_app{
+    width:110px
+}
+.img_download_app2{
+    width:120px
+}
+.img_download_app_bootom120{
+    max-width:120%
 }
