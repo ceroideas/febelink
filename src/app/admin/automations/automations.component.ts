@@ -139,32 +139,36 @@ export class AutomationsComponent implements OnInit {
         this.deleteModal.nativeElement.showModal();
     }
 
-    sendAutomation(){
+    resetForm(){
+        this.automationForm.patchValue({
+            type:1,
+            sector_type:1,
+            profession_type: 1,
+            province_type: 1,
+            message_title: '',
+            message_content: '',
+            auto_id:null,
+            message_click_action:1
+        });
+    }
+
+    async sendAutomation(){
         this.loadingRequest = true;
 
         let form = this.automationForm.value;
         try {
-            this.searchForYouService.createAutomation(form).subscribe({
-                next: (response) => {
-                    if(response.success){
-                        console.log('estoy en lo nuevo')
-                        this.getData(true);
-                        this.automationForm.reset();
-                        this.editModal.nativeElement.close();
-                        this.loadingRequest = false;
-                    }
-                },
-                error: (err) => {
-                  console.error('Error al crear la automatización', err);
-                  this.loadingRequest = false;
-                }
-            });
+            this.searchForYouService.createAutomation(form);
+
+            this.getData(true);
+            this.loadingRequest = false;
+            this.resetForm();
+            this.editModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;
         }
     }
 
-    deleteAutomation(){
+    async deleteAutomation(){
         this.loadingRequest = true;
 
         let data = {
@@ -174,21 +178,10 @@ export class AutomationsComponent implements OnInit {
         try {
             this.searchForYouService.deleteAutomation(data);
 
-            this.searchForYouService.createAutomation(form).subscribe({
-                next: (response) => {
-                    if(response.success){ 
-                        console.log('estoy en lo nuevo3')
-                        this.getData(true);
-                        this.loadingRequest = false;
-                        this.automationForm.reset();
-                        this.deleteModal.nativeElement.close();
-                    }
-                },
-                error: (err) => {
-                    console.error('Error al crear la automatización', err);
-                    this.loadingRequest = false;
-                }
-            });
+            this.getData(true);
+            this.loadingRequest = false;
+            this.resetForm();
+            this.deleteModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;
         }
