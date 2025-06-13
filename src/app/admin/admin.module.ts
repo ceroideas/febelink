@@ -18,6 +18,7 @@ import { ShadowUsersComponent } from './shadow-users/shadow-users.component';
 import { ShadowProductsComponent } from './shadow-products/shadow-products.component';
 import { AutomationsComponent } from './automations/automations.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { PrompsComponent } from './promps/promps.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     ShadowUsersComponent,
     ShadowProductsComponent,
     AutomationsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    PrompsComponent,
   ]
 })
 export class AdminPageModule {}

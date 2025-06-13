@@ -71,6 +71,12 @@ export class AdminPage {
         {title: 'Automatizaciones', icon: 'wallet', link: '/admin/automations'},
         {title: 'Envio de notificaciones', icon: 'link', link: '/admin/notifications'},
       ]
+    },
+    {
+      name: 'Seccion resultados IA',
+      items: [
+        {title: 'Promps', icon: 'wallet', link: '/admin/promps'},
+      ]
     }
   ]
 

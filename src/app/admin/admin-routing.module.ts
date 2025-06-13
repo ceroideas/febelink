@@ -14,6 +14,7 @@ import { ShadowUsersComponent } from './shadow-users/shadow-users.component';
 import { ShadowProductsComponent } from './shadow-products/shadow-products.component';
 import { AutomationsComponent } from './automations/automations.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { PrompsComponent } from './promps/promps.component';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
       { path: 'shadow-users', component: ShadowUsersComponent },
       { path: 'shadow-products', component: ShadowProductsComponent },
       { path: 'automations', component: AutomationsComponent },
-      { path: 'notifications', component: NotificationsComponent }
+      { path: 'notifications', component: NotificationsComponent },
+      { path: 'promps', component: PrompsComponent }
     ]
   },
   

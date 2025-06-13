@@ -76,6 +76,7 @@ export class HttpService {
       };
   
     }
+    // console.log(httpOptions);
 
     return new Promise<IHttpService>((resolve, reject) => {
       this.http.get(environment.API_URL_AUTH + endpoint, httpOptions).subscribe(
@@ -111,7 +112,7 @@ export class HttpService {
   
     }
 
-    console.log(httpOptions);
+    // console.log(httpOptions);
   
     return new Promise<IHttpService>((resolve, reject) => {
       this.http.post(environment.API_URL_AUTH + endpoint, this.objToFromData(data), httpOptions).subscribe(

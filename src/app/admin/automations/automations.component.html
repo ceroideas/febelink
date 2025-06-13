@@ -14,30 +14,30 @@
     <!-- Actions -->
     <div class="actions flex gap-4">
         <!-- Filter -->
-        <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
+        <!-- <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
             <input type="text" class="w-full h-full bg-transparent outline-none" placeholder="Filtrar..." />
-        </div>
+        </div> -->
         <!-- Buttons -->
         <div class="buttons flex gap-4 shrink-0">
             <!-- Export -->
-            <button class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold">
+           <!--  <button class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold">
                 <lucide-icon name="file-down" class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" [strokeWidth]="2" [size]="20" />
                 <span class="px-2">Exportar</span>
-            </button>
+            </button> -->
             <!-- Import -->
-            <button class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold">
+            <!-- <button class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold">
                 <lucide-icon name="file-up" class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" [strokeWidth]="2" [size]="20" />
                 <span class="px-2">Importar</span>
-            </button>
+            </button> -->
             <!-- Create -->
             <button class="button flex justify-center items-center text-white ring-1 ring-inset ring-primary bg-primary/80 hover:enabled:bg-primary transition rounded-lg p-2 font-semibold" (click)="showCreate()">
                 <lucide-icon name="plus" class="stroke-white transition duration-75 group-hover:stroke-gray-900" [strokeWidth]="3" [size]="20" />
                 <span class="px-2">Crear</span>
             </button>
             <!-- Delete -->
-            <button class="button min-w-12 flex justify-center items-center text-white ring-1 ring-inset ring-red-600 bg-red-600/80 hover:enabled:bg-red-600 transition rounded-lg p-2 font-semibold disabled:opacity-30" [disabled]="!someSelected">
+            <!-- <button class="button min-w-12 flex justify-center items-center text-white ring-1 ring-inset ring-red-600 bg-red-600/80 hover:enabled:bg-red-600 transition rounded-lg p-2 font-semibold disabled:opacity-30" [disabled]="!someSelected">
                 <lucide-icon name="trash-2" class="stroke-white transition duration-75 group-hover:stroke-gray-900" [strokeWidth]="2" [size]="20" />
-            </button>
+            </button> -->
         </div>
     </div>
     <!-- Table -->
@@ -105,11 +105,11 @@
             <!-- Actions -->
             <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
                 <!-- Edit -->
-                <button class="w-7 h-7 flex justify-center items-center">
+                <button class="w-7 h-7 flex justify-center items-center" (click)="showEdit(item)">
                     <lucide-icon name="pencil" class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" [size]="20" />
                 </button>
                 <!-- Delete -->
-                <button class="w-7 h-7 flex justify-center items-center">
+                <button class="w-7 h-7 flex justify-center items-center" (click)="showDelete(item.id)">
                     <lucide-icon name="trash-2" class="stroke-gray-500 stroke-red-600 transition duration-75 group-hover:stroke-gray-900" [size]="20" />
                 </button>
             </div>
@@ -210,12 +210,12 @@
 <dialog #deleteModal class="modal">
     <div class="modal-box bg-white">
         <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
-        <p class="py-4">¿Estas seguro que quieres eliminar el petición <b></b>?</p>
+        <p class="py-4">¿Estas seguro que quieres eliminar este registro?</p>
         <div class="modal-action">
             <button class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition" [disabled]="loadingRequest">
                 Cancelar
             </button>
-            <button class="btn bg-red-600 text-white hover:bg-red-700 transition"  [disabled]="loadingRequest">
+            <button class="btn bg-red-600 text-white hover:bg-red-700 transition"  [disabled]="loadingRequest" (click)="deleteAutomation()">
                 Eliminar
                 <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
             </button>
