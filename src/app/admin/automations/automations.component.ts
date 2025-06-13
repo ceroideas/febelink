@@ -144,12 +144,18 @@ export class AutomationsComponent implements OnInit {
 
         let form = this.automationForm.value;
         try {
-            this.searchForYouService.createAutomation(form);
-
-            this.getData(true);
-            this.loadingRequest = false;
-            this.automationForm.reset();
-            this.editModal.nativeElement.close();
+            this.searchForYouService.createAutomation(form).subscribe({
+                next: (response) => {
+                    this.getData(true);
+                    this.automationForm.reset();
+                    this.editModal.nativeElement.close();
+                    this.loadingRequest = false;
+                },
+                error: (err) => {
+                  console.error('Error al crear la automatización', err);
+                  this.loadingRequest = false;
+                }
+            });
         } catch (error) {
             this.loadingRequest = false;
         }
