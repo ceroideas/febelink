@@ -145,34 +145,49 @@ export class NotificationsComponent implements OnInit {
         this.editModal.nativeElement.showModal();
     }
 
-    sendNotification(){
+    resetForm(){
+        this.notificationForm.patchValue({
+            sector_type:1,
+            profession_type: 1,
+            province_type: 1,
+            message_title: '',
+            message_content: '',
+            not_id:null,
+            message_click_action:1,
+            send_type:1,
+            send_date:null,
+            send_date_hour:null
+        });
+    }
+
+    async sendNotification(){
         this.loadingRequest = true;
 
         let form = this.notificationForm.value;
         try {
-            this.searchForYouService.createNotification(form);
+            await this.searchForYouService.createNotification(form);
 
             this.getData(true);
             this.loadingRequest = false;
-            this.notificationForm.reset();
+            this.resetForm();
             this.editModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;
         }
     }
 
-    deleteNotification(){
+    async deleteNotification(){
         this.loadingRequest = true;
 
         let data = {
             not_id:this.activeNotification
         }
         try {
-            this.searchForYouService.deleteNotification(data);
+            await this.searchForYouService.deleteNotification(data);
 
             this.getData(true);
             this.loadingRequest = false;
-            this.notificationForm.reset();
+            this.resetForm();
             this.deleteModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;

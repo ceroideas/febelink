@@ -133,23 +133,33 @@ export class PrompsComponent implements OnInit {
         this.deleteModal.nativeElement.showModal();
     }
 
-    sendPromp(){
+    resetForm(){
+        this.prompsForm.patchValue({
+            sector_type:1,
+            profession_type: 1,
+            province_type: 1,
+            message_content: '',
+            pro_id:null,
+        });
+    }
+
+    async sendPromp(){
         this.loadingRequest = true;
 
         let form = this.prompsForm.value;
         try {
-            this.searchForYouService.createPromp(form);
+            await this.searchForYouService.createPromp(form);
             this.getData(true);
             this.loadingRequest = false;
             this.editModal.nativeElement.close();
-            this.prompsForm.reset();
+            this.resetForm();
             this.isNewRegister = true;
         } catch (error) {
             this.loadingRequest = false;
         }
     }
 
-    deleteProm(){
+    async deleteProm(){
         this.loadingRequest = true;
 
         let data = {
@@ -157,9 +167,10 @@ export class PrompsComponent implements OnInit {
         };
 
         try {
-            this.searchForYouService.deletePromp(data);
+            await this.searchForYouService.deletePromp(data);
             this.getData(true);
             this.loadingRequest = false;
+            this.resetForm();
             this.deleteModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;

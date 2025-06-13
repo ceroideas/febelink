@@ -157,7 +157,7 @@ export class AutomationsComponent implements OnInit {
 
         let form = this.automationForm.value;
         try {
-            this.searchForYouService.createAutomation(form);
+            await this.searchForYouService.createAutomation(form);
 
             this.getData(true);
             this.loadingRequest = false;
@@ -176,7 +176,7 @@ export class AutomationsComponent implements OnInit {
         }
 
         try {
-            this.searchForYouService.deleteAutomation(data);
+            await this.searchForYouService.deleteAutomation(data);
 
             this.getData(true);
             this.loadingRequest = false;
