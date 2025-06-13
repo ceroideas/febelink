@@ -45,6 +45,13 @@ export class SearchforyouService {
         }, true);
     }
 
+    async getPromps(subsectors: number[], provinces: number[]): Promise < IHttpService > {
+        return this.http.post('getPromps', {
+            subsectors: JSON.stringify(subsectors),
+            provinces: JSON.stringify(provinces),
+        }, true);
+    }
+
     async getProfessions(sector:any): Promise < IHttpService > {
         return this.http.get('getSubsectorinfo/'+sector, {}, true);
     }
@@ -55,5 +62,21 @@ export class SearchforyouService {
 
     async createNotification(form:any): Promise < IHttpService > {
         return this.http.post('createNotification', form, true);
+    }
+
+    async createPromp(form:any): Promise < IHttpService > {
+        return this.http.post('createPromp', form, true);
+    }
+
+    async deletePromp(form:any): Promise < IHttpService > {
+        return this.http.post('deletePromp', form, true);
+    }
+
+    async deleteAutomation(form:any): Promise < IHttpService > {
+        return this.http.post('deleteAutomation', form, true);
+    }
+
+    async deleteNotification(form:any): Promise < IHttpService > {
+        return this.http.post('deleteNotification', form, true);
     }
 }

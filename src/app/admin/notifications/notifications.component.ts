@@ -22,11 +22,13 @@ export class NotificationsComponent implements OnInit {
     @ViewChild('keywordsModal') keywordsModal: any;
     @ViewChild('subsectorsModal') subsectorsModal: any;
     @ViewChild('editModal') editModal: any;
+    @ViewChild('deleteModal') deleteModal: any;
 
     provinces: Location[] = [];
     subsectors: Subsector[] = [];
     sectors: Sector[] = [];
     notifications:any;
+    activeNotification:any;
 
     loading: boolean = false;
     someSelected: boolean = false;
@@ -34,13 +36,16 @@ export class NotificationsComponent implements OnInit {
     isNewRegister: boolean = true;
 
     notificationForm = new FormGroup({
-        type: new FormControl(1, Validators.required),
         sector_type: new FormControl(1, Validators.required),
         profession_type: new FormControl(1, Validators.required),
         province_type: new FormControl(1, Validators.required),
         message_title: new FormControl('', Validators.required),
         message_content: new FormControl('', Validators.required),
-        message_click_action: new FormControl(1, Validators.required)
+        message_click_action: new FormControl(1, Validators.required),
+        send_type: new FormControl(1, Validators.required),
+        send_date: new FormControl(null),
+        send_date_hour: new FormControl(null),
+        not_id:new FormControl(null),
     });
 
     constructor(
@@ -118,6 +123,28 @@ export class NotificationsComponent implements OnInit {
         this.editModal.nativeElement.showModal();
     }
 
+    showDelete(id:any){
+        this.activeNotification = id;
+        this.deleteModal.nativeElement.showModal();
+    }
+
+    showEdit(item:any){
+        this.isNewRegister = false;
+        this.notificationForm.patchValue({
+            sector_type: item.sector_type,
+            profession_type: item.profession_type,
+            province_type: item.province_type,
+            message_title: item.message_title,
+            message_content: item.message_content,
+            not_id:item.id,
+            message_click_action:item.message_click_action,
+            send_type:item.send_type,
+            send_date:item.send_date,
+            send_date_hour:item.send_date_hour,
+        });
+        this.editModal.nativeElement.showModal();
+    }
+
     sendNotification(){
         this.loadingRequest = true;
 
@@ -127,10 +154,28 @@ export class NotificationsComponent implements OnInit {
 
             this.getData(true);
             this.loadingRequest = false;
+            this.notificationForm.reset();
             this.editModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;
         }
     }
-    
+
+    deleteNotification(){
+        this.loadingRequest = true;
+
+        let data = {
+            not_id:this.activeNotification
+        }
+        try {
+            this.searchForYouService.deleteNotification(data);
+
+            this.getData(true);
+            this.loadingRequest = false;
+            this.notificationForm.reset();
+            this.deleteModal.nativeElement.close();
+        } catch (error) {
+            this.loadingRequest = false;
+        }
+    }
 }

@@ -6,21 +6,21 @@
     <!-- Statistics -->
     <div class="cards flex flex-wrap gap-4">
         <div class="card w-fit min-w-44 h-fit px-4 py-3 flex flex-col bg-white rounded-lg shadow-default">
-            <span class="title mb-2 font-semibold">Notificaciones</span>
-            <span class="data text-4xl font-bold" *ngIf="notifications">{{notifications.length}}</span>
+            <span class="title mb-2 font-semibold">Promps</span>
+            <span class="data text-4xl font-bold" *ngIf="promps">{{promps.length}}</span>
             <span class="aux text-neutral-400">Total</span>
         </div>
     </div>
     <!-- Actions -->
     <div class="actions flex gap-4">
         <!-- Filter -->
-       <!--  <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
+        <!-- <div class="w-full bg-white ring-1 ring-inset ring-neutral-200 rounded-lg px-4">
             <input type="text" class="w-full h-full bg-transparent outline-none" placeholder="Filtrar..." />
         </div> -->
         <!-- Buttons -->
         <div class="buttons flex gap-4 shrink-0">
             <!-- Export -->
-           <!--  <button class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold">
+            <!-- <button class="button flex justify-center items-center text-neutral-600 ring-1 ring-inset ring-neutral-200 bg-white hover:enabled:bg-neutral-100 transition rounded-lg p-2 font-semibold">
                 <lucide-icon name="file-down" class="stroke-neutral-600 transition duration-75 group-hover:stroke-gray-900" [strokeWidth]="2" [size]="20" />
                 <span class="px-2">Exportar</span>
             </button> -->
@@ -35,7 +35,7 @@
                 <span class="px-2">Crear</span>
             </button>
             <!-- Delete -->
-           <!--  <button class="button min-w-12 flex justify-center items-center text-white ring-1 ring-inset ring-red-600 bg-red-600/80 hover:enabled:bg-red-600 transition rounded-lg p-2 font-semibold disabled:opacity-30" [disabled]="!someSelected">
+            <!-- <button class="button min-w-12 flex justify-center items-center text-white ring-1 ring-inset ring-red-600 bg-red-600/80 hover:enabled:bg-red-600 transition rounded-lg p-2 font-semibold disabled:opacity-30" [disabled]="!someSelected">
                 <lucide-icon name="trash-2" class="stroke-white transition duration-75 group-hover:stroke-gray-900" [strokeWidth]="2" [size]="20" />
             </button> -->
         </div>
@@ -48,19 +48,18 @@
             <span class="w-64 h-fit shrink-0">Sector</span>
             <span class="w-64 h-fit shrink-0">Profesion</span>
             <span class="w-64 h-fit shrink-0">Provincia</span>
-            <span class="w-64 h-fit shrink-0">Titulo</span>
-            <span class="w-64 h-fit shrink-0">Contenido</span>
+            <span class="w-72 h-fit shrink-0">Contenido</span>
             <span class="w-20 h-fit shrink-0 text-right">Acciones</span>
         </li>
         <!-- Data -->
-        <li class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer" *ngFor="let item of notifications">
+        <li class="flex items-center gap-2 p-1 py-2 pr-3 border-b last:border-none cursor-pointer" *ngFor="let item of promps">
             <!-- Select -->
             <!--  <span class="h-fit w-5 shrink-0">
                 <lucide-icon *ngIf="item.selected" name="square-check" class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" [size]="20" />
                 <lucide-icon *ngIf="!item.selected" name="square" class="stroke-gray-500 stroke-neutral-400 transition duration-75 group-hover:stroke-gray-900" [size]="20" />
             </span> -->
             <!-- Subsector -->
-            <button class="w-64 h-fit shrink-0 flex items-center hover:opacity-50 text-left">
+            <button class="w-56 h-fit shrink-0 flex items-center hover:opacity-50 text-left">
                 <span *ngIf="item.sector_type == 1">
                     Todos los sectores
                 </span>
@@ -69,7 +68,7 @@
                 </span>
             </button>
             <!-- Location -->
-            <button class="w-64 shrink-0 flex items-center gap-1 hover:opacity-50">
+            <button class="w-72 shrink-0 flex items-center gap-1 hover:opacity-50">
                 <span *ngIf="item.profession_type == 1">
                     Todos las profesiones
                 </span>
@@ -85,8 +84,7 @@
                     {{ item.province_info.title }}
                 </span>
             </button>
-            <span class="w-64 line-clamp-1">{{ item.message_title }}</span>
-            <span class="w-64 line-clamp-1">{{ item.message_content }}</span>
+            <span class="w-72 line-clamp-1">{{ item.promp }}</span>
             <!-- Actions -->
             <div class="buttons w-20 flex gap-2 justify-end items-center shrink-0">
                 <!-- Edit -->
@@ -94,7 +92,7 @@
                     <lucide-icon name="pencil" class="stroke-gray-500 stroke-link transition duration-75 group-hover:stroke-gray-900" [size]="20" />
                 </button>
                 <!-- Delete -->
-                <button class="w-7 h-7 flex justify-center items-center" (click)="showDelete(item.id)">
+                <button class="w-7 h-7 flex justify-center items-center" (click)="showDelete(item)">
                     <lucide-icon name="trash-2" class="stroke-gray-500 stroke-red-600 transition duration-75 group-hover:stroke-gray-900" [size]="20" />
                 </button>
             </div>
@@ -109,7 +107,7 @@
         </form>
         <h3 *ngIf="!isNewRegister" class="text-lg font-bold">Modificar</h3>
         <h3 *ngIf="isNewRegister" class="text-lg font-bold">Crear</h3>
-        <div [formGroup]="notificationForm">
+        <div [formGroup]="prompsForm">
             <label class="form-control w-full">
                 <div class="label">
                     <span class="label-text text-neutral-500">Sector*</span>
@@ -142,59 +140,17 @@
             </label>
             <label class="form-control w-full">
                 <div class="label">
-                    <span class="label-text text-neutral-500">Titulo de la notificacion*</span> <br>
-                </div>
-                <span>
-                    Usa las etiqueta <code>[SECTORNAME]</code>, <code>[PROFESSIONNAME]</code> y <code>[PROVINCENAME]</code> para mostrar el dato correspondiente.
-                </span> <br>
-                <input type="text" class="input input-bordered w-full bg-neutral-100" formControlName="message_title" />
-            </label>
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text text-neutral-500">Contenido de la notificacion*</span>
+                    <span class="label-text text-neutral-500">Contenido del promp*</span>
                 </div>
                 <span>
                     Usa las etiqueta <code>[SECTORNAME]</code>, <code>[PROFESSIONNAME]</code> y <code>[PROVINCENAME]</code> para mostrar el dato correspondiente.
                 </span> <br>
                 <textarea id="message_content" class="input input-bordered w-full bg-neutral-100" formControlName="message_content" rows="10" style="height: 160px;"></textarea>
             </label>
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text text-neutral-500">Accion de la notificacion*</span>
-                </div>
-                <select class="select select-bordered bg-neutral-100 text-base" formControlName="message_click_action">
-                    <option disabled>Elige una opción</option>
-                    <option value="1">Abrir pagina web</option>
-                    <option value="2">Abrir pagina de perfil</option>
-                    <option value="3">Abrir pagina de busqueda de servicios</option>
-                </select>
-            </label>
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text text-neutral-500">Tipo de envio*</span>
-                </div>
-                <select class="select select-bordered bg-neutral-100 text-base" formControlName="send_type">
-                    <option disabled>Elige una opción</option>
-                    <option value="1">Guardar y enviar</option>
-                    <option value="2">Guardar y enviar en una fecha especifica</option>
-                </select>
-            </label>
-            <label class="form-control w-full" *ngIf="notificationForm.value.send_type != 1">
-                <div class="label">
-                    <span class="label-text text-neutral-500">Fecha de envio</span>
-                </div>
-                <input type="date" class="input input-bordered w-full bg-neutral-100" formControlName="send_date" />
-            </label>
-            <label class="form-control w-full" *ngIf="notificationForm.value.send_type != 1">
-                <div class="label">
-                    <span class="label-text text-neutral-500">Hora de inicio de envio</span>
-                </div>
-                <input type="time" class="input input-bordered w-full bg-neutral-100" formControlName="send_date_hour" />
-            </label>
         </div>
         <div class="modal-action">
-            <button class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400" [disabled]="notificationForm.invalid" (click)="sendNotification()">
-                Guardar
+            <button class="btn bg-primary text-white hover:bg-primary/80 disabled:text-neutral-400" [disabled]="prompsForm.invalid" (click)="sendPromp()">
+                {{ !isNewRegister ? 'Editar' : 'Guardar' }}
                 <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
             </button>
         </div>
@@ -207,15 +163,12 @@
 <dialog #deleteModal class="modal">
     <div class="modal-box bg-white">
         <h3 class="text-lg font-bold text-red-600">¡Atención!</h3>
-        <p class="py-4">
-            ¿Estas seguro que quieres eliminar este registro? <br>
-            Al eliminar este registro e cancelaran los avisos vinculados que aun no se hayan enviado a los usuarios!
-        </p>
+        <p class="py-4">¿Estas seguro que quieres eliminar este registro?</p>
         <div class="modal-action">
             <button class="btn bg-neutral-100 text-black hover:bg-neutral-200 transition" [disabled]="loadingRequest">
                 Cancelar
             </button>
-            <button class="btn bg-red-600 text-white hover:bg-red-700 transition" [disabled]="loadingRequest" (click)="deleteNotification()">
+            <button class="btn bg-red-600 text-white hover:bg-red-700 transition" [disabled]="loadingRequest" (click)="deleteProm()">
                 Eliminar
                 <span *ngIf="loadingRequest" class="loading loading-spinner loading-xs"></span>
             </button>

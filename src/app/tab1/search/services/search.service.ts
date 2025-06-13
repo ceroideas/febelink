@@ -178,6 +178,14 @@ export class SearchService {
       cities: JSON.stringify(cities)
     });
   }
+
+  async findOffersAiSection(subsectors: number[], provinces: number[], cities: string[]) {
+    return this.http.post('findOffersAiSection', {
+      subsectors: JSON.stringify(subsectors),
+      provinces: JSON.stringify(provinces),
+      cities: JSON.stringify(cities)
+    });
+  }
   async findOtherOffers(subsectors: number[], index: number = 0) {
     return this.http.post('product/findOthers', {
       subsectors: JSON.stringify(subsectors),

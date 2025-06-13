@@ -13,10 +13,11 @@ import { Location } from '../../interfaces/location';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-automations',
-    templateUrl: './automations.component.html',
+    selector: 'app-promps',
+    templateUrl: './promps.component.html',
+    styleUrls: ['./promps.component.scss'],
 })
-export class AutomationsComponent implements OnInit {
+export class PrompsComponent implements OnInit {
     @ViewChild('keywordsModal') keywordsModal: any;
     @ViewChild('subsectorsModal') subsectorsModal: any;
     @ViewChild('editModal') editModal: any;
@@ -25,23 +26,21 @@ export class AutomationsComponent implements OnInit {
     provinces: Location[] = [];
     subsectors: Subsector[] = [];
     sectors: Sector[] = [];
-    automations:any;
-    activeAuto:any;
+    promps:any;
+    activePromp:any;
 
     loading: boolean = false;
     someSelected: boolean = false;
     loadingRequest: boolean = false;
     isNewRegister: boolean = true;
 
-    automationForm = new FormGroup({
-        type: new FormControl(1, Validators.required),
+
+    prompsForm = new FormGroup({
         sector_type: new FormControl(1, Validators.required),
         profession_type: new FormControl(1, Validators.required),
         province_type: new FormControl(1, Validators.required),
-        message_title: new FormControl('', Validators.required),
         message_content: new FormControl('', Validators.required),
-        message_click_action: new FormControl(1, Validators.required),
-        auto_id: new FormControl(null)
+        pro_id: new FormControl(null)
     });
 
     constructor(
@@ -50,14 +49,12 @@ export class AutomationsComponent implements OnInit {
         private keywordService: KeywordService,
         private cdRef: ChangeDetectorRef,
         private searchForYouService: SearchforyouService
-    ) {
-        // super();
-    }
+    ) {}
 
     ngOnInit() {
         this.getData();
 
-        this.automationForm.get('sector_type')?.valueChanges.subscribe(valor => {   
+        this.prompsForm.get('sector_type')?.valueChanges.subscribe(valor => {   
             this.searchForYouService.getProfessions(valor).then((data: any) => {
                 this.subsectors = data.response.data;
                 this.cdRef.detectChanges();
@@ -71,8 +68,8 @@ export class AutomationsComponent implements OnInit {
     getData(refresh: boolean = false) {
         !refresh && (this.loading = true);
 
-        this.searchForYouService.getAutomations([], []).then((data: any) => {
-            this.automations = data.response.data;
+        this.searchForYouService.getPromps([], []).then((data: any) => {
+            this.promps = data.response.data;
 
             this.loading = false;
             this.cdRef.detectChanges();
@@ -119,55 +116,50 @@ export class AutomationsComponent implements OnInit {
         this.editModal.nativeElement.showModal();
     }
 
-    showEdit(item:any){
+    showEdit(promp:any){
         this.isNewRegister = false;
-        this.automationForm.patchValue({
-            type:item.type,
-            sector_type: item.sector_type,
-            profession_type: item.profession_type,
-            province_type: item.province_type,
-            message_title: item.message_title,
-            message_content: item.message_content,
-            auto_id:item.id,
-            message_click_action:item.message_click_action
+        this.prompsForm.patchValue({
+            sector_type: promp.sector_type,
+            profession_type: promp.profession_type,
+            province_type: promp.province_type,
+            message_content: promp.promp,
+            pro_id:promp.id
         });
         this.editModal.nativeElement.showModal();
     }
 
-    showDelete(id:any){
-        this.activeAuto = id;
+    showDelete(promp:any){
+        this.activePromp = promp.id;
         this.deleteModal.nativeElement.showModal();
     }
 
-    sendAutomation(){
+    sendPromp(){
         this.loadingRequest = true;
 
-        let form = this.automationForm.value;
+        let form = this.prompsForm.value;
         try {
-            this.searchForYouService.createAutomation(form);
-
+            this.searchForYouService.createPromp(form);
             this.getData(true);
             this.loadingRequest = false;
-            this.automationForm.reset();
             this.editModal.nativeElement.close();
+            this.prompsForm.reset();
+            this.isNewRegister = true;
         } catch (error) {
             this.loadingRequest = false;
         }
     }
 
-    deleteAutomation(){
+    deleteProm(){
         this.loadingRequest = true;
 
         let data = {
-            auto_id:this.activeAuto
-        }
+            pro_id:this.activePromp
+        };
 
         try {
-            this.searchForYouService.deleteAutomation(data);
-
+            this.searchForYouService.deletePromp(data);
             this.getData(true);
             this.loadingRequest = false;
-            this.automationForm.reset();
             this.deleteModal.nativeElement.close();
         } catch (error) {
             this.loadingRequest = false;
