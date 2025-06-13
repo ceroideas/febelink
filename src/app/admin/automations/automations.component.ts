@@ -146,10 +146,12 @@ export class AutomationsComponent implements OnInit {
         try {
             this.searchForYouService.createAutomation(form).subscribe({
                 next: (response) => {
-                    this.getData(true);
-                    this.automationForm.reset();
-                    this.editModal.nativeElement.close();
-                    this.loadingRequest = false;
+                    setTimeout(()=> {
+                        this.getData(true);
+                        this.automationForm.reset();
+                        this.editModal.nativeElement.close();
+                        this.loadingRequest = false;
+                    }, 1000)
                 },
                 error: (err) => {
                   console.error('Error al crear la automatización', err);
@@ -171,10 +173,20 @@ export class AutomationsComponent implements OnInit {
         try {
             this.searchForYouService.deleteAutomation(data);
 
-            this.getData(true);
-            this.loadingRequest = false;
-            this.automationForm.reset();
-            this.deleteModal.nativeElement.close();
+            this.searchForYouService.createAutomation(form).subscribe({
+                next: (response) => {
+                    setTimeout(()=> {
+                        this.getData(true);
+                        this.loadingRequest = false;
+                        this.automationForm.reset();
+                        this.deleteModal.nativeElement.close();
+                    }, 1000)
+                },
+                error: (err) => {
+                    console.error('Error al crear la automatización', err);
+                    this.loadingRequest = false;
+                }
+            });
         } catch (error) {
             this.loadingRequest = false;
         }
