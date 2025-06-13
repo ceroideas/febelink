@@ -146,12 +146,13 @@ export class AutomationsComponent implements OnInit {
         try {
             this.searchForYouService.createAutomation(form).subscribe({
                 next: (response) => {
-                    setTimeout(()=> {
+                    if(response.success){
+                        console.log('estoy en lo nuevo')
                         this.getData(true);
                         this.automationForm.reset();
                         this.editModal.nativeElement.close();
                         this.loadingRequest = false;
-                    }, 1000)
+                    }
                 },
                 error: (err) => {
                   console.error('Error al crear la automatización', err);
@@ -175,12 +176,13 @@ export class AutomationsComponent implements OnInit {
 
             this.searchForYouService.createAutomation(form).subscribe({
                 next: (response) => {
-                    setTimeout(()=> {
+                    if(response.success){ 
+                        console.log('estoy en lo nuevo3')
                         this.getData(true);
                         this.loadingRequest = false;
                         this.automationForm.reset();
                         this.deleteModal.nativeElement.close();
-                    }, 1000)
+                    }
                 },
                 error: (err) => {
                     console.error('Error al crear la automatización', err);
