@@ -150,9 +150,9 @@ export class AskForBudgetComponent implements OnInit {
     this.loadingRequest = true;
 
     this.servicesSvc.create({
-      name: !this.currentUser?.email ? this.name : undefined,
-      email: !this.currentUser?.email ? this.email : undefined,
-      phone: !this.currentUser?.email ? this.phone : undefined,
+      name: !this.currentUser?.email ? this.name : this.currentUser?.name,
+      email: !this.currentUser?.email ? this.email : this.currentUser?.email,
+      phone: !this.currentUser?.email ? this.phone : this.currentUser?.telefono,
       location: this.location?.toString(),
       subsector: this.subsector?.toString(),
       description: this.title,
