@@ -61,6 +61,8 @@ export class AskForBudgetComponent implements OnInit {
   async ngOnInit() {
     this.currentUser = {...(await this.utilities.getUserData())};
 
+    console.log(this.currentUser);
+
     this.keywordService.getSubSectorAll()
     .then((data: any) => {
       this.subsectors = data.response;
