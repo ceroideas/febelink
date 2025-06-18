@@ -756,6 +756,10 @@ export class SearchComponent {
             // this.offers = [];
           }
 
+          if(provinces[0]){
+            sessionStorage.setItem('active_prov', provinces[0].toString());
+          }
+
           this.otherOffers = [];
           this.otherOffersStartIndex = 0;
 

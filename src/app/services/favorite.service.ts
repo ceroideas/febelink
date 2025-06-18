@@ -12,7 +12,8 @@ export class FavoriteService {
   }
 
   async toggleFavorite(id: number): Promise<IHttpService> {
-    return this.http.post(`favoriteProducts`, { id });
+    const prov_id = sessionStorage.getItem('active_prov');
+    return this.http.post(`favoriteProducts`, { id, prov_id });
   }
 
   async getFavorites(): Promise<IHttpService> {
