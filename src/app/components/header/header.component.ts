@@ -4,6 +4,9 @@ import { DOCUMENT, Location, isPlatformBrowser } from '@angular/common';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { CuentaProfesionalService } from './../../pages/cuenta-profesional/Services/cuenta-profesional.service';
 import { getDocument, getWindow } from 'ssr-window';
+import { NotificationService } from './../../services/notification.service';
+import { SearchforyouService } from '../../services/searchforyou.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -29,7 +32,9 @@ export class HeaderComponent {
     private router: Router,  
     private location: Location,
     private authenticationService: AuthenticationService,
-    private profAccountService: CuentaProfesionalService
+    private profAccountService: CuentaProfesionalService,
+    private not: NotificationService,
+    private searchForYouService: SearchforyouService
   ) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -58,6 +63,7 @@ export class HeaderComponent {
   perfil: any = {}
   homePage: any = {}
   onImgError: any = {}
+  cnot:any;
 
   irA(value: any) {
     this.window.location.href = value;
@@ -69,6 +75,12 @@ export class HeaderComponent {
       this.window.addEventListener('scroll', this.scroll, true);
       this.window.addEventListener('resize', this.scroll, true);
     }
+    this.searchForYouService.getUserNotifications([], []).then((data: any) => {
+        this.cnot = 2;
+    })
+    .catch((error) => {
+        console.log(error)
+    });
   }
 
   async navigateNewServices() {
