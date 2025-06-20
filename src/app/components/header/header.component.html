@@ -13,7 +13,7 @@
         <!-- <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " [href]="'/oracles'" >Oraculo</a></div> -->
         <!-- <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item " >Carrito</a></div> -->
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item" (click)="navigateToFavorites()">Favoritos</a></div>
-        <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div>
+        <!-- <div  class="menu primary " *ngIf="currentUser !== undefined"[ngClass]="{'detached': detached}"><a  class="item " href="/chat">Chat</a></div> -->
 
         <!-- Ceroideas start -->
             <div  class="menu primary " [ngClass]="{'detached': detached}">
@@ -33,6 +33,13 @@
             </div>
         <!-- Ceroideas end -->
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
+        <div  class="bell-parent primary " [ngClass]="{'detached': detached}">
+            <a  class="item login" (click)="navigateNewServices()">
+                <i class="fa-solid fa-bell fa-2x bell-icon"></i>
+            </a>
+            <div class="missing-notices" *ngIf="cnot > 0"></div>
+        </div>
+
 
         <div  class="menu secondary"[ngClass]="{'detached': detached}" >
           <div class="item login " *ngIf="currentUser === undefined" (click)="irA('/login')" >

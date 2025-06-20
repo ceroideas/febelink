@@ -544,3 +544,18 @@ ion-image{
 .img_download_app_bootom120{
     max-width:120%
 }
+.bell-icon{
+    color: #415ABD;
+}
+.bell-parent{
+    cursor:pointer
+}
+.missing-notices{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 100%;
+    margin-top: -30px;
+    margin-left: 15px;
+}
