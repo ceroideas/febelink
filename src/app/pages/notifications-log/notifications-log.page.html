@@ -46,14 +46,17 @@
     <div class="row2" style="height: 350px;overflow: scroll;overflow-x: hidden;">
         <div class="col-12">
             <ion-list *ngIf="notifications" class="results-list limit-size" style="padding-bottom: 50px;">
-                <ion-item lines="none" class="clickable">
+                <ion-item lines="none" class="clickable" *ngFor="let notif of notifications">
                     <ion-label>
-                        <h2>Esto es un texto</h2>
+                        <h2>{{ notif.title_not }}</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam debitis ab maxime blanditiis incidunt, eius ad provident quae natus, non accusamus omnis nisi obcaecati voluptatem aspernatur, consequatur rem beatae aliquid.
+                            {{ notif.content_not }} <br>
+                            <small>
+                                {{ notif.send_at }} {{ notif.send_hour_at }}
+                            </small>
                         </p>
-                        <i class="fa-solid fa-eye" style="color:green;margin-right: 7px;"></i>
-                        <i class="fa-solid fa-trash" style="color:red"></i>
+                        <!-- <i class="fa-solid fa-eye" style="color:green;margin-right: 7px;"></i>
+                        <i class="fa-solid fa-trash" style="color:red"></i> -->
                     </ion-label>
                 </ion-item>
             </ion-list>

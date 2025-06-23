@@ -3,10 +3,14 @@ export interface Notification {
     id_receiver: number;
     title: string;
     message?: string;
+    title_not?: string;
+    content_not?: string;
+    send_at?: string;
+    send_hour_at?: string;
     is_read?: number;
     type?: NotifType;
     route?: string;
-    open?: boolean
+    open?: boolean;
 }
 
 export enum NotifType {
