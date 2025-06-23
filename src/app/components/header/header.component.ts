@@ -64,6 +64,7 @@ export class HeaderComponent {
   homePage: any = {}
   onImgError: any = {}
   cnot:any;
+  not:any;
   openDiv:any;
 
   irA(value: any) {
@@ -76,8 +77,9 @@ export class HeaderComponent {
       this.window.addEventListener('scroll', this.scroll, true);
       this.window.addEventListener('resize', this.scroll, true);
     }
-    this.searchForYouService.getUserNotifications([], []).then((data: any) => {
-        this.cnot = 2;
+    this.searchForYouService.getUserNotifications([], []).then((res: any) => {
+        this.cnot = data.data.length;
+        this.not = data.data;
     })
     .catch((error) => {
         console.log(error)
