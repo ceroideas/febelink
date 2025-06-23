@@ -78,8 +78,8 @@ export class HeaderComponent {
       this.window.addEventListener('resize', this.scroll, true);
     }
     this.searchForYouService.getUserNotifications([], []).then((res: any) => {
-        this.cnot = data.data.length;
-        this.not = data.data;
+        this.cnot = res.data.length;
+        this.not = res.data;
     })
     .catch((error) => {
         console.log(error)
