@@ -41,7 +41,8 @@ export class AutomationsComponent implements OnInit {
         message_title: new FormControl('', Validators.required),
         message_content: new FormControl('', Validators.required),
         message_click_action: new FormControl(1, Validators.required),
-        auto_id: new FormControl(null)
+        auto_id: new FormControl(null),
+        custom_url: new FormControl(null)
     });
 
     constructor(
@@ -129,7 +130,8 @@ export class AutomationsComponent implements OnInit {
             message_title: item.message_title,
             message_content: item.message_content,
             auto_id:item.id,
-            message_click_action:item.message_click_action
+            message_click_action:item.message_click_action,
+            custom_url:item.custom_url
         });
         this.editModal.nativeElement.showModal();
     }
@@ -148,7 +150,8 @@ export class AutomationsComponent implements OnInit {
             message_title: '',
             message_content: '',
             auto_id:null,
-            message_click_action:1
+            message_click_action:1,
+            custom_url:null
         });
     }
 

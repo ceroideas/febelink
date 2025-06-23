@@ -192,7 +192,14 @@
                     <option value="1">Abrir pagina web</option>
                     <option value="2">Abrir pagina de perfil</option>
                     <option value="3">Abrir pagina de busqueda de servicios</option>
+                    <option value="4">Abrir una web especifica</option>
                 </select>
+            </label>
+            <label class="form-control w-full" *ngIf="automationForm.value.message_click_action == 4">
+                <div class="label">
+                    <span class="label-text text-neutral-500">Escribe la URL</span> <br>
+                </div>
+                <input type="text" class="input input-bordered w-full bg-neutral-100" formControlName="custom_url" />
             </label>
         </div>
         <div class="modal-action">

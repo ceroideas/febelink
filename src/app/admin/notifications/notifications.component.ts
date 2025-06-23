@@ -46,6 +46,7 @@ export class NotificationsComponent implements OnInit {
         send_date: new FormControl(null),
         send_date_hour: new FormControl(null),
         not_id:new FormControl(null),
+        custom_url:new FormControl(null)
     });
 
     constructor(
@@ -141,6 +142,7 @@ export class NotificationsComponent implements OnInit {
             send_type:item.send_type,
             send_date:item.send_date,
             send_date_hour:item.send_date_hour,
+            custom_url:item.custom_url
         });
         this.editModal.nativeElement.showModal();
     }
@@ -156,7 +158,8 @@ export class NotificationsComponent implements OnInit {
             message_click_action:1,
             send_type:1,
             send_date:null,
-            send_date_hour:null
+            send_date_hour:null,
+            custom_url:null
         });
     }
 
