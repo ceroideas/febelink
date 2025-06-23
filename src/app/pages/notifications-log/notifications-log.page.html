@@ -1,13 +1,13 @@
-<ion-content>
+<!-- <ion-content style="top: 7%;height: 50vh;"> -->
   <!-- Loading -->
-  <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
+<!--   <app-loading [isLoading]="isLoading" clase="marg-t10" message="common.labelSearching"></app-loading>
 
 
   <ion-refresher slot="fixed" (ionRefresh)="get( $event )">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngIf="notifications" class="results-list limit-size">
+  <ion-list *ngIf="notifications" class="results-list limit-size" style="padding-bottom: 50px;">
     <ion-item
       lines="none"
       *ngFor="let notif of notifications"
@@ -25,15 +25,40 @@
         </ion-button>
       </ion-label>
 
-      <ion-badge color="danger" slot="end" class="wh-20 br-rad-30" *ngIf="!notif.is_read">{{ ' ' }}</ion-badge>
+      <ion-badge color="danger" slot="end" class="wh-20 br-rad-30" *ngIf="!notif.is_read">{{ ' ' }}</ion-badge> -->
       <!-- <ion-button *ngIf="currentUser.id === offer?.id_demandante" fill="clear" (click)="editItem(offer); $event.stopPropagation();" class="editBtn">
         <ion-icon slot="icon-only" name="create-outline"></ion-icon>
       </ion-button>
       <ion-button color="danger" fill="clear" (click)="deleteItem(offer); $event.stopPropagation();">
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button> -->
-    </ion-item>
+<!--     </ion-item>
   </ion-list>
-</ion-content>
-
+</ion-content> -->
+<div class="container2">
+    <div class="row2">
+        <div class="col-12 text-center">
+            <h1 style="font-size: 1.3em;">
+                <b>Notificaciones recibidas</b>
+            </h1>
+        </div>
+    </div>
+    <div class="row2" style="height: 350px;overflow: scroll;overflow-x: hidden;">
+        <div class="col-12">
+            <ion-list *ngIf="notifications" class="results-list limit-size" style="padding-bottom: 50px;">
+                <ion-item lines="none" class="clickable">
+                    <ion-label>
+                        <h2>Esto es un texto</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam debitis ab maxime blanditiis incidunt, eius ad provident quae natus, non accusamus omnis nisi obcaecati voluptatem aspernatur, consequatur rem beatae aliquid.
+                        </p>
+                        <i class="fa-solid fa-eye" style="color:green;margin-right: 7px;"></i>
+                        <i class="fa-solid fa-trash" style="color:red"></i>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </div>  
+    </div>
+    <div style="height:20px"></div>
+</div>
 <app-footer></app-footer>

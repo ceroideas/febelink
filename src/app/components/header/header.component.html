@@ -33,11 +33,32 @@
             </div>
         <!-- Ceroideas end -->
         <div  class="menu primary " [ngClass]="{'detached': detached}"><a  class="item login" (click)="navigateNewServices()">Ofrece tus servicios</a></div>
-        <div  class="bell-parent primary " [ngClass]="{'detached': detached}">
-            <a  class="item login" (click)="navigateNewServices()">
+        <div  class="bell-parent primary " [ngClass]="{'detached': detached}" *ngIf="currentUser !== undefined">
+            <a  class="item login" (click)="openDivNotifications()">
                 <i class="fa-solid fa-bell fa-2x bell-icon"></i>
             </a>
             <div class="missing-notices" *ngIf="cnot > 0"></div>
+            <div class="" *ngIf="cnot < 1">
+                Sin resultados
+            </div>
+            <div class="container-notifications" *ngIf="openDiv">
+                <div class="" *ngIf="cnot > 0">
+                    <ul style="list-style: none;display: inline-block;">
+                        <li>
+                            <p style="font-size: .9em;">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                                <small>
+                                    11/06/2025 14:33
+                                </small>
+                            </p>
+                            <hr style="border: solid 1px #333;">
+                        </li>
+                    </ul>
+                </div>
+                <button (click)="goNotifications()" class="link-not">
+                    Ver todas
+                </button>
+            </div>
         </div>
 
 

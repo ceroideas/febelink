@@ -64,6 +64,7 @@ export class HeaderComponent {
   homePage: any = {}
   onImgError: any = {}
   cnot:any;
+  openDiv:any;
 
   irA(value: any) {
     this.window.location.href = value;
@@ -82,6 +83,15 @@ export class HeaderComponent {
         console.log(error)
     });
   }
+
+  openDivNotifications(){
+    this.openDiv = !this.openDiv;
+  }
+
+    goNotifications() {
+        this.openDiv = !this.openDiv;
+        this.router.navigate(['/notifications']);
+    }
 
   async navigateNewServices() {
     let url = 'registro';

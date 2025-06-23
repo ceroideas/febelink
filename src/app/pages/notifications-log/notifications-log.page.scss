@@ -4,3 +4,48 @@
         font-weight: bold !important;
     }
 }
+.container2 {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container2 {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container2 {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .container2 {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .container2 {
+    max-width: 1140px;
+  }
+}
+.row2 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.col-12 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+.text-center{
+    text-align:center;
+}
