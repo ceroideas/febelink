@@ -44,11 +44,12 @@
             <div class="container-notifications" *ngIf="openDiv">
                 <div class="" *ngIf="cnot > 0">
                     <ul style="list-style: none;display: inline-block;">
-                        <li>
+                        <li *ngFor="let n of not">
                             <p style="font-size: .9em;">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                                <b>{{ n.title_not }}</b> <br>
+                                {{ n.content_not }} <br>
                                 <small>
-                                    11/06/2025 14:33
+                                    {{ n.send_at }} {{ n.send_hour_at }}
                                 </small>
                             </p>
                             <hr style="border: solid 1px #333;">
