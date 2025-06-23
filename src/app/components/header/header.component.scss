@@ -559,3 +559,24 @@ ion-image{
     margin-top: -30px;
     margin-left: 15px;
 }
+.container-notifications{
+    position: absolute;
+    background: #f2f2f2;
+    padding: 15px;
+    width: 300px;
+    right: 10%;
+    border-radius: 10px;
+    max-height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.link-not{
+    background-color: #415ABD;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%;
+}
