@@ -64,7 +64,7 @@ export class HeaderComponent {
   homePage: any = {}
   onImgError: any = {}
   cnot:any;
-  not:any;
+  notis:any;
   openDiv:any;
 
   irA(value: any) {
@@ -79,7 +79,7 @@ export class HeaderComponent {
     }
     this.searchForYouService.getUserNotifications([], []).then((res: any) => {
         this.cnot = res.data.length;
-        this.not = res.data;
+        this.notis = res.data;
     })
     .catch((error) => {
         console.log(error)
