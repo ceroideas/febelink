@@ -20,6 +20,7 @@ export class HeaderComponent {
   detachBlock: boolean = false;
   reduced: boolean = false;
   wide: boolean = false;
+  bellContent: boolean = false;
 
   loadUser: any = {}
   user: any = {}
@@ -92,7 +93,43 @@ export class HeaderComponent {
 
     goNotifications() {
         this.openDiv = !this.openDiv;
+        this.bellContent = !this.bellContent;
         this.router.navigate(['/notifications']);
+    }
+
+    toggleBellContent(){
+        this.bellContent = !this.bellContent;
+    }
+
+    async readNot(n:any){
+        let data = {
+            notification_id: n.id
+        } 
+        try {
+            await this.searchForYouService.readUserNotification(data);
+            this.searchForYouService.getUserNotifications([], []).then((res: any) => {
+                this.cnot = res.response.count;
+                this.notis = res.response.data;
+
+                if(n.action_type == 2){
+                    window.open('https://www.febelink.com/profile', '_blank');
+                }else{
+                    if(n.action_type == 3){
+                        window.open('https://www.febelink.com/servicios/'+n.proffession_name+'/'+n.province_name, '_blank');
+                    }else{
+                        if(n.action_type == 4){
+                            window.open('https://www.febelink.com/servicios/'+n.custom_url, '_blank');
+                        }
+                    }
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+        } catch (error) {
+            // this.loadingRequest = false;
+        }
+
     }
 
   async navigateNewServices() {

@@ -39,7 +39,7 @@
             </a>
             <div class="missing-notices" *ngIf="cnot > 0"></div>
             <div class="container-notifications" *ngIf="openDiv">
-                <div class="" *ngIf="cnot < 1">
+                <div class="" *ngIf="notis.length < 1">
                     <ul style="list-style: none;display: inline-block;">
                         <li>
                             <p style="font-size: .9em;">
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="" *ngIf="cnot > 0">
+                <div class="" *ngIf="notis.length > 0">
                     <ul style="list-style: none;display: inline-block;">
                         <li *ngFor="let n of notis">
                             <p style="font-size: .9em;">
@@ -132,5 +132,38 @@
       </div>
     </div>
   </div>
+    <div id="bellContent" class="floating-content" *ngIf="bellContent">
+        <div class="" *ngIf="notis.length < 1">
+            <ul style="list-style: none;display: inline-block;">
+                <li>
+                    <p style="font-size: .9em;">
+                        sin resultados
+                    </p>
+                    <hr style="border: solid 1px #333;">
+                </li>
+            </ul>
+        </div>
+        <div class="" *ngIf="notis.length > 0">
+            <ul style="list-style: none;display: inline-block;">
+                <li *ngFor="let n of notis" class="item_not" [ngClass]="n.status == 1 ? 'item_read' : ''" (click)="readNot(n)">
+                    <p style="font-size: .9em;">
+                        <b>{{ n.title_not }}</b> <br>
+                        {{ n.content_not }} <br>
+                        <small>
+                            {{ n.send_at }} {{ n.send_hour_at }}
+                        </small>
+                    </p>
+                    <!-- <hr style="border: solid 1px #333;"> -->
+                </li>
+            </ul>
+        </div>
+        <button (click)="goNotifications()" class="link-not">
+            Ver todas
+        </button>
+    </div>
+    <div class="floating-bell" (click)="toggleBellContent()">
+        <div class="missing-notices miss2" *ngIf="cnot > 0"></div>
+        <i class="fa-solid fa-bell bell-icon" style="font-size:1.4em"></i>
+    </div>
 </header>
 
