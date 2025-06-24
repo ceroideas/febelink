@@ -86,4 +86,8 @@ export class SearchforyouService {
     async deleteNotification(form:any): Promise < IHttpService > {
         return this.http.post('deleteNotification', form, true);
     }
+
+    async readUserNotification(form:any): Promise < IHttpService > {
+        return this.http.post('readUserNotification', form, true);
+    }
 }
