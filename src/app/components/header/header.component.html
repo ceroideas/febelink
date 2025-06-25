@@ -51,7 +51,7 @@
                 </div>
                 <div class="" *ngIf="notis.length > 0">
                     <ul style="list-style: none;display: inline-block;">
-                        <li *ngFor="let n of notis">
+                        <li *ngFor="let n of notis" class="item_not" [ngClass]="n.status == 1 ? 'item_read' : ''" (click)="readNot(n)">
                             <p style="font-size: .9em;">
                                 <b>{{ n.title_not }}</b> <br>
                                 {{ n.content_not }} <br>
@@ -59,7 +59,7 @@
                                     {{ n.send_at }} {{ n.send_hour_at }}
                                 </small>
                             </p>
-                            <hr style="border: solid 1px #333;">
+                            <!-- <hr style="border: solid 1px #333;"> -->
                         </li>
                     </ul>
                 </div>
