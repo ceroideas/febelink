@@ -594,6 +594,7 @@ ion-image{
   z-index: 10001;
   cursor: pointer;
   transition: transform 0.3s ease;
+  display: none;
 }
 
 .floating-bell:hover {
