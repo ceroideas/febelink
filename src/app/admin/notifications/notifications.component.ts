@@ -36,6 +36,7 @@ export class NotificationsComponent implements OnInit {
     isNewRegister: boolean = true;
 
     notificationForm = new FormGroup({
+        user_type: new FormControl(0, Validators.required),
         sector_type: new FormControl(1, Validators.required),
         profession_type: new FormControl(1, Validators.required),
         province_type: new FormControl(1, Validators.required),
@@ -132,6 +133,7 @@ export class NotificationsComponent implements OnInit {
     showEdit(item:any){
         this.isNewRegister = false;
         this.notificationForm.patchValue({
+            user_type: item.user_type,
             sector_type: item.sector_type,
             profession_type: item.profession_type,
             province_type: item.province_type,
@@ -149,6 +151,7 @@ export class NotificationsComponent implements OnInit {
 
     resetForm(){
         this.notificationForm.patchValue({
+            user_type:0,
             sector_type:1,
             profession_type: 1,
             province_type: 1,
