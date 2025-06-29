@@ -112,6 +112,19 @@
         <div [formGroup]="notificationForm">
             <label class="form-control w-full">
                 <div class="label">
+                    <span class="label-text text-neutral-500">Usuarios de rol*</span>
+                </div>
+                <select class="select select-bordered bg-neutral-100 text-base" formControlName="user_type">
+                    <option disabled>Elige el rol</option>
+                    <option value="0">Todos los roles</option>
+                    <option value="2">Usuario Normal</option>
+                    <option value="3">Administrador</option>
+                    <option value="4">Demandantes</option>
+                    <option value="5">Ofertantes</option>
+                </select>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
                     <span class="label-text text-neutral-500">Sector*</span>
                 </div>
                 <select class="select select-bordered bg-neutral-100 text-base" formControlName="sector_type">
