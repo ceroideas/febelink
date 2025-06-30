@@ -183,7 +183,7 @@
       <div class="grid-container">
         @for ( sector of sectors; track sector.id ) {
           <div  class="grid-item">
-            <a class="link"  [href]="basePath + '/' + sector.link + '/espana'">
+            <a class="link"  [href]=" 'es/' + basePath + '/' + sector.link ">
               <div class="icon">
                 <img src="{{sector.imageURL}}"/>
               </div>
