@@ -54,7 +54,7 @@
         @if ( data?.verified === 1 ) {
           <span class="inline-flex items-center rounded-full bg-[#e8f8ff] px-2 py-1 text-xs font-medium text-[#0095d8] ring-1 ring-inset ring-[#0095d8]">Profesional</span>
         }
-          <span class="inline-flex items-center rounded-full bg-[#f3fff7] px-2 py-1 text-xs font-bold text-[#25D366] ring-1 ring-inset ring-[#25D366]" *ngIf="tieneWhatsapp(data.telefono)">>WhatsApp</span>
+          <span class="inline-flex items-center rounded-full bg-[#f3fff7] px-2 py-1 text-xs font-bold text-[#25D366] ring-1 ring-inset ring-[#25D366]" *ngIf="tieneWhatsapp(data.telefono)">WhatsApp</span>
         @if ( data?.provincia || data?.ciudad ) {
           <span class="inline-flex items-center rounded-full bg-[#f3f7ff] px-2 py-1 text-xs font-bold text-analogous ring-1 ring-inset ring-analogous">
             {{data?.provincia ? data.provincia : data?.ciudad ? data.ciudad : ''}} 

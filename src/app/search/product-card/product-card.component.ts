@@ -88,9 +88,9 @@ export class ProductCardComponent {
   }
 
   tieneWhatsapp(telefono: string | null | undefined): boolean {
-      if (!telefono) return false;
+    if (!telefono) return false;
 
-      return telefono.startsWith('+346') || telefono.startsWith('+347') ||
-             telefono.startsWith('6') || telefono.startsWith('7');
-    }
+    return telefono.startsWith('+346') || telefono.startsWith('+347') ||
+           telefono.startsWith('6') || telefono.startsWith('7');
+  }
 }
