@@ -78,13 +78,15 @@ export class HeaderComponent {
       this.window.addEventListener('scroll', this.scroll, true);
       this.window.addEventListener('resize', this.scroll, true);
     }
-    this.searchForYouService.getUserNotifications([], []).then((res: any) => {
-        this.cnot = res.response.count;
-        this.notis = res.response.data;
-    })
-    .catch((error) => {
-        console.log(error)
-    });
+    if (this.authenticationService.isAuthenticated()) {  
+        this.searchForYouService.getUserNotifications([], []).then((res: any) => {
+            this.cnot = res.response.count;
+            this.notis = res.response.data;
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
   }
 
   openDivNotifications(){
