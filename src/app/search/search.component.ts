@@ -749,7 +749,8 @@ export class SearchComponent {
           if ( data && data.response && data.response ) {
             // this.offers = data.response;
             this.allRecords = data.response;
-            this.loadNextChunk();
+            // this.loadNextChunk();
+            this.changePage(1);
             this.isLoading = false;
           } else {
             this.allRecords = [];
