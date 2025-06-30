@@ -23,11 +23,22 @@ jobs:
       - name: Build Angular app (producción)
         run: npm run build --configuration=production
 
-      - name: Copiar archivos al servidor remoto
-        uses: appleboy/scp-action@v0.1.4
+      - name: Build y despliegue local
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: "82.223.118.251"
           username: "root"
           password: "o4@l4ZBIZzrmpz"
-          source: "dist/browser/*"
-          target: "/var/www/vhosts/febelink.com/test.febelink.com"
+          script: |
+            cd /var/www/vhosts/febelink.com/test.febelink.com/febelink
+            git pull origin development
+
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 20
+
+            npm install
+            npm run build --configuration=production
+
+            # Aquí se hace el 'cp' directo sin transferencias
+            cp -r dist/browser/* /var/www/vhosts/febelink.com/test.febelink.com/
