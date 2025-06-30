@@ -18,6 +18,7 @@ jobs:
           script: |
             cd /var/www/vhosts/febelink.com/test.febelink.com/febelink
             git pull test development
+            nvm use 18
             npm i
             npm run build -c production
             cp -r ./dist/browser/* /var/www/vhosts/febelink.com/test.febelink.com
