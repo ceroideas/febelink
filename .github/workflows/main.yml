@@ -16,11 +16,9 @@ jobs:
           username: "root"
           password: "o4@l4ZBIZzrmpz"
           script: |
-            cd /var/www/vhosts/test.febelink.com/httpdocs/febelink
-            git pull origin development
+            cd /var/www/vhosts/febelink.com/test.febelink.com/httpdocs/febelink
+            git pull test development
             npm i
             ng build -c production
-            cd dist/browser
-            cp -r ./dist/browser/* /var/www/vhosts/test.febelink.com/httpdocs
-            rm -r /var/www/vhosts/test.febelink.com/httpdocs/febelink
-            
+            cp -r ./dist/browser/* /var/www/vhosts/febelink.com/test.febelink.com/httpdocs
+            # rm -r /var/www/vhosts/test.febelink.com/httpdocs/febelink
