@@ -1,0 +1,26 @@
+name: febelinkWEB CI/CD
+
+on:
+  push:
+    branches: [development]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy to Plesk
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{secrets.IPSERVER}}
+          username: ${{secrets.USER}}
+          password: ${{secrets.CLAVESSH}}
+          script: |
+            cd /var/www/vhosts/test.febelink.com/httpdocs/febelink
+            git pull origin development
+            npm i
+            ng build -c production
+            cd dist/browser
+            cp -r ./dist/browser/* /var/www/vhosts/test.febelink.com/httpdocs
+            rm -r /var/www/vhosts/test.febelink.com/httpdocs/febelink
+            
