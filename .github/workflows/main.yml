@@ -19,6 +19,6 @@ jobs:
             cd /var/www/vhosts/febelink.com/test.febelink.com/febelink
             git pull test development
             npm i
-            ng build -c production
+            npm run build -c production
             cp -r ./dist/browser/* /var/www/vhosts/febelink.com/test.febelink.com
             # rm -r /var/www/vhosts/test.febelink.com/febelink
