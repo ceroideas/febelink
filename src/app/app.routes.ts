@@ -32,35 +32,35 @@ export const routes: Routes = [
         component: FavoritesComponent
       },
       {
-        path: 'servicios',
+        path: 'es/servicios',
         component: SearchComponent
       },
       {
-        path: 'servicios/:profession',
+        path: 'es/servicios/:profession',
         component: SearchComponent
       },
       {
-        path: 'servicios/:profession/:province',
+        path: 'es/servicios/:profession/:province',
         component: SearchComponent
       },
       {
-        path: 'servicios/:profession/:province/:city',
+        path: 'es/servicios/:profession/:province/:city',
         component: SearchComponent
       },
       {
-        path: 'trabajos',
+        path: 'es/trabajos',
         component: EmploymentComponent
       },
       {
-        path: 'trabajos/:profession',
+        path: 'es/trabajos/:profession',
         component: EmploymentComponent
       },
       {
-        path: 'trabajos/:profession/:province',
+        path: 'es/trabajos/:profession/:province',
         component: EmploymentComponent
       },
       {
-        path: 'trabajos/:profession/:province/:city',
+        path: 'es/trabajos/:profession/:province/:city',
         component: EmploymentComponent
       },
       {
