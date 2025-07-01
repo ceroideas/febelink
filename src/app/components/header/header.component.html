@@ -37,7 +37,9 @@
             <a  class="item login" (click)="openDivNotifications()">
                 <i class="fa-solid fa-bell fa-2x bell-icon"></i>
             </a>
-            <div class="missing-notices" *ngIf="cnot > 0"></div>
+            <div class="missing-notices" *ngIf="cnot > 0">
+                {{ cnot }}
+            </div>
             <div class="container-notifications" *ngIf="openDiv">
                 <div class="" *ngIf="notis.length < 1">
                     <ul style="list-style: none;display: inline-block;">
@@ -162,7 +164,9 @@
         </button>
     </div>
     <div class="floating-bell" (click)="toggleBellContent()">
-        <div class="missing-notices miss2" *ngIf="cnot > 0"></div>
+        <div class="missing-notices miss2" *ngIf="cnot > 0">
+            {{ cnot }}
+        </div>
         <i class="fa-solid fa-bell bell-icon" style="font-size:1.4em"></i>
     </div>
 </header>

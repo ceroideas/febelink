@@ -8,14 +8,14 @@ export const environment = {
     baseWebUrlWsrv: 'https://wsrv.nl?url=',
 
   
-    baseWebUrl: 'http://localhost:8000',
-    API_URL: 'http://localhost:8000/api',
-    API_URL_AUTH: 'http://localhost:8000/api/auth/',
-/*
-    baseWebUrl: 'http://apitest.febelink.com/',
-    API_URL: 'http://apitest.febelink.com/api/',
-    API_URL_AUTH: 'http://apitest.febelink.com/api/auth/',
-   */
+    // baseWebUrl: 'http://localhost:8000',
+    // API_URL: 'http://localhost:8000/api',
+    // API_URL_AUTH: 'http://localhost:8000/api/auth/',
+
+    baseWebUrl: 'http://api.febelink.com/',
+    API_URL: 'http://api.febelink.com/api/',
+    API_URL_AUTH: 'http://api.febelink.com/api/auth/',
+   
 
   // baseWebUrl: 'http://localhost/',
   // API_URL: 'http://localhost/api/',
