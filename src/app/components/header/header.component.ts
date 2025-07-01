@@ -78,7 +78,7 @@ export class HeaderComponent {
       this.window.addEventListener('scroll', this.scroll, true);
       this.window.addEventListener('resize', this.scroll, true);
     }
-    if (this.authenticationService.isAuthenticated()) {  
+    /*if (this.authenticationService.isAuthenticated()) {  
         this.searchForYouService.getUserNotifications([], []).then((res: any) => {
             this.cnot = res.response.count;
             this.notis = res.response.data;
@@ -86,7 +86,7 @@ export class HeaderComponent {
         .catch((error) => {
             console.log(error)
         });
-    }
+    }*/
   }
 
   openDivNotifications(){
@@ -109,7 +109,7 @@ export class HeaderComponent {
         } 
         try {
             await this.searchForYouService.readUserNotification(data);
-            this.searchForYouService.getUserNotifications([], []).then((res: any) => {
+            /*this.searchForYouService.getUserNotifications([], []).then((res: any) => {
                 this.cnot = res.response.count;
                 this.notis = res.response.data;
 
@@ -127,7 +127,7 @@ export class HeaderComponent {
             })
             .catch((error) => {
                 console.log(error)
-            });
+            });*/
         } catch (error) {
             // this.loadingRequest = false;
         }

@@ -31,12 +31,12 @@ export class SearchforyouService {
     }
 
     //Ceroideas
-    async getUserNotifications(subsectors: number[], provinces: number[]): Promise < IHttpService > {
+    /*async getUserNotifications(subsectors: number[], provinces: number[]): Promise < IHttpService > {
         return this.http.post('getUserNotifications', {
             subsectors: JSON.stringify(subsectors),
             provinces: JSON.stringify(provinces),
         }, true);
-    }
+    }*/
 
     async getAutomations(subsectors: number[], provinces: number[]): Promise < IHttpService > {
         return this.http.post('getAutomations', {
