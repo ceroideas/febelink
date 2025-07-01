@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Redirección dinámica para /servicios/*
+RewriteRule ^servicios/(.*)$ /es/servicios/$1 [R=301,L]
+
+# Redirección dinámica para /trabajos/*
+RewriteRule ^trabajos/(.*)$ /es/trabajos/$1 [R=301,L]
