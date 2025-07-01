@@ -109,7 +109,7 @@ export class HeaderComponent {
         } 
         try {
             await this.searchForYouService.readUserNotification(data);
-            this.searchForYouService.getUserNotifications([], []).then((res: any) => {
+            await this.searchForYouService.getUserNotifications([], []).then((res: any) => {
                 this.cnot = res.response.count;
                 this.notis = res.response.data;
 
