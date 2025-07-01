@@ -252,7 +252,7 @@ export const routes: Routes = [
           import('./pages/cart/cart.module').then((m) => m.CartPageModule),
       },
       {
-        path: 'services',
+        path: 'es/services',
         loadChildren: () =>
           import('./pages/servicios/servicios.module').then(
             (m) => m.ServiciosPageModule
@@ -316,7 +316,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'servicio/:title/detail/:id',
+        path: 'es/servicio/:title/detail/:id',
         loadChildren: () =>
           import('./pages/detalle-busqueda/detalle-busqueda.module').then(
             (m) => m.DetalleBusquedaPageModule
