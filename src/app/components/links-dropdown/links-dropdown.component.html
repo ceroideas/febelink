@@ -62,9 +62,10 @@
     <ul class="overflow-auto">
     @for ( item of filteredDropdownItems; track item.link ) {
       <li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900" id="listbox-option-0" role="option">
-        <button class="w-full h-full flex items-center gap-2" (click)="softLinks ? itemClick(item) : null">
+        <!-- <button class="w-full h-full flex items-center gap-2" (click)="softLinks ? itemClick(item) : null"> -->
+        <button class="w-full h-full flex items-center gap-2">
           <div>
-            <lucide-icon 
+            <!-- <lucide-icon 
               *ngIf="!item.checked"
               name="square"
               class="stroke-primary" 
@@ -75,9 +76,10 @@
               name="square-check-big"
               class="stroke-primary" 
               [strokeWidth]="2"
-            />
+            /> -->
           </div>
-          <a [href]="'/' + basePath + '/' + item.link" (click)="softLinks ? preventDefault($event) : null">
+          <!-- <a [href]="'es/' + basePath + '/' + item.link" (click)="softLinks ? preventDefault($event) : null"> -->
+          <a [href]="'es/' + basePath + '/' + item.link">
             <div class="flex items-center">
               <span 
                 class="block truncate font-normal"

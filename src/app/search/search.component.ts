@@ -220,7 +220,7 @@ export class SearchComponent {
       } else if ( this.provinceQuery && !this.cityQuery ) {
         this.searchText = `${this.professionQuery}-en-${this.provinceQuery}`;
       } else {
-        this.searchText = `${this.professionQuery}-en-españa`;
+        this.searchText = `${this.professionQuery}-en-espana`;
       }
       
       this.basePath = 'servicios';
@@ -232,6 +232,8 @@ export class SearchComponent {
 
     this.keywordService.getLinkData(this.searchText).then((data: any) => {
       const response = data.response;
+
+      console.log(response);
 
       if ( response.subsector?.length ) {
         this.targetSubsector = response.subsector[0];
@@ -1018,7 +1020,7 @@ export class SearchComponent {
 
         this.employmentLinks = selected.map((location: Location) => {
           return {
-            link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(location.title)}`,
+            link: `es/trabajos/${toSlug(employment?.title || '')}/${toSlug(location.title)}`,
             title: `${location.title}`
           }
         });
@@ -1034,7 +1036,7 @@ export class SearchComponent {
         
         this.employmentLinks = selected.map((employment: Employment) => {
           return {
-            link: `trabajos/${toSlug(employment.title)}/${toSlug(this.targetLocation?.title || '')}`,
+            link: `es/trabajos/${toSlug(employment.title)}/${toSlug(this.targetLocation?.title || '')}`,
             title: `${employment.title}`
           }
         });
@@ -1050,7 +1052,7 @@ export class SearchComponent {
         
         this.employmentLinks = selected.map((employment: Employment) => {
           return {
-            link: `trabajos/${toSlug(employment.title)}/${toSlug(this.targetCity?.locations_id.title || '')}/${toSlug(this.targetCity?.title || '')}`,
+            link: `es/trabajos/${toSlug(employment.title)}/${toSlug(this.targetCity?.location.title || '')}/${toSlug(this.targetCity?.title || '')}`,
             title: `${employment.title}`
           }
         });
@@ -1066,7 +1068,7 @@ export class SearchComponent {
 
         this.employmentLinks = selected.map((location: Location) => {
           return {
-            link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(location.title)}`,
+            link: `es/trabajos/${toSlug(employment?.title || '')}/${toSlug(location.title)}`,
             title: `${location.title}`
           }
         });
@@ -1085,7 +1087,7 @@ export class SearchComponent {
 
         this.employmentLinks = cities.map((city: City, index: number) => {
           return {
-            link: `trabajos/${toSlug(employment?.title || '')}/${toSlug(city.locations_id.title)}/${toSlug(city.title)}`,
+            link: `es/trabajos/${toSlug(employment?.title || '')}/${toSlug(city.locations_id.title)}/${toSlug(city.title)}`,
             title: `${city.title}`
           }
         });
@@ -1101,7 +1103,7 @@ export class SearchComponent {
         
         this.employmentLinks = selected.map((employment: Employment) => {
           return {
-            link: `trabajos/${toSlug(employment.title)}`,
+            link: `es/trabajos/${toSlug(employment.title)}`,
             title: `${employment.title}`
           }
         });

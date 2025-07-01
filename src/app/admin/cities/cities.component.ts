@@ -107,6 +107,7 @@ export class CitiesComponent extends BaseComponent implements OnInit {
       page_title: '',
       title: '',
       locations_id: { id: 0, title: '' },
+      location: { id: 0, title: '' },
       updated_at: '',
       checked: false,
       isNew: true,
