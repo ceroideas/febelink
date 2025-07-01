@@ -31,7 +31,7 @@ jobs:
           password: "o4@l4ZBIZzrmpz"
           script: |
             cd /var/www/vhosts/febelink.com/test.febelink.com/febelink
-            git pull origin development
+            git pull test development
 
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
