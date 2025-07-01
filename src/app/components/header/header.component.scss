@@ -552,12 +552,17 @@ ion-image{
 }
 .missing-notices{
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: 17px;
+    height: 17px;
     background: red;
     border-radius: 100%;
     margin-top: -30px;
     margin-left: 15px;
+    color: #fff;
+    font-size: .7em;
+    text-align: center;
+    padding-right: 1px;
+    font-weight: 900;
 }
 .container-notifications{
     position: absolute;
@@ -632,6 +637,8 @@ ion-image{
 }
 .miss2{
     margin-top: 2px;
+    font-size: .5em;
+    height: 19px;
 }
 
 /* Mostrar solo en móvil */
