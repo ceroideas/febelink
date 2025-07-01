@@ -31,14 +31,14 @@ jobs:
           password: "o4@l4ZBIZzrmpz"
           script: |
             cd /var/www/vhosts/febelink.com/test.febelink.com/febelink
-            git pull test development
+            git pull origin development
 
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use 20
 
             npm install
-            npm run build --configuration=production
+            npm run build
 
             # Aquí se hace el 'cp' directo sin transferencias
             cp -r dist/browser/* /var/www/vhosts/febelink.com/test.febelink.com/
