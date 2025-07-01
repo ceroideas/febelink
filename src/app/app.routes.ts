@@ -31,34 +31,58 @@ export const routes: Routes = [
         path: 'favoritos',
         component: FavoritesComponent
       },
+      
+      { path: 'servicios', redirectTo: 'es/servicios', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/servicios',
         component: SearchComponent
       },
+      
+      { path: 'servicios/:profession', redirectTo: 'es/servicios/:profession', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/servicios/:profession',
         component: SearchComponent
       },
+      
+      { path: 'servicios/:profession/:province', redirectTo: 'es/servicios/:profession/:province', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/servicios/:profession/:province',
         component: SearchComponent
       },
+      
+      { path: 'servicios/:profession/:province/:city', redirectTo: 'es/servicios/:profession/:province/:city', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/servicios/:profession/:province/:city',
         component: SearchComponent
       },
+      
+      { path: 'trabajos', redirectTo: 'es/trabajos', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/trabajos',
         component: EmploymentComponent
       },
+      
+      { path: 'trabajos/:profession', redirectTo: 'es/trabajos/:profession', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/trabajos/:profession',
         component: EmploymentComponent
       },
+      
+      { path: 'trabajos/:profession/:province', redirectTo: 'es/trabajos/:profession/:province', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/trabajos/:profession/:province',
         component: EmploymentComponent
       },
+      
+      { path: 'trabajos/:profession/:province/:city', redirectTo: 'es/trabajos/:profession/:province/:city', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/trabajos/:profession/:province/:city',
         component: EmploymentComponent
@@ -251,6 +275,9 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/cart/cart.module').then((m) => m.CartPageModule),
       },
+
+      { path: 'services', redirectTo: 'es/services', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/services',
         loadChildren: () =>
@@ -315,6 +342,9 @@ export const routes: Routes = [
             (m) => m.SuscripcionesPageModule
           ),
       },
+      
+      { path: 'servicio/:title/detail/:id', redirectTo: 'es/servicio/:title/detail/:id', pathMatch: 'full' }, // redirecciones
+
       {
         path: 'es/servicio/:title/detail/:id',
         loadChildren: () =>
